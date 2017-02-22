@@ -1,0 +1,30 @@
+﻿<div class="form-group" style="color:white; font-size:11px">
+	<table>
+		<tr height="12px"> </tr>
+		<tr>
+			<td width="20px"></td>
+			<td width="120px">Login</td>
+			<td width="250px">
+				<input type="text" focus="true" class="form-control input-transparent" ng-model="filtro.campos.busca" />
+			</td>
+		</tr>
+		<tr>
+			<td></td><td>Perfil</td>
+			<td>
+				<input type="hidden" name="perfil" style="width:100%" ui-select2="filtro.campos.selects.perfil" ng-model="filtro.campos.fkPerfil" />
+			</td>
+		</tr>
+		<tr>
+			<td></td><td>Status</td>
+			<td>
+				<table>
+					<tr>
+						<td width="20px"><input type="radio" name="status" id="statusAtivo" value="true" ng-model="filtro.campos.ativo" /></td><td> Ativo</td><td width="20px"></td>
+						<td width="20px"><input type="radio" name="status" id="statusAtivo" value="false" ng-model="filtro.campos.ativo" /></td><td> Inativo</td><td width="20px"></td>
+						<td width="20px"><input type="radio" name="status" id="statusAtivo" value="" ng-model="filtro.campos.ativo" /></td><td> Todos</td><td width="20px"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>

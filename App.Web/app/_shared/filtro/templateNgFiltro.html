@@ -1,0 +1,33 @@
+﻿<div class="row">
+	<div class="col-md-12" style="height:auto;">
+		<form>
+			<table>
+				<tr>
+					<td valign="top">
+						<button type="button" style="margin-bottom:5px;height:29px" class="btn btn-default btn-xs" ng-click="toggleFiltros()" ng-if="ferramentaPesquisa"><span class="glyphicon glyphicon-filter"></span> Filtros</button>
+					</td>
+					<td width="20px"></td>
+					<td valign="top">
+						<input type="text" uppercase focus="true" id="filtroBasico" class="form-control input-transparent" ng-model="filtro.filtroBasico" style="font-size:9px; height:29px"
+								ng-show="!filtro.exibeFiltro" ng-change="alterarFiltroBasico()" placeholder="{{placeholder}}">
+					</td>
+					<td width="20px"></td>
+					<td valign="top">
+						<button ng-show="!filtro.exibeFiltro" type="submit" style="margin-bottom:5px;height:29px" class="btn btn-primary btn-xs" ng-class="{ 'botaoPesquisa-blue': theme == 'blue', 'botaoPesquisa-orange': theme == 'orange' }" ng-click="pesquisar()">Pesquisar</button>
+					</td>
+				</tr>
+			</table>
+			<div id="filtro" ng-show="filtro.exibeFiltro">				
+				<table>
+					<tr>
+						<td valign="top"><ng-include src="templateAvancado"></ng-include></td>
+						<td valign="top" width="60px"></td>
+						<td valign="top" style="padding-top:10px;"><button class="btn btn-default btn-xs" type="submit" ng-click="limpar()">LIMPAR</button></td>
+						<td width="20px"></td>
+						<td valign="top" style="padding-top:10px;"><button class="btn btn-primary btn-xs" type="submit" ng-click="pesquisar()">PESQUISAR</button></td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</div>
+</div>

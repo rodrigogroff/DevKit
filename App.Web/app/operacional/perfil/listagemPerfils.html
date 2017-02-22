@@ -1,0 +1,49 @@
+﻿<div style="color:black; padding-top: 60px;">
+	<section class="widgetForm" style="height:100%;">
+		<div style="padding-left:20px; padding-top: 7px;">
+			<legend>
+				<table>
+					<tr>
+						<td><i style="color:white" class="fa fa-list"> </i> <span style="color:#6a6a6a">Listagem de</span> <b>perfis de acesso</b> &nbsp;<small>Operacional</small></td>
+						<td width="20px"></td>
+						<td><input type="submit" class="btn btn-success btn-xs" ng-click="adicionar()" value="Novo"></td>
+					</tr>
+				</table>
+			</legend>
+			<table>
+				<tr>
+					<td valign="top">
+						<ng-filtro tipo="perfil" campos="campos" template-avancado="app/operacional/perfil/_filtroPerfil.html"
+								   funcao-pesquisar="pesquisar" placeholder="Pesquisar por nome ou código"></ng-filtro>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<div ng-show="lista.length == 0">
+							<br />
+							<div class="btn btn-warning btn-lg btn-block">Nenhum registro encontrado.</div>
+						</div>
+						<div ng-show="lista.length > 0">
+							<ng-paginacao carregar="carregar" lista="lista" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th width="250px">Perfil</th>
+										<th width="120px">Usuários</th>
+										<th width="120px">Permissões</th>
+									</tr>
+								</thead>
+								<tr ng-click="exibir(mdl)" data-ng-repeat="mdl in lista">
+									<td>{{ mdl.stNome }}</td>
+									<td>{{ mdl.qtdeUsuarios }}</td>
+									<td>{{ mdl.qtdePermissoes }}</td>
+								</tr>
+							</table>
+						</div>
+						<br />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+</div>

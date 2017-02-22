@@ -1,0 +1,15 @@
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog janelaConfirmacao">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="titulo">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{titulo}}</h4>
+            </div>
+            <div class="modal-body">{{mensagem}}</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="resposta(true)">Sim</button>
+                <button type="button" class="btn btn-default" ng-click="resposta(false)">Não</button>
+            </div>
+        </div>
+    </div>
+</div>

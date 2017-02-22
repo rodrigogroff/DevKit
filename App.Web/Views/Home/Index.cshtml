@@ -1,0 +1,217 @@
+﻿
+@{
+	// Build version
+	var assembly = System.Reflection.Assembly.GetAssembly(typeof(Application));
+	var version = assembly.GetName().Version.ToString(3);
+}
+
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<base href="/">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title ng-bind="title">Suporte CIT</title>
+
+	<meta name="description">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	@Styles.Render("~/bundles/css")
+	@Scripts.Render("~/bundles/scripts")
+
+	<style>
+
+		body {
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-size: 11px;
+			color: black;
+			background-color: #2e466d 20%;
+			background-image: radial-gradient(farthest-side ellipse at 10% 0, #ffffff 20%, #2e466d );
+			background-image: -webkit-radial-gradient(10% 0, farthest-side ellipse, #ffffff 20%, 2e466d);
+			background-image: -moz-radial-gradient(10% 0, farthest-side ellipse, #ffffff 20%, #2e466d);
+			background-attachment: fixed, fixed;
+		}
+		
+		.dropdown {
+			position: relative;
+			display: inline-block;
+			padding-top: 15px;
+			font-size: 14px;
+			color: black; /*#d0d1d3; */
+			padding-left: 20px;
+			padding-right: 30px;
+		}
+
+		.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
+			background-color: goldenrod;
+			color:black;
+		}
+
+		.table-hover
+		{
+			background: rgba(23,101,124,0.35); 
+			font-size:11px;
+			color: black;
+		}	
+		
+		.select 
+		{
+			color: black; 
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			color: black;
+			font-size: 14px;
+			min-width: 660px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			padding: 0px 0px;
+			z-index: 1;
+		}
+
+			.dropdown-content > table > tbody > tr > td > a:hover {
+				background-color: whitesmoke;
+				color: blue;
+			}
+
+			.dropdown-content > a {
+				background-color: black;
+			}
+
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+
+		::-webkit-input-placeholder {
+   color: red;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: red;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: red;  
+}
+
+:-ms-input-placeholder {  
+   color: red;  
+}
+			
+	</style>
+</head>
+<body class="background-white">
+		
+	<div class="header" ng-show="exibirMenu" ng-controller="MenuController">
+
+		<div class="logo" style="padding-top:-4px; padding-left:-60px ">
+			<img src='../../images/logo.png' height="112px" />
+		</div>
+
+		<div class="logo" style="padding-top:-4px; padding-left:160px ">
+			<img src='../../images/logoLetras.png' />
+		</div>
+
+		<header class="page-header">
+			<div class="navbar pull-right" style="height: 72px; padding-top:-4px;">
+				<div class="pull-right" style="color:white">
+					Bem-vindo, <b>{{authentication.nomeUsuario}}</b> &nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
+				</div>
+			</div>
+		</header>
+
+		<nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top: 60px">
+			<section class="widget" style="height:100%;">
+				<ul id="side-nav" class="side-nav" style="color:black">
+					<li class="panel active">
+						<a class="accordion-toggle " data-toggle="collapse"
+						   data-parent="#side-nav" href="#forms-collapse"><span class="name">Operacional</span></a>
+						<ul id="forms-collapse" class="panel-collapse collapse in">
+							<li><a ui-sref="usuarios"><span>Usuarios</span></a></li>
+							<li><a ui-sref="perfils"><span>Perfils</span></a></li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+		</nav>
+
+	</div>
+
+	<section class="section" style="padding-left:24px">
+		<div id="ui-view" class="container" ui-view>
+
+		</div>
+	</section>
+	
+	<script src="scripts/nv.d3.min.js"></script>
+	<script src="scripts/angular.treeview.min.js"></script>
+
+	@Scripts.Render("~/bundles/app")
+
+	<script>
+		$('#cssmenu').prepend('<div id="indicatorContainer"><div id="pIndicator"><div id="cIndicator"></div></div></div>');
+		var activeElement = $('#cssmenu>ul>li:first');
+
+		$('#cssmenu>ul>li').each(function () {
+			if ($(this).hasClass('active')) {
+				activeElement = $(this);
+			}
+		});
+
+		var posLeft = activeElement.position().left;
+		var elementWidth = activeElement.width();
+		posLeft = posLeft + elementWidth / 2 - 6;
+		if (activeElement.hasClass('has-sub')) {
+			posLeft -= 6;
+		}
+
+		$('#cssmenu #pIndicator').css('left', posLeft);
+		var element, leftPos, indicator = $('#cssmenu pIndicator');
+
+		$("#cssmenu>ul>li").hover(function () {
+			element = $(this);
+			var w = element.width();
+			if ($(this).hasClass('has-sub')) {
+				leftPos = element.position().left + w / 2 - 12;
+			}
+			else {
+				leftPos = element.position().left + w / 2 - 6;
+			}
+
+			$('#cssmenu #pIndicator').css('left', leftPos);
+		}
+        , function () {
+        	$('#cssmenu #pIndicator').css('left', posLeft);
+        });
+
+
+		$('#cssmenu>ul>.has-sub>ul').append('<div class="submenuArrow"></div>');
+		$('#cssmenu>ul').children('.has-sub').each(function () {
+			var posLeftArrow = $(this).width();
+			posLeftArrow /= 2;
+			posLeftArrow -= 12;
+			$(this).find('.submenuArrow').css('left', posLeftArrow);
+
+		});
+
+		$('#cssmenu>ul').prepend('<li id="menu-button"><a>Menu</a></li>');
+		$("#menu-button").click(function () {
+			if ($(this).parent().hasClass('open')) {
+				$(this).parent().removeClass('open');
+			}
+			else {
+				$(this).parent().addClass('open');
+			}
+		});
+
+	</script>
+
+	<script>
+		// Version constant
+		app.constant('version', '@version');
+	</script>
+
+</body>
+</html>

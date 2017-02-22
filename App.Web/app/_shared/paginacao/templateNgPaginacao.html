@@ -1,0 +1,52 @@
+﻿
+<div class="table-pagination">
+	<table style="color:white;font-size:11px">
+		<tr height="52px">
+			<td width="8px;" valign="middle"></td>	
+			<td>
+				Exibindo <b>{{itemInicial}}</b> a <b>{{itemFinal}}</b> de {{total}} itens
+			</td>
+			<td width="50px;" valign="middle"></td>	
+			<td  valign="middle">
+				Mostrar &nbsp;&nbsp;
+				<select id="itensporpagina" name="itensporpagina" ng-model="itensporpagina" style="color:black">
+					<option value="10">10</option>
+					<option selected value="15">15</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+					<option value="500">500</option>
+					<option value="1000">1000</option>
+					<option value="3000">3000</option>
+					<option value="5000">5000</option>
+					<option value="10000">10000</option>
+					<option value="30000">30000</option>
+				</select>
+				&nbsp;&nbsp;
+				itens
+
+			</td>	
+			<td width="50px;"  valign="middle"></td>	
+			<td  valign="middle">
+				<div class="datatable-table_paginate">
+					<ul class="pagination no-margin">
+						<li ng-class="prevPageDisabled()" ng-click="firstPage()">
+							<<
+						</li>
+						<li ng-class="prevPageDisabled()" ng-click="prevPage()">
+							<
+						</li>
+						<li ng-repeat="n in range()" ng-class="{'table-pagination__index-selecteditem': n == paginaAtual}" ng-click="setPage(n)" ng-show="total>n*itensporpagina">
+							{{n+1}}
+						</li>
+						<li ng-class="nextPageDisabled()" ng-click="nextPage()">
+							>
+						</li>
+						<li ng-class="nextPageDisabled()" ng-click="lastPage()">
+							>>
+						</li>
+					</ul>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>

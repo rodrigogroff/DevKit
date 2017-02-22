@@ -1,0 +1,158 @@
+﻿<div style="color:black; padding-top: 60px;">
+	<section class="widgetForm" style="height:100%;color: black; font-size:11px">
+		<div style="padding-left:20px; padding-top: 7px;">
+			<legend>
+				<table>
+					<tr>
+						<td><i style="color:white" class="fa fa-cogs"> </i> Cadastro de <b>usuário do sistema</b> &nbsp;<small>Operacional</small></td>
+						<td width="20px"></td>
+						<td></td>
+					</tr>
+				</table>
+			</legend>
+
+			<form name="formEntidade" role="form" class="form-horizontal" ng-disabled="!permModel.edicao" xt-form novalidate>
+				<div style="height:12px"></div>
+				<tabset class="tabs-left" style="min-height:300px">
+					<tab heading="Dados do usuário">
+						<table style="width:500px;" >
+							<tr height="40px">
+								<td ></td>
+								<td width="120px" >Login do usuário</td>
+								<td ></td>
+								<td >
+									<input type="text" focus="true" name="login" class="form-control input-transparent" ng-disabled="!permModel.edicao"
+											id="nome" placeholder="Login do usuário" ng-model="viewModel.stLogin"
+											ng-maxlength="100" xt-validate required>
+								</td>
+							</tr>
+							<tr height="40px">
+								<td></td>
+								<td>Perfil do usuário
+								</td>
+								<td ></td>
+								<td>
+									<input type="hidden" name="perfil" style="width:100%" ui-select2="selectPerfis" ng-disabled="!permModel.edicao"
+											ng-model="viewModel.fkPerfil" required />
+								</td>
+							</tr>
+							<tr height="40px">
+								<td></td>
+								<td>Ativo</td>
+								<td></td>
+								<td>
+									<input name="ativo" type="checkbox" ng-disabled="!permModel.edicao"
+											ng-model="viewModel.bAtivo" required />
+								</td>
+							</tr>
+						</table>
+					</tab>	
+						
+					<tab heading="Telefones" disabled="true" ng-if="viewModel.id == undefined"></tab>
+					<tab heading="Telefones ({{viewModel.qtdeTelefones}})" ng-if="viewModel.id != undefined">
+						<button class="btn btn-primary" ng-click="adicionarTelefone()" ng-if="addTelefone == false">Adicionar </button>
+						<div ng-if="addTelefone == true">
+							<table>
+								<tr height="52px">
+									<td width="150px">Novo telefone</td>
+									<td width="200px">
+										<input focus="true" name="telefone" class="form-control"
+												type="text" ng-maxlength="15" ng-minlength="5"
+												id="nome" placeholder="Telefone" ng-model="novoTelefone.stTelefone" required>
+									</td>
+								</tr>
+								<tr height="52px">
+									<td>Local</td>
+									<td>
+										<input name="local" class="form-control"
+												type="text"
+												id="nome" placeholder="Local" ng-model="novoTelefone.stLocal"
+												ng-maxlength="100">
+									</td>
+								</tr>
+							</table>
+							<br />
+							<button class="btn btn-success" ng-click="salvarNovoTelefone()">Salvar </button>
+						</div>
+
+						<br />
+						<br />
+						<div ng-show="viewModel.telefones.length > 0" style="overflow-y:scroll;height:220px">
+							<table class="table table-hover" ng-if="viewModel.telefones.length > 0">
+								<thead>
+									<tr>
+										<th>Telefone</th>
+										<th>Local</th>
+										<th class="colunaRemover">REMOVER</th>
+									</tr>
+								</thead>
+								<tr data-ng-repeat="tel in viewModel.telefones">
+									<td>{{ tel.stTelefone }}</td>
+									<td>{{ tel.stLocal }}</td>
+									<td class="colunaRemover">
+										<a href="" role="button" ng-click="removerTelefone($index, viewModel.telefones)">
+											<i class="glyphicon glyphicon-remove text-muted"></i>
+										</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</tab>
+
+					<tab heading="Emails" disabled="true" ng-if="viewModel.id == undefined"></tab>
+					<tab heading="Emails ({{viewModel.qtdeEmails}})" ng-if="viewModel.id != undefined">
+						<button class="btn btn-primary" ng-click="adicionarEmail()" ng-if="addEmail == false">Adicionar </button>
+						<div ng-if="addEmail == true">
+
+							<table>
+								<tr height="28px">
+									<td width="150px">Novo email</td>
+									<td width="200px">
+										<input focus="true" name="login" class="form-control"
+												type="email"
+												id="nome" placeholder="Email do usuário" ng-model="novoEmail.stEmail"
+												ng-maxlength="100" xt-validate required>
+									</td>
+								</tr>
+							</table>
+							<br />
+							<button class="btn btn-success" ng-click="salvarNovoEmail()">Salvar </button>
+						</div>
+
+						<br />
+						<br />
+						<div ng-show="viewModel.emails.length > 0" style="overflow-y:scroll;height:220px">
+							<table class="table table-hover" ng-if="viewModel.emails.length > 0">
+								<thead>
+									<tr>
+										<th>Email</th>
+										<th class="colunaRemover"></th>
+									</tr>
+								</thead>
+								<tr data-ng-repeat="tel in viewModel.emails">
+									<td>{{ tel.stEmail }}</td>
+									<td class="colunaRemover">
+										<a href="" role="button" ng-click="removerEmail($index, viewModel.emails)">
+											<i class="glyphicon glyphicon-remove text-muted"></i>
+										</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</tab>					
+				</tabset>
+			</form>
+		</div>
+		<br />
+		<table>
+			<tr>
+				<td width="34px"></td>
+				<td><button class="btn btn-default" ng-click="listar()">CANCELAR</button> </td>
+				<td width="34px"></td>
+				<td><button class="btn btn-success" ng-click="salvar()">SALVAR</button></td>
+			</tr>
+		</table>
+		<br />
+		<br />
+	</section>
+</div>

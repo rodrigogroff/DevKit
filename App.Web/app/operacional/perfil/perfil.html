@@ -1,118 +1,123 @@
-﻿<section class="widgetForm">
-	<br />
-	<legend>
-		<table style="color:white; width:100%">
-			<tr>
-				<td width="20px"></td>
-				<td><i class="fa fa-cogs"> </i> Operacional | <b>Cadastro de perfil</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-			</tr>
-			<tr height="12px"></tr>
-		</table>
-	</legend>
-	<div style="padding-left:25px;padding-top:7px;width:100%;height:400px;width:800px">
-		<form name="formEntidade" role="form" class="form-horizontal" ng-disabled="!permModel.edicao" xt-form novalidate>
-			<tabset class="tabs-left" style="min-height:300px">
-				<tab heading="Dados do perfil">
-					<table style="width:500px;color:white">
-						<tr height="40px" ng-show="viewModel.id > 0">
-							<td></td>
-							<td width="120px">Código do perfil</td>
-							<td></td>
-							<td>
-								<b>{{viewModel.id}}</b>
-							</td>
-						</tr>
-						<tr height="40px">
-							<td></td>
-							<td>Nome do perfil</td>
-							<td></td>
-							<td>
-								<input type="text" focus="true" name="nome" class="form-control input-transparent" ng-disabled="!permModel.edicao"
-									   id="nome" placeholder="Login do usuário" ng-model="viewModel.stNome"
-									   ng-maxlength="150" xt-validate required>
-							</td>
-						</tr>
-					</table>
-				</tab>
-
-				<tab heading="Usuários" disabled="true" ng-if="viewModel.id == undefined"></tab>
-				<tab heading="Usuários ({{viewModel.usuarios.length}})" ng-if="viewModel.id != undefined">
-					<div style="vertical-align:top">
-						Lista de usuários<br />
-						<br />
-						<table>
-							<tr>
-								<td>
-									<table class="table table-hover" ng-if="viewModel.usuarios.length > 0">
-										<thead>
-											<tr>
-												<th width="100px">Código</th>
-												<th width="250px">Login</th>
-											</tr>
-										</thead>
-										<tr ng-click="exibirUsuario(mdl)" data-ng-repeat="mdl in viewModel.usuarios">
-											<td>{{ mdl.id }}</td>
-											<td>{{ mdl.stLogin }}</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</tab>
-
-				<tab heading="Permissões" disabled="true" ng-if="viewModel.id == undefined"></tab>
-				<tab heading="Permissões ({{viewModel.qtdePermissoes}})" ng-if="viewModel.id != undefined">
-					<div style="overflow-y:scroll;height:300px">
-						<table style="vertical-align:top" width="550px">
-							<tr>
-								<td>
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												<th width="250px"><b>Operacional</b></th>
-												<th width="70px">Listagem</th>
-												<th width="70px">Visualizar</th>
-												<th width="70px">Editar</th>
-												<th width="70px">Criar</th>
-												<th width="70px">Remover</th>
-											</tr>
-										</thead>
-										<tr>
-											<td>Perfis de usuários</td>
-											<td><input name="tg1011" type="checkbox" ng-model="viewModel.tg1011" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1012" type="checkbox" ng-model="viewModel.tg1012" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1013" type="checkbox" ng-model="viewModel.tg1013" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1014" type="checkbox" ng-model="viewModel.tg1014" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1015" type="checkbox" ng-model="viewModel.tg1015" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<tr>
-											<td>Manutenção de usuários</td>
-											<td><input name="tg1021" type="checkbox" ng-model="viewModel.tg1021" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1022" type="checkbox" ng-model="viewModel.tg1022" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1023" type="checkbox" ng-model="viewModel.tg1023" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1024" type="checkbox" ng-model="viewModel.tg1024" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1025" type="checkbox" ng-model="viewModel.tg1025" ng-disabled="!permModel.edicao"></td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</tab>
-
-			</tabset>
-
-			<br />
-			<table>
+﻿<div class="webFormPostion">
+	<section class="widgetForm">
+		<table><tr height="12px"><td> </td></tr></table>
+		<legend>
+			<table style="color:white; width:100%">
 				<tr>
-					<td><button class="btn btn-default" ng-click="listar()">CANCELAR</button> </td>
-					<td width="34px"></td>
-					<td><button class="btn btn-success" ng-click="salvar()">SALVAR</button></td>
+					<td width="20px"></td>
+					<td><i class="fa fa-cogs"> </i> <b>Perfil de usuários</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td width="80px"></td>
+					<td><input type="submit" class="btn btn-success btn-xs pull-right" ng-click="adicionar()" value="Novo"></td>
+					<td width="20px"></td>
 				</tr>
+				<tr height="12px"></tr>
 			</table>
-			<br />
-			<br />
-		</form>
-	</div>
-</section>
+		</legend>
+		<div style="padding-left:25px;padding-top:7px;width:100%;min-height:320px;height:100%;width:800px">
+			<form name="formEntidade" role="form" class="form-horizontal" ng-disabled="!permModel.edicao" xt-form novalidate>
+				<tabset class="tabs-left" style="min-height:320px;font-size:13px">
+					<tab heading="Dados do perfil">
+						<table style="width:500px;color:white">
+							<tr height="40px" ng-show="viewModel.id > 0">
+								<td></td>
+								<td width="120px">Código do perfil</td>
+								<td></td>
+								<td>
+									<b>{{viewModel.id}}</b>
+								</td>
+							</tr>
+							<tr height="40px">
+								<td></td>
+								<td>Nome do perfil</td>
+								<td></td>
+								<td>
+									<input type="text" focus="true" name="nome" class="form-control input-transparent" ng-disabled="!permModel.edicao"
+										   id="nome" placeholder="Login do usuário" ng-model="viewModel.stNome"
+										   ng-maxlength="150" xt-validate required>
+								</td>
+							</tr>
+						</table>
+					</tab>
+
+					<tab heading="Usuários" disabled="true" ng-if="viewModel.id == undefined"></tab>
+					<tab heading="Usuários ({{viewModel.usuarios.length}})" ng-if="viewModel.id != undefined">
+						<div style="vertical-align:top">
+							Lista de usuários<br />
+							<br />
+							<table>
+								<tr>
+									<td>
+										<table class="table table-hover" ng-if="viewModel.usuarios.length > 0">
+											<thead>
+												<tr>
+													<th width="100px">Código</th>
+													<th width="250px">Login</th>
+												</tr>
+											</thead>
+											<tr ng-click="exibirUsuario(mdl)" data-ng-repeat="mdl in viewModel.usuarios">
+												<td>{{ mdl.id }}</td>
+												<td>{{ mdl.stLogin }}</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</tab>
+
+					<tab heading="Permissões" disabled="true" ng-if="viewModel.id == undefined"></tab>
+					<tab heading="Permissões ({{viewModel.qtdePermissoes}})" ng-if="viewModel.id != undefined">
+						<div style="overflow-y:scroll;height:300px">
+							<table style="vertical-align:top" width="550px">
+								<tr>
+									<td>
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th width="250px"><b>Operacional</b></th>
+													<th width="70px">Listagem</th>
+													<th width="70px">Visualizar</th>
+													<th width="70px">Editar</th>
+													<th width="70px">Criar</th>
+													<th width="70px">Remover</th>
+												</tr>
+											</thead>
+											<tr>
+												<td>Perfis de usuários</td>
+												<td><input name="tg1011" type="checkbox" ng-model="viewModel.tg1011" ng-disabled="!permModel.edicao"></td>
+												<td><input name="tg1012" type="checkbox" ng-model="viewModel.tg1012" ng-disabled="!permModel.edicao"></td>
+												<td><input name="tg1013" type="checkbox" ng-model="viewModel.tg1013" ng-disabled="!permModel.edicao"></td>
+												<td><input name="tg1014" type="checkbox" ng-model="viewModel.tg1014" ng-disabled="!permModel.edicao"></td>
+												<td><input name="tg1015" type="checkbox" ng-model="viewModel.tg1015" ng-disabled="!permModel.edicao"></td>
+											</tr>
+											<tr>
+												<td>Manutenção de usuários</td>
+												<td><input name="tg1021" type="checkbox" ng-model="viewModel.tg1021" ng-disabled="!permModel.edicao"></td>
+												<td><input name="tg1022" type="checkbox" ng-model="viewModel.tg1022" ng-disabled="!permModel.edicao"></td>
+												<td><input name="tg1023" type="checkbox" ng-model="viewModel.tg1023" ng-disabled="!permModel.edicao"></td>
+												<td><input name="tg1024" type="checkbox" ng-model="viewModel.tg1024" ng-disabled="!permModel.edicao"></td>
+												<td><input name="tg1025" type="checkbox" ng-model="viewModel.tg1025" ng-disabled="!permModel.edicao"></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</tab>
+
+				</tabset>
+
+				<br />
+				<table>
+					<tr>
+						<td><button class="btn btn-default" ng-click="listar()">CANCELAR</button> </td>
+						<td width="34px"></td>
+						<td><button class="btn btn-success" ng-click="salvar()">SALVAR</button></td>
+					</tr>
+				</table>
+				<br />
+				<br />
+			</form>
+		</div>
+	</section>
+</div>

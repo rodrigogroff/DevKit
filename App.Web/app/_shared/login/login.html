@@ -25,60 +25,62 @@
 
 </head>
 
-<body class="background-white">
-	<div align="center" style="height:500px;background-image:url(../../../images/login_box.png); background-repeat: no-repeat; background-position: top">
-		<form id="validate" style="width: 300px; margin-left:24px;">
-			<fieldset>
-				<br /><br />
+<body class="background-white" >
+	<div style="padding-top:150px;">
+		<div align="center" style="height:500px;background-image:url(../../../images/login_box.png); background-repeat: no-repeat; background-position: top">
+			<form id="validate" style="width: 300px; margin-left:24px;">
+				<fieldset>
+					<br /><br />
+					<br />
+					<img src='../../images/openIcs.png' /><br />
+					<table>
+						<tr height="24px"></tr>
+						<tr height="48px">
+							<td width="60px">
+								<p for="email" style="color: black">Login</p>
+							</td>
+							<td width="240px">
+								<div class="input-group input-group-lg">
+									<span class="input-group-addon"><i class="fa fa-user"></i></span>
+									<input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
+										   class="form-control" name="username" ng-model="loginData.userName" value="" placeholder="Usuário" autofocus>
+								</div>
+							</td>
+						</tr>
+						<tr height="48px">
+							<td>
+								<p for="email" style="color: black">Senha</p>
+							</td>
+							<td>
+								<div class="input-group input-group-lg">
+									<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+									<input id="login-password" style="font-size: 12px; border: 1px solid #ccc;" type="password"
+										   class="form-control" name="password" ng-model="loginData.password" placeholder="Senha">
+								</div>
+							</td>
+						</tr>
+
+						<tr height="24px"></tr>
+
+						<tr height="48px">
+							<td colspan="2" align="center">
+								<button type="submit" id="btn-login" class="btn btn-block btn-lg btn-primary" ng-click="login()">Autorizar <i class="fa fa-spinner fa-spin" ng-show="loading"></i></button>
+							</td>
+						</tr>
+
+						<tr height="48px">
+							<td colspan="2">
+								<div align="center">
+									<span style="float:left;color:#ff0000;">{{mensagem}}</span>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
 				<br />
-				<img src='../../images/openIcs.png' /><br />
-				<table>
-					<tr height="24px"></tr>
-					<tr height="48px">
-						<td width="60px">
-							<p for="email" style="color: black">Login</p>
-						</td>
-						<td width="240px">
-							<div class="input-group input-group-lg">
-								<span class="input-group-addon"><i class="fa fa-user"></i></span>
-								<input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
-									   class="form-control" name="username" ng-model="loginData.userName" value="" placeholder="Usuário" autofocus>
-							</div>
-						</td>
-					</tr>
-					<tr height="48px">
-						<td>
-							<p for="email" style="color: black">Senha</p>
-						</td>
-						<td>
-							<div class="input-group input-group-lg">
-								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input id="login-password" style="font-size: 12px; border: 1px solid #ccc;" type="password"
-									   class="form-control" name="password" ng-model="loginData.password" placeholder="Senha">
-							</div>
-						</td>
-					</tr>
-					
-					<tr height="24px"></tr>
-
-					<tr height="48px">
-						<td colspan="2" align="center">
-							<button type="submit" id="btn-login" class="btn btn-block btn-lg btn-primary" ng-click="login()">Autorizar</button>
-						</td>
-					</tr>
-
-					<tr height="48px">
-						<td colspan="2" >
-							<div align="center">
-								<span style="float:left;color:#ff0000;">{{mensagem}}</span>
-							</div>							
-						</td>
-					</tr>
-				</table>
-			</fieldset>
-			<br />
 			</form>
-		<footer></footer>
-	</div>		
+			<footer></footer>
+		</div>
+	</div>
 </body>
 </html>

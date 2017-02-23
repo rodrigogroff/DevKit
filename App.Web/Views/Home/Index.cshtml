@@ -21,12 +21,15 @@
 
 	<style>
 
-		.table {
+		.webFormPostion {
+			padding-left:195px;
+			padding-top:5px;
+			width:1250px;
 		}
 
 		body {
 			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-			font-size: 11px;
+			font-size:13px;
 			color: black;
 			background-color: #2e466d 20%;
 			background-image: radial-gradient(farthest-side ellipse at 10% 0, #ffffff 20%, #2e466d );
@@ -45,6 +48,11 @@
 			padding-right: 30px;
 		}
 
+		.table-hover > thead  {
+			background-color: rgba(23,101,124,1); ;
+			color:black;
+		}
+
 		.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
 			background-color: goldenrod;
 			color:black;
@@ -53,7 +61,7 @@
 		.table-hover
 		{
 			background: rgba(23,101,124,0.35); 
-			font-size:11px;
+			font-size:13px;
 			color: black;
 		}	
 		
@@ -104,7 +112,7 @@
 			
 	</style>
 </head>
-<body class="background-white">
+<body class="background">
 		
 	<div class="header" ng-show="exibirMenu" ng-controller="MenuController">
 
@@ -112,7 +120,7 @@
 			<img src='../../images/logo.png' height="112px" />
 		</div>
 
-		<div class="logo" style="padding-top:-4px; padding-left:160px ">
+		<div class="logo" style="padding-top:8px; padding-left:160px ">
 			<img src='../../images/logoLetras.png' />
 		</div>
 
@@ -142,7 +150,13 @@
 
 	</div>
 		
-	<div id="ui-view" class="container" style="position:absolute;padding-left:210px;padding-top:75px;" ui-view ></div>
+	<table align="left" style="width:100%">
+		<tr>
+			<td>
+				<div id="ui-view" style="width:100%" class="container" ui-view></div>
+			</td>
+		</tr>
+	</table>
 	
 	<script src="scripts/nv.d3.min.js"></script>
 	<script src="scripts/angular.treeview.min.js"></script>

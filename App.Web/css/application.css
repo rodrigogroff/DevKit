@@ -21080,6 +21080,7 @@ html {
 }
 
 body {
+  font-size:12px;
   font-weight: 400;
   padding-bottom: 100px;
   background-color: #2b6e80 20%;
@@ -22564,11 +22565,9 @@ a.text-gray-lighter:focus {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-/*  padding: 12px 17px;*/
   color: white;
-    background: rgba(15, 43, 89, 0.4	);
+  background: rgba(15, 43, 89, 0.4	);
   margin-bottom: 30px;
-  position: relative;
 }
 
 .widgetForm.normal {

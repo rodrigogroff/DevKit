@@ -543,7 +543,6 @@
     <Content Include="css\angular-motion.min.css" />
     <Content Include="css\angular-ui-tree.min.css" />
     <Content Include="css\angular.treeview.css" />
-    <Content Include="css\application-min.css" />
     <Content Include="css\application.css" />
     <Content Include="css\blueimp-gallery.min.css" />
     <Content Include="css\bootstrap-additions.min.css" />

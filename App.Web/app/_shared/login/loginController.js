@@ -4,7 +4,8 @@ angular.module('app.controllers').controller('LoginController',
 function ($scope, $rootScope, $location, AuthService, version)
 {
 	$scope.version = version;
-    $rootScope.exibirMenu = false;
+	$rootScope.exibirMenu = false;
+	$scope.loading = false;
 
     $scope.loginData = {
         userName: "",
@@ -15,14 +16,17 @@ function ($scope, $rootScope, $location, AuthService, version)
 
     $scope.login = function () {
 
-        AuthService.login($scope.loginData).then(function (response) {
-            $rootScope.exibirMenu = true;
-            $location.path('/');
+    	$scope.loading = true;
 
+        AuthService.login($scope.loginData).then(function (response) {
+
+        	$scope.loading = false;
+        	$rootScope.exibirMenu = true;
+            $location.path('/');
         },
-         function (err) {
+		function (err) {
+         	 $scope.loading = false;
              $scope.mensagem = err.error_description;
          });
     };
-
 }]);

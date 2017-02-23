@@ -1,56 +1,59 @@
-﻿<section class="widgetForm">
-	<br />
-	<legend>
-		<table style="color:white; width:100%">
-			<tr>
-				<td width="20px"></td>
-				<td><i class="fa fa-list"> </i> <b>Listagem de usuários</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-				<td width="80px"></td>
-				<td><input type="submit" class="btn btn-success btn-xs pull-right" ng-click="adicionar()" value="Novo"></td>
-				<td width="20px"></td>
-			</tr>
-			<tr height="12px"></tr>
-		</table>
-	</legend>
-	<div style="padding-left:25px;padding-top:7px;width:100%;height:400px;width:800px">
-		<table>
-			<tr>
-				<td valign="top">
-					<ng-filtro tipo="perfil" campos="campos" template-avancado="app/operacional/usuario/_filtroUsuario.html"
-							   funcao-pesquisar="pesquisar" placeholder="Pesquisar por nome ou código"></ng-filtro>
-				</td>
-			</tr>
-			<tr>
-				<td valign="top">
-					<div ng-show="lista.length == 0">
-						<br />
-						<div class="btn btn-warning btn-lg btn-block">Nenhum registro encontrado.</div>
-					</div>
-					<div ng-show="lista.length > 0">
-						<ng-paginacao carregar="carregar" lista="lista" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th width="150px">Login</th>
-									<th width="150px">Perfil</th>
-									<th width="150px">Telefones</th>
-									<th width="150px">Emails</th>
-									<th width="150px">Ultimo Login</th>
+﻿<div class="webFormPostion">
+	<section class="widgetForm">
+		<table><tr height="12px"><td> </td></tr></table>
+		<legend>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td><i class="fa fa-list"> </i> <b>Listagem de usuários</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td width="80px"></td>
+					<td><input type="submit" class="btn btn-success btn-xs pull-right" ng-click="adicionar()" value="Novo"></td>
+					<td width="20px"></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+		<div style="padding-left:25px;padding-top:7px;width:100%;min-height:500px;height:100%;width:800px">
+			<table>
+				<tr>
+					<td valign="top">
+						<ng-filtro tipo="perfil" campos="campos" template-avancado="app/operacional/usuario/_filtroUsuario.html"
+								   funcao-pesquisar="pesquisar" placeholder="Pesquisar por nome ou código"></ng-filtro>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<div ng-show="lista.length == 0">
+							<br />
+							<div class="btn btn-warning btn-lg btn-block">Nenhum registro encontrado.</div>
+						</div>
+						<div ng-show="lista.length > 0">
+							<br />
+							<ng-paginacao carregar="carregar" lista="lista" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+							<br />
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th width="150px">Login</th>
+										<th width="150px">Perfil</th>
+										<th width="150px">Telefones</th>
+										<th width="150px">Emails</th>
+										<th width="150px">Ultimo Login</th>
+									</tr>
+								</thead>
+								<tr ng-click="exibir(mdl)" data-ng-repeat="mdl in lista">
+									<td>{{ mdl.stLogin }}</td>
+									<td>{{ mdl.perfil.stNome }}</td>
+									<td><div data-ng-repeat="m in mdl.telefones">{{ m.stTelefone }}</div></td>
+									<td><div data-ng-repeat="m in mdl.emails">{{ m.stEmail }}</div></td>
+									<td>{{ mdl.dtUltimoLogin | date:'dd/MM/yyyy HH:mm'}}</td>
 								</tr>
-							</thead>
-							<tr ng-click="exibir(mdl)" data-ng-repeat="mdl in lista">
-								<td>{{ mdl.stLogin }}</td>
-								<td>{{ mdl.perfil.stNome }}</td>
-								<td><div data-ng-repeat="m in mdl.telefones">{{ m.stTelefone }}</div></td>
-								<td><div data-ng-repeat="m in mdl.emails">{{ m.stEmail }}</div></td>
-								<td>{{ mdl.dtUltimoLogin | date:'dd/MM/yyyy HH:mm'}}</td>
-							</tr>
-						</table>
-					</div>
-					<br />
-				</td>
-			</tr>
-		</table>
-	</div>
-</section>
-	
+							</table>
+						</div>
+						<br />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+</div>

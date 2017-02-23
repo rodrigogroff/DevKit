@@ -6,6 +6,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using LinqToDB;
 using DataModel;
+using System.Threading;
 
 namespace App.Web
 {
@@ -19,6 +20,8 @@ namespace App.Web
 
 		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
+			Thread.Sleep(500);
+
 			using (var db = new SuporteCITDB())
 			{
 				var usuario = (from element in db.Usuarios

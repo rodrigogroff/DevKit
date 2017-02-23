@@ -1,14 +1,11 @@
 ﻿<div class="webFormPostion">
 	<section class="widgetForm">
 		<table><tr height="12px"><td> </td></tr></table>
-		<legend>
+		<legend style="background: rgba(15, 43, 89, 0.1	);">
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td><i class="fa fa-cogs"> </i> <b>Cadastro de usuário</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-					<td width="80px"></td>
-					<td><input type="submit" class="btn btn-success btn-xs pull-right" ng-click="adicionar()" value="Novo"></td>
-					<td width="20px"></td>
+					<td><i class="fa fa-cogs"> </i> Operacional | <b>Cadastro de usuário</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
 				</tr>
 				<tr height="12px"></tr>
 			</table>
@@ -16,7 +13,7 @@
 		<div style="padding-left:25px;padding-top:7px;width:100%;min-height:320px;height:100%;width:800px">
 			<form name="formEntidade" role="form" class="form-horizontal" ng-disabled="!permModel.edicao" xt-form novalidate>
 				<tabset class="tabs-left" style="min-height:320px;font-size:13px">
-					<tab heading="Dados do usuário">
+					<tab heading="Definição">
 						<table style="width:500px;">
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
@@ -61,9 +58,11 @@
 
 					<tab heading="Telefones" disabled="true" ng-if="viewModel.id == undefined"></tab>
 					<tab heading="Telefones ({{viewModel.qtdeTelefones}})" ng-if="viewModel.id != undefined">
-						<button class="btn btn-default" ng-click="adicionarTelefone()">Adicionar </button>
+						<legend style="color:white">
+							Lista de telefones
+							<button class="btn btn-info btn-xs pull-right" ng-click="adicionarTelefone()"><i class="fa fa-plus"> </i>  Adicionar </button>
+						</legend>
 						<div ng-if="addTelefone == true">
-							<br />
 							<table>
 								<tr>
 									<td>
@@ -84,23 +83,21 @@
 											</tr>
 										</table>
 									</td>
-									<td width="20px"></td>
-									<td valign="top" style="padding-top:4px">
-										<button class="btn btn-primary" ng-click="salvarNovoTelefone()">Salvar </button>
-									</td>
 								</tr>
 							</table>
+							<br />
+							<button class="btn btn-primary" ng-click="salvarNovoTelefone()">Salvar </button>
+							<br />
+							<br />
 						</div>
-						<div ng-show="viewModel.telefones.length > 0" style="overflow-y:scroll;height:220px">
+						<div ng-show="viewModel.telefones.length > 0">
 							<br />
-							<h3>Lista de telefones</h3>
-							<br />
-							<table class="table table-hover" ng-if="viewModel.telefones.length > 0" style="width:450px">
+							<table class="table table-hover" ng-if="viewModel.telefones.length > 0" style="width:100%">
 								<thead>
 									<tr>
 										<th>Telefone</th>
 										<th>Local</th>
-										<th width="20px" class="colunaRemover">REMOVER</th>
+										<th width="70px" class="colunaRemover">REMOVER</th>
 									</tr>
 								</thead>
 								<tr data-ng-repeat="tel in viewModel.telefones">
@@ -118,7 +115,10 @@
 
 					<tab heading="Emails" disabled="true" ng-if="viewModel.id == undefined"></tab>
 					<tab heading="Emails ({{viewModel.qtdeEmails}})" ng-if="viewModel.id != undefined">
-						<button class="btn btn-primary" ng-click="adicionarEmail()" ng-if="addEmail == false">Adicionar </button>
+						<legend style="color:white">
+							Lista de emails
+							<button class="btn btn-info btn-xs pull-right" ng-click="adicionarEmail()"><i class="fa fa-plus"> </i>  Adicionar </button>
+						</legend>
 						<div ng-if="addEmail == true">
 							<table>
 								<tr height="28px">
@@ -132,23 +132,24 @@
 								</tr>
 							</table>
 							<br />
-							<button class="btn btn-success" ng-click="salvarNovoEmail()">Salvar </button>
+							<button class="btn btn-primary" ng-click="salvarNovoEmail()">Salvar </button>
+							<br />
+							<br />
 						</div>
-						<br />
-						<br />
-						<div ng-show="viewModel.emails.length > 0" style="overflow-y:scroll;height:220px">
-							<table class="table table-hover" ng-if="viewModel.emails.length > 0">
+						<div ng-show="viewModel.emails.length > 0">
+							<br />
+							<table class="table table-hover" ng-if="viewModel.emails.length > 0" style="width:100%">
 								<thead>
 									<tr>
 										<th>Email</th>
-										<th class="colunaRemover"></th>
+										<th width="70px" class="colunaRemover">REMOVER</th>
 									</tr>
 								</thead>
 								<tr data-ng-repeat="tel in viewModel.emails">
 									<td>{{ tel.stEmail }}</td>
 									<td class="colunaRemover">
 										<a href="" role="button" ng-click="removerEmail($index, viewModel.emails)">
-											<i class="glyphicon glyphicon-remove"></i>
+											<i class="glyphicon glyphicon-remove" style="color:white"></i>
 										</a>
 									</td>
 								</tr>
@@ -171,3 +172,4 @@
 		<br />
 		<br />
 	</section>
+</div>

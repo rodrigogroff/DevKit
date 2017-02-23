@@ -2705,9 +2705,9 @@ th {
 }
 
 .table {
-  width: 100%;
+/*  width: 100%;
   max-width: 100%;
-  margin-bottom: 18px;
+  margin-bottom: 18px;*/
 }
 
 .table > thead > tr > th,
@@ -3004,7 +3004,6 @@ input[type="search"] {
 
 input[type="radio"],
 input[type="checkbox"] {
-  margin: 12px 0 0;
   margin-top: 1px \9;
   line-height: normal;
 }
@@ -22561,18 +22560,13 @@ a.text-gray-lighter:focus {
 /**          WIDGET FORM              **/
 /**********************************/
 .widgetForm {
-
-	height:100%;
-	width:800px; 
-/*	margin-left:130px; */
-	
   border-radius: 3px;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  padding: 12px 17px;
+/*  padding: 12px 17px;*/
   color: white;
-    background: rgba(15, 43, 89, 0.3	);
+    background: rgba(15, 43, 89, 0.4	);
   margin-bottom: 30px;
   position: relative;
 }

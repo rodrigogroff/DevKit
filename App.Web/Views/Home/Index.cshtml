@@ -21,6 +21,9 @@
 
 	<style>
 
+		.table {
+		}
+
 		body {
 			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 			font-size: 11px;
@@ -138,12 +141,8 @@
 		</nav>
 
 	</div>
-
-	<section class="section" style="padding-left:24px">
-		<div id="ui-view" class="container" ui-view>
-
-		</div>
-	</section>
+		
+	<div id="ui-view" class="container" style="position:absolute;padding-left:210px;padding-top:75px" ui-view ></div>
 	
 	<script src="scripts/nv.d3.min.js"></script>
 	<script src="scripts/angular.treeview.min.js"></script>

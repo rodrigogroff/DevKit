@@ -143,6 +143,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		});
 
 		$scope.novoTelefone = { StTelefone: '', StLocal: '' };
+		//	toastr.error('Falha', 'Campos');
 	}
 
 }]);

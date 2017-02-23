@@ -11,11 +11,23 @@ namespace GetStarted
 		{
 			using (var db = new DataModel.SuporteCITDB())
 			{
-				var x = db.Perfils.Find(1);
+				{
+					var x = new Perfil();
 
-				x.StPermissoes = "|1012|";
+					x.StPermissoes = "|1011||1012||1013||1014||1015||1021||1022||1023||1024||1025|";
 
-				db.Update(x);
+					db.Insert(x);
+				}
+
+				{
+					var y = new Usuario();
+
+					y.StLogin = "DBA";
+					y.StPassword = "DBA";
+					y.FkPerfil = 1;
+
+					db.Insert(y);
+				}
 			}
 		}
 	}

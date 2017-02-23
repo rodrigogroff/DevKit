@@ -3,6 +3,7 @@
 function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
 	$scope.permModel = {};
+	$scope.loading = false;
 
 	function ObterPermissoes() { Api.Permissao.obter({ id: 102 }, function (data) { $scope.permModel = data; }, function (response) { }); }
 
@@ -26,6 +27,8 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	
 	$scope.carregar = function (skip, take)
 	{
+		$scope.loading = true;
+
 		var opcoes = { ativo: 'true', skip: skip, take: take };
 		var filtro = ngHistoricoFiltro.filtro.filtroGerado;
 		if (filtro)
@@ -34,6 +37,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 		Api.Usuario.listarPaginado(opcoes, function (data) {
 			$scope.lista = data.results;
 			$scope.total = data.count;
+			$scope.loading = false;
 		});
 	}
 

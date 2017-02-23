@@ -5,6 +5,7 @@ angular.module('app.controllers').controller('PerfilController',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
 	$scope.permModel = {};
+	$scope.loading = false;
 
 	function ObterPermissoes() { Api.Permissao.obter({ id: 101 }, function (data) { $scope.permModel = data; }, function (response) { }); }
 
@@ -23,6 +24,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function init()
 	{
+		$scope.loading = true;
+
 		ObterPermissoes();
 
 		if (id > 0) {
@@ -43,6 +46,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (data.stPermissoes.indexOf('|1025|') >= 0) data.tg1025 = true; else data.tg1025 = false;
 				
 				$scope.viewModel = data;
+
+				$scope.loading = false;
 
 			}, function (response) {
 				if (response.status === 404) { toastr.error('Perfil inexistente', 'Erro'); }

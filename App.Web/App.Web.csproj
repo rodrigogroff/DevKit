@@ -540,7 +540,6 @@
     <Content Include="Backload\Imaging\readme.txt" />
     <Content Include="Backload\License.txt" />
     <Content Include="Backload\Release.txt" />
-    <Content Include="css\ajustes.css" />
     <Content Include="css\angular-motion.min.css" />
     <Content Include="css\angular-ui-tree.min.css" />
     <Content Include="css\angular.treeview.css" />
@@ -560,15 +559,13 @@
     <Content Include="css\fonts\Bold\OpenSans-Bold.svg" />
     <Content Include="css\fonts\ExtraBoldItalic\OpenSans-ExtraBoldItalic.svg" />
     <Content Include="css\fonts\ExtraBold\OpenSans-ExtraBold.svg" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="css\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="css\fonts\Italic\OpenSans-Italic.svg" />
     <Content Include="css\fonts\LightItalic\OpenSans-LightItalic.svg" />
     <Content Include="css\fonts\Light\OpenSans-Light.svg" />
     <Content Include="css\fonts\Regular\OpenSans-Regular.svg" />
     <Content Include="css\fonts\SemiboldItalic\OpenSans-SemiboldItalic.svg" />
     <Content Include="css\fonts\Semibold\OpenSans-Semibold.svg" />
-    <Content Include="css\jasmine\jasmine.css" />
-    <Content Include="css\jasmine\jasmine_favicon.png" />
     <Content Include="css\jquery.fileupload-ui.css" />
     <Content Include="css\jquery.fileupload.css" />
     <Content Include="css\loading-bar.min.css" />
@@ -1033,9 +1030,9 @@
     <Content Include="css\fonts\ExtraBold\OpenSans-ExtraBold.eot" />
     <Content Include="css\fonts\ExtraBold\OpenSans-ExtraBold.ttf" />
     <Content Include="css\fonts\ExtraBold\OpenSans-ExtraBold.woff" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="css\fonts\bootstrap\glyphicons-halflings-regular.eot" />
+    <Content Include="css\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
+    <Content Include="css\fonts\bootstrap\glyphicons-halflings-regular.woff" />
     <Content Include="css\fonts\Italic\OpenSans-Italic.eot" />
     <Content Include="css\fonts\Italic\OpenSans-Italic.ttf" />
     <Content Include="css\fonts\Italic\OpenSans-Italic.woff" />

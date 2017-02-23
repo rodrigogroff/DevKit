@@ -5,6 +5,7 @@ angular.module('app.controllers').controller('UsuarioController',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
 	$scope.permModel = {};
+	$scope.loading = false;
 
 	function ObterPermissoes() { Api.Permissao.obter({ id: 102 }, function (data) { $scope.permModel = data; }, function (response) { }); }
 
@@ -16,6 +17,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function init()
 	{
+		$scope.loading = true;
+
 		ObterPermissoes();
 
 		$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Perfil, { tamanhoPagina: 15, campoNome: 'stNome' });
@@ -23,6 +26,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (id > 0) {
 			Api.Usuario.obter({ id: id }, function (data) {
 				$scope.viewModel = data;
+				$scope.loading = false;
 			}, function (response) {
 				if (response.status === 404) { toastr.error('Cadastro inexistente', 'Erro'); }
 				$scope.listar();

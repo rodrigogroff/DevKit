@@ -103,6 +103,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		$scope.addEmail = false;
 		$scope.novoEmail.FkUsuario = id;
+		$scope.novoEmail.dtCriacao = new Date();
+
 		$scope.viewModel.emails.push($scope.novoEmail);
 
 		Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data) {

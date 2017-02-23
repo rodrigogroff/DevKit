@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace DataModel
 {
@@ -25,11 +26,11 @@ namespace DataModel
 		public Perfil LoadPerfil(SuporteCITDB db) { return (from e in db.Perfils where e.Id == FkPerfil select e).FirstOrDefault(); }
 
 		public List<UsuarioTelefone> Telefones = new List<UsuarioTelefone>();
-		public List<UsuarioTelefone> LoadTelefones(SuporteCITDB db) { return (from e in db.UsuarioTelefones where e.FkUsuario == Id select e).ToList(); }
+		public List<UsuarioTelefone> LoadTelefones(SuporteCITDB db) { return (from e in db.UsuarioTelefones where e.FkUsuario == Id select e).OrderBy ( t=> t.StTelefone).ToList(); }
 		public int CountTelefones(SuporteCITDB db) { return (from e in db.UsuarioTelefones where e.FkUsuario == Id select e).Count(); }
 
 		public List<UsuarioEmail> Emails = new List<UsuarioEmail>();
-		public List<UsuarioEmail> LoadEmails(SuporteCITDB db) { return (from e in db.UsuarioEmails where e.FkUsuario == Id select e).ToList(); }
+		public List<UsuarioEmail> LoadEmails(SuporteCITDB db) { return (from e in db.UsuarioEmails where e.FkUsuario == Id select e).OrderByDescending(t=>t.DtCriacao).ToList(); }
 		public int CountEmails(SuporteCITDB db) { return (from e in db.UsuarioEmails where e.FkUsuario == Id select e).Count(); }
 
 		public Usuario Load(SuporteCITDB db, UsuarioLoadParams _load = null)

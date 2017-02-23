@@ -11,8 +11,8 @@ namespace App.Web.Controllers
 	public class TabelaPermissao
 	{
 		public bool listagem = false,
-					visualizar = false, 
-					edicao = false, 
+					visualizar = false,
+					editar = false, 
 					novo = false, 
 					remover = false;
 	}
@@ -34,7 +34,7 @@ namespace App.Web.Controllers
 
 				tblPerm.listagem = perf.StPermissoes.Contains("|" + id + "1|");
 				tblPerm.visualizar = perf.StPermissoes.Contains("|" + id + "2|");
-				tblPerm.edicao = perf.StPermissoes.Contains("|" + id + "3|");
+				tblPerm.editar = perf.StPermissoes.Contains("|" + id + "3|");
 				tblPerm.novo = perf.StPermissoes.Contains("|" + id + "4|");
 				tblPerm.remover = perf.StPermissoes.Contains("|" + id + "5|");
 

@@ -57,9 +57,10 @@ namespace DataModel
 	[Table(Schema="public", Name="UsuarioEmail")]
 	public partial class UsuarioEmail
 	{
-		[PrimaryKey, Identity] public long   Id        { get; set; } // bigint
-		[Column,     Nullable] public string StEmail   { get; set; } // character varying(250)
-		[Column,     Nullable] public long?  FkUsuario { get; set; } // bigint
+		[PrimaryKey, Identity] public long      Id        { get; set; } // bigint
+		[Column,     Nullable] public string    StEmail   { get; set; } // character varying(250)
+		[Column,     Nullable] public long?     FkUsuario { get; set; } // bigint
+		[Column,     Nullable] public DateTime? DtCriacao { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="UsuarioTelefone")]

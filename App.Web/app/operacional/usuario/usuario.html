@@ -1,7 +1,7 @@
 ﻿<div class="webFormPostion">
 	<section class="widgetForm">
-		<table><tr height="12px"><td> </td></tr></table>
 		<legend style="background: rgba(15, 43, 89, 0.1	);">
+			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
@@ -142,11 +142,13 @@
 								<thead>
 									<tr>
 										<th>Email</th>
+										<th>Data</th>
 										<th width="70px" class="colunaRemover">REMOVER</th>
 									</tr>
 								</thead>
-								<tr data-ng-repeat="tel in viewModel.emails">
-									<td>{{ tel.stEmail }}</td>
+								<tr data-ng-repeat="email in viewModel.emails | orderBy:-dtCriacao">
+									<td>{{ email.stEmail }}</td>
+									<td>{{ email.dtCriacao | date:'dd/MM/yyyy HH:mm'}}</td>
 									<td class="colunaRemover">
 										<a href="" role="button" ng-click="removerEmail($index, viewModel.emails)">
 											<i class="glyphicon glyphicon-remove" style="color:white"></i>

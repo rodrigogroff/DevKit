@@ -113,3 +113,7 @@ ALTER TABLE ONLY "UsuarioTelefone"
 
 ALTER TABLE ONLY "UsuarioEmail"
     ADD CONSTRAINT "fkUsuarioEmail" FOREIGN KEY ("FkUsuario") REFERENCES "Usuario"("Id");
+
+
+ALTER TABLE public."UsuarioEmail"
+    ADD COLUMN "DtCriacao" timestamp without time zone;

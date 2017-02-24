@@ -24,11 +24,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function init()
 	{
-		$scope.loading = true;
-
 		ObterPermissoes();
 
 		if (id > 0) {
+			$scope.loading = true;
 			Api.Perfil.obter({ id: id }, function (data)
 			{
 				// perfis
@@ -56,17 +55,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
-	function showSuccess() {
-		toastr.success('Perfil salvo', 'Sucesso');
-	}
-
 	function showError(errorMessage) {
 		toastr.error(errorMessage, 'Validação');
 	}
 
 	$scope.salvar = function ()
 	{
-		if (!$scope.permModel.novo && !$scope.permModel.editar)
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Você não tem permissão de salvar o registro', 'Permissão');
 		else
 		if ($scope.formEntidade.$valid)
@@ -86,14 +81,15 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			if (id > 0)
 			{
 				Api.Perfil.atualizar({ id: id }, $scope.viewModel, function (data) {
-					showSuccess();
+					toastr.success('Perfil salvo', 'Sucesso');
 				}, function (response) {
 					showError(response.data.message);
 				});
 			}
 			else 
 				Api.Perfil.adicionar($scope.viewModel, function (data) {
-					showSuccess();
+					toastr.success('Perfil salvo', 'Sucesso');
+					$state.go('perfil', { id: data.id });
 				}, function (response) {
 					showError(response.data.message);
 				});
@@ -106,8 +102,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$state.go('perfils');
 	}
 
-	$scope.exibirUsuario = function (mdl)
-	{
+	$scope.exibirUsuario = function (mdl) {
 		$state.go('usuario', { id: mdl.id });
 	}	
 

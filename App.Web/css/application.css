@@ -22327,11 +22327,11 @@ a.text-gray-lighter:focus {
 }
 
 .side-nav li a:hover, .side-nav li a:focus {
-  background: rgba(0, 0, 0, 0.07);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .side-nav li a {
-  color: inherit;
+  color: black;
   -webkit-transition: background-color 0.2s;
   -o-transition: background-color 0.2s;
   transition: background-color 0.2s;
@@ -22879,8 +22879,8 @@ a.text-gray-lighter:focus {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   padding: 12px 17px;
-  color: white;
-    background: rgba(95, 95, 95, 0.095);
+  color: dimgrey;
+  background: rgba(15, 43, 89, 0.15	);
   margin-bottom: 30px;
   position: relative;
 }
@@ -23524,6 +23524,7 @@ fieldset[disabled] .btn-inverse.active {
 
 .form-control.input-transparent {
   border: none;
+  font-size: 13px;
   color: black;
   background-color: rgba(255, 255, 255, 0.55);
 }
@@ -26098,7 +26099,6 @@ table.table thead .sorting_desc_disabled {
     
 }
 
-// = Side Tabs
 .tabs-below > .nav-tabs,
 .tabs-right > .nav-tabs,
 .tabs-left > .nav-tabs {

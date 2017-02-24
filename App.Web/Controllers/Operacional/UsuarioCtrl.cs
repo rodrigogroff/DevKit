@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Collections.Generic;
+using System;
 
 namespace App.Web.Controllers
 {
@@ -75,7 +76,7 @@ namespace App.Web.Controllers
 				query = from e in query where e.bAtivo == item.bAtivo select e;
 
 			if (item.StLogin != null)
-				query = from e in query where e.StLogin.ToUpper().Contains(item.StLogin) select e;
+				query = from e in query where e.StLogin.ToUpper().Contains(item.StLogin.ToUpper()) select e;
 
 			if (item.Id > 0)
 				query = from e in query where e.Id != item.Id select e;
@@ -90,7 +91,7 @@ namespace App.Web.Controllers
 				if (VerificaDuplicado(mdl, db))
 					return BadRequest("O login informado já existe.");
 
-				db.Insert(mdl);
+				mdl.Id = Convert.ToInt64(db.InsertWithIdentity(mdl));
 
 				return Ok(mdl);
 			}
@@ -105,7 +106,10 @@ namespace App.Web.Controllers
 				if (VerificaDuplicado(mdl, db))
 					return BadRequest("O login informado já existe.");
 
-				mdl.Update(db);
+				var resp = "";
+
+				if (!mdl.Update(db, ref resp))
+					return BadRequest(resp);
 
 				return Ok();
 			}

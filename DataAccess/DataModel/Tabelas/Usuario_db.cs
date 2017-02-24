@@ -52,21 +52,42 @@ namespace DataModel
 			return this;
 		}
 		
-		public void Update(SuporteCITDB db)
+		public bool Update(SuporteCITDB db, ref string resp)
 		{
-			UpdateTelefones(db);
-			UpdateEmails(db);
+			if (!UpdateTelefones(db))
+			{
+				resp = "Telefone duplicado!";
+				return false;
+			}
+
+			if (!UpdateEmails(db))
+			{
+				resp = "Email duplicado!";
+				return false;
+			}
 
 			db.Update(this);
+
+			return true;
 		}
 
-		public void UpdateTelefones(SuporteCITDB db)
+		public bool UpdateTelefones(SuporteCITDB db)
 		{
 			// atualiza toda a arvore de corelacionais
+			bool checkDuplicados = true;
 
 			var originais = LoadTelefones(db);
 			var ids_orig = (from e in originais select e.Id).ToList();
 			var ids_new = (from e in Telefones select e.Id).ToList();
+
+			if (checkDuplicados)
+			{
+				var str_orig = (from e in originais select e.StTelefone).ToList();
+
+				foreach (var e in Telefones)
+					if (str_orig.Contains(e.StTelefone))
+						return false;
+			}
 
 			foreach (var itemOldId in ids_orig)
 				if (!ids_new.Contains(itemOldId))
@@ -75,15 +96,27 @@ namespace DataModel
 			foreach (var itemNewId in ids_new)
 				if (!ids_orig.Contains(itemNewId))
 					db.Insert((from e in Telefones where e.Id == itemNewId select e).FirstOrDefault());
+
+			return true;
 		}
 
-		public void UpdateEmails(SuporteCITDB db)
+		public bool UpdateEmails(SuporteCITDB db)
 		{
 			// atualiza toda a arvore de corelacionais
+			bool checkDuplicados = true;
 
 			var originais = LoadEmails(db);
 			var ids_orig = (from e in originais select e.Id).ToList();
 			var ids_new = (from e in Emails select e.Id).ToList();
+
+			if (checkDuplicados)
+			{
+				var str_orig = (from e in originais select e.StEmail).ToList();
+
+				foreach (var e in Emails)
+					if (str_orig.Contains(e.StEmail))
+						return false;
+			}
 
 			foreach (var itemOldId in ids_orig)
 				if (!ids_new.Contains(itemOldId))
@@ -92,6 +125,8 @@ namespace DataModel
 			foreach (var itemNewId in ids_new)
 				if (!ids_orig.Contains(itemNewId))
 					db.Insert((from e in Emails where e.Id == itemNewId select e).FirstOrDefault());
+
+			return true;
 		}
 	}
 }

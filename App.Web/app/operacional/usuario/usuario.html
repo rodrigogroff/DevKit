@@ -5,155 +5,186 @@
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td><i class="fa fa-cogs"> </i> Operacional | <b>Cadastro de usuário</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td><i class="fa fa-cogs"> </i> \ Operacional \ Cadastro de usuário <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
 				</tr>
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div style="padding-left:25px;padding-top:7px;width:100%;min-height:320px;height:100%;width:800px">
+		<div style="padding-left:25px;padding-top:7px;width:100%;min-height:320px;height:100%;width:100%">
 			<form name="formEntidade" role="form" class="form-horizontal" ng-disabled="!permModel.edicao" xt-form novalidate>
-				<tabset class="tabs-left" style="min-height:320px;font-size:13px">
-					<tab heading="Definição">
-						<table style="width:500px;">
-							<tr height="40px" ng-show="viewModel.id > 0">
-								<td></td>
-								<td width="120px">Código do usuário</td>
-								<td></td>
-								<td>
-									<b>{{viewModel.id}}</b>
-								</td>
-							</tr>
-							<tr height="40px">
-								<td></td>
-								<td width="120px">Login do usuário</td>
-								<td></td>
-								<td>
-									<input type="text" focus="true" name="login" class="form-control input-transparent" ng-disabled="!permModel.edicao"
-										   id="nome" placeholder="Login do usuário" ng-model="viewModel.stLogin"
-										   ng-maxlength="100" xt-validate required>
-								</td>
-							</tr>
-							<tr height="40px">
-								<td></td>
-								<td>
-									Perfil do usuário
-								</td>
-								<td></td>
-								<td>
-									<input type="hidden" name="perfil" style="width:100%" ui-select2="selectPerfis" ng-disabled="!permModel.edicao"
-										   ng-model="viewModel.fkPerfil" required />
-								</td>
-							</tr>
-							<tr height="40px">
-								<td></td>
-								<td>Ativo</td>
-								<td></td>
-								<td>
-									<input name="ativo" type="checkbox" ng-disabled="!permModel.edicao"
-										   ng-model="viewModel.bAtivo" required />
-								</td>
-							</tr>
-						</table>
-					</tab>
-
-					<tab heading="Telefones" disabled="true" ng-if="viewModel.id == undefined"></tab>
-					<tab heading="Telefones ({{viewModel.qtdeTelefones}})" ng-if="viewModel.id != undefined">
-						<legend style="color:white">
-							Lista de telefones
-							<button class="btn btn-info btn-xs pull-right" ng-click="adicionarTelefone()"><i class="fa fa-plus"> </i>  Adicionar </button>
-						</legend>
-						<div ng-if="addTelefone == true">
+				<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
+					<tab heading="Usuário">
+						<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 							<table>
-								<tr>
+								<thead>
+									<tr>
+										<th width="20px"></th>
+										<th width="140px"></th>
+										<th width="300px"></th>
+										<th width="20px"></th>
+									</tr>
+								</thead>
+								<tr height="12px"></tr>
+								<tr height="40px" ng-show="viewModel.id > 0">
+									<td></td>
+									<td>Código</td>
 									<td>
-										<table>
-											<tr height="42px">
-												<td width="120px">Novo telefone</td>
-												<td width="200px">
-													<input focus="true" name="telefone" class="form-control" xt-validate ng-minlength="8"
-														   type="text" id="nome" placeholder="Telefone" ng-model="novoTelefone.stTelefone">
-												</td>
-											</tr>
-											<tr height="42px">
-												<td>Local</td>
-												<td>
-													<input name="local" class="form-control" type="text" xt-validate ng-minlength="8"
-														   id="nome" placeholder="Local" ng-model="novoTelefone.stLocal">
-												</td>
-											</tr>
-										</table>
+										<b>{{viewModel.id}}</b>
+									</td>
+									<td></td>
+								</tr>
+								<tr height="40px">
+									<td></td>
+									<td>Login do usuário</td>
+									<td>
+										<input type="text" focus="true" name="login" class="form-control input-transparent" ng-disabled="!permModel.edicao"
+											   id="nome" placeholder="Login do usuário" ng-model="viewModel.stLogin"
+											   ng-maxlength="100" required>
+									</td>
+									<td></td>
+								</tr>
+								<tr height="40px">
+									<td></td>
+									<td>
+										Perfil do usuário
+									</td>
+									<td>
+										<input type="hidden" name="perfil" style="width:100%" ui-select2="selectPerfis" ng-disabled="!permModel.edicao"
+											   ng-model="viewModel.fkPerfil" required />
+									</td>
+								</tr>
+								<tr height="40px">
+									<td></td>
+									<td>Ativo</td>
+									<td>
+										<input name="ativo" type="checkbox" ng-disabled="!permModel.edicao"
+											   ng-model="viewModel.bAtivo" required />
 									</td>
 								</tr>
 							</table>
-							<br />
-							<button class="btn btn-primary" ng-click="salvarNovoTelefone()">Salvar </button>
-							<br />
-							<br />
 						</div>
-						<div ng-show="viewModel.telefones.length > 0">
-							<br />
-							<table class="table table-hover" ng-if="viewModel.telefones.length > 0" style="width:100%">
-								<thead>
-									<tr>
-										<th>Telefone</th>
-										<th>Local</th>
-										<th width="70px" class="colunaRemover">REMOVER</th>
-									</tr>
-								</thead>
-								<tr data-ng-repeat="tel in viewModel.telefones">
-									<td>{{ tel.stTelefone }}</td>
-									<td>{{ tel.stLocal }}</td>
-									<td class="colunaRemover">
-										<a href="" role="button" ng-click="removerTelefone($index, viewModel.telefones)">
-											<i class="glyphicon glyphicon-remove" style="color:white"></i>
-										</a>
+					</tab>
+
+					<tab heading="Telefones" disabled="true" ng-if="viewModel.id == undefined"></tab>
+					<tab heading="Telefones ({{viewModel.telefones.length}})" ng-if="viewModel.id != undefined">
+						<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+							<table width="100%">
+								<tr height="12px"></tr>
+								<tr>
+									<td width="20px"></td>
+									<td>
+										<legend style="color:aliceblue">
+											Lista de telefones
+											<button class="btn btn-info btn-xs pull-right" ng-click="adicionarTelefone()"><i class="fa fa-plus"> </i>  Adicionar </button>
+										</legend>
+										<div ng-if="addTelefone == true">
+											<table>
+												<tr>
+													<td>
+														<table>
+															<tr height="42px">
+																<td width="120px">Novo telefone</td>
+																<td width="200px">
+																	<input focus="true" name="telefone" class="form-control" xt-validate ng-minlength="8"
+																		   type="text" id="nome" placeholder="Telefone" ng-model="novoTelefone.stTelefone">
+																</td>
+															</tr>
+															<tr height="42px">
+																<td>Local</td>
+																<td>
+																	<input name="local" class="form-control" type="text" xt-validate ng-minlength="8"
+																		   id="nome" placeholder="Local" ng-model="novoTelefone.stLocal">
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+											<br />
+											<button class="btn btn-primary" ng-click="salvarNovoTelefone()">Salvar </button>
+											<br />
+											<br />
+										</div>
+										<div ng-show="viewModel.telefones.length > 0">
+											<br />
+											<table class="table table-hover" ng-if="viewModel.telefones.length > 0" style="width:100%">
+												<thead>
+													<tr>
+														<th>Telefone</th>
+														<th>Local</th>
+														<th width="70px" class="colunaRemover">REMOVER</th>
+													</tr>
+												</thead>
+												<tr data-ng-repeat="tel in viewModel.telefones">
+													<td>{{ tel.stTelefone }}</td>
+													<td>{{ tel.stLocal }}</td>
+													<td class="colunaRemover">
+														<a href="" role="button" ng-click="removerTelefone($index, viewModel.telefones)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</td>
+												</tr>
+											</table>
+										</div>
 									</td>
+									<td width="20px"></td>
 								</tr>
 							</table>
 						</div>
 					</tab>
 
 					<tab heading="Emails" disabled="true" ng-if="viewModel.id == undefined"></tab>
-					<tab heading="Emails ({{viewModel.qtdeEmails}})" ng-if="viewModel.id != undefined">
-						<legend style="color:white">
-							Lista de emails
-							<button class="btn btn-info btn-xs pull-right" ng-click="adicionarEmail()"><i class="fa fa-plus"> </i>  Adicionar </button>
-						</legend>
-						<div ng-if="addEmail == true">
-							<table>
-								<tr height="28px">
-									<td width="150px">Novo email</td>
-									<td width="200px">
-										<input focus="true" name="login" class="form-control"
-											   type="email"
-											   id="nome" placeholder="Email do usuário" ng-model="novoEmail.stEmail"
-											   ng-maxlength="100" xt-validate required>
+					<tab heading="Emails ({{viewModel.emails.length}})" ng-if="viewModel.id != undefined">
+						<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+							<table width="100%">
+								<tr height="12px"></tr>
+								<tr>
+									<td width="20px"></td>
+									<td>
+										<legend style="color:white">
+											Lista de emails
+											<button class="btn btn-info btn-xs pull-right" ng-click="adicionarEmail()"><i class="fa fa-plus"> </i> Adicionar </button>
+										</legend>
+										<div ng-if="addEmail == true">
+											<table>
+												<tr height="28px">
+													<td width="150px">Novo email</td>
+													<td width="200px">
+														<input focus="true" name="login" class="form-control"
+															   type="email"
+															   id="nome" placeholder="Email do usuário" ng-model="novoEmail.stEmail"
+															   ng-maxlength="100" xt-validate required>
+													</td>
+												</tr>
+											</table>
+											<br />
+											<button class="btn btn-primary" ng-click="salvarNovoEmail()">Salvar </button>
+											<br />
+											<br />
+										</div>
+										<div ng-show="viewModel.emails.length > 0">
+											<br />
+											<table class="table table-hover" ng-if="viewModel.emails.length > 0" style="width:100%">
+												<thead>
+													<tr>
+														<th>Email</th>
+														<th>Data</th>
+														<th width="70px" class="colunaRemover">REMOVER</th>
+													</tr>
+												</thead>
+												<tr data-ng-repeat="email in viewModel.emails | orderBy:-dtCriacao">
+													<td>{{ email.stEmail }}</td>
+													<td>{{ email.dtCriacao | date:'dd/MM/yyyy HH:mm'}}</td>
+													<td class="colunaRemover">
+														<a href="" role="button" ng-click="removerEmail($index, viewModel.emails)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</td>
+												</tr>
+											</table>
+										</div>
 									</td>
-								</tr>
-							</table>
-							<br />
-							<button class="btn btn-primary" ng-click="salvarNovoEmail()">Salvar </button>
-							<br />
-							<br />
-						</div>
-						<div ng-show="viewModel.emails.length > 0">
-							<br />
-							<table class="table table-hover" ng-if="viewModel.emails.length > 0" style="width:100%">
-								<thead>
-									<tr>
-										<th>Email</th>
-										<th>Data</th>
-										<th width="70px" class="colunaRemover">REMOVER</th>
-									</tr>
-								</thead>
-								<tr data-ng-repeat="email in viewModel.emails | orderBy:-dtCriacao">
-									<td>{{ email.stEmail }}</td>
-									<td>{{ email.dtCriacao | date:'dd/MM/yyyy HH:mm'}}</td>
-									<td class="colunaRemover">
-										<a href="" role="button" ng-click="removerEmail($index, viewModel.emails)">
-											<i class="glyphicon glyphicon-remove" style="color:white"></i>
-										</a>
-									</td>
+									<td width="20px"></td>
 								</tr>
 							</table>
 						</div>
@@ -162,6 +193,7 @@
 				</tabset>
 			</form>
 		</div>
+		<br />
 		<br />
 		<table>
 			<tr>

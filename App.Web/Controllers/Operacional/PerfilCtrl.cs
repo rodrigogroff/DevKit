@@ -1,5 +1,6 @@
 ﻿using DataModel;
 using LinqToDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -66,7 +67,7 @@ namespace App.Web.Controllers
 			var query = from e in db.Perfils select e;
 
 			if (item.StNome != null)
-				query = from e in query where e.StNome.ToUpper().Contains(item.StNome) select e;
+				query = from e in query where e.StNome.ToUpper().Contains(item.StNome.ToUpper()) select e;
 
 			if (item.Id > 0)
 				query = from e in query where e.Id != item.Id select e;
@@ -81,7 +82,7 @@ namespace App.Web.Controllers
 				if (VerificaDuplicado(mdl, db))
 					return BadRequest("O perfil informado já existe.");
 
-				db.Insert(mdl);
+				mdl.Id = Convert.ToInt64(db.InsertWithIdentity(mdl));
 
 				return Ok(mdl);
 			}

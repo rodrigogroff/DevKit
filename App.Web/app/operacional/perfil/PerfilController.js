@@ -102,6 +102,18 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$state.go('perfils');
 	}
 
+	$scope.excluir = function () {
+		if (!$scope.permModel.remover)
+			toastr.error('Você não tem permissão de remover o registro', 'Permissão');
+		else
+			Api.Perfil.remover({ id: id }, $scope.viewModel, function (data) {
+				toastr.success('Perfil removido', 'Sucesso');
+				$scope.listar();
+			}, function (response) {
+				showError(response.data.message);
+			});
+	}
+
 	$scope.exibirUsuario = function (mdl) {
 		$state.go('usuario', { id: mdl.id });
 	}	

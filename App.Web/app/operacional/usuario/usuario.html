@@ -10,7 +10,7 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div style="padding-left:25px;padding-top:7px;width:100%;min-height:320px;height:100%;width:100%">
+		<div style="padding-left:25px;padding-top:7px;width:100%;min-height:320px;height:100%;">
 			<form name="formEntidade" role="form" class="form-horizontal" ng-disabled="!permModel.edicao" xt-form novalidate>
 				<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
 					<tab heading="Usuário">
@@ -200,7 +200,8 @@
 				<td width="34px"></td>
 				<td><button class="btn btn-default" ng-click="listar()">CANCELAR</button> </td>
 				<td width="34px"></td>
-				<td><button class="btn btn-success" ng-click="salvar()">SALVAR</button></td>
+				<td><button class="btn btn-primary" ng-click="salvar()">SALVAR</button></td>
+				<td width="635px"><button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="excluir()">EXCLUIR</button></td>
 			</tr>
 		</table>
 		<br />

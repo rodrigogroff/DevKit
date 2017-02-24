@@ -103,14 +103,21 @@ namespace App.Web.Controllers
 			}
 		}
 
-		public void Delete(long id)
+		public IHttpActionResult Delete(long id)
 		{
 			using (var db = new SuporteCITDB())
 			{
 				var model = db.Perfils.Find(id);
 
 				if (model != null)
+				{
+					if ((from ne in db.Usuarios where ne.FkPerfil == model.Id).Count())
+						return BadRequest("O perfil informado possui usuários associados.");
+					
 					db.Delete(model);
+				}
+
+				return Ok();
 			}
 		}
 	}

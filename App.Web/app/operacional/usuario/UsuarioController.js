@@ -74,6 +74,19 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$state.go('usuarios');
 	}
 
+	$scope.excluir = function ()
+	{
+		if (!$scope.permModel.remover)
+			toastr.error('Você não tem permissão de remover o registro', 'Permissão');
+		else
+			Api.Usuario.remover({ id: id }, $scope.viewModel, function (data) {
+				toastr.success('Usuário removido', 'Sucesso');
+				$scope.listar();
+			}, function (response) {
+				showError(response.data.message);
+			});		
+	}
+
 	// ============================================
 	// email --------------------------------------
 	// ============================================

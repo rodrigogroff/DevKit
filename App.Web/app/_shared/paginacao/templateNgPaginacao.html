@@ -8,39 +8,30 @@
 			<td valign="middle">
 				Mostrar &nbsp;&nbsp;
 				<select id="itensporpagina" name="itensporpagina" ng-model="itensporpagina" style="color:black">
+					<option value="5">5</option>
 					<option value="10">10</option>
 					<option selected value="15">15</option>
 					<option value="50">50</option>
 					<option value="100">100</option>
-					<option value="500">500</option>
-					<option value="1000">1000</option>
-					<option value="3000">3000</option>
-					<option value="5000">5000</option>
-					<option value="10000">10000</option>
-					<option value="30000">30000</option>
 				</select>
 				&nbsp;&nbsp;
 				itens
 			</td>	
 			<td width="50px;"  valign="middle"></td>	
 			<td  valign="middle">
-				<div class="datatable-table_paginate">
+				<div class="table-pagination__index-list">
 					<ul class="pagination no-margin">
-						<li ng-class="prevPageDisabled()" ng-click="firstPage()">
-							<<
-						</li>
-						<li ng-class="prevPageDisabled()" ng-click="prevPage()">
-							<
-						</li>
-						<li ng-repeat="n in range()" ng-class="{'table-pagination__index-selecteditem': n == paginaAtual}" ng-click="setPage(n)" ng-show="total>n*itensporpagina">
-							{{n+1}}
-						</li>
-						<li ng-class="nextPageDisabled()" ng-click="nextPage()">
-							>
-						</li>
-						<li ng-class="nextPageDisabled()" ng-click="lastPage()">
-							>>
-						</li>
+						<li class="btn btn-xs btn-default" ng-class="prevPageDisabled()" ng-click="firstPage()"><<</li>&nbsp;
+						<li class="btn btn-xs btn-default" ng-class="prevPageDisabled()" ng-click="prevPage()"><</li>&nbsp;
+						
+						<li class="btn btn-xs btn-default"
+							ng-class="isCurrentPage(n)" 
+							ng-repeat="n in range()" 
+							ng-click="setPage(n)" 
+							ng-show="total>n*itensporpagina"> {{n+1}} </li>&nbsp;
+
+						<li class="btn btn-xs btn-default" ng-class="nextPageDisabled()" ng-click="nextPage()">></li>&nbsp;
+						<li class="btn btn-xs btn-default" ng-class="nextPageDisabled()" ng-click="lastPage()">>></li>&nbsp;
 					</ul>
 				</div>
 			</td>

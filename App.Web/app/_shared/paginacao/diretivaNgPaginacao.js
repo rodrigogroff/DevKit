@@ -62,7 +62,7 @@ angular.module('app.directives').directive('ngPaginacao', function () {
 			};
 
 			$scope.prevPageDisabled = function () {
-				return $scope.paginaAtual === 0 ? "disabled" : "";
+				return $scope.paginaAtual === 0 ? "" : "";
 			};
 
 			$scope.nextPage = function () {
@@ -72,7 +72,11 @@ angular.module('app.directives').directive('ngPaginacao', function () {
 			};
 
 			$scope.nextPageDisabled = function () {
-				return $scope.paginaAtual === $scope.pageCount() - 1 ? "disabled" : "";
+				return $scope.paginaAtual === $scope.pageCount() - 1 ? "" : "";
+			};
+
+			$scope.isCurrentPage = function (p) {
+				return $scope.paginaAtual === p ? "btn btn-xs btn-primary" : "btn btn-xs btn-default";
 			};
 
 			$scope.pageCount = function () {

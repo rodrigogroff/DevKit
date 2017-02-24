@@ -45,14 +45,15 @@
 					</tab>
 
 					<tab heading="Usuários" disabled="true" ng-if="viewModel.id == undefined"></tab>
-					<tab heading="Usuários ({{viewModel.usuarios.length}})" ng-if="viewModel.id != undefined">
+					<tab heading="Usuários [{{viewModel.usuarios.length}}]" ng-if="viewModel.id != undefined">
 						<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+							<br />
 							<table width="100%">
 								<tr height="12px"></tr>
 								<tr>
 									<td width="20px"></td>
 									<td width="400px">
-										<legend style="color:white">Lista de usuários</legend>
+										<legend style="color:white">Usuários com este perfil</legend>
 										<br />
 										<table>
 											<tr>
@@ -82,12 +83,13 @@
 					<tab heading="Permissões" disabled="true" ng-if="viewModel.id == undefined"></tab>
 					<tab heading="Permissões" ng-if="viewModel.id != undefined">
 						<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+							<br />
 							<table width="100%">
 								<tr height="12px"></tr>
 								<tr>
 									<td width="20px"></td>
 									<td width="400px">
-										<legend style="color:white">Lista de permissões</legend>
+										<legend style="color:white">Catálogo de permissões</legend>
 										<br />
 										<table class="table table-hover">
 											<thead>
@@ -132,10 +134,10 @@
 		<table>
 			<tr>
 				<td width="34px"></td>
-				<td><button class="btn btn-default" ng-click="listar()">CANCELAR</button> </td>
+				<td><button class="btn btn-default" ng-click="listar()">Cancelar</button> </td>
 				<td width="34px"></td>
-				<td><button class="btn btn-primary" ng-click="salvar()">SALVAR</button></td>
-				<td width="635px"><button class="btn btn-default pull-right" ng-click="excluir()">EXCLUIR</button></td>
+				<td><button class="btn btn-primary" ng-click="salvar()">Salvar</button></td>
+				<td width="635px"><button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="excluir()">Excluir</button></td>
 			</tr>
 		</table>
 		<br />

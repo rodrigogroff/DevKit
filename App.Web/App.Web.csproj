@@ -551,9 +551,6 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\chosen-sprite%402x.png" />
     <Content Include="css\chosen-sprite.png" />
-    <Content Include="css\crud.css" />
-    <Content Include="css\demo.css" />
-    <Content Include="css\dialogs.css" />
     <Content Include="css\fonts\BoldItalic\OpenSans-BoldItalic.svg" />
     <Content Include="css\fonts\Bold\OpenSans-Bold.svg" />
     <Content Include="css\fonts\ExtraBoldItalic\OpenSans-ExtraBoldItalic.svg" />
@@ -568,7 +565,6 @@
     <Content Include="css\jquery.fileupload-ui.css" />
     <Content Include="css\jquery.fileupload.css" />
     <Content Include="css\loading-bar.min.css" />
-    <Content Include="css\main.css" />
     <Content Include="css\ng-scrollbar.min.css" />
     <Content Include="css\nv.d3.css" />
     <Content Include="css\perfect-scrollbar.css" />

@@ -1,7 +1,7 @@
 ﻿<div class="row">
 	<div class="col-md-12" style="height:auto;">
 		<form>
-			<table>
+			<table ng-show="!filtro.exibeFiltro">
 				<tr>
 					<td valign="top">
 						<button type="button" style="margin-bottom:5px;height:29px" class="btn btn-default btn-xs" ng-click="toggleFiltros()" ng-if="ferramentaPesquisa"><span class="glyphicon glyphicon-filter"></span> Filtros</button>
@@ -18,16 +18,24 @@
 				</tr>
 			</table>
 			<div id="filtro" ng-show="filtro.exibeFiltro">				
-				<section style="background: rgba(15, 43, 89, 0.1 );">
+				<section style="background: rgba(15, 43, 89, 0.2 );">
 					<br />
 					<table>
 						<tr>
 							<td valign="top"><ng-include src="templateAvancado"></ng-include></td>
 							<td valign="top" width="60px"></td>
-							<td valign="top" style="padding-top:10px;"><button class="btn btn-default btn-xs" type="submit" ng-click="limpar()">LIMPAR</button></td>
+							<td valign="top" style="padding-top:10px;"><button class="btn btn-default btn-xs" type="submit" ng-click="limpar()">Limpar</button></td>
 							<td width="20px"></td>
-							<td valign="top" style="padding-top:10px;"><button class="btn btn-primary btn-xs" type="submit" ng-click="pesquisar()">PESQUISAR</button></td>
+							<td valign="top" style="padding-top:10px;"><button class="btn btn-primary btn-xs" type="submit" ng-click="pesquisar()">Pesquisar</button></td>
 							<td width="20px"></td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td width="20px"></td>
+							<td>
+								<button type="button" style="margin-bottom:5px;height:29px" class="btn btn-default btn-xs" ng-click="toggleFiltros()"> Fechar filtros</button>
+							</td>
 						</tr>
 					</table>
 					<br />

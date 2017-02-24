@@ -66,8 +66,9 @@
 					</tab>
 
 					<tab heading="Telefones" disabled="true" ng-if="viewModel.id == undefined"></tab>
-					<tab heading="Telefones ({{viewModel.telefones.length}})" ng-if="viewModel.id != undefined">
+					<tab heading="Telefones [{{viewModel.telefones.length}}]" ng-if="viewModel.id != undefined">
 						<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+							<br />
 							<table width="100%">
 								<tr height="12px"></tr>
 								<tr>
@@ -134,8 +135,9 @@
 					</tab>
 
 					<tab heading="Emails" disabled="true" ng-if="viewModel.id == undefined"></tab>
-					<tab heading="Emails ({{viewModel.emails.length}})" ng-if="viewModel.id != undefined">
+					<tab heading="Emails [{{viewModel.emails.length}}]" ng-if="viewModel.id != undefined">
 						<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+							<br />
 							<table width="100%">
 								<tr height="12px"></tr>
 								<tr>
@@ -198,10 +200,10 @@
 		<table>
 			<tr>
 				<td width="34px"></td>
-				<td><button class="btn btn-default" ng-click="listar()">CANCELAR</button> </td>
+				<td><button class="btn btn-default" ng-click="listar()">Cancelar</button> </td>
 				<td width="34px"></td>
-				<td><button class="btn btn-primary" ng-click="salvar()">SALVAR</button></td>
-				<td width="635px"><button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="excluir()">EXCLUIR</button></td>
+				<td><button class="btn btn-primary" ng-click="salvar()">Salvar</button></td>
+				<td width="635px"><button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="excluir()">Excluir</button></td>
 			</tr>
 		</table>
 		<br />

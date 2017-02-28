@@ -24,6 +24,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function init()
 	{
+		console.log('oi');
 		ObterPermissoes();
 
 		if (id > 0) {

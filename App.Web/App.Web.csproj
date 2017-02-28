@@ -972,7 +972,6 @@
     <Content Include="scripts\ui-bootstrap-tpls-0.10.0.js" />
     <Content Include="scripts\ui-bootstrap-tpls-0.10.0.min.js" />
     <Content Include="css\bootstrap-theme.css.map" />
-    <Content Include="css\bootstrap.css.map" />
     <Content Include="css\bootstrap\alerts.less" />
     <Content Include="css\bootstrap\badges.less" />
     <Content Include="css\bootstrap\bootstrap.less" />
@@ -1046,7 +1045,6 @@
     <Content Include="css\fonts\Semibold\OpenSans-Semibold.eot" />
     <Content Include="css\fonts\Semibold\OpenSans-Semibold.ttf" />
     <Content Include="css\fonts\Semibold\OpenSans-Semibold.woff" />
-    <Content Include="css\toastr.css.map" />
     <Content Include="css\toastr.less" />
     <Content Include="css\variables.less" />
     <Content Include="scripts\errors.json" />

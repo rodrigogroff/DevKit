@@ -15,53 +15,56 @@
 				<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
 					<tab heading="Usuário">
 						<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-							<table>
-								<thead>
-									<tr>
-										<th width="20px"></th>
-										<th width="140px"></th>
-										<th width="300px"></th>
-										<th width="20px"></th>
+							<ng-form name="formData">
+								<table>
+									<thead>
+										<tr>
+											<th width="20px"></th>
+											<th width="140px"></th>
+											<th width="300px"></th>
+											<th width="20px"></th>
+										</tr>
+									</thead>
+									<tr height="12px"></tr>
+									<tr height="40px" ng-show="viewModel.id > 0">
+										<td></td>
+										<td>Código</td>
+										<td>
+											<b>{{viewModel.id}}</b>
+										</td>
+										<td></td>
 									</tr>
-								</thead>
-								<tr height="12px"></tr>
-								<tr height="40px" ng-show="viewModel.id > 0">
-									<td></td>
-									<td>Código</td>
-									<td>
-										<b>{{viewModel.id}}</b>
-									</td>
-									<td></td>
-								</tr>
-								<tr height="40px">
-									<td></td>
-									<td>Login do usuário</td>
-									<td>
-										<input type="text" focus="true" name="login" class="form-control input-transparent" ng-disabled="!permModel.edicao"
-											   id="nome" placeholder="Login do usuário" ng-model="viewModel.stLogin"
-											   ng-maxlength="100" required>
-									</td>
-									<td></td>
-								</tr>
-								<tr height="40px">
-									<td></td>
-									<td>
-										Perfil do usuário
-									</td>
-									<td>
-										<input type="hidden" name="perfil" style="width:100%" ui-select2="selectPerfis" ng-disabled="!permModel.edicao"
-											   ng-model="viewModel.fkPerfil" required />
-									</td>
-								</tr>
-								<tr height="40px">
-									<td></td>
-									<td>Ativo</td>
-									<td>
-										<input name="ativo" type="checkbox" ng-disabled="!permModel.edicao"
-											   ng-model="viewModel.bAtivo" required />
-									</td>
-								</tr>
-							</table>
+									<tr height="40px">
+										<td></td>
+										<td>Login do usuário</td>
+										<td>
+											<input type="text" focus="true" name="login" class="form-control input-transparent" ng-disabled="!permModel.edicao"
+												   id="nome" placeholder="Login do usuário" ng-model="viewModel.stLogin"
+												   ng-maxlength="100" required>
+										</td>
+										<td></td>
+									</tr>
+									<tr height="40px">
+										<td></td>
+										<td>
+											Perfil do usuário
+										</td>
+										<td>
+											<input type="hidden" name="perfil" style="width:100%" ui-select2="selectPerfis" ng-disabled="!permModel.edicao"
+												   ng-model="viewModel.fkPerfil" required />
+										</td>
+									</tr>
+									<tr height="40px">
+										<td></td>
+										<td>Ativo</td>
+										<td>
+											<input name="ativo" type="checkbox" ng-disabled="!permModel.edicao"
+												   ng-model="viewModel.bAtivo" required />
+										</td>
+									</tr>
+								</table>
+
+							</ng-form>
 						</div>
 					</tab>
 

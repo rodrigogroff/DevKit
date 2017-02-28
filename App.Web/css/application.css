@@ -7,7 +7,7 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
-  font-family: Calibri;
+  font-family: 'Roboto Condensed', sans-serif;
   font-size: 10px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -26207,3 +26207,98 @@ table.table thead .sorting_desc_disabled {
   border-color: #ddd #ddd #ddd transparent;
   *border-left-color: #ffffff;
 }
+
+.webFormPostion {
+	padding-left:195px;
+	padding-top:5px;
+	width:1100px;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size:13px;
+	color: black;
+	background-color: #2e466d 20%;
+	background-image: radial-gradient(farthest-side ellipse at 10% 0, #ffffff 20%, #2e466d );
+	background-image: -webkit-radial-gradient(10% 0, farthest-side ellipse, #ffffff 20%, 2e466d);
+	background-image: -moz-radial-gradient(10% 0, farthest-side ellipse, #ffffff 20%, #2e466d);
+	background-attachment: fixed, fixed;
+}
+		
+.dropdown {
+	position: relative;
+	display: inline-block;
+	padding-top: 15px;
+	font-size: 13px;
+	color: black; /*#d0d1d3; */
+	padding-left: 20px;
+	padding-right: 30px;
+}
+
+.table-hover > thead  {
+	background-color: rgba(23,101,124,1); ;
+	color:black;
+}
+
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
+	background-color: goldenrod;
+	color:black;
+}
+
+.table-hover
+{
+	background: rgba(23,101,124,0.35); 
+	font-size:13px;
+	color: black;
+}	
+		
+.select 
+{
+	color: black; 
+}
+
+.select2-container, .select2-drop, .select2-search, .select2-search input {
+	font-size: 14px;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	color: black;
+	font-size: 13px;
+	min-width: 660px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	padding: 0px 0px;
+	z-index: 1;
+}
+
+.dropdown-content > table > tbody > tr > td > a:hover {
+	background-color: whitesmoke;
+	color: blue;
+}
+
+.dropdown-content > a {
+	background-color: black;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.legendTop {
+	padding-left:10px;
+	background: rgba(15, 43, 89, 0.1	);
+}
+
+.divWebForm {
+	padding-left:35px;padding-top:7px;width:100%;min-height:500px;height:100%;width:800px
+}
+
+.redBorder {
+          border: solid 1px red;
+      }
+
+
+.genericForm.ng-invalid {
+   background: red;
+ }

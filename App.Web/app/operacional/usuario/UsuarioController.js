@@ -7,7 +7,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.permModel = {};
 	$scope.loading = false;
 
-	function ObterPermissoes() { Api.Permissao.obter({ id: 102 }, function (data) { $scope.permModel = data; }, function (response) { }); }
+	function ObterPermissoes() {
+		Api.Permissao.obter({ id: 102 }, function (data) { $scope.permModel = data; }, function (response) { });
+	}
 
 	$scope.viewModel = {};
 

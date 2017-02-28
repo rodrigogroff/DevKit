@@ -4,6 +4,10 @@ angular.module('app.controllers').controller('UsuarioController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$scope.style_error = { 'background-color': 'goldenrod' }
+
+	$scope.maskTelefone = '(99) 999999999';
+	
 	$scope.permModel = {};
 	$scope.loading = false;
 
@@ -52,7 +56,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Você não tem permissão de salvar o registro', 'Permissão');
 		else
-		if ($scope.formEntidade.$valid) {
+		if ($scope.formBase.$valid) {
 			if (id > 0) {
 				Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data) {
 					showSuccessAndRedirect();
@@ -90,12 +94,79 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	}
 
 	// ============================================
+	// telefone -----------------------------------
+	// ============================================
+
+	$scope.addTelefone = false;
+	$scope.novoTelefone = {
+		stTelefone: '',
+		stLocal: ''
+	};
+	
+	$scope.removerTelefone = function (index, lista) {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Você não tem permissão de salvar o registro', 'Permissão');
+		else {
+			Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data) {
+				toastr.success('Lista de telefones salva', 'Sucesso');
+				$scope.viewModel.telefones.splice(index, 1);
+			});
+		}
+	}
+
+	$scope.adicionarTelefone = function () {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Você não tem permissão de salvar o registro', 'Permissão');
+		else
+			$scope.addTelefone = !$scope.addTelefone;
+	}
+
+	$scope.salvarNovoTelefone = function ()
+	{
+		console.log($scope.novoTelefone.stTelefone.length);
+		console.log($scope.novoTelefone.stTelefone);
+
+		var _stTelefone = $scope.novoTelefone.stTelefone.length != 11;
+		var _stLocal = $scope.novoTelefone.stLocal.length < 3;
+		
+		if (_stTelefone || _stLocal)
+		{
+			if (_stTelefone) $scope.style_stTelefone = $scope.style_error; else $scope.style_stTelefone = {};
+			if (_stLocal) $scope.style_stLocal = $scope.style_error; else $scope.style_stLocal = {};
+
+			toastr.error('Preencha os campos corretamente', 'Validação');
+		}
+		else
+		{
+			$scope.addTelefone = false;
+			$scope.novoTelefone.FkUsuario = id;
+			$scope.viewModel.telefones.push($scope.novoTelefone);
+
+			Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data)
+			{				
+				$scope.style_stTelefone = {}
+				$scope.style_stLocal = {}
+				$scope.novoTelefone = {
+					stTelefone: '',
+					stLocal: ''
+				};
+				toastr.success('Lista de telefones salva', 'Sucesso');
+
+				$scope.viewModel.telefones = data.telefones;
+
+			}, function (response) {
+				showError(response.data.message);
+			});
+		}
+	}
+
+	// ============================================
 	// email --------------------------------------
 	// ============================================
 
 	$scope.addEmail = false;
-	$scope.novoEmail = { StEmail: '' };
-
+	$scope.novoEmail = { stEmail: '' };
+	
 	$scope.removerEmail = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
@@ -127,46 +198,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data) {
 			toastr.success('Lista de emails salva', 'Sucesso');
 			$scope.novoEmail = { StEmail: '' };
-		}, function (response) {
-			showError(response.data.message);
-		});
-	}
-
-	// ============================================
-	// telefone -----------------------------------
-	// ============================================
-
-	$scope.addTelefone = false;
-	$scope.novoTelefone = { StTelefone: '', StLocal: '' };
-
-	$scope.removerTelefone = function (index, lista)
-	{
-		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Você não tem permissão de salvar o registro', 'Permissão');
-		else {
-			$scope.viewModel.telefones.splice(index, 1);
-			Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data) {
-				toastr.success('Lista de telefones salva', 'Sucesso');
-			});
-		}
-	}
-
-	$scope.adicionarTelefone = function () {
-		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Você não tem permissão de salvar o registro', 'Permissão');
-		else
-			$scope.addTelefone = !$scope.addTelefone;
-	}
-
-	$scope.salvarNovoTelefone = function ()
-	{
-		$scope.addTelefone = false;
-		$scope.novoTelefone.FkUsuario = id;
-		$scope.viewModel.telefones.push($scope.novoTelefone);
-
-		Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data) {
-			$scope.novoTelefone = { StTelefone: '', StLocal: '' };
-			toastr.success('Lista de telefones salva', 'Sucesso');
 		}, function (response) {
 			showError(response.data.message);
 		});

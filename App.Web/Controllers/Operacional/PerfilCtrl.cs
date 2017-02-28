@@ -14,25 +14,22 @@ namespace App.Web.Controllers
 		{
 			using (var db = new SuporteCITDB())
 			{
-				var skip = Request.GetQueryStringValue<int?>("skip", null);
-				var take = Request.GetQueryStringValue<int?>("take", null);
+				var filter = new PerfilFilter()
+				{
+					skip = Request.GetQueryStringValue("skip", 0),
+					take = Request.GetQueryStringValue("take", 15),
+					busca = Request.GetQueryStringValue("busca")?.ToUpper()
+				};
 
-				var busca = Request.GetQueryStringValue("busca")?.ToUpper();
+				var mdl = new Perfil();
 
-				var query = from e in db.Perfils select e;
-
-				if (busca != null)
-					query = from e in query where e.StNome.ToUpper().Contains(busca) select e;
-
-				query = query.OrderBy(y => y.StNome);
-
-				if (!skip.HasValue || !take.HasValue)
-					return Ok(query);
+				var query = mdl.ComposedFilters(db, filter).
+					OrderBy(y => y.StNome);
 
 				return Ok(new
 				{
 					count = query.Count(),
-					results = Output(query.Skip(() => skip.Value).Take(() => take.Value), db)
+					results = Output(query.Skip(() => filter.skip).Take(() => filter.take), db)
 				});
 			}
 		}

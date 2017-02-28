@@ -14,7 +14,15 @@ namespace DataModel
 					bEmails = false,
 					bQtdeEmails = false;
 	}
-	
+
+	public class UsuarioFilter
+	{
+		public int skip, take;
+		public long? fkPerfil;
+		public bool? ativo;
+		public string busca;
+	}
+
 	public partial class Usuario
 	{
 		UsuarioLoadParams load = new UsuarioLoadParams { bTudo = true };
@@ -32,6 +40,22 @@ namespace DataModel
 		public List<UsuarioEmail> Emails = new List<UsuarioEmail>();
 		public List<UsuarioEmail> LoadEmails(SuporteCITDB db) { return (from e in db.UsuarioEmails where e.FkUsuario == Id select e).OrderByDescending(t=>t.DtCriacao).ToList(); }
 		public int CountEmails(SuporteCITDB db) { return (from e in db.UsuarioEmails where e.FkUsuario == Id select e).Count(); }
+
+		public IQueryable<Usuario> ComposedFilters(SuporteCITDB db, UsuarioFilter filter)
+		{
+			var query = from e in db.Usuarios select e;
+
+			if (filter.ativo != null)
+				query = from e in query where e.bAtivo == filter.ativo select e;
+
+			if (filter.busca != null)
+				query = from e in query where e.StLogin.ToUpper().Contains(filter.busca) select e;
+
+			if (filter.fkPerfil != null)
+				query = from e in query where e.FkPerfil == filter.fkPerfil select e;
+
+			return query;
+		}
 
 		public Usuario Load(SuporteCITDB db, UsuarioLoadParams _load = null)
 		{
@@ -70,24 +94,48 @@ namespace DataModel
 
 			return true;
 		}
-
+		
 		public bool UpdateTelefones(SuporteCITDB db)
 		{
-			// atualiza toda a arvore de corelacionais
-			bool checkDuplicados = true;
+			// busca maskara global
+			var mask = "(99) 9999999";
 
+			for (int x = 0; x < Telefones.Count; ++x)
+			{
+				var item = Telefones.ElementAt(x);
+
+				bool foundMask = false;
+
+				foreach (var i in item.StTelefone)
+					if (!Char.IsLetterOrDigit(i))
+					{
+						foundMask = true;
+						break;
+					}
+					
+				if (!foundMask)
+				{
+					var result = ""; var index = 0; var maxlen = item.StTelefone.Length;
+
+					foreach (var i in mask)
+					{
+						if (Char.IsLetterOrDigit(i))
+						{
+							if (index < maxlen)
+								result += item.StTelefone[index++];
+						}
+						else
+							result += i;
+					}
+
+					item.StTelefone = result;
+				}
+			}
+
+			// atualiza toda a arvore de corelacionais
 			var originais = LoadTelefones(db);
 			var ids_orig = (from e in originais select e.Id).ToList();
 			var ids_new = (from e in Telefones select e.Id).ToList();
-
-			if (checkDuplicados)
-			{
-				var str_orig = (from e in originais select e.StTelefone).ToList();
-
-				foreach (var e in Telefones)
-					if (str_orig.Contains(e.StTelefone))
-						return false;
-			}
 
 			foreach (var itemOldId in ids_orig)
 				if (!ids_new.Contains(itemOldId))
@@ -102,21 +150,9 @@ namespace DataModel
 
 		public bool UpdateEmails(SuporteCITDB db)
 		{
-			// atualiza toda a arvore de corelacionais
-			bool checkDuplicados = true;
-
 			var originais = LoadEmails(db);
 			var ids_orig = (from e in originais select e.Id).ToList();
 			var ids_new = (from e in Emails select e.Id).ToList();
-
-			if (checkDuplicados)
-			{
-				var str_orig = (from e in originais select e.StEmail).ToList();
-
-				foreach (var e in Emails)
-					if (str_orig.Contains(e.StEmail))
-						return false;
-			}
 
 			foreach (var itemOldId in ids_orig)
 				if (!ids_new.Contains(itemOldId))

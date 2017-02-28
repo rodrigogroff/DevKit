@@ -11,6 +11,13 @@ namespace DataModel
 					bQtdUsuarios = false;
 	}
 
+	public class PerfilFilter
+	{
+		public int skip, take;		
+		public bool? ativo;
+		public string busca;
+	}
+	
 	public partial class Perfil
 	{
 		PerfilLoad_Params load = new PerfilLoad_Params { bTudo = true };
@@ -21,6 +28,16 @@ namespace DataModel
 		public List<Usuario> Usuarios { get; set; }
 		public List<Usuario> LoadUsuarios(SuporteCITDB db) { return (from e in db.Usuarios where e.FkPerfil == Id select e).ToList(); }
 		public int CountUsuarios(SuporteCITDB db) { return (from e in db.Usuarios where e.FkPerfil == Id select e).Count(); }
+
+		public IQueryable<Perfil> ComposedFilters(SuporteCITDB db, PerfilFilter filter)
+		{
+			var query = from e in db.Perfils select e;
+
+			if (filter.busca != null)
+				query = from e in query where e.StNome.ToUpper().Contains(filter.busca) select e;
+
+			return query;
+		}
 
 		public Perfil Load(SuporteCITDB db, PerfilLoad_Params _load = null)
 		{

@@ -14,34 +14,24 @@ namespace App.Web.Controllers
 		{
 			using (var db = new SuporteCITDB())
 			{
-				var skip = Request.GetQueryStringValue<int?>("skip", null);
-				var take = Request.GetQueryStringValue<int?>("take", null);
-				var fkPerfil = Request.GetQueryStringValue<int?>("fkPerfil", null);
+				var filter = new UsuarioFilter()
+				{
+					skip = Request.GetQueryStringValue("skip", 0),
+					take = Request.GetQueryStringValue("take", 15),
+					fkPerfil = Request.GetQueryStringValue<long?>("fkPerfil", null),
+					ativo = Request.GetQueryStringValue<bool?>("ativo", null),
+					busca = Request.GetQueryStringValue("busca")?.ToUpper()
+				};
 
-				var ativo = Request.GetQueryStringValue<bool?>("ativo", null);
+				var mdl = new Usuario();
 
-				var busca = Request.GetQueryStringValue("busca")?.ToUpper();
-
-				var query = from e in db.Usuarios select e;
-
-				if (ativo != null)
-					query = from e in query where e.bAtivo == ativo select e;
-
-				if (busca != null)
-					query = from e in query where e.StLogin.ToUpper().Contains(busca) select e;
-
-				if (fkPerfil != null)
-					query = from e in query where e.FkPerfil == fkPerfil select e;
-
-				query = query.OrderBy(y => y.StLogin);
-
-				if (!skip.HasValue || !take.HasValue)
-					return Ok(query);
+				var query = mdl.ComposedFilters(db, filter).
+					OrderBy(y => y.StLogin);
 
 				return Ok(new
 				{
 					count = query.Count(),
-					results = Output (query.Skip(() => skip.Value).Take(() => take.Value), db)
+					results = Output (query.Skip(() => filter.skip).Take(() => filter.take), db)
 				});
 			}
 		}
@@ -111,7 +101,7 @@ namespace App.Web.Controllers
 				if (!mdl.Update(db, ref resp))
 					return BadRequest(resp);
 
-				return Ok();
+				return Ok(mdl);
 			}
 		}
 

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Collections.Generic;
-using System;
 
 namespace App.Web.Controllers
 {
@@ -58,30 +57,12 @@ namespace App.Web.Controllers
 			}
 		}
 
-		private bool VerificaDuplicado(Usuario item, SuporteCITDB db)
-		{
-			var query = from e in db.Usuarios select e;
-
-			if (item.bAtivo != null)
-				query = from e in query where e.bAtivo == item.bAtivo select e;
-
-			if (item.StLogin != null)
-				query = from e in query where e.StLogin.ToUpper().Contains(item.StLogin.ToUpper()) select e;
-
-			if (item.Id > 0)
-				query = from e in query where e.Id != item.Id select e;
-
-			return query.Any();
-		}
-
 		public IHttpActionResult Post(Usuario mdl)
 		{
 			using (var db = new SuporteCITDB())
 			{
-				if (VerificaDuplicado(mdl, db))
-					return BadRequest("O login informado já existe.");
-
-				mdl.Id = Convert.ToInt64(db.InsertWithIdentity(mdl));
+				var resp = ""; if (!mdl.Create(db, ref resp))
+					return BadRequest(resp);
 
 				return Ok(mdl);
 			}
@@ -91,28 +72,28 @@ namespace App.Web.Controllers
 		{
 			using (var db = new SuporteCITDB())
 			{
-				mdl.Id = id;
-
-				if (VerificaDuplicado(mdl, db))
-					return BadRequest("O login informado já existe.");
-
-				var resp = "";
-
-				if (!mdl.Update(db, ref resp))
+				var resp = ""; if (!mdl.Update(db, ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);
 			}
 		}
 
-		public void Delete(long id)
+		public IHttpActionResult Delete(long id)
 		{
 			using (var db = new SuporteCITDB())
 			{
 				var model = db.Usuarios.Find(id);
 
-				if (model != null)
-					db.Delete(model);
+				if (model == null)
+					return StatusCode(HttpStatusCode.NotFound);
+
+				var resp = ""; if (!model.CanDelete(db, ref resp))
+					return BadRequest(resp);
+					
+				db.Delete(model);
+				
+				return Ok();
 			}
 		}
 	}

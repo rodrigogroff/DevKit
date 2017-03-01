@@ -11,7 +11,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.viewModel =
 		{
-			// ## Operacional #########################
+			// ## Sistema #########################
 			// perfis
 			tg1011: false, tg1012: false, tg1013: false, tg1014: false, tg1015: false,
 			// usuarios

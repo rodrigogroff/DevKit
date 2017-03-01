@@ -5,18 +5,17 @@ angular.module('app.controllers').controller('UsuarioController',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
 	$scope.style_error = { 'background-color': 'goldenrod' }
-
 	$scope.maskTelefone = '(99) 999999999';
 	
+	$scope.viewModel = {};
 	$scope.permModel = {};
+	
 	$scope.loading = false;
 
 	function ObterPermissoes() {
 		Api.Permissao.obter({ id: 102 }, function (data) { $scope.permModel = data; }, function (response) { });
 	}
-
-	$scope.viewModel = {};
-
+	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
 	init();
@@ -76,7 +75,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	};
 
 	$scope.listar = function () {
-		$scope.entidadeAlterada = false;
 		$state.go('usuarios');
 	}
 
@@ -94,7 +92,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	}
 
 	// ============================================
-	// telefone -----------------------------------
+	// telefone 
 	// ============================================
 
 	$scope.addTelefone = false;
@@ -102,6 +100,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		stTelefone: '',
 		stLocal: ''
 	};
+	$scope.errorTel = false;
+	$scope.errorTelMsg = '';
 	
 	$scope.removerTelefone = function (index, lista) {
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
@@ -123,9 +123,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.salvarNovoTelefone = function ()
 	{
-		console.log($scope.novoTelefone.stTelefone.length);
-		console.log($scope.novoTelefone.stTelefone);
-
 		var _stTelefone = $scope.novoTelefone.stTelefone.length != 11;
 		var _stLocal = $scope.novoTelefone.stLocal.length < 3;
 		
@@ -134,10 +131,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			if (_stTelefone) $scope.style_stTelefone = $scope.style_error; else $scope.style_stTelefone = {};
 			if (_stLocal) $scope.style_stLocal = $scope.style_error; else $scope.style_stLocal = {};
 
-			toastr.error('Preencha os campos corretamente', 'Validação');
+			$scope.errorTel = true;
+			$scope.errorTelMsg = 'Preencha os campos corretamente';
 		}
 		else
 		{
+			$scope.errorTel = false;
+			
 			$scope.addTelefone = false;
 			$scope.novoTelefone.FkUsuario = id;
 			$scope.viewModel.telefones.push($scope.novoTelefone);
@@ -161,11 +161,17 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	}
 
 	// ============================================
-	// email --------------------------------------
+	// email 
 	// ============================================
 
 	$scope.addEmail = false;
-	$scope.novoEmail = { stEmail: '' };
+	$scope.novoEmail =
+		{
+			stEmail: ''
+		};
+	$scope.errorEmail = false;
+	$scope.errorEmailMsg = '';
+	$scope.style_stEmail = {};
 	
 	$scope.removerEmail = function (index, lista)
 	{
@@ -189,18 +195,42 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.salvarNovoEmail = function ()
 	{
-		$scope.addEmail = false;
-		$scope.novoEmail.FkUsuario = id;
-		$scope.novoEmail.dtCriacao = new Date();
+		var _stEmail = false;
 
-		$scope.viewModel.emails.push($scope.novoEmail);
+		if ($scope.novoEmail.stEmail != undefined)
+			_stEmail = !($scope.novoEmail.stEmail.indexOf('@') > 0);
+		
+		if (_stEmail)
+		{
+			if (_stEmail)
+				$scope.style_stEmail = $scope.style_error; else $scope.style_stEmail = {};
 
-		Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data) {
-			toastr.success('Lista de emails salva', 'Sucesso');
-			$scope.novoEmail = { StEmail: '' };
-		}, function (response) {
-			showError(response.data.message);
-		});
+			$scope.errorEmail = true;
+			$scope.errorEmailMsg = 'Preencha os campos corretamente';
+		}
+		else
+		{
+			$scope.errorEmail = false;
+			$scope.addEmail = false;
+
+			$scope.novoEmail.FkUsuario = id;
+			$scope.novoEmail.dtCriacao = new Date();
+			$scope.viewModel.emails.push($scope.novoEmail);
+
+			Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Lista de emails salva', 'Sucesso');
+				$scope.novoEmail =
+					{
+						stEmail: ''
+					};
+				
+				$scope.viewModel.emails = data.emails;
+
+			}, function (response) {
+				showError(response.data.message);
+			});
+		}
 	}
 
 }]);

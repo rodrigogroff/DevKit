@@ -10,13 +10,13 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 	.state('login', {
 		url: '/login', templateUrl: 'app/_shared/login/login.html', controller: 'LoginController', data: { } })
 
-    .state('usuarios', { url: '/operacional/usuario', templateUrl: 'app/operacional/usuario/listagemUsuarios.html', controller: 'ListagemUsuariosController' })
-    .state('usuario-novo', { url: '/operacional/usuario/novo', templateUrl: 'app/operacional/usuario/usuario.html', controller: 'UsuarioController' })
-    .state('usuario', { url: '/operacional/usuario/:id', templateUrl: 'app/operacional/usuario/usuario.html', controller: 'UsuarioController' })
+    .state('usuarios', { url: '/system/usuario', templateUrl: 'app/system/usuario/listagemUsuarios.html', controller: 'ListagemUsuariosController' })
+    .state('usuario-novo', { url: '/system/usuario/novo', templateUrl: 'app/system/usuario/usuario.html', controller: 'UsuarioController' })
+    .state('usuario', { url: '/system/usuario/:id', templateUrl: 'app/system/usuario/usuario.html', controller: 'UsuarioController' })
 
-	.state('perfils', { url: '/operacional/perfil', templateUrl: 'app/operacional/perfil/listagemPerfils.html', controller: 'ListagemPerfilsController' })
-    .state('perfil-novo', { url: '/operacional/perfil/novo', templateUrl: 'app/operacional/perfil/perfil.html', controller: 'PerfilController' })
-    .state('perfil', { url: '/operacional/perfil/:id', templateUrl: 'app/operacional/perfil/perfil.html', controller: 'PerfilController' })
+	.state('perfils', { url: '/system/perfil', templateUrl: 'app/system/perfil/listagemPerfils.html', controller: 'ListagemPerfilsController' })
+    .state('perfil-novo', { url: '/system/perfil/novo', templateUrl: 'app/system/perfil/perfil.html', controller: 'PerfilController' })
+    .state('perfil', { url: '/system/perfil/:id', templateUrl: 'app/system/perfil/perfil.html', controller: 'PerfilController' })
 
 	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 

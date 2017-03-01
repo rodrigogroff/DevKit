@@ -75,9 +75,44 @@ namespace DataModel
 
 			return this;
 		}
-		
+
+		private bool CheckDuplicate(Usuario item, SuporteCITDB db)
+		{
+			var query = from e in db.Usuarios select e;
+
+			if (item.bAtivo != null)
+				query = from e in query where e.bAtivo == item.bAtivo select e;
+
+			if (item.StLogin != null)
+				query = from e in query where e.StLogin.ToUpper().Contains(item.StLogin.ToUpper()) select e;
+
+			if (item.Id > 0)
+				query = from e in query where e.Id != item.Id select e;
+
+			return query.Any();
+		}
+
+		public bool Create(SuporteCITDB db, ref string resp)
+		{
+			if (CheckDuplicate(this, db))
+			{
+				resp = "O login informado já existe.";
+				return false;
+			}
+
+			Id = Convert.ToInt64(db.InsertWithIdentity(this));
+
+			return true;
+		}
+
 		public bool Update(SuporteCITDB db, ref string resp)
 		{
+			if (CheckDuplicate(this, db))
+			{
+				resp = "Login informado já existe!";
+				return false;
+			}
+
 			if (!UpdateTelefones(db))
 			{
 				resp = "Telefone duplicado!";
@@ -162,6 +197,11 @@ namespace DataModel
 				if (!ids_orig.Contains(itemNewId))
 					db.Insert((from e in Emails where e.Id == itemNewId select e).FirstOrDefault());
 
+			return true;
+		}
+
+		public bool CanDelete(SuporteCITDB db, ref string resp)
+		{
 			return true;
 		}
 	}

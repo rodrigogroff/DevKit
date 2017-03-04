@@ -77,18 +77,19 @@ angular.module('app.services', ['ngResource'])
 
 .factory('Api', ['$resource', function ($resource) {
 	var opcoes = {
-		'adicionar': { method: 'POST' },
-		'listar': { method: 'GET', isArray: true },
-		'listarPaginado': { method: 'GET', isArray: false },
-		'obter': { method: 'GET', isArray: false },
-		'atualizar': { method: 'PUT' },
-		'remover': { method: 'DELETE' }
+		'add': { method: 'POST' },
+		'list': { method: 'GET', isArray: true },
+		'listPage': { method: 'GET', isArray: false },
+		'get': { method: 'GET', isArray: false },
+		'update': { method: 'PUT' },
+		'remove': { method: 'DELETE' }
 	};
+
 	return {
 		
-		Usuario: $resource('api/usuario/:id', {}, opcoes),
-		Perfil: $resource('api/perfil/:id', {}, opcoes),
-		Permissao: $resource('api/permissao/:id', {}, opcoes)
+		User: $resource('api/user/:id', {}, opcoes),
+		Profile: $resource('api/profile/:id', {}, opcoes),
+		Permission: $resource('api/permission/:id', {}, opcoes)
 
 	};
 }]);

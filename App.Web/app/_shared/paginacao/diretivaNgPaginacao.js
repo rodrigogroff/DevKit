@@ -8,7 +8,7 @@ angular.module('app.directives').directive('ngPaginacao', function () {
 
 		scope: {
 			carregar: '=',
-			lista: '=',
+			list: '=',
 			total: '=',
 			itensporpagina: '=',
 			paginador: '=',
@@ -110,7 +110,7 @@ angular.module('app.directives').directive('ngPaginacao', function () {
 				}
 			});
 
-			$scope.$watch("lista", function (valorNovo, valorAntigo) {
+			$scope.$watch("list", function (valorNovo, valorAntigo) {
 				$scope.itemInicial = $scope.paginaAtual * $scope.itensporpagina + 1;
 				$scope.itemFinal = Math.min(($scope.paginaAtual + 1) * $scope.itensporpagina, $scope.total);
 			});

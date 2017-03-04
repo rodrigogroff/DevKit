@@ -5,7 +5,7 @@
 <#
 	NamespaceName = "DataModel";
 
-	LoadPostgreSQLMetadata("localhost", "5432", "SuporteCIT", "postgres", "rodrigo");
+	LoadPostgreSQLMetadata("localhost", "5432", "DevKit", "postgres", "rodrigo");
 
 	GenerateModel();
 #>

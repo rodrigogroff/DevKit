@@ -58,8 +58,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Tabelas\Perfil_db.cs" />
-    <Compile Include="DataModel\Tabelas\Usuario_db.cs" />
+    <Compile Include="DataModel\Tables\Profile_db.cs" />
+    <Compile Include="DataModel\Tables\User_db.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +89,7 @@
     <None Include="packages.config" />
     <None Include="README.md" />
     <Content Include="LinqToDB.Templates\CopyMe.PostgreSQL.tt.txt" />
+    <Content Include="SQL\insert_dba.sql" />
     <Content Include="SQL\create_tables.sql" />
   </ItemGroup>
   <ItemGroup>

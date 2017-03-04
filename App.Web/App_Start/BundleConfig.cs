@@ -105,10 +105,10 @@ namespace App.Web
 				"~/app/_shared/NgSelectsService.js",
 				"~/app/app.js",
 				// telas
-				"~/app/system/usuario/UsuarioController.js",
-				"~/app/system/usuario/ListagemUsuariosController.js",
-				"~/app/system/perfil/PerfilController.js",
-				"~/app/system/perfil/ListagemPerfilsController.js"
+				"~/app/system/user/UserController.js",
+				"~/app/system/user/ListingUsersController.js",
+				"~/app/system/profile/ProfileController.js",
+				"~/app/system/profile/ListingProfilesController.js"
 				));
 
 			BundleTable.EnableOptimizations = false;

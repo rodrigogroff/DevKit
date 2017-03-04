@@ -5,7 +5,6 @@
 // </auto-generated>
 //---------------------------------------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using LinqToDB;
@@ -14,88 +13,88 @@ using LinqToDB.Mapping;
 namespace DataModel
 {
 	/// <summary>
-	/// Database       : SuporteCIT
+	/// Database       : DevKit
 	/// Data Source    : localhost
 	/// Server Version : 9.6.1
 	/// </summary>
-	public partial class SuporteCITDB : LinqToDB.Data.DataConnection
+	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<Perfil>          Perfils          { get { return this.GetTable<Perfil>(); } }
-		public ITable<Usuario>         Usuarios         { get { return this.GetTable<Usuario>(); } }
-		public ITable<UsuarioEmail>    UsuarioEmails    { get { return this.GetTable<UsuarioEmail>(); } }
-		public ITable<UsuarioTelefone> UsuarioTelefones { get { return this.GetTable<UsuarioTelefone>(); } }
+		public ITable<Profile>   Profiles   { get { return this.GetTable<Profile>(); } }
+		public ITable<User>      Users      { get { return this.GetTable<User>(); } }
+		public ITable<UserEmail> UserEmails { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserPhone> UserPhones { get { return this.GetTable<UserPhone>(); } }
 
-		public SuporteCITDB()
+		public DevKitDB()
 		{
 		}
 
-		public SuporteCITDB(string configuration)
+		public DevKitDB(string configuration)
 			: base(configuration)
 		{
 		}
 	}
 
-	[Table(Schema="public", Name="Perfil")]
-	public partial class Perfil
+	[Table(Schema="public", Name="Profile")]
+	public partial class Profile
 	{
-		[PrimaryKey, Identity] public long   Id           { get; set; } // bigint
-		[Column,     Nullable] public string StNome       { get; set; } // character varying(150)
-		[Column,     Nullable] public string StPermissoes { get; set; } // character varying(4000)
+		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
+		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
+		[Column,     Nullable] public string stPermissions { get; set; } // character varying(9999)
 	}
 
-	[Table(Schema="public", Name="Usuario")]
-	public partial class Usuario
+	[Table(Schema="public", Name="User")]
+	public partial class User
 	{
-		[PrimaryKey, Identity] public long      Id            { get; set; } // bigint
-		[Column,     Nullable] public string    StLogin       { get; set; } // character varying(100)
-		[Column,     Nullable] public string    StPassword    { get; set; } // character varying(100)
-		[Column,     Nullable] public bool?     bAtivo        { get; set; } // boolean
-		[Column,     Nullable] public long?     FkPerfil      { get; set; } // bigint
-		[Column,     Nullable] public DateTime? DtUltimoLogin { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
+		[Column,     Nullable] public string    stLogin     { get; set; } // character varying(200)
+		[Column,     Nullable] public string    stPassword  { get; set; } // character varying(30)
+		[Column,     Nullable] public bool?     bActive     { get; set; } // boolean
+		[Column,     Nullable] public long?     fkProfile   { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLastLogin { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtCreation  { get; set; } // timestamp (6) without time zone
 	}
 
-	[Table(Schema="public", Name="UsuarioEmail")]
-	public partial class UsuarioEmail
+	[Table(Schema="public", Name="UserEmail")]
+	public partial class UserEmail
 	{
-		[PrimaryKey, Identity] public long      Id        { get; set; } // bigint
-		[Column,     Nullable] public string    StEmail   { get; set; } // character varying(250)
-		[Column,     Nullable] public long?     FkUsuario { get; set; } // bigint
-		[Column,     Nullable] public DateTime? DtCriacao { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public long   id      { get; set; } // bigint
+		[Column,     Nullable] public long?  fkUser  { get; set; } // bigint
+		[Column,     Nullable] public string stEmail { get; set; } // character varying(250)
 	}
 
-	[Table(Schema="public", Name="UsuarioTelefone")]
-	public partial class UsuarioTelefone
+	[Table(Schema="public", Name="UserPhone")]
+	public partial class UserPhone
 	{
-		[PrimaryKey, Identity] public long   Id         { get; set; } // bigint
-		[Column,     Nullable] public string StTelefone { get; set; } // character varying(20)
-		[Column,     Nullable] public string StLocal    { get; set; } // character varying(100)
-		[Column,     Nullable] public long?  FkUsuario  { get; set; } // bigint
+		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
+		[Column,     Nullable] public long?  fkUser        { get; set; } // bigint
+		[Column,     Nullable] public string stPhone       { get; set; } // character varying(50)
+		[Column,     Nullable] public string stDescription { get; set; } // character varying(50)
 	}
 
 	public static partial class tableExtensions
 	{
-		public static Perfil Find(this ITable<Perfil> table, long Id)
+		public static Profile Find(this ITable<Profile> table, long id)
 		{
 			return table.FirstOrDefault(t =>
-				t.Id == Id);
+				t.id == id);
 		}
 
-		public static Usuario Find(this ITable<Usuario> table, long Id)
+		public static User Find(this ITable<User> table, long id)
 		{
 			return table.FirstOrDefault(t =>
-				t.Id == Id);
+				t.id == id);
 		}
 
-		public static UsuarioEmail Find(this ITable<UsuarioEmail> table, long Id)
+		public static UserEmail Find(this ITable<UserEmail> table, long id)
 		{
 			return table.FirstOrDefault(t =>
-				t.Id == Id);
+				t.id == id);
 		}
 
-		public static UsuarioTelefone Find(this ITable<UsuarioTelefone> table, long Id)
+		public static UserPhone Find(this ITable<UserPhone> table, long id)
 		{
 			return table.FirstOrDefault(t =>
-				t.Id == Id);
+				t.id == id);
 		}
 	}
 }

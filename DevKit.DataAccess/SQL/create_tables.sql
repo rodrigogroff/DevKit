@@ -1,4 +1,19 @@
-﻿CREATE TABLE public."Profile"
+﻿
+CREATE TABLE public."Setup"
+(
+    id bigserial NOT NULL,
+    "stPhoneMask" character varying(99),
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Setup"
+    OWNER to postgres;
+
+CREATE TABLE public."Profile"
 (
     id bigserial NOT NULL,
     "stName" character varying(200),

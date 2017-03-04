@@ -167,7 +167,7 @@ namespace DataModel
 				case "newPhone":
 					{
 						var ent = JsonConvert.DeserializeObject<UserPhone>(anexedEntity.ToString());
-						ent.stPhone = GetMaskedValue(ent.stPhone);
+						ent.stPhone = GetMaskedValue(db, ent.stPhone);
 						db.Insert(ent);
 
 						phones = LoadPhones(db);
@@ -215,8 +215,14 @@ namespace DataModel
 			return true;
 		}
 
-		public string GetMaskedValue(string stPhone, string mask = "(99) 9999999")
+		public string GetMaskedValue(DevKitDB db, string stPhone)
 		{
+			var pref = (from e in db.Setups select e).FirstOrDefault();
+			var mask = "(99) 9999999"; // default
+
+			if (pref != null)
+				mask = pref.stPhoneMask;
+
 			bool foundMask = false;
 
 			foreach (var i in stPhone)

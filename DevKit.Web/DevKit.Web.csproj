@@ -235,6 +235,8 @@
     <Content Include="app\system\profile\profile.html" />
     <Content Include="app\system\profile\ProfileController.js" />
     <Content Include="app\system\profile\_filterProfile.html" />
+    <Content Include="app\system\setup\setup.html" />
+    <Content Include="app\system\setup\SetupController.js" />
     <Content Include="app\system\user\user.html" />
     <Content Include="app\system\user\UserController.js" />
     <Content Include="app\system\user\listingUsers.html" />
@@ -795,6 +797,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\System\SetupCtrl.cs" />
     <Compile Include="Controllers\System\ProfileCtrl.cs" />
     <Compile Include="Controllers\System\PermissionCtrl.cs" />
     <Compile Include="GlobalExtensions.cs" />

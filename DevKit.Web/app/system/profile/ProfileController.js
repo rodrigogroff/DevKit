@@ -14,7 +14,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.viewModel =
 		{
 			// ## System #########################
-
+			// setup
+			tg1001: false, tg1002: false, tg1003: false, tg1004: false, tg1005: false,
 			// profiles
 			tg1011: false, tg1012: false, tg1013: false, tg1014: false, tg1015: false,
 			// users
@@ -35,6 +36,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.Profile.get({ id: id }, function (data)
 			{
+				// setup
+				if (data.stPermissions.indexOf('|1001|') >= 0) data.tg1001 = true; else data.tg1001 = false;
+				if (data.stPermissions.indexOf('|1002|') >= 0) data.tg1002 = true; else data.tg1002 = false;
+				if (data.stPermissions.indexOf('|1003|') >= 0) data.tg1003 = true; else data.tg1003 = false;
+				if (data.stPermissions.indexOf('|1004|') >= 0) data.tg1004 = true; else data.tg1004 = false;
+				if (data.stPermissions.indexOf('|1005|') >= 0) data.tg1005 = true; else data.tg1005 = false;
+
 				// profiles
 				if (data.stPermissions.indexOf('|1011|') >= 0) data.tg1011 = true; else data.tg1011 = false;
 				if (data.stPermissions.indexOf('|1012|') >= 0) data.tg1012 = true; else data.tg1012 = false;
@@ -91,6 +99,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.errorMainMsg = '';
 
 				var perms = ''; var _mdl = $scope.viewModel;
+
+				// setup
+				if (_mdl.tg1001 == true) perms += '|1001|'; if (_mdl.tg1002 == true) perms += '|1002|'; if (_mdl.tg1003 == true) perms += '|1003|';
+				if (_mdl.tg1004 == true) perms += '|1004|'; if (_mdl.tg1005 == true) perms += '|1005|';
 
 				// profiles
 				if (_mdl.tg1011 == true) perms += '|1011|'; if (_mdl.tg1012 == true) perms += '|1012|'; if (_mdl.tg1013 == true) perms += '|1013|';

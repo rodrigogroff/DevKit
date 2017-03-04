@@ -103,9 +103,16 @@ namespace DevKit.Web
 				"~/app/_shared/SelectsService.js",
 				"~/app/_shared/NgSelectsService.js",
 				"~/app/app.js",
+
+				// ====================
 				// telas
+				// ====================
+
+				"~/app/system/setup/SetupController.js",
+
 				"~/app/system/user/UserController.js",
 				"~/app/system/user/ListingUsersController.js",
+
 				"~/app/system/profile/ProfileController.js",
 				"~/app/system/profile/ListingProfilesController.js"
 				));

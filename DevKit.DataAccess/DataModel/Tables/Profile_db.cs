@@ -18,20 +18,37 @@ namespace DataModel
 		public bool? ativo;
 		public string busca;
 	}
-	
+
+	// --------------------------
+	// properties
+	// --------------------------
+
+	public partial class Profile
+	{
+		public int qttyUsers = 0,
+					qttyPermissions = 0;
+
+		public List<User> Users { get; set; }
+	}
+
+	// --------------------------
+	// functions
+	// --------------------------
+
 	public partial class Profile
 	{
 		ProfileLoad_Params load = new ProfileLoad_Params { bAll = true };
 
-		public int	qttyUsers = 0,
-					qttyPermissions = 0;
+		List<User> LoadUsers(DevKitDB db)
+		{
+			return (from e in db.Users where e.fkProfile == id select e).
+				ToList();
+		}
 
-		public List<User> Users { get; set; }
-
-		// functions
-		
-		List<User> LoadUsers(DevKitDB db) { return (from e in db.Users where e.fkProfile == id select e).ToList(); }
-		int CountUsers(DevKitDB db) { return (from e in db.Users where e.fkProfile == id select e).Count(); }
+		int CountUsers(DevKitDB db)
+		{
+			return (from e in db.Users where e.fkProfile == id select e).Count();
+		}
 
 		public IQueryable<Profile> ComposedFilters(DevKitDB db, ProfileFilter filter)
 		{

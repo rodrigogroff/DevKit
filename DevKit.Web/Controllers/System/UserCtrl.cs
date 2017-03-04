@@ -75,7 +75,7 @@ namespace DevKit.Web.Controllers
 				var resp = ""; if (!mdl.Update(db, ref resp))
 					return BadRequest(resp);
 
-				return Ok(mdl);
+				return Ok(mdl);				
 			}
 		}
 

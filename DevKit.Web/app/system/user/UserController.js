@@ -75,6 +75,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				if (id > 0)
 				{
+					$scope.viewModel.updateCommand = "entity";
+
 					Api.User.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('User saved!', 'Success');
@@ -127,25 +129,30 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	// ============================================
 
 	$scope.addPhone = false;
-	$scope.newPhone = {
-		stPhone: '',
-		stLocal: ''
-	};
-	$scope.errorTel = false;
-	$scope.errorTelMsg = '';
+	$scope.newPhone = { stPhone: '', stDescription: '' };
+
+	$scope.errorPhone = false;
+	$scope.errorPhoneMsg = '';
 	
-	$scope.removePhone = function (index, lista) {
+	$scope.removePhone = function (index, lista)
+	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
-		else {
-			Api.User.update({ id: id }, $scope.viewModel, function (data) {
-				toastr.success('Phone added', 'Success');
-				$scope.viewModel.phones.splice(index, 1);
+		else
+		{
+			$scope.viewModel.updateCommand = "removePhone";
+			$scope.viewModel.anexedEntity = $scope.viewModel.phones[index];
+
+			Api.User.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Phone removed', 'Success');
+				$scope.viewModel.phones = data.phones;
 			});
 		}
 	}
 
-	$scope.addNewPhone = function () {
+	$scope.addNewPhone = function ()
+	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
@@ -154,36 +161,37 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.saveNewPhone = function ()
 	{
-		var _stPhone = $scope.newPhone.stPhone.length != 11;
-		var _stLocal = $scope.newPhone.stLocal.length < 3;
+		var _stPhone = $scope.newPhone.stPhone.length == 11;
+		var _stDescription = $scope.newPhone.stDescription.length > 3;
 		
-		if (_stPhone || _stLocal)
+		if (!_stPhone || !_stDescription)
 		{
-			if (_stPhone) $scope.style_stTelefone = $scope.style_error; else $scope.style_stTelefone = {};
-			if (_stLocal) $scope.style_stLocal = $scope.style_error; else $scope.style_stLocal = {};
+			if (!_stPhone) $scope.style_stPhone = $scope.style_error; else $scope.style_stPhone = {};
+			if (!_stDescription) $scope.style_stDescription = $scope.style_error; else $scope.style_stDescription = {};
 
-			$scope.errorTel = true;
-			$scope.errorTelMsg = 'Preencha os campos corretamente';
+			$scope.errorPhone = true;
+			$scope.errorPhoneMsg = 'Field validation failed';
 		}
 		else
 		{
-			$scope.errorTel = false;
+			$scope.errorPhone = false;
 			
-			$scope.addTelefone = false;
-			$scope.novoTelefone.FkUsuario = id;
-			$scope.viewModel.telefones.push($scope.novoTelefone);
+			$scope.addPhone = false;
+			$scope.newPhone.fkUser = id;
+			
+			$scope.viewModel.updateCommand = "newPhone";
+			$scope.viewModel.anexedEntity = $scope.newPhone;
 
-			Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data)
+			Api.User.update({ id: id }, $scope.viewModel, function (data)
 			{				
-				$scope.style_stTelefone = {}
+				$scope.style_stPhone = {}
 				$scope.style_stLocal = {}
-				$scope.novoTelefone = {
-					stTelefone: '',
-					stLocal: ''
-				};
-				toastr.success('Lista de telefones salva', 'Sucesso');
 
-				$scope.viewModel.telefones = data.telefones;
+				$scope.newPhone = { stPhone: '', stLocal: '' };
+
+				toastr.success('Phone added', 'Success');
+
+				$scope.viewModel.phones = data.phones;
 
 			}, function (response) {
 				toastr.error(response.data.message, 'Error');

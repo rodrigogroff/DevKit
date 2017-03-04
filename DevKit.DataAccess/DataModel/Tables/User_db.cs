@@ -2,17 +2,18 @@
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using Newtonsoft.Json;
 
 namespace DataModel
 {
 	public class UserLoadParams
 	{
-		public bool bTudo = false,
-					bPerfil = false,
-					bTelefones = false,
-					bQtdeTelefones = false,
+		public bool bAll = false,
+					bProfile = false,
+					bPhones = false,
+					bQttyPhones = false,
 					bEmails = false,
-					bQtdeEmails = false;
+					bQttyEmails = false;
 	}
 
 	public class UserFilter
@@ -23,26 +24,60 @@ namespace DataModel
 		public string busca;
 	}
 
+	// --------------------------
+	// properties
+	// --------------------------
+
 	public partial class User
 	{
-		UserLoadParams load = new UserLoadParams { bTudo = true };
-
-		public int	qttyPhones = 0,
+		public int qttyPhones = 0,
 					qttyEmails = 0;
 
 		public Profile Profile;
 		public List<UserPhone> phones = new List<UserPhone>();
 		public List<UserEmail> emails = new List<UserEmail>();
 
-		// functions
+		public string updateCommand = "";
+		public object anexedEntity;
+	}
 
-		Profile LoadPerfil(DevKitDB db) { return (from e in db.Profiles where e.id == fkProfile select e).FirstOrDefault(); }
+	// --------------------------
+	// functions
+	// --------------------------
 
-		List<UserPhone> LoadPhones(DevKitDB db) { return (from e in db.UserPhones where e.fkUser == id select e).OrderBy ( t=> t.stPhone).ToList(); }
-		int CountPhones(DevKitDB db) { return (from e in db.UserPhones where e.fkUser == id select e).Count(); }
+	public partial class User
+	{
+		UserLoadParams load = new UserLoadParams { bAll = true };
+
+		Profile LoadPerfil(DevKitDB db)
+		{
+			return (from e in db.Profiles where e.id == fkProfile select e).
+				FirstOrDefault();
+		}
+
+		List<UserPhone> LoadPhones(DevKitDB db)
+		{
+			return (from e in db.UserPhones where e.fkUser == id select e).
+				OrderBy ( t=> t.stPhone).
+				ToList();
+		}
+
+		int CountPhones(DevKitDB db)
+		{
+			return (from e in db.UserPhones where e.fkUser == id select e).Count();
+		}
 		
-		List<UserEmail> LoadEmails(DevKitDB db) { return (from e in db.UserEmails where e.fkUser == id select e).OrderByDescending(t=>t.id).ToList(); }
-		int CountEmails(DevKitDB db) { return (from e in db.UserEmails where e.fkUser == id select e).Count(); }
+		List<UserEmail> LoadEmails(DevKitDB db)
+		{
+			return (from e in db.UserEmails where e.fkUser == id select e).
+				OrderByDescending(t=>t.id).
+				ToList();
+		}
+
+		int CountEmails(DevKitDB db)
+		{
+			return (from e in db.UserEmails where e.fkUser == id select e).Count();
+		}
 
 		public IQueryable<User> ComposedFilters(DevKitDB db, UserFilter filter)
 		{
@@ -65,16 +100,16 @@ namespace DataModel
 			if (_load != null)
 				load = _load;
 
-			if (load.bTudo || load.bPerfil)
+			if (load.bAll || load.bProfile)
 				Profile = LoadPerfil(db);
 
-			// telefones
-			if (load.bTudo || load.bTelefones) phones = LoadPhones(db);
-			if (load.bTudo) qttyPhones = phones.Count(); else if (load.bQtdeTelefones) qttyPhones = CountPhones(db);
+			// phones
+			if (load.bAll || load.bPhones) phones = LoadPhones(db);
+			if (load.bAll) qttyPhones = phones.Count(); else if (load.bQttyPhones) qttyPhones = CountPhones(db);
 
 			// emails
-			if (load.bTudo || load.bEmails) emails = LoadEmails(db);
-			if (load.bTudo) qttyEmails = emails.Count(); else if (load.bQtdeEmails) qttyEmails = CountEmails(db);
+			if (load.bAll || load.bEmails) emails = LoadEmails(db);
+			if (load.bAll) qttyEmails = emails.Count(); else if (load.bQttyEmails) qttyEmails = CountEmails(db);
 
 			return this;
 		}
@@ -106,7 +141,7 @@ namespace DataModel
 				return false;
 			}
 
-			this.dtCreation = DateTime.Now;
+			dtCreation = DateTime.Now;
 
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 
@@ -121,19 +156,32 @@ namespace DataModel
 				return false;
 			}
 
-			if (!UpdateTelefones(db))
+			switch (updateCommand)
 			{
-				resp = "Duplicate phone";
-				return false;
-			}
+				case "entity":
+					{
+						db.Update(this);
+						break;
+					}
+									
+				case "newPhone":
+					{
+						var ent = JsonConvert.DeserializeObject<UserPhone>(anexedEntity.ToString());
+						ent.stPhone = GetMaskedValue(ent.stPhone);
+						db.Insert(ent);
 
-			if (!UpdateEmails(db))
-			{
-				resp = "Duplicate email!";
-				return false;
-			}
+						phones = LoadPhones(db);
+						break;
+					}
 
-			db.Update(this);
+				case "removePhone":
+					{
+						db.Delete(JsonConvert.DeserializeObject<UserPhone>(anexedEntity.ToString()));
+
+						phones = LoadPhones(db);
+						break;
+					}
+			}
 
 			return true;
 		}
@@ -149,73 +197,36 @@ namespace DataModel
 			return true;
 		}
 
-		public bool UpdateTelefones(DevKitDB db)
+		public string GetMaskedValue(string stPhone, string mask = "(99) 9999999")
 		{
-			// search global mask
-			var mask = "(99) 9999999";
+			bool foundMask = false;
 
-			for (int x = 0; x < phones.Count; ++x)
-			{
-				var item = phones.ElementAt(x);
-
-				bool foundMask = false;
-
-				foreach (var i in item.stPhone)
-					if (!Char.IsLetterOrDigit(i))
-					{
-						foundMask = true;
-						break;
-					}
-					
-				if (!foundMask)
+			foreach (var i in stPhone)
+				if (!Char.IsLetterOrDigit(i))
 				{
-					var result = ""; var index = 0; var maxlen = item.stPhone.Length;
-
-					foreach (var i in mask)
-					{
-						if (Char.IsLetterOrDigit(i))
-						{
-							if (index < maxlen)
-								result += item.stPhone[index++];
-						}
-						else
-							result += i;
-					}
-
-					item.stPhone = result;
+					foundMask = true;
+					break;
 				}
+
+			if (!foundMask)
+			{
+				var result = ""; var index = 0; var maxlen = stPhone.Length;
+
+				foreach (var i in mask)
+				{
+					if (Char.IsLetterOrDigit(i))
+					{
+						if (index < maxlen)
+							result += stPhone[index++];
+					}
+					else
+						result += i;
+				}
+
+				return result;
 			}
-
-			var originais = LoadPhones(db);
-			var ids_orig = (from e in originais select e.id).ToList();
-			var ids_new = (from e in phones select e.id).ToList();
-
-			foreach (var itemOldId in ids_orig)
-				if (!ids_new.Contains(itemOldId))
-					db.Delete((from e in originais where e.id == itemOldId select e).FirstOrDefault());
-
-			foreach (var itemNewId in ids_new)
-				if (!ids_orig.Contains(itemNewId))
-					db.Insert((from e in phones where e.id == itemNewId select e).FirstOrDefault());
-
-			return true;
-		}
-
-		public bool UpdateEmails(DevKitDB db)
-		{
-			var originais = LoadEmails(db);
-			var ids_orig = (from e in originais select e.id).ToList();
-			var ids_new = (from e in emails select e.id).ToList();
-
-			foreach (var itemOldId in ids_orig)
-				if (!ids_new.Contains(itemOldId))
-					db.Delete((from e in originais where e.id == itemOldId select e).FirstOrDefault());
-
-			foreach (var itemNewId in ids_new)
-				if (!ids_orig.Contains(itemNewId))
-					db.Insert((from e in emails where e.id == itemNewId select e).FirstOrDefault());
-
-			return true;
+			else
+				return stPhone;			
 		}
 	}
 }

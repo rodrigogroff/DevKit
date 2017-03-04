@@ -5,7 +5,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Newtonsoft.Json.Linq;
 
-namespace App.Web
+namespace DevKit.Web
 {
     public class ValidationActionFilter : ActionFilterAttribute
     {

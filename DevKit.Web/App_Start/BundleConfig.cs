@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace App.Web
+namespace DevKit.Web
 {
 	using System.Web.Optimization;
 

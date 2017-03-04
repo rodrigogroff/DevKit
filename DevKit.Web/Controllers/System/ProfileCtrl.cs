@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 
-namespace App.Web.Controllers
+namespace DevKit.Web.Controllers
 {
 	public class ProfileController : ApiControllerBase
 	{

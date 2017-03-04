@@ -6,7 +6,7 @@ using System.Threading;
 using System.Security.Claims;
 using System.Net;
 
-namespace App.Web.Controllers
+namespace DevKit.Web.Controllers
 {
 	public class TabelaPermissao
 	{

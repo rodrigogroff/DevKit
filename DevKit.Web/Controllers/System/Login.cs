@@ -8,7 +8,7 @@ using LinqToDB;
 using DataModel;
 using System.Threading;
 
-namespace App.Web
+namespace DevKit.Web
 {
 	public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
 	{

@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>App.Web</RootNamespace>
-    <AssemblyName>App.Web</AssemblyName>
+    <RootNamespace>DevKit.Web</RootNamespace>
+    <AssemblyName>DevKit.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -926,11 +926,8 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
-    <None Include="Properties\PublishProfiles\GFK.pubxml" />
     <Content Include="scripts\angular-spinner.min.js.map" />
-    <None Include="Properties\PublishProfiles\Homologa.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
-    <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="scripts\jquery-2.1.0.js" />
     <Content Include="scripts\jquery-2.1.0.min.js" />
@@ -4006,9 +4003,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+    <ProjectReference Include="..\DevKit.DataAccess\DevKit.DataAccess.csproj">
       <Project>{12e2ce82-0027-4152-abdf-fcebe99ae4f7}</Project>
-      <Name>DataAccess</Name>
+      <Name>DevKit.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -4,7 +4,7 @@ using SimpleInjector.Integration.Web;
 using System.Security.Claims;
 using System.Web;
 
-namespace App.Web
+namespace DevKit.Web
 {
 	public class IocConfig
 	{

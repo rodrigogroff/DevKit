@@ -4,9 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-[assembly: Microsoft.Owin.OwinStartup(typeof(App.Web.Startup))]
+[assembly: Microsoft.Owin.OwinStartup(typeof(DevKit.Web.Startup))]
 
-namespace App.Web
+namespace DevKit.Web
 {
 	using Microsoft.Owin;
 	using Microsoft.Owin.Security.OAuth;

@@ -4,7 +4,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace App.Web
+namespace DevKit.Web
 {
 	public class Application : HttpApplication
 	{
@@ -24,7 +24,8 @@ namespace App.Web
 			RouteTable.Routes.MapRoute(
 				name: "Default",
 				url: "{*url}",
-				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional  },
+				namespaces: new[] { "DevKit.Web.Controllers" }
 			);
 		}
 	}

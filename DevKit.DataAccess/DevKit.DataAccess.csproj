@@ -7,8 +7,8 @@
     <ProjectGuid>{12E2CE82-0027-4152-ABDF-FCEBE99AE4F7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataAccess</RootNamespace>
-    <AssemblyName>DataAccess</AssemblyName>
+    <RootNamespace>DevKit.DataAccess</RootNamespace>
+    <AssemblyName>DevKit.DataAccess</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

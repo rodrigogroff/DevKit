@@ -5,7 +5,7 @@ using System.Net;
 using System.Web.Http;
 using System.Collections.Generic;
 
-namespace App.Web.Controllers
+namespace DevKit.Web.Controllers
 {
 	public class UserController : ApiControllerBase
 	{

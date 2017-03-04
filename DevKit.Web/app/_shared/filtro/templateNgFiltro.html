@@ -4,16 +4,22 @@
 			<table ng-show="!filtro.exibeFiltro">
 				<tr>
 					<td valign="top">
-						<button type="button" style="margin-bottom:5px;height:29px" class="btn btn-default btn-xs" ng-click="toggleFiltros()" ng-if="ferramentaPesquisa"><span class="glyphicon glyphicon-filter"></span> Filtros</button>
+						<button type="button" style="margin-bottom:5px;height:29px" class="btn btn-default btn-xs" 
+								ng-click="toggleFiltros()" ng-if="ferramentaPesquisa">
+							<span class="glyphicon glyphicon-filter"></span> Filters
+						</button>
 					</td>
 					<td width="20px"></td>
 					<td width="260px" valign="top">
-						<input type="text" uppercase focus="true" id="filtroBasico" class="form-control input-transparent" ng-model="filtro.filtroBasico" style="font-size:9px; height:29px"
-								ng-show="!filtro.exibeFiltro" ng-change="alterarFiltroBasico()" placeholder="{{placeholder}}">
+						<input	type="text" uppercase focus="true" id="filtroBasico" class="form-control input-transparent" 
+								ng-model="filtro.filtroBasico" ng-show="!filtro.exibeFiltro" ng-change="alterarFiltroBasico()"
+								style="font-size:9px; height:29px">
 					</td>
 					<td width="20px"></td>
 					<td valign="top">
-						<button ng-show="!filtro.exibeFiltro" type="submit" style="margin-bottom:5px;height:29px" class="btn btn-primary btn-xs" ng-class="{ 'botaoPesquisa-blue': theme == 'blue', 'botaoPesquisa-orange': theme == 'orange' }" ng-click="pesquisar()">Pesquisar</button>
+						<button ng-show="!filtro.exibeFiltro" type="submit" style="margin-bottom:5px;height:29px" class="btn btn-primary btn-xs" 
+								ng-click="pesquisar()">Search
+						</button>
 					</td>
 				</tr>
 			</table>
@@ -24,9 +30,9 @@
 						<tr>
 							<td valign="top"><ng-include src="templateAvancado"></ng-include></td>
 							<td valign="top" width="60px"></td>
-							<td valign="top" style="padding-top:10px;"><button class="btn btn-default btn-xs" type="submit" ng-click="limpar()">Limpar</button></td>
+							<td valign="top" style="padding-top:10px;"><button class="btn btn-default btn-xs" type="submit" ng-click="limpar()">Cleanup</button></td>
 							<td width="20px"></td>
-							<td valign="top" style="padding-top:10px;"><button class="btn btn-primary btn-xs" type="submit" ng-click="pesquisar()">Pesquisar</button></td>
+							<td valign="top" style="padding-top:10px;"><button class="btn btn-primary btn-xs" type="submit" ng-click="pesquisar()">Search</button></td>
 							<td width="20px"></td>
 						</tr>
 					</table>
@@ -34,7 +40,7 @@
 						<tr>
 							<td width="20px"></td>
 							<td>
-								<button type="button" style="margin-bottom:5px;height:29px" class="btn btn-default btn-xs" ng-click="toggleFiltros()"> Fechar filtros</button>
+								<button type="button" style="margin-bottom:5px;height:29px" class="btn btn-default btn-xs" ng-click="toggleFiltros()"> Close filters</button>
 							</td>
 						</tr>
 					</table>

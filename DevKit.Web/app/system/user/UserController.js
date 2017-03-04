@@ -204,66 +204,65 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	// ============================================
 
 	$scope.addEmail = false;
-	$scope.novoEmail =
-		{
-			stEmail: ''
-		};
+	$scope.newEmail = { stEmail: '' };
+
 	$scope.errorEmail = false;
 	$scope.errorEmailMsg = '';
-	$scope.style_stEmail = {};
-	
-	$scope.removerEmail = function (index, lista)
+
+	$scope.removeEmail = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Você não tem permissão de salvar o registro', 'Permissão');
+			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			$scope.viewModel.emails.splice(index, 1);
-			Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data) {
-				toastr.success('Lista de emails salva', 'Sucesso');
+			$scope.viewModel.updateCommand = "removeEmail";
+			$scope.viewModel.anexedEntity = $scope.viewModel.emails[index];
+
+			Api.User.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Email removed', 'Success');
+				$scope.viewModel.emails = data.emails;
 			});
-		}		
+		}
 	}
-	
-	$scope.adicionarEmail = function () {
+
+	$scope.addNewEmail = function ()
+	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Você não tem permissão de salvar o registro', 'Permissão');
+			toastr.error('Access denied!', 'Permission');
 		else
 			$scope.addEmail = !$scope.addEmail;
 	}
 
-	$scope.salvarNovoEmail = function ()
+	$scope.saveNewEmail = function ()
 	{
-		var _stEmail = false;
+		var _stEmail = ($scope.newEmail.stEmail.indexOf('@') > 0);
 
-		if ($scope.novoEmail.stEmail != undefined)
-			_stEmail = !($scope.novoEmail.stEmail.indexOf('@') > 0);
-		
-		if (_stEmail)
+		if (!_stEmail)
 		{
-			if (_stEmail)
-				$scope.style_stEmail = $scope.style_error; else $scope.style_stEmail = {};
+			if (!_stEmail) $scope.style_stEmail = $scope.style_error; else $scope.style_stEmail = {};
 
 			$scope.errorEmail = true;
-			$scope.errorEmailMsg = 'Preencha os campos corretamente';
+			$scope.errorEmailMsg = 'Field validation failed';
 		}
 		else
 		{
 			$scope.errorEmail = false;
+
 			$scope.addEmail = false;
+			$scope.newEmail.fkUser = id;
 
-			$scope.novoEmail.FkUsuario = id;
-			$scope.novoEmail.dtCriacao = new Date();
-			$scope.viewModel.emails.push($scope.novoEmail);
+			$scope.viewModel.updateCommand = "newEmail";
+			$scope.viewModel.anexedEntity = $scope.newEmail;
 
-			Api.Usuario.atualizar({ id: id }, $scope.viewModel, function (data)
+			Api.User.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Lista de emails salva', 'Sucesso');
-				$scope.novoEmail =
-					{
-						stEmail: ''
-					};
+				$scope.style_stEmail = {}
 				
+				$scope.newEmail = { stEmail: '' };
+
+				toastr.success('Email added', 'Success');
+
 				$scope.viewModel.emails = data.emails;
 
 			}, function (response) {

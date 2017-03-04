@@ -181,6 +181,24 @@ namespace DataModel
 						phones = LoadPhones(db);
 						break;
 					}
+
+				case "newEmail":
+					{
+						var ent = JsonConvert.DeserializeObject<UserEmail>(anexedEntity.ToString());
+						
+						db.Insert(ent);
+
+						emails = LoadEmails(db);
+						break;
+					}
+
+				case "removeEmail":
+					{
+						db.Delete(JsonConvert.DeserializeObject<UserEmail>(anexedEntity.ToString()));
+
+						emails = LoadEmails(db);
+						break;
+					}
 			}
 
 			return true;

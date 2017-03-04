@@ -161,17 +161,23 @@
 							<tr>
 								<td width="20px"></td>
 								<td>
-									<legend style="color:white">
-										Lista de emails
-										<button class="btn btn-info btn-xs pull-right" ng-click="adicionarEmail()"><i class="fa fa-plus"> </i> Adicionar </button>
+									<legend style="color:aliceblue">
+										Email list
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
 									<div ng-if="addEmail == true">
 										<table>
-											<tr height="28px">
-												<td width="150px">Novo email</td>
-												<td width="200px">
-													<input type="text" class="form-control input-transparent" ng-maxlength="100" ng-style="style_stEmail"
-														   ng-model="novoEmail.stEmail">
+											<tr>
+												<td>
+													<table>
+														<tr height="42px">
+															<td width="120px">New Email</td>
+															<td width="200px">
+																<input type="text" class="form-control input-transparent" ng-style="style_stEmail"
+																	   ng-model="newEmail.stEmail">
+															</td>
+														</tr>
+													</table>
 												</td>
 											</tr>
 										</table>
@@ -179,7 +185,7 @@
 										<table>
 											<tr>
 												<td>
-													<button class="btn btn-primary" ng-click="salvarNovoEmail()">Salvar </button>
+													<button class="btn btn-primary" ng-click="saveNewEmail()">Salvar </button>
 												</td>
 												<td width="20px"></td>
 												<td>
@@ -196,15 +202,13 @@
 											<thead>
 												<tr>
 													<th>Email</th>
-													<th>Data</th>
-													<th width="70px" class="colunaRemover">REMOVER</th>
+													<th width="70px" class="colunaRemover">REMOVE</th>
 												</tr>
 											</thead>
-											<tr data-ng-repeat="email in viewModel.emails | orderBy:-dtCriacao">
-												<td>{{ email.stEmail }}</td>
-												<td>{{ email.dtCriacao | date:'dd/MM/yyyy HH:mm'}}</td>
+											<tr data-ng-repeat="mdl in viewModel.emails">
+												<td>{{ mdl.stEmail }}</td>
 												<td class="colunaRemover">
-													<a href="" role="button" ng-click="removerEmail($index, viewModel.emails)">
+													<a href="" role="button" ng-click="removeEmail($index, viewModel.emails)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>
 												</td>

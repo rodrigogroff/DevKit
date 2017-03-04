@@ -72,7 +72,9 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var resp = ""; if (!mdl.Update(db, ref resp))
+				var resp = "";
+
+				if (!mdl.Update(db, ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);				

@@ -24,10 +24,11 @@ namespace DevKit.Web
 
 			using (var db = new DevKitDB())
 			{
-				var usuario = (from element in db.Users
-							   where element.stLogin.ToUpper() == context.UserName.ToUpper()
-							   where element.stPassword.ToUpper() == context.Password.ToUpper()
-							   select element).FirstOrDefault();
+				var usuario = (from e in db.Users
+							   where e.stLogin.ToUpper() == context.UserName.ToUpper()
+							   where e.stPassword.ToUpper() == context.Password.ToUpper()
+							   where e.bActive == true
+							   select e).FirstOrDefault();
 
 				if (usuario != null)
 				{
@@ -42,9 +43,8 @@ namespace DevKit.Web
 					identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
 					identity.AddClaim(new Claim(ClaimTypes.Role, usuario.Profile.stName));
 					identity.AddClaim(new Claim(ClaimTypes.Sid, usuario.Profile.id.ToString()));
-
-					identity.AddClaim(new Claim("IdUsuario", usuario.id.ToString()));
-					identity.AddClaim(new Claim("IdPerfil", usuario.Profile.id.ToString()));					
+					identity.AddClaim(new Claim("IdUser", usuario.id.ToString()));
+					identity.AddClaim(new Claim("IdProfile", usuario.Profile.id.ToString()));
 
 					var ticket = new AuthenticationTicket(identity, null);
 					context.Validated(ticket);
@@ -61,11 +61,11 @@ namespace DevKit.Web
 		
 		public override Task TokenEndpoint(OAuthTokenEndpointContext context)
 		{
-			string nomeUsuario = context.Identity.Claims.Where(x => x.Type == ClaimTypes.Name).Select(x => x.Value).FirstOrDefault();
-			string idPerfil = context.Identity.Claims.Where(x => x.Type == "IdPerfil").Select(x => x.Value).FirstOrDefault();
+			string nameUser = context.Identity.Claims.Where(x => x.Type == ClaimTypes.Name).Select(x => x.Value).FirstOrDefault();
+			string IdProfile = context.Identity.Claims.Where(x => x.Type == "IdProfile").Select(x => x.Value).FirstOrDefault();
 
-			context.AdditionalResponseParameters.Add("nomeUsuario", nomeUsuario);
-			context.AdditionalResponseParameters.Add("idPerfil", Convert.ToInt32(idPerfil));
+			context.AdditionalResponseParameters.Add("nameUser", nameUser);
+			context.AdditionalResponseParameters.Add("idProfile", Convert.ToInt32(IdProfile));
 
 			return Task.FromResult<object>(null);
 		}

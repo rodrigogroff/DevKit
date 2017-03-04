@@ -101,6 +101,12 @@ namespace DataModel
 
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
+			if (stName.ToUpper() == "ADMINISTRATOR")
+			{
+				resp = "Administrator profile cannot be deleted";
+				return false;
+			}
+
 			resp = "Profile still associated with other users";
 
 			var query = from e in db.Users where e.fkProfile == this.id select e;

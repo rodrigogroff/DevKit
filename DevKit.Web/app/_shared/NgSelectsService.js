@@ -4,7 +4,7 @@
 	{
 		var tamanhoPagina = 15;
 		var campoId = (parametros && parametros.campoId) || 'id';
-		var campoNome = (parametros && parametros.campoNome) || 'stNome';
+		var campoNome = (parametros && parametros.campoNome) || 'stName';
 
 		if (parametros && parametros.tamanhoPagina) 
 			tamanhoPagina = parametros.tamanhoPagina;
@@ -13,7 +13,7 @@
 		{
 			allowClear: true,
 			itemSelecionado: null,
-			placeholder: "Selecione",
+			placeholder: "Select",
 
 			multiple: (parametros && parametros.selecaoMultipla) || false,
 

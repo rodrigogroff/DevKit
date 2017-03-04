@@ -4,8 +4,9 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 {
 	$scope.permModel = {};
 	$scope.loading = false;
+	$scope.permID = 101;
 
-	function CheckPermissions() { Api.Permission.get({ id: 101 }, function (data) { $scope.permModel = data; }, function (response) { }); }
+	function CheckPermissions() { Api.Permission.get({ id: $scope.permID }, function (data) { $scope.permModel = data; }, function (response) { }); }
 
 	init();
 

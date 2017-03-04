@@ -4,10 +4,12 @@ angular.module('app.controllers').controller('ProfileController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$scope.style_error = { 'background-color': 'goldenrod' }
 	$scope.permModel = {};
 	$scope.loading = false;
+	$scope.permID = 101;
 
-	function CheckPermissions() { Api.Permission.get({ id: 101 }, function (data) { $scope.permModel = data; }, function (response) { }); }
+	function CheckPermissions() { Api.Permission.get({ id: $scope.permID }, function (data) { $scope.permModel = data; }, function (response) { }); }
 
 	$scope.viewModel =
 		{
@@ -60,43 +62,70 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+	$scope.errorMain = false;
+	$scope.errorMainMsg = '';
+
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
-		if ($scope.formEntidade.$valid)
 		{
-			var perms = ''; var _mdl = $scope.viewModel;
+			var _stName = true;
 
-			// profiles
-			if (_mdl.tg1011 == true) perms += '|1011|'; if (_mdl.tg1012 == true) perms += '|1012|'; if (_mdl.tg1013 == true) perms += '|1013|';
-			if (_mdl.tg1014 == true) perms += '|1014|'; if (_mdl.tg1015 == true) perms += '|1015|';
+			if ($scope.viewModel.stName != undefined) // when new...
+				_stName = $scope.viewModel.stName.length < 3;
 
-			// users
-			if (_mdl.tg1021 == true) perms += '|1021|'; if (_mdl.tg1022 == true) perms += '|1022|'; if (_mdl.tg1023 == true) perms += '|1023|';
-			if (_mdl.tg1024 == true) perms += '|1024|'; if (_mdl.tg1025 == true) perms += '|1025|';
-			
-			$scope.viewModel.stPermissions = perms;
-
-			if (id > 0)
+			if (_stName) 
 			{
-				Api.Profile.update({ id: id }, $scope.viewModel, function (data) {
-					toastr.success('Profile saved!', 'Success');
-				}, function (response) {
-					toastr.error(response.data.message, 'Error');
-				});
+				if (_stName) 
+					$scope.style_stName = $scope.style_error; else $scope.style_stName = {};
+
+				$scope.errorMain = true;
+				$scope.errorMainMsg = 'Fill the form with all the required fields';
 			}
-			else 
-				Api.Profile.add($scope.viewModel, function (data) {
-					toastr.success('Profile saved!', 'Success');
-					$state.go('profile', { id: data.id });
-				}, function (response) {
-					toastr.error(response.data.message, 'Error');
-				});
+			else
+			{
+				$scope.errorMain = false;
+				$scope.errorMainMsg = '';
+
+				var perms = ''; var _mdl = $scope.viewModel;
+
+				// profiles
+				if (_mdl.tg1011 == true) perms += '|1011|'; if (_mdl.tg1012 == true) perms += '|1012|'; if (_mdl.tg1013 == true) perms += '|1013|';
+				if (_mdl.tg1014 == true) perms += '|1014|'; if (_mdl.tg1015 == true) perms += '|1015|';
+
+				// users
+				if (_mdl.tg1021 == true) perms += '|1021|'; if (_mdl.tg1022 == true) perms += '|1022|'; if (_mdl.tg1023 == true) perms += '|1023|';
+				if (_mdl.tg1024 == true) perms += '|1024|'; if (_mdl.tg1025 == true) perms += '|1025|';
+
+				$scope.viewModel.stPermissions = perms;
+
+				if (id > 0)
+				{
+					Api.Profile.update({ id: id }, $scope.viewModel, function (data)
+					{
+						toastr.success('Profile saved!', 'Success');
+					},
+					function (response)
+					{
+						toastr.error(response.data.message, 'Error');
+					});
+				}
+				else
+				{
+					Api.Profile.add($scope.viewModel, function (data)
+					{
+						toastr.success('Profile saved!', 'Success');
+						$state.go('profile', { id: data.id });
+					},
+					function (response)
+					{
+						toastr.error(response.data.message, 'Error');
+					});
+				}
+			}
 		}
-		else 
-			toastr.error('Invalid fields!', 'Validation');
 	};
 
 	$scope.list = function () {
@@ -108,6 +137,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (!$scope.permModel.remover)
 			toastr.error('Access denied!', 'Permission');
 		else
+		{
 			Api.Profile.remove({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Profile removed!', 'Success');
@@ -117,9 +147,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				toastr.error(response.data.message, 'Error');
 			});
+		}
 	}
 
-	$scope.showUser = function (mdl) {
+	$scope.showUser = function (mdl)
+	{
 		$state.go('user', { id: mdl.id });
 	}	
 

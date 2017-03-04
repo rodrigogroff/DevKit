@@ -18,9 +18,6 @@ namespace DevKit.Web
 			// Map attributes 
 			RouteTable.Routes.MapMvcAttributeRoutes();
 
-			//Upload de arquivos feito pela url /Backload/UploadHandler
-			RouteTable.Routes.MapRoute("UploadHandler", "Backload/FileHandler", new { controller = "Backload", action = "FileHandler" });
-
 			RouteTable.Routes.MapRoute(
 				name: "Default",
 				url: "{*url}",

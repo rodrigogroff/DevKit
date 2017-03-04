@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', 'ngAnimate', 'ui.router', 'angularSpinner', 'perfect_scrollbar', 'ngSanitize', 'ng-currency', 'ui.select', 'ui.select2', 'pasvaz.bindonce', 'app.filters', 'app.services', 'app.directives', 'app.controllers', 'ui.sortable', 'ui.keypress', 'xtForm', 'uploadModule', 'ui.tree', 'nvd3ChartDirectives', 'angularTreeview', 'ui.mask', 'ngCsv'])
+var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', 'ngAnimate', 'ui.router', 'angularSpinner', 'perfect_scrollbar', 'ngSanitize', 'ng-currency', 'ui.select', 'ui.select2', 'pasvaz.bindonce', 'app.filters', 'app.services', 'app.directives', 'app.controllers', 'ui.sortable', 'ui.keypress', 'xtForm', 'ui.tree', 'nvd3ChartDirectives', 'angularTreeview', 'ui.mask', 'ngCsv'])
 
 .config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider)
 {

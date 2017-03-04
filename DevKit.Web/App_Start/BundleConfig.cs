@@ -96,7 +96,6 @@ namespace DevKit.Web
 				"~/app/_shared/paginacao/diretivaPaginacao.js",
 				"~/app/_shared/controllers.js",
 				"~/app/_shared/HighlightService.js",
-				"~/app/_shared/uploadModule.js",
 				"~/app/_shared/login/AuthInterceptorService.js",
 				"~/app/_shared/login/AuthService.js",
 				"~/app/_shared/login/LoginController.js",

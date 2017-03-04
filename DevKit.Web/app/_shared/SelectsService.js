@@ -2,8 +2,8 @@
 
 	var obterConfiguracao = function (api, parametros) {
 
-		var campoNome = (parametros && parametros.campoNome) || 'Nome';
-		var campoId = (parametros && parametros.campoId) || 'Id';
+		var campoNome = (parametros && parametros.campoNome) || 'stName';
+		var campoId = (parametros && parametros.campoId) || 'id';
 		var _campoId = campoId.toLowerCase();
 		var _campoNome = campoNome.toLowerCase();
 		var tamanhoPagina = 15;
@@ -15,7 +15,7 @@
 		var configuracao = {
 
 			allowClear: true,
-			placeholder: "Selecione",
+			placeholder: "Select",
 			multiple: (parametros && parametros.selecaoMultipla) || false,
 			funcaoDadosIniciais: parametros ? parametros.funcaoDadosIniciais : undefined,
 			initSelection: function (element, callback) {
@@ -33,9 +33,8 @@
 					opcoesObter[_campoId] = id;
 					if (parametros && parametros.opcoes)
 						angular.extend(opcoesObter, parametros.opcoes);
-
-
-					api.obter(opcoesObter, function (selecionado) {
+					
+					api.get(opcoesObter, function (selecionado) {
 						return callback({ id: selecionado[_campoId], text: selecionado[_campoNome] });
 					});
 				}
@@ -98,7 +97,7 @@
 				if (parametros && parametros.opcoes)
 					angular.extend(opcoesListar, parametros.opcoes);
 
-				api.listarPaginado(opcoesListar, function (data) {
+				api.listPage(opcoesListar, function (data) {
 					var lista = [];
 					if (parametros && parametros.buscaPorTrecho && query.page == 1 && query.term) {
 						lista.push({
@@ -129,4 +128,5 @@
 	return {
 		obterConfiguracao: obterConfiguracao
 	}
+
 }])

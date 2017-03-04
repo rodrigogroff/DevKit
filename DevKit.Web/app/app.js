@@ -10,7 +10,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 	.state('login', { url: '/login', templateUrl: 'app/_shared/login/login.html', controller: 'LoginController', data: { } })
 
     .state('users', { url: '/system/user', templateUrl: 'app/system/user/listingUsers.html', controller: 'ListingUsersController' })
-    .state('users-new', { url: '/system/user/new', templateUrl: 'app/system/user/user.html', controller: 'UserController' })
+    .state('user-new', { url: '/system/user/new', templateUrl: 'app/system/user/user.html', controller: 'UserController' })
     .state('user', { url: '/system/user/:id', templateUrl: 'app/system/user/user.html', controller: 'UserController' })
 
 	.state('profiles', { url: '/system/profiles', templateUrl: 'app/system/profile/listingProfiles.html', controller: 'ListingProfilesController' })

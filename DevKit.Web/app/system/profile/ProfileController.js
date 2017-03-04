@@ -56,7 +56,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			},
 			function (response)
 			{
-				if (response.status === 404) { toastr.error('Invalid profile', 'Erro'); }
+				if (response.status === 404) { toastr.error('Invalid ID', 'Error'); }
 				$scope.list();
 			});
 		}
@@ -74,9 +74,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			var _stName = true;
 
 			if ($scope.viewModel.stName != undefined) // when new...
-				_stName = $scope.viewModel.stName.length < 3;
+				if ($scope.viewModel.stName.length < 3)
+					_stName = false;
 
-			if (_stName) 
+			if (!_stName) 
 			{
 				if (_stName) 
 					$scope.style_stName = $scope.style_error; else $scope.style_stName = {};
@@ -116,7 +117,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					Api.Profile.add($scope.viewModel, function (data)
 					{
-						toastr.success('Profile saved!', 'Success');
+						toastr.success('Profile added!', 'Success');
 						$state.go('profile', { id: data.id });
 					},
 					function (response)

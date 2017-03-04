@@ -140,6 +140,12 @@ namespace DataModel
 
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
+			if (stLogin.ToUpper() == "DBA")
+			{
+				resp = "DBA user cannot be removed";
+				return false;
+			}
+
 			return true;
 		}
 

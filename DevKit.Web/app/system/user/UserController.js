@@ -9,10 +9,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	
 	$scope.viewModel = {};
 	$scope.permModel = {};
-	
 	$scope.loading = false;
+	$scope.permID = 102;
 
-	function CheckPermissions() { Api.Permission.obter({ id: 102 }, function (data) { $scope.permModel = data; }, function (response) { }); }
+	function CheckPermissions() { Api.Permission.get({ id: $scope.permID }, function (data) { $scope.permModel = data; }, function (response) { }); }
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
@@ -22,46 +22,82 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		CheckPermissions();
 
-		$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Perfil, { tamanhoPagina: 15, campoNome: 'stNome' });
+		$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Profile, { tamanhoPagina: 15, campoNome: 'stName' });
 
-		if (id > 0) {
+		if (id > 0)
+		{
 			$scope.loading = true;
-			Api.User.obter({ id: id }, function (data) {
+			Api.User.get({ id: id }, function (data)
+			{
 				$scope.viewModel = data;
 				$scope.loading = false;
-			}, function (response) {
-				if (response.status === 404) { toastr.error('Cadastro inexistente', 'Erro'); }
+			},
+			function (response)
+			{
+				if (response.status === 404) { toastr.error('Invalid ID', 'Error'); }
 				$scope.list();
 			});
 		}
-		else {
-			$scope.viewModel = { bAtivo: true };
+		else
+		{
+			$scope.viewModel = { bActive: true };
 		}
 	}
+
+	$scope.errorMain = false;
+	$scope.errorMainMsg = '';
 
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
-		if ($scope.formBase.$valid) {
-			if (id > 0) {
-				Api.User.update({ id: id }, $scope.viewModel, function (data) {
-					toastr.success('User saved', 'Success');
-					$scope.list();
-				}, function (response) {
-					toastr.error(response.data.message, 'Error');
-				});
+		{
+			var _stLogin = true;
+
+			if ($scope.viewModel.stLogin != undefined) // when new...
+			{
+				console.log($scope.viewModel.stLogin.length);
+
+				if ($scope.viewModel.stLogin.length < 3)
+					_stLogin = false;
+			}				
+
+			if (!_stLogin)
+			{
+				if (_stLogin)
+					$scope.style_stLogin = $scope.style_error; else $scope.style_stLogin = {};
+
+				$scope.errorMain = true;
+				$scope.errorMainMsg = 'Fill the form with all the required fields';
 			}
-			else 
-				Api.User.add($scope.viewModel, function (data) {
-					showSuccessAndRedirect();
-				}, function (response) {
-					showError(response.data.message);
-				});
+			else
+			{
+				if (id > 0)
+				{
+					Api.User.update({ id: id }, $scope.viewModel, function (data)
+					{
+						toastr.success('User saved!', 'Success');
+					},
+					function (response)
+					{
+						toastr.error(response.data.message, 'Error');
+					});
+				}
+				else
+				{
+					Api.User.add($scope.viewModel, function (data)
+					{
+						toastr.success('User added!', 'Success');
+						$state.go('user', { id: data.id });
+					},
+					function (response)
+					{
+						toastr.error(response.data.message, 'Error');
+					});
+				}
+			}
 		}
-		else 
-			toastr.error('Invalid fields!', 'Validation');
 	};
 
 	$scope.list = function () {
@@ -73,12 +109,17 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (!$scope.permModel.remover)
 			toastr.error('Access denied!', 'Permission');
 		else
-			Api.User.remove({ id: id }, $scope.viewModel, function (data) {
+		{
+			Api.User.remove({ id: id }, {}, function (data)
+			{
 				toastr.success('User removed!', 'Success');
 				$scope.list();
-			}, function (response) {
-				showError(response.data.message);
-			});		
+			},
+			function (response)
+			{
+				toastr.error(response.data.message, 'Permission');
+			});
+		}			
 	}
 
 	// ============================================
@@ -145,7 +186,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.viewModel.telefones = data.telefones;
 
 			}, function (response) {
-				showError(response.data.message);
+				toastr.error(response.data.message, 'Error');
 			});
 		}
 	}
@@ -218,7 +259,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.viewModel.emails = data.emails;
 
 			}, function (response) {
-				showError(response.data.message);
+				toastr.error(response.data.message, 'Error');
 			});
 		}
 	}

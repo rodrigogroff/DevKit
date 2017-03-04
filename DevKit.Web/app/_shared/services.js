@@ -75,7 +75,8 @@ angular.module('app.services', ['ngResource'])
 	return janela;
 }])
 
-.factory('Api', ['$resource', function ($resource) {
+.factory('Api', ['$resource', function ($resource)
+{
 	var opcoes = {
 		'add': { method: 'POST' },
 		'list': { method: 'GET', isArray: true },

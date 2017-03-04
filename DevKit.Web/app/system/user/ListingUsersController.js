@@ -4,27 +4,35 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
 	$scope.permModel = {};
 	$scope.loading = false;
+	$scope.permID = 102;
 
-	function CheckPermissions() { Api.Permission.obter({ id: 102 }, function (data) { $scope.permModel = data; }, function (response) { }); }
+	function CheckPermissions() { Api.Permission.get({ id: $scope.permID }, function (data) { $scope.permModel = data; }, function (response) { }); }
 
 	init();
 
-	function init() {
+	function init()
+	{
 		CheckPermissions();
 
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;		
 	}
 
-	$scope.fields = {
-		active: 'true',
+	$scope.campos = {
+		ativo: 'true',
 		selects: {
-			perfil: ngSelects.obterConfiguracao(Api.Perfil, { tamanhoPagina: 15, campoNome: 'stName' }),
+			perfil: ngSelects.obterConfiguracao(Api.Profile, { tamanhoPagina: 15, campoNome: 'stName' }),
 		}
 	};
 	
 	$scope.itensporpagina = 15;
-	
+
+	$scope.search = function ()
+	{
+		$scope.load(0, $scope.itensporpagina);
+		$scope.paginador.reiniciar();
+	}
+
 	$scope.load = function (skip, take)
 	{
 		$scope.loading = true;
@@ -34,7 +42,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 		if (filter)
 			angular.extend(options, filter);
 
-		Api.User.listarPaginado(options, function (data) {
+		Api.User.listPage(options, function (data) {
 			$scope.list = data.results;
 			$scope.total = data.count;
 			$scope.loading = false;
@@ -44,22 +52,17 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	$scope.show = function (mdl)
 	{
 		if (!$scope.permModel.visualizar) 
-			toastr.error('Você não tem permissão para acessar esta página', 'Erro');
+			toastr.error('Access denied!', 'Permission');
 		else
-			$state.go('usuario', { id: mdl.id });
+			$state.go('user', { id: mdl.id });
 	}
 
-	$scope.add = function ()
+	$scope.new = function ()
 	{
 		if (!$scope.permModel.novo)
-			toastr.error('Você não tem permissão para acessar esta página', 'Erro');
+			toastr.error('Access denied!', 'Permission');
 		else
-			$state.go('usuario-novo');
+			$state.go('user-new');
 	}
 
-	$scope.search = function ()
-	{
-		$scope.load(0, $scope.itensporpagina);
-		$scope.paginador.reiniciar();
-	}
 }]);

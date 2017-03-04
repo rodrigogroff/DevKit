@@ -21,6 +21,12 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 	$scope.campos = { ativo: 'true' };
 	$scope.itensporpagina = 15;
 	
+	$scope.search = function ()
+	{
+		$scope.load(0, $scope.itensporpagina);
+		$scope.paginador.reiniciar();
+	}
+
 	$scope.load = function (skip, take)
 	{
 		$scope.loading = true;
@@ -51,11 +57,6 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 			toastr.error('Access denied!', 'Permission');
 		else
 			$state.go('profile-new');
-	}
-
-	$scope.search = function () {
-		$scope.load(0, $scope.itensporpagina);
-		$scope.paginador.reiniciar();
 	}
 	
 }]);

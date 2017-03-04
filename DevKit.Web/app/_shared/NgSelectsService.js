@@ -42,7 +42,7 @@
 					if (parametros && parametros.opcoes)
 						angular.extend(opcoesObter, parametros.opcoes);
 
-					api.obter(opcoesObter, function (selecionado) {
+					api.get(opcoesObter, function (selecionado) {
 						return callback({ id: selecionado[campoId], text: selecionado[campoNome], source: selecionado });
 					});
 				}
@@ -101,7 +101,7 @@
 				if (parametros && parametros.opcoes)
 					angular.extend(objFiltro, parametros.opcoes);
 
-				api.listarPaginado(objFiltro, function (data)
+				api.listPage(objFiltro, function (data)
 				{
 					var lista = [];
 

@@ -1,18 +1,19 @@
 ﻿<div class="webFormPostion">
-	<section class="widgetForm">
+	<section class="widgetForm" style="width:925px">
 		<legend style="background: rgba(15, 43, 89, 0.1	);">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td> System \ Cadastro de usuário <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td> System \ User <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button></td>
+					<td width="20px"></td>
 				</tr>
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div style="padding-left:25px;padding-top:7px;width:100%;min-height:320px;height:100%;">			
+		<div style="padding-left:25px;padding-top:7px;width:100%;min-height:320px;height:100%;">
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
-				<tab heading="Usuário">
+				<tab heading="User">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -26,7 +27,7 @@
 							<tr height="12px"></tr>
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
-								<td>Código</td>
+								<td>Id</td>
 								<td>
 									<b>{{viewModel.id}}</b>
 								</td>
@@ -34,31 +35,39 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td>Login do usuário</td>
+								<td>User Login</td>
 								<td>
-									<input type="text" focus="true" class="form-control input-transparent" ng-maxlength="100" ng-disabled="!permModel.edicao"
-												ng-model="viewModel.stLogin" >
+									<input type="text" focus="true" class="form-control input-transparent" ng-maxlength="100" 
+										   ng-disabled="!permModel.edicao" ng-style="style_stLogin" ng-model="viewModel.stLogin">
 								</td>
 								<td></td>
 							</tr>
 							<tr height="40px">
 								<td></td>
 								<td>
-									Perfil do usuário
+									Profile
 								</td>
 								<td>
-									<input type="hidden" name="perfil" style="width:100%" ui-select2="selectPerfis" ng-disabled="!permModel.edicao"
-											ng-model="viewModel.fkPerfil" />
+									<input type="hidden" name="perfil" style="width:100%" ui-select2="selectPerfis" ng-disabled="!permModel.edicao" ng-model="viewModel.fkProfile" />
 								</td>
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td>Ativo</td>
+								<td>Active</td>
 								<td>
-									<input name="ativo" type="checkbox" ng-disabled="!permModel.edicao" 
-											ng-model="viewModel.bAtivo" />
+									<input name="ativo" type="checkbox" ng-disabled="!permModel.edicao" ng-model="viewModel.bActive" checked />
 								</td>
 							</tr>
+
+							<tr height="20px"></tr>
+
+							<tr height="40px">
+								<td></td>
+								<td colspan="2">
+									<button class="btn btn-danger" ng-show="errorMain">{{errorMainMsg}} </button>
+								</td>
+							</tr>
+
 						</table>
 					</div>
 				</tab>
@@ -76,7 +85,7 @@
 										Lista de telefones
 										<button class="btn btn-info btn-xs pull-right" ng-click="adicionarTelefone()"><i class="fa fa-plus"> </i>  Adicionar </button>
 									</legend>
-									<div ng-if="addTelefone == true">											
+									<div ng-if="addTelefone == true">
 										<table>
 											<tr>
 												<td>
@@ -85,15 +94,15 @@
 															<td width="120px">Novo telefone</td>
 															<td width="200px">
 																<input type="text" class="form-control input-transparent" ng-style="style_stTelefone"
-																		ng-maxlength="14" ui-mask="{{maskTelefone}}" ui-mask-placeholder ui-mask-placeholder-char="_"
-																		ng-model="novoTelefone.stTelefone">
+																	   ng-maxlength="14" ui-mask="{{maskTelefone}}" ui-mask-placeholder ui-mask-placeholder-char="_"
+																	   ng-model="novoTelefone.stTelefone">
 															</td>
 														</tr>
 														<tr height="42px">
 															<td>Local</td>
 															<td>
 																<input type="text" class="form-control input-transparent" ng-maxlength="100" ng-style="style_stLocal"
-																		ng-model="novoTelefone.stLocal">
+																	   ng-model="novoTelefone.stLocal">
 															</td>
 														</tr>
 													</table>
@@ -104,7 +113,7 @@
 										<table>
 											<tr>
 												<td>
-													<button class="btn btn-primary" ng-click="salvarNovoTelefone()">Salvar </button> 
+													<button class="btn btn-primary" ng-click="salvarNovoTelefone()">Salvar </button>
 												</td>
 												<td width="20px"></td>
 												<td>
@@ -113,7 +122,7 @@
 											</tr>
 										</table>
 										<br />
-										<br />											
+										<br />
 									</div>
 									<div ng-show="viewModel.telefones.length > 0">
 										<br />
@@ -174,7 +183,7 @@
 												</td>
 												<td width="20px"></td>
 												<td>
-													<button class="btn btn-danger" ng-show="errorEmail" >{{errorEmailMsg}} </button>
+													<button class="btn btn-danger" ng-show="errorEmail">{{errorEmailMsg}} </button>
 												</td>
 											</tr>
 										</table>
@@ -209,17 +218,16 @@
 					</div>
 				</tab>
 
-			</tabset>			
+			</tabset>
 		</div>
 		<br />
 		<br />
 		<table>
 			<tr>
 				<td width="34px"></td>
-				<td><button class="btn btn-default" ng-click="listar()">Cancelar</button> </td>
+				<td><button class="btn btn-default" ng-click="list()">Cancel</button> </td>
 				<td width="34px"></td>
-				<td><button class="btn btn-primary" ng-click="salvar()">Salvar</button></td>
-				<td width="635px"><button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="excluir()">Excluir</button></td>
+				<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
 			</tr>
 		</table>
 		<br />

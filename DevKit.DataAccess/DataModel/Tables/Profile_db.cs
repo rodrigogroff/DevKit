@@ -123,12 +123,14 @@ namespace DataModel
 				resp = "Administrator profile cannot be deleted";
 				return false;
 			}
+			
+			if ((from e in db.Users where e.fkProfile == this.id select e).Any())
+			{
+				resp = "Profile still associated with other users";
+				return false;
+			}
 
-			resp = "Profile still associated with other users";
-
-			var query = from e in db.Users where e.fkProfile == this.id select e;
-
-			return query.Any();
+			return true;
 		}
 	}
 }

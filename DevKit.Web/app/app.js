@@ -24,7 +24,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     $locationProvider.html5Mode(true);
 
 }]);
-
+ 
 angular.module('app').config(function ($httpProvider) {
 
 	$httpProvider.interceptors.push('AuthInterceptorService');

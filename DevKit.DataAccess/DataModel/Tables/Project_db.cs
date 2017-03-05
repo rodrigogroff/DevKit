@@ -24,7 +24,6 @@ namespace DataModel
 	public partial class Project
 	{
 		public string stUser = "";
-		public string sdtCreation = "";
 
 		public string updateCommand = "";
 		public object anexedEntity;
@@ -53,10 +52,10 @@ namespace DataModel
 			if (_load != null)
 				load = _load;
 
-			var setup = db.Setups.Find(1);
+			var mdlUser = (from e in db.Users where e.id == this.fkUser select e).FirstOrDefault();
 
-			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
-			stUser = db.Users.Find((long)fkUser).stLogin;
+			if (mdlUser!= null)
+				stUser = mdlUser.stLogin;
 
 			return this;
 		}

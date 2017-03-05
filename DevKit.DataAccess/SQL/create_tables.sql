@@ -3,7 +3,6 @@ CREATE TABLE public."Setup"
 (
     id bigserial NOT NULL,
     "stPhoneMask" character varying(99),
-	"stDateFormat" character varying(99),
     PRIMARY KEY (id)
 )
 WITH (

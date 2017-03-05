@@ -53,24 +53,16 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			var _stPhoneMask = true;
-			var _stDateFormat = true;
+			var _stName = true;
 
-			if ($scope.viewModel.stPhoneMask != undefined) // when new...
-				if ($scope.viewModel.stPhoneMask.length < 5)
-					_stPhoneMask = false;
+			if ($scope.viewModel.stName != undefined) // when new...
+				if ($scope.viewModel.stName.length < 3)
+					_stName = false;
 
-			if ($scope.viewModel.stDateFormat != undefined) // when new...
-				if ($scope.viewModel.stDateFormat.length < 5)
-					_stDateFormat = false;
-
-			if (!_stPhoneMask || !_stDateFormat)
+			if (!_stName) 
 			{
-				if (!_stPhoneMask)
-					$scope.style_stPhoneMask = $scope.style_error; else $scope.style_stPhoneMask = {};
-
-				if (!_stDateFormat)
-					$scope.style_stDateFormat = $scope.style_error; else $scope.style_stDateFormat = {};
+				if (_stName) 
+					$scope.style_stName = $scope.style_error; else $scope.style_stName = {};
 
 				$scope.errorMain = true;
 				$scope.errorMainMsg = 'Fill the form with all the required fields';

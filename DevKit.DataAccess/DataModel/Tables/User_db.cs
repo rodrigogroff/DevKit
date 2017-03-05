@@ -33,9 +33,6 @@ namespace DataModel
 		public int qttyPhones = 0,
 					qttyEmails = 0;
 
-		public string sdtCreation = "";
-		public string sdtLastLogin = "";
-
 		public Profile Profile;
 		public List<UserPhone> phones = new List<UserPhone>();
 		public List<UserEmail> emails = new List<UserEmail>();
@@ -51,46 +48,6 @@ namespace DataModel
 	public partial class User
 	{
 		UserLoadParams load = new UserLoadParams { bAll = true };
-
-		public IQueryable<User> ComposedFilters(DevKitDB db, UserFilter filter)
-		{
-			var query = from e in db.Users select e;
-
-			if (filter.ativo != null)
-				query = from e in query where e.bActive == filter.ativo select e;
-
-			if (filter.busca != null)
-				query = from e in query where e.stLogin.ToUpper().Contains(filter.busca) select e;
-
-			if (filter.fkPerfil != null)
-				query = from e in query where e.fkProfile == filter.fkPerfil select e;
-
-			return query;
-		}
-
-		public User Load(DevKitDB db, UserLoadParams _load = null)
-		{
-			if (_load != null)
-				load = _load;
-
-			var setup = db.Setups.Find(1);
-
-			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
-			sdtLastLogin = dtLastLogin?.ToString(setup.stDateFormat);
-
-			if (load.bAll || load.bProfile)
-				Profile = LoadPerfil(db);
-
-			// phones
-			if (load.bAll || load.bPhones) phones = LoadPhones(db);
-			if (load.bAll) qttyPhones = phones.Count(); else if (load.bQttyPhones) qttyPhones = CountPhones(db);
-
-			// emails
-			if (load.bAll || load.bEmails) emails = LoadEmails(db);
-			if (load.bAll) qttyEmails = emails.Count(); else if (load.bQttyEmails) qttyEmails = CountEmails(db);
-
-			return this;
-		}
 
 		Profile LoadPerfil(DevKitDB db)
 		{
@@ -121,7 +78,42 @@ namespace DataModel
 		{
 			return (from e in db.UserEmails where e.fkUser == id select e).Count();
 		}
-		
+
+		public IQueryable<User> ComposedFilters(DevKitDB db, UserFilter filter)
+		{
+			var query = from e in db.Users select e;
+
+			if (filter.ativo != null)
+				query = from e in query where e.bActive == filter.ativo select e;
+
+			if (filter.busca != null)
+				query = from e in query where e.stLogin.ToUpper().Contains(filter.busca) select e;
+
+			if (filter.fkPerfil != null)
+				query = from e in query where e.fkProfile == filter.fkPerfil select e;
+
+			return query;
+		}
+
+		public User Load(DevKitDB db, UserLoadParams _load = null)
+		{
+			if (_load != null)
+				load = _load;
+
+			if (load.bAll || load.bProfile)
+				Profile = LoadPerfil(db);
+
+			// phones
+			if (load.bAll || load.bPhones) phones = LoadPhones(db);
+			if (load.bAll) qttyPhones = phones.Count(); else if (load.bQttyPhones) qttyPhones = CountPhones(db);
+
+			// emails
+			if (load.bAll || load.bEmails) emails = LoadEmails(db);
+			if (load.bAll) qttyEmails = emails.Count(); else if (load.bQttyEmails) qttyEmails = CountEmails(db);
+
+			return this;
+		}
+
 		bool CheckDuplicate(User item, DevKitDB db)
 		{
 			var query = from e in db.Users select e;
@@ -225,9 +217,12 @@ namespace DataModel
 
 		public string GetMaskedValue(DevKitDB db, string stPhone)
 		{
-			var setup = db.Setups.Find(1);
-			var mask = setup.stPhoneMask;
-				
+			var pref = (from e in db.Setups select e).FirstOrDefault();
+			var mask = "(99) 9999999"; // default
+
+			if (pref != null)
+				mask = pref.stPhoneMask;
+
 			bool foundMask = false;
 
 			foreach (var i in stPhone)

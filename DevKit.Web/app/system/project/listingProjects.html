@@ -34,10 +34,12 @@
 								<thead>
 									<tr>
 										<th width="250px">Project</th>
+										<th width="150px">Date</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
+									<td>{{ mdl.sdtCreation }}</td>
 								</tr>
 							</table>
 						</div>

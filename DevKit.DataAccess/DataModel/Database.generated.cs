@@ -56,8 +56,9 @@ namespace DataModel
 	[Table(Schema="public", Name="Setup")]
 	public partial class Setup
 	{
-		[PrimaryKey, Identity] public long   id          { get; set; } // bigint
-		[Column,     Nullable] public string stPhoneMask { get; set; } // character varying(99)
+		[PrimaryKey, Identity] public long   id           { get; set; } // bigint
+		[Column,     Nullable] public string stPhoneMask  { get; set; } // character varying(99)
+		[Column,     Nullable] public string stDateFormat { get; set; } // character varying(99)
 	}
 
 	[Table(Schema="public", Name="User")]

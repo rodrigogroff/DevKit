@@ -60,7 +60,9 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var resp = ""; if (!mdl.Create(db, Thread.CurrentPrincipal.Identity.Name, ref resp))
+				var resp = "";
+
+				if (!mdl.Create(db, GetCurrentUser(db), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);

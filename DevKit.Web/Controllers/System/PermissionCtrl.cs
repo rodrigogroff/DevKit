@@ -1,16 +1,16 @@
 ﻿using DataModel;
-using System.Linq;
-using System;
-using System.Web.Http;
-using System.Threading;
-using System.Security.Claims;
 using System.Net;
+using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
 	public class TabelaPermissao
 	{
-		public bool listagem = false, visualizar = false, edicao = false,  novo = false,  remover = false;
+		public bool listagem = false,
+					visualizar = false,
+					edicao = false, 
+					novo = false,
+					remover = false;
 	}
 
 	public class PermissionController : ApiControllerBase
@@ -19,9 +19,8 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var identity = Thread.CurrentPrincipal as ClaimsPrincipal;				
-				var sid = Convert.ToInt64(identity.Claims.Where(c => c.Type == ClaimTypes.Sid).Select(c => c.Value).SingleOrDefault());
-				var perf = db.Profiles.Find(sid);
+				var usr = GetCurrentUser(db);
+				var perf = db.Profiles.Find((long)usr.fkProfile);
 
 				if (perf == null)
 					return StatusCode(HttpStatusCode.NotFound);

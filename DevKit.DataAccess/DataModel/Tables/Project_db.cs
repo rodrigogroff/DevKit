@@ -77,7 +77,7 @@ namespace DataModel
 			return query.Any();
 		}
 
-		public bool Create(DevKitDB db, string usrName, ref string resp)
+		public bool Create(DevKitDB db, User usr, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
 			{
@@ -86,7 +86,7 @@ namespace DataModel
 			}
 
 			this.dtCreation = DateTime.Now;
-			this.fkUser = (from e in db.Users where e.stLogin == usrName select e).FirstOrDefault().id;
+			this.fkUser = usr.id;
 			
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 

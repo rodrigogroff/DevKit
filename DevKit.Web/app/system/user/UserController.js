@@ -5,14 +5,17 @@ angular.module('app.controllers').controller('UserController',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
 	$scope.style_error = { 'background-color': 'goldenrod' }
-	$scope.maskPhone = '(99) 999999999';
+	$scope.setupModel = { stPhoneMask: '' }
 	
 	$scope.viewModel = {};
 	$scope.permModel = {};
+	$scope.setupModel = {};
+
 	$scope.loading = false;
 	$scope.permID = 102;
 
 	function CheckPermissions() { Api.Permission.get({ id: $scope.permID }, function (data) { $scope.permModel = data; }, function (response) { }); }
+	function loadSetup() { Api.Setup.get({ id: 1 }, function (data) { $scope.setupModel = data; }, function (response) { }); }
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
@@ -21,6 +24,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	function init()
 	{
 		CheckPermissions();
+		loadSetup();
 
 		$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Profile, { tamanhoPagina: 15, campoNome: 'stName' });
 
@@ -161,7 +165,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.saveNewPhone = function ()
 	{
-		var _stPhone = $scope.newPhone.stPhone.length == 11;
+		var _stPhone = $scope.newPhone.stPhone != '';
 		var _stDescription = $scope.newPhone.stDescription.length > 3;
 		
 		if (!_stPhone || !_stDescription)

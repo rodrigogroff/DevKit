@@ -72,29 +72,14 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.errorMain = false;
 				$scope.errorMainMsg = '';
 
-				if (id > 0)
+				Api.Setup.update({ id: 1 }, $scope.viewModel, function (data)
 				{
-					Api.Profile.update({ id: id }, $scope.viewModel, function (data)
-					{
-						toastr.success('Profile saved!', 'Success');
-					},
-					function (response)
-					{
-						toastr.error(response.data.message, 'Error');
-					});
-				}
-				else
+					toastr.success('Setup preferences saved!', 'Success');
+				},
+				function (response)
 				{
-					Api.Profile.add($scope.viewModel, function (data)
-					{
-						toastr.success('Profile added!', 'Success');
-						$state.go('profile', { id: data.id });
-					},
-					function (response)
-					{
-						toastr.error(response.data.message, 'Error');
-					});
-				}
+					toastr.error(response.data.message, 'Error');
+				});
 			}
 		}
 	};

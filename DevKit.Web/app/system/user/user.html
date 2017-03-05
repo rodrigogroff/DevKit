@@ -94,7 +94,7 @@
 															<td width="120px">New Phone</td>
 															<td width="200px">
 																<input type="text" class="form-control input-transparent" ng-style="style_stPhone"
-																	   ng-maxlength="14" ui-mask="{{maskPhone}}" ui-mask-placeholder ui-mask-placeholder-char="_"
+																	   ng-maxlength="14" ui-mask="{{ setupModel.stPhoneMask }}" ui-mask-placeholder ui-mask-placeholder-char="_"
 																	   ng-model="newPhone.stPhone">
 															</td>
 														</tr>

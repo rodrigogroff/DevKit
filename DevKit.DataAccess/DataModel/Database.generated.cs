@@ -47,8 +47,10 @@ namespace DataModel
 	[Table(Schema="public", Name="Project")]
 	public partial class Project
 	{
-		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
-		[Column,     Nullable] public string stName { get; set; } // character varying(99)
+		[PrimaryKey, Identity] public long      id         { get; set; } // bigint
+		[Column,     Nullable] public string    stName     { get; set; } // character varying(99)
+		[Column,     Nullable] public long?     fkUser     { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtCreation { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="Setup")]

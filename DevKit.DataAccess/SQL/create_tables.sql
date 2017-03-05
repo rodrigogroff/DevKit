@@ -82,6 +82,8 @@ CREATE TABLE public."Project"
 (
     id bigserial NOT NULL,
     "stName" character varying(99),
+	"fkUser" bigint,
+	"dtCreation" timestamp without time zone,
     PRIMARY KEY (id)
 )
 WITH (

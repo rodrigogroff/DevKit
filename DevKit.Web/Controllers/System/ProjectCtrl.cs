@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace DevKit.Web.Controllers
 {
@@ -59,7 +60,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var resp = ""; if (!mdl.Create(db, ref resp))
+				var resp = ""; if (!mdl.Create(db, Thread.CurrentPrincipal.Identity.Name, ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);

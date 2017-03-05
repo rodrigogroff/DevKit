@@ -23,6 +23,8 @@ namespace DataModel
 
 	public partial class Project
 	{
+		public string stUser = "";
+
 		public string updateCommand = "";
 		public object anexedEntity;
 	}
@@ -50,6 +52,11 @@ namespace DataModel
 			if (_load != null)
 				load = _load;
 
+			var mdlUser = (from e in db.Users where e.id == this.fkUser select e).FirstOrDefault();
+
+			if (mdlUser!= null)
+				stUser = mdlUser.stLogin;
+
 			return this;
 		}
 
@@ -69,7 +76,7 @@ namespace DataModel
 			return query.Any();
 		}
 
-		public bool Create(DevKitDB db, ref string resp)
+		public bool Create(DevKitDB db, string usrName, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
 			{
@@ -77,6 +84,9 @@ namespace DataModel
 				return false;
 			}
 
+			this.dtCreation = DateTime.Now;
+			this.fkUser = (from e in db.Users where e.stLogin == usrName select e).FirstOrDefault().id;
+			
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 
 			return true;

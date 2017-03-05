@@ -235,6 +235,11 @@
     <Content Include="app\system\profile\profile.html" />
     <Content Include="app\system\profile\ProfileController.js" />
     <Content Include="app\system\profile\_filterProfile.html" />
+    <Content Include="app\system\project\listingProjects.html" />
+    <Content Include="app\system\project\ListingProjectsController.js" />
+    <Content Include="app\system\project\project.html" />
+    <Content Include="app\system\project\ProjectController.js" />
+    <Content Include="app\system\project\_filterProject.html" />
     <Content Include="app\system\setup\setup.html" />
     <Content Include="app\system\setup\SetupController.js" />
     <Content Include="app\system\user\user.html" />
@@ -800,6 +805,7 @@
     <Compile Include="Controllers\System\SetupCtrl.cs" />
     <Compile Include="Controllers\System\ProfileCtrl.cs" />
     <Compile Include="Controllers\System\PermissionCtrl.cs" />
+    <Compile Include="Controllers\System\ProjectCtrl.cs" />
     <Compile Include="GlobalExtensions.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

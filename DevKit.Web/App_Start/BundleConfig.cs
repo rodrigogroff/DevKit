@@ -114,7 +114,11 @@ namespace DevKit.Web
 				"~/app/system/user/ListingUsersController.js",
 
 				"~/app/system/profile/ProfileController.js",
-				"~/app/system/profile/ListingProfilesController.js"
+				"~/app/system/profile/ListingProfilesController.js",
+
+				"~/app/system/project/ProjectController.js",
+				"~/app/system/project/ListingProjectsController.js"
+
 				));
 
 			BundleTable.EnableOptimizations = false;

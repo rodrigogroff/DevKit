@@ -14,7 +14,19 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.loading = false;
 	$scope.permID = 102;
 
-	function CheckPermissions() { Api.Permission.get({ id: $scope.permID }, function (data) { $scope.permModel = data; }, function (response) { }); }
+	function CheckPermissions()
+	{
+		Api.Permission.get({ id: $scope.permID }, function (data) {
+			$scope.permModel = data;
+
+			if (!$scope.permModel.visualizar) {
+				toastr.error('Access denied!', 'Permission');
+				$state.go('home');
+			}
+		},
+		function (response) { });
+	}
+
 	function loadSetup() { Api.Setup.get({ id: 1 }, function (data) { $scope.setupModel = data; }, function (response) { }); }
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;

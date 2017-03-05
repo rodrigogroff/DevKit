@@ -20,6 +20,7 @@ namespace DataModel
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
 		public ITable<Profile>   Profiles   { get { return this.GetTable<Profile>(); } }
+		public ITable<Project>   Projects   { get { return this.GetTable<Project>(); } }
 		public ITable<Setup>     Setups     { get { return this.GetTable<Setup>(); } }
 		public ITable<User>      Users      { get { return this.GetTable<User>(); } }
 		public ITable<UserEmail> UserEmails { get { return this.GetTable<UserEmail>(); } }
@@ -41,6 +42,13 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
 		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
 		[Column,     Nullable] public string stPermissions { get; set; } // character varying(9999)
+	}
+
+	[Table(Schema="public", Name="Project")]
+	public partial class Project
+	{
+		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
+		[Column,     Nullable] public string stName { get; set; } // character varying(99)
 	}
 
 	[Table(Schema="public", Name="Setup")]
@@ -82,6 +90,12 @@ namespace DataModel
 	public static partial class tableExtensions
 	{
 		public static Profile Find(this ITable<Profile> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Project Find(this ITable<Project> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

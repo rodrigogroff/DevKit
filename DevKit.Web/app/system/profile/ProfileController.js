@@ -9,7 +9,18 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.loading = false;
 	$scope.permID = 101;
 
-	function CheckPermissions() { Api.Permission.get({ id: $scope.permID }, function (data) { $scope.permModel = data; }, function (response) { }); }
+	function CheckPermissions()
+	{
+		Api.Permission.get({ id: $scope.permID }, function (data) {
+			$scope.permModel = data;
+
+			if (!$scope.permModel.visualizar) {
+				toastr.error('Access denied!', 'Permission');
+				$state.go('home');
+			}
+		},
+		function (response) { });
+	}
 
 	$scope.viewModel =
 		{
@@ -20,6 +31,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1011: false, tg1012: false, tg1013: false, tg1014: false, tg1015: false,
 			// users
 			tg1021: false, tg1022: false, tg1023: false, tg1024: false, tg1025: false,
+			// projects
+			tg1031: false, tg1032: false, tg1033: false, tg1034: false, tg1035: false,
 		};
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -56,6 +69,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (data.stPermissions.indexOf('|1023|') >= 0) data.tg1023 = true; else data.tg1023 = false;
 				if (data.stPermissions.indexOf('|1024|') >= 0) data.tg1024 = true; else data.tg1024 = false;
 				if (data.stPermissions.indexOf('|1025|') >= 0) data.tg1025 = true; else data.tg1025 = false;
+
+				// projects
+				if (data.stPermissions.indexOf('|1031|') >= 0) data.tg1031 = true; else data.tg1031 = false;
+				if (data.stPermissions.indexOf('|1032|') >= 0) data.tg1032 = true; else data.tg1032 = false;
+				if (data.stPermissions.indexOf('|1033|') >= 0) data.tg1033 = true; else data.tg1033 = false;
+				if (data.stPermissions.indexOf('|1034|') >= 0) data.tg1034 = true; else data.tg1034 = false;
+				if (data.stPermissions.indexOf('|1035|') >= 0) data.tg1035 = true; else data.tg1035 = false;
 				
 				$scope.viewModel = data;
 
@@ -111,6 +131,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				// users
 				if (_mdl.tg1021 == true) perms += '|1021|'; if (_mdl.tg1022 == true) perms += '|1022|'; if (_mdl.tg1023 == true) perms += '|1023|';
 				if (_mdl.tg1024 == true) perms += '|1024|'; if (_mdl.tg1025 == true) perms += '|1025|';
+
+				// projects
+				if (_mdl.tg1031 == true) perms += '|1031|'; if (_mdl.tg1032 == true) perms += '|1032|'; if (_mdl.tg1033 == true) perms += '|1033|';
+				if (_mdl.tg1034 == true) perms += '|1034|'; if (_mdl.tg1035 == true) perms += '|1035|';
 
 				$scope.viewModel.stPermissions = perms;
 

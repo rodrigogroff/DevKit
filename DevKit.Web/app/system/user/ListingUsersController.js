@@ -6,7 +6,17 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	$scope.loading = false;
 	$scope.permID = 102;
 
-	function CheckPermissions() { Api.Permission.get({ id: $scope.permID }, function (data) { $scope.permModel = data; }, function (response) { }); }
+	function CheckPermissions() {
+		Api.Permission.get({ id: $scope.permID }, function (data) {
+			$scope.permModel = data;
+
+			if (!$scope.permModel.listagem) {
+				toastr.error('Access denied!', 'Permission');
+				$state.go('home');
+			}
+		},
+		function (response) { });
+	}
 
 	init();
 

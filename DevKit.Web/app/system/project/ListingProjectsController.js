@@ -1,19 +1,22 @@
-﻿angular.module('app.controllers').controller('ListingProfilesController',
+﻿angular.module('app.controllers').controller('ListingProjectsController',
 ['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api',
 function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 {
 	$scope.permModel = {};
 	$scope.loading = false;
-	$scope.permID = 101;
+	$scope.permID = 103;
 
-	function CheckPermissions() {
-		Api.Permission.get({ id: $scope.permID }, function (data) {
+	function CheckPermissions()
+	{
+		Api.Permission.get({ id: $scope.permID }, function (data)
+		{
 			$scope.permModel = data;
 
-			if (!$scope.permModel.listagem) {
+			if (!$scope.permModel.listagem)
+			{
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
-			}
+			}				
 		},
 		function (response) { });
 	}
@@ -46,7 +49,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 		if (filtro)
 			angular.extend(opcoes, filtro);
 
-		Api.Profile.listPage(opcoes, function (data) {
+		Api.Project.listPage(opcoes, function (data) {
 			$scope.list = data.results;
 			$scope.total = data.count;		
 			$scope.loading = false;
@@ -58,7 +61,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 		if (!$scope.permModel.visualizar) 
 			toastr.error('Access denied!', 'Permission');
 		else
-			$state.go('profile', { id: mdl.id });
+			$state.go('project', { id: mdl.id });
 	}
 
 	$scope.new = function ()
@@ -66,7 +69,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 		if (!$scope.permModel.novo)
 			toastr.error('Access denied!', 'Permission');
 		else
-			$state.go('profile-new');
+			$state.go('project-new');
 	}
 	
 }]);

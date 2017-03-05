@@ -91,7 +91,8 @@ angular.module('app.services', ['ngResource'])
 		Setup: $resource('api/setup/:id', {}, opcoes),
 		User: $resource('api/user/:id', {}, opcoes),
 		Profile: $resource('api/profile/:id', {}, opcoes),
-		Permission: $resource('api/permission/:id', {}, opcoes)
+		Permission: $resource('api/permission/:id', {}, opcoes),
+		Project: $resource('api/project/:id', {}, opcoes)
 
 	};
 }]);

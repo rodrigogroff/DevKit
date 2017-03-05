@@ -77,3 +77,18 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."UserPhone"
     OWNER to postgres;
+
+CREATE TABLE public."Project"
+(
+    id bigserial NOT NULL,
+    "stName" character varying(99),
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Project"
+    OWNER to postgres;
+

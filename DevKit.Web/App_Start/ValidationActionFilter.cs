@@ -14,9 +14,6 @@ namespace DevKit.Web
             var modelState = context.ModelState;
             if (!modelState.IsValid)
             {
-                if (modelState.Keys.Where(x => x.StartsWith("regra") || x.StartsWith("coleta")).Any())
-                    return;
-
                 var errors = new JObject();
                 foreach (var key in modelState.Keys)
                 {

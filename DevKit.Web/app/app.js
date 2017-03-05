@@ -19,6 +19,10 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('profile-new', { url: '/system/profile/new', templateUrl: 'app/system/profile/profile.html', controller: 'ProfileController' })
     .state('profile', { url: '/system/profile/:id', templateUrl: 'app/system/profile/profile.html', controller: 'ProfileController' })
 
+	.state('projects', { url: '/system/projects', templateUrl: 'app/system/project/listingProjects.html', controller: 'ListingProjectsController' })
+    .state('project-new', { url: '/system/project/new', templateUrl: 'app/system/project/project.html', controller: 'ProjectController' })
+    .state('project', { url: '/system/project/:id', templateUrl: 'app/system/project/project.html', controller: 'ProjectController' })
+
 	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);

@@ -94,3 +94,39 @@ TABLESPACE pg_default;
 ALTER TABLE public."Project"
     OWNER to postgres;
 
+CREATE TABLE public."ProjectUser"
+(
+    id bigserial NOT NULL,
+    "fkProject" bigint,
+    "fkUser" bigint,
+	"stRole" character varying(99),
+	"dtJoin" timestamp without time zone,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."ProjectUser"
+    OWNER to postgres;
+
+CREATE TABLE public."ProjectPhase"
+(
+    id bigserial NOT NULL,
+    "fkProject" bigint,
+	"stName" character varying(99),
+	"dtStart" timestamp without time zone,
+	"dtEnd" timestamp without time zone,
+	"bComplete" boolean,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."ProjectPhase"
+    OWNER to postgres;
+
+

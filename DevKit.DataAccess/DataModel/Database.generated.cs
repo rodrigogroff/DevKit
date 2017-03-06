@@ -19,12 +19,14 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<Profile>   Profiles   { get { return this.GetTable<Profile>(); } }
-		public ITable<Project>   Projects   { get { return this.GetTable<Project>(); } }
-		public ITable<Setup>     Setups     { get { return this.GetTable<Setup>(); } }
-		public ITable<User>      Users      { get { return this.GetTable<User>(); } }
-		public ITable<UserEmail> UserEmails { get { return this.GetTable<UserEmail>(); } }
-		public ITable<UserPhone> UserPhones { get { return this.GetTable<UserPhone>(); } }
+		public ITable<Profile>      Profiles      { get { return this.GetTable<Profile>(); } }
+		public ITable<Project>      Projects      { get { return this.GetTable<Project>(); } }
+		public ITable<ProjectPhase> ProjectPhases { get { return this.GetTable<ProjectPhase>(); } }
+		public ITable<ProjectUser>  ProjectUsers  { get { return this.GetTable<ProjectUser>(); } }
+		public ITable<Setup>        Setups        { get { return this.GetTable<Setup>(); } }
+		public ITable<User>         Users         { get { return this.GetTable<User>(); } }
+		public ITable<UserEmail>    UserEmails    { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserPhone>    UserPhones    { get { return this.GetTable<UserPhone>(); } }
 
 		public DevKitDB()
 		{
@@ -51,6 +53,27 @@ namespace DataModel
 		[Column,     Nullable] public string    stName     { get; set; } // character varying(99)
 		[Column,     Nullable] public long?     fkUser     { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtCreation { get; set; } // timestamp (6) without time zone
+	}
+
+	[Table(Schema="public", Name="ProjectPhase")]
+	public partial class ProjectPhase
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
+		[Column,     Nullable] public string    stName    { get; set; } // character varying(99)
+		[Column,     Nullable] public DateTime? dtStart   { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtEnd     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public bool?     bComplete { get; set; } // boolean
+	}
+
+	[Table(Schema="public", Name="ProjectUser")]
+	public partial class ProjectUser
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
+		[Column,     Nullable] public string    stRole    { get; set; } // character varying(99)
+		[Column,     Nullable] public DateTime? dtJoin    { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="Setup")]
@@ -99,6 +122,18 @@ namespace DataModel
 		}
 
 		public static Project Find(this ITable<Project> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static ProjectPhase Find(this ITable<ProjectPhase> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static ProjectUser Find(this ITable<ProjectUser> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

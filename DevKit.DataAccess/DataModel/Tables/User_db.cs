@@ -176,6 +176,13 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<UserPhone>(anexedEntity.ToString());
 						ent.stPhone = GetMaskedValue(db, ent.stPhone);
+
+						if ((from ne in db.UserPhones where ne.stPhone == ent.stPhone select ne).Any())
+						{
+							resp = "Phone duplicated!";
+							return false;
+						}
+
 						db.Insert(ent);
 
 						phones = LoadPhones(db);
@@ -193,7 +200,13 @@ namespace DataModel
 				case "newEmail":
 					{
 						var ent = JsonConvert.DeserializeObject<UserEmail>(anexedEntity.ToString());
-						
+
+						if ((from ne in db.UserEmails where ne.stEmail == ent.stEmail select ne).Any())
+						{
+							resp = "Email duplicated!";
+							return false;
+						}
+
 						db.Insert(ent);
 
 						emails = LoadEmails(db);

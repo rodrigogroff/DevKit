@@ -206,7 +206,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newPhone = { stPhone: '', stLocal: '' };
 
 				toastr.success('Phone added', 'Success');
-
 				$scope.viewModel.phones = data.phones;
 
 			}, function (response) {
@@ -278,7 +277,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newEmail = { stEmail: '' };
 
 				toastr.success('Email added', 'Success');
-
 				$scope.viewModel.emails = data.emails;
 
 			}, function (response) {

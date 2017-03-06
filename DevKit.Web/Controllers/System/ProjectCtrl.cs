@@ -62,7 +62,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Create(db, GetCurrentUser(db), ref resp))
+				if (!mdl.Create(db, new Util().GetCurrentUser(db), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);

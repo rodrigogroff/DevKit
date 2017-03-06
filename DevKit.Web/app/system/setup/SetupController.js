@@ -9,16 +9,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.loading = false;
 	$scope.permID = 100;
 
-	function CheckPermissions()
-	{
-		Api.Permission.get({ id: $scope.permID }, function (data)
-		{
+	function CheckPermissions() {
+		Api.Permission.get({ id: $scope.permID }, function (data) {
 			$scope.permModel = data;
 
-			if (!$scope.permModel.visualizar)
-			{
+			if (!$scope.permModel.visualizar) {
 				toastr.error('Access denied!', 'Permission');
-				$state.go('home', { });
+				$state.go('home', {});
 			}
 
 		}, function (response) { });
@@ -26,19 +23,16 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	init();
 
-	function init()
-	{
+	function init() {
 		CheckPermissions();
 
 		$scope.loading = true;
 
-		Api.Setup.get({ id: 1 }, function (data)
-		{
+		Api.Setup.get({ id: 1 }, function (data) {
 			$scope.viewModel = data;
 			$scope.loading = false;
 		},
-		function (response)
-		{
+		function (response) {
 			if (response.status === 404) { toastr.error('Invalid ID', 'Error'); }
 			$scope.list();
 		});
@@ -47,37 +41,39 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.errorMain = false;
 	$scope.errorMainMsg = '';
 
-	$scope.save = function ()
-	{
+	$scope.save = function () {
 		if (!$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
-		else
-		{
-			var _stName = true;
+		else {
+			var _stPhoneMask = true;
+			var _stDateFormat = true;
 
-			if ($scope.viewModel.stName != undefined) // when new...
-				if ($scope.viewModel.stName.length < 3)
-					_stName = false;
+			if ($scope.viewModel.stPhoneMask != undefined) // when new...
+				if ($scope.viewModel.stPhoneMask.length < 5)
+					_stPhoneMask = false;
 
-			if (!_stName) 
-			{
-				if (_stName) 
-					$scope.style_stName = $scope.style_error; else $scope.style_stName = {};
+			if ($scope.viewModel.stDateFormat != undefined) // when new...
+				if ($scope.viewModel.stDateFormat.length < 5)
+					_stDateFormat = false;
+
+			if (!_stPhoneMask || !_stDateFormat) {
+				if (!_stPhoneMask)
+					$scope.style_stPhoneMask = $scope.style_error; else $scope.style_stPhoneMask = {};
+
+				if (!_stDateFormat)
+					$scope.style_stDateFormat = $scope.style_error; else $scope.style_stDateFormat = {};
 
 				$scope.errorMain = true;
 				$scope.errorMainMsg = 'Fill the form with all the required fields';
 			}
-			else
-			{
+			else {
 				$scope.errorMain = false;
 				$scope.errorMainMsg = '';
 
-				Api.Setup.update({ id: 1 }, $scope.viewModel, function (data)
-				{
+				Api.Setup.update({ id: 1 }, $scope.viewModel, function (data) {
 					toastr.success('Setup preferences saved!', 'Success');
 				},
-				function (response)
-				{
+				function (response) {
 					toastr.error(response.data.message, 'Error');
 				});
 			}

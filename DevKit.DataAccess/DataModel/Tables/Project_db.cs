@@ -1,8 +1,6 @@
 ﻿using LinqToDB;
-using System.Linq;
-using System.Collections.Generic;
 using System;
-using Newtonsoft.Json;
+using System.Linq;
 
 namespace DataModel
 {
@@ -52,10 +50,9 @@ namespace DataModel
 			if (_load != null)
 				load = _load;
 
-			var mdlUser = (from e in db.Users where e.id == this.fkUser select e).FirstOrDefault();
+			var mdlUser = db.Users.Find((long)this.fkUser);
 
-			if (mdlUser!= null)
-				stUser = mdlUser.stLogin;
+			stUser = mdlUser?.stLogin;
 
 			return this;
 		}
@@ -84,8 +81,8 @@ namespace DataModel
 				return false;
 			}
 
-			this.dtCreation = DateTime.Now;
-			this.fkUser = usr.id;
+			dtCreation = DateTime.Now;
+			fkUser = usr.id;
 			
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 

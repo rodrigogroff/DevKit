@@ -33,6 +33,9 @@ namespace DataModel
 		public int qttyPhones = 0,
 					qttyEmails = 0;
 
+		public string sdtLastLogin = "";
+		public string sdtCreation = "";
+
 		public Profile Profile;
 		public List<UserPhone> phones = new List<UserPhone>();
 		public List<UserEmail> emails = new List<UserEmail>();
@@ -99,6 +102,11 @@ namespace DataModel
 		{
 			if (_load != null)
 				load = _load;
+
+			var setup = db.Setups.Find(1);
+
+			sdtLastLogin = dtLastLogin?.ToString(setup.stDateFormat);
+			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
 
 			if (load.bAll || load.bProfile)
 				Profile = LoadPerfil(db);

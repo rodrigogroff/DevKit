@@ -19,7 +19,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var usr = GetCurrentUser(db);
+				var usr = new Util().GetCurrentUser(db);
 				var perf = db.Profiles.Find((long)usr.fkProfile);
 
 				if (perf == null)

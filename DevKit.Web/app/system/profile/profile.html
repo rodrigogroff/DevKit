@@ -1,12 +1,12 @@
 ﻿<div class="webFormPostion">
-	<section class="widgetForm" style="width:925px">
+	<section class="widgetForm" style="width:925px; height:500px">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
 					<td>
-						System \ Profile <i class="fa fa-spinner fa-spin" ng-show="loading"></i> 
+						System \ Profile <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
 						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button>
 					</td>
 					<td width="20px"></td>
@@ -14,7 +14,7 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div class="divWebForm">			
+		<div class="divWebForm">
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
 				<tab heading="Profile">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -39,7 +39,7 @@
 								<td>Profile name</td>
 								<td>
 									<input type="text" focus="true" class="form-control input-transparent" ng-maxlength="150"
-											ng-disabled="!permModel.edicao" ng-style="style_stName" ng-model="viewModel.stName">
+										   ng-disabled="!permModel.edicao" ng-style="style_stName" ng-model="viewModel.stName">
 								</td>
 							</tr>
 
@@ -153,19 +153,20 @@
 					</div>
 				</tab>
 
-			</tabset>			
+			</tabset>
+
+			<br />
+			<br />
+			<table>
+				<tr>
+					<td><button class="btn btn-default" ng-click="list()">Cancel</button> </td>
+					<td width="34px"></td>
+					<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
+				</tr>
+			</table>
+			<br />
+			<br />
 		</div>
-		<br />
-		<br />
-		<table>
-			<tr>
-				<td width="34px"></td>
-				<td><button class="btn btn-default" ng-click="list()">Cancel</button> </td>
-				<td width="34px"></td>
-				<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
-			</tr>
-		</table>
-		<br />
-		<br />
+		
 	</section>
 </div>

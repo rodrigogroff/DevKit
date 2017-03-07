@@ -4,22 +4,20 @@ angular.module('app.controllers').controller('UserController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
-	$scope.style_error = { 'background-color': 'goldenrod' }
-	$scope.setupModel = { stPhoneMask: '' }
-	
-	$scope.viewModel = {};
-	$scope.permModel = {};
-	$scope.setupModel = {};
-
 	$scope.loading = false;
+	$scope.setupModel = { stPhoneMask: '' }	
+	$scope.viewModel = {};
+	$scope.permModel = {};	
 	$scope.permID = 102;
 
 	function CheckPermissions()
 	{
-		Api.Permission.get({ id: $scope.permID }, function (data) {
+		Api.Permission.get({ id: $scope.permID }, function (data)
+		{
 			$scope.permModel = data;
 
-			if (!$scope.permModel.visualizar) {
+			if (!$scope.permModel.visualizar)
+			{
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
 			}
@@ -27,7 +25,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		function (response) { });
 	}
 
-	function loadSetup() { Api.Setup.get({ id: 1 }, function (data) { $scope.setupModel = data; }, function (response) { }); }
+	function loadSetup()
+	{
+		Api.Setup.get({ id: 1 }, function (data)
+		{
+			$scope.setupModel = data;
+		});
+	}
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
@@ -60,34 +64,22 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
-	$scope.errorMain = false;
-	$scope.errorMainMsg = '';
-
 	$scope.save = function ()
 	{
+		$scope.stLogin_fail = false;
+		$scope.fkProfile_fail = false;
+
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			var _stLogin = true;
+			if ($scope.viewModel.stLogin != undefined && $scope.viewModel.stLogin.length == 0)
+				$scope.stLogin_fail = true;
 
-			if ($scope.viewModel.stLogin != undefined) // when new...
-			{
-				console.log($scope.viewModel.stLogin.length);
-
-				if ($scope.viewModel.stLogin.length < 3)
-					_stLogin = false;
-			}				
-
-			if (!_stLogin)
-			{
-				if (_stLogin)
-					$scope.style_stLogin = $scope.style_error; else $scope.style_stLogin = {};
-
-				$scope.errorMain = true;
-				$scope.errorMainMsg = 'Fill the form with all the required fields';
-			}
-			else
+			if ($scope.viewModel.fkProfile == undefined)
+				$scope.fkProfile_fail = true;
+	
+			if (!$scope.stLogin_fail && !$scope.fkProfile_fail)
 			{
 				if (id > 0)
 				{
@@ -145,11 +137,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	// ============================================
 
 	$scope.addPhone = false;
-	$scope.newPhone = { stPhone: '', stDescription: '' };
-
-	$scope.errorPhone = false;
-	$scope.errorPhoneMsg = '';
-	
+		
 	$scope.removePhone = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
@@ -175,42 +163,40 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addPhone = !$scope.addPhone;
 	}
 
+	$scope.newPhone = { stPhone: '', stDescription: '' };
+
 	$scope.saveNewPhone = function ()
 	{
-		var _stPhone = $scope.newPhone.stPhone != '';
-		var _stDescription = $scope.newPhone.stDescription.length > 3;
-		
-		if (!_stPhone || !_stDescription)
-		{
-			if (!_stPhone) $scope.style_stPhone = $scope.style_error; else $scope.style_stPhone = {};
-			if (!_stDescription) $scope.style_stDescription = $scope.style_error; else $scope.style_stDescription = {};
+		$scope.stPhone_fail = false;
+		$scope.stDescription_fail = false;
 
-			$scope.errorPhone = true;
-			$scope.errorPhoneMsg = 'Field validation failed';
-		}
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			$scope.errorPhone = false;
-			
-			$scope.addPhone = false;
-			$scope.newPhone.fkUser = id;
-			
-			$scope.viewModel.updateCommand = "newPhone";
-			$scope.viewModel.anexedEntity = $scope.newPhone;
+			if ($scope.newPhone.stPhone != undefined && $scope.newPhone.stPhone.length == 0)
+				$scope.stPhone_fail = true;
 
-			Api.User.update({ id: id }, $scope.viewModel, function (data)
-			{				
-				$scope.style_stPhone = {}
-				$scope.style_stLocal = {}
+			if ($scope.newPhone.stDescription != undefined && $scope.newPhone.stDescription.length == 0)
+				$scope.stDescription_fail = true;
+	
+			if (!$scope.stPhone_fail && !$scope.stDescription_fail)
+			{
+				$scope.addPhone = false;
 
-				$scope.newPhone = { stPhone: '', stLocal: '' };
+				$scope.viewModel.updateCommand = "newPhone";
+				$scope.viewModel.anexedEntity = $scope.newPhone;
 
-				toastr.success('Phone added', 'Success');
-				$scope.viewModel.phones = data.phones;
+				Api.User.update({ id: id }, $scope.viewModel, function (data)
+				{
+					$scope.newPhone = { stPhone: '', stDescription: '' };
+					toastr.success('Phone added', 'Success');
+					$scope.viewModel.phones = data.phones;
 
-			}, function (response) {
-				toastr.error(response.data.message, 'Error');
-			});
+				}, function (response) {
+					toastr.error(response.data.message, 'Error');
+				});
+			}
 		}
 	}
 
@@ -219,11 +205,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	// ============================================
 
 	$scope.addEmail = false;
-	$scope.newEmail = { stEmail: '' };
-
-	$scope.errorEmail = false;
-	$scope.errorEmailMsg = '';
-
+	
 	$scope.removeEmail = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
@@ -249,39 +231,36 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addEmail = !$scope.addEmail;
 	}
 
+	$scope.newEmail = { stEmail: '' };
+
 	$scope.saveNewEmail = function ()
 	{
-		var _stEmail = ($scope.newEmail.stEmail.indexOf('@') > 0);
-
-		if (!_stEmail)
-		{
-			if (!_stEmail) $scope.style_stEmail = $scope.style_error; else $scope.style_stEmail = {};
-
-			$scope.errorEmail = true;
-			$scope.errorEmailMsg = 'Field validation failed';
-		}
+		$scope.stEmail_fail = false;
+		
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			$scope.errorEmail = false;
-
-			$scope.addEmail = false;
-			$scope.newEmail.fkUser = id;
-
-			$scope.viewModel.updateCommand = "newEmail";
-			$scope.viewModel.anexedEntity = $scope.newEmail;
-
-			Api.User.update({ id: id }, $scope.viewModel, function (data)
+			if ($scope.newEmail.stEmail != undefined && $scope.newEmail.stEmail.indexOf('@') <= 0)
+				$scope.stEmail_fail = true;
+	
+			if (!$scope.stEmail_fail)
 			{
-				$scope.style_stEmail = {}
-				
-				$scope.newEmail = { stEmail: '' };
+				$scope.addEmail = false;
 
-				toastr.success('Email added', 'Success');
-				$scope.viewModel.emails = data.emails;
+				$scope.viewModel.updateCommand = "newEmail";
+				$scope.viewModel.anexedEntity = $scope.newEmail;
 
-			}, function (response) {
-				toastr.error(response.data.message, 'Error');
-			});
+				Api.User.update({ id: id }, $scope.viewModel, function (data)
+				{
+					$scope.newEmail = { stEmail: '' };
+					toastr.success('Email added', 'Success');
+					$scope.viewModel.emails = data.emails;
+
+				}, function (response) {
+					toastr.error(response.data.message, 'Error');
+				});
+			}
 		}
 	}
 

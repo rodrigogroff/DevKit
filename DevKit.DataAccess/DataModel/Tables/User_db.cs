@@ -183,6 +183,8 @@ namespace DataModel
 							return false;
 						}
 
+						ent.fkUser = id;
+
 						db.Insert(ent);
 
 						phones = LoadPhones(db);
@@ -206,6 +208,8 @@ namespace DataModel
 							resp = "Email duplicated!";
 							return false;
 						}
+
+						ent.fkUser = id;
 
 						db.Insert(ent);
 

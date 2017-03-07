@@ -4,20 +4,21 @@ angular.module('app.controllers').controller('ProjectController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
-	$scope.style_error = { 'background-color': 'goldenrod' }
-	
-	$scope.viewModel = {};
-	$scope.permModel = {};
-
 	$scope.loading = false;
+
+	$scope.viewModel = {};
+
+	$scope.permModel = {};	
 	$scope.permID = 103;
 
 	function CheckPermissions()
 	{
-		Api.Permission.get({ id: $scope.permID }, function (data) {
+		Api.Permission.get({ id: $scope.permID }, function (data)
+		{
 			$scope.permModel = data;
 
-			if (!$scope.permModel.visualizar) {
+			if (!$scope.permModel.visualizar)
+			{
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
 			}
@@ -55,33 +56,18 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
-	$scope.errorMain = false;
-	$scope.errorMainMsg = '';
-
 	$scope.save = function ()
 	{
+		$scope.stName_fail = false;
+
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			var _stName = true;
-
-			if ($scope.viewModel.stName != undefined) // when new...
-			{
-				console.log($scope.viewModel.stName.length);
-
-				if ($scope.viewModel.stName.length < 3)
-					_stName = false;
-			}
-
-			if (!_stName) {
-				if (_stName)
-					$scope.style_stName = $scope.style_error; else $scope.style_stName = {};
-
-				$scope.errorMain = true;
-				$scope.errorMainMsg = 'Fill the form with all the required fields';
-			}
-			else
+			if ($scope.viewModel.stName != undefined && $scope.viewModel.stName.length == 0)
+				$scope.stName_fail = true;
+	
+			if (!$scope.stName_fail)
 			{
 				if (id > 0)
 				{
@@ -138,10 +124,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	// ---------------------------------
 
 	$scope.addUser = false;
-	$scope.newUser = { fkUser: undefined, stRole: '', fkProject: undefined };
-
-	$scope.errorUser = false;
-	$scope.errorUserMsg = '';
 
 	$scope.removeUser = function (index, lista)
 	{
@@ -168,30 +150,28 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addUser = !$scope.addUser;
 	}
 
+	$scope.newUser =
+		{
+			fkUser: undefined,
+			stRole: '', 
+			fkProject: undefined
+		};
+
 	$scope.saveNewUser = function ()
 	{
-		var _stfkUser = ($scope.newUser.fkUser != undefined);
-		var _stRole = ($scope.newUser.stRole.length > 2);
+		$scope.fkUser_fail = false;
+		$scope.stRole_fail = false;
 
-		console.log($scope.newUser.fkUser);
-		console.log(_stfkUser);
+		if ($scope.newUser.fkUser == undefined )
+			$scope.fkUser_fail = true;
 
-		if (!_stRole || !_stfkUser)
+		if ($scope.newUser.stRole != undefined && $scope.newUser.stRole.length == 0)
+			$scope.stRole_fail = true;
+	
+		if (!$scope.fkUser_fail && !$scope.stRole_fail)
 		{
-			if (!_stRole) $scope.style_stRole = $scope.style_error; else $scope.style_stRole = {};
-
-			$scope.errorUser = true;
-			$scope.errorUserMsg = 'Field validation failed';
-		}
-		else
-		{
-			$scope.errorUser = false;
-			$scope.addUser = false;
-
 			$scope.viewModel.updateCommand = "newUser";
 			$scope.viewModel.anexedEntity = $scope.newUser;
-
-			$scope.newUser.fkProject = id;
 
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
@@ -201,6 +181,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				toastr.success('User added', 'Success');
 				$scope.viewModel.users = data.users;
+
+				$scope.addUser = false;
 
 			}, function (response)
 			{

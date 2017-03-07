@@ -69,12 +69,12 @@ namespace DataModel
 			stUser = mdlUser?.stLogin;
 			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
 
-			users = Loadusers(db);
+			users = LoadUsers(db);
 
 			return this;
 		}
 
-		List<ProjectUser> Loadusers(DevKitDB db)
+		List<ProjectUser> LoadUsers(DevKitDB db)
 		{
 			var setup = db.Setups.Find(1);
 
@@ -143,23 +143,26 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<ProjectUser>(anexedEntity.ToString());
 
-						if ((from ne in db.ProjectUsers where ne.fkUser == ent.fkUser select ne).Any())
+						if ((from ne in db.ProjectUsers
+							 where ne.fkUser == ent.fkUser && ne.fkProject == id
+							 select ne).Any())
 						{
-							resp = "User duplicated!";
+							resp = "User already added to project!";
 							return false;
 						}
 
+						ent.fkProject = id;
 						ent.dtJoin = DateTime.Now;
 
 						db.Insert(ent);
-						users = Loadusers(db);
+						users = LoadUsers(db);
 						break;
 					}
 
 				case "removeUser":
 					{
 						db.Delete(JsonConvert.DeserializeObject<ProjectUser>(anexedEntity.ToString()));
-						users = Loadusers(db);
+						users = LoadUsers(db);
 						break;
 					}
 			}

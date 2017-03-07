@@ -34,10 +34,14 @@
 								<thead>
 									<tr>
 										<th width="250px">Project</th>
+										<th width="250px">Users</th>
+										<th width="250px">Roles</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
+									<td><div data-ng-repeat="m in mdl.users">{{ m.stUser }}</div></td>
+									<td><div data-ng-repeat="m in mdl.users">{{ m.stRole }}</div></td>
 								</tr>
 							</table>
 						</div>

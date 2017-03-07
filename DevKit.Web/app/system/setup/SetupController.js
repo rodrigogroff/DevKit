@@ -4,16 +4,19 @@ angular.module('app.controllers').controller('SetupController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
-	$scope.style_error = { 'background-color': 'goldenrod' }
-	$scope.permModel = {};
 	$scope.loading = false;
+
+	$scope.permModel = {};
 	$scope.permID = 100;
 
-	function CheckPermissions() {
-		Api.Permission.get({ id: $scope.permID }, function (data) {
+	function CheckPermissions()
+	{
+		Api.Permission.get({ id: $scope.permID }, function (data)
+		{
 			$scope.permModel = data;
 
-			if (!$scope.permModel.visualizar) {
+			if (!$scope.permModel.visualizar)
+			{
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home', {});
 			}
@@ -23,57 +26,46 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	init();
 
-	function init() {
+	function init()
+	{
 		CheckPermissions();
 
 		$scope.loading = true;
 
-		Api.Setup.get({ id: 1 }, function (data) {
+		Api.Setup.get({ id: 1 }, function (data)
+		{
 			$scope.viewModel = data;
 			$scope.loading = false;
 		},
-		function (response) {
+		function (response)
+		{
 			if (response.status === 404) { toastr.error('Invalid ID', 'Error'); }
-			$scope.list();
 		});
 	}
 
-	$scope.errorMain = false;
-	$scope.errorMainMsg = '';
+	$scope.save = function ()
+	{
+		$scope.stPhoneMask_fail = false;
+		$scope.stDateFormat_fail = false;
 
-	$scope.save = function () {
 		if (!$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
-		else {
-			var _stPhoneMask = true;
-			var _stDateFormat = true;
+		else
+		{
+			if ($scope.viewModel.stPhoneMask != undefined && $scope.viewModel.stPhoneMask.length == 0)
+				$scope.stPhoneMask_fail = true;
 
-			if ($scope.viewModel.stPhoneMask != undefined) // when new...
-				if ($scope.viewModel.stPhoneMask.length < 5)
-					_stPhoneMask = false;
+			if ($scope.viewModel.stDateFormat != undefined && $scope.viewModel.stDateFormat.length == 0)
+				$scope.stDateFormat_fail = true;
 
-			if ($scope.viewModel.stDateFormat != undefined) // when new...
-				if ($scope.viewModel.stDateFormat.length < 5)
-					_stDateFormat = false;
-
-			if (!_stPhoneMask || !_stDateFormat) {
-				if (!_stPhoneMask)
-					$scope.style_stPhoneMask = $scope.style_error; else $scope.style_stPhoneMask = {};
-
-				if (!_stDateFormat)
-					$scope.style_stDateFormat = $scope.style_error; else $scope.style_stDateFormat = {};
-
-				$scope.errorMain = true;
-				$scope.errorMainMsg = 'Fill the form with all the required fields';
-			}
-			else {
-				$scope.errorMain = false;
-				$scope.errorMainMsg = '';
-
-				Api.Setup.update({ id: 1 }, $scope.viewModel, function (data) {
+			if (!$scope.stPhoneMask_fail && !$scope.stDateFormat_fail)
+			{
+				Api.Setup.update({ id: 1 }, $scope.viewModel, function (data)
+				{
 					toastr.success('Setup preferences saved!', 'Success');
 				},
-				function (response) {
+				function (response)
+				{
 					toastr.error(response.data.message, 'Error');
 				});
 			}

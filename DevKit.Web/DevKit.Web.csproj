@@ -235,11 +235,11 @@
     <Content Include="app\system\profile\profile.html" />
     <Content Include="app\system\profile\ProfileController.js" />
     <Content Include="app\system\profile\_filterProfile.html" />
-    <Content Include="app\system\project\listingProjects.html" />
-    <Content Include="app\system\project\ListingProjectsController.js" />
-    <Content Include="app\system\project\project.html" />
-    <Content Include="app\system\project\ProjectController.js" />
-    <Content Include="app\system\project\_filterProject.html" />
+    <Content Include="app\configuration\project\listingProjects.html" />
+    <Content Include="app\configuration\project\ListingProjectsController.js" />
+    <Content Include="app\configuration\project\project.html" />
+    <Content Include="app\configuration\project\ProjectController.js" />
+    <Content Include="app\configuration\project\_filterProject.html" />
     <Content Include="app\system\setup\setup.html" />
     <Content Include="app\system\setup\SetupController.js" />
     <Content Include="app\system\user\user.html" />
@@ -805,7 +805,7 @@
     <Compile Include="Controllers\System\SetupCtrl.cs" />
     <Compile Include="Controllers\System\ProfileCtrl.cs" />
     <Compile Include="Controllers\System\PermissionCtrl.cs" />
-    <Compile Include="Controllers\System\ProjectCtrl.cs" />
+    <Compile Include="Controllers\Configuration\ProjectCtrl.cs" />
     <Compile Include="Controllers\Util.cs" />
     <Compile Include="GlobalExtensions.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -819,7 +819,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\System\Login.cs" />
+    <Compile Include="Controllers\Login\Login.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

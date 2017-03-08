@@ -29,6 +29,7 @@ namespace DataModel
 		public string sdtCreation = "";
 
 		public List<ProjectUser> users = new List<ProjectUser>();
+		public List<ProjectPhase> phases = new List<ProjectPhase>();
 
 		public string updateCommand = "";
 		public object anexedEntity;
@@ -38,6 +39,12 @@ namespace DataModel
 	{
 		public string stUser = "";
 		public string sdtJoin = "";
+	}
+
+	public partial class ProjectPhase
+	{
+		public string sdtStart = "";
+		public string sdtEnd = "";
 	}
 
 	// --------------------------
@@ -70,6 +77,7 @@ namespace DataModel
 			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
 
 			users = LoadUsers(db);
+			phases = LoadPhases(db);
 
 			return this;
 		}
@@ -86,6 +94,23 @@ namespace DataModel
 			{
 				item.stUser = db.Users.Find((long)item.fkUser).stLogin;
 				item.sdtJoin = item.dtJoin?.ToString(setup.stDateFormat);
+			}
+
+			return lst;
+		}
+
+		List<ProjectPhase> LoadPhases(DevKitDB db)
+		{
+			var setup = db.Setups.Find(1);
+
+			var lst = (from e in db.ProjectPhases where e.fkProject == id select e).
+				OrderBy(t => t.id).
+				ToList();
+
+			foreach (var item in lst)
+			{
+				item.sdtStart = item.dtStart?.ToString(setup.stDateFormat);
+				item.sdtEnd = item.dtEnd?.ToString(setup.stDateFormat);
 			}
 
 			return lst;
@@ -163,6 +188,32 @@ namespace DataModel
 					{
 						db.Delete(JsonConvert.DeserializeObject<ProjectUser>(anexedEntity.ToString()));
 						users = LoadUsers(db);
+						break;
+					}
+
+				case "newPhase":
+					{
+						var ent = JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString());
+
+						if ((from ne in db.ProjectPhases
+							 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkProject == id
+							 select ne).Any())
+						{
+							resp = "Phase already added to project!";
+							return false;
+						}
+
+						ent.fkProject = id;
+						
+						db.Insert(ent);
+						phases = LoadPhases(db);
+						break;
+					}
+										
+				case "removePhase":
+					{
+						db.Delete(JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString()));
+						phases = LoadPhases(db);
 						break;
 					}
 			}

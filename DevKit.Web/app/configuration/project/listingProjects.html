@@ -17,7 +17,7 @@
 			<table>
 				<tr>
 					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/project/_filterProject.html" funcao-pesquisar="search"></ng-filtro>
+						<ng-filtro tipo="profile" campos="campos" template-avancado="app/configuration/project/_filterProject.html" funcao-pesquisar="search"></ng-filtro>
 					</td>
 				</tr>
 				<tr>
@@ -36,12 +36,14 @@
 										<th width="250px">Project</th>
 										<th width="250px">Users</th>
 										<th width="250px">Roles</th>
+										<th width="250px">Phases</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
 									<td><div data-ng-repeat="m in mdl.users">{{ m.stUser }}</div></td>
 									<td><div data-ng-repeat="m in mdl.users">{{ m.stRole }}</div></td>
+									<td></td>
 								</tr>
 							</table>
 						</div>

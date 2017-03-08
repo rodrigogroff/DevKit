@@ -132,7 +132,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		else
 		{
 			$scope.viewModel.updateCommand = "removeUser";
-			$scope.viewModel.anexedEntity = $scope.viewModel.users[index];
+			$scope.viewModel.anexedEntity = lista[index];
 
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
@@ -175,8 +175,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
-				$scope.style_stRole = {}
-
 				$scope.newUser = { fkUser: undefined, stRole: '', fkProject: undefined };
 
 				toastr.success('User added', 'Success');
@@ -186,6 +184,80 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			}, function (response)
 			{
+				toastr.error(response.data.message, 'Error');
+			});
+		}
+	}
+
+	// ---------------------------------
+	// phases
+	// ---------------------------------
+
+	$scope.addPhase = false;
+
+	$scope.removePhase = function (index, lista)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.viewModel.updateCommand = "removePhase";
+			$scope.viewModel.anexedEntity = lista[index];
+
+			Api.Project.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Phase removed', 'Success');
+				$scope.viewModel.phases = data.phases;
+			});
+		}
+	}
+
+	$scope.addNewPhase = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addPhase = !$scope.addPhase;
+	}
+
+	$scope.newPhase =
+		{
+			stName: '',
+			dtStart: '',
+			dtEnd: '',
+			bComplete: false,
+			fkProject: undefined
+		};
+
+	$scope.saveNewPhase = function ()
+	{		
+		$scope.newphase_stName_fail = false;
+
+		if ($scope.newPhase.stName != undefined && $scope.newPhase.stName.length == 0)
+			$scope.newphase_stName_fail = true;
+
+		if (!$scope.newphase_stName_fail)
+		{
+			$scope.viewModel.updateCommand = "newPhase";
+			$scope.viewModel.anexedEntity = $scope.newPhase;
+
+			Api.Project.update({ id: id }, $scope.viewModel, function (data)
+			{
+				$scope.newPhase =
+					{
+						stName: '',
+						dtStart: '',
+						dtEnd: '',
+						bComplete: false,
+						fkProject: undefined
+					};
+
+				toastr.success('Phase added', 'Success');
+				$scope.viewModel.phases = data.phases;
+
+				$scope.addPhase = false;
+
+			}, function (response) {
 				toastr.error(response.data.message, 'Error');
 			});
 		}

@@ -46,13 +46,19 @@
 		<nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top: 60px">
 			<section class="widget" style="height:100%;font-size:11px">
 				<ul id="side-nav" class="side-nav" style="color:black">
-					<li class="panel active">
+					<li class="panel">
 						<a class="accordion-toggle " data-toggle="collapse"
-						   data-parent="#side-nav" href="#forms-collapse"><span class="name">System</span></a>
-						<ul id="forms-collapse" class="panel-collapse collapse in">
+						   data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">System</span></a>
+						<ul id="forms-collapseSystem" class="panel-collapse collapse in">
 							<li><a ui-sref="setup"><span>Setup</span></a></li>
 							<li><a ui-sref="users"><span>Users</span></a></li>
 							<li><a ui-sref="profiles"><span>Profiles</span></a></li>
+						</ul>
+					</li>
+					<li class="panel">
+						<a class="accordion-toggle " data-toggle="collapse"
+						   data-parent="#side-nav" href="#forms-collapseConfig"><span class="name">Configuration</span></a>
+						<ul id="forms-collapseConfig" class="panel-collapse collapse in">
 							<li><a ui-sref="projects"><span>Projects</span></a></li>
 						</ul>
 					</li>

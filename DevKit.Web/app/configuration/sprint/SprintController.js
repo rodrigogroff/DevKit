@@ -35,7 +35,16 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		CheckPermissions();
 
 		$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' });
-		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phases, { tamanhoPagina: 15, scope: $scope, filtro: { campo: 'idProject', valor: 'viewModel.fkProject' } });
+		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase,
+			{
+				tamanhoPagina: 15,
+				scope: $scope,
+				filtro:
+					{
+						campo: 'idProject',
+						valor: 'viewModel.fkProject'
+					}
+			});
 
 		if (id > 0)
 		{

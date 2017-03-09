@@ -93,7 +93,7 @@ angular.module('app.services', ['ngResource'])
 		Profile: $resource('api/profile/:id', {}, opcoes),
 		Permission: $resource('api/permission/:id', {}, opcoes),
 		Project: $resource('api/project/:id', {}, opcoes),
-		Phases: $resource('api/phase/:id', {}, opcoes),
+		Phase: $resource('api/phase/:id', {}, opcoes),
 		Sprint: $resource('api/sprint/:id', {}, opcoes)
 
 	};

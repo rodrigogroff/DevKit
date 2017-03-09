@@ -15,6 +15,9 @@ namespace DataModel
 	public class ProjectSprintFilter
 	{
 		public int skip, take;
+
+		public long? fkProject, fkPhase;
+
 		public string busca;
 	}
 
@@ -47,6 +50,12 @@ namespace DataModel
 
 			if (filter.busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
+
+			if (filter.fkProject != null)
+				query = from e in query where e.fkProject == filter.fkProject select e;
+
+			if (filter.fkPhase != null)
+				query = from e in query where e.fkPhase == filter.fkPhase select e;
 
 			return query;
 		}

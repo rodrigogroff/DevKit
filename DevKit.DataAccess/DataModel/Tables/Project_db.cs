@@ -30,6 +30,7 @@ namespace DataModel
 
 		public List<ProjectUser> users = new List<ProjectUser>();
 		public List<ProjectPhase> phases = new List<ProjectPhase>();
+		public List<ProjectSprint> sprints = new List<ProjectSprint>();
 
 		public string updateCommand = "";
 		public object anexedEntity;
@@ -78,8 +79,18 @@ namespace DataModel
 
 			users = LoadUsers(db);
 			phases = LoadPhases(db);
+			sprints = LoadSprints(db);
 
 			return this;
+		}
+
+		List<ProjectSprint> LoadSprints(DevKitDB db)
+		{
+			var lst = (from e in db.ProjectSprints where e.fkProject == id select e).
+				OrderBy(t => t.id).
+				ToList();
+
+			return lst;
 		}
 
 		List<ProjectUser> LoadUsers(DevKitDB db)

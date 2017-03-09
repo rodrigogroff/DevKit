@@ -130,4 +130,25 @@ TABLESPACE pg_default;
 ALTER TABLE public."ProjectPhase"
     OWNER to postgres;
 
+CREATE TABLE public."ProjectSprint"
+(
+    id bigserial NOT NULL,
+    "fkProject" bigint,
+	"fkPhase" bigint,
+	"stName" character varying(200),
+	"stDescription" character varying(1000),
+	"dtStart" timestamp without time zone,
+	"dtEnd" timestamp without time zone,
+	"bComplete" boolean,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."ProjectSprint"
+    OWNER to postgres;
+
+
 

@@ -105,7 +105,7 @@ namespace DevKit.Web
 				"~/app/app.js",
 
 				// ====================
-				// telas system
+				// system
 				// ====================
 
 				"~/app/system/setup/SetupController.js",
@@ -117,11 +117,14 @@ namespace DevKit.Web
 				"~/app/system/profile/ListingProfilesController.js",
 
 				// ==========================
-				// telas configuration
+				// configuration
 				// ==========================
 
 				"~/app/configuration/project/ProjectController.js",
-				"~/app/configuration/project/ListingProjectsController.js"
+				"~/app/configuration/project/ListingProjectsController.js",
+
+				"~/app/configuration/sprint/SprintController.js",
+				"~/app/configuration/sprint/ListingSprintsController.js"
 
 				));
 

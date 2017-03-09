@@ -19,14 +19,15 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<Profile>      Profiles      { get { return this.GetTable<Profile>(); } }
-		public ITable<Project>      Projects      { get { return this.GetTable<Project>(); } }
-		public ITable<ProjectPhase> ProjectPhases { get { return this.GetTable<ProjectPhase>(); } }
-		public ITable<ProjectUser>  ProjectUsers  { get { return this.GetTable<ProjectUser>(); } }
-		public ITable<Setup>        Setups        { get { return this.GetTable<Setup>(); } }
-		public ITable<User>         Users         { get { return this.GetTable<User>(); } }
-		public ITable<UserEmail>    UserEmails    { get { return this.GetTable<UserEmail>(); } }
-		public ITable<UserPhone>    UserPhones    { get { return this.GetTable<UserPhone>(); } }
+		public ITable<Profile>       Profiles       { get { return this.GetTable<Profile>(); } }
+		public ITable<Project>       Projects       { get { return this.GetTable<Project>(); } }
+		public ITable<ProjectPhase>  ProjectPhases  { get { return this.GetTable<ProjectPhase>(); } }
+		public ITable<ProjectSprint> ProjectSprints { get { return this.GetTable<ProjectSprint>(); } }
+		public ITable<ProjectUser>   ProjectUsers   { get { return this.GetTable<ProjectUser>(); } }
+		public ITable<Setup>         Setups         { get { return this.GetTable<Setup>(); } }
+		public ITable<User>          Users          { get { return this.GetTable<User>(); } }
+		public ITable<UserEmail>     UserEmails     { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserPhone>     UserPhones     { get { return this.GetTable<UserPhone>(); } }
 
 		public DevKitDB()
 		{
@@ -64,6 +65,19 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtStart   { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtEnd     { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public bool?     bComplete { get; set; } // boolean
+	}
+
+	[Table(Schema="public", Name="ProjectSprint")]
+	public partial class ProjectSprint
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkProject     { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPhase       { get; set; } // bigint
+		[Column,     Nullable] public string    stName        { get; set; } // character varying(200)
+		[Column,     Nullable] public string    stDescription { get; set; } // character varying(1000)
+		[Column,     Nullable] public DateTime? dtStart       { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtEnd         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public bool?     bComplete     { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="ProjectUser")]
@@ -128,6 +142,12 @@ namespace DataModel
 		}
 
 		public static ProjectPhase Find(this ITable<ProjectPhase> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static ProjectSprint Find(this ITable<ProjectSprint> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

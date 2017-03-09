@@ -48,7 +48,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Users.Find(id);
+				var model = (from ne in db.Users select ne).Where(t => t.id == id).FirstOrDefault();
 
 				if (model != null)
 					return Ok(model.Load(db));
@@ -85,7 +85,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Users.Find(id);
+				var model = (from ne in db.Users select ne).Where(t => t.id == id).FirstOrDefault();
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

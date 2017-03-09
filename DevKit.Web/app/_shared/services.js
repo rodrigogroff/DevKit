@@ -92,7 +92,8 @@ angular.module('app.services', ['ngResource'])
 		User: $resource('api/user/:id', {}, opcoes),
 		Profile: $resource('api/profile/:id', {}, opcoes),
 		Permission: $resource('api/permission/:id', {}, opcoes),
-		Project: $resource('api/project/:id', {}, opcoes)
+		Project: $resource('api/project/:id', {}, opcoes),
+		Sprint: $resource('api/sprint/:id', {}, opcoes)
 
 	};
 }]);

@@ -23,6 +23,10 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('project-new', { url: '/configuration/project/new', templateUrl: 'app/configuration/project/project.html', controller: 'ProjectController' })
     .state('project', { url: '/configuration/project/:id', templateUrl: 'app/configuration/project/project.html', controller: 'ProjectController' })
 
+	.state('sprints', { url: '/configuration/sprints', templateUrl: 'app/configuration/sprint/listingSprints.html', controller: 'ListingSprintsController' })
+    .state('sprint-new', { url: '/configuration/sprint/new', templateUrl: 'app/configuration/sprint/sprint.html', controller: 'SprintController' })
+    .state('sprint', { url: '/configuration/sprint/:id', templateUrl: 'app/configuration/sprint/sprint.html', controller: 'SprintController' })
+
 	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);

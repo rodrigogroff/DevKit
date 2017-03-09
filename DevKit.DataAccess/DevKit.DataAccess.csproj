@@ -63,6 +63,7 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Tables\Profile_db.cs" />
+    <Compile Include="DataModel\Tables\ProjectSprint_db.cs" />
     <Compile Include="DataModel\Tables\Project_db.cs" />
     <Compile Include="DataModel\Tables\Setup_db.cs" />
     <Compile Include="DataModel\Tables\User_db.cs" />

@@ -1,4 +1,6 @@
 ﻿using DataModel;
+using LinqToDB;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 
@@ -10,8 +12,8 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Setups.Find(id);
-
+				var model = (from ne in db.Setups select ne).Where(t => t.id == id).FirstOrDefault();
+				
 				if (model != null)
 					return Ok(model);
 

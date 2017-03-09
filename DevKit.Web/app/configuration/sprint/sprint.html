@@ -16,7 +16,7 @@
 		</legend>
 		<div class="divWebForm">			
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
-				<tab heading="Project">
+				<tab heading="Sprint">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -37,14 +37,25 @@
 								</td>
 							</tr>
 
+							<tr height="42px">
+								<td></td>
+								<td>Project</td>
+								<td>
+									<button class="btn btn-xs btn-danger" ng-show="fkProject_fail">!</button>
+								</td>
+								<td>
+									<input type="hidden" name="user" style="width:100%" ui-select2="selectProjects" ng-model="viewModel.fkProject" />
+								</td>
+							</tr>
+
 							<tr height="40px">
 								<td></td>
-								<td>Project name</td>
+								<td>Sprint name</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
 								</td>
 								<td>
-									<input type="text" focus="true" class="form-control input-transparent" ng-maxlength="150"
+									<input type="text" class="form-control input-transparent" ng-maxlength="150"
 											ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
 								</td>
 							</tr>

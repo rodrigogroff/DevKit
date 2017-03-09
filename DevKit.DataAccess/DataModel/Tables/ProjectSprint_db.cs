@@ -26,7 +26,9 @@ namespace DataModel
 	{
 		public string sdtStart = "";
 		public string sdtEnd = "";
-		
+		public string sfkProject = "";
+		public string sfkPhase = "";
+
 		public string updateCommand = "";
 		public object anexedEntity;
 	}
@@ -58,6 +60,12 @@ namespace DataModel
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
 			sdtEnd = dtEnd?.ToString(setup.stDateFormat);
+
+			if (fkProject != null)
+				sfkProject = (from ne in db.Projects where ne.id == fkProject select ne).FirstOrDefault().stName;
+
+			if (fkPhase != null)
+				sfkPhase = (from ne in db.ProjectPhases where ne.id == fkPhase select ne).FirstOrDefault().stName;
 
 			return this;
 		}

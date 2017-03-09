@@ -62,7 +62,7 @@
 									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
 								</td>
 								<td>
-									<input type="text" focus="true" class="form-control input-transparent" ng-maxlength="150"
+									<input type="text" class="form-control input-transparent" ng-maxlength="150"
 											ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
 								</td>
 							</tr>
@@ -227,7 +227,7 @@
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.phases">
-												<td>{{ mdl.bCompleted ? 'Active' : 'Blocked' }}</td>
+												<td>{{ mdl.bCompleted ? 'Complete' : 'Active' }}</td>
 												<td>{{ mdl.stName }}</td>
 												<td></td>
 												<td>{{ mdl.sdtStart }}</td>

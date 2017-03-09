@@ -24,7 +24,8 @@
 					<td valign="top">
 						<div ng-show="list.length == 0">
 							<br />
-							<div class="btn btn-warning btn-lg btn-block">No records found.</div>
+							<br />
+							<div class="btn btn-info btn-lg">No records found.</div>
 						</div>
 						<div ng-show="list.length > 0">
 							<br />
@@ -41,9 +42,9 @@
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.bComplete ? 'Complete' : 'Active' }}</td>
-									<td>{{ mdl.sfkProject }}</td>
-									<td>{{ mdl.sfkPhase }}</td>
 									<td>{{ mdl.stName }}</td>
+									<td>{{ mdl.sfkProject }}</td>
+									<td>{{ mdl.sfkPhase }}</td>									
 									<td></td>
 								</tr>
 							</table>

@@ -61,18 +61,29 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		$scope.stName_fail = false;
 		$scope.fkProject_fail = false;
+		$scope.fkPhase_fail = false;
 
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.viewModel.stName != undefined && $scope.viewModel.stName.length < 5)
+			if ($scope.viewModel.stName != undefined)
+			{
+				if ($scope.viewModel.stName.length < 5)
+					$scope.stName_fail = true;
+			}
+			else
 				$scope.stName_fail = true;
 			
 			if ($scope.viewModel.fkProject == undefined)
 				$scope.fkProject_fail = true;
 
-			if (!$scope.stName_fail && !$scope.fkProject_fail)
+			if ($scope.viewModel.fkPhase == undefined)
+				$scope.fkPhase_fail = true;
+
+			if (!$scope.stName_fail &&
+				!$scope.fkProject_fail &&
+				!$scope.fkPhase_fail)
 			{
 				if (id > 0)
 				{

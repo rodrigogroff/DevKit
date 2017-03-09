@@ -98,35 +98,24 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			});
 		}
 	}
-
-	$scope.errorMain = false;
-	$scope.errorMainMsg = '';
-
+	
 	$scope.save = function ()
 	{
+		$scope.stName_fail = false;
+
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			var _stName = true;
-
-			if ($scope.viewModel.stName != undefined) // when new...
-				if ($scope.viewModel.stName.length < 3)
-					_stName = false;
-
-			if (!_stName) 
-			{
-				if (_stName) 
-					$scope.style_stName = $scope.style_error; else $scope.style_stName = {};
-
-				$scope.errorMain = true;
-				$scope.errorMainMsg = 'Fill the form with all the required fields';
+			if ($scope.viewModel.stName != undefined) {
+				if ($scope.viewModel.stName.length < 5)
+					$scope.stName_fail = true;
 			}
 			else
-			{
-				$scope.errorMain = false;
-				$scope.errorMainMsg = '';
+				$scope.stName_fail = true;
 
+			if (!$scope.stName_fail) 
+			{
 				var perms = ''; var _mdl = $scope.viewModel;
 
 				// setup

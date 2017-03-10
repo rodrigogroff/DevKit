@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevKit.DataAccess", "DevKit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevKit.Web", "DevKit.Web\DevKit.Web.csproj", "{3F37EF80-E4CA-4BF7-8B21-07849230404C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{31992D7E-A656-4D93-82E6-259739B034FF}"
+	ProjectSection(SolutionItems) = preProject
+		Map.txt = Map.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

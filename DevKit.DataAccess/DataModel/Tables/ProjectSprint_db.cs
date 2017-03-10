@@ -29,6 +29,8 @@ namespace DataModel
 
 		public string updateCommand = "";
 		public object anexedEntity;
+
+		public List<ProjectSprintVersion> versions;
 	}
 
 	// --------------------------

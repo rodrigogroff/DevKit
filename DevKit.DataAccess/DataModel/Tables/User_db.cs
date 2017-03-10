@@ -25,9 +25,9 @@ namespace DataModel
 
 		public Profile Profile;
 
-		public List<UserPhone> phones = new List<UserPhone>();
-		public List<UserEmail> emails = new List<UserEmail>();
-
+		public List<UserPhone> phones;
+		public List<UserEmail> emails;
+		
 		public string updateCommand = "";
 		public object anexedEntity;
 	}

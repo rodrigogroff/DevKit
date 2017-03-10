@@ -1,0 +1,13 @@
+
+Sprint
+	
+	Version = (00.10)
+
+Task
+
+	Task Type = Software
+
+	Task Category (Software) = Bug, Requirement, Improvement
+
+	Task Flow (Software) = Open, Analisys, Development, Testing, Delivered, Accepted
+

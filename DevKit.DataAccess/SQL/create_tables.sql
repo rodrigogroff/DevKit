@@ -149,6 +149,67 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."ProjectSprint"
     OWNER to postgres;
+	
+CREATE TABLE public."TaskType"
+(
+    id bigserial NOT NULL,
+    "stName" character varying(200),
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."TaskType"
+    OWNER to postgres;
 
 
+CREATE TABLE public."TaskCategory"
+(
+    id bigserial NOT NULL,
+	"fkTaskType" bigint,
+    "stName" character varying(200),
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."TaskCategory"
+    OWNER to postgres;
+
+
+CREATE TABLE public."TaskFlow"
+(
+    id bigserial NOT NULL,
+	"fkTaskType" bigint,
+    "stName" character varying(200),
+	"nuOrder" bigint,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."TaskFlow"
+    OWNER to postgres;
+	
+
+CREATE TABLE public."ProjectSprintVersion"
+(
+    id bigserial NOT NULL,
+    "fkSprint" bigint,
+	"stName" character varying(20),
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."ProjectSprintVersion"
+    OWNER to postgres;
 

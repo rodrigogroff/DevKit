@@ -1,17 +1,8 @@
 ﻿using LinqToDB;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using DataModel;
 
 namespace DataModel
 {
-	public class ProjectPhaseLoadParams
-	{
-		public bool bAll = false;
-	}
-
 	public class ProjectPhaseFilter
 	{
 		public int skip, take;
@@ -19,24 +10,13 @@ namespace DataModel
 
 		public string busca;
 	}
-
-	// --------------------------
-	// properties
-	// --------------------------
-
-	public partial class ProjectPhase
-	{
-		
-	}
-
+	
 	// --------------------------
 	// functions
 	// --------------------------
 
 	public partial class ProjectPhase
 	{
-		ProjectPhaseLoadParams load = new ProjectPhaseLoadParams { bAll = true };
-		
 		public IQueryable<ProjectPhase> ComposedFilters(DevKitDB db, ProjectPhaseFilter filter)
 		{
 			var query = from e in db.ProjectPhases select e;
@@ -50,10 +30,8 @@ namespace DataModel
 			return query;
 		}
 
-		public ProjectPhase Load(DevKitDB db, ProjectPhaseLoadParams _load = null)
+		public ProjectPhase Load(DevKitDB db)
 		{
-			if (_load != null)
-				load = _load;
 
 			return this;
 		}

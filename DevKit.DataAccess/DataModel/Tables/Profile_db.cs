@@ -20,7 +20,7 @@ namespace DataModel
 	{
 		public int qttyPermissions = 0;
 
-		public List<User> Users { get; set; }
+		public List<User> Users;
 	}
 
 	// --------------------------

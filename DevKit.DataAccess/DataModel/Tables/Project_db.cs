@@ -22,9 +22,9 @@ namespace DataModel
 		public string stUser = "";
 		public string sdtCreation = "";
 
-		public List<ProjectUser> users = new List<ProjectUser>();
-		public List<ProjectPhase> phases = new List<ProjectPhase>();
-		public List<ProjectSprint> sprints = new List<ProjectSprint>();
+		public List<ProjectUser> users;
+		public List<ProjectPhase> phases;
+		public List<ProjectSprint> sprints;
 
 		public string updateCommand = "";
 		public object anexedEntity;

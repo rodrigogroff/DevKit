@@ -19,15 +19,19 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<Profile>       Profiles       { get { return this.GetTable<Profile>(); } }
-		public ITable<Project>       Projects       { get { return this.GetTable<Project>(); } }
-		public ITable<ProjectPhase>  ProjectPhases  { get { return this.GetTable<ProjectPhase>(); } }
-		public ITable<ProjectSprint> ProjectSprints { get { return this.GetTable<ProjectSprint>(); } }
-		public ITable<ProjectUser>   ProjectUsers   { get { return this.GetTable<ProjectUser>(); } }
-		public ITable<Setup>         Setups         { get { return this.GetTable<Setup>(); } }
-		public ITable<User>          Users          { get { return this.GetTable<User>(); } }
-		public ITable<UserEmail>     UserEmails     { get { return this.GetTable<UserEmail>(); } }
-		public ITable<UserPhone>     UserPhones     { get { return this.GetTable<UserPhone>(); } }
+		public ITable<Profile>              Profiles              { get { return this.GetTable<Profile>(); } }
+		public ITable<Project>              Projects              { get { return this.GetTable<Project>(); } }
+		public ITable<ProjectPhase>         ProjectPhases         { get { return this.GetTable<ProjectPhase>(); } }
+		public ITable<ProjectSprint>        ProjectSprints        { get { return this.GetTable<ProjectSprint>(); } }
+		public ITable<ProjectSprintVersion> ProjectSprintVersions { get { return this.GetTable<ProjectSprintVersion>(); } }
+		public ITable<ProjectUser>          ProjectUsers          { get { return this.GetTable<ProjectUser>(); } }
+		public ITable<Setup>                Setups                { get { return this.GetTable<Setup>(); } }
+		public ITable<TaskCategory>         TaskCategories        { get { return this.GetTable<TaskCategory>(); } }
+		public ITable<TaskFlow>             TaskFlows             { get { return this.GetTable<TaskFlow>(); } }
+		public ITable<TaskType>             TaskTypes             { get { return this.GetTable<TaskType>(); } }
+		public ITable<User>                 Users                 { get { return this.GetTable<User>(); } }
+		public ITable<UserEmail>            UserEmails            { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserPhone>            UserPhones            { get { return this.GetTable<UserPhone>(); } }
 
 		public DevKitDB()
 		{
@@ -80,6 +84,14 @@ namespace DataModel
 		[Column,     Nullable] public bool?     bComplete     { get; set; } // boolean
 	}
 
+	[Table(Schema="public", Name="ProjectSprintVersion")]
+	public partial class ProjectSprintVersion
+	{
+		[PrimaryKey, Identity] public long   id       { get; set; } // bigint
+		[Column,     Nullable] public long?  fkSprint { get; set; } // bigint
+		[Column,     Nullable] public string stName   { get; set; } // character varying(20)
+	}
+
 	[Table(Schema="public", Name="ProjectUser")]
 	public partial class ProjectUser
 	{
@@ -96,6 +108,30 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id           { get; set; } // bigint
 		[Column,     Nullable] public string stPhoneMask  { get; set; } // character varying(99)
 		[Column,     Nullable] public string stDateFormat { get; set; } // character varying(99)
+	}
+
+	[Table(Schema="public", Name="TaskCategory")]
+	public partial class TaskCategory
+	{
+		[PrimaryKey, Identity] public long   id         { get; set; } // bigint
+		[Column,     Nullable] public long?  fkTaskType { get; set; } // bigint
+		[Column,     Nullable] public string stName     { get; set; } // character varying(200)
+	}
+
+	[Table(Schema="public", Name="TaskFlow")]
+	public partial class TaskFlow
+	{
+		[PrimaryKey, Identity] public long   id         { get; set; } // bigint
+		[Column,     Nullable] public long?  fkTaskType { get; set; } // bigint
+		[Column,     Nullable] public string stName     { get; set; } // character varying(200)
+		[Column,     Nullable] public long?  nuOrder    { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="TaskType")]
+	public partial class TaskType
+	{
+		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
+		[Column,     Nullable] public string stName { get; set; } // character varying(200)
 	}
 
 	[Table(Schema="public", Name="User")]
@@ -153,6 +189,12 @@ namespace DataModel
 				t.id == id);
 		}
 
+		public static ProjectSprintVersion Find(this ITable<ProjectSprintVersion> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
 		public static ProjectUser Find(this ITable<ProjectUser> table, long id)
 		{
 			return table.FirstOrDefault(t =>
@@ -160,6 +202,24 @@ namespace DataModel
 		}
 
 		public static Setup Find(this ITable<Setup> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskCategory Find(this ITable<TaskCategory> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskFlow Find(this ITable<TaskFlow> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskType Find(this ITable<TaskType> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

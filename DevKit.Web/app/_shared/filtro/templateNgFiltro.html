@@ -26,22 +26,16 @@
 			<div id="filtro" ng-show="filtro.exibeFiltro">				
 				<section style="background: rgba(15, 43, 89, 0.2 );">
 					<br />
-					<table>
-						<tr>
-							<td valign="top"><ng-include src="templateAvancado"></ng-include></td>
-							<td valign="top" width="60px"></td>
-							<td valign="top" style="padding-top:10px;"><button class="btn btn-default btn-xs" type="submit" ng-click="limpar()">Cleanup</button></td>
-							<td width="20px"></td>
-							<td valign="top" style="padding-top:10px;"><button class="btn btn-primary btn-xs" type="submit" ng-click="pesquisar()">Search</button></td>
-							<td width="20px"></td>
-						</tr>
-					</table>
+					<ng-include src="templateAvancado"></ng-include>
+					<br />
 					<table>
 						<tr>
 							<td width="20px"></td>
-							<td>
-								<button type="button" style="margin-bottom:5px;height:29px" class="btn btn-default btn-xs" ng-click="toggleFiltros()"> Close filters</button>
-							</td>
+							<td valign="top" style="padding-top:10px;"><button class="btn btn-primary" type="submit" ng-click="pesquisar()">Search</button></td>
+							<td width="20px"></td>
+							<td valign="top" style="padding-top:10px;"><button class="btn btn-default" type="submit" ng-click="limpar()">Cleanup</button></td>
+							<td width="50px"></td>
+							<td valign="top" style="padding-top:10px;"><button class="btn btn-default" type="submit" ng-click="toggleFiltros()">Close filters</button></td>
 						</tr>
 					</table>
 					<br />

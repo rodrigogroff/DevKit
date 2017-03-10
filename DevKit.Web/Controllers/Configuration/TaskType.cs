@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace DevKit.Web.Controllers
 {

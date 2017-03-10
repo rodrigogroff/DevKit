@@ -4,28 +4,27 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace DevKit.Web.Controllers
 {
-	public class UserController : ApiControllerBase
+	public class TaskTypeController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
 			using (var db = new DevKitDB())
 			{
-				var filter = new UserFilter()
+				var filter = new TaskTypeFilter()
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
-					fkPerfil = Request.GetQueryStringValue<long?>("fkPerfil", null),
-					ativo = Request.GetQueryStringValue<bool?>("ativo", null),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper()
 				};
 
-				var mdl = new User();
+				var mdl = new TaskType();
 
 				var query = mdl.ComposedFilters(db, filter).
-					OrderBy(y => y.stLogin);
+					OrderBy(y => y.stName);
 
 				return Ok(new
 				{
@@ -35,7 +34,7 @@ namespace DevKit.Web.Controllers
 			}
 		}
 
-		List<User> Output(IQueryable<User> query, DevKitDB db)
+		List<TaskType> Output(IQueryable<TaskType> query, DevKitDB db)
 		{
 			var lst = query.ToList();
 
@@ -48,7 +47,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Users select ne).Where(t => t.id == id).FirstOrDefault();
+				var model = (from ne in db.TaskTypes select ne).Where(t => t.id == id).FirstOrDefault();
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -57,18 +56,20 @@ namespace DevKit.Web.Controllers
 			}
 		}
 
-		public IHttpActionResult Post(User mdl)
+		public IHttpActionResult Post(TaskType mdl)
 		{
 			using (var db = new DevKitDB())
 			{
-				var resp = ""; if (!mdl.Create(db, ref resp))
+				var resp = "";
+
+				if (!mdl.Create(db, new Util().GetCurrentUser(db), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);
 			}
 		}
 
-		public IHttpActionResult Put(long id, User mdl)
+		public IHttpActionResult Put(long id, TaskType mdl)
 		{
 			using (var db = new DevKitDB())
 			{
@@ -85,7 +86,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Users select ne).Where(t => t.id == id).FirstOrDefault();
+				var model = (from ne in db.TaskTypes select ne).Where(t => t.id == id).FirstOrDefault();
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

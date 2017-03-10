@@ -39,7 +39,7 @@ namespace DataModel
 			return query;
 		}
 
-		public Profile Load(DevKitDB db)
+		public Profile LoadAssociations(DevKitDB db)
 		{
 			if ( stPermissions != null && stPermissions.Length > 0)
 				qttyPermissions = stPermissions.Split('|').Length / 2;

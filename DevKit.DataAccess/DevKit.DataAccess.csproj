@@ -62,12 +62,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Tables\Profile_db.cs" />
-    <Compile Include="DataModel\Tables\ProjectPhase_db.cs" />
-    <Compile Include="DataModel\Tables\ProjectSprint_db.cs" />
-    <Compile Include="DataModel\Tables\Project_db.cs" />
-    <Compile Include="DataModel\Tables\Setup_db.cs" />
-    <Compile Include="DataModel\Tables\User_db.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType_db.cs" />
+    <Compile Include="DataModel\Tables\System\Profile_db.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectPhase_db.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectSprint_db.cs" />
+    <Compile Include="DataModel\Tables\Configuration\Project_db.cs" />
+    <Compile Include="DataModel\Tables\System\Setup_db.cs" />
+    <Compile Include="DataModel\Tables\System\User_db.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

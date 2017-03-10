@@ -124,7 +124,10 @@ namespace DevKit.Web
 				"~/app/configuration/project/ListingProjectsController.js",
 
 				"~/app/configuration/sprint/SprintController.js",
-				"~/app/configuration/sprint/ListingSprintsController.js"
+				"~/app/configuration/sprint/ListingSprintsController.js",
+
+				"~/app/configuration/taskType/TaskTypeController.js",
+				"~/app/configuration/taskType/ListingTaskTypesController.js"
 
 				));
 

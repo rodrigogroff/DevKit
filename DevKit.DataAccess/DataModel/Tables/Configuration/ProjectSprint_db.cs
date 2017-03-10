@@ -55,7 +55,7 @@ namespace DataModel
 			return query;
 		}
 
-		public ProjectSprint Load(DevKitDB db)
+		public ProjectSprint LoadAssociations(DevKitDB db)
 		{
 			var setup = db.Setups.Find(1);
 

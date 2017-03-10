@@ -39,7 +39,7 @@ namespace DevKit.Web.Controllers
 		{
 			var lst = query.ToList();
 
-			lst.ForEach(mdl => { mdl = mdl.Load(db); });
+			lst.ForEach(mdl => { mdl = mdl.LoadAssociations(db); });
 
 			return lst;
 		}
@@ -51,7 +51,7 @@ namespace DevKit.Web.Controllers
 				var model = (from ne in db.ProjectPhases select ne).Where(t => t.id == id).FirstOrDefault();
 
 				if (model != null)
-					return Ok(model.Load(db));
+					return Ok(model.LoadAssociations(db));
 
 				return StatusCode(HttpStatusCode.NotFound);
 			}

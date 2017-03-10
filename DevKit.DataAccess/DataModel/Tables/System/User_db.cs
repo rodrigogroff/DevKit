@@ -54,7 +54,7 @@ namespace DataModel
 			return query;
 		}
 
-		public User Load(DevKitDB db)
+		public User LoadAssociations(DevKitDB db)
 		{
 			var setup = db.Setups.Find(1);
 

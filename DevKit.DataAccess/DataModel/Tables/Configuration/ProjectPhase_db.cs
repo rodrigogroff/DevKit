@@ -30,7 +30,7 @@ namespace DataModel
 			return query;
 		}
 
-		public ProjectPhase Load(DevKitDB db)
+		public ProjectPhase LoadAssociations(DevKitDB db)
 		{
 
 			return this;

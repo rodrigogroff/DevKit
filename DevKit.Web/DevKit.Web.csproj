@@ -230,6 +230,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\configuration\taskType\listingTaskTypes.html" />
+    <Content Include="app\configuration\taskType\ListingTaskTypesController.js" />
+    <Content Include="app\configuration\taskType\taskType.html" />
+    <Content Include="app\configuration\taskType\TaskTypeController.js" />
+    <Content Include="app\configuration\taskType\_filterTaskType.html" />
     <Content Include="app\configuration\sprint\listingSprints.html" />
     <Content Include="app\configuration\sprint\ListingSprintsController.js" />
     <Content Include="app\configuration\sprint\sprint.html" />
@@ -807,6 +812,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Configuration\PhaseCtrl.cs" />
+    <Compile Include="Controllers\Configuration\TaskType.cs" />
     <Compile Include="Controllers\Configuration\SprintCtrl.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\System\SetupCtrl.cs" />

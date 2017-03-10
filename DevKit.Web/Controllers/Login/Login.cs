@@ -36,7 +36,7 @@ namespace DevKit.Web
 
 					db.Update(usuario);
 					
-					usuario = usuario.Load(db);
+					usuario = usuario.LoadAssociations(db);
 
 					var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 

@@ -27,6 +27,10 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('sprint-new', { url: '/configuration/sprint/new', templateUrl: 'app/configuration/sprint/sprint.html', controller: 'SprintController' })
     .state('sprint', { url: '/configuration/sprint/:id', templateUrl: 'app/configuration/sprint/sprint.html', controller: 'SprintController' })
 
+	.state('taskTypes', { url: '/configuration/taskTypes', templateUrl: 'app/configuration/taskType/listingTaskTypes.html', controller: 'ListingTaskTypesController' })
+    .state('taskType-new', { url: '/configuration/taskType/new', templateUrl: 'app/configuration/taskType/taskType.html', controller: 'TaskTypeController' })
+    .state('taskType', { url: '/configuration/taskType/:id', templateUrl: 'app/configuration/taskType/taskType.html', controller: 'TaskTypeController' })
+
 	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);

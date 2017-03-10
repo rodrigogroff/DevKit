@@ -9,7 +9,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.viewModel = {};
 
 	$scope.permModel = {};	
-	$scope.permID = 103;
+	$scope.permID = 104;
 
 	function CheckPermissions()
 	{

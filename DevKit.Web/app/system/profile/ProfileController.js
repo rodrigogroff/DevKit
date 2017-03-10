@@ -35,6 +35,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1031: false, tg1032: false, tg1033: false, tg1034: false, tg1035: false,
 			// sprints
 			tg1041: false, tg1042: false, tg1043: false, tg1044: false, tg1045: false,
+			// task type
+			tg1051: false, tg1052: false, tg1053: false, tg1054: false, tg1055: false,
 		};
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -85,6 +87,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (data.stPermissions.indexOf('|1043|') >= 0) data.tg1043 = true; else data.tg1043 = false;
 				if (data.stPermissions.indexOf('|1044|') >= 0) data.tg1044 = true; else data.tg1044 = false;
 				if (data.stPermissions.indexOf('|1045|') >= 0) data.tg1045 = true; else data.tg1045 = false;
+
+				// task type
+				if (data.stPermissions.indexOf('|1051|') >= 0) data.tg1051 = true; else data.tg1051 = false;
+				if (data.stPermissions.indexOf('|1052|') >= 0) data.tg1052 = true; else data.tg1052 = false;
+				if (data.stPermissions.indexOf('|1053|') >= 0) data.tg1053 = true; else data.tg1053 = false;
+				if (data.stPermissions.indexOf('|1054|') >= 0) data.tg1054 = true; else data.tg1054 = false;
+				if (data.stPermissions.indexOf('|1055|') >= 0) data.tg1055 = true; else data.tg1055 = false;
 				
 				$scope.viewModel = data;
 
@@ -137,6 +146,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				// sprints
 				if (_mdl.tg1041 == true) perms += '|1041|'; if (_mdl.tg1042 == true) perms += '|1042|'; if (_mdl.tg1043 == true) perms += '|1043|';
 				if (_mdl.tg1044 == true) perms += '|1044|'; if (_mdl.tg1045 == true) perms += '|1045|';
+
+				// task type
+				if (_mdl.tg1051 == true) perms += '|1051|'; if (_mdl.tg1052 == true) perms += '|1052|'; if (_mdl.tg1043 == true) perms += '|1053|';
+				if (_mdl.tg1054 == true) perms += '|1054|'; if (_mdl.tg1055 == true) perms += '|1055|';
 
 				$scope.viewModel.stPermissions = perms;
 

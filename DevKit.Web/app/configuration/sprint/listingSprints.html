@@ -1,5 +1,5 @@
 ﻿<div class="webFormPostion">
-	<section class="widgetForm" style="width:1050px">
+	<section class="widgetForm" style="width:975px">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
@@ -24,7 +24,8 @@
 					<td valign="top">
 						<div ng-show="list.length == 0">
 							<br />
-							<div class="btn btn-warning btn-lg btn-block">No records found.</div>
+							<br />
+							<div class="btn btn-info btn-lg">No records found.</div>
 						</div>
 						<div ng-show="list.length > 0">
 							<br />
@@ -33,15 +34,17 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th width="250px">Project</th>
-										<th width="250px">Phase</th>
-										<th width="250px">Sprint</th>
+										<th width="120px">Status</th>
+										<th width="200px">Sprint</th>
+										<th width="200px">Project</th>
+										<th width="200px">Phase</th>										
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-									<td>{{ mdl.sfkProject }}</td>
-									<td>{{ mdl.sfkPhase }}</td>
+									<td>{{ mdl.bComplete ? 'Complete' : 'Active' }}</td>
 									<td>{{ mdl.stName }}</td>
+									<td>{{ mdl.sfkProject }}</td>
+									<td>{{ mdl.sfkPhase }}</td>									
 									<td></td>
 								</tr>
 							</table>

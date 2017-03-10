@@ -806,6 +806,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Configuration\PhaseCtrl.cs" />
     <Compile Include="Controllers\Configuration\SprintCtrl.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\System\SetupCtrl.cs" />

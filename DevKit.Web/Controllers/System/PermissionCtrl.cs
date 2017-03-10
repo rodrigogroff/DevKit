@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
 					novo = false,
 					remover = false;
 	}
-
+	
 	public class PermissionController : ApiControllerBase
 	{
 		public IHttpActionResult Get(long id)

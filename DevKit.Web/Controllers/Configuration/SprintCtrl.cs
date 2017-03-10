@@ -17,7 +17,10 @@ namespace DevKit.Web.Controllers
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
-					busca = Request.GetQueryStringValue("busca")?.ToUpper()
+					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+
+					fkProject = Request.GetQueryStringValue<long?>("fkSprint", null),
+					fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
 				};
 
 				var mdl = new ProjectSprint();

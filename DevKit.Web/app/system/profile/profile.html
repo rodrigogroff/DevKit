@@ -1,5 +1,5 @@
 ﻿<div class="webFormPostion">
-	<section class="widgetForm" style="width:895px; height:500px">
+	<section class="widgetForm" style="width:895px; height:100%">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
@@ -23,6 +23,7 @@
 								<tr>
 									<th width="20px"></th>
 									<th width="120px"></th>
+									<th width="20px"></th>
 									<th width="240px"></th>
 								</tr>
 							</thead>
@@ -30,6 +31,7 @@
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
 								<td>Id</td>
+								<td></td>
 								<td>
 									<b>{{viewModel.id}}</b>
 								</td>
@@ -38,19 +40,16 @@
 								<td></td>
 								<td>Profile name</td>
 								<td>
-									<input type="text" focus="true" class="form-control input-transparent" ng-maxlength="150"
-										   ng-disabled="!permModel.edicao" ng-style="style_stName" ng-model="viewModel.stName">
+									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
+								</td>
+								<td>
+									<input type="text" class="form-control input-transparent" ng-maxlength="150"
+										   ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
 								</td>
 							</tr>
 
 							<tr height="20px"></tr>
-
-							<tr height="40px">
-								<td></td>
-								<td colspan="2">
-									<button class="btn btn-danger" ng-show="errorMain">{{errorMainMsg}} </button>
-								</td>
-							</tr>
+							
 						</table>
 					</div>
 				</tab>
@@ -162,7 +161,6 @@
 				</tab>
 
 			</tabset>
-
 			<br />
 			<br />
 			<table>
@@ -175,6 +173,5 @@
 			<br />
 			<br />
 		</div>
-		
 	</section>
 </div>

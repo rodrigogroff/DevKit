@@ -10,6 +10,9 @@ namespace DataModel
 	public class ProjectSprintFilter
 	{
 		public int skip, take;
+
+		public long? fkProject, fkPhase;
+
 		public string busca;
 	}
 
@@ -21,7 +24,9 @@ namespace DataModel
 	{
 		public string sdtStart = "";
 		public string sdtEnd = "";
-		
+		public string sfkProject = "";
+		public string sfkPhase = "";
+
 		public string updateCommand = "";
 		public object anexedEntity;
 	}
@@ -39,6 +44,12 @@ namespace DataModel
 			if (filter.busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
+			if (filter.fkProject != null)
+				query = from e in query where e.fkProject == filter.fkProject select e;
+
+			if (filter.fkPhase != null)
+				query = from e in query where e.fkPhase == filter.fkPhase select e;
+
 			return query;
 		}
 
@@ -48,6 +59,12 @@ namespace DataModel
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
 			sdtEnd = dtEnd?.ToString(setup.stDateFormat);
+
+			if (fkProject != null)
+				sfkProject = (from ne in db.Projects where ne.id == fkProject select ne).FirstOrDefault().stName;
+
+			if (fkPhase != null)
+				sfkPhase = (from ne in db.ProjectPhases where ne.id == fkPhase select ne).FirstOrDefault().stName;
 
 			return this;
 		}

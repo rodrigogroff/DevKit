@@ -64,7 +64,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.viewModel.stName != undefined && $scope.viewModel.stName.length == 0)
+			if ($scope.viewModel.stName != undefined) {
+				if ($scope.viewModel.stName.length < 5)
+					$scope.stName_fail = true;
+			}
+			else
 				$scope.stName_fail = true;
 	
 			if (!$scope.stName_fail)

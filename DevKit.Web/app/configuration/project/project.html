@@ -62,7 +62,7 @@
 									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
 								</td>
 								<td>
-									<input type="text" focus="true" class="form-control input-transparent" ng-maxlength="150"
+									<input type="text" class="form-control input-transparent" ng-maxlength="150"
 											ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
 								</td>
 							</tr>
@@ -227,7 +227,7 @@
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.phases">
-												<td>{{ mdl.bCompleted ? 'Active' : 'Blocked' }}</td>
+												<td>{{ mdl.bCompleted ? 'Complete' : 'Active' }}</td>
 												<td>{{ mdl.stName }}</td>
 												<td></td>
 												<td>{{ mdl.sdtStart }}</td>
@@ -246,9 +246,43 @@
 						</table>
 					</div>
 				</tab>
+				
+				<tab heading="Sprints" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Sprints [{{viewModel.sprints.length}}]" ng-if="viewModel.id != undefined">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<br />
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<legend style="color:aliceblue">
+										Sprints for project
+									</legend>
+									
+									<div ng-show="viewModel.sprints.length > 0">
+										<br />
+										<table class="table table-hover" ng-if="viewModel.sprints.length > 0" style="width:100%">
+											<thead>
+												<tr>
+													<th width="80px">Status</th>
+													<th width="150px">Sprint</th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="mdl in viewModel.phases">
+												<td>{{ mdl.bCompleted ? 'Complete' : 'Active' }}</td>
+												<td>{{ mdl.stName }}</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
 
 			</tabset>			
-
 			<br />
 			<br />
 			<table>
@@ -260,8 +294,6 @@
 			</table>
 			<br />
 			<br />
-
-		</div>
-		
+		</div>		
 	</section>
 </div>

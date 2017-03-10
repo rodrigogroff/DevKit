@@ -1,5 +1,5 @@
 ﻿<div class="webFormPostion">
-	<section class="widgetForm" style="width:1050px">
+	<section class="widgetForm" style="width:975px">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
@@ -25,7 +25,8 @@
 					<td valign="top">
 						<div ng-show="list.length == 0">
 							<br />
-							<div class="btn btn-warning btn-lg btn-block">No records found.</div>
+							<br />
+							<div class="btn btn-info btn-lg">No records found.</div>
 						</div>
 						<div ng-show="list.length > 0">
 							<br />
@@ -35,11 +36,11 @@
 								<thead>
 									<tr>
 										<th width="90px">Status</th>
-										<th width="190px">Login</th>
+										<th width="150px">Login</th>
 										<th width="150px">Profile</th>
 										<th width="150px">Phones</th>
-										<th width="250px">Emails</th>										
-										<th width="150px">Last Login</th>
+										<th width="220px">Emails</th>										
+										<th width="120px">Last Login</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">

@@ -44,7 +44,7 @@
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.bComplete ? 'Complete' : 'Active' }}</td>
 									<td>{{ mdl.stName }}</td>
-									<td></td>
+									<td>{{ mdl.versions.length }}</td>
 									<td>{{ mdl.sfkPhase }}</td>
 									<td>{{ mdl.sfkProject }}</td>															
 								</tr>

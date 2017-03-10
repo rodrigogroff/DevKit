@@ -143,5 +143,74 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			});
 		}
 	}
+
+	// ---------------------------------
+	// versions
+	// ---------------------------------
+
+	$scope.addVersion = false;
+
+	$scope.removeVersion = function (index, lista)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.viewModel.updateCommand = "removeVersion";
+			$scope.viewModel.anexedEntity = lista[index];
+
+			Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Version removed', 'Success');
+				$scope.viewModel.versions = data.versions;
+			});
+		}
+	}
+
+	$scope.addNewVersion = function () {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addVersion = !$scope.addVersion;
+	}
+
+	$scope.newVersion =
+		{
+			fkSprint: undefined,
+			stName: '',
+		};
+
+	$scope.saveNewVersion = function ()
+	{
+		$scope.stVersion_fail = false;
+
+		if ($scope.newVersion.stName != undefined && $scope.newVersion.stName.length == 0)
+			$scope.stVersion_fail = true;
+
+		if (!$scope.stVersion_fail)
+		{
+			$scope.viewModel.updateCommand = "newVersion";
+			$scope.viewModel.anexedEntity = $scope.newVersion;
+
+			Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
+			{
+				$scope.newVersion =
+				{
+					fkSprint: undefined,
+					stName: '',
+				};
+
+				toastr.success('Version added', 'Success');
+				$scope.viewModel.versions = data.versions;
+
+				$scope.addVersion = false;
+
+			},
+			function (response)
+			{
+				toastr.error(response.data.message, 'Error');
+			});
+		}
+	}
 	
 }]);

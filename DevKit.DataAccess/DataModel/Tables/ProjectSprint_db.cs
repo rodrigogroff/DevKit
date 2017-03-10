@@ -68,7 +68,18 @@ namespace DataModel
 			if (fkPhase != null)
 				sfkPhase = (from ne in db.ProjectPhases where ne.id == fkPhase select ne).FirstOrDefault().stName;
 
+			versions = LoadVersions(db);
+
 			return this;
+		}
+
+		List<ProjectSprintVersion> LoadVersions(DevKitDB db)
+		{
+			var lst = (from e in db.ProjectSprintVersions where e.fkSprint == id select e).
+				OrderByDescending(t => t.id).
+				ToList();
+
+			return lst;
 		}
 
 		bool CheckDuplicate(ProjectSprint item, DevKitDB db)
@@ -116,6 +127,32 @@ namespace DataModel
 				case "entity":
 					{
 						db.Update(this);
+						break;
+					}
+
+				case "newVersion":
+					{
+						var ent = JsonConvert.DeserializeObject<ProjectSprintVersion>(anexedEntity.ToString());
+
+						if ((from ne in db.ProjectSprintVersions
+							 where ne.stName == ent.stName && ne.fkSprint == id
+							 select ne).Any())
+						{
+							resp = "Version already added to project!";
+							return false;
+						}
+
+						ent.fkSprint = id;
+						
+						db.Insert(ent);
+						versions = LoadVersions(db);
+						break;
+					}
+
+				case "removeVersion":
+					{
+						db.Delete(JsonConvert.DeserializeObject<ProjectSprintVersion>(anexedEntity.ToString()));
+						versions = LoadVersions(db);
 						break;
 					}
 			}

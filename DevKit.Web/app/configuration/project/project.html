@@ -76,7 +76,6 @@
 				<tab heading="Users" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Users [{{viewModel.users.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-						<br />
 						<table width="100%">
 							<tr height="12px"></tr>
 							<tr>
@@ -152,7 +151,6 @@
 				<tab heading="Phases" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Phases [{{viewModel.phases.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-						<br />
 						<table width="100%">
 							<tr height="12px"></tr>
 							<tr>
@@ -250,7 +248,6 @@
 				<tab heading="Sprints" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Sprints [{{viewModel.sprints.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-						<br />
 						<table width="100%">
 							<tr height="12px"></tr>
 							<tr>
@@ -262,14 +259,14 @@
 									
 									<div ng-show="viewModel.sprints.length > 0">
 										<br />
-										<table class="table table-hover" style="width:100%">
+										<table class="table table-hover" >
 											<thead>
 												<tr>
 													<th width="80px">Status</th>
 													<th width="150px">Sprint</th>
 												</tr>
 											</thead>
-											<tr data-ng-repeat="mdl in viewModel.phases">
+											<tr data-ng-repeat="mdl in viewModel.sprints">
 												<td>{{ mdl.bCompleted ? 'Complete' : 'Active' }}</td>
 												<td>{{ mdl.stName }}</td>
 											</tr>

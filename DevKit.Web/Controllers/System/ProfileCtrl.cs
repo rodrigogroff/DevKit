@@ -37,7 +37,7 @@ namespace DevKit.Web.Controllers
 		{
 			var lst = query.ToList();
 
-			lst.ForEach(mdl => { mdl = mdl.Load(db, new ProfileLoad_Params { bQttyUsers = true }); });
+			lst.ForEach(mdl => { mdl = mdl.Load(db); });
 
 			return lst;
 		}

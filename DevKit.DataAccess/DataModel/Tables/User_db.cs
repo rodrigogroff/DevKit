@@ -6,16 +6,6 @@ using Newtonsoft.Json;
 
 namespace DataModel
 {
-	public class UserLoadParams
-	{
-		public bool bAll = false,
-					bProfile = false,
-					bPhones = false,
-					bQttyPhones = false,
-					bEmails = false,
-					bQttyEmails = false;
-	}
-
 	public class UserFilter
 	{
 		public int skip, take;
@@ -29,14 +19,12 @@ namespace DataModel
 	// --------------------------
 
 	public partial class User
-	{
-		public int qttyPhones = 0,
-					qttyEmails = 0;
-
+	{ 
 		public string sdtLastLogin = "";
 		public string sdtCreation = "";
 
 		public Profile Profile;
+
 		public List<UserPhone> phones = new List<UserPhone>();
 		public List<UserEmail> emails = new List<UserEmail>();
 
@@ -50,38 +38,6 @@ namespace DataModel
 
 	public partial class User
 	{
-		UserLoadParams load = new UserLoadParams { bAll = true };
-
-		Profile LoadPerfil(DevKitDB db)
-		{
-			return (from e in db.Profiles where e.id == fkProfile select e).
-				FirstOrDefault();
-		}
-
-		List<UserPhone> LoadPhones(DevKitDB db)
-		{
-			return (from e in db.UserPhones where e.fkUser == id select e).
-				OrderBy ( t=> t.stPhone).
-				ToList();
-		}
-
-		int CountPhones(DevKitDB db)
-		{
-			return (from e in db.UserPhones where e.fkUser == id select e).Count();
-		}
-		
-		List<UserEmail> LoadEmails(DevKitDB db)
-		{
-			return (from e in db.UserEmails where e.fkUser == id select e).
-				OrderByDescending(t=>t.id).
-				ToList();
-		}
-
-		int CountEmails(DevKitDB db)
-		{
-			return (from e in db.UserEmails where e.fkUser == id select e).Count();
-		}
-
 		public IQueryable<User> ComposedFilters(DevKitDB db, UserFilter filter)
 		{
 			var query = from e in db.Users select e;
@@ -98,28 +54,38 @@ namespace DataModel
 			return query;
 		}
 
-		public User Load(DevKitDB db, UserLoadParams _load = null)
+		public User Load(DevKitDB db)
 		{
-			if (_load != null)
-				load = _load;
-
 			var setup = db.Setups.Find(1);
 
 			sdtLastLogin = dtLastLogin?.ToString(setup.stDateFormat);
 			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
 
-			if (load.bAll || load.bProfile)
-				Profile = LoadPerfil(db);
-
-			// phones
-			if (load.bAll || load.bPhones) phones = LoadPhones(db);
-			if (load.bAll) qttyPhones = phones.Count(); else if (load.bQttyPhones) qttyPhones = CountPhones(db);
-
-			// emails
-			if (load.bAll || load.bEmails) emails = LoadEmails(db);
-			if (load.bAll) qttyEmails = emails.Count(); else if (load.bQttyEmails) qttyEmails = CountEmails(db);
+			Profile = LoadProfile(db);
+			phones = LoadPhones(db);
+			emails = LoadEmails(db);
 
 			return this;
+		}
+
+		Profile LoadProfile(DevKitDB db)
+		{
+			return (from e in db.Profiles where e.id == fkProfile select e).
+				FirstOrDefault();
+		}
+
+		List<UserPhone> LoadPhones(DevKitDB db)
+		{
+			return (from e in db.UserPhones where e.fkUser == id select e).
+				OrderBy(t => t.stPhone).
+				ToList();
+		}
+
+		List<UserEmail> LoadEmails(DevKitDB db)
+		{
+			return (from e in db.UserEmails where e.fkUser == id select e).
+				OrderByDescending(t => t.id).
+				ToList();
 		}
 
 		bool CheckDuplicate(User item, DevKitDB db)

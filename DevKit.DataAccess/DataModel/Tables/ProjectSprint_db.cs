@@ -7,11 +7,6 @@ using DataModel;
 
 namespace DataModel
 {
-	public class ProjectSprintLoadParams
-	{
-		public bool bAll = false;
-	}
-
 	public class ProjectSprintFilter
 	{
 		public int skip, take;
@@ -37,8 +32,6 @@ namespace DataModel
 
 	public partial class ProjectSprint
 	{
-		ProjectSprintLoadParams load = new ProjectSprintLoadParams { bAll = true };
-		
 		public IQueryable<ProjectSprint> ComposedFilters(DevKitDB db, ProjectSprintFilter filter)
 		{
 			var query = from e in db.ProjectSprints select e;
@@ -49,11 +42,8 @@ namespace DataModel
 			return query;
 		}
 
-		public ProjectSprint Load(DevKitDB db, ProjectSprintLoadParams _load = null)
+		public ProjectSprint Load(DevKitDB db)
 		{
-			if (_load != null)
-				load = _load;
-
 			var setup = db.Setups.Find(1);
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);

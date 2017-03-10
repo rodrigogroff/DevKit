@@ -7,12 +7,6 @@ using DataModel;
 
 namespace DataModel
 {
-	public class ProjectLoadParams
-	{
-		public bool bAll = false,
-					bUsers = false;
-	}
-
 	public class ProjectFilter
 	{
 		public int skip, take;
@@ -53,8 +47,6 @@ namespace DataModel
 
 	public partial class Project
 	{
-		ProjectLoadParams load = new ProjectLoadParams { bAll = true };
-		
 		public IQueryable<Project> ComposedFilters(DevKitDB db, ProjectFilter filter)
 		{
 			var query = from e in db.Projects select e;
@@ -65,12 +57,10 @@ namespace DataModel
 			return query;
 		}
 
-		public Project Load(DevKitDB db, ProjectLoadParams _load = null)
+		public Project Load(DevKitDB db)
 		{
-			if (_load != null)
-				load = _load;
-
 			var setup = db.Setups.Find(1);
+
 			var mdlUser = db.Users.Find((long)this.fkUser);
 
 			stUser = mdlUser?.stLogin;

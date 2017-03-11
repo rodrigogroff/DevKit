@@ -27,7 +27,9 @@
 									<th width="240px"></th>
 								</tr>
 							</thead>
+							
 							<tr height="12px"></tr>
+
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
 								<td>Id</td>
@@ -66,8 +68,28 @@
 									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
 								</td>
 								<td>
-									<input type="text" class="form-control input-transparent" ng-maxlength="150"
+									<input type="text" class="form-control input-transparent" maxlength="150"
 											ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
+								</td>
+							</tr>
+
+							<tr height="40px">
+								<td></td>
+								<td>Start Date</td>
+								<td>
+									
+								</td>
+								<td>
+									
+								</td>
+							</tr>
+
+							<tr height="40px">
+								<td></td>
+								<td>End Date</td>
+								<td></td>
+								<td>
+									
 								</td>
 							</tr>
 
@@ -79,7 +101,7 @@
 								<td></td>
 								<td>
 									<input name="ativo" type="checkbox"
-										   ng-disabled="!permModel.edicao" ng-model="viewModel.bComplete" checked />
+										   ng-disabled="!permModel.edicao" ng-model="viewModel.bComplete" />
 								</td>
 							</tr>
 

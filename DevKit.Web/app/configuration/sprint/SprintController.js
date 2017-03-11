@@ -4,6 +4,17 @@ angular.module('app.controllers').controller('SprintController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+
+	
+	$scope.opts = {
+		dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true
+	};
+	$scope.data = {
+		valor: "10/09/2013"
+	};
+
 	$scope.loading = false;
 
 	$scope.viewModel = {};

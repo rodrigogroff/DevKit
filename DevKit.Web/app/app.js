@@ -36,6 +36,22 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     $locationProvider.html5Mode(true);
 
 }]);
+
+//angular.module('app').config(['$datepickerProvider', '$asideProvider', function ($datepickerProvider, $asideProvider)
+//{
+//	angular.extend($datepickerProvider.defaults, {
+//		dateFormat: 'dd/MM/yyyy',
+//		startWeek: 1,
+//		autoclose: true
+//	});
+
+//	angular.extend($asideProvider.defaults, {
+//		animation: 'am-fade-and-slide-left',
+//		placement: 'left',
+//		backdrop: false
+//	});
+
+//}]);
  
 angular.module('app').config(function ($httpProvider) {
 

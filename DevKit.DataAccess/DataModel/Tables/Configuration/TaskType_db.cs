@@ -19,6 +19,8 @@ namespace DataModel
 
 	public partial class TaskType
 	{
+		public List<TaskCategory> categories;
+
 		public string updateCommand = "";
 		public object anexedEntity;
 	}
@@ -41,9 +43,20 @@ namespace DataModel
 
 		public TaskType LoadAssociations(DevKitDB db)
 		{
+			categories = LoadCategories(db);
+
 			return this;
 		}
-		
+
+		List<TaskCategory> LoadCategories(DevKitDB db)
+		{
+			var lst = (from e in db.TaskCategories where e.fkTaskType == id select e).
+				OrderBy(t => t.stName).
+				ToList();
+
+			return lst;
+		}
+
 		bool CheckDuplicate(TaskType item, DevKitDB db)
 		{
 			var query = from e in db.TaskTypes select e;
@@ -86,6 +99,32 @@ namespace DataModel
 				case "entity":
 					{
 						db.Update(this);
+						break;
+					}
+
+				case "newCategorie":
+					{
+						var ent = JsonConvert.DeserializeObject<TaskCategory>(anexedEntity.ToString());
+
+						if ((from ne in db.TaskCategories
+							 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkTaskType == id
+							 select ne).Any())
+						{
+							resp = "Category already added to task type!";
+							return false;
+						}
+
+						ent.fkTaskType = id;
+
+						db.Insert(ent);
+						categories = LoadCategories(db);
+						break;
+					}
+
+				case "removeCategorie":
+					{
+						db.Delete(JsonConvert.DeserializeObject<TaskCategory>(anexedEntity.ToString()));
+						categories = LoadCategories(db);
 						break;
 					}
 			}

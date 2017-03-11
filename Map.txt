@@ -1,11 +1,18 @@
 
-Sprint
+Profile					(Administrator)
+	*User
 	
-	OK	//Version = (00.10)
+User					(dba)
+	Profile				(Administrator)
+	*Email
+	*Phone
+	
+Project
+	*User
+	*Phase				(Phase one)
+		*Sprint			(sp0001 - basic requirements)
+			*Version	(00.01.a)
 
-Task
-
-	OK		//Task Type = Software
-	NOK		//Task Category (Software) = Bug, Requirement, Improvement	
-	NOK		//Task Flow (Software) = Open, Analisys, Development, Testing, Delivered, Accepted
-
+Task Type				(Software)
+	*Task Category		(Bug, Requirement, Improvement, Fix)
+	*Task Flow			(Open -> Analisys -> Development -> Testing -> Delivered -> Accepted)

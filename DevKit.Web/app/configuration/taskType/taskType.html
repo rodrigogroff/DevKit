@@ -55,6 +55,68 @@
 					</div>
 				</tab>
 
+				<tab heading="Categories" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Categories [{{viewModel.categories.length}}]" ng-if="viewModel.id != undefined">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<legend style="color:aliceblue">
+										Categories available for task type
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewCategorie()"><i class="fa fa-plus"> </i> Add new </button>
+									</legend>
+									<div ng-if="addCategorie == true">
+										<table>
+											<tr>
+												<td>
+													<table>
+														<tr height="42px">
+															<td width="120px">Category</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="stCategorieName_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="text" class="form-control input-transparent" ng-model="newCategorie.stName">
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										<br />
+										<button class="btn btn-primary" ng-click="saveNewCategorie()">Save </button>
+										<br />
+										<br />
+									</div>
+									<div ng-show="viewModel.categories.length > 0">
+										<br />
+										<table class="table table-hover" style="width:100%">
+											<thead>
+												<tr>
+													<th width="150px">Category</th>
+													<th width="70px" class="colunaRemover">REMOVE</th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="mdl in viewModel.categories">
+												<td>{{ mdl.stName }}</td>
+												<td class="colunaRemover">
+													<a href="" role="button" ng-click="removeCategorie($index, viewModel.categories)">
+														<i class="glyphicon glyphicon-remove" style="color:white"></i>
+													</a>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
+
+
 			</tabset>			
 			<br />
 			<br />

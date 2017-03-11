@@ -121,4 +121,73 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+	// ---------------------------------
+	// categories
+	// ---------------------------------
+
+	$scope.addCategorie = false;
+
+	$scope.removeCategorie = function (index, lista)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.viewModel.updateCommand = "removeCategorie";
+			$scope.viewModel.anexedEntity = lista[index];
+
+			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Category removed', 'Success');
+				$scope.viewModel.categories = data.categories;
+			});
+		}
+	}
+
+	$scope.addNewCategorie = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addCategorie = !$scope.addCategorie;
+	}
+
+	$scope.newCategorie =
+		{
+			fkTaskType: undefined,
+			stName: ''			
+		};
+
+	$scope.saveNewCategorie = function ()
+	{
+		$scope.stCategorieName_fail = false;
+
+		if ($scope.newCategorie.stName != undefined && $scope.newCategorie.stName.length == 0)
+			$scope.stCategorieName_fail = true;
+
+		if (!$scope.stCategorieName_fail)
+		{
+			$scope.viewModel.updateCommand = "newCategorie";
+			$scope.viewModel.anexedEntity = $scope.newCategorie;
+
+			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
+			{
+				$scope.newCategorie =
+				{
+					fkTaskType: undefined,
+					stName: ''
+				};
+
+				toastr.success('Category added', 'Success');
+				$scope.viewModel.categories = data.categories;
+
+				$scope.addCategorie = false;
+
+			}, function (response)
+			{
+				toastr.error(response.data.message, 'Error');
+			});
+		}
+	}
+
 }]);

@@ -41,7 +41,7 @@
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
-									<td></td>
+									<td><div data-ng-repeat="m in mdl.categories">{{ m.stName }}</div></td>
 									<td></td>
 								</tr>
 							</table>

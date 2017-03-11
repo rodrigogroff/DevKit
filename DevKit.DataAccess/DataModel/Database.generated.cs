@@ -129,6 +129,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkUserResponsible { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastEdit        { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkPhase           { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskCategory")]

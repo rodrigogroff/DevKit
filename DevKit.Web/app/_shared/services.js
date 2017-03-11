@@ -94,6 +94,7 @@ angular.module('app.services', ['ngResource'])
 		Permission: $resource('api/permission/:id', {}, opcoes),
 		Project: $resource('api/project/:id', {}, opcoes),
 		Phase: $resource('api/phase/:id', {}, opcoes),
+		Version: $resource('api/version/:id', {}, opcoes),
 		Sprint: $resource('api/sprint/:id', {}, opcoes),
 		TaskType: $resource('api/taskType/:id', {}, opcoes),
 		Task: $resource('api/task/:id', {}, opcoes)

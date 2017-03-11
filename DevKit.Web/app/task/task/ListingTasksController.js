@@ -27,11 +27,24 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;		
 	}
-
-	$scope.campos = {
-		ativo: 'true'
-	};
 	
+	$scope.campos = {
+		ativo: 'true',
+		selects: {
+			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
+			phase: ngSelects.obterConfiguracao(Api.Phase, {
+				tamanhoPagina: 15, campoNome: 'stName',
+
+				scope: $scope,
+				filtro:
+					{
+						campo: 'idProject',
+						valor: 'campos.fkProject'
+					}
+
+			}),
+		}
+	};
 	$scope.itensporpagina = 15;
 
 	$scope.search = function ()

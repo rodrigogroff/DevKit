@@ -1,19 +1,19 @@
 ﻿<div class="webFormPostion">
-	<section class="widgetForm" style="width:925px; height:500px">
+	<section class="widgetForm" style="width:925px; height:100%">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
 					<td>
-						System \ Setup <i class="fa fa-spinner fa-spin" ng-show="loading"></i> 
+						System \ Setup <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
 					</td>
 					<td width="20px"></td>
 				</tr>
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div class="divWebForm" >
+		<div class="divWebForm">
 			<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 				<div style="padding-left:20px; padding-top:20px">
 					<legend style="color:white">Preferences</legend>
@@ -36,7 +36,7 @@
 								<button class="btn btn-xs btn-danger" ng-show="stPhoneMask_fail">!</button>
 							</td>
 							<td>
-								<input type="text" class="form-control input-transparent" maxlength="20" 
+								<input type="text" class="form-control input-transparent" maxlength="20"
 									   ng-disabled="!permModel.edicao" ng-model="viewModel.stPhoneMask">
 							</td>
 						</tr>
@@ -48,7 +48,7 @@
 								<button class="btn btn-xs btn-danger" ng-show="stDateFormat_fail">!</button>
 							</td>
 							<td>
-								<input type="text" class="form-control input-transparent" maxlength="99" 
+								<input type="text" class="form-control input-transparent" maxlength="99"
 									   ng-disabled="!permModel.edicao" ng-model="viewModel.stDateFormat">
 							</td>
 						</tr>
@@ -61,6 +61,6 @@
 			<br />
 			<br />
 			<button class="btn btn-primary" ng-click="save()">Save</button>
-		</div>		
+		</div>
 	</section>
 </div>

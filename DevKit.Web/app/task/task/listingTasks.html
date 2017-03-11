@@ -35,17 +35,19 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th width="120px">Opened</th>
-										<th width="120px">Title</th>
-										<th width="120px">Local</th>
-										<th width="120px">Description</th>
+										<th width="150px">Date Start</th>
+										<th width="120px">Opened By</th>
+										<th width="180px">Title</th>
+										<th width="180px">Sprint</th>
+										<th width="180px">Project / Phase</th>										
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.sdtStart }}</td>
-									<td>{{ mdl.stTitle }}</td>
-									<td>{{ mdl.stLocalization }}</td>
-									<td>{{ mdl.stDescription }}</td>
+									<td>{{ mdl.sfkUserStart }}</td>
+									<td>{{ mdl.stTitle }}<br /><i>{{ mdl.stLocalization }}</i></td>
+									<td>{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
+									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}</td>
 								</tr>
 							</table>
 						</div>

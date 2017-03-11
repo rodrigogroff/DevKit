@@ -41,6 +41,41 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		CheckPermissions();
 		loadSetup();
 
+		$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' });
+
+		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase,
+			{
+				tamanhoPagina: 15,
+				scope: $scope,
+				filtro:
+					{
+						campo: 'idProject',
+						valor: 'viewModel.fkProject'
+					}
+			});
+
+		$scope.selectSprints = ngSelects.obterConfiguracao(Api.Sprint,
+			{
+				tamanhoPagina: 15,
+				scope: $scope,
+				filtro:
+					{
+						campo: 'idPhase',
+						valor: 'viewModel.fkPhase'
+					}
+			});
+
+		$scope.selectVersions = ngSelects.obterConfiguracao(Api.Version,
+			{
+				tamanhoPagina: 15,
+				scope: $scope,
+				filtro:
+					{
+						campo: 'idSprint',
+						valor: 'viewModel.fkSprint'
+					}
+			});
+
 		if (id > 0)
 		{
 			$scope.loading = true;
@@ -66,23 +101,36 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.stTitle_fail = false;
 		$scope.stLocalization_fail = false;
 		$scope.stDescription_fail = false;
+		$scope.fkProject_fail = false;
+		$scope.fkPhase_fail = false;
+		$scope.fkSprint_fail = false;
+		$scope.fkVersion_fail = false;
 
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.viewModel.stTitle != undefined && $scope.viewModel.stTitle.length == 0)
-				$scope.stTitle_fail = true;
+			if ($scope.viewModel.stTitle == undefined) $scope.stTitle_fail = true;
+			else if ($scope.viewModel.stTitle.length == 0) $scope.stTitle_fail = true;
 
-			if ($scope.viewModel.stLocalization != undefined && $scope.viewModel.stLocalization.length == 0)
-				$scope.stLocalization_fail = true;
+			if ($scope.viewModel.stLocalization == undefined) $scope.stLocalization_fail = true;
+			else if ($scope.viewModel.stLocalization.length == 0) $scope.stLocalization_fail = true;
 
-			if ($scope.viewModel.stDescription != undefined && $scope.viewModel.stDescription.length == 0)
-				$scope.stDescription_fail = true;
+			if ($scope.viewModel.stDescription == undefined) $scope.stDescription_fail = true;
+			else if ($scope.viewModel.stDescription.length == 0) $scope.stDescription_fail = true;
+
+			if ($scope.viewModel.fkProject == undefined) $scope.fkProject_fail = true;
+			if ($scope.viewModel.fkPhase == undefined) $scope.fkPhase_fail = true;
+			if ($scope.viewModel.fkSprint == undefined) $scope.fkSprint_fail = true;
+			if ($scope.viewModel.fkVersion == undefined) $scope.fkVersion_fail = true;
 	
 			if (!$scope.stTitle_fail &&
 				!$scope.stLocalization_fail &&
-				!$scope.stDescription_fail)
+				!$scope.stDescription_fail &&
+				!$scope.fkProject_fail &&
+				!$scope.fkPhase_fail && 
+				!$scope.fkSprint_fail && 
+				!$scope.fkVersion_fail )
 			{
 				if (id > 0)
 				{

@@ -816,6 +816,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Configuration\VersionCtrl.cs" />
     <Compile Include="Controllers\Configuration\PhaseCtrl.cs" />
     <Compile Include="Controllers\Configuration\TaskType.cs" />
     <Compile Include="Controllers\Configuration\SprintCtrl.cs" />

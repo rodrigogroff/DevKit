@@ -20,7 +20,11 @@ namespace DataModel
 	{
 		public string sdtStart = "";
 		public string sfkUserStart = "";
-	
+		public string sfkProject = "";
+		public string sfkPhase = "";
+		public string sfkSprint = "";
+		public string sfkVersion = "";
+
 		public string updateCommand = "";
 		public object anexedEntity;
 	}
@@ -50,7 +54,12 @@ namespace DataModel
 			var setup = db.Setups.Find(1);
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
+
 			sfkUserStart = (from e in db.Users where e.id == fkUserStart select e).FirstOrDefault().stLogin;
+			sfkProject = fkProject != null ? (from e in db.Projects where e.id == fkProject select e).FirstOrDefault().stName : "";
+			sfkPhase = fkPhase != null ? (from e in db.ProjectPhases where e.id == fkPhase select e).FirstOrDefault().stName : "";
+			sfkSprint = fkSprint != null ? (from e in db.ProjectSprints where e.id == fkSprint select e).FirstOrDefault().stName : "";
+			sfkVersion = fkVersion != null ? (from e in db.ProjectSprintVersions where e.id == fkVersion select e).FirstOrDefault().stName : "";
 
 			return this;
 		}

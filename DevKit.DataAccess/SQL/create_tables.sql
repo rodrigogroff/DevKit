@@ -220,6 +220,7 @@ CREATE TABLE public."Task"
 	"stLocalization" character varying(200),
 	"stDescription" character varying(4000),
 	"fkProject" bigint,
+	"fkPhase" bigint,
     "fkSprint" bigint,
 	"fkUserStart" bigint,
 	"fkVersion" bigint,

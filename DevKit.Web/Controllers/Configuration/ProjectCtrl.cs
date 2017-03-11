@@ -93,9 +93,9 @@ namespace DevKit.Web.Controllers
 
 				var resp = ""; if (!model.CanDelete(db, ref resp))
 					return BadRequest(resp);
-					
-				db.Delete(model);
-				
+
+				model.Delete(db);
+								
 				return Ok();
 			}
 		}

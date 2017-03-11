@@ -113,5 +113,12 @@ namespace DataModel
 
 			return true;
 		}
+
+		public void Delete(DevKitDB db)
+		{
+			// cascade
+			
+			db.Delete(this);
+		}
 	}
 }

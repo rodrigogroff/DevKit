@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using DataModel;
 
 namespace DataModel
 {
@@ -162,7 +161,19 @@ namespace DataModel
 
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
+			// check for versions used in tasks
+
 			return true;
+		}
+
+		public void Delete(DevKitDB db)
+		{
+			foreach (var item in (from e in db.ProjectSprintVersions
+								  where e.fkSprint == id
+								  select e))
+				db.Delete(item);
+
+			db.Delete(this);
 		}
 	}
 }

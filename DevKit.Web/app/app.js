@@ -31,6 +31,10 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('taskType-new', { url: '/configuration/taskType/new', templateUrl: 'app/configuration/taskType/taskType.html', controller: 'TaskTypeController' })
     .state('taskType', { url: '/configuration/taskType/:id', templateUrl: 'app/configuration/taskType/taskType.html', controller: 'TaskTypeController' })
 
+	.state('tasks', { url: '/task/tasks', templateUrl: 'app/task/task/listingTasks.html', controller: 'ListingTasksController' })
+    .state('task-new', { url: '/task/task/new', templateUrl: 'app/task/task/task.html', controller: 'TaskController' })
+    .state('task', { url: '/task/task/:id', templateUrl: 'app/task/task/task.html', controller: 'TaskController' })
+
 	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);

@@ -12,13 +12,13 @@ namespace DevKit.Web
 {
 	public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
 	{
-		public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+		public override async System.Threading.Tasks.Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
 		{
 			context.Validated();
-			await Task.FromResult(0);
+			await System.Threading.Tasks.Task.FromResult(0);
 		}
 
-		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+		public override async System.Threading.Tasks.Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
 			Thread.Sleep(500);
 
@@ -41,10 +41,10 @@ namespace DevKit.Web
 					var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
 					identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
-					identity.AddClaim(new Claim(ClaimTypes.Role, usuario.Profile.stName));
-					identity.AddClaim(new Claim(ClaimTypes.Sid, usuario.Profile.id.ToString()));
+					identity.AddClaim(new Claim(ClaimTypes.Role, usuario.profile.stName));
+					identity.AddClaim(new Claim(ClaimTypes.Sid, usuario.profile.id.ToString()));
 					identity.AddClaim(new Claim("IdUser", usuario.id.ToString()));
-					identity.AddClaim(new Claim("IdProfile", usuario.Profile.id.ToString()));
+					identity.AddClaim(new Claim("IdProfile", usuario.profile.id.ToString()));
 
 					var ticket = new AuthenticationTicket(identity, null);
 					context.Validated(ticket);
@@ -55,11 +55,11 @@ namespace DevKit.Web
 					return;
 				}
 
-				await Task.FromResult(0);
+				await System.Threading.Tasks.Task.FromResult(0);
 			}
 		}
 		
-		public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+		public override System.Threading.Tasks.Task TokenEndpoint(OAuthTokenEndpointContext context)
 		{
 			string nameUser = context.Identity.Claims.Where(x => x.Type == ClaimTypes.Name).Select(x => x.Value).FirstOrDefault();
 			string IdProfile = context.Identity.Claims.Where(x => x.Type == "IdProfile").Select(x => x.Value).FirstOrDefault();
@@ -67,7 +67,7 @@ namespace DevKit.Web
 			context.AdditionalResponseParameters.Add("nameUser", nameUser);
 			context.AdditionalResponseParameters.Add("idProfile", Convert.ToInt32(IdProfile));
 
-			return Task.FromResult<object>(null);
+			return System.Threading.Tasks.Task.FromResult<object>(null);
 		}
 	}
 }

@@ -1,0 +1,135 @@
+﻿<div class="webFormPostion">
+	<section class="widgetForm" style="width:895px; height:500px">
+		<legend class="legendTop">
+			<table><tr height="12px"><td> </td></tr></table>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td>
+						Task \ Task detail <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
+						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button>
+					</td>
+					<td width="20px"></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+		<div class="divWebForm">
+			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
+				<tab heading="Task">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table>
+							<thead>
+								<tr>
+									<th width="20px"></th>
+									<th width="140px"></th>
+									<th width="20px"></th>
+									<th width="300px"></th>
+									<th width="20px"></th>
+								</tr>
+							</thead>
+
+							<tr height="12px"></tr>
+
+							<tr height="40px" ng-show="viewModel.id > 0">
+								<td></td>
+								<td>
+									Id
+								</td>
+								<td></td>
+								<td>
+									<b>{{viewModel.id}}</b>
+								</td>
+								<td></td>
+							</tr>
+
+							<tr height="40px" ng-show="viewModel.id > 0">
+								<td></td>
+								<td>
+									Start Date
+								</td>
+								<td></td>
+								<td>
+									<b>{{viewModel.sdtStart}}</b>
+								</td>
+								<td></td>
+							</tr>
+
+							<tr height="40px" ng-show="viewModel.id > 0">
+								<td></td>
+								<td>
+									Opened by
+								</td>
+								<td></td>
+								<td>
+									<b>{{viewModel.sfkUserStart}}</b>
+								</td>
+								<td></td>
+							</tr>
+
+							<tr height="40px">
+								<td></td>
+								<td>
+									Title
+								</td>
+								<td width="20px">
+									<button class="btn btn-xs btn-danger" ng-show="stTitle_fail">!</button>
+								</td>
+								<td>
+									<input type="text" class="form-control input-transparent" maxlength="200"
+										   ng-disabled="!permModel.edicao" ng-model="viewModel.stTitle">
+								</td>
+								<td></td>
+							</tr>
+
+							<tr height="40px">
+								<td></td>
+								<td>
+									Localization
+								</td>
+								<td width="20px">
+									<button class="btn btn-xs btn-danger" ng-show="stLocalization_fail">!</button>
+								</td>
+								<td>
+									<input type="text" class="form-control input-transparent" maxlength="200"
+										   ng-disabled="!permModel.edicao" ng-model="viewModel.stLocalization">
+								</td>
+								<td></td>
+							</tr>
+
+							<tr height="40px">
+								<td></td>
+								<td>
+									Description
+								</td>
+								<td width="20px">
+									<button class="btn btn-xs btn-danger" ng-show="stDescription_fail">!</button>
+								</td>
+								<td>
+									<input type="text" class="form-control input-transparent" maxlength="200"
+										   ng-disabled="!permModel.edicao" ng-model="viewModel.stDescription">
+								</td>
+								<td></td>
+							</tr>
+							
+							<tr height="20px"></tr>
+
+						</table>
+					</div>
+				</tab>
+
+			</tabset>
+			<br />
+			<br />
+			<table>
+				<tr>
+					<td><button class="btn btn-default" ng-click="list()">Cancel</button> </td>
+					<td width="34px"></td>
+					<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+		</div>
+	</section>
+</div>

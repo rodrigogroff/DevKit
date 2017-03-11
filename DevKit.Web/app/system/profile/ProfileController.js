@@ -37,6 +37,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1041: false, tg1042: false, tg1043: false, tg1044: false, tg1045: false,
 			// task type
 			tg1051: false, tg1052: false, tg1053: false, tg1054: false, tg1055: false,
+			// task 
+			tg1061: false, tg1062: false, tg1063: false, tg1064: false, tg1065: false,
 		};
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -94,6 +96,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (data.stPermissions.indexOf('|1053|') >= 0) data.tg1053 = true; else data.tg1053 = false;
 				if (data.stPermissions.indexOf('|1054|') >= 0) data.tg1054 = true; else data.tg1054 = false;
 				if (data.stPermissions.indexOf('|1055|') >= 0) data.tg1055 = true; else data.tg1055 = false;
+
+				// task 
+				if (data.stPermissions.indexOf('|1061|') >= 0) data.tg1061 = true; else data.tg1061 = false;
+				if (data.stPermissions.indexOf('|1062|') >= 0) data.tg1062 = true; else data.tg1062 = false;
+				if (data.stPermissions.indexOf('|1063|') >= 0) data.tg1063 = true; else data.tg1063 = false;
+				if (data.stPermissions.indexOf('|1064|') >= 0) data.tg1064 = true; else data.tg1064 = false;
+				if (data.stPermissions.indexOf('|1065|') >= 0) data.tg1065 = true; else data.tg1065 = false;
 				
 				$scope.viewModel = data;
 
@@ -148,8 +157,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (_mdl.tg1044 == true) perms += '|1044|'; if (_mdl.tg1045 == true) perms += '|1045|';
 
 				// task type
-				if (_mdl.tg1051 == true) perms += '|1051|'; if (_mdl.tg1052 == true) perms += '|1052|'; if (_mdl.tg1043 == true) perms += '|1053|';
+				if (_mdl.tg1051 == true) perms += '|1051|'; if (_mdl.tg1052 == true) perms += '|1052|'; if (_mdl.tg1053 == true) perms += '|1053|';
 				if (_mdl.tg1054 == true) perms += '|1054|'; if (_mdl.tg1055 == true) perms += '|1055|';
+
+				// task 
+				if (_mdl.tg1061 == true) perms += '|1061|'; if (_mdl.tg1062 == true) perms += '|1062|'; if (_mdl.tg1063 == true) perms += '|1063|';
+				if (_mdl.tg1064 == true) perms += '|1064|'; if (_mdl.tg1065 == true) perms += '|1065|';
 
 				$scope.viewModel.stPermissions = perms;
 

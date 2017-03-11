@@ -23,7 +23,7 @@ namespace DataModel
 		public string sdtLastLogin = "";
 		public string sdtCreation = "";
 
-		public Profile Profile;
+		public Profile profile;
 
 		public List<UserPhone> phones;
 		public List<UserEmail> emails;
@@ -61,7 +61,7 @@ namespace DataModel
 			sdtLastLogin = dtLastLogin?.ToString(setup.stDateFormat);
 			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
 
-			Profile = LoadProfile(db);
+			profile = LoadProfile(db);
 			phones = LoadPhones(db);
 			emails = LoadEmails(db);
 

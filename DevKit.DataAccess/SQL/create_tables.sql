@@ -213,3 +213,30 @@ TABLESPACE pg_default;
 ALTER TABLE public."ProjectSprintVersion"
     OWNER to postgres;
 
+CREATE TABLE public."Task"
+(
+    id bigserial NOT NULL,
+	"stTitle" character varying(200),
+	"stLocalization" character varying(200),
+	"stDescription" character varying(4000),
+	"fkProject" bigint,
+    "fkSprint" bigint,
+	"fkUserStart" bigint,
+	"fkVersion" bigint,
+	"fkTaskType" bigint,
+	"fkTaskCategory" bigint,
+	"fkTaskFlowCurrent" bigint,
+	"fkReleaseVersion" bigint,
+	"fkUserResponsible" bigint,
+	"dtStart" timestamp without time zone,	
+	"dtLastEdit" timestamp without time zone,	
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Task"
+    OWNER to postgres;
+

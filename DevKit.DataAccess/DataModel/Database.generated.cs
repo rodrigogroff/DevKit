@@ -26,6 +26,7 @@ namespace DataModel
 		public ITable<ProjectSprintVersion> ProjectSprintVersions { get { return this.GetTable<ProjectSprintVersion>(); } }
 		public ITable<ProjectUser>          ProjectUsers          { get { return this.GetTable<ProjectUser>(); } }
 		public ITable<Setup>                Setups                { get { return this.GetTable<Setup>(); } }
+		public ITable<Task>                 Tasks                 { get { return this.GetTable<Task>(); } }
 		public ITable<TaskCategory>         TaskCategories        { get { return this.GetTable<TaskCategory>(); } }
 		public ITable<TaskFlow>             TaskFlows             { get { return this.GetTable<TaskFlow>(); } }
 		public ITable<TaskType>             TaskTypes             { get { return this.GetTable<TaskType>(); } }
@@ -108,6 +109,26 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id           { get; set; } // bigint
 		[Column,     Nullable] public string stPhoneMask  { get; set; } // character varying(99)
 		[Column,     Nullable] public string stDateFormat { get; set; } // character varying(99)
+	}
+
+	[Table(Schema="public", Name="Task")]
+	public partial class Task
+	{
+		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
+		[Column,     Nullable] public string    stTitle           { get; set; } // character varying(200)
+		[Column,     Nullable] public string    stLocalization    { get; set; } // character varying(200)
+		[Column,     Nullable] public string    stDescription     { get; set; } // character varying(4000)
+		[Column,     Nullable] public long?     fkProject         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkSprint          { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserStart       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkVersion         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTaskType        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTaskCategory    { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTaskFlowCurrent { get; set; } // bigint
+		[Column,     Nullable] public long?     fkReleaseVersion  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserResponsible { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastEdit        { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="TaskCategory")]
@@ -202,6 +223,12 @@ namespace DataModel
 		}
 
 		public static Setup Find(this ITable<Setup> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Task Find(this ITable<Task> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

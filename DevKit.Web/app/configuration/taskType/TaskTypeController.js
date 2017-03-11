@@ -190,4 +190,78 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+	// ---------------------------------
+	// flows
+	// ---------------------------------
+
+	$scope.addFlow = false;
+
+	$scope.removeFlow = function (index, lista)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.viewModel.updateCommand = "removeFlow";
+			$scope.viewModel.anexedEntity = lista[index];
+
+			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Flow removed', 'Success');
+				$scope.viewModel.flows = data.flows;
+			});
+		}
+	}
+
+	$scope.addNewFlow = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addFlow = !$scope.addFlow;
+	}
+
+	$scope.newFlow =
+		{
+			fkTaskType: undefined,
+			stName: '',
+			nuOrder: ''
+		};
+
+	$scope.saveNewFlow = function ()
+	{
+		$scope.stFlowName_fail = false;
+		$scope.stFlowOrder_fail = false;
+
+		if ($scope.newFlow.stName != undefined && $scope.newFlow.stName.length == 0)
+			$scope.stFlowName_fail = true;
+
+		if ($scope.newFlow.nuOrder != undefined && $scope.newFlow.nuOrder.length == 0)
+			$scope.stFlowOrder_fail = true;
+
+		if (!$scope.stFlowName_fail && !$scope.stFlowOrder_fail)
+		{
+			$scope.viewModel.updateCommand = "newFlow";
+			$scope.viewModel.anexedEntity = $scope.newFlow;
+
+			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
+			{
+				$scope.newFlow =
+					{
+						fkTaskType: undefined,
+						stName: '',
+						nuOrder: ''
+					};
+
+				toastr.success('Flow added', 'Success');
+				$scope.viewModel.flows = data.flows;
+
+				$scope.addFlow = false;
+
+			}, function (response) {
+				toastr.error(response.data.message, 'Error');
+			});
+		}
+	}
+
 }]);

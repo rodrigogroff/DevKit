@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using DataModel;
 
 namespace DataModel
 {
@@ -20,6 +19,7 @@ namespace DataModel
 	public partial class TaskType
 	{
 		public List<TaskCategory> categories;
+		public List<TaskFlow> flows;
 
 		public string updateCommand = "";
 		public object anexedEntity;
@@ -44,6 +44,7 @@ namespace DataModel
 		public TaskType LoadAssociations(DevKitDB db)
 		{
 			categories = LoadCategories(db);
+			flows = LoadFlows(db);
 
 			return this;
 		}
@@ -52,6 +53,15 @@ namespace DataModel
 		{
 			var lst = (from e in db.TaskCategories where e.fkTaskType == id select e).
 				OrderBy(t => t.stName).
+				ToList();
+
+			return lst;
+		}
+
+		List<TaskFlow> LoadFlows(DevKitDB db)
+		{
+			var lst = (from e in db.TaskFlows where e.fkTaskType == id select e).
+				OrderBy(t => t.nuOrder).
 				ToList();
 
 			return lst;
@@ -125,6 +135,32 @@ namespace DataModel
 					{
 						db.Delete(JsonConvert.DeserializeObject<TaskCategory>(anexedEntity.ToString()));
 						categories = LoadCategories(db);
+						break;
+					}
+
+				case "newFlow":
+					{
+						var ent = JsonConvert.DeserializeObject<TaskFlow>(anexedEntity.ToString());
+
+						if ((from ne in db.TaskFlows
+							 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkTaskType == id
+							 select ne).Any())
+						{
+							resp = "Flow already added to task type!";
+							return false;
+						}
+
+						ent.fkTaskType = id;
+
+						db.Insert(ent);
+						flows = LoadFlows(db);
+						break;
+					}
+
+				case "removeFlow":
+					{
+						db.Delete(JsonConvert.DeserializeObject<TaskFlow>(anexedEntity.ToString()));
+						flows = LoadFlows(db);
 						break;
 					}
 			}

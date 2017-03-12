@@ -24,6 +24,7 @@ namespace DataModel
 
 		public string snuPriority = "";
 		public string sfkUserStart = "";
+		public string sfkUserResponsible = "";
 		public string sfkProject = "";
 		public string sfkPhase = "";
 		public string sfkSprint = "";
@@ -73,6 +74,10 @@ namespace DataModel
 				snuPriority = new EnumPriority().lst.Where(t => t.id == nuPriority).FirstOrDefault().stName;
 
 			sfkUserStart = db.User(fkUserStart).stLogin;
+
+			if (fkUserResponsible != null)
+				sfkUserResponsible = db.User(fkUserResponsible).stLogin;
+
 			sfkProject = db.Project(fkProject).stName;
 			sfkPhase = db.ProjectPhase(fkPhase).stName;
 			sfkSprint = db.ProjectSprint(fkSprint).stName;

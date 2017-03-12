@@ -38,16 +38,16 @@
 										<th width="90px">Date Start</th>
 										<th width="140px">Priority / Opened By</th>
 										<th width="180px">Title</th>
-										<th width="180px">Sprint / Version</th>
-										<th width="180px">Project / Phase</th>										
+										<th width="180px">Assigned To</th>
+										<th width="180px">Project / SPRINT</th>										
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.sdtStart }}</td>
 									<td>{{ mdl.snuPriority }}<br />{{ mdl.sfkUserStart }}</td>
 									<td>{{ mdl.stTitle }}<br /><i>{{ mdl.stLocalization }}</i></td>
-									<td>{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
-									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}</td>
+									<td>{{ mdl.sfkUserResponsible }}</td>
+									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}<br />{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
 								</tr>
 							</table>
 						</div>

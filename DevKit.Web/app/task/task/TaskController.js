@@ -78,6 +78,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					}
 			});
 
+		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' });
+
 		if (id > 0)
 		{
 			$scope.loading = true;

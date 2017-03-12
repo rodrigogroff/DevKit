@@ -1,5 +1,5 @@
 ﻿<div class="webFormPostion">
-	<section class="widgetForm" style="width:895px; height:100%">
+	<section class="widgetForm" style="width:950px; height:100%">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
@@ -22,46 +22,34 @@
 							<thead>
 								<tr>
 									<th width="20px"></th>
-									<th width="140px"></th>
+									<th width="90px"></th>
 									<th width="20px"></th>
-									<th width="300px"></th>
+									<th width="180px"></th>
+									<th width="20px"></th>
+									<th width="90px"></th>
+									<th width="20px"></th>
+									<th width="180px"></th>
 									<th width="20px"></th>
 								</tr>
 							</thead>
 
-							<tr height="12px"></tr>
+							<tr height="10px"></tr>
 
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
-								<td>
-									Id
-								</td>
-								<td></td>
-								<td>
-									<b>{{viewModel.id}}</b>
-								</td>
-								<td></td>
-							</tr>
-
-							<tr height="40px" ng-show="viewModel.id > 0">
-								<td></td>
-								<td>
+								<td valign="middle">
 									Start Date
 								</td>
 								<td></td>
-								<td>
+								<td valign="middle">
 									<b>{{viewModel.sdtStart}}</b>
 								</td>
 								<td></td>
-							</tr>
-
-							<tr height="40px" ng-show="viewModel.id > 0">
-								<td></td>
-								<td>
+								<td valign="middle">
 									Opened by
 								</td>
 								<td></td>
-								<td>
+								<td valign="middle">
 									<b>{{viewModel.sfkUserStart}}</b>
 								</td>
 								<td></td>
@@ -69,13 +57,13 @@
 
 							<tr height="40px">
 								<td></td>
-								<td>
+								<td valign="middle">
 									Title
 								</td>
-								<td width="20px">
+								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="stTitle_fail">!</button>
 								</td>
-								<td>
+								<td colspan="5" valign="middle">
 									<input type="text" class="form-control input-transparent" maxlength="200"
 										   ng-disabled="!permModel.edicao" ng-model="viewModel.stTitle">
 								</td>
@@ -84,101 +72,136 @@
 
 							<tr height="40px">
 								<td></td>
-								<td>
+								<td valign="middle">
 									Localization
 								</td>
-								<td width="20px">
+								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="stLocalization_fail">!</button>
 								</td>
-								<td>
+								<td colspan="5" valign="middle">
 									<input type="text" class="form-control input-transparent" maxlength="200"
 										   ng-disabled="!permModel.edicao" ng-model="viewModel.stLocalization">
 								</td>
 								<td></td>
 							</tr>
 
-							<tr height="40px">
+							<tr height="110px">
 								<td></td>
-								<td>
+								<td valign="middle">
 									Description
 								</td>
-								<td width="20px">
+								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="stDescription_fail">!</button>
 								</td>
-								<td>
+								<td colspan="5" valign="middle">
 									<textarea rows="4" type="text" class="form-control input-transparent" maxlength="2000"
-										   ng-disabled="!permModel.edicao" ng-model="viewModel.stDescription">
-									</textarea>
+											  ng-disabled="!permModel.edicao" ng-model="viewModel.stDescription"></textarea>
 								</td>
 								<td></td>
 							</tr>
 
 							<tr height="40px">
 								<td></td>
-								<td>
-									Priority
-								</td>
-								<td width="20px">
-									<button class="btn btn-xs btn-danger" ng-show="nuPriority_fail">!</button>
-								</td>
-								<td>
-									<input type="hidden" name="user" style="width:100%" ui-select2="selectPriority" ng-model="viewModel.nuPriority" />
-								</td>
-								<td></td>
-							</tr>
-
-							<tr height="40px">
-								<td></td>
-								<td>
+								<td valign="middle">
 									Project
 								</td>
-								<td width="20px">
+								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkProject_fail">!</button>
 								</td>
-								<td>
+								<td valign="middle">
 									<input type="hidden" name="user" style="width:100%" ui-select2="selectProjects" ng-model="viewModel.fkProject" />
 								</td>
 								<td></td>
-							</tr>
-
-							<tr height="42px">
-								<td></td>
-								<td>Phase</td>
-								<td>
+								<td valign="middle">
+									Phase
+								</td>
+								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkPhase_fail">!</button>
 								</td>
-								<td>
+								<td valign="middle">
 									<input type="hidden" name="user" style="width:100%" ui-select2="selectPhases" ng-model="viewModel.fkPhase" />
 								</td>
+								<td></td>
 							</tr>
 
-							<tr height="42px">
+							<tr height="40px">
 								<td></td>
-								<td>Sprint</td>
-								<td>
+								<td valign="middle">Sprint</td>
+								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkSprint_fail">!</button>
 								</td>
-								<td>
+								<td valign="middle">
 									<input type="hidden" name="user" style="width:100%" ui-select2="selectSprints" ng-model="viewModel.fkSprint" />
 								</td>
-							</tr>
-
-							<tr height="42px">
 								<td></td>
-								<td>Version</td>
-								<td>
+								<td valign="middle">Version</td>
+								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkVersion_fail">!</button>
 								</td>
-								<td>
+								<td valign="middle">
 									<input type="hidden" name="user" style="width:100%" ui-select2="selectVersions" ng-model="viewModel.fkVersion" />
 								</td>
 							</tr>
-							
-							<tr height="20px"></tr>
+
+							<tr height="40px">
+								<td></td>
+								<td valign="middle">Priority</td>
+								<td valign="middle">
+									<button class="btn btn-xs btn-danger" ng-show="nuPriority_fail">!</button>
+								</td>
+								<td valign="middle">
+									<input type="hidden" name="user" style="width:100%" ui-select2="selectPriority" ng-model="viewModel.nuPriority" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr height="40px"></tr>
 
 						</table>
 					</div>
 				</tab>
+
+				<tab heading="Progress">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table>
+							<thead>
+								<tr>
+									<th width="20px"></th>
+									<th width="90px"></th>
+									<th width="20px"></th>
+									<th width="180px"></th>
+									<th width="20px"></th>
+									<th width="90px"></th>
+									<th width="20px"></th>
+									<th width="180px"></th>
+									<th width="20px"></th>
+								</tr>
+							</thead>
+
+							<tr height="20px"></tr>
+
+							<tr height="40px">
+								<td></td>
+								<td valign="middle">Assigned To</td>
+								<td valign="middle">
+									<button class="btn btn-xs btn-danger" ng-show="fkUserResponsible_fail">!</button>
+								</td>
+								<td valign="middle">
+									<input type="hidden" name="user" style="width:100%" ui-select2="selectUsers" ng-model="viewModel.fkUserResponsible" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+						</table>
+					</div>
+				</tab>
+
 
 			</tabset>
 			<br />

@@ -29,6 +29,8 @@ namespace DataModel
 		public ITable<Task>                 Tasks                 { get { return this.GetTable<Task>(); } }
 		public ITable<TaskCategory>         TaskCategories        { get { return this.GetTable<TaskCategory>(); } }
 		public ITable<TaskFlow>             TaskFlows             { get { return this.GetTable<TaskFlow>(); } }
+		public ITable<TaskMessage>          TaskMessages          { get { return this.GetTable<TaskMessage>(); } }
+		public ITable<TaskProgress>         TaskProgresses        { get { return this.GetTable<TaskProgress>(); } }
 		public ITable<TaskType>             TaskTypes             { get { return this.GetTable<TaskType>(); } }
 		public ITable<User>                 Users                 { get { return this.GetTable<User>(); } }
 		public ITable<UserEmail>            UserEmails            { get { return this.GetTable<UserEmail>(); } }
@@ -150,6 +152,24 @@ namespace DataModel
 		[Column,     Nullable] public long?  nuOrder    { get; set; } // bigint
 	}
 
+	[Table(Schema="public", Name="TaskMessage")]
+	public partial class TaskMessage
+	{
+		[PrimaryKey, Identity] public long      id     { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTask { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog  { get; set; } // timestamp (6) without time zone
+	}
+
+	[Table(Schema="public", Name="TaskProgress")]
+	public partial class TaskProgress
+	{
+		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTask         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserAssigned { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
+	}
+
 	[Table(Schema="public", Name="TaskType")]
 	public partial class TaskType
 	{
@@ -243,6 +263,18 @@ namespace DataModel
 		}
 
 		public static TaskFlow Find(this ITable<TaskFlow> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskMessage Find(this ITable<TaskMessage> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskProgress Find(this ITable<TaskProgress> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

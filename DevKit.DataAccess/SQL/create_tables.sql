@@ -242,3 +242,36 @@ TABLESPACE pg_default;
 ALTER TABLE public."Task"
     OWNER to postgres;
 
+
+CREATE TABLE public."TaskProgress"
+(
+    id bigserial NOT NULL,
+	"fkTask" bigint,
+	"fkUserAssigned" bigint,
+	"dtLog" timestamp without time zone,	
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."TaskProgress"
+    OWNER to postgres;
+
+CREATE TABLE public."TaskMessage"
+(
+    id bigserial NOT NULL,
+	"fkTask" bigint,
+	"fkUser" bigint,
+	"dtLog" timestamp without time zone,	
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."TaskMessage"
+    OWNER to postgres;
+

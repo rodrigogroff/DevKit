@@ -13,12 +13,12 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div class="divWebForm" style="width:100%">
-			<table>
+		<div class="divWebForm">
+			<table width="100%">
 				<tr>
 					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/user/_filterUser.html" 
-								   funcao-pesquisar="search" ></ng-filtro>
+						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/user/_filterUser.html"
+								   funcao-pesquisar="search"></ng-filtro>
 					</td>
 				</tr>
 				<tr>
@@ -39,7 +39,7 @@
 										<th width="150px">Login</th>
 										<th width="150px">Profile</th>
 										<th width="150px">Phones</th>
-										<th width="220px">Emails</th>										
+										<th width="220px">Emails</th>
 										<th width="120px">Last Login</th>
 									</tr>
 								</thead>
@@ -48,7 +48,7 @@
 									<td>{{ mdl.stLogin }}</td>
 									<td>{{ mdl.profile.stName }}</td>
 									<td><div data-ng-repeat="m in mdl.phones">{{ m.stPhone }}</div></td>
-									<td><div data-ng-repeat="m in mdl.emails">{{ m.stEmail }}</div></td>									
+									<td><div data-ng-repeat="m in mdl.emails">{{ m.stEmail }}</div></td>
 									<td>{{ mdl.sdtLastLogin }}</td>
 								</tr>
 							</table>

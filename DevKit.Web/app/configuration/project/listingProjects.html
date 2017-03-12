@@ -13,8 +13,8 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div class="divWebForm" style="width:100%">
-			<table>
+		<div class="divWebForm">
+			<table width="100%">
 				<tr>
 					<td valign="top">
 						<ng-filtro tipo="profile" campos="campos" template-avancado="app/configuration/project/_filterProject.html" funcao-pesquisar="search"></ng-filtro>
@@ -46,7 +46,7 @@
 									<td><div data-ng-repeat="m in mdl.phases">{{ m.stName }}</div></td>
 									<td>{{ mdl.sprints.length }}</td>
 									<td><div data-ng-repeat="m in mdl.users">{{ m.stUser }}</div></td>
-									<td><div data-ng-repeat="m in mdl.users">{{ m.stRole }}</div></td>									
+									<td><div data-ng-repeat="m in mdl.users">{{ m.stRole }}</div></td>
 								</tr>
 							</table>
 						</div>

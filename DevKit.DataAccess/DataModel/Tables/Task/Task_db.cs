@@ -21,10 +21,11 @@ namespace DataModel
 	public partial class Task
 	{
 		public string sdtStart = "";
-
 		public string snuPriority = "";
 		public string sfkUserStart = "";
 		public string sfkUserResponsible = "";
+		public string sfkTaskType = "";
+		public string sfkTaskCategory = "";
 		public string sfkProject = "";
 		public string sfkPhase = "";
 		public string sfkSprint = "";
@@ -78,6 +79,12 @@ namespace DataModel
 			if (fkUserResponsible != null)
 				sfkUserResponsible = db.User(fkUserResponsible).stLogin;
 
+			if (fkTaskCategory != null)
+				sfkTaskCategory = db.TaskCategory(fkTaskCategory).stName;
+
+			if (fkTaskType != null)
+				sfkTaskType = db.TaskType(fkTaskType).stName;
+			
 			sfkProject = db.Project(fkProject).stName;
 			sfkPhase = db.ProjectPhase(fkPhase).stName;
 			sfkSprint = db.ProjectSprint(fkSprint).stName;

@@ -22,11 +22,11 @@
 							<thead>
 								<tr>
 									<th width="20px"></th>
-									<th width="90px"></th>
+									<th width="105px"></th>
 									<th width="20px"></th>
 									<th width="180px"></th>
 									<th width="20px"></th>
-									<th width="90px"></th>
+									<th width="105px"></th>
 									<th width="20px"></th>
 									<th width="180px"></th>
 									<th width="20px"></th>
@@ -102,6 +102,25 @@
 
 							<tr height="40px">
 								<td></td>
+								<td valign="middle">Task Type</td>
+								<td valign="middle">
+									<button class="btn btn-xs btn-danger" ng-show="fkTaskType_fail">!</button>
+								</td>
+								<td valign="middle">
+									<input type="hidden" name="user" style="width:100%" ui-select2="selectTaskType" ng-model="viewModel.fkTaskType" />
+								</td>
+								<td></td>
+								<td valign="middle">Task Category</td>
+								<td valign="middle">
+									<button class="btn btn-xs btn-danger" ng-show="fkTaskCategory_fail">!</button>
+								</td>
+								<td valign="middle">
+									<input type="hidden" name="user" style="width:100%" ui-select2="selectTaskCategory" ng-model="viewModel.fkTaskCategory" />
+								</td>
+							</tr>
+
+							<tr height="40px">
+								<td></td>
 								<td valign="middle">
 									Project
 								</td>
@@ -142,7 +161,7 @@
 									<input type="hidden" name="user" style="width:100%" ui-select2="selectVersions" ng-model="viewModel.fkVersion" />
 								</td>
 							</tr>
-
+							
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">Priority</td>

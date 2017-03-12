@@ -54,5 +54,19 @@ namespace DataModel
 			if (ret == null) { ret = ProjectSprintVersions.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
+
+		public TaskType TaskType(long? id)
+		{
+			var tag = "TaskType" + id; var ret = Cache[tag] as TaskType;
+			if (ret == null) { ret = TaskTypes.Find((long)id); Cache[tag] = ret; }
+			return ret;
+		}
+
+		public TaskCategory TaskCategory(long? id)
+		{
+			var tag = "TaskCategory" + id; var ret = Cache[tag] as TaskCategory;
+			if (ret == null) { ret = TaskCategories.Find((long)id); Cache[tag] = ret; }
+			return ret;
+		}
 	}
 }

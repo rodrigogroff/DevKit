@@ -35,16 +35,18 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th width="90px">Date Start</th>
-										<th width="140px">Priority / Opened By</th>
-										<th width="180px">Title</th>
-										<th width="180px">Assigned To</th>
-										<th width="180px">Project / SPRINT</th>										
+										<th width="90px">Date </th>
+										<th width="140px">Priority <br /> Informed By</th>
+										<th width="140px">Type <br /> Category</th>
+										<th width="180px">Title <br /> Localization</th>
+										<th width="140px">Assigned To</th>
+										<th width="180px">Project <br /> SPRINT</th>										
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.sdtStart }}</td>
 									<td>{{ mdl.snuPriority }}<br />{{ mdl.sfkUserStart }}</td>
+									<td>{{ mdl.sfkTaskType }}<br />{{ mdl.sfkTaskCategory }}</td>									
 									<td>{{ mdl.stTitle }}<br /><i>{{ mdl.stLocalization }}</i></td>
 									<td>{{ mdl.sfkUserResponsible }}</td>
 									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}<br />{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>

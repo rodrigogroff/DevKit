@@ -80,6 +80,19 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' });
 
+		$scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskType, { tamanhoPagina: 15, campoNome: 'stName' });
+
+		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory,
+			{
+				tamanhoPagina: 15,
+				scope: $scope,
+				filtro:
+					{
+						campo: 'idTaskType',
+						valor: 'viewModel.fkTaskType'
+					}
+			});
+
 		if (id > 0)
 		{
 			$scope.loading = true;
@@ -109,7 +122,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.fkPhase_fail = false;
 		$scope.fkSprint_fail = false;
 		$scope.fkVersion_fail = false;
-
+		$scope.nuPriority_fail = false;
+		$scope.fkTaskType_fail = false;
+		$scope.fkTaskCategory_fail = false;
+		
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
@@ -127,6 +143,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			if ($scope.viewModel.fkPhase == undefined) $scope.fkPhase_fail = true;
 			if ($scope.viewModel.fkSprint == undefined) $scope.fkSprint_fail = true;
 			if ($scope.viewModel.fkVersion == undefined) $scope.fkVersion_fail = true;
+			if ($scope.viewModel.nuPriority == undefined) $scope.nuPriority_fail = true;
+			if ($scope.viewModel.fkTaskType == undefined) $scope.fkTaskType_fail = true;
+			if ($scope.viewModel.fkTaskCategory == undefined) $scope.fkTaskCategory_fail = true;
 	
 			if (!$scope.stTitle_fail &&
 				!$scope.stLocalization_fail &&
@@ -134,7 +153,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				!$scope.fkProject_fail &&
 				!$scope.fkPhase_fail && 
 				!$scope.fkSprint_fail && 
-				!$scope.fkVersion_fail )
+				!$scope.fkVersion_fail &&
+				!$scope.nuPriority_fail)
 			{
 				if (id > 0)
 				{

@@ -33,6 +33,11 @@ namespace DataModel
 		public string sfkVersion = "";
 
 		public List<TaskProgress> usrProgress;
+		public List<TaskMessage> usrMessages;
+
+		// up commands
+
+		public string stUserMessage = "";
 
 		public string updateCommand = "";
 		public object anexedEntity;
@@ -84,10 +89,11 @@ namespace DataModel
 			sfkVersion = db.ProjectSprintVersion(fkVersion).stName;
 
 			usrProgress = LoadProgress(db);
+			usrMessages = LoadMessages(db);
 
 			return this;
 		}
-		
+
 		public List<TaskProgress> LoadProgress(DevKitDB db)
 		{
 			var ret = (from e in db.TaskProgresses where e.fkTask == id select e).OrderByDescending(t => t.dtLog).ToList();
@@ -100,6 +106,23 @@ namespace DataModel
 
 				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
 				item.sfkUserAssigned = db.User(item.fkUserAssigned).stLogin;
+			}
+
+			return ret;
+		}
+
+		public List<TaskMessage> LoadMessages(DevKitDB db)
+		{
+			var ret = (from e in db.TaskMessages where e.fkTask == id select e).OrderByDescending(t => t.dtLog).ToList();
+
+			var setup = db.Setup();
+
+			for (int i = 0; i < ret.Count(); i++)
+			{
+				var item = ret.ElementAt(i);
+
+				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
+				item.sfkUser = db.User(item.fkUser).stLogin;
 			}
 
 			return ret;
@@ -143,7 +166,7 @@ namespace DataModel
 			return true;
 		}
 
-		public bool Update(DevKitDB db, ref string resp)
+		public bool Update(DevKitDB db, User userLogged, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
 			{
@@ -167,9 +190,22 @@ namespace DataModel
 							});
 						}
 
-						usrProgress = LoadProgress(db);
+						if (stUserMessage != "")
+						{
+							db.Insert(new TaskMessage()
+							{
+								stMessage = stUserMessage,
+								dtLog = DateTime.Now,
+								fkTask = id,
+								fkUser = userLogged.id
+							});
+
+							stUserMessage = "";
+						}
 
 						db.Update(this);
+						LoadAssociations(db);
+
 						break;
 					}				
 			}

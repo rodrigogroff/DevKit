@@ -222,13 +222,12 @@
 							<tr>
 								<td></td>
 								<td valign="top" colspan="6" width="700px">
-
 									<div ng-show="viewModel.usrProgress.length > 0">
-										<table class="table table-hover">
+										<table class="table table-hover" style="width:350px">
 											<thead>
 												<tr>
-													<th width="180px">Date</th>
-													<th width="180px">User</th>
+													<th width="110px">Date</th>
+													<th width="140px">User</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="m in viewModel.usrProgress">
@@ -239,11 +238,66 @@
 									</div>
 								</td>
 								<td></td>
+							</tr>							
+						</table>
+					</div>
+				</tab>
+
+				<tab heading="User Messages">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table>
+							<thead>
+								<tr>
+									<th width="20px"></th>
+									<th width="90px"></th>
+									<th width="250px"></th>
+									<th width="20px"></th>
+								</tr>
+							</thead>
+
+							<tr height="20px"></tr>
+
+							<tr height="40px">
+								<td></td>
+								<td valign="middle">Your message</td>
+								
+								<td valign="middle">
+
+									<textarea rows="2" type="text" class="form-control input-transparent" maxlength="999"
+											  ng-disabled="!permModel.edicao" ng-model="viewModel.stUserMessage"></textarea>
+									
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
 							</tr>
 
-							
-						</table>
+							<tr height="20px"></tr>
 
+							<tr>
+								<td></td>
+								<td valign="top" colspan="2" width="700px">
+									<div ng-show="viewModel.usrMessages.length > 0">
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th width="110px">Date</th>
+													<th width="110px">User</th>
+													<th width="250px">Message</th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="m in viewModel.usrMessages">
+												<td>{{ m.sdtLog }}</td>
+												<td>{{ m.sfkUser }}</td>
+												<td>{{ m.stMessage }}</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td></td>
+							</tr>
+						</table>
 					</div>
 				</tab>
 

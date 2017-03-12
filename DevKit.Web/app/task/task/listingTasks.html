@@ -16,11 +16,14 @@
 		<div class="divWebForm">
 			<table width="100%">
 				<tr>
+					<td width="15px"></td>
 					<td valign="top">
 						<ng-filtro tipo="profile" campos="campos" template-avancado="app/task/task/_filterTask.html" 
 								   funcao-pesquisar="search" ></ng-filtro>
 					</td>
 				</tr>
+			</table>
+			<table width="100%">
 				<tr>
 					<td valign="top">
 						<div ng-show="list.length == 0">
@@ -40,13 +43,13 @@
 										<th width="140px">Type <br /> Category</th>
 										<th width="180px">Title <br /> Localization</th>
 										<th width="140px">Assigned To</th>
-										<th width="180px">Project <br /> SPRINT</th>										
+										<th width="180px">Project <br /> SPRINT</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.sdtStart }}</td>
 									<td>{{ mdl.snuPriority }}<br />{{ mdl.sfkUserStart }}</td>
-									<td>{{ mdl.sfkTaskType }}<br />{{ mdl.sfkTaskCategory }}</td>									
+									<td>{{ mdl.sfkTaskType }}<br />{{ mdl.sfkTaskCategory }}</td>
 									<td>{{ mdl.stTitle }}<br /><i>{{ mdl.stLocalization }}</i></td>
 									<td>{{ mdl.sfkUserResponsible }}</td>
 									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}<br />{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>

@@ -264,6 +264,7 @@ CREATE TABLE public."TaskMessage"
     id bigserial NOT NULL,
 	"fkTask" bigint,
 	"fkUser" bigint,
+	"stMessage" character varying(999),
 	"dtLog" timestamp without time zone,	
     PRIMARY KEY (id)
 )

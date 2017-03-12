@@ -155,10 +155,11 @@ namespace DataModel
 	[Table(Schema="public", Name="TaskMessage")]
 	public partial class TaskMessage
 	{
-		[PrimaryKey, Identity] public long      id     { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTask { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog  { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTask    { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stMessage { get; set; } // character varying(999)
 	}
 
 	[Table(Schema="public", Name="TaskProgress")]

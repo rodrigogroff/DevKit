@@ -13,13 +13,18 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
+
 		<div class="divWebForm">
 			<table width="100%">
 				<tr>
+					<td width="15px"></td>
 					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/configuration/project/_filterProject.html" funcao-pesquisar="search"></ng-filtro>
+						<ng-filtro tipo="profile" campos="campos" template-avancado="app/configuration/project/_filterProject.html" 
+								   funcao-pesquisar="search"></ng-filtro>
 					</td>
 				</tr>
+			</table>
+			<table width="100%">
 				<tr>
 					<td valign="top">
 						<div ng-show="list.length == 0">

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace DevKit.Web.Controllers
 {
@@ -18,6 +17,10 @@ namespace DevKit.Web.Controllers
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
+
+					nuPriority = Request.GetQueryStringValue<long?>("nuPriority", null),
+					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
+
 					busca = Request.GetQueryStringValue("busca")?.ToUpper()
 				};
 

@@ -97,7 +97,8 @@ angular.module('app.services', ['ngResource'])
 		Version: $resource('api/version/:id', {}, opcoes),
 		Sprint: $resource('api/sprint/:id', {}, opcoes),
 		TaskType: $resource('api/taskType/:id', {}, opcoes),
-		Task: $resource('api/task/:id', {}, opcoes)
+		Task: $resource('api/task/:id', {}, opcoes),
+		Priority: $resource('api/priority/:id', {}, opcoes)
 
 	};
 }]);

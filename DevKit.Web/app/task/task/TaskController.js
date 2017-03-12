@@ -41,6 +41,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		CheckPermissions();
 		loadSetup();
 
+		$scope.selectPriority = ngSelects.obterConfiguracao(Api.Priority, { tamanhoPagina: 15, campoNome: 'stName' });
+
 		$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' });
 
 		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase,

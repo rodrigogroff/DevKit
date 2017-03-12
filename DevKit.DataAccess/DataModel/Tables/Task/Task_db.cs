@@ -1,14 +1,16 @@
 ﻿using LinqToDB;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace DataModel
 {
 	public class TaskFilter
 	{
 		public int skip, take;
+
+		public long?	nuPriority,
+						fkProject;
+
 		public string busca;
 	}
 
@@ -19,6 +21,8 @@ namespace DataModel
 	public partial class Task
 	{
 		public string sdtStart = "";
+
+		public string snuPriority = "";
 		public string sfkUserStart = "";
 		public string sfkProject = "";
 		public string sfkPhase = "";
@@ -46,6 +50,16 @@ namespace DataModel
 								e.stTitle.ToUpper().Contains(filter.busca) 
 						select e;
 
+			if (filter.nuPriority != null)
+				query = from e in query
+						where e.nuPriority == filter.nuPriority
+						select e;
+
+			if (filter.fkProject != null)
+				query = from e in query
+						where e.fkProject == filter.fkProject
+						select e;
+
 			return query;
 		}
 
@@ -54,6 +68,9 @@ namespace DataModel
 			var setup = db.Setup();
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
+
+			if (nuPriority != null)
+				snuPriority = new EnumPriority().lst.Where(t => t.id == nuPriority).FirstOrDefault().stName;
 
 			sfkUserStart = db.User(fkUserStart).stLogin;
 			sfkProject = db.Project(fkProject).stName;

@@ -31,6 +31,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	$scope.campos = {
 		ativo: 'true',
 		selects: {
+			priority: ngSelects.obterConfiguracao(Api.Priority, { tamanhoPagina: 15, campoNome: 'stName' }),
 			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
 			phase: ngSelects.obterConfiguracao(Api.Phase, {
 				tamanhoPagina: 15, campoNome: 'stName',

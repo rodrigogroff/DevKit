@@ -212,7 +212,15 @@ namespace DataModel
 										
 				case "removePhase":
 					{
-						db.Delete(JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString()));
+						var phaseDel = JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString());
+
+						if ((from e in db.Tasks where e.fkPhase == phaseDel.id select e).Any())
+						{
+							resp = "This phase is being used in a task";
+							return false;
+						}
+						
+						db.Delete(phaseDel);
 						phases = LoadPhases(db);
 						break;
 					}
@@ -223,6 +231,12 @@ namespace DataModel
 
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
+			if ((from e in db.Tasks where e.fkProject == id select e).Any())
+			{
+				resp = "This project is being used in a task";
+				return false;
+			}
+
 			return true;
 		}
 

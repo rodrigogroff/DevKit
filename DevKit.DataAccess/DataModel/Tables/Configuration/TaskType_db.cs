@@ -133,7 +133,15 @@ namespace DataModel
 
 				case "removeCategorie":
 					{
-						db.Delete(JsonConvert.DeserializeObject<TaskCategory>(anexedEntity.ToString()));
+						var categDel = JsonConvert.DeserializeObject<TaskCategory>(anexedEntity.ToString());
+
+						if ((from e in db.Tasks where e.fkTaskCategory == categDel.id select e).Any())
+						{
+							resp = "This category is being used in a task";
+							return false;
+						}
+
+						db.Delete(categDel);
 						categories = LoadCategories(db);
 						break;
 					}
@@ -159,7 +167,15 @@ namespace DataModel
 
 				case "removeFlow":
 					{
-						db.Delete(JsonConvert.DeserializeObject<TaskFlow>(anexedEntity.ToString()));
+						var flowDel = JsonConvert.DeserializeObject<TaskFlow>(anexedEntity.ToString());
+
+						if ((from e in db.Tasks where e.fkTaskFlowCurrent == flowDel.id select e).Any())
+						{
+							resp = "This flow is being used in a task";
+							return false;
+						}
+
+						db.Delete(flowDel);
 						flows = LoadFlows(db);
 						break;
 					}
@@ -170,6 +186,12 @@ namespace DataModel
 
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
+			if ((from e in db.Tasks where e.fkTaskType == id select e).Any())
+			{
+				resp = "This task type is being used in a task";
+				return false;
+			}
+
 			return true;
 		}
 	}

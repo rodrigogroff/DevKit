@@ -150,7 +150,15 @@ namespace DataModel
 
 				case "removeVersion":
 					{
-						db.Delete(JsonConvert.DeserializeObject<ProjectSprintVersion>(anexedEntity.ToString()));
+						var versionDel = JsonConvert.DeserializeObject<ProjectSprintVersion>(anexedEntity.ToString());
+
+						if ((from e in db.Tasks where e.fkVersion == id select e).Any())
+						{
+							resp = "This version is being used in a task";
+							return false;
+						}
+
+						db.Delete(versionDel);
 						versions = LoadVersions(db);
 						break;
 					}
@@ -161,7 +169,11 @@ namespace DataModel
 
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
-			// check for versions used in tasks
+			if ((from e in db.Tasks where e.fkSprint == id select e).Any())
+			{
+				resp = "This sprint is being used in a task";
+				return false;
+			}
 
 			return true;
 		}

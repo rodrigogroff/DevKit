@@ -210,6 +210,12 @@ namespace DataModel
 				return false;
 			}
 
+			if ((from e in db.Tasks where e.fkUserStart == id select e).Count() > 0)
+			{
+				resp = "this user is allocated in a task and cannot be removed";
+				return false;
+			}
+
 			return true;
 		}
 

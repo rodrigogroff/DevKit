@@ -116,8 +116,6 @@ namespace DataModel
 
 		public void Delete(DevKitDB db)
 		{
-			// cascade
-			
 			db.Delete(this);
 		}
 	}

@@ -63,7 +63,7 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\DevKit_db.cs" />
-    <Compile Include="DataModel\Enum\Priority_enum.cs" />
+    <Compile Include="DataModel\Enums\Priority_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion_db.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType_db.cs" />
     <Compile Include="DataModel\Tables\System\Profile_db.cs" />

@@ -163,6 +163,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Task.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Task saved!', 'Success');
+						$scope.viewModel = data;
 					},
 					function (response)
 					{

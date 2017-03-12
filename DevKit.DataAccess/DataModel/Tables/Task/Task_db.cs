@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataModel
@@ -30,6 +31,8 @@ namespace DataModel
 		public string sfkPhase = "";
 		public string sfkSprint = "";
 		public string sfkVersion = "";
+
+		public List<TaskProgress> usrProgress;
 
 		public string updateCommand = "";
 		public object anexedEntity;
@@ -70,29 +73,38 @@ namespace DataModel
 			var setup = db.Setup();
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
-
-			if (nuPriority != null)
-				snuPriority = new EnumPriority().lst.Where(t => t.id == nuPriority).FirstOrDefault().stName;
-
+			snuPriority = new EnumPriority().lst.Where(t => t.id == nuPriority).FirstOrDefault().stName;
 			sfkUserStart = db.User(fkUserStart).stLogin;
-
-			if (fkUserResponsible != null)
-				sfkUserResponsible = db.User(fkUserResponsible).stLogin;
-
-			if (fkTaskCategory != null)
-				sfkTaskCategory = db.TaskCategory(fkTaskCategory).stName;
-
-			if (fkTaskType != null)
-				sfkTaskType = db.TaskType(fkTaskType).stName;
-			
+			sfkUserResponsible = db.User(fkUserResponsible).stLogin;
+			sfkTaskCategory = db.TaskCategory(fkTaskCategory).stName;
+			sfkTaskType = db.TaskType(fkTaskType).stName;
 			sfkProject = db.Project(fkProject).stName;
 			sfkPhase = db.ProjectPhase(fkPhase).stName;
 			sfkSprint = db.ProjectSprint(fkSprint).stName;
 			sfkVersion = db.ProjectSprintVersion(fkVersion).stName;
-			
+
+			usrProgress = LoadProgress(db);
+
 			return this;
 		}
 		
+		public List<TaskProgress> LoadProgress(DevKitDB db)
+		{
+			var ret = (from e in db.TaskProgresses where e.fkTask == id select e).OrderByDescending(t => t.dtLog).ToList();
+
+			var setup = db.Setup();
+
+			for (int i = 0; i < ret.Count(); i++)
+			{
+				var item = ret.ElementAt(i);
+
+				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
+				item.sfkUserAssigned = db.User(item.fkUserAssigned).stLogin;
+			}
+
+			return ret;
+		}
+
 		bool CheckDuplicate(Task item, DevKitDB db)
 		{
 			var query = from e in db.Tasks select e;
@@ -143,6 +155,20 @@ namespace DataModel
 			{
 				case "entity":
 					{
+						var oldTask = (from ne in db.Tasks where ne.id == id select ne).FirstOrDefault();
+
+						if (oldTask.fkUserResponsible != fkUserResponsible)
+						{
+							db.Insert(new TaskProgress()
+							{
+								dtLog = DateTime.Now,
+								fkTask = id,
+								fkUserAssigned = fkUserResponsible
+							});
+						}
+
+						usrProgress = LoadProgress(db);
+
 						db.Update(this);
 						break;
 					}				

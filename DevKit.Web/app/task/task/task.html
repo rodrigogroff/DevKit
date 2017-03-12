@@ -183,7 +183,7 @@
 					</div>
 				</tab>
 
-				<tab heading="Progress">
+				<tab heading="Assignment">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -217,7 +217,33 @@
 								<td></td>
 							</tr>
 
+							<tr height="20px"></tr>
+
+							<tr>
+								<td></td>
+								<td valign="top" colspan="6" width="700px">
+
+									<div ng-show="viewModel.usrProgress.length > 0">
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th width="180px">Date</th>
+													<th width="180px">User</th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="m in viewModel.usrProgress">
+												<td>{{ m.sdtLog }}</td>
+												<td>{{ m.sfkUserAssigned }}</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td></td>
+							</tr>
+
+							
 						</table>
+
 					</div>
 				</tab>
 

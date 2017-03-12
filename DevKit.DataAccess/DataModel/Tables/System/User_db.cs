@@ -56,12 +56,13 @@ namespace DataModel
 
 		public User LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setups.Find(1);
+			var setup = db.Setup();
 
 			sdtLastLogin = dtLastLogin?.ToString(setup.stDateFormat);
 			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
 
-			profile = LoadProfile(db);
+			profile = db.Profile(fkProfile);
+
 			phones = LoadPhones(db);
 			emails = LoadEmails(db);
 

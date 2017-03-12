@@ -56,16 +56,16 @@ namespace DataModel
 
 		public ProjectSprint LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setups.Find(1);
+			var setup = db.Setup();
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
 			sdtEnd = dtEnd?.ToString(setup.stDateFormat);
 
 			if (fkProject != null)
-				sfkProject = (from ne in db.Projects where ne.id == fkProject select ne).FirstOrDefault().stName;
+				sfkProject = db.Project(fkProject).stName;
 
 			if (fkPhase != null)
-				sfkPhase = (from ne in db.ProjectPhases where ne.id == fkPhase select ne).FirstOrDefault().stName;
+				sfkPhase = db.ProjectPhase(fkPhase).stName;
 
 			versions = LoadVersions(db);
 

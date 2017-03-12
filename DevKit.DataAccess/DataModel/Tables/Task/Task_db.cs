@@ -51,16 +51,16 @@ namespace DataModel
 
 		public Task LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setups.Find(1);
+			var setup = db.Setup();
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
 
-			sfkUserStart = (from e in db.Users where e.id == fkUserStart select e).FirstOrDefault().stLogin;
-			sfkProject = fkProject != null ? (from e in db.Projects where e.id == fkProject select e).FirstOrDefault().stName : "";
-			sfkPhase = fkPhase != null ? (from e in db.ProjectPhases where e.id == fkPhase select e).FirstOrDefault().stName : "";
-			sfkSprint = fkSprint != null ? (from e in db.ProjectSprints where e.id == fkSprint select e).FirstOrDefault().stName : "";
-			sfkVersion = fkVersion != null ? (from e in db.ProjectSprintVersions where e.id == fkVersion select e).FirstOrDefault().stName : "";
-
+			sfkUserStart = db.User(fkUserStart).stLogin;
+			sfkProject = db.Project(fkProject).stName;
+			sfkPhase = db.ProjectPhase(fkPhase).stName;
+			sfkSprint = db.ProjectSprint(fkSprint).stName;
+			sfkVersion = db.ProjectSprintVersion(fkVersion).stName;
+			
 			return this;
 		}
 		

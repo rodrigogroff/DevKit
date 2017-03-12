@@ -59,9 +59,9 @@ namespace DataModel
 
 		public Project LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setups.Find(1);
+			var setup = db.Setup();
 
-			var mdlUser = db.Users.Find((long)this.fkUser);
+			var mdlUser = db.User(this.fkUser);
 
 			stUser = mdlUser?.stLogin;
 			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
@@ -84,7 +84,7 @@ namespace DataModel
 
 		List<ProjectUser> LoadUsers(DevKitDB db)
 		{
-			var setup = db.Setups.Find(1);
+			var setup = db.Setup();
 
 			var lst = (from e in db.ProjectUsers where e.fkProject == id select e).
 				OrderBy(t => t.id).
@@ -92,7 +92,7 @@ namespace DataModel
 
 			foreach (var item in lst)
 			{
-				item.stUser = db.Users.Find((long)item.fkUser).stLogin;
+				item.stUser = db.User(item.fkUser).stLogin;
 				item.sdtJoin = item.dtJoin?.ToString(setup.stDateFormat);
 			}
 
@@ -101,7 +101,7 @@ namespace DataModel
 
 		List<ProjectPhase> LoadPhases(DevKitDB db)
 		{
-			var setup = db.Setups.Find(1);
+			var setup = db.Setup();
 
 			var lst = (from e in db.ProjectPhases where e.fkProject == id select e).
 				OrderBy(t => t.id).

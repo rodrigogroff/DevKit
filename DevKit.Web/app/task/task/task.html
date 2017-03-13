@@ -264,21 +264,29 @@
 
 							<tr height="40px">
 								<td></td>
-								<td valign="middle"> Current State</td>
+								<td valign="middle"> <b>Current State</b></td>
 								<td></td>
 								<td valign="middle">
-
-									<input type="hidden" style="width:100%" ui-select2="selectTaskFlow" ng-model="viewModel.fkTaskFlowCurrent" />
-
+									<input type="hidden" style="width:100%" ng-disabled="true" ui-select2="selectTaskFlow" ng-model="viewModel.fkTaskFlowCurrent" />
 								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>							
+								<td></td>
+							</tr>
+
+							<tr height="40px">
 								<td></td>
 								<td valign="middle"> New State</td>
 								<td></td>
 								<td valign="middle">
-
 									<input type="hidden" style="width:100%" ui-select2="selectTaskFlow" ng-model="viewModel.fkNewFlow" />
-
 								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
 								<td></td>
 							</tr>
 
@@ -286,7 +294,7 @@
 
 							<tr>
 								<td></td>
-								<td valign="top" colspan="8" width="700px">
+								<td valign="top" colspan="8" width="590px">
 									<div ng-show="viewModel.flows.length > 0">
 										<table class="table table-hover">
 											<thead>

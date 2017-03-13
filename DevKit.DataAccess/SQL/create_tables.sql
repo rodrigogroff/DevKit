@@ -276,3 +276,21 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskMessage"
     OWNER to postgres;
 
+
+CREATE TABLE public."TaskFlowChange"
+(
+    id bigserial NOT NULL,
+	"fkTask" bigint,
+	"fkUser" bigint,
+	"fkOldFlowState" bigint,
+	"fkNewFlowState" bigint,
+	"dtLog" timestamp without time zone,	
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."TaskFlowChange"
+    OWNER to postgres;

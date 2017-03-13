@@ -68,5 +68,12 @@ namespace DataModel
 			if (ret == null) { ret = TaskCategories.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
+
+		public TaskFlow TaskFlow(long? id)
+		{
+			var tag = "TaskFlow" + id; var ret = Cache[tag] as TaskFlow;
+			if (ret == null) { ret = TaskFlows.Find((long)id); Cache[tag] = ret; }
+			return ret;
+		}
 	}
 }

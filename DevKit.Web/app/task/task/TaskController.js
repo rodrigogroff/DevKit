@@ -93,6 +93,17 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					}
 			});
 
+		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow,
+			{
+				tamanhoPagina: 15,
+				scope: $scope,
+				filtro:
+					{
+						campo: 'idTaskType',
+						valor: 'viewModel.fkTaskType'
+					}
+			});
+
 		if (id > 0)
 		{
 			$scope.loading = true;

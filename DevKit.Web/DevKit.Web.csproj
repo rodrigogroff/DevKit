@@ -817,9 +817,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Configuration\TaskCategoryCtrl.cs" />
+    <Compile Include="Controllers\Configuration\TaskFlowCtrl.cs" />
     <Compile Include="Controllers\Configuration\VersionCtrl.cs" />
     <Compile Include="Controllers\Configuration\PhaseCtrl.cs" />
-    <Compile Include="Controllers\Configuration\TaskType.cs" />
+    <Compile Include="Controllers\Configuration\TaskTypeCtrl.cs" />
     <Compile Include="Controllers\Configuration\SprintCtrl.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\System\SetupCtrl.cs" />

@@ -65,6 +65,7 @@
     <Compile Include="DataModel\DevKit_db.cs" />
     <Compile Include="DataModel\Enums\Priority_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion_db.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskFlow_db.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskCategory_db.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType_db.cs" />
     <Compile Include="DataModel\Tables\System\Profile_db.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="DataModel\Tables\Configuration\Project_db.cs" />
     <Compile Include="DataModel\Tables\System\Setup_db.cs" />
     <Compile Include="DataModel\Tables\System\User_db.cs" />
+    <Compile Include="DataModel\Tables\Task\TaskFlowChange_db.cs" />
     <Compile Include="DataModel\Tables\Task\TaskMessage_db.cs" />
     <Compile Include="DataModel\Tables\Task\TaskProcess_db.cs" />
     <Compile Include="DataModel\Tables\Task\Task_db.cs" />

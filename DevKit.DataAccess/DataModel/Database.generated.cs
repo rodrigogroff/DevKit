@@ -29,6 +29,7 @@ namespace DataModel
 		public ITable<Task>                 Tasks                 { get { return this.GetTable<Task>(); } }
 		public ITable<TaskCategory>         TaskCategories        { get { return this.GetTable<TaskCategory>(); } }
 		public ITable<TaskFlow>             TaskFlows             { get { return this.GetTable<TaskFlow>(); } }
+		public ITable<TaskFlowChange>       TaskFlowChanges       { get { return this.GetTable<TaskFlowChange>(); } }
 		public ITable<TaskMessage>          TaskMessages          { get { return this.GetTable<TaskMessage>(); } }
 		public ITable<TaskProgress>         TaskProgresses        { get { return this.GetTable<TaskProgress>(); } }
 		public ITable<TaskType>             TaskTypes             { get { return this.GetTable<TaskType>(); } }
@@ -152,6 +153,17 @@ namespace DataModel
 		[Column,     Nullable] public long?  nuOrder    { get; set; } // bigint
 	}
 
+	[Table(Schema="public", Name="TaskFlowChange")]
+	public partial class TaskFlowChange
+	{
+		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTask         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkOldFlowState { get; set; } // bigint
+		[Column,     Nullable] public long?     fkNewFlowState { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
+	}
+
 	[Table(Schema="public", Name="TaskMessage")]
 	public partial class TaskMessage
 	{
@@ -264,6 +276,12 @@ namespace DataModel
 		}
 
 		public static TaskFlow Find(this ITable<TaskFlow> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskFlowChange Find(this ITable<TaskFlowChange> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

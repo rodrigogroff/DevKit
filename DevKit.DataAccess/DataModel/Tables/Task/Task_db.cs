@@ -34,10 +34,13 @@ namespace DataModel
 
 		public List<TaskProgress> usrProgress;
 		public List<TaskMessage> usrMessages;
+		public List<TaskFlowChange> flows;
 
 		// up commands
 
 		public string stUserMessage = "";
+
+		public long? fkNewFlow = null;
 
 		public string updateCommand = "";
 		public object anexedEntity;
@@ -90,6 +93,7 @@ namespace DataModel
 
 			usrProgress = LoadProgress(db);
 			usrMessages = LoadMessages(db);
+			flows = LoadFlows(db);
 
 			return this;
 		}
@@ -128,6 +132,27 @@ namespace DataModel
 			return ret;
 		}
 
+		public List<TaskFlowChange> LoadFlows(DevKitDB db)
+		{
+			var ret = (from e in db.TaskFlowChanges where e.fkTask == id select e).
+				OrderByDescending(t => t.dtLog).
+				ToList();
+
+			var setup = db.Setup();
+
+			for (int i = 0; i < ret.Count(); i++)
+			{
+				var item = ret.ElementAt(i);
+
+				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
+				item.sfkUser = db.User(item.fkUser).stLogin;
+				item.sfkOldFlowState = db.TaskFlow(item.fkOldFlowState).stName;
+				item.sfkNewFlowState = db.TaskFlow(item.fkNewFlowState).stName;
+			}
+
+			return ret;
+		}
+
 		bool CheckDuplicate(Task item, DevKitDB db)
 		{
 			var query = from e in db.Tasks select e;
@@ -160,6 +185,10 @@ namespace DataModel
 
 			dtStart = DateTime.Now;
 			fkUserStart = usr.id;
+			fkTaskFlowCurrent = (from e in db.TaskFlows where e.fkTaskType == this.fkTaskType select e).
+								 OrderBy(t => t.nuOrder).
+								 FirstOrDefault().
+								 id;
 			
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 
@@ -178,7 +207,8 @@ namespace DataModel
 			{
 				case "entity":
 					{
-						var oldTask = (from ne in db.Tasks where ne.id == id select ne).FirstOrDefault();
+						var oldTask = (from ne in db.Tasks where ne.id == id select ne).
+							FirstOrDefault();
 
 						if (oldTask.fkUserResponsible != fkUserResponsible)
 						{
@@ -201,6 +231,21 @@ namespace DataModel
 							});
 
 							stUserMessage = "";
+						}
+
+						if (oldTask.fkTaskFlowCurrent != fkNewFlow)
+						{
+							db.Insert(new TaskFlowChange()
+							{
+								dtLog = DateTime.Now,
+								fkTask = id,
+								fkUser = userLogged.id,
+								fkNewFlowState = fkNewFlow,
+								fkOldFlowState = fkTaskFlowCurrent
+							});
+
+							fkTaskFlowCurrent = fkNewFlow;
+							fkNewFlow = null;
 						}
 
 						db.Update(this);

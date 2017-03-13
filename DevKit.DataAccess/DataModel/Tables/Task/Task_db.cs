@@ -76,7 +76,7 @@ namespace DataModel
 			return query;
 		}
 
-		public Task LoadAssociations(DevKitDB db)
+		public Task LoadAssociations(DevKitDB db, bool IsListing = false)
 		{
 			var setup = db.Setup();
 
@@ -91,9 +91,12 @@ namespace DataModel
 			sfkSprint = db.ProjectSprint(fkSprint).stName;
 			sfkVersion = db.ProjectSprintVersion(fkVersion).stName;
 
-			usrProgress = LoadProgress(db);
-			usrMessages = LoadMessages(db);
-			flows = LoadFlows(db);
+			if (!IsListing)
+			{
+				usrProgress = LoadProgress(db);
+				usrMessages = LoadMessages(db);
+				flows = LoadFlows(db);
+			}
 
 			return this;
 		}

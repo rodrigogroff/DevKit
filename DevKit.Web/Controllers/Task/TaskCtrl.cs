@@ -41,7 +41,7 @@ namespace DevKit.Web.Controllers
 		{
 			var lst = query.ToList();
 
-			lst.ForEach(mdl => { mdl = mdl.LoadAssociations(db); });
+			lst.ForEach(mdl => { mdl = mdl.LoadAssociations(db, true); });
 
 			return lst;
 		}

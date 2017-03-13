@@ -28,9 +28,7 @@ namespace DevKit.Web
 				"~/css/angular-ui-tree.min.css",
 				"~/css/angular-motion.min.css",
 				"~/css/select.css",
-				"~/css/select2.css",
-				"~/css/nv.d3.css",
-				"~/css/angular.treeview.css"
+				"~/css/select2.css"
 				));
 
 			bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
@@ -41,8 +39,6 @@ namespace DevKit.Web
 				"~/scripts/angular-resource.min.js",
 				"~/scripts/i18n/angular-locale_pt-br.js",
 				"~/scripts/angular-mocks.js",
-				"~/scripts/xtform.js",
-				"~/scripts/purl.js",
 				"~/scripts/restful-ng-mock.js",
 				"~/scripts/bootstrap.min.js",
 				"~/scripts/ui-bootstrap-tpls-0.10.0.min.js",
@@ -64,10 +60,7 @@ namespace DevKit.Web
 				"~/scripts/select2.min.js",
 				"~/scripts/select2_locale_pt-BR.js",
 				"~/scripts/angular_select2.js",
-				"~/scripts/d3.min.js",
 				"~/scripts/moment.js",
-				"~/scripts/ng-csv.min.js",
-				"~/scripts/angularjs-nvd3-directives.min.js",
 				"~/scripts/angular-ui-mask.min.js",
 				"~/scripts/bindonce.min.js",
 				"~/scripts/load-image.min.js",
@@ -109,10 +102,8 @@ namespace DevKit.Web
 				// ====================
 
 				"~/app/system/setup/SetupController.js",
-
 				"~/app/system/user/UserController.js",
 				"~/app/system/user/ListingUsersController.js",
-
 				"~/app/system/profile/ProfileController.js",
 				"~/app/system/profile/ListingProfilesController.js",
 
@@ -122,10 +113,8 @@ namespace DevKit.Web
 
 				"~/app/configuration/project/ProjectController.js",
 				"~/app/configuration/project/ListingProjectsController.js",
-
 				"~/app/configuration/sprint/SprintController.js",
 				"~/app/configuration/sprint/ListingSprintsController.js",
-
 				"~/app/configuration/taskType/TaskTypeController.js",
 				"~/app/configuration/taskType/ListingTaskTypesController.js",
 

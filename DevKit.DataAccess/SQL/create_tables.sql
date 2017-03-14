@@ -187,6 +187,8 @@ CREATE TABLE public."TaskFlow"
 	"fkTaskType" bigint,
     "stName" character varying(200),
 	"nuOrder" bigint,
+	"bForceComplete" boolean,
+	"bForceOpen" boolean,
     PRIMARY KEY (id)
 )
 WITH (
@@ -232,6 +234,7 @@ CREATE TABLE public."Task"
 	"fkUserResponsible" bigint,
 	"dtStart" timestamp without time zone,	
 	"dtLastEdit" timestamp without time zone,	
+	"bComplete" boolean,
     PRIMARY KEY (id)
 )
 WITH (
@@ -264,6 +267,7 @@ CREATE TABLE public."TaskMessage"
     id bigserial NOT NULL,
 	"fkTask" bigint,
 	"fkUser" bigint,
+	"fkCurrentFlow" bigint,
 	"stMessage" character varying(999),
 	"dtLog" timestamp without time zone,	
     PRIMARY KEY (id)

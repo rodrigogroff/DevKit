@@ -134,6 +134,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLastEdit        { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkPhase           { get; set; } // bigint
 		[Column,     Nullable] public long?     nuPriority        { get; set; } // bigint
+		[Column,     Nullable] public bool?     bComplete         { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="TaskCategory")]
@@ -147,10 +148,12 @@ namespace DataModel
 	[Table(Schema="public", Name="TaskFlow")]
 	public partial class TaskFlow
 	{
-		[PrimaryKey, Identity] public long   id         { get; set; } // bigint
-		[Column,     Nullable] public long?  fkTaskType { get; set; } // bigint
-		[Column,     Nullable] public string stName     { get; set; } // character varying(200)
-		[Column,     Nullable] public long?  nuOrder    { get; set; } // bigint
+		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
+		[Column,     Nullable] public long?  fkTaskType     { get; set; } // bigint
+		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
+		[Column,     Nullable] public long?  nuOrder        { get; set; } // bigint
+		[Column,     Nullable] public bool?  bForceComplete { get; set; } // boolean
+		[Column,     Nullable] public bool?  bForceOpen     { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="TaskFlowChange")]
@@ -167,11 +170,12 @@ namespace DataModel
 	[Table(Schema="public", Name="TaskMessage")]
 	public partial class TaskMessage
 	{
-		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTask    { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stMessage { get; set; } // character varying(999)
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTask        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(999)
+		[Column,     Nullable] public long?     fkCurrentFlow { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskProgress")]

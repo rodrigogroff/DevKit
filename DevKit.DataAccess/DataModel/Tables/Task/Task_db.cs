@@ -130,6 +130,9 @@ namespace DataModel
 
 				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
 				item.sfkUser = db.User(item.fkUser).stLogin;
+
+				if (item.fkCurrentFlow != null)
+					item.sfkFlow = db.TaskFlow(item.fkCurrentFlow).stName;
 			}
 
 			return ret;
@@ -149,8 +152,12 @@ namespace DataModel
 
 				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
 				item.sfkUser = db.User(item.fkUser).stLogin;
-				item.sfkOldFlowState = db.TaskFlow(item.fkOldFlowState).stName;
-				item.sfkNewFlowState = db.TaskFlow(item.fkNewFlowState).stName;
+
+				if (item.fkOldFlowState != null)
+					item.sfkOldFlowState = db.TaskFlow(item.fkOldFlowState).stName;
+
+				if (item.fkNewFlowState != null)
+					item.sfkNewFlowState = db.TaskFlow(item.fkNewFlowState).stName;
 			}
 
 			return ret;
@@ -186,6 +193,7 @@ namespace DataModel
 				return false;
 			}
 
+			bComplete = false;
 			dtStart = DateTime.Now;
 			fkUserStart = usr.id;
 			fkTaskFlowCurrent = (from e in db.TaskFlows where e.fkTaskType == this.fkTaskType select e).
@@ -230,13 +238,14 @@ namespace DataModel
 								stMessage = stUserMessage,
 								dtLog = DateTime.Now,
 								fkTask = id,
-								fkUser = userLogged.id
+								fkUser = userLogged.id,
+								fkCurrentFlow = fkTaskFlowCurrent
 							});
 
 							stUserMessage = "";
 						}
 
-						if (oldTask.fkTaskFlowCurrent != fkNewFlow)
+						if (fkNewFlow != null && oldTask.fkTaskFlowCurrent != fkNewFlow)
 						{
 							db.Insert(new TaskFlowChange()
 							{
@@ -249,6 +258,17 @@ namespace DataModel
 
 							fkTaskFlowCurrent = fkNewFlow;
 							fkNewFlow = null;
+
+							var flowState = (from e in db.TaskFlows
+											 where e.id == fkTaskFlowCurrent
+											 select e).
+											 FirstOrDefault();
+
+							if (flowState.bForceComplete == true)
+								this.bComplete = true;
+
+							if (flowState.bForceOpen == true)
+								this.bComplete = false;
 						}
 
 						db.Update(this);

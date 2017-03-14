@@ -196,6 +196,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.addFlow = false;
 
+	$scope.editFlow = function (mdl)
+	{
+		$scope.addFlow = true;
+		$scope.newFlow = mdl;
+	}
+
 	$scope.removeFlow = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)

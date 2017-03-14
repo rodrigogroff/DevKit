@@ -5,5 +5,6 @@ namespace DataModel
 	{
 		public string sdtLog = "";
 		public string sfkUser = "";
+		public string sfkFlow = "";
 	}
 }

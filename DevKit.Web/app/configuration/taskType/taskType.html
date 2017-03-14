@@ -125,7 +125,7 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:aliceblue">
-										Flow available for task type
+										Work flows for task type
 										<button class="btn btn-info btn-xs pull-right" ng-click="addNewFlow()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
 									<div ng-if="addFlow == true">
@@ -133,6 +133,9 @@
 											<tr>
 												<td>
 													<table>
+														
+														<tr height="12px"></tr>
+
 														<tr height="42px">
 															<td width="120px">Flow State</td>
 															<td width="20px">
@@ -141,16 +144,48 @@
 															<td width="200px">
 																<input type="text" class="form-control input-transparent" ng-model="newFlow.stName">
 															</td>
+															<td width="40px"></td>
+															<td width="120px">Task Complete?</td>
+															<td width="20px"></td>
+															<td width="200px">
+																<table>
+																	<tr>
+																		<td width="20px"></td>
+																		<td width="30px"> Yes</td>
+																		<td width="20px"><input type="radio" name="statusForceComplete" value="true" ng-model="newFlow.bForceComplete" /></td>
+																		<td width="20px"></td>
+																		<td width="30px"> No</td>
+																		<td width="20px"><input type="radio" name="statusForceComplete" value="false" ng-model="newFlow.bForceComplete" /></td>
+																	</tr>
+																</table>
+															</td>
 														</tr>
+
 														<tr height="42px">
-															<td width="120px">Order</td>
-															<td width="20px">
+															<td >Order</td>
+															<td >
 																<button class="btn btn-xs btn-danger" ng-show="stFlowOrder_fail">!</button>
 															</td>
-															<td width="200px">
+															<td >
 																<input type="text" class="form-control input-transparent" ng-model="newFlow.nuOrder">
 															</td>
+															<td ></td>
+															<td >Task Open?</td>
+															<td ></td>
+															<td >
+																<table>
+																	<tr>
+																		<td width="20px"></td>
+																		<td width="30px"> Yes</td>
+																		<td width="20px"><input type="radio" name="statusForceOpen" value="true" ng-model="newFlow.bForceOpen" /></td>
+																		<td width="20px"></td>
+																		<td width="30px"> No</td>
+																		<td width="20px"><input type="radio" name="statusForceOpen" value="false" ng-model="newFlow.bForceOpen" /></td>
+																	</tr>
+																</table>
+															</td>
 														</tr>
+													
 													</table>
 												</td>
 											</tr>
@@ -165,14 +200,18 @@
 										<table class="table table-hover" style="width:100%">
 											<thead>
 												<tr>
-													<th width="150px">Flow</th>
-													<th width="150px">Order</th>
+													<th width="50px">Order</th>
+													<th width="120px">Flow</th>													
+													<th width="70px">F. Complete</th>
+													<th width="70px">F. Open</th>
 													<th width="70px" class="colunaRemover">REMOVE</th>
 												</tr>
 											</thead>
-											<tr data-ng-repeat="mdl in viewModel.flows">
-												<td>{{ mdl.stName }}</td>
+											<tr ng-click="editFlow(mdl)" data-ng-repeat="mdl in viewModel.flows">
 												<td>{{ mdl.nuOrder }}</td>
+												<td>{{ mdl.stName }}</td>												
+												<td>{{ mdl.bForceComplete == true ? 'Y' : 'N' }}</td>
+												<td>{{ mdl.bForceOpen == true ? 'Y' : 'N' }}</td>
 												<td class="colunaRemover">
 													<a href="" role="button" ng-click="removeFlow($index, viewModel.flows)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>

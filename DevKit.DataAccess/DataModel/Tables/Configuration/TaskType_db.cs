@@ -61,7 +61,7 @@ namespace DataModel
 		List<TaskFlow> LoadFlows(DevKitDB db)
 		{
 			var lst = (from e in db.TaskFlows where e.fkTaskType == id select e).
-				OrderBy(t => t.nuOrder).
+				OrderBy(t => t.nuOrder).ThenBy(t => t.stName).
 				ToList();
 
 			return lst;
@@ -150,17 +150,23 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<TaskFlow>(anexedEntity.ToString());
 
-						if ((from ne in db.TaskFlows
-							 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkTaskType == id
-							 select ne).Any())
+						if (ent.id == 0)
 						{
-							resp = "Flow already added to task type!";
-							return false;
+							if ((from ne in db.TaskFlows
+								 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkTaskType == id
+								 select ne).Any())
+							{
+								resp = "Flow already added to task type!";
+								return false;
+							}
+
+							ent.fkTaskType = id;
+
+							db.Insert(ent);
 						}
+						else
+							db.Update(ent);
 
-						ent.fkTaskType = id;
-
-						db.Insert(ent);
 						flows = LoadFlows(db);
 						break;
 					}

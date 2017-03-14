@@ -466,6 +466,23 @@
 			</table>
 			<br />
 			<br />
+
+
+			<accordion>
+				<accordion-group ng-repeat="group in groups" heading="{{group.title}}" is-open="group.open">
+					<accordion-heading>
+						some text here, on the left side of the header.
+
+						<div class="pull-right">
+							<span>1st info</span>
+							<span>2nd info</span>
+							<span>maybe 3rd?</span>
+						</div>
+					</accordion-heading>
+					This is just some content to illustrate fancy headings.
+				</accordion-group>
+			</accordion>
+
 		</div>
 	</section>
 </div>

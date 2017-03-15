@@ -83,7 +83,8 @@ namespace DataModel
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
 			snuPriority = new EnumPriority().lst.Where(t => t.id == nuPriority).FirstOrDefault().stName;
 			sfkUserStart = db.User(fkUserStart).stLogin;
-			sfkUserResponsible = db.User(fkUserResponsible).stLogin;
+			if (fkUserResponsible != null)
+				sfkUserResponsible = db.User(fkUserResponsible).stLogin;
 			sfkTaskCategory = db.TaskCategory(fkTaskCategory).stName;
 			sfkTaskType = db.TaskType(fkTaskType).stName;
 			sfkProject = db.Project(fkProject).stName;

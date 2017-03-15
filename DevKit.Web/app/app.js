@@ -7,6 +7,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     $stateProvider
 
     .state('home', { url: '/', templateUrl: 'app/home/home.html' })
+
 	.state('login', { url: '/login', templateUrl: 'app/_shared/login/login.html', controller: 'LoginController', data: {} })
 
 	.state('setup', { url: '/system/setup/:id', templateUrl: 'app/system/setup/setup.html', controller: 'SetupController' })
@@ -34,6 +35,8 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 	.state('tasks', { url: '/task/tasks', templateUrl: 'app/task/task/listingTasks.html', controller: 'ListingTasksController' })
     .state('task-new', { url: '/task/task/new', templateUrl: 'app/task/task/task.html', controller: 'TaskController' })
     .state('task', { url: '/task/task/:id', templateUrl: 'app/task/task/task.html', controller: 'TaskController' })
+
+	.state('userKanban', { url: '/task/kanban', templateUrl: 'app/task/kanban/listingUserKanban.html', controller: 'ListingUserKanbanController' })
 
 	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 

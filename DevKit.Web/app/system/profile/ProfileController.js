@@ -39,6 +39,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1051: false, tg1052: false, tg1053: false, tg1054: false, tg1055: false,
 			// task 
 			tg1061: false, tg1062: false, tg1063: false, tg1064: false, tg1065: false,
+			// user Kanban
+			tg1071: false, 
 		};
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -103,6 +105,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (data.stPermissions.indexOf('|1063|') >= 0) data.tg1063 = true; else data.tg1063 = false;
 				if (data.stPermissions.indexOf('|1064|') >= 0) data.tg1064 = true; else data.tg1064 = false;
 				if (data.stPermissions.indexOf('|1065|') >= 0) data.tg1065 = true; else data.tg1065 = false;
+
+				// user Kanban  
+				if (data.stPermissions.indexOf('|1071|') >= 0) data.tg1071 = true; else data.tg1071 = false;
 				
 				$scope.viewModel = data;
 
@@ -163,6 +168,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				// task 
 				if (_mdl.tg1061 == true) perms += '|1061|'; if (_mdl.tg1062 == true) perms += '|1062|'; if (_mdl.tg1063 == true) perms += '|1063|';
 				if (_mdl.tg1064 == true) perms += '|1064|'; if (_mdl.tg1065 == true) perms += '|1065|';
+
+				// user Kanban
+				if (_mdl.tg1071 == true) perms += '|1071|';
 
 				$scope.viewModel.stPermissions = perms;
 

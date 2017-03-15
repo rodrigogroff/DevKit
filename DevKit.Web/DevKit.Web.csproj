@@ -257,6 +257,9 @@
     <Content Include="app\system\user\listingUsers.html" />
     <Content Include="app\system\user\ListingUsersController.js" />
     <Content Include="app\system\user\_filterUser.html" />
+    <Content Include="app\task\kanban\listingUserKanban.html" />
+    <Content Include="app\task\kanban\ListingUserKanbanController.js" />
+    <Content Include="app\task\kanban\_filterUserKanban.html" />
     <Content Include="app\task\task\listingTasks.html" />
     <Content Include="app\task\task\ListingTasksController.js" />
     <Content Include="app\task\task\task.html" />
@@ -314,7 +317,6 @@
     <Content Include="css\jquery.fileupload.css" />
     <Content Include="css\loading-bar.min.css" />
     <Content Include="css\ng-scrollbar.min.css" />
-    <Content Include="css\nv.d3.css" />
     <Content Include="css\perfect-scrollbar.css" />
     <Content Include="css\select.css" />
     <Content Include="css\select2-spinner.gif" />
@@ -375,6 +377,7 @@
     <Content Include="img\play-pause.svg" />
     <Content Include="img\video-play.png" />
     <Content Include="img\video-play.svg" />
+    <Content Include="logoLetras.png" />
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-animate.min.js" />
     <Content Include="scripts\angular-cookies.js" />
@@ -660,6 +663,8 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="scripts\angular-spinner.min.js.map" />
+    <Content Include="logoLetras.psd" />
+    <Content Include="openICS.psd" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="scripts\jquery-2.1.0.js" />
@@ -822,6 +827,7 @@
     <Compile Include="Controllers\System\PermissionCtrl.cs" />
     <Compile Include="Controllers\Configuration\ProjectCtrl.cs" />
     <Compile Include="Controllers\Task\PriorityCtrl.cs" />
+    <Compile Include="Controllers\Task\UserKanbanCtrl.cs" />
     <Compile Include="Controllers\Task\TaskCtrl.cs" />
     <Compile Include="Controllers\Util.cs" />
     <Compile Include="GlobalExtensions.cs" />

@@ -63,6 +63,8 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\DevKit_db.cs" />
+    <Compile Include="DataModel\DTO\UserKanban_db.cs" />
+    <Compile Include="DataModel\DTO\UserKanban_dto.cs" />
     <Compile Include="DataModel\Enums\Priority_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion_db.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskFlow_db.cs" />

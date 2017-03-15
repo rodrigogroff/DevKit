@@ -1,4 +1,6 @@
-﻿'use strict';
+﻿
+/*
+'use strict';
 
 var validatorModule = angular.module('xtForm')
 
@@ -107,3 +109,4 @@ var validatorModule = angular.module('xtForm')
 		}
 	};
 });
+*/

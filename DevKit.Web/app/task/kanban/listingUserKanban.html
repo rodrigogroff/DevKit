@@ -1,0 +1,93 @@
+﻿<div class="webFormPostion">
+	<section class="widgetForm" style="width:975px">
+		<legend class="legendTop">
+			<table><tr height="12px"><td> </td></tr></table>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td><b>User Kanban </b> view <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+
+		<div class="divWebForm">
+			<table width="100%">
+				<tr>
+					<td width="15px"></td>
+					<td valign="top">
+						<ng-filtro tipo="profile" campos="campos" template-avancado="app/task/task/_filterUserKanban.html"
+								   funcao-pesquisar="search"></ng-filtro>
+					</td>
+				</tr>
+			</table>
+			<br />
+
+			<div class="panel-group" data-ng-repeat="proj in viewModel.projects">
+				<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
+					<div class="panel-heading">
+						<a class="accordion-toggle" data-toggle="collapse" href="task/kanban#collapseProj{{proj.project.id}}">
+							Project > <b>{{proj.project.stName}}</b>
+						</a>
+					</div>
+					<div id="collapseProj{{proj.project.id}}" class="panel-collapse collapse" style="height: auto;">
+						<div class="panel-body">
+
+							<div class="panel-group" data-ng-repeat="sp in proj.sprints">
+								<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
+									<div class="panel-heading">
+										<a class="accordion-toggle" data-toggle="collapse" href="task/kanban#collapseSprint{{sp.sprint.id}}">
+											Sprint > <b>{{sp.sprint.stName}}</b>
+										</a>
+									</div>
+									<div id="collapseSprint{{sp.sprint.id}}" class="panel-collapse collapse" style="height: auto;">
+										<div class="panel-body">
+
+											<div class="panel-group" data-ng-repeat="tt in sp.tasktypes">
+												<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
+													<div class="panel-heading">
+														<a class="accordion-toggle" data-toggle="collapse" href="task/kanban#collapseTaskType{{tt.tasktype.id}}">
+															Type > <b>{{tt.tasktype.stName}}</b>
+														</a>
+													</div>
+													<div id="collapseTaskType{{tt.tasktype.id}}" class="panel-collapse collapse" style="height: auto;">
+														<div class="panel-body">
+
+															<div data-ng-repeat="cat in tt.categories">
+																Category: <b>{{ cat.category.stName }}</b><br />
+																<br />
+																<table class="table table-hover">
+																	<thead>
+																		<tr>
+																			<th ng-repeat="f in cat.flows">{{f.flow.stName}}</th>
+																		</tr>
+																	</thead>
+																	<tr >
+																		<td ng-repeat="f in cat.flows">
+																			<div ng-show="f.tasks.length > 0 ">
+																				<div data-ng-repeat="t in f.tasks">
+																					<button class="btn btn-info btn-xs" ng-click="open(t)">T{{ t.nuPriority }}</button>																					
+																				</div>
+																			</div>
+																		</td>
+																	</tr>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+
+

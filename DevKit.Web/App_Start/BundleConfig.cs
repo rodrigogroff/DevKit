@@ -123,7 +123,8 @@ namespace DevKit.Web
 				// ==========================
 
 				"~/app/task/task/TaskController.js",
-				"~/app/task/task/ListingTasksController.js"
+				"~/app/task/task/ListingTasksController.js",
+				"~/app/task/kanban/ListingUserKanbanController.js"
 
 				));
 

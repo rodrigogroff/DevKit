@@ -9,6 +9,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.permModel = {};	
 	$scope.permID = 106;
 
+	/*
 	$scope.groups = [
    {
    	title: "Dynamic Group Header - 1",
@@ -20,7 +21,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
    	content: "Dynamic Group Body - 2",
    	open: false
    }
-	];
+	];*/
 
 	function CheckPermissions()
 	{

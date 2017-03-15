@@ -14621,7 +14621,7 @@ textarea + .help-block,
 }
 
 .panel .panel-heading a {
-  color: #606060;
+  color: white;
   font-weight: 400;
 }
 
@@ -14630,7 +14630,7 @@ textarea + .help-block,
 }
 
 .panel .panel-heading a.collapsed {
-  color: #808080;
+  color: white;
 }
 
 .panel .panel-heading a[data-toggle="collapse"]:before {

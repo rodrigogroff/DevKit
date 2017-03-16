@@ -5,23 +5,10 @@ angular.module('app.controllers').controller('TaskController',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
 	$scope.loading = false;
+
 	$scope.viewModel = {};
 	$scope.permModel = {};	
 	$scope.permID = 106;
-
-	/*
-	$scope.groups = [
-   {
-   	title: "Dynamic Group Header - 1",
-   	content: "Dynamic Group Body - 1",
-   	open: false
-   },
-   {
-   	title: "Dynamic Group Header - 2",
-   	content: "Dynamic Group Body - 2",
-   	open: false
-   }
-	];*/
 
 	function CheckPermissions()
 	{
@@ -59,68 +46,34 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' });
 
-		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase,
-			{
-				tamanhoPagina: 15,
-				scope: $scope,
-				filtro:
-					{
-						campo: 'idProject',
-						valor: 'viewModel.fkProject'
-					}
-			});
+		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, {
+				tamanhoPagina: 15, scope: $scope,
+				filtro: { campo: 'idProject', valor: 'viewModel.fkProject' } });
 
-		$scope.selectSprints = ngSelects.obterConfiguracao(Api.Sprint,
-			{
-				tamanhoPagina: 15,
-				scope: $scope,
-				filtro:
-					{
-						campo: 'idPhase',
-						valor: 'viewModel.fkPhase'
-					}
-			});
+		$scope.selectSprints = ngSelects.obterConfiguracao(Api.Sprint, {
+				tamanhoPagina: 15, scope: $scope,
+				filtro: { campo: 'idPhase', valor: 'viewModel.fkPhase' } });
 
-		$scope.selectVersions = ngSelects.obterConfiguracao(Api.Version,
-			{
-				tamanhoPagina: 15,
-				scope: $scope,
-				filtro:
-					{
-						campo: 'idSprint',
-						valor: 'viewModel.fkSprint'
-					}
-			});
+		$scope.selectVersions = ngSelects.obterConfiguracao(Api.Version, {
+				tamanhoPagina: 15, scope: $scope,
+				filtro:	{ campo: 'idSprint', valor: 'viewModel.fkSprint' } });
 
 		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' });
 
 		$scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskType, { tamanhoPagina: 15, campoNome: 'stName' });
 
-		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory,
-			{
-				tamanhoPagina: 15,
-				scope: $scope,
-				filtro:
-					{
-						campo: 'idTaskType',
-						valor: 'viewModel.fkTaskType'
-					}
-			});
+		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, {
+				tamanhoPagina: 15, scope: $scope,
+				filtro: { campo: 'idTaskType', valor: 'viewModel.fkTaskType' } });
 
-		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow,
-			{
-				tamanhoPagina: 15,
-				scope: $scope,
-				filtro:
-					{
-						campo: 'idTaskType',
-						valor: 'viewModel.fkTaskType'
-					}
-			});
+		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, {
+				tamanhoPagina: 15, scope: $scope,
+				filtro: { campo: 'idTaskType', valor: 'viewModel.fkTaskType' } });
 
 		if (id > 0)
 		{
 			$scope.loading = true;
+
 			Api.Task.get({ id: id }, function (data)
 			{
 				$scope.viewModel = data;
@@ -146,7 +99,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.fkProject_fail = false;
 		$scope.fkPhase_fail = false;
 		$scope.fkSprint_fail = false;
-		$scope.fkVersion_fail = false;
 		$scope.nuPriority_fail = false;
 		$scope.fkTaskType_fail = false;
 		$scope.fkTaskCategory_fail = false;
@@ -167,7 +119,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			if ($scope.viewModel.fkProject == undefined) $scope.fkProject_fail = true;
 			if ($scope.viewModel.fkPhase == undefined) $scope.fkPhase_fail = true;
 			if ($scope.viewModel.fkSprint == undefined) $scope.fkSprint_fail = true;
-			if ($scope.viewModel.fkVersion == undefined) $scope.fkVersion_fail = true;
 			if ($scope.viewModel.nuPriority == undefined) $scope.nuPriority_fail = true;
 			if ($scope.viewModel.fkTaskType == undefined) $scope.fkTaskType_fail = true;
 			if ($scope.viewModel.fkTaskCategory == undefined) $scope.fkTaskCategory_fail = true;
@@ -178,7 +129,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				!$scope.fkProject_fail &&
 				!$scope.fkPhase_fail && 
 				!$scope.fkSprint_fail && 
-				!$scope.fkVersion_fail &&
 				!$scope.nuPriority_fail)
 			{
 				if (id > 0)

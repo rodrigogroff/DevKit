@@ -242,27 +242,20 @@ namespace DataModel
 
 		public void Delete(DevKitDB db)
 		{
-			foreach (var item in (from e in db.ProjectSprints
-								  where e.fkProject == id
-								  select e))
+			foreach (var item in (from e in db.ProjectSprints where e.fkProject == id select e))
 			{
 				item.Delete(db);
 			}
 
-			foreach (var item in (from e in db.ProjectPhases
-								  where e.fkProject == id
-								  select e))
+			foreach (var item in (from e in db.ProjectPhases where e.fkProject == id select e))
 			{
 				db.Delete(item);
 			}
 
-			foreach (var item in (from e in db.ProjectUsers
-								  where e.fkProject == id
-								  select e))
+			foreach (var item in (from e in db.ProjectUsers where e.fkProject == id select e))
 			{
 				db.Delete(item);
 			}
-
 
 			db.Delete(this);
 		}

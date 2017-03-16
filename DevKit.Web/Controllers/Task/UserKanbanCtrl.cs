@@ -13,15 +13,12 @@ namespace DevKit.Web.Controllers
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
-
 					busca = Request.GetQueryStringValue("busca")?.ToUpper()
 				};
 
 				var mdl = new UserKanban();
 
-				var result = mdl.ComposedFilters(db, filter, new Util().GetCurrentUser(db));
-
-				return Ok(result);
+				return Ok(mdl.ComposedFilters(db, filter, new Util().GetCurrentUser(db)));
 			}
 		}
 	}

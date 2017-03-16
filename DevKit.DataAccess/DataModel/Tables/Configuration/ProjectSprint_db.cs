@@ -9,10 +9,9 @@ namespace DataModel
 	public class ProjectSprintFilter
 	{
 		public int skip, take;
-
-		public long? fkProject, fkPhase;
-
 		public string busca;
+
+		public long? fkProject, fkPhase;		
 	}
 
 	// --------------------------
@@ -26,10 +25,10 @@ namespace DataModel
 		public string sfkProject = "";
 		public string sfkPhase = "";
 
-		public string updateCommand = "";
-		public object anexedEntity;
-
 		public List<ProjectSprintVersion> versions;
+
+		public string updateCommand = "";
+		public object anexedEntity;		
 	}
 
 	// --------------------------
@@ -180,9 +179,7 @@ namespace DataModel
 
 		public void Delete(DevKitDB db)
 		{
-			foreach (var item in (from e in db.ProjectSprintVersions
-								  where e.fkSprint == id
-								  select e))
+			foreach (var item in (from e in db.ProjectSprintVersions where e.fkSprint == id select e))
 				db.Delete(item);
 
 			db.Delete(this);

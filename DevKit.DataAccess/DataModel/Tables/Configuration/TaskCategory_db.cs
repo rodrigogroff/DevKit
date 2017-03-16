@@ -6,10 +6,9 @@ namespace DataModel
 	public class TaskCategoryFilter
 	{
 		public int skip, take;
-
-		public long? fkTaskType;
-
 		public string busca;
+
+		public long? fkTaskType;		
 	}
 
 	// --------------------------

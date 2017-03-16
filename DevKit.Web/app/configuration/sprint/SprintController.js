@@ -7,7 +7,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.loading = false;
 
 	$scope.viewModel = {};
-
 	$scope.permModel = {};	
 	$scope.permID = 104;
 
@@ -39,12 +38,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase,
 			{
 				tamanhoPagina: 15,
-				scope: $scope,
-				filtro:
-					{
-						campo: 'idProject',
-						valor: 'viewModel.fkProject'
-					}
+				scope: $scope, filtro: { campo: 'idProject', valor: 'viewModel.fkProject' }
 			});
 
 		if (id > 0)
@@ -62,9 +56,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			});
 		}
 		else
-		{
 			$scope.viewModel = { };
-		}
 	}
 
 	$scope.save = function ()

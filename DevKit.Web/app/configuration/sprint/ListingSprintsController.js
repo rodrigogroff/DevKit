@@ -2,8 +2,19 @@
 ['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
-	$scope.permModel = {};
 	$scope.loading = false;
+	$scope.campos = {
+		selects: {
+			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
+			phase: ngSelects.obterConfiguracao(Api.Phase, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'idProject', valor: 'campos.fkProject' }
+			}),
+		}
+	};
+	$scope.itensporpagina = 15;
+
+	$scope.permModel = {};	
 	$scope.permID = 104;
 
 	function CheckPermissions()
@@ -31,26 +42,6 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;
 	}
 
-	$scope.campos = {
-		ativo: 'true',
-		selects: {
-			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
-			phase: ngSelects.obterConfiguracao(Api.Phase, {
-				tamanhoPagina: 15, campoNome: 'stName',
-
-				scope: $scope,
-				filtro:
-					{
-						campo: 'idProject',
-						valor: 'campos.fkProject'
-					}
-
-			}),
-		}
-	};
-
-	$scope.itensporpagina = 15;
-	
 	$scope.search = function ()
 	{
 		$scope.load(0, $scope.itensporpagina);
@@ -61,8 +52,10 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	{
 		$scope.loading = true;
 
-		var opcoes = { ativo: 'true', skip: skip, take: take };
+		var opcoes = { skip: skip, take: take };
+
 		var filtro = ngHistoricoFiltro.filtro.filtroGerado;
+
 		if (filtro)
 			angular.extend(opcoes, filtro);
 

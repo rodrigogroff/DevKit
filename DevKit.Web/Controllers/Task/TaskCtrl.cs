@@ -17,11 +17,18 @@ namespace DevKit.Web.Controllers
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
+					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+
+					complete = Request.GetQueryStringValue<bool?>("complete", null),
 
 					nuPriority = Request.GetQueryStringValue<long?>("nuPriority", null),
 					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
-
-					busca = Request.GetQueryStringValue("busca")?.ToUpper()
+					fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
+					fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
+					fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
+					fkTaskFlowCurrent = Request.GetQueryStringValue<long?>("fkTaskFlowCurrent", null),
+					fkUserStart = Request.GetQueryStringValue<long?>("fkUserStart", null),
+					fkUserResponsible = Request.GetQueryStringValue<long?>("fkUserResponsible", null),					
 				};
 
 				var mdl = new Task();
@@ -50,7 +57,9 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Tasks select ne).Where(t => t.id == id).FirstOrDefault();
+				var model = (from ne in db.Tasks select ne).
+					Where(t => t.id == id).
+					FirstOrDefault();
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -91,12 +100,16 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Tasks select ne).Where(t => t.id == id).FirstOrDefault();
+				var model = (from ne in db.Tasks select ne).
+					Where(t => t.id == id).
+					FirstOrDefault();
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);
 
-				var resp = ""; if (!model.CanDelete(db, ref resp))
+				var resp = "";
+
+				if (!model.CanDelete(db, ref resp))
 					return BadRequest(resp);
 
 				model.Delete(db);

@@ -46,7 +46,9 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.TaskFlows select ne).Where(t => t.id == id).FirstOrDefault();
+				var model = (from ne in db.TaskFlows select ne).
+					Where(t => t.id == id).
+					FirstOrDefault();
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));

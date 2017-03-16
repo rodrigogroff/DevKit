@@ -8,11 +8,18 @@ namespace DataModel
 	public class TaskFilter
 	{
 		public int skip, take;
-
-		public long?	nuPriority,
-						fkProject;
-
 		public string busca;
+
+		public bool? complete;
+
+		public long? nuPriority,
+						fkProject,
+						fkPhase,
+						fkUserStart,
+						fkUserResponsible,
+						fkTaskType,
+						fkTaskFlowCurrent,
+						fkTaskCategory;
 	}
 
 	// --------------------------
@@ -21,16 +28,16 @@ namespace DataModel
 
 	public partial class Task
 	{
-		public string sdtStart = "";
-		public string snuPriority = "";
-		public string sfkUserStart = "";
-		public string sfkUserResponsible = "";
-		public string sfkTaskType = "";
-		public string sfkTaskCategory = "";
-		public string sfkProject = "";
-		public string sfkPhase = "";
-		public string sfkSprint = "";
-		public string sfkVersion = "";
+		public string	sdtStart = "",
+						snuPriority = "",
+						sfkUserStart = "",
+						sfkUserResponsible = "",
+						sfkTaskType = "",
+						sfkTaskCategory = "",
+						sfkProject = "",
+						sfkPhase = "",
+						sfkSprint = "",
+						sfkVersion = "";
 
 		public List<TaskProgress> usrProgress;
 		public List<TaskMessage> usrMessages;
@@ -63,15 +70,32 @@ namespace DataModel
 								e.stTitle.ToUpper().Contains(filter.busca) 
 						select e;
 
+			if (filter.complete != null)
+				query = from e in query where e.bComplete == filter.complete select e;
+
 			if (filter.nuPriority != null)
-				query = from e in query
-						where e.nuPriority == filter.nuPriority
-						select e;
+				query = from e in query where e.nuPriority == filter.nuPriority select e;
 
 			if (filter.fkProject != null)
-				query = from e in query
-						where e.fkProject == filter.fkProject
-						select e;
+				query = from e in query where e.fkProject == filter.fkProject select e;
+
+			if (filter.fkPhase != null)
+				query = from e in query where e.fkPhase == filter.fkPhase select e;
+
+			if (filter.fkTaskType != null)
+				query = from e in query where e.fkTaskType == filter.fkTaskType select e;
+
+			if (filter.fkTaskCategory != null)
+				query = from e in query where e.fkTaskCategory == filter.fkTaskCategory select e;
+
+			if (filter.fkUserStart != null)
+				query = from e in query where e.fkUserStart == filter.fkUserStart select e;
+
+			if (filter.fkTaskFlowCurrent != null)
+				query = from e in query where e.fkTaskFlowCurrent == filter.fkTaskFlowCurrent select e;
+			
+			if (filter.fkUserResponsible != null)
+				query = from e in query where e.fkUserResponsible == filter.fkUserResponsible select e;
 
 			return query;
 		}
@@ -83,14 +107,18 @@ namespace DataModel
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
 			snuPriority = new EnumPriority().lst.Where(t => t.id == nuPriority).FirstOrDefault().stName;
 			sfkUserStart = db.User(fkUserStart).stLogin;
-			if (fkUserResponsible != null)
-				sfkUserResponsible = db.User(fkUserResponsible).stLogin;
+
 			sfkTaskCategory = db.TaskCategory(fkTaskCategory).stName;
 			sfkTaskType = db.TaskType(fkTaskType).stName;
 			sfkProject = db.Project(fkProject).stName;
 			sfkPhase = db.ProjectPhase(fkPhase).stName;
 			sfkSprint = db.ProjectSprint(fkSprint).stName;
-			sfkVersion = db.ProjectSprintVersion(fkVersion).stName;
+
+			if (fkVersion != null)
+				sfkVersion = db.ProjectSprintVersion(fkVersion).stName;
+
+			if (fkUserResponsible != null)
+				sfkUserResponsible = db.User(fkUserResponsible).stLogin;
 
 			if (!IsListing)
 			{
@@ -284,7 +312,7 @@ namespace DataModel
 
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
-			return true;
+			return false;
 		}
 
 		public void Delete(DevKitDB db)

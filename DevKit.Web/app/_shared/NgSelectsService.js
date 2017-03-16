@@ -68,8 +68,6 @@
 
 				var apenasAtivos = parametros.apenasAtivos != undefined ? parametros.apenasAtivos : true;
 
-				if (apenasAtivos)
-					objFiltro.ativo = true;
 
 				if (parametros && parametros.filtro)
 				{

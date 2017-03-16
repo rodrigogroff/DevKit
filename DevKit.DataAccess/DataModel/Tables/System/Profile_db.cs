@@ -7,8 +7,7 @@ namespace DataModel
 {
 	public class ProfileFilter
 	{
-		public int skip, take;		
-		public bool? ativo;
+		public int skip, take;				
 		public string busca;
 	}
 

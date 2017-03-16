@@ -2,8 +2,35 @@
 ['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
-	$scope.permModel = {};
 	$scope.loading = false;
+	$scope.campos = {
+		complete: 'false',
+		selects: {
+			user: ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' }),
+			priority: ngSelects.obterConfiguracao(Api.Priority, { tamanhoPagina: 15, campoNome: 'stName' }),
+			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
+
+			phase: ngSelects.obterConfiguracao(Api.Phase, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'idProject', valor: 'campos.fkProject' }
+			}),
+
+			tasktype: ngSelects.obterConfiguracao(Api.TaskType, { tamanhoPagina: 15, campoNome: 'stName' }),
+
+			taskcategory: ngSelects.obterConfiguracao(Api.TaskCategory, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'idTaskType', valor: 'campos.fkTaskType' }
+			}),
+
+			taskflow: ngSelects.obterConfiguracao(Api.TaskFlow, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'idTaskType', valor: 'campos.fkTaskType' }
+			}),
+		}
+	};
+	$scope.itensporpagina = 15;
+
+	$scope.permModel = {};	
 	$scope.permID = 106;
 
 	function CheckPermissions() {
@@ -28,26 +55,6 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;		
 	}
 	
-	$scope.campos = {
-		ativo: 'true',
-		selects: {
-			priority: ngSelects.obterConfiguracao(Api.Priority, { tamanhoPagina: 15, campoNome: 'stName' }),
-			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
-			phase: ngSelects.obterConfiguracao(Api.Phase, {
-				tamanhoPagina: 15, campoNome: 'stName',
-
-				scope: $scope,
-				filtro:
-					{
-						campo: 'idProject',
-						valor: 'campos.fkProject'
-					}
-
-			}),
-		}
-	};
-	$scope.itensporpagina = 15;
-
 	$scope.search = function ()
 	{
 		$scope.load(0, $scope.itensporpagina);
@@ -58,8 +65,10 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	{
 		$scope.loading = true;
 
-		var options = { active: 'true', skip: skip, take: take };
+		var options = { active: $scope.campos.complete, skip: skip, take: take };
+
 		var filter = ngHistoricoFiltro.filtro.filtroGerado;
+
 		if (filter)
 			angular.extend(options, filter);
 

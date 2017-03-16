@@ -2,8 +2,16 @@
 ['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
-	$scope.permModel = {};
 	$scope.loading = false;
+	$scope.campos = {
+		ativo: 'true',
+		selects: {
+			perfil: ngSelects.obterConfiguracao(Api.Profile, { tamanhoPagina: 15, campoNome: 'stName' }),
+		}
+	};
+	$scope.itensporpagina = 15;
+
+	$scope.permModel = {};	
 	$scope.permID = 102;
 
 	function CheckPermissions() {
@@ -27,15 +35,6 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;		
 	}
-
-	$scope.campos = {
-		ativo: 'true',
-		selects: {
-			perfil: ngSelects.obterConfiguracao(Api.Profile, { tamanhoPagina: 15, campoNome: 'stName' }),
-		}
-	};
-	
-	$scope.itensporpagina = 15;
 
 	$scope.search = function ()
 	{

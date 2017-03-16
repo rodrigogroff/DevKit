@@ -6,9 +6,9 @@ namespace DataModel
 	public class ProjectVersionFilter
 	{
 		public int skip, take;
-		public int? fkSprint;
-
 		public string busca;
+
+		public int? fkSprint;		
 	}
 	
 	// --------------------------

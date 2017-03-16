@@ -7,7 +7,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.loading = false;
 
 	$scope.viewModel = {};
-
 	$scope.permModel = {};	
 	$scope.permID = 105;
 

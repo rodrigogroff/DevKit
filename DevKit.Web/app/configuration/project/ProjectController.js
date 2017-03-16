@@ -7,7 +7,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.loading = false;
 
 	$scope.viewModel = {};
-
 	$scope.permModel = {};	
 	$scope.permID = 103;
 
@@ -39,6 +38,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (id > 0)
 		{
 			$scope.loading = true;
+
 			Api.Project.get({ id: id }, function (data)
 			{
 				$scope.viewModel = data;
@@ -51,9 +51,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			});
 		}
 		else
-		{
 			$scope.viewModel = { };
-		}
 	}
 
 	$scope.save = function ()

@@ -86,7 +86,6 @@ angular.module('app.directives').directive('ngFiltro', function () {
 			$scope.constroiFiltro = function (opcoes) {
 				if (opcoes.filtroBasico) {
 					var fBasico = {
-						ativo: true,
 						busca: opcoes ? opcoes.valor : ''
 					};
 					return fBasico;
@@ -183,7 +182,7 @@ angular.module('app.directives').directive('ngFiltro', function () {
 						selects = $scope.filtro.campos.selects;
 
 					$scope.filtro.campos = {
-						ativo: 'true'
+						
 					}
 
 					if (tabs) {

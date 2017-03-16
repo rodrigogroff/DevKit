@@ -36,7 +36,6 @@
 									<b>{{viewModel.id}}</b>
 								</td>
 							</tr>
-
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
 								<td>Creation Date</td>
@@ -45,7 +44,6 @@
 									<b>{{viewModel.sdtCreation }}</b>
 								</td>
 							</tr>
-
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
 								<td>Created By</td>
@@ -54,7 +52,6 @@
 									<b>{{viewModel.stUser}}</b>
 								</td>
 							</tr>
-
 							<tr height="40px">
 								<td></td>
 								<td>Project name</td>
@@ -66,9 +63,7 @@
 										   ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
 								</td>
 							</tr>
-
 							<tr height="20px"></tr>
-
 						</table>
 					</div>
 				</tab>
@@ -193,7 +188,7 @@
 															</td>
 															<td></td>
 															<td>
-																<input name="ativo" type="checkbox" ng-disabled="!permModel.edicao" ng-model="newPhase.bComplete" />
+																<input type="checkbox" ng-disabled="!permModel.edicao" ng-model="newPhase.bComplete" />
 															</td>
 														</tr>
 													</table>

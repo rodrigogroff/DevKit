@@ -5,6 +5,7 @@ angular.module('app.controllers').controller('UserController',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
 	$scope.loading = false;
+
 	$scope.setupModel = { stPhoneMask: '' }	
 	$scope.viewModel = {};
 	$scope.permModel = {};	

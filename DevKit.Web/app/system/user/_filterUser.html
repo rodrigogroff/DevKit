@@ -11,7 +11,7 @@
 			<td></td>
 			<td>Profile</td>
 			<td>
-				<input type="hidden" name="perfil" style="width:100%" ui-select2="filtro.campos.selects.perfil" ng-model="filtro.campos.fkPerfil" />
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.perfil" ng-model="filtro.campos.fkPerfil" />
 			</td>
 		</tr>
 		<tr height="36px">
@@ -20,13 +20,13 @@
 			<td>
 				<table>
 					<tr>
-						<td width="20px"><input type="radio" name="status" id="statusAtivo" value="true" ng-model="filtro.campos.ativo" /></td>
+						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.ativo" /></td>
 						<td> Active</td>
 						<td width="20px"></td>
-						<td width="20px"><input type="radio" name="status" id="statusAtivo" value="false" ng-model="filtro.campos.ativo" /></td>
+						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.ativo" /></td>
 						<td> Blocked</td>
 						<td width="20px"></td>
-						<td width="20px"><input type="radio" name="status" id="statusAtivo" value="" ng-model="filtro.campos.ativo" /></td>
+						<td width="20px"><input type="radio" value="" ng-model="filtro.campos.ativo" /></td>
 						<td> All</td>
 						<td width="20px"></td>
 					</tr>

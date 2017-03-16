@@ -4,9 +4,9 @@ angular.module('app.controllers').controller('ProfileController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
-	$scope.style_error = { 'background-color': 'goldenrod' }
-	$scope.permModel = {};
 	$scope.loading = false;
+	
+	$scope.permModel = {};	
 	$scope.permID = 101;
 
 	function CheckPermissions()

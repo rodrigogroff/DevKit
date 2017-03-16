@@ -51,7 +51,9 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.ProjectSprints select ne).Where(t => t.id == id).FirstOrDefault();
+				var model = (from ne in db.ProjectSprints select ne).
+					Where(t => t.id == id).
+					FirstOrDefault();
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -90,12 +92,16 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.ProjectSprints select ne).Where(t => t.id == id).FirstOrDefault();
+				var model = (from ne in db.ProjectSprints select ne).
+					Where(t => t.id == id).
+					FirstOrDefault();
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);
 
-				var resp = ""; if (!model.CanDelete(db, ref resp))
+				var resp = "";
+
+				if (!model.CanDelete(db, ref resp))
 					return BadRequest(resp);
 
 				model.Delete(db);

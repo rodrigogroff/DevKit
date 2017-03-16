@@ -32,7 +32,6 @@ namespace DataModel
 
 		public ProjectPhase LoadAssociations(DevKitDB db)
 		{
-
 			return this;
 		}
 	}

@@ -9,9 +9,10 @@ namespace DataModel
 	public class UserFilter
 	{
 		public int skip, take;
-		public long? fkPerfil;
-		public bool? ativo;
 		public string busca;
+
+		public bool? ativo;
+		public long? fkPerfil;
 	}
 
 	// --------------------------
@@ -221,8 +222,6 @@ namespace DataModel
 
 		public void Delete(DevKitDB db)
 		{
-			// cascade
-
 			foreach (var item in (from e in db.UserPhones where e.fkUser == id select e))
 				db.Delete(item);
 

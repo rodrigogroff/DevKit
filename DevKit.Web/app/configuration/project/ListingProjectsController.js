@@ -2,8 +2,11 @@
 ['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api',
 function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 {
-	$scope.permModel = {};
 	$scope.loading = false;
+	$scope.campos = {};
+	$scope.itensporpagina = 15;
+
+	$scope.permModel = {};	
 	$scope.permID = 103;
 
 	function CheckPermissions()
@@ -30,9 +33,6 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;
 	}
-
-	$scope.campos = { ativo: 'true' };
-	$scope.itensporpagina = 15;
 	
 	$scope.search = function ()
 	{
@@ -44,8 +44,10 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
 	{
 		$scope.loading = true;
 
-		var opcoes = { ativo: 'true', skip: skip, take: take };
+		var opcoes = { skip: skip, take: take };
+
 		var filtro = ngHistoricoFiltro.filtro.filtroGerado;
+
 		if (filtro)
 			angular.extend(opcoes, filtro);
 

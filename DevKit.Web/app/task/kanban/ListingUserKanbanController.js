@@ -2,10 +2,10 @@
 ['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 
 function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 {
-	$scope.permModel = {};
-	$scope.viewModel = {};
-
 	$scope.loading = false;
+
+	$scope.permModel = {};
+	$scope.viewModel = {};	
 	$scope.permID = 107;
 
 	function CheckPermissions()
@@ -29,9 +29,10 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 
 		$scope.loading = true;
 
-		var options = { active: 'true' };
+		var options = { };
 
 		var filter = ngHistoricoFiltro.filtro.filtroGerado;
+
 		if (filter)
 			angular.extend(options, filter);
 
@@ -40,6 +41,10 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 			$scope.viewModel = data;
 			$scope.loading = false;
 		});
+	}
+
+	$scope.search = function () {
+		init();
 	}
 
 }]);

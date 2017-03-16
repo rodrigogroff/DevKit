@@ -15,6 +15,11 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 				scope: $scope, filtro: { campo: 'idProject', valor: 'campos.fkProject' }
 			}),
 
+			sprint: ngSelects.obterConfiguracao(Api.Sprint, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'idPhase', valor: 'campos.fkPhase' }
+			}),
+
 			tasktype: ngSelects.obterConfiguracao(Api.TaskType, { tamanhoPagina: 15, campoNome: 'stName' }),
 
 			taskcategory: ngSelects.obterConfiguracao(Api.TaskCategory, {
@@ -65,12 +70,14 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	{
 		$scope.loading = true;
 
-		var options = { active: $scope.campos.complete, skip: skip, take: take };
+		var options = { skip: skip, take: take };
 
 		var filter = ngHistoricoFiltro.filtro.filtroGerado;
 
 		if (filter)
 			angular.extend(options, filter);
+
+		delete options.selects;
 
 		Api.Task.listPage(options, function (data) {
 			$scope.list = data.results;

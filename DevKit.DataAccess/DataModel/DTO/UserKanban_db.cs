@@ -5,12 +5,23 @@ namespace DataModel
 {
 	public class UserKanbanFilter
 	{
-		public int skip, take;
 		public string busca;
+		public bool? complete;
+
+		public long? nuPriority,
+						fkProject,
+						fkPhase,
+						fkSprint,
+						fkUserStart,
+						fkTaskType,
+						fkTaskFlowCurrent,
+						fkTaskCategory;
 	}
 
 	public class UserKanban_dto
 	{
+		public bool fail = false;
+
 		public List<KanbanProject> projects = new List<KanbanProject>();
 	}
 
@@ -53,7 +64,12 @@ namespace DataModel
 			var dbUserprojects = (	from e in db.Projects
 									join pu in db.ProjectUsers on e.id equals pu.fkProject
 									where pu.fkUser == user.id
-									select e).ToList();
+									where filter.fkProject == null || e.id == filter.fkProject
+									select e).
+									ToList();
+
+			if (dbUserprojects.Count() == 0)
+				dto.fail = true;
 
 			dto.projects = new List<KanbanProject>();
 
@@ -64,11 +80,24 @@ namespace DataModel
 					project = project
 				};
 
-				var lstUsertasks = ( from e in db.Tasks
-									where e.fkProject == project.id
-									where e.fkUserResponsible == user.id
-									select e).
-									ToList();
+				var lstUsertasks = (	from e in db.Tasks
+										where e.fkProject == project.id
+										where e.fkUserResponsible == user.id
+
+										where filter.complete == null || e.bComplete == filter.complete
+										where filter.nuPriority == null || e.nuPriority == filter.nuPriority
+										where filter.fkPhase == null || e.fkPhase == filter.fkPhase
+										where filter.fkSprint == null || e.fkSprint == filter.fkSprint
+										where filter.fkUserStart == null || e.fkUserStart == filter.fkUserStart
+										where filter.fkTaskType == null || e.fkTaskType == filter.fkTaskType
+										where filter.fkTaskFlowCurrent == null || e.fkTaskFlowCurrent == filter.fkTaskFlowCurrent
+										where filter.fkTaskCategory == null || e.fkTaskCategory == filter.fkTaskCategory
+
+										select e).
+										ToList();
+
+				if (lstUsertasks.Count() == 0)
+					dto.fail = true;
 
 				var lstSprints = (from e in lstUsertasks
 								  join sp in db.ProjectSprints on e.fkSprint equals sp.id

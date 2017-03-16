@@ -15,13 +15,17 @@
 				<tr>
 					<td width="15px"></td>
 					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/task/task/_filterUserKanban.html"
+						<ng-filtro tipo="profile" campos="campos" template-avancado="app/task/kanban/_filterUserKanban.html"
 								   funcao-pesquisar="search"></ng-filtro>
 					</td>
 				</tr>
 			</table>
 			<br />
-			<div class="panel-group" data-ng-repeat="proj in viewModel.projects">
+			<div ng-show="fail == true">
+				<br />
+				<div class="btn btn-info btn-lg">No records found.</div>
+			</div>
+			<div class="panel-group" data-ng-repeat="proj in viewModel.projects" ng-show="fail == false">
 				<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
 					<div class="panel-heading">
 						<a class="accordion-toggle" data-toggle="collapse" href="task/kanban#collapseProj{{proj.project.id}}">
@@ -83,6 +87,8 @@
 					</div>
 				</div>
 			</div>
+			<br />
+			<br />
 		</div>
 	</section>
 </div>

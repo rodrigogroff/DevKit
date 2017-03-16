@@ -24,11 +24,12 @@ namespace DevKit.Web.Controllers
 					nuPriority = Request.GetQueryStringValue<long?>("nuPriority", null),
 					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 					fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
+					fkSprint = Request.GetQueryStringValue<long?>("fkSprint", null),
 					fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
 					fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
 					fkTaskFlowCurrent = Request.GetQueryStringValue<long?>("fkTaskFlowCurrent", null),
 					fkUserStart = Request.GetQueryStringValue<long?>("fkUserStart", null),
-					fkUserResponsible = Request.GetQueryStringValue<long?>("fkUserResponsible", null),					
+					fkUserResponsible = Request.GetQueryStringValue<long?>("fkUserResponsible", null),	
 				};
 
 				var mdl = new Task();

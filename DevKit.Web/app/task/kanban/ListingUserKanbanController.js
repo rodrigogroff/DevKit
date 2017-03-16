@@ -3,6 +3,37 @@
 function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 {
 	$scope.loading = false;
+	$scope.fail = false;
+	$scope.campos = {
+		complete: 'false',
+		selects: {
+			user: ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' }),
+			priority: ngSelects.obterConfiguracao(Api.Priority, { tamanhoPagina: 15, campoNome: 'stName' }),
+			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
+
+			phase: ngSelects.obterConfiguracao(Api.Phase, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'idProject', valor: 'campos.fkProject' }
+			}),
+
+			sprint: ngSelects.obterConfiguracao(Api.Sprint, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'idPhase', valor: 'campos.fkPhase' }
+			}),
+
+			tasktype: ngSelects.obterConfiguracao(Api.TaskType, { tamanhoPagina: 15, campoNome: 'stName' }),
+
+			taskcategory: ngSelects.obterConfiguracao(Api.TaskCategory, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'idTaskType', valor: 'campos.fkTaskType' }
+			}),
+
+			taskflow: ngSelects.obterConfiguracao(Api.TaskFlow, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'idTaskType', valor: 'campos.fkTaskType' }
+			}),
+		}
+	};
 
 	$scope.permModel = {};
 	$scope.viewModel = {};	
@@ -36,10 +67,18 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 		if (filter)
 			angular.extend(options, filter);
 
+		delete options.selects;
+
 		Api.UserKanban.listPage(options, function (data)
 		{
 			$scope.viewModel = data;
 			$scope.loading = false;
+			$scope.fail = false;
+		},
+		function (response)
+		{
+			$scope.loading = false;
+			$scope.fail = true;
 		});
 	}
 

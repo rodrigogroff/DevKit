@@ -1,11 +1,91 @@
 ﻿<div class="form-group" style="color:white;">
-	<table width="550px">
+	<table>
 		<tr height="36px">
-			<td width="20px"></td>
-			<td width="120px">Title / Description</td>
-			<td width="250px">
+			<td width="25px"></td>
+			<td width="180px">Title </td>
+			<td width="220px">
 				<input type="text" focus="true" class="form-control input-transparent" ng-model="filtro.campos.busca" />
 			</td>
+			<td width="60px"></td>
+			<td width="180px">Priority</td>
+			<td width="220px">
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.priority" ng-model="filtro.campos.nuPriority" />
+			</td>
+		</tr>
+		<tr height="36px">
+			<td></td>
+			<td>State</td>
+			<td>
+				<table>
+					<tr>
+						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.complete" /></td>
+						<td> Open</td>
+						<td width="20px"></td>
+						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.complete" /></td>
+						<td> Closed</td>
+						<td width="20px"></td>
+						<td width="20px"><input type="radio" value="" ng-model="filtro.campos.complete" /></td>
+						<td> Both</td>
+					</tr>
+				</table>
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr height="36px">
+			<td></td>
+			<td>Project</td>
+			<td>
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.project" ng-model="filtro.campos.fkProject" />
+			</td>
+			<td></td>
+			<td>Phase</td>
+			<td>
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.phase" ng-model="filtro.campos.fkPhase" />
+			</td>
+		</tr>
+		<tr height="36px">
+			<td></td>
+			<td>Sprint</td>
+			<td>
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.sprint" ng-model="filtro.campos.fkSprint" />
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr height="36px">
+			<td></td>
+			<td>Opened By</td>
+			<td>
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.user" ng-model="filtro.campos.fkUserStart" />
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr height="36px">
+			<td></td>
+			<td>Task Type</td>
+			<td>
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.tasktype" ng-model="filtro.campos.fkTaskType" />
+			</td>
+			<td></td>
+			<td>Task Category</td>
+			<td>
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.taskcategory" ng-model="filtro.campos.fkTaskCategory" />
+			</td>
+		</tr>
+		<tr height="36px">
+			<td></td>
+			<td>Current Flow</td>
+			<td>
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.taskflow" ng-model="filtro.campos.fkTaskFlowCurrent" />
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
 		</tr>
 	</table>
 </div>

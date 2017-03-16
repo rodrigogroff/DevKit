@@ -15,6 +15,7 @@ namespace DataModel
 		public long? nuPriority,
 						fkProject,
 						fkPhase,
+						fkSprint,
 						fkUserStart,
 						fkUserResponsible,
 						fkTaskType,

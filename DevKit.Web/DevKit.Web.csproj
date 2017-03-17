@@ -663,7 +663,6 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="scripts\angular-spinner.min.js.map" />
-    <Content Include="logoLetras.psd" />
     <Content Include="openICS.psd" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="scripts\jquery-2.1.0.intellisense.js" />

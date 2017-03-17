@@ -27,31 +27,41 @@ namespace DataModel
 
 	public class KanbanProject
 	{
-		public Project project;
+		public string project;
+		public long project_id;
+
 		public List<KanbanSprint> sprints = new List<KanbanSprint>();
 	}
 
 	public class KanbanSprint
 	{
-		public ProjectSprint sprint;
+		public string sprint;
+		public long sprint_id;
+
 		public List<KanbanTaskType> tasktypes = new List<KanbanTaskType>();
 	}
 
 	public class KanbanTaskType
 	{
-		public TaskType tasktype;
+		public string tasktype;
+		public long tasktype_id;
+
 		public List<KanbanTaskCategory> categories = new List<KanbanTaskCategory>();
 	}
 
 	public class KanbanTaskCategory
 	{
-		public TaskCategory category;
+		public string category;
+		public long category_id;
+
 		public List<KanbanTaskFlow> flows = new List<KanbanTaskFlow>();
 	}
 
 	public class KanbanTaskFlow
 	{
-		public TaskFlow flow;
+		public string flow;
+		public long flow_id;
+
 		public List<Task> tasks = new List<Task>();
 	}
 
@@ -61,11 +71,11 @@ namespace DataModel
 		{
 			var dto = new UserKanban_dto();
 
-			var dbUserprojects = (	from e in db.Projects
+			var dbUserprojects = ( from e in db.Projects
 									join pu in db.ProjectUsers on e.id equals pu.fkProject
 									where pu.fkUser == user.id
 									where filter.fkProject == null || e.id == filter.fkProject
-									select e).
+									select e ).
 									ToList();
 
 			if (dbUserprojects.Count() == 0)
@@ -77,7 +87,8 @@ namespace DataModel
 			{
 				var kb_proj = new KanbanProject()
 				{
-					project = project
+					project = project.stName,
+					project_id = project.id
 				};
 
 				var lstUsertasks = (	from e in db.Tasks
@@ -105,11 +116,12 @@ namespace DataModel
 								  OrderBy(y => y.stName).
 								  ToList();
 				
-				foreach (var sp in lstSprints)
+				foreach (var sprint in lstSprints)
 				{
 					var ks = new KanbanSprint()
 					{
-						sprint = sp
+						sprint = sprint.stName,
+						sprint_id = sprint.id
 					};
 
 					var lstTaskType = (from e in lstUsertasks
@@ -118,46 +130,49 @@ namespace DataModel
 									   OrderBy(y => y.stName).
 									   ToList();
 
-					foreach (var tt in lstTaskType)
+					foreach (var tasktype in lstTaskType)
 					{
 						var ktt = new KanbanTaskType()
 						{
-							tasktype = tt
+							tasktype = tasktype.stName,
+							tasktype_id = tasktype.id
 						};
 
 						var lstCategories = (from e in lstUsertasks
 											 join cat in db.TaskCategories on e.fkTaskCategory equals cat.id
 
-											 where e.fkTaskType == tt.id
-											 where e.fkSprint == sp.id
+											 where e.fkTaskType == tasktype.id
+											 where e.fkSprint == sprint.id
 											 where e.fkProject == project.id
 
 											 select cat).Distinct().
 											 OrderBy(y => y.stName).
 											 ToList();
 
-						foreach (var cat in lstCategories)
+						foreach (var category in lstCategories)
 						{
 							var ktc = new KanbanTaskCategory()
 							{
-								category = cat
+								category = category.stName,
+								category_id = category.id
 							};
 
-							var flows = (from e in db.TaskFlows where e.fkTaskType == tt.id select e).OrderBy( y=> y.nuOrder).ToList();
+							var flows = (from e in db.TaskFlows where e.fkTaskType == tasktype.id select e).OrderBy( y=> y.nuOrder).ToList();
 
-							foreach (var _flow in flows)
+							foreach (var flow in flows)
 							{
 								var ktf = new KanbanTaskFlow()
 								{
-									flow = _flow
+									flow = flow.stName,
+									flow_id = flow.id
 								};
 
 								ktf.tasks = (from e in lstUsertasks
-											 where e.fkTaskType == tt.id
-											 where e.fkSprint == sp.id
+											 where e.fkTaskType == tasktype.id
+											 where e.fkSprint == sprint.id
 											 where e.fkProject == project.id
-											 where e.fkTaskCategory == cat.id
-											 where e.fkTaskFlowCurrent == _flow.id
+											 where e.fkTaskCategory == category.id
+											 where e.fkTaskFlowCurrent == flow.id
 											 select e).
 											 OrderBy(y => y.id).
 											 ToList();

@@ -12,28 +12,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title ng-bind="title">DevKit</title>
-
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
-
 	<meta name="description">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	@Styles.Render("~/bundles/css")
 	@Scripts.Render("~/bundles/scripts")
-
 </head>
 <body class="background">
-		
 	<div class="header" ng-show="exibirMenu" ng-controller="MenuController">
-
 		<div class="logo" style="padding-top:-4px; padding-left:-60px ">
 			<img src='../../images/logo.png' height="112px" />
 		</div>
-
-		<div class="logo" style="padding-top:8px; padding-left:160px ">
-			<img src='../../images/logoLetras.png' />
-		</div>
-
 		<header class="page-header">
 			<div class="navbar pull-right" style="height: 72px; padding-top:-4px;">
 				<div class="pull-right" style="color:white">
@@ -42,11 +31,9 @@
 				</div>
 			</div>
 		</header>
-
 		<nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top: 60px">
 			<section class="widget" style="height:100%;font-size:11px">
 				<ul id="side-nav" class="side-nav" style="color:black">
-
 					<li class="panel">
 						<a class="accordion-toggle " data-toggle="collapse"
 						   data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">System</span></a>
@@ -56,7 +43,6 @@
 							<li><a ui-sref="profiles"><span>Profiles</span></a></li>
 						</ul>
 					</li>
-
 					<li class="panel">
 						<a class="accordion-toggle " data-toggle="collapse"
 						   data-parent="#side-nav" href="#forms-collapseSetup"><span class="name">Setup</span></a>
@@ -66,7 +52,6 @@
 							<li><a ui-sref="taskTypes"><span>Task Types</span></a></li>
 						</ul>
 					</li>
-
 					<li class="panel">
 						<a class="accordion-toggle " data-toggle="collapse"
 						   data-parent="#side-nav" href="#forms-collapseTask"><span class="name">Tasks</span></a>
@@ -75,13 +60,10 @@
 							<li><a ui-sref="tasks"><span>Listing</span></a></li>
 						</ul>
 					</li>
-
 				</ul>
 			</section>
 		</nav>
-
 	</div>
-		
 	<table align="left" style="width:100%">
 		<tr>
 			<td>
@@ -89,13 +71,9 @@
 			</td>
 		</tr>
 	</table>
-
 	@Scripts.Render("~/bundles/app")
-
 	<script>
-		// Version constant
-		app.constant('version', '@version');
+		app.constant('version', '@version'); // Version constant
 	</script>
-
 </body>
 </html>

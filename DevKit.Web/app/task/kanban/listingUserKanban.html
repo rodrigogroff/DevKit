@@ -68,7 +68,7 @@
 																		<td ng-repeat="f in cat.flows">
 																			<div ng-show="f.tasks.length > 0 ">
 																				<div data-ng-repeat="t in f.tasks">
-																					<button class="btn btn-info btn-xs" ng-click="open(t)">T{{ t.nuPriority }}</button>																					
+																					<button class="btn btn-info btn-xs" title="{{ t.stDescription }}" ng-click="open(t)">T{{ t.nuPriority }}</button>																					
 																				</div>
 																			</div>
 																		</td>

@@ -165,6 +165,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkOldFlowState { get; set; } // bigint
 		[Column,     Nullable] public long?     fkNewFlowState { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stMessage      { get; set; } // character varying(300)
 	}
 
 	[Table(Schema="public", Name="TaskMessage")]

@@ -289,6 +289,7 @@ CREATE TABLE public."TaskFlowChange"
 	"fkOldFlowState" bigint,
 	"fkNewFlowState" bigint,
 	"dtLog" timestamp without time zone,	
+	"stMessage" character varying(300),
     PRIMARY KEY (id)
 )
 WITH (

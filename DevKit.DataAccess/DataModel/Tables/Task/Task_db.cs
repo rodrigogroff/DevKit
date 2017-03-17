@@ -49,6 +49,7 @@ namespace DataModel
 		public string stUserMessage = "";
 
 		public long? fkNewFlow = null;
+		public string fkNewFlow_Message = "";
 
 		public string updateCommand = "";
 		public object anexedEntity;
@@ -282,12 +283,14 @@ namespace DataModel
 								dtLog = DateTime.Now,
 								fkTask = id,
 								fkUser = userLogged.id,
+								stMessage = fkNewFlow_Message,
 								fkNewFlowState = fkNewFlow,
 								fkOldFlowState = fkTaskFlowCurrent
 							});
 
 							fkTaskFlowCurrent = fkNewFlow;
 							fkNewFlow = null;
+							fkNewFlow_Message = "";
 
 							var flowState = (from e in db.TaskFlows
 											 where e.id == fkTaskFlowCurrent

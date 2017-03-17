@@ -317,6 +317,16 @@
 								<td></td>
 								<td></td>
 							</tr>
+							<tr height="40px">
+								<td></td>
+								<td valign="middle"> Message</td>
+								<td></td>
+								<td colspan="5" valign="middle">
+									<input type="text" class="form-control input-transparent" maxlength="200"
+										   ng-disabled="!permModel.edicao" ng-model="viewModel.fkNewFlow_Message">
+								</td>
+								<td></td>
+							</tr>
 							<tr height="40px"></tr>
 							<tr>
 								<td></td>
@@ -325,19 +335,15 @@
 										<table class="table table-hover">
 											<thead>
 												<tr>
-													<th width="110px">Date</th>
-													<th width="110px">User</th>
-													<th width="140px">From State</th>
-													<th width="10px"></th>
-													<th width="140px">To State</th>
+													<th width="140px">Date \ User</th>
+													<th width="140px">State Change</th>
+													<th width="220px">Message</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="m in viewModel.flows">
-												<td>{{ m.sdtLog }}</td>
-												<td>{{ m.sfkUser }}</td>
-												<td>{{ m.sfkOldFlowState }}</td>
-												<td> >> </td>
-												<td>{{ m.sfkNewFlowState }}</td>
+												<td>{{ m.sdtLog }}<br>{{ m.sfkUser }}</td>
+												<td>From: {{ m.sfkOldFlowState }} <br />To: {{ m.sfkNewFlowState }}</td>
+												<td>{{ m.stMessage }}</td>
 											</tr>
 										</table>
 									</div>

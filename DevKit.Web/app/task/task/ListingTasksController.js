@@ -1,8 +1,14 @@
 ﻿angular.module('app.controllers').controller('ListingTasksController',
-['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$window', '$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
+function ($window, $scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
 	$scope.loading = false;
+
+	$scope.windowWidth = 900; var w = angular.element($window);
+	$scope.$watch( function () { return $window.innerWidth; },
+	  function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1450; else $scope.windowWidth = 900; },
+	  true ); w.bind('resize', function () { $scope.$apply();	});
+
 	$scope.campos = {
 		complete: 'false',
 		fkProject: 0,

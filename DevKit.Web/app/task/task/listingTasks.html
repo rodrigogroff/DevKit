@@ -1,5 +1,5 @@
 ﻿<div class="webFormPostion" style="width:95%">
-	<section class="widgetForm" style="width:100%">
+	<section class="widgetForm" style="width:95%">
 		<legend class="legendTop" style="width:100%">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
@@ -13,7 +13,7 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div class="divWebForm">
+		<div class="divWebFormListing" style="padding-left:35px;width:{{windowWidth}}px">
 			<table width="100%">
 				<tr>
 					<td width="15px"></td>
@@ -23,7 +23,7 @@
 					</td>
 				</tr>
 			</table>
-			<table width="100%">
+			<table>
 				<tr>
 					<td valign="top">
 						<div ng-show="list.length == 0">
@@ -35,7 +35,7 @@
 							<br />
 							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
-							<table class="table table-hover">
+							<table class="table table-hover" ng-if="availWidth < 1400">
 								<thead>
 									<tr>
 										<th width="90px">Date </th>
@@ -55,6 +55,35 @@
 									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}<br />{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
 								</tr>
 							</table>
+							<table class="table table-hover" ng-if="availWidth > 1400">
+								<thead>
+									<tr>
+										<th width="130px">Date</th>
+										<th width="90px">Priority</th>
+										<th width="130px">Informed By</th>
+										<th width="130px">Assigned To</th>
+										<th width="130px">Type</th>
+										<th width="130px">Category</th>
+										<th width="180px">Title</th>
+										<th width="180px">Localization</th>										
+										<th width="180px">Project</th>
+										<th width="180px">Sprint</th>
+									</tr>
+								</thead>
+								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+									<td>{{ mdl.sdtStart }}</td>
+									<td>{{ mdl.snuPriority }}</td>
+									<td>{{ mdl.sfkUserStart }}</td>
+									<td>{{ mdl.sfkUserResponsible }}</td>
+									<td>{{ mdl.sfkTaskType }}</td>
+									<td>{{ mdl.sfkTaskCategory }}</td>
+									<td>{{ mdl.stTitle }}</td>
+									<td><i>{{ mdl.stLocalization }}</i></td>									
+									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}</td>
+									<td>{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
+								</tr>
+							</table>
+
 						</div>
 						<br />
 					</td>

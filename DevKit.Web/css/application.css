@@ -26293,6 +26293,10 @@ body {
 	padding-left:35px;padding-top:7px;width:950px;min-height:430px;height:100%;
 }
 
+divWebFormListing {
+	padding-left:35px;padding-top:7px;min-height:430px;height:100%;
+}
+
 .redBorder {
           border: solid 1px red;
       }

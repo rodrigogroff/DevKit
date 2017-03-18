@@ -8,7 +8,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 
     .state('home', { url: '/', templateUrl: 'app/home/home.html' })
 
-	.state('login', { url: '/login', templateUrl: 'app/_shared/login/login.html', controller: 'LoginController', data: {} })
+	.state('login', { url: '/login', templateUrl: 'app/login/login.html', controller: 'LoginController', data: {} })
 
 	.state('setup', { url: '/system/setup/:id', templateUrl: 'app/system/setup/setup.html', controller: 'SetupController' })
 

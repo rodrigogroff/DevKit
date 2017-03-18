@@ -271,11 +271,11 @@
     <Content Include="app\_shared\paginacao\templateNgPaginacao.html" />
     <Content Include="app\_shared\directives.validator.js" />
     <Content Include="app\_shared\MenuController.js" />
-    <Content Include="app\_shared\login\AuthInterceptorService.js" />
-    <Content Include="app\_shared\login\AuthService.js" />
+    <Content Include="app\login\AuthInterceptorService.js" />
+    <Content Include="app\login\AuthService.js" />
     <Content Include="app\_shared\filters.js" />
-    <Content Include="app\_shared\login\login.html" />
-    <Content Include="app\_shared\login\LoginController.js" />
+    <Content Include="app\login\login.html" />
+    <Content Include="app\login\LoginController.js" />
     <Content Include="app\_shared\SelectsService.js" />
     <Content Include="app\_shared\templateExportacao.html" />
     <Content Include="app\_shared\templateInformacao.html" />

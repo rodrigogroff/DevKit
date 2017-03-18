@@ -6,7 +6,7 @@ function ($window, $scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelect
 
 	$scope.windowWidth = 900; var w = angular.element($window);
 	$scope.$watch( function () { return $window.innerWidth; },
-	  function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1450; else $scope.windowWidth = 900; },
+	  function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1570; else $scope.windowWidth = 900; },
 	  true ); w.bind('resize', function () { $scope.$apply();	});
 
 	$scope.campos = {

@@ -60,27 +60,25 @@
 									<tr>
 										<th width="130px">Date</th>
 										<th width="90px">Priority</th>
-										<th width="130px">Informed By</th>
+										<th width="130px">Informed By</th>										
+										<th width="150px">Type</th>
+										<th width="150px">Category</th>
+										<th width="280px">Title / Localization</th>
+										<th width="180px">Project / PHASE</th>
+										<th width="180px">Sprint / VERSION</th>
 										<th width="130px">Assigned To</th>
-										<th width="130px">Type</th>
-										<th width="130px">Category</th>
-										<th width="180px">Title</th>
-										<th width="180px">Localization</th>										
-										<th width="180px">Project</th>
-										<th width="180px">Sprint</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.sdtStart }}</td>
 									<td>{{ mdl.snuPriority }}</td>
-									<td>{{ mdl.sfkUserStart }}</td>
-									<td>{{ mdl.sfkUserResponsible }}</td>
+									<td>{{ mdl.sfkUserStart }}</td>									
 									<td>{{ mdl.sfkTaskType }}</td>
 									<td>{{ mdl.sfkTaskCategory }}</td>
-									<td>{{ mdl.stTitle }}</td>
-									<td><i>{{ mdl.stLocalization }}</i></td>									
+									<td>{{ mdl.stTitle }}<br /><i>{{ mdl.stLocalization }}</i></td>									
 									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}</td>
 									<td>{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
+									<td>{{ mdl.sfkUserResponsible }}</td>
 								</tr>
 							</table>
 

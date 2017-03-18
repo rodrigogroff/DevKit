@@ -19,7 +19,7 @@ namespace DevKit.Web.Controllers
 					take = Request.GetQueryStringValue("take", 15),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
 
-					fkProject = Request.GetQueryStringValue<long?>("fkSprint", null),
+					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 					fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
 				};
 

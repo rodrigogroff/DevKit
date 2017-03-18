@@ -38,7 +38,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase,
 			{
 				tamanhoPagina: 15,
-				scope: $scope, filtro: { campo: 'idProject', valor: 'viewModel.fkProject' }
+				scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' }
 			});
 
 		if (id > 0)

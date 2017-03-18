@@ -185,6 +185,7 @@ CREATE TABLE public."TaskFlow"
 (
     id bigserial NOT NULL,
 	"fkTaskType" bigint,
+	"fkTaskCategory" bigint,
     "stName" character varying(200),
 	"nuOrder" bigint,
 	"bForceComplete" boolean,

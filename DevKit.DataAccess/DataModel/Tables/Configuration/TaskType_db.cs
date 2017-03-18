@@ -19,8 +19,7 @@ namespace DataModel
 	public partial class TaskType
 	{
 		public List<TaskCategory> categories;
-		public List<TaskFlow> flows;
-
+		
 		public string updateCommand = "";
 		public object anexedEntity;
 	}
@@ -44,8 +43,7 @@ namespace DataModel
 		public TaskType LoadAssociations(DevKitDB db)
 		{
 			categories = LoadCategories(db);
-			flows = LoadFlows(db);
-
+			
 			return this;
 		}
 
@@ -53,15 +51,6 @@ namespace DataModel
 		{
 			var lst = (from e in db.TaskCategories where e.fkTaskType == id select e).
 				OrderBy(t => t.stName).
-				ToList();
-
-			return lst;
-		}
-
-		List<TaskFlow> LoadFlows(DevKitDB db)
-		{
-			var lst = (from e in db.TaskFlows where e.fkTaskType == id select e).
-				OrderBy(t => t.nuOrder).ThenBy(t => t.stName).
 				ToList();
 
 			return lst;
@@ -125,9 +114,57 @@ namespace DataModel
 						}
 
 						ent.fkTaskType = id;
+						
+						ent.id = Convert.ToInt64(db.InsertWithIdentity(ent));
+												
+						// populate basic flows
+						int order = 1;
 
-						db.Insert(ent);
+						db.Insert(new TaskFlow()
+						{
+							fkTaskCategory = ent.id,
+							fkTaskType = id,
+							nuOrder = order++,
+							bForceOpen = true,
+							stName = "Open"
+						});
+
+						db.Insert(new TaskFlow()
+						{
+							fkTaskCategory = ent.id,
+							fkTaskType = id,
+							nuOrder = order++,
+							stName = "Analysis"
+						});
+
+						db.Insert(new TaskFlow()
+						{
+							fkTaskCategory = ent.id,
+							fkTaskType = id,
+							nuOrder = order++,
+							stName = "Development"
+						});
+
+						db.Insert(new TaskFlow()
+						{
+							fkTaskCategory = ent.id,
+							fkTaskType = id,
+							nuOrder = order++,
+							bForceComplete = true,
+							stName = "Closed"
+						});
+
+						db.Insert(new TaskFlow()
+						{
+							fkTaskCategory = ent.id,
+							fkTaskType = id,
+							nuOrder = order++,
+							bForceComplete = true,
+							stName = "Cancelled"
+						});
+
 						categories = LoadCategories(db);
+
 						break;
 					}
 
@@ -142,6 +179,7 @@ namespace DataModel
 						}
 
 						db.Delete(categDel);
+
 						categories = LoadCategories(db);
 						break;
 					}
@@ -152,9 +190,11 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.TaskFlows
-								 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkTaskType == id
-								 select ne).Any())
+							if ((from e in db.TaskFlows
+								 where e.fkTaskCategory == ent.fkTaskCategory
+								 where e.fkTaskType == ent.fkTaskType
+								 where e.stName.ToUpper() == ent.stName.ToUpper() && e.fkTaskType == id
+								 select e).Any())
 							{
 								resp = "Flow already added to task type!";
 								return false;
@@ -166,8 +206,7 @@ namespace DataModel
 						}
 						else
 							db.Update(ent);
-
-						flows = LoadFlows(db);
+						
 						break;
 					}
 
@@ -182,7 +221,6 @@ namespace DataModel
 						}
 
 						db.Delete(flowDel);
-						flows = LoadFlows(db);
 						break;
 					}
 			}

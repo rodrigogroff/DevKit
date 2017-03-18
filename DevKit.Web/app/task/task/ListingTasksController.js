@@ -5,6 +5,9 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	$scope.loading = false;
 	$scope.campos = {
 		complete: 'false',
+		fkProject: 0,
+		fkProject: 0,
+
 		selects: {
 			user: ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' }),
 			priority: ngSelects.obterConfiguracao(Api.Priority, { tamanhoPagina: 15, campoNome: 'stName' }),
@@ -12,24 +15,19 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 
 			phase: ngSelects.obterConfiguracao(Api.Phase, {
 				tamanhoPagina: 15, campoNome: 'stName',
-				scope: $scope, filtro: { campo: 'idProject', valor: 'campos.fkProject' }
+				scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' }
 			}),
 
 			sprint: ngSelects.obterConfiguracao(Api.Sprint, {
 				tamanhoPagina: 15, campoNome: 'stName',
-				scope: $scope, filtro: { campo: 'idPhase', valor: 'campos.fkPhase' }
+				scope: $scope, filtro: { campo: 'fkPhase', valor: 'campos.fkPhase' }
 			}),
 
 			tasktype: ngSelects.obterConfiguracao(Api.TaskType, { tamanhoPagina: 15, campoNome: 'stName' }),
 
 			taskcategory: ngSelects.obterConfiguracao(Api.TaskCategory, {
 				tamanhoPagina: 15, campoNome: 'stName',
-				scope: $scope, filtro: { campo: 'idTaskType', valor: 'campos.fkTaskType' }
-			}),
-
-			taskflow: ngSelects.obterConfiguracao(Api.TaskFlow, {
-				tamanhoPagina: 15, campoNome: 'stName',
-				scope: $scope, filtro: { campo: 'idTaskType', valor: 'campos.fkTaskType' }
+				scope: $scope, filtro: { campo: 'fkTaskType', valor: 'campos.fkTaskType' }
 			}),
 		}
 	};

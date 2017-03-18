@@ -154,6 +154,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  nuOrder        { get; set; } // bigint
 		[Column,     Nullable] public bool?  bForceComplete { get; set; } // boolean
 		[Column,     Nullable] public bool?  bForceOpen     { get; set; } // boolean
+		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskFlowChange")]

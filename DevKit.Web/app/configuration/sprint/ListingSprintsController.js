@@ -8,7 +8,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
 			phase: ngSelects.obterConfiguracao(Api.Phase, {
 				tamanhoPagina: 15, campoNome: 'stName',
-				scope: $scope, filtro: { campo: 'idProject', valor: 'campos.fkProject' }
+				scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' }
 			}),
 		}
 	};

@@ -48,15 +48,15 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, {
 				tamanhoPagina: 15, scope: $scope,
-				filtro: { campo: 'idProject', valor: 'viewModel.fkProject' } });
+				filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
 
 		$scope.selectSprints = ngSelects.obterConfiguracao(Api.Sprint, {
 				tamanhoPagina: 15, scope: $scope,
-				filtro: { campo: 'idPhase', valor: 'viewModel.fkPhase' } });
+				filtro: { campo: 'fkPhase', valor: 'viewModel.fkPhase' } });
 
 		$scope.selectVersions = ngSelects.obterConfiguracao(Api.Version, {
 				tamanhoPagina: 15, scope: $scope,
-				filtro:	{ campo: 'idSprint', valor: 'viewModel.fkSprint' } });
+				filtro:	{ campo: 'fkSprint', valor: 'viewModel.fkSprint' } });
 
 		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' });
 
@@ -64,11 +64,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, {
 				tamanhoPagina: 15, scope: $scope,
-				filtro: { campo: 'idTaskType', valor: 'viewModel.fkTaskType' } });
+				filtro: { campo: 'fkTaskType', valor: 'viewModel.fkTaskType' } });
 
 		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, {
 				tamanhoPagina: 15, scope: $scope,
-				filtro: { campo: 'idTaskType', valor: 'viewModel.fkTaskType' } });
+				filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' }
+		});
 
 		if (id > 0)
 		{

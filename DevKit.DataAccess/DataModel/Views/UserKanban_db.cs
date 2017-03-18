@@ -157,7 +157,10 @@ namespace DataModel
 								category_id = category.id
 							};
 
-							var flows = (from e in db.TaskFlows where e.fkTaskType == tasktype.id select e).OrderBy( y=> y.nuOrder).ToList();
+							var flows = (from e in db.TaskFlows
+										 where e.fkTaskType == tasktype.id
+										 where e.fkTaskCategory == category.id
+										 select e).OrderBy( y=> y.nuOrder).ToList();
 
 							foreach (var flow in flows)
 							{

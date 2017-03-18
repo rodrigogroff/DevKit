@@ -8,7 +8,8 @@ namespace DataModel
 		public int skip, take;
 		public string busca;
 
-		public long? fkTaskType;		
+		public long?	fkTaskType,
+						fkTaskCategory;
 	}
 
 	// --------------------------
@@ -23,6 +24,9 @@ namespace DataModel
 
 			if (filter.fkTaskType != null)
 				query = from e in query where e.fkTaskType == filter.fkTaskType select e;
+
+			if (filter.fkTaskCategory != null)
+				query = from e in query where e.fkTaskCategory == filter.fkTaskCategory select e;
 
 			if (filter.busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;

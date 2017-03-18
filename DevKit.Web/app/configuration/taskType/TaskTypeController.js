@@ -33,6 +33,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		CheckPermissions();
 
+		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, {
+			tamanhoPagina: 15, scope: $scope,
+			filtro: {
+				campo: 'idTaskType', valor: 'viewModel.id' }
+		});
+
 		if (id > 0)
 		{
 			$scope.loading = true;
@@ -193,6 +199,32 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	// flows
 	// ---------------------------------
 
+	$scope.$watch('newFlow.fkTaskCategory', function (newState, oldState)
+	{
+		if (newState !== oldState)
+			$scope.loadFlows();
+	});
+
+	$scope.flows = [];
+
+	$scope.loadFlows = function ()
+	{
+		var opcoes =
+			{
+				fkTaskCategory: $scope.newFlow.fkTaskCategory
+			};
+
+		console.log($scope.newFlow);
+		console.log(opcoes);
+
+		$scope.flows = [];
+
+		Api.TaskFlow.listPage(opcoes, function (data)
+		{
+			$scope.flows = data.results;
+		});
+	}
+
 	$scope.addFlow = false;
 
 	$scope.editFlow = function (mdl)
@@ -213,7 +245,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Flow removed', 'Success');
-				$scope.viewModel.flows = data.flows;
+				$scope.loadFlows();
 			});
 		}
 	}
@@ -226,12 +258,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addFlow = !$scope.addFlow;
 	}
 
-	$scope.newFlow =
-		{
-			fkTaskType: undefined,
-			stName: '',
-			nuOrder: ''
-		};
+	$scope.newFlow = { };
 
 	$scope.saveNewFlow = function ()
 	{
@@ -246,20 +273,19 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		if (!$scope.stFlowName_fail && !$scope.stFlowOrder_fail)
 		{
+			var tmp = $scope.newFlow.fkTaskCategory;
+
 			$scope.viewModel.updateCommand = "newFlow";
 			$scope.viewModel.anexedEntity = $scope.newFlow;
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				$scope.newFlow =
-					{
-						fkTaskType: undefined,
-						stName: '',
-						nuOrder: ''
-					};
-
 				toastr.success('Flow added', 'Success');
-				$scope.viewModel.flows = data.flows;
+
+				$scope.newFlow = {};
+				$scope.newFlow.fkTaskCategory = tmp;
+
+				$scope.loadFlows();
 
 				$scope.addFlow = false;
 

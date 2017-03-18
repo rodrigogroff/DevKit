@@ -274,7 +274,8 @@
 					</div>
 				</tab>
 
-				<tab heading="Work Flow">
+				<tab heading="Work Flow" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Work Flow" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -341,7 +342,7 @@
 												</tr>
 											</thead>
 											<tr data-ng-repeat="m in viewModel.flows">
-												<td>{{ m.sdtLog }}<br>{{ m.sfkUser }}</td>
+												<td>{{ m.sdtLog }}<br><b>{{ m.sfkUser }}</b></td>
 												<td>From: {{ m.sfkOldFlowState }} <br />To: {{ m.sfkNewFlowState }}</td>
 												<td>{{ m.stMessage }}</td>
 											</tr>
@@ -354,7 +355,8 @@
 					</div>
 				</tab>
 
-				<tab heading="User Messages">
+				<tab heading="User Messages" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="User Messages" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>

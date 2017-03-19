@@ -828,6 +828,7 @@
     <Compile Include="Controllers\System\PermissionCtrl.cs" />
     <Compile Include="Controllers\Configuration\ProjectCtrl.cs" />
     <Compile Include="Controllers\Task\PriorityCtrl.cs" />
+    <Compile Include="Controllers\Task\TaskCountCtrl.cs" />
     <Compile Include="Controllers\Task\UserKanbanCtrl.cs" />
     <Compile Include="Controllers\Task\TaskCtrl.cs" />
     <Compile Include="Controllers\Util.cs" />

@@ -99,6 +99,9 @@ namespace DataModel
 			if (filter.fkUserResponsible != null)
 				query = from e in query where e.fkUserResponsible == filter.fkUserResponsible select e;
 
+			if (filter.complete != null)
+				query = from e in query where e.bComplete == filter.complete select e;
+
 			return query;
 		}
 

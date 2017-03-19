@@ -1,17 +1,37 @@
 ﻿'use strict';
-angular.module('app.controllers').controller('MenuController', ['$scope', '$rootScope','$location', 'AuthService', function ($scope, $rootScope, $location, AuthService) {
 
-    $rootScope.exibirMenu = $rootScope.exibirMenu || true;
+angular.module('app.controllers').controller('MenuController',
+['$scope', '$rootScope', '$location', 'AuthService', 'Api',
+function ($scope, $rootScope, $location, AuthService, Api)
+{
+	$scope.userTasks = 0;
 
-    AuthService.fillAuthData();
-    $scope.authentication = AuthService.authentication;
+	init();
 
-    if (!AuthService.authentication.isAuth)
-        $location.path('/login');
+	function init()
+	{
+		AuthService.fillAuthData();
 
-    $scope.logOut = function () {
+		$scope.authentication = AuthService.authentication;
+
+		if (!AuthService.authentication.isAuth)
+			$location.path('/login');
+
+		Api.TaskCount.listPage({}, function (data)
+		{
+			$scope.userTasks = data.count_user_tasks;
+		});
+	}
+
+    $scope.logOut = function ()
+    {
         AuthService.logOut();
         $location.path('/login');
+    };
+
+    $scope.tasksClick = function ()
+    {
+    	$location.path('/task/kanban');
     };
 
 }]);

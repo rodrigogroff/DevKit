@@ -99,6 +99,7 @@ angular.module('app.services', ['ngResource'])
 		TaskType: $resource('api/taskType/:id', {}, opcoes),
 		TaskCategory: $resource('api/taskCategory/:id', {}, opcoes),
 		TaskFlow: $resource('api/taskFlow/:id', {}, opcoes),
+		TaskCount: $resource('api/taskCount/:id', {}, opcoes),
 		TaskAccumulator: $resource('api/taskAccumulator/:id', {}, opcoes),
 		Task: $resource('api/task/:id', {}, opcoes),
 		Priority: $resource('api/priority/:id', {}, opcoes),

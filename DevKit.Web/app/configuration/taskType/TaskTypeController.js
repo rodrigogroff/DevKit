@@ -36,7 +36,16 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, {
 			tamanhoPagina: 15, scope: $scope,
 			filtro: {
-				campo: 'idTaskType', valor: 'viewModel.id' }
+				campo: 'fkTaskType', valor: 'viewModel.id' }
+		});
+
+		$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, { tamanhoPagina: 15, campoNome: 'stName' });
+
+		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, {
+			tamanhoPagina: 15, scope: $scope,
+			filtro: {
+				campo: 'fkTaskCategory', valor: 'newAcc.fkTaskCategory'
+			}
 		});
 
 		if (id > 0)
@@ -59,20 +68,23 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+	var invalidCheck = function (element) {
+		if (element == undefined)
+			return true;
+		else
+			if (element.length == 0)
+				return true;
+
+		return false;
+	}
+	
 	$scope.save = function ()
 	{
-		$scope.stName_fail = false;
-
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.viewModel.stName != undefined) {
-				if ($scope.viewModel.stName.length < 5)
-					$scope.stName_fail = true;
-			}
-			else
-				$scope.stName_fail = true;
+			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
 	
 			if (!$scope.stName_fail)
 			{
@@ -165,10 +177,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.saveNewCategorie = function ()
 	{
-		$scope.stCategorieName_fail = false;
-
-		if ($scope.newCategorie.stName != undefined && $scope.newCategorie.stName.length == 0)
-			$scope.stCategorieName_fail = true;
+		$scope.stCategorieName_fail = invalidCheck($scope.newCategorie.stName);
 
 		if (!$scope.stCategorieName_fail)
 		{
@@ -213,9 +222,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				fkTaskCategory: $scope.newFlow.fkTaskCategory
 			};
-
-		console.log($scope.newFlow);
-		console.log(opcoes);
 
 		$scope.flows = [];
 
@@ -262,14 +268,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.saveNewFlow = function ()
 	{
-		$scope.stFlowName_fail = false;
-		$scope.stFlowOrder_fail = false;
-
-		if ($scope.newFlow.stName != undefined && $scope.newFlow.stName.length == 0)
-			$scope.stFlowName_fail = true;
-
-		if ($scope.newFlow.nuOrder != undefined && $scope.newFlow.nuOrder.length == 0)
-			$scope.stFlowOrder_fail = true;
+		$scope.stFlowName_fail = invalidCheck ($scope.newFlow.stName);
+		$scope.stFlowOrder_fail = invalidCheck ($scope.newFlow.nuOrder);
 
 		if (!$scope.stFlowName_fail && !$scope.stFlowOrder_fail)
 		{
@@ -288,6 +288,93 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.loadFlows();
 
 				$scope.addFlow = false;
+
+			}, function (response) {
+				toastr.error(response.data.message, 'Error');
+			});
+		}
+	}
+
+	// ---------------------------------
+	// accs
+	// ---------------------------------
+
+	$scope.$watch('newAcc.fkTaskCategory', function (newState, oldState) {
+		if (newState !== oldState)
+			$scope.loadAccs();
+	});
+
+	$scope.accs = [];
+
+	$scope.loadAccs = function () {
+		var opcoes =
+			{
+				fkTaskCategory: $scope.newAcc.fkTaskCategory
+			};
+
+		$scope.accs = [];
+
+		Api.TaskAccumulator.listPage(opcoes, function (data) {
+			$scope.accs = data.results;
+		});
+	}
+
+	$scope.addAcc = false;
+
+	$scope.editAcc = function (mdl) {
+		$scope.addAcc = true;
+		$scope.newAcc= mdl;
+	}
+
+	$scope.removeAcc = function (index, lista)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else {
+			$scope.viewModel.updateCommand = "removeAcc";
+			$scope.viewModel.anexedEntity = lista[index];
+
+			Api.TaskType.update({ id: id }, $scope.viewModel, function (data) {
+				toastr.success('Accumulator removed', 'Success');
+				$scope.loadAccs();
+			});
+		}
+	}
+
+	$scope.addNewAcc = function () {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addAcc = !$scope.addAcc;
+	}
+
+	$scope.newAcc = {};
+
+	$scope.saveNewAcc = function ()
+	{
+		$scope.stAccName_fail = invalidCheck($scope.newAcc.stName);
+		$scope.selectAccType_fail = $scope.newAcc.fkTaskAccType == undefined;
+		$scope.selectAccFlow_fail = $scope.newAcc.fkTaskFlow == undefined;
+
+		if (!$scope.stAccName_fail &&
+			!$scope.selectAccType_fail &&
+			!$scope.selectAccFlow_fail)
+		{
+			var tmp = $scope.newAcc.fkTaskCategory;
+
+			$scope.viewModel.updateCommand = "newAcc";
+			$scope.viewModel.anexedEntity = $scope.newAcc;
+
+			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Accumulator added', 'Success');
+
+				$scope.newAcc = {};
+				$scope.newAcc.fkTaskCategory = tmp;
+
+				$scope.loadAccs();
+
+				$scope.addAcc = false;
 
 			}, function (response) {
 				toastr.error(response.data.message, 'Error');

@@ -814,6 +814,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Configuration\AccumulatorTypeCtrl.cs" />
+    <Compile Include="Controllers\Configuration\TaskAccumulatorCtrl.cs" />
     <Compile Include="Controllers\Configuration\TaskCategoryCtrl.cs" />
     <Compile Include="Controllers\Configuration\TaskFlowCtrl.cs" />
     <Compile Include="Controllers\Configuration\VersionCtrl.cs" />

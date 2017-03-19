@@ -193,7 +193,7 @@ namespace DataModel
 							if ((from e in db.TaskFlows
 								 where e.fkTaskCategory == ent.fkTaskCategory
 								 where e.fkTaskType == ent.fkTaskType
-								 where e.stName.ToUpper() == ent.stName.ToUpper() && e.fkTaskType == id
+								 where e.stName.ToUpper() == ent.stName.ToUpper() 
 								 select e).Any())
 							{
 								resp = "Flow already added to task type!";
@@ -221,6 +221,41 @@ namespace DataModel
 						}
 
 						db.Delete(flowDel);
+						break;
+					}
+
+				case "newAcc":
+					{
+						var ent = JsonConvert.DeserializeObject<TaskTypeAccumulator>(anexedEntity.ToString());
+
+						if (ent.id == 0)
+						{
+							if ((from e in db.TaskTypeAccumulators
+								 where e.fkTaskFlow == ent.fkTaskFlow
+								 where e.fkTaskCategory == ent.fkTaskCategory
+								 where e.fkTaskType == ent.fkTaskType
+								 where e.stName.ToUpper() == ent.stName.ToUpper() 
+								 select e).Any())
+							{
+								resp = "Accumulator already added to task type!";
+								return false;
+							}
+
+							ent.fkTaskType = id;
+
+							db.Insert(ent);
+						}
+						else
+							db.Update(ent);
+
+						break;
+					}
+
+				case "removeAcc":
+					{
+						var accDel = JsonConvert.DeserializeObject<TaskTypeAccumulator>(anexedEntity.ToString());
+
+						db.Delete(accDel);
 						break;
 					}
 			}

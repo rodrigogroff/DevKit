@@ -92,37 +92,31 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+	var invalidCheck = function (element) {
+		if (element == undefined)
+			return true;
+		else
+			if (element.length == 0)
+				return true;
+
+		return false;
+	}
+
 	$scope.save = function ()
 	{
-		$scope.stTitle_fail = false;
-		$scope.stLocalization_fail = false;
-		$scope.stDescription_fail = false;
-		$scope.fkProject_fail = false;
-		$scope.fkPhase_fail = false;
-		$scope.fkSprint_fail = false;
-		$scope.nuPriority_fail = false;
-		$scope.fkTaskType_fail = false;
-		$scope.fkTaskCategory_fail = false;
-		
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.viewModel.stTitle == undefined) $scope.stTitle_fail = true;
-			else if ($scope.viewModel.stTitle.length == 0) $scope.stTitle_fail = true;
-
-			if ($scope.viewModel.stLocalization == undefined) $scope.stLocalization_fail = true;
-			else if ($scope.viewModel.stLocalization.length == 0) $scope.stLocalization_fail = true;
-
-			if ($scope.viewModel.stDescription == undefined) $scope.stDescription_fail = true;
-			else if ($scope.viewModel.stDescription.length == 0) $scope.stDescription_fail = true;
-
-			if ($scope.viewModel.fkProject == undefined) $scope.fkProject_fail = true;
-			if ($scope.viewModel.fkPhase == undefined) $scope.fkPhase_fail = true;
-			if ($scope.viewModel.fkSprint == undefined) $scope.fkSprint_fail = true;
-			if ($scope.viewModel.nuPriority == undefined) $scope.nuPriority_fail = true;
-			if ($scope.viewModel.fkTaskType == undefined) $scope.fkTaskType_fail = true;
-			if ($scope.viewModel.fkTaskCategory == undefined) $scope.fkTaskCategory_fail = true;
+			$scope.stTitle_fail = invalidCheck($scope.viewModel.stTitle);
+			$scope.stLocalization_fail = invalidCheck($scope.viewModel.stLocalization);
+			$scope.stDescription_fail = invalidCheck($scope.viewModel.stDescription);
+			$scope.fkProject_fail = $scope.viewModel.fkProject == undefined;
+			$scope.fkPhase_fail = $scope.viewModel.fkPhase == undefined;
+			$scope.fkSprint_fail = $scope.viewModel.fkSprint == undefined;
+			$scope.nuPriority_fail = $scope.viewModel.nuPriority == undefined;
+			$scope.fkTaskType_fail = $scope.viewModel.fkTaskType == undefined;
+			$scope.fkTaskCategory_fail = $scope.viewModel.fkTaskCategory == undefined;
 	
 			if (!$scope.stTitle_fail &&
 				!$scope.stLocalization_fail &&

@@ -300,3 +300,22 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."TaskFlowChange"
     OWNER to postgres;
+
+	
+CREATE TABLE public."TaskTypeAccumulator"
+(
+    id bigserial NOT NULL,
+	"fkTaskType" bigint,
+	"fkTaskAccType" bigint,
+	"fkTaskFlow" bigint,
+	"fkTaskCategory" bigint,
+	"stName" character varying(30),
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."TaskTypeAccumulator"
+    OWNER to postgres;

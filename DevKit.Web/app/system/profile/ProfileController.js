@@ -121,21 +121,24 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			});
 		}
 	}
+
+	var invalidCheck = function (element) {
+		if (element == undefined)
+			return true;
+		else
+			if (element.length == 0)
+				return true;
+
+		return false;
+	}
 	
 	$scope.save = function ()
 	{
-		$scope.stName_fail = false;
-
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.viewModel.stName != undefined) {
-				if ($scope.viewModel.stName.length < 5)
-					$scope.stName_fail = true;
-			}
-			else
-				$scope.stName_fail = true;
+			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
 
 			if (!$scope.stName_fail) 
 			{

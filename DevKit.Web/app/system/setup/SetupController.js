@@ -43,20 +43,24 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		});
 	}
 
+	var invalidCheck = function (element) {
+		if (element == undefined)
+			return true;
+		else
+			if (element.length == 0)
+				return true;
+
+		return false;
+	}
+
 	$scope.save = function ()
 	{
-		$scope.stPhoneMask_fail = false;
-		$scope.stDateFormat_fail = false;
-
 		if (!$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.viewModel.stPhoneMask != undefined && $scope.viewModel.stPhoneMask.length == 0)
-				$scope.stPhoneMask_fail = true;
-
-			if ($scope.viewModel.stDateFormat != undefined && $scope.viewModel.stDateFormat.length == 0)
-				$scope.stDateFormat_fail = true;
+			$scope.stPhoneMask_fail = invalidCheck($scope.viewModel.stPhoneMask);
+			$scope.stDateFormat_fail = invalidCheck($scope.viewModel.stDateFormat);
 
 			if (!$scope.stPhoneMask_fail && !$scope.stDateFormat_fail)
 			{

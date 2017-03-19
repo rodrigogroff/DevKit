@@ -54,20 +54,23 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.viewModel = { };
 	}
 
+	var invalidCheck = function (element) {
+		if (element == undefined)
+			return true;
+		else
+			if (element.length == 0)
+				return true;
+
+		return false;
+	}
+
 	$scope.save = function ()
 	{
-		$scope.stName_fail = false;
-
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.viewModel.stName != undefined) {
-				if ($scope.viewModel.stName.length < 5)
-					$scope.stName_fail = true;
-			}
-			else
-				$scope.stName_fail = true;
+			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
 	
 			if (!$scope.stName_fail)
 			{
@@ -161,14 +164,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.saveNewUser = function ()
 	{
-		$scope.fkUser_fail = false;
-		$scope.stRole_fail = false;
-
-		if ($scope.newUser.fkUser == undefined )
-			$scope.fkUser_fail = true;
-
-		if ($scope.newUser.stRole != undefined && $scope.newUser.stRole.length == 0)
-			$scope.stRole_fail = true;
+		$scope.fkUser_fail = $scope.newUser.fkUser == undefined;
+		$scope.stRole_fail = invalidCheck($scope.newUser.stRole);
 	
 		if (!$scope.fkUser_fail && !$scope.stRole_fail)
 		{
@@ -233,10 +230,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.saveNewPhase = function ()
 	{		
-		$scope.newphase_stName_fail = false;
-
-		if ($scope.newPhase.stName != undefined && $scope.newPhase.stName.length == 0)
-			$scope.newphase_stName_fail = true;
+		$scope.newphase_stName_fail = invalidCheck($scope.newPhase.stName);
 
 		if (!$scope.newphase_stName_fail)
 		{

@@ -65,20 +65,24 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+	var invalidCheck = function (element) {
+		if (element == undefined)
+			return true;
+		else
+			if (element.length == 0)
+				return true;
+
+		return false;
+	}
+
 	$scope.save = function ()
 	{
-		$scope.stLogin_fail = false;
-		$scope.fkProfile_fail = false;
-
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.viewModel.stLogin != undefined && $scope.viewModel.stLogin.length == 0)
-				$scope.stLogin_fail = true;
-
-			if ($scope.viewModel.fkProfile == undefined)
-				$scope.fkProfile_fail = true;
+			$scope.stLogin_fail = invalidCheck($scope.viewModel.stLogin);
+			$scope.fkProfile_fail = $scope.viewModel.fkProfile == undefined;
 	
 			if (!$scope.stLogin_fail && !$scope.fkProfile_fail)
 			{

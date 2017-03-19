@@ -33,6 +33,7 @@ namespace DataModel
 		public ITable<TaskMessage>          TaskMessages          { get { return this.GetTable<TaskMessage>(); } }
 		public ITable<TaskProgress>         TaskProgresses        { get { return this.GetTable<TaskProgress>(); } }
 		public ITable<TaskType>             TaskTypes             { get { return this.GetTable<TaskType>(); } }
+		public ITable<TaskTypeAccumulator>  TaskTypeAccumulators  { get { return this.GetTable<TaskTypeAccumulator>(); } }
 		public ITable<User>                 Users                 { get { return this.GetTable<User>(); } }
 		public ITable<UserEmail>            UserEmails            { get { return this.GetTable<UserEmail>(); } }
 		public ITable<UserPhone>            UserPhones            { get { return this.GetTable<UserPhone>(); } }
@@ -196,6 +197,17 @@ namespace DataModel
 		[Column,     Nullable] public string stName { get; set; } // character varying(200)
 	}
 
+	[Table(Schema="public", Name="TaskTypeAccumulator")]
+	public partial class TaskTypeAccumulator
+	{
+		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
+		[Column,     Nullable] public long?  fkTaskType     { get; set; } // bigint
+		[Column,     Nullable] public long?  fkTaskAccType  { get; set; } // bigint
+		[Column,     Nullable] public long?  fkTaskFlow     { get; set; } // bigint
+		[Column,     Nullable] public string stName         { get; set; } // character varying(30)
+		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
+	}
+
 	[Table(Schema="public", Name="User")]
 	public partial class User
 	{
@@ -306,6 +318,12 @@ namespace DataModel
 		}
 
 		public static TaskType Find(this ITable<TaskType> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskTypeAccumulator Find(this ITable<TaskTypeAccumulator> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

@@ -5,6 +5,8 @@ angular.module('app.controllers').controller('MenuController',
 function ($scope, $rootScope, $location, AuthService, Api)
 {
 	$scope.userTasks = 0;
+	$scope.projectTasks = 0;
+	$scope.userDeadlineTasks = 0;
 
 	init();
 
@@ -19,6 +21,7 @@ function ($scope, $rootScope, $location, AuthService, Api)
 
 		Api.TaskCount.listPage({}, function (data)
 		{
+			$scope.projectTasks = data.count_project_tasks;
 			$scope.userTasks = data.count_user_tasks;
 		});
 	}

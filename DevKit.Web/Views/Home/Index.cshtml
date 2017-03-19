@@ -23,13 +23,23 @@
 		<div class="logo" style="padding-top:-4px; padding-left:-60px">
 			<img src='../../images/logo.png' height="112px" />
 		</div>
-		<div class="logo" style="padding-top:8px; padding-left:160px" ng-if="userTasks > 0">
+		<div class="logo" style="padding-top:20px; padding-left:160px" ng-if="userTasks > 0">
 			<table>
 				<tr>
+					<td width="50px"></td> 
+					<td width="130px">
+						 <button class="btn btn-success btn-xs " ng-click="tasksClick()">{{projectTasks}}</button> Project tasks</td>
+					<td>						
+					</td>
 					<td width="20px"></td> 
-					<td width="100px"><b>User Tasks</b></td>
+					<td width="130px">
+						 <button class="btn btn-primary btn-xs " ng-click="tasksClick()">{{userTasks}}</button> User Tasks</td>
 					<td>
-						<button class="btn btn-success btn-xs " ng-click="tasksClick()">{{userTasks}}</button>
+					</td>
+					<td width="20px"></td> 
+					<td width="130px">
+						 <button class="btn btn-danger btn-xs " ng-click="tasksClick()">{{userDeadlineTasks}}</button> User Deadline</td>
+					<td>						
 					</td>
 				</tr>
 			</table>

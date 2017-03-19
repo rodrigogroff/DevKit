@@ -21,6 +21,8 @@ namespace DataModel
 						fkTaskType,
 						fkTaskFlowCurrent,
 						fkTaskCategory;
+
+		public List<long?> lstProjects = null;
 	}
 
 	// --------------------------
@@ -80,6 +82,11 @@ namespace DataModel
 
 			if (filter.fkProject != null)
 				query = from e in query where e.fkProject == filter.fkProject select e;
+
+			if (filter.lstProjects != null)
+			{
+				query = from e in query where filter.lstProjects.Contains(e.fkProject) select e;
+			}
 
 			if (filter.fkPhase != null)
 				query = from e in query where e.fkPhase == filter.fkPhase select e;

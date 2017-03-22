@@ -310,6 +310,7 @@ CREATE TABLE public."TaskTypeAccumulator"
 	"fkTaskFlow" bigint,
 	"fkTaskCategory" bigint,
 	"stName" character varying(30),
+	"stDisplay" character varying(30),
     PRIMARY KEY (id)
 )
 WITH (

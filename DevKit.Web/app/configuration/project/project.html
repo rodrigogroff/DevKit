@@ -120,14 +120,14 @@
 													<th width="150px">User</th>
 													<th width="150px">Role</th>
 													<th width="120px">Join Date</th>
-													<th width="70px" class="colunaRemover">REMOVE</th>
+													<th width="70px">Actions</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.users">
 												<td>{{ mdl.stUser }}</td>
 												<td>{{ mdl.stRole }}</td>
 												<td>{{ mdl.sdtJoin }}</td>
-												<td class="colunaRemover">
+												<td>
 													<a href="" role="button" ng-click="removeUser($index, viewModel.users)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>
@@ -210,7 +210,7 @@
 													<th width="150px">Sprints</th>
 													<th width="120px">Start</th>
 													<th width="120px">End</th>
-													<th width="70px" class="colunaRemover">REMOVE</th>
+													<th width="70px">Actions</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.phases">
@@ -219,7 +219,7 @@
 												<td></td>
 												<td>{{ mdl.sdtStart }}</td>
 												<td>{{ mdl.sdtEnd }}</td>
-												<td class="colunaRemover">
+												<td>
 													<a href="" role="button" ng-click="removePhase($index, viewModel.phases)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>

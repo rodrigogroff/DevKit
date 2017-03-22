@@ -123,12 +123,12 @@
 											<thead>
 												<tr>
 													<th width="150px">Version</th>
-													<th width="70px" class="colunaRemover">REMOVE</th>
+													<th width="70px">Actions</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.versions">
 												<td>{{ mdl.stName }}</td>
-												<td class="colunaRemover">
+												<td>
 													<a href="" role="button" ng-click="removeVersion($index, viewModel.versions)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>

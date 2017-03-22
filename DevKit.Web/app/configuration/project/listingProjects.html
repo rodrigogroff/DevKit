@@ -42,16 +42,14 @@
 										<th width="180px">Project</th>
 										<th width="180px">Phases</th>
 										<th width="180px">Sprints</th>
-										<th width="180px">Users</th>
-										<th width="180px">Roles</th>
+										<th width="260px">Users / Roles</th>										
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
 									<td><div data-ng-repeat="m in mdl.phases">{{ m.stName }}</div></td>
 									<td>{{ mdl.sprints.length }}</td>
-									<td><div data-ng-repeat="m in mdl.users">{{ m.stUser }}</div></td>
-									<td><div data-ng-repeat="m in mdl.users">{{ m.stRole }}</div></td>
+									<td><div data-ng-repeat="m in mdl.users">{{ m.stUser }} - {{ m.stRole }}</div></td>
 								</tr>
 							</table>
 						</div>

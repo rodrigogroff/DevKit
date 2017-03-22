@@ -93,12 +93,12 @@
 											<thead>
 												<tr>
 													<th width="150px">Category</th>
-													<th width="70px" class="colunaRemover">REMOVE</th>
+													<th width="70px">Actions</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.categories">
 												<td>{{ mdl.stName }}</td>
-												<td class="colunaRemover">
+												<td>
 													<a href="" role="button" ng-click="removeCategorie($index, viewModel.categories)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>
@@ -213,15 +213,20 @@
 													<th width="120px">Flow</th>
 													<th width="70px">Opens?</th>
 													<th width="70px">Completes?</th>													
-													<th width="70px" class="colunaRemover">REMOVE</th>
+													<th width="70px">Actions</th>
 												</tr>
 											</thead>
-											<tr ng-click="editFlow(mdl)" data-ng-repeat="mdl in flows">
+											<tr data-ng-repeat="mdl in flows">
 												<td>{{ mdl.nuOrder }}</td>
 												<td>{{ mdl.stName }}</td>
 												<td>{{ mdl.bForceOpen == true ? 'Y' : 'N' }}</td>
 												<td>{{ mdl.bForceComplete == true ? 'Y' : 'N' }}</td>												
-												<td class="colunaRemover">
+												<td>
+													<a href="" role="button" ng-click="editFlow(mdl)">
+														<i class="glyphicon glyphicon-edit" style="color:white"></i>
+													</a>
+													&nbsp;
+													&nbsp;
 													<a href="" role="button" ng-click="removeFlow($index, flows)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>
@@ -282,6 +287,18 @@
 															</td>
 															<td width="40px"></td>
 														</tr>
+
+														<tr height="42px">
+															<td width="120px">Display</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="stAccDisplay_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="text" class="form-control input-transparent" ng-model="newAcc.stDisplay">
+															</td>
+															<td width="40px"></td>
+														</tr>
+
 														<tr height="42px">
 															<td width="120px">Type</td>
 															<td width="20px">
@@ -316,15 +333,17 @@
 										<table class="table table-hover" style="width:100%">
 											<thead>
 												<tr>
-													<th width="50px">Name</th>
-													<th width="50px">Flow</th>
-													<th width="70px" class="colunaRemover">REMOVE</th>
+													<th width="150px">Name</th>
+													<th width="150px">Display</th>
+													<th width="150px">Flow</th>
+													<th width="70px">Actions</th>
 												</tr>
 											</thead>
 											<tr ng-click="editAcc(mdl)" data-ng-repeat="mdl in accs">
 												<td>{{ mdl.stName }}</td>
+												<td>{{ mdl.stDisplay }}</td>
 												<td>{{ mdl.sfkFlow }}</td>
-												<td class="colunaRemover">
+												<td>
 													<a href="" role="button" ng-click="removeAcc($index, accs)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>

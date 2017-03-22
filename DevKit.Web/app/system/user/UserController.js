@@ -75,6 +75,21 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		return false;
 	}
 
+	var invalidEmail = function (element) {
+		if (element == undefined)
+			return true;
+		else
+		{
+			if (element.length == 0)
+				return true;
+
+			if (element.indexOf('@') > 1)
+				return true;
+		}			
+
+		return false;
+	}
+
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
@@ -170,22 +185,23 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.newPhone = { stPhone: '', stDescription: '' };
 
+	$scope.editPhone = function (mdl)
+	{
+		$scope.addPhone = true;
+		$scope.newPhone = mdl;
+	}
+
 	$scope.saveNewPhone = function ()
 	{
-		$scope.stPhone_fail = false;
-		$scope.stDescription_fail = false;
-
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.newPhone.stPhone != undefined && $scope.newPhone.stPhone.length == 0)
-				$scope.stPhone_fail = true;
-
-			if ($scope.newPhone.stDescription != undefined && $scope.newPhone.stDescription.length == 0)
-				$scope.stDescription_fail = true;
+			$scope.stPhone_fail = invalidCheck($scope.newPhone.stPhone);
+			$scope.stDescription_fail = invalidCheck($scope.newPhone.stDescription);
 	
-			if (!$scope.stPhone_fail && !$scope.stDescription_fail)
+			if (!$scope.stPhone_fail &&
+				!$scope.stDescription_fail)
 			{
 				$scope.addPhone = false;
 
@@ -195,7 +211,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				Api.User.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newPhone = { stPhone: '', stDescription: '' };
-					toastr.success('Phone added', 'Success');
+					
+					if ($scope.newPhone.id != undefined)
+						toastr.success('Phone updated', 'Success');
+					else
+						toastr.success('Phone added', 'Success');
+
 					$scope.viewModel.phones = data.phones;
 
 				}, function (response) {
@@ -238,17 +259,19 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.newEmail = { stEmail: '' };
 
+	$scope.editEmail = function (mdl) {
+		$scope.addEmail = true;
+		$scope.newEmail = mdl;
+	}
+
 	$scope.saveNewEmail = function ()
 	{
-		$scope.stEmail_fail = false;
-		
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			if ($scope.newEmail.stEmail != undefined && $scope.newEmail.stEmail.indexOf('@') <= 0)
-				$scope.stEmail_fail = true;
-	
+			$scope.stEmail_fail = invalidEmail($scope.newEmail.stEmail) ;
+
 			if (!$scope.stEmail_fail)
 			{
 				$scope.addEmail = false;
@@ -257,9 +280,14 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.viewModel.anexedEntity = $scope.newEmail;
 
 				Api.User.update({ id: id }, $scope.viewModel, function (data)
-				{
+				{					
 					$scope.newEmail = { stEmail: '' };
-					toastr.success('Email added', 'Success');
+
+					if ($scope.newEmail.id != undefined)
+						toastr.success('Email updated', 'Success');
+					else
+						toastr.success('Email added', 'Success');
+
 					$scope.viewModel.emails = data.emails;
 
 				}, function (response) {

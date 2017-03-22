@@ -138,13 +138,17 @@
 												<tr>
 													<th>Telefone</th>
 													<th>Local</th>
-													<th width="70px" class="colunaRemover">Actions</th>
+													<th width="70px">Actions</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.phones">
 												<td>{{ mdl.stPhone }}</td>
 												<td>{{ mdl.stDescription }}</td>
 												<td>
+													<a href="" role="button" ng-click="editPhone(mdl)">
+														<i class="glyphicon glyphicon-edit" style="color:white"></i>
+													</a>
+													&nbsp;&nbsp;
 													<a href="" role="button" ng-click="removePhone($index, viewModel.phones)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>
@@ -208,6 +212,10 @@
 											<tr data-ng-repeat="mdl in viewModel.emails">
 												<td>{{ mdl.stEmail }}</td>
 												<td>
+													<a href="" role="button" ng-click="editEmail(mdl)">
+														<i class="glyphicon glyphicon-edit" style="color:white"></i>
+													</a>
+													&nbsp;&nbsp;
 													<a href="" role="button" ng-click="removeEmail($index, viewModel.emails)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>

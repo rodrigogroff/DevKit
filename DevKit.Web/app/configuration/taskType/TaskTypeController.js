@@ -324,9 +324,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.addAcc = false;
 
-	$scope.editAcc = function (mdl) {
+	$scope.editAcc = function (mdl)
+	{
 		$scope.addAcc = true;
-		$scope.newAcc= mdl;
+		$scope.newAcc = mdl;
 	}
 
 	$scope.removeAcc = function (index, lista)
@@ -372,7 +373,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Accumulator added', 'Success');
+				if ($scope.newAcc.id != undefined)
+					toastr.success('Accumulator updated', 'Success');
+				else
+					toastr.success('Accumulator added', 'Success');
 
 				$scope.newAcc = {};
 				$scope.newAcc.fkTaskCategory = tmp;

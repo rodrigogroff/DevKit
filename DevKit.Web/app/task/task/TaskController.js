@@ -71,6 +71,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' }
 		});
 
+		$scope.selectTaskAcc = ngSelects.obterConfiguracao(Api.TaskAccumulator, {
+			tamanhoPagina: 15, scope: $scope,
+			filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' }
+		});
+
 		if (id > 0)
 		{
 			$scope.loading = true;
@@ -176,6 +181,86 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				toastr.error(response.data.message, 'Permission');
 			});
 		}			
+	}
+
+	// ============================================
+	// acc´s 
+	// ============================================
+
+	$scope.addAcc = false;
+
+	$scope.removeAcc = function (index, lista) {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else {
+			$scope.viewModel.updateCommand = "removeAcc";
+			$scope.viewModel.anexedEntity = $scope.viewModel.accs[index];
+
+			Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+				toastr.success('Accumulator value removed', 'Success');
+				$scope.viewModel.accs = data.accs;
+			});
+		}
+	}
+
+	$scope.$watch('newAcc.fkTaskAcc', function (newState, oldState)
+	{
+		if (newState !== oldState)
+		{
+			Api.TaskAccumulator.get({ id: $scope.newAcc.fkTaskAcc }, function (data)
+			{
+				$scope.fkTaskAccType = data.fkTaskAccType;
+			});
+		}
+	});
+
+	$scope.addNewAcc = function () {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addAcc = !$scope.addAcc;
+	}
+
+	$scope.newAcc = { fkTask: id, fkTaskAcc: undefined, nuValue: '', nuHourValue : '', nuMinValue: '', fkUser: undefined };
+
+	$scope.saveNewAcc = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.newAcc_fkTaskAcc_fail = $scope.newAcc.fkTaskAcc == undefined;
+
+			if ($scope.fkTaskAccType == 1)
+				newAcc_val_fail = invalidCheck($scope.newAcc.nuValue);
+			else
+				if ($scope.fkTaskAccType == 2)
+					newAcc_val_fail = invalidCheck($scope.newAcc.nuHourValue) && invalidCheck($scope.newAcc.nuMinValue);
+
+			if (!$scope.newAcc_fkTaskAcc_fail &&
+				!newAcc_val_fail)
+			{
+				$scope.addAcc = false;
+
+				$scope.viewModel.updateCommand = "newAcc";
+				$scope.viewModel.anexedEntity = $scope.newAcc;
+
+				Api.Task.update({ id: id }, $scope.viewModel, function (data) 
+				{
+					$scope.newAcc = { fkTask: id, fkTaskAcc: undefined, nuValue: '', nuHourValue : '', nuMinValue: '', fkUser: undefined };
+
+					if ($scope.newAcc.id != undefined)
+						toastr.success('Accumulator updated', 'Success');
+					else
+						toastr.success('Accumulator added', 'Success');
+
+					$scope.viewModel.accs = data.accs;
+
+				}, function (response) {
+					toastr.error(response.data.message, 'Error');
+				});
+			}
+		}
 	}
 
 }]);

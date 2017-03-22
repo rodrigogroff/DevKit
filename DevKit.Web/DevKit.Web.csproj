@@ -664,6 +664,7 @@
     <Content Include="scripts\angular-spinner.min.js.map" />
     <Content Include="openICS.psd" />
     <Content Include="css\bootstrap.css.map" />
+    <Content Include="css\bootstrap-select.css.map" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="scripts\jquery-2.1.0.js" />

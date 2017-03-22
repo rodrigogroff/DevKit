@@ -320,3 +320,24 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."TaskTypeAccumulator"
     OWNER to postgres;
+
+
+CREATE TABLE public."TaskAccumulatorValue"
+(
+    id bigserial NOT NULL,
+	"fkTask" bigint,
+	"fkTaskAcc" bigint,
+	"fkUser" bigint,
+	"dtLog" timestamp without time zone,
+	"nuValue" bigint,
+	"nuHourValue" bigint,
+	"nuMinValue" bigint,	
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."TaskAccumulatorValue"
+    OWNER to postgres;

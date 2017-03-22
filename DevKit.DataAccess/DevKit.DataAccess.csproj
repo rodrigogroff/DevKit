@@ -66,6 +66,7 @@
     <Compile Include="DataModel\Enums\AccumulatorType_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectUser_db.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskAccumulator_db.cs" />
+    <Compile Include="DataModel\Tables\Task\TaskTypeAccumulator_db.cs" />
     <Compile Include="DataModel\Views\UserKanban_db.cs" />
     <Compile Include="DataModel\Enums\Priority_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion_db.cs" />

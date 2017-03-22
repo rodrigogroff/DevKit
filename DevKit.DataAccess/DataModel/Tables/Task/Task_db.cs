@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,7 @@ namespace DataModel
 		public List<TaskProgress> usrProgress;
 		public List<TaskMessage> usrMessages;
 		public List<TaskFlowChange> flows;
+		public List<TaskTypeAccumulator> accs;
 
 		// up commands
 
@@ -137,6 +139,7 @@ namespace DataModel
 				usrProgress = LoadProgress(db);
 				usrMessages = LoadMessages(db);
 				flows = LoadFlows(db);
+				accs = LoadAccs(db);
 			}
 
 			return this;
@@ -199,6 +202,60 @@ namespace DataModel
 
 				if (item.fkNewFlowState != null)
 					item.sfkNewFlowState = db.TaskFlow(item.fkNewFlowState).stName;
+			}
+
+			return ret;
+		}
+
+		public List<TaskTypeAccumulator> LoadAccs(DevKitDB db)
+		{
+			var ret = (from e in db.TaskTypeAccumulators where e.fkTaskCategory == this.fkTaskCategory select e).
+				ToList();
+
+			var setup = db.Setup();
+			var stypes = new EnumAccumulatorType().lst;
+
+			for (int i = 0; i < ret.Count(); i++)
+			{
+				var item = ret.ElementAt(i);
+
+				item.sfkTaskAccType = stypes.Where(y => y.id == item.fkTaskAccType).FirstOrDefault().stName;
+
+				switch (item.sfkTaskAccType)
+				{
+					case "Money":
+						item.snuTotal = (from e in db.TaskAccumulatorValues
+										 where e.fkTask == id 
+										 where e.fkTaskAcc == item.id
+										 select e).Sum(y => y.nuValue).ToString();
+						break;
+
+					case "Hours":
+
+						var hh = (from e in db.TaskAccumulatorValues
+								  where e.fkTask == id && e.fkTaskAcc == item.id
+								  select e).Sum(y => y.nuHourValue)*60;
+
+						var mm = (from e in db.TaskAccumulatorValues
+								  where e.fkTask == id && e.fkTaskAcc == item.id
+								  select e).Sum(y => y.nuMinValue);
+
+						var tot = hh + mm;
+
+						if (tot != null)
+						{
+							var totHours = (hh + mm) / 60;
+							var totMins = tot - totHours * 60;
+
+							item.snuTotal = totHours != null ? totHours.ToString() : "00" +
+										":" +
+										totMins != null ? totMins.ToString() : "00";
+						}
+						else
+							item.snuTotal = "00:00";
+
+						break;
+				}
 			}
 
 			return ret;
@@ -318,7 +375,21 @@ namespace DataModel
 						LoadAssociations(db);
 
 						break;
-					}				
+					}
+
+				case "newAcc":
+					{
+						var ent = JsonConvert.DeserializeObject<TaskAccumulatorValue>(anexedEntity.ToString());
+
+						
+						ent.fkTask = id;
+						ent.fkUser = userLogged.id;
+						ent.dtLog = DateTime.Now;
+						
+						db.Insert(ent);
+						
+						break;
+					}
 			}
 
 			return true;

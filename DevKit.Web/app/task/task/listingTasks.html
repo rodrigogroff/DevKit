@@ -1,5 +1,5 @@
-﻿<div class="webFormPostion" style="width:95%">
-	<section class="widgetForm" style="width:95%">
+﻿<div class="webFormPostion" style="width:100%">
+	<section class="widgetForm" style="width:100%">
 		<legend class="legendTop" style="width:100%">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
@@ -55,18 +55,18 @@
 									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}<br />{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
 								</tr>
 							</table>
-							<table class="table table-hover" ng-if="availWidth > 1400">
+							<table class="table table-hover" ng-if="availWidth > 1400" style="width:100%">
 								<thead>
 									<tr>
-										<th width="130px">Date</th>
-										<th width="90px">Priority</th>
-										<th width="130px">Informed By</th>										
-										<th width="150px">Type</th>
-										<th width="150px">Category</th>
-										<th width="280px">Title / Localization</th>
-										<th width="180px">Project / PHASE</th>
-										<th width="180px">Sprint / VERSION</th>
-										<th width="130px">Assigned To</th>
+										<th>Date</th>
+										<th>Priority</th>
+										<th>Informed By</th>										
+										<th>Type</th>
+										<th>Category</th>
+										<th>Title / Localization</th>
+										<th>Project / PHASE</th>
+										<th>Sprint / VERSION</th>
+										<th>Assigned To</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">

@@ -27,6 +27,7 @@ namespace DataModel
 		public ITable<ProjectUser>          ProjectUsers          { get { return this.GetTable<ProjectUser>(); } }
 		public ITable<Setup>                Setups                { get { return this.GetTable<Setup>(); } }
 		public ITable<Task>                 Tasks                 { get { return this.GetTable<Task>(); } }
+		public ITable<TaskAccumulatorValue> TaskAccumulatorValues { get { return this.GetTable<TaskAccumulatorValue>(); } }
 		public ITable<TaskCategory>         TaskCategories        { get { return this.GetTable<TaskCategory>(); } }
 		public ITable<TaskFlow>             TaskFlows             { get { return this.GetTable<TaskFlow>(); } }
 		public ITable<TaskFlowChange>       TaskFlowChanges       { get { return this.GetTable<TaskFlowChange>(); } }
@@ -136,6 +137,19 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastEdit        { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public bool?     bComplete         { get; set; } // boolean
+	}
+
+	[Table(Schema="public", Name="TaskAccumulatorValue")]
+	public partial class TaskAccumulatorValue
+	{
+		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTask      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTaskAcc   { get; set; } // bigint
+		[Column,     Nullable] public long?     nuValue     { get; set; } // bigint
+		[Column,     Nullable] public long?     nuHourValue { get; set; } // bigint
+		[Column,     Nullable] public long?     nuMinValue  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser      { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog       { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="TaskCategory")]
@@ -283,6 +297,12 @@ namespace DataModel
 		}
 
 		public static Task Find(this ITable<Task> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskAccumulatorValue Find(this ITable<TaskAccumulatorValue> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

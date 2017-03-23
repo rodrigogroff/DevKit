@@ -232,13 +232,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.newAcc_fkTaskAcc_fail = $scope.newAcc.fkTaskAcc == undefined;
 
 			if ($scope.fkTaskAccType == 1)
-				newAcc_val_fail = invalidCheck($scope.newAcc.nuValue);
+				$scope.newAcc_val_fail = invalidCheck($scope.newAcc.nuValue);
 			else
 				if ($scope.fkTaskAccType == 2)
-					newAcc_val_fail = invalidCheck($scope.newAcc.nuHourValue) && invalidCheck($scope.newAcc.nuMinValue);
+					$scope.newAcc_val_fail = invalidCheck($scope.newAcc.nuHourValue) && invalidCheck($scope.newAcc.nuMinValue);
 
 			if (!$scope.newAcc_fkTaskAcc_fail &&
-				!newAcc_val_fail)
+				!$scope.newAcc_val_fail)
 			{
 				$scope.addAcc = false;
 

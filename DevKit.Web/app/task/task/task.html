@@ -422,7 +422,7 @@
 								<td>
 									<legend style="color:aliceblue">
 										Accumulators for task
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewAcc()"><i class="fa fa-plus"> </i> Add new </button>
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewAcc()"><i class="fa fa-plus"> </i> Add value </button>
 									</legend>
 									<div ng-if="addAcc == true">
 										<table>
@@ -467,15 +467,17 @@
 																		<td width="50px">
 																			Hours
 																		</td>
-																		<td width="50px">
-																			<input type="text" class="form-control input-transparent" maxlength="2"
+																		<td width="90px">
+																			<input type="number" class="form-control input-transparent" maxlength="2"
 																				   ng-disabled="!permModel.edicao" ng-model="newAcc.nuHourValue">
 																		</td>
+																	</tr>
+																	<tr>
 																		<td width="10px"></td>
 																		<td width="50px">
 																			Mins
-																		<td width="50px">
-																			<input type="text" class="form-control input-transparent" maxlength="2"
+																		<td width="90px">
+																			<input type="number" class="form-control input-transparent" maxlength="2"
 																				   ng-disabled="!permModel.edicao" ng-model="newAcc.nuMinValue">
 																		</td>
 																	</tr>
@@ -498,14 +500,18 @@
 											<thead>
 												<tr>
 													<th>Accumulator</th>
-													<th>Type</th>
-													<th>Total</th>
+													<th width="60px">Type</th>
+													<th width="60px">Total</th>
+													<th>Log</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.accs">
 												<td>{{ mdl.stName }}</td>
 												<td>{{ mdl.sfkTaskAccType }}</td>
 												<td>{{ mdl.snuTotal }}</td>
+												<td>
+													<div data-ng-repeat="m in mdl.logs">{{ m.sdtLog }} | {{ m.sfkUser }} : {{ m.sValue }}</div>
+												</td>
 											</tr>
 										</table>
 									</div>

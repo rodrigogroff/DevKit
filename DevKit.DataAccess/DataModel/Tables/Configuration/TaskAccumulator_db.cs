@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataModel
@@ -18,13 +19,24 @@ namespace DataModel
 	public partial class TaskTypeAccumulator
 	{
 		public string sfkFlow = "";
+
+		public List<LogAccumulatorValue> logs = new List<LogAccumulatorValue>();
 	}
 
+	// extra class
+
+	public class LogAccumulatorValue
+	{
+		public string sfkUser = "",
+			          sdtLog = "",
+					  sValue = "";
+	}
+	
 	// --------------------------
 	// functions
 	// --------------------------
 
-		public partial class TaskTypeAccumulator
+	public partial class TaskTypeAccumulator
 	{
 		public IQueryable<TaskTypeAccumulator> ComposedFilters(DevKitDB db, TaskAccumulatorFilter filter)
 		{

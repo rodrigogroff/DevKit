@@ -20,8 +20,6 @@ angular.module('app.directives').directive('ngPaginacao', function () {
 
 		controller: ['$scope', 'ngHistoricoFiltro', function ($scope, ngHistoricoFiltro) {
 
-			//console.log('-> NgPaginacao');
-
 			$scope.paginador = $scope.paginador || {};
 			$scope.paginaAtual = ngHistoricoFiltro.filtro.paginaAtual || 0;
 			$scope.itensporpagina = ngHistoricoFiltro.filtro.itensporpaginastored || $scope.itensporpagina;

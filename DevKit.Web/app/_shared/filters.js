@@ -147,8 +147,6 @@ angular.module('app.filters', ['ngResource'])
 					result.push(item);
 			}
 
-			console.log("idx -> FIM");
-
 			return result;
 		}
 	}])

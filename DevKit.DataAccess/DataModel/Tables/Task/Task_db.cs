@@ -38,6 +38,7 @@ namespace DataModel
 						sfkUserResponsible = "",
 						sfkTaskType = "",
 						sfkTaskCategory = "",
+						sfkTaskFlowCurrent = "",
 						sfkProject = "",
 						sfkPhase = "",
 						sfkSprint = "",
@@ -127,6 +128,7 @@ namespace DataModel
 			sfkProject = db.Project(fkProject).stName;
 			sfkPhase = db.ProjectPhase(fkPhase).stName;
 			sfkSprint = db.ProjectSprint(fkSprint).stName;
+			sfkTaskFlowCurrent = db.TaskFlow(fkTaskFlowCurrent).stName;
 
 			if (fkVersion != null)
 				sfkVersion = db.ProjectSprintVersion(fkVersion).stName;
@@ -355,16 +357,13 @@ namespace DataModel
 
 		public bool Create(DevKitDB db, User usr, ref string resp)
 		{
-			if (CheckDuplicate(this, db))
-			{
-				resp = "Task title cannot be duplicated";
-				return false;
-			}
-
 			bComplete = false;
 			dtStart = DateTime.Now;
 			fkUserStart = usr.id;
-			fkTaskFlowCurrent = (from e in db.TaskFlows where e.fkTaskType == this.fkTaskType select e).
+			fkTaskFlowCurrent = (from e in db.TaskFlows
+								 where e.fkTaskType == this.fkTaskType
+								 where e.fkTaskCategory == this.fkTaskCategory
+								 select e).
 								 OrderBy(t => t.nuOrder).
 								 FirstOrDefault().
 								 id;
@@ -376,12 +375,6 @@ namespace DataModel
 
 		public bool Update(DevKitDB db, User userLogged, ref string resp)
 		{
-			if (CheckDuplicate(this, db))
-			{
-				resp = "Task title cannot be duplicated";
-				return false;
-			}
-
 			switch (updateCommand)
 			{
 				case "entity":

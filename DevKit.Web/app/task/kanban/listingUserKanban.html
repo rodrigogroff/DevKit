@@ -34,7 +34,6 @@
 					</div>
 					<div id="collapseProj{{proj.project_id}}" class="panel-collapse collapse" style="height: auto;">
 						<div class="panel-body">
-
 							<div class="panel-group" data-ng-repeat="sp in proj.sprints">
 								<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
 									<div class="panel-heading">
@@ -54,7 +53,6 @@
 													</div>
 													<div id="collapseTaskType{{sp.sprint_id}}_{{tt.tasktype_id}}" class="panel-collapse collapse" style="height: auto;">
 														<div class="panel-body">
-
 															<div data-ng-repeat="cat in tt.categories">
 																Category: <b>{{ cat.category }}</b><br />
 																<br />
@@ -64,7 +62,7 @@
 																			<th ng-repeat="f in cat.flows">{{f.flow}}</th>
 																		</tr>
 																	</thead>
-																	<tr >
+																	<tr>
 																		<td ng-repeat="f in cat.flows">
 																			<div ng-show="f.tasks.length > 0 ">
 																				<div data-ng-repeat="t in f.tasks">
@@ -75,7 +73,13 @@
 																	</tr>
 																</table>
 																<div data-ng-repeat="acc in cat.accs">
-																	{{ acc.stName }} - <b>{{ acc.sValue }}</b>
+																	<table class="table table-hover" style="width:250px">
+																		<tr>
+																			<td>{{ acc.stName }}</td>
+																			<td width="20px"></td>
+																			<td width="70px">{{ acc.sValue }}</td>
+																		</tr>
+																	</table>																	 
 																</div>
 															</div>
 														</div>

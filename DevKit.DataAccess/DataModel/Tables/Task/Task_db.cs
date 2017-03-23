@@ -248,7 +248,7 @@ namespace DataModel
 			return ret;
 		}
 
-		public string GetValueForType(DevKitDB db, string _type, long task_id, long task_acc, long accVal_id = 0 )
+		public string GetValueForType(DevKitDB db, string _type, long task_id, long task_acc, long accVal_id = 0, List<long> lstRange = null )
 		{
 			var ret = "";
 
@@ -260,6 +260,7 @@ namespace DataModel
 						ret = ( from e in db.TaskAccumulatorValues
 								where accVal_id == 0 || e.id == accVal_id 
 								where task_id ==0 || e.fkTask == task_id
+								where lstRange == null || lstRange.Contains ( (long)e.fkTask)
 								where e.fkTaskAcc == task_acc
 								select e).Select(y => y.nuValue).ToString();
 					else
@@ -278,6 +279,7 @@ namespace DataModel
 					{
 						hh = (from e in db.TaskAccumulatorValues
 							  where task_id == 0 || e.fkTask == task_id
+							  where lstRange == null || lstRange.Contains((long)e.fkTask)
 							  where e.fkTaskAcc == task_acc
 							  select e).Sum(y => y.nuHourValue) * 60;
 
@@ -301,6 +303,7 @@ namespace DataModel
 					{
 						mm = (from e in db.TaskAccumulatorValues
 							  where task_id == 0 || e.fkTask == task_id
+							  where lstRange == null || lstRange.Contains((long)e.fkTask)
 							  where e.fkTaskAcc == task_acc
 							  select e).Sum(y => y.nuMinValue);
 

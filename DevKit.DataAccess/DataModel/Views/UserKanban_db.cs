@@ -171,6 +171,8 @@ namespace DataModel
 										 where e.fkTaskCategory == category.id
 										 select e).OrderBy( y=> y.nuOrder).ToList();
 
+							var currentTaskRang = new List<long>();
+
 							foreach (var flow in flows)
 							{
 								var ktf = new KanbanTaskFlow()
@@ -189,6 +191,8 @@ namespace DataModel
 											 OrderBy(y => y.id).
 											 ToList();
 
+								currentTaskRang.AddRange(ktf.tasks.Select ( y=> y.id));
+
 								ktc.flows.Add(ktf);
 							}
 
@@ -202,7 +206,7 @@ namespace DataModel
 								ktc.accs.Add(new KanbanTaskAcc()
 								{
 									stName = i_acc.stName,
-									sValue = task_helper.GetValueForType (db, accTypeEnum.GetName(i_acc.fkTaskAccType), 0, i_acc.id, 0 ),
+									sValue = task_helper.GetValueForType (db, accTypeEnum.GetName(i_acc.fkTaskAccType), 0, i_acc.id, 0, currentTaskRang ),
 								});
 							}
 

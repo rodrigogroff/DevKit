@@ -1,12 +1,12 @@
 ﻿angular.module('app.controllers').controller('ListingTasksController',
-['$window', '$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($window, $scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
+function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
 	$scope.loading = false;
 
 	$scope.windowWidth = 900; var w = angular.element($window);
 	$scope.$watch( function () { return $window.innerWidth; },
-	  function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1300; else $scope.windowWidth = 900; },
+	  function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1250; else $scope.windowWidth = 900; },
 	  true ); w.bind('resize', function () { $scope.$apply();	});
 
 	$scope.campos = {
@@ -45,11 +45,10 @@ function ($window, $scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelect
 	function CheckPermissions() {
 		Api.Permission.get({ id: $scope.permID }, function (data) {
 			$scope.permModel = data;
-
 			if (!$scope.permModel.listagem) {
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
-			}
+			}			
 		},
 		function (response) { });
 	}
@@ -59,6 +58,8 @@ function ($window, $scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelect
 	function init()
 	{
 		CheckPermissions();
+
+		$rootScope.$broadcast('updateCounters');
 
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;		

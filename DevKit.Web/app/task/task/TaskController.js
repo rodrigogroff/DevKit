@@ -157,6 +157,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 						toastr.error(response.data.message, 'Error');
 					});
 				}
+
+				$rootScope.$broadcast('updateCounters');
 			}
 		}
 	};

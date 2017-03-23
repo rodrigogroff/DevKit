@@ -1,18 +1,8 @@
 
-Profile					(Administrator)
-	*User
-	
-User					(dba)
-	Profile				(Administrator)
-	*Email
-	*Phone
-	
-Project
-	*User
-	*Phase				(Phase one)
-		*Sprint			(sp0001 - basic requirements)
-			*Version	(00.01.a)
 
-Task Type				(Software)
-	*Task Category		(Bug, Requirement, Improvement, Fix)
-	*Task Flow			(Open -> Analisys -> Development -> Testing -> Delivered -> Accepted)
+Sprint 
+	Accumulator Set
+		Work						
+		Re-work			[1]		Type: Software BUg 
+								Category: Homologation
+								Accumulator: Development hours

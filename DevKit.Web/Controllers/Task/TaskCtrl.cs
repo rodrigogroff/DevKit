@@ -35,7 +35,7 @@ namespace DevKit.Web.Controllers
 				var mdl = new Task();
 
 				var query = mdl.ComposedFilters(db, filter).
-					OrderByDescending(y => y.id);
+					OrderByDescending(y => y.fkSprint);
 
 				return Ok(new
 				{

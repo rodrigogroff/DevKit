@@ -22,8 +22,9 @@ namespace DevKit.Web.Controllers
 				};
 
 				var mdl = new Project();
+				var util = new Util();
 
-				var query = mdl.ComposedFilters(db, filter).
+				var query = mdl.ComposedFilters(db, filter, util.GetCurrentUserProjects(db)).
 					OrderBy(y => y.stName);
 
 				return Ok(new

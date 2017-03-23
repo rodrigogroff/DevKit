@@ -10,17 +10,18 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var usr_id = new Util().GetCurrentUser(db).id;
-
+				var util = new Util();
+				var usr = util.GetCurrentUser(db);
+				
 				var queryTaskProjects = new Task().ComposedFilters(db, new TaskFilter
 				{
 					complete = false,
-					lstProjects = new ProjectUser().ComposedFilters(db, new ProjectUserFilter { fkUser = usr_id }).Select(y => y.fkProject).ToList()
+					lstProjects = util.GetCurrentUserProjects(db, usr.id)
 				});
 
 				var queryTaskUser = new Task().ComposedFilters(db, new TaskFilter
 				{
-					fkUserResponsible = usr_id,
+					fkUserResponsible = usr.id,
 				});
 								
 				return Ok(new

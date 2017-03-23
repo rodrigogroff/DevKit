@@ -19,8 +19,6 @@ namespace DevKit.Web.Controllers
 				if (busca != null)
 					query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 				
-				query = query.OrderBy(y => y.stName);
-
 				return Ok(new
 				{
 					count = query.Count(),

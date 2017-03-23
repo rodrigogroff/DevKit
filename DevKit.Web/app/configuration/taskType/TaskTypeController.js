@@ -357,12 +357,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.saveNewAcc = function ()
 	{
 		$scope.stAccName_fail = invalidCheck($scope.newAcc.stName);
-		$scope.stAccDisplay_fail = invalidCheck($scope.newAcc.stDisplay);
 		$scope.selectAccType_fail = $scope.newAcc.fkTaskAccType == undefined;
 		$scope.selectAccFlow_fail = $scope.newAcc.fkTaskFlow == undefined;
 
 		if (!$scope.stAccName_fail &&
-			!$scope.stAccDisplay_fail &&
 			!$scope.selectAccType_fail &&
 			!$scope.selectAccFlow_fail)
 		{

@@ -81,4 +81,8 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 		init();
 	}
 
+	$scope.open = function (mdl) {
+		$state.go('task', { id: mdl.id });
+	}
+
 }]);

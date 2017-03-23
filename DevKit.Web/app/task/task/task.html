@@ -436,7 +436,7 @@
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_fkTaskAcc_fail">!</button>
 															</td>
-															<td width="200px">
+															<td width="250px">
 																<input type="hidden" name="user" style="width:100%" ui-select2="selectTaskAcc" ng-model="newAcc.fkTaskAcc" />
 															</td>
 														</tr>
@@ -448,7 +448,7 @@
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_val_fail">!</button>
 															</td>
-															<td width="200px">
+															<td width="250px">
 																<input type="text" class="form-control input-transparent" maxlength="2"
 																	   ng-disabled="!permModel.edicao" ng-model="newAcc.nuValue">
 															</td>
@@ -461,22 +461,20 @@
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_val_fail">!</button>
 															</td>
-															<td width="200px">
+															<td width="250px">
 																<table>
 																	<tr>
 																		<td width="50px">
 																			Hours
 																		</td>
-																		<td width="90px">
+																		<td width="80px">
 																			<input type="number" class="form-control input-transparent" maxlength="2"
 																				   ng-disabled="!permModel.edicao" ng-model="newAcc.nuHourValue">
 																		</td>
-																	</tr>
-																	<tr>
 																		<td width="10px"></td>
 																		<td width="50px">
 																			Mins
-																		<td width="90px">
+																		<td width="80px">
 																			<input type="number" class="form-control input-transparent" maxlength="2"
 																				   ng-disabled="!permModel.edicao" ng-model="newAcc.nuMinValue">
 																		</td>
@@ -510,7 +508,7 @@
 												<td>{{ mdl.sfkTaskAccType }}</td>
 												<td>{{ mdl.snuTotal }}</td>
 												<td>
-													<div data-ng-repeat="m in mdl.logs">{{ m.sdtLog }} | {{ m.sfkUser }} : {{ m.sValue }}</div>
+													<div data-ng-repeat="m in mdl.logs">{{ m.sdtLog }} | {{ m.sfkUser }} | {{ m.sValue }}</div>
 												</td>
 											</tr>
 										</table>

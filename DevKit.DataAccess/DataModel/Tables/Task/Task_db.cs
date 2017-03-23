@@ -248,7 +248,7 @@ namespace DataModel
 			return ret;
 		}
 
-		string GetValueForType(DevKitDB db, string _type, long task_id, long task_acc, long acc_id = 0 )
+		public string GetValueForType(DevKitDB db, string _type, long task_id, long task_acc, long accVal_id = 0 )
 		{
 			var ret = "";
 
@@ -256,15 +256,15 @@ namespace DataModel
 			{
 				case "Money":
 
-					if (acc_id == 0)
+					if (accVal_id == 0)
 						ret = ( from e in db.TaskAccumulatorValues
-								where acc_id == 0 || e.id == acc_id 
-								where e.fkTask == task_id
+								where accVal_id == 0 || e.id == accVal_id 
+								where task_id ==0 || e.fkTask == task_id
 								where e.fkTaskAcc == task_acc
 								select e).Select(y => y.nuValue).ToString();
 					else
 						ret = ( from e in db.TaskAccumulatorValues
-								where e.fkTask == task_id
+								where task_id == 0 || e.fkTask == task_id
 								where e.fkTaskAcc == task_acc
 								select e).Sum(y => y.nuValue).ToString();
 
@@ -274,10 +274,11 @@ namespace DataModel
 
 					long? hh = 0, mm = 0;
 
-					if (acc_id == 0)
+					if (accVal_id == 0)
 					{
 						hh = (from e in db.TaskAccumulatorValues
-							  where e.fkTask == task_id && e.fkTaskAcc == task_acc
+							  where task_id == 0 || e.fkTask == task_id
+							  where e.fkTaskAcc == task_acc
 							  select e).Sum(y => y.nuHourValue) * 60;
 
 						if (hh == null) hh = 0;
@@ -285,8 +286,9 @@ namespace DataModel
 					else
 					{
 						hh = (from e in db.TaskAccumulatorValues
-							  where e.id == acc_id
-							  where e.fkTask == task_id && e.fkTaskAcc == task_acc
+							  where e.id == accVal_id
+							  where task_id == 0 || e.fkTask == task_id
+							  where e.fkTaskAcc == task_acc
 							  select e).FirstOrDefault().nuHourValue;
 
 						if (hh != null)
@@ -295,10 +297,11 @@ namespace DataModel
 							hh = 0;
 					}
 
-					if (acc_id == 0)
+					if (accVal_id == 0)
 					{
 						mm = (from e in db.TaskAccumulatorValues
-							  where e.fkTask == task_id && e.fkTaskAcc == task_acc
+							  where task_id == 0 || e.fkTask == task_id
+							  where e.fkTaskAcc == task_acc
 							  select e).Sum(y => y.nuMinValue);
 
 						if (mm == null)
@@ -307,8 +310,9 @@ namespace DataModel
 					else
 					{
 						mm = (from e in db.TaskAccumulatorValues
-							  where e.id == acc_id
-							  where e.fkTask == task_id && e.fkTaskAcc == task_acc
+							  where e.id == accVal_id
+							  where task_id == 0 || e.fkTask == task_id
+							  where e.fkTaskAcc == task_acc
 							  select e).FirstOrDefault().nuMinValue;
 
 						if (mm == null)

@@ -49,12 +49,19 @@ namespace DataModel
 		public List<KanbanTaskCategory> categories = new List<KanbanTaskCategory>();
 	}
 
+	public class KanbanTaskAcc
+	{
+		public string stName,
+					  sValue;
+	}
+
 	public class KanbanTaskCategory
 	{
 		public string category;
 		public long category_id;
 
 		public List<KanbanTaskFlow> flows = new List<KanbanTaskFlow>();
+		public List<KanbanTaskAcc> accs = new List<KanbanTaskAcc>();
 	}
 
 	public class KanbanTaskFlow
@@ -62,7 +69,7 @@ namespace DataModel
 		public string flow;
 		public long flow_id;
 
-		public List<Task> tasks = new List<Task>();
+		public List<Task> tasks = new List<Task>();		
 	}
 
 	public class UserKanban
@@ -70,6 +77,8 @@ namespace DataModel
 		public UserKanban_dto ComposedFilters(DevKitDB db, UserKanbanFilter filter, User user)
 		{
 			var dto = new UserKanban_dto();
+			var task_helper = new Task();
+			var accTypeEnum = new EnumAccumulatorType();
 
 			var dbUserprojects = ( from e in db.Projects
 									join pu in db.ProjectUsers on e.id equals pu.fkProject
@@ -181,6 +190,20 @@ namespace DataModel
 											 ToList();
 
 								ktc.flows.Add(ktf);
+							}
+
+							var accs = (from e in db.TaskTypeAccumulators
+										where e.fkTaskType == tasktype.id
+										where e.fkTaskCategory == category.id
+										select e).ToList();
+
+							foreach (var i_acc in accs)
+							{
+								ktc.accs.Add(new KanbanTaskAcc()
+								{
+									stName = i_acc.stName,
+									sValue = task_helper.GetValueForType (db, accTypeEnum.GetName(i_acc.fkTaskAccType), 0, i_acc.id, 0 ),
+								});
 							}
 
 							ktt.categories.Add(ktc);

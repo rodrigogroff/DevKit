@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace DataModel
 {
@@ -16,6 +17,16 @@ namespace DataModel
 		{
 			lst.Add(new AccumulatorType() { id = 1, stName = "Money" });
 			lst.Add(new AccumulatorType() { id = 2, stName = "Hours" });
+		}
+
+		public string GetName(long? _id)
+		{
+			var it = lst.Where(y => y.id == _id).FirstOrDefault();
+
+			if (it != null)
+				return it.stName;
+
+			return "";
 		}
 	}
 }

@@ -3,7 +3,6 @@ using LinqToDB;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using System.Collections.Generic;
 
 namespace DevKit.Web.Controllers
 {
@@ -30,14 +29,9 @@ namespace DevKit.Web.Controllers
 				return Ok(new
 				{
 					count = query.Count(),
-					results = Output(query.Skip(() => filter.skip).Take(() => filter.take), db)
+					results = query.Skip(() => filter.skip).Take(() => filter.take)
 				});
 			}
-		}
-
-		List<ProjectSprintVersion> Output(IQueryable<ProjectSprintVersion> query, DevKitDB db)
-		{
-			return query.ToList();
 		}
 
 		public IHttpActionResult Get(long id)

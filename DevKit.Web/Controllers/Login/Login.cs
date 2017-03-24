@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using DataModel;
+using LinqToDB;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
-using LinqToDB;
-using DataModel;
+using System;
 using System.Threading;
+using System.Linq;
+using System.Security.Claims;
 
 namespace DevKit.Web
 {
@@ -20,7 +19,7 @@ namespace DevKit.Web
 
 		public override async System.Threading.Tasks.Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
-			Thread.Sleep(500);
+			Thread.Sleep(999);
 
 			using (var db = new DevKitDB())
 			{

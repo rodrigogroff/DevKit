@@ -1,8 +1,12 @@
-editar categorias
-ao criar a tarefa, não mostrou cabeçalho
+------------------
+melhorias
+------------------
+
+-editar categorias
+-ao criar a tarefa, não mostrou cabeçalho
 -software kit, via install
 
-Sprint 
+-Sprint 
 	Accumulator Set
 		Work						
 		Re-work			[1]		Type: Software BUg 

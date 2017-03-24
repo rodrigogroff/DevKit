@@ -9,6 +9,8 @@ namespace DevKit.Web.Controllers
 {
 	public class SprintController : ApiControllerBase
 	{
+		Util util = new Util();
+
 		public IHttpActionResult Get()
 		{
 			using (var db = new DevKitDB())
@@ -24,8 +26,7 @@ namespace DevKit.Web.Controllers
 				};
 
 				var mdl = new ProjectSprint();
-				var util = new Util();
-
+				
 				var query = mdl.ComposedFilters(db, filter, util.GetCurrentUserProjects(db)).
 					OrderBy(y => y.stName).
 					ThenBy(y=>y.fkProject).
@@ -69,7 +70,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Create(db, new Util().GetCurrentUser(db), ref resp))
+				if (!mdl.Create(db, util.GetCurrentUser(db), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);

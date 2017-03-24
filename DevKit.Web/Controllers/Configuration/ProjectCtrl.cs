@@ -4,12 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace DevKit.Web.Controllers
 {
 	public class ProjectController : ApiControllerBase
 	{
+		Util util = new Util();
+
 		public IHttpActionResult Get()
 		{
 			using (var db = new DevKitDB())
@@ -21,8 +22,7 @@ namespace DevKit.Web.Controllers
 					busca = Request.GetQueryStringValue("busca")?.ToUpper()
 				};
 
-				var mdl = new Project();
-				var util = new Util();
+				var mdl = new Project();				
 
 				var query = mdl.ComposedFilters(db, filter, util.GetCurrentUserProjects(db)).
 					OrderBy(y => y.stName);
@@ -65,7 +65,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Create(db, new Util().GetCurrentUser(db), ref resp))
+				if (!mdl.Create(db, util.GetCurrentUser(db), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);

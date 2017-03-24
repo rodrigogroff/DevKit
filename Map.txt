@@ -1,4 +1,6 @@
-
+editar categorias
+ao criar a tarefa, não mostrou cabeçalho
+-software kit, via install
 
 Sprint 
 	Accumulator Set

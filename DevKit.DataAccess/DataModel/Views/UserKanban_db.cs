@@ -13,6 +13,7 @@ namespace DataModel
 						fkPhase,
 						fkSprint,
 						fkUserStart,
+						fkUserAssigned,
 						fkTaskType,
 						fkTaskFlowCurrent,
 						fkTaskCategory;
@@ -109,6 +110,7 @@ namespace DataModel
 										where filter.fkPhase == null || e.fkPhase == filter.fkPhase
 										where filter.fkSprint == null || e.fkSprint == filter.fkSprint
 										where filter.fkUserStart == null || e.fkUserStart == filter.fkUserStart
+										where filter.fkUserAssigned == null || e.fkUserResponsible == filter.fkUserAssigned
 										where filter.fkTaskType == null || e.fkTaskType == filter.fkTaskType
 										where filter.fkTaskFlowCurrent == null || e.fkTaskFlowCurrent == filter.fkTaskFlowCurrent
 										where filter.fkTaskCategory == null || e.fkTaskCategory == filter.fkTaskCategory

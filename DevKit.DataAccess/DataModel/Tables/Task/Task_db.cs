@@ -101,6 +101,9 @@ namespace DataModel
 			if (filter.fkUserStart != null)
 				query = from e in query where e.fkUserStart == filter.fkUserStart select e;
 
+			if (filter.fkUserResponsible != null)
+				query = from e in query where e.fkUserResponsible == filter.fkUserResponsible select e;
+
 			if (filter.fkTaskFlowCurrent != null)
 				query = from e in query where e.fkTaskFlowCurrent == filter.fkTaskFlowCurrent select e;
 			

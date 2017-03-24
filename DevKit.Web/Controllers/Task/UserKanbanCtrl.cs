@@ -24,6 +24,7 @@ namespace DevKit.Web.Controllers
 					fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
 					fkTaskFlowCurrent = Request.GetQueryStringValue<long?>("fkTaskFlowCurrent", null),
 					fkUserStart = Request.GetQueryStringValue<long?>("fkUserStart", null),
+					fkUserAssigned = Request.GetQueryStringValue<long?>("fkUserAssigned", null)
 				};
 
 				var mdl = new UserKanban();

@@ -122,43 +122,40 @@ namespace DataModel
 
 						db.Insert(new TaskFlow()
 						{
-							fkTaskCategory = ent.id,
-							fkTaskType = id,
-							nuOrder = order++,
+							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
 							bForceOpen = true,
 							stName = "Open"
 						});
 
 						db.Insert(new TaskFlow()
 						{
-							fkTaskCategory = ent.id,
-							fkTaskType = id,
-							nuOrder = order++,
+							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
+							bForceOpen = true,
+							stName = "Re-Open"
+						});
+
+						db.Insert(new TaskFlow()
+						{
+							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
 							stName = "Analysis"
 						});
 
 						db.Insert(new TaskFlow()
 						{
-							fkTaskCategory = ent.id,
-							fkTaskType = id,
-							nuOrder = order++,
+							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
 							stName = "Development"
 						});
 
 						db.Insert(new TaskFlow()
 						{
-							fkTaskCategory = ent.id,
-							fkTaskType = id,
-							nuOrder = order++,
+							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
 							bForceComplete = true,
 							stName = "Closed"
 						});
 
 						db.Insert(new TaskFlow()
 						{
-							fkTaskCategory = ent.id,
-							fkTaskType = id,
-							nuOrder = order++,
+							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
 							bForceComplete = true,
 							stName = "Cancelled"
 						});

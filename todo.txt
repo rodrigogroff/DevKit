@@ -1,0 +1,26 @@
+------------------
+melhorias
+------------------
+
+-ao criar a tarefa, não mostrou cabeçalho!
+-software kit, via botao de install no setup
+-acumulador do tipo dinheiro
+
+-Sprint 
+	Accumulator Set
+		Work						
+		Re-work			[1]		Type: Software BUg 
+								Category: Homologation
+								Accumulator: Development hours
+
+-textbox de data
+-poder anexar documentos nas tarefas
+-atualizar linq to db 
+
+------------------
+bugs
+------------------
+
+-ao fazer login, mostra brevemente layout do site para depois entrar de fato na tela
+-ao iniciar site fora do login, tela fica não-responsiva
+-ao apertar F5, perde-se a view e fica somente a tela em questão

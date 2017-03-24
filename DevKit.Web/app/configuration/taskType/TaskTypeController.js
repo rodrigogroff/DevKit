@@ -169,6 +169,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addCategorie = !$scope.addCategorie;
 	}
 
+	$scope.editCategorie = function (mdl) {
+		$scope.addCategorie = true;
+		$scope.newCategorie = mdl;
+	}
+
 	$scope.newCategorie =
 		{
 			fkTaskType: undefined,

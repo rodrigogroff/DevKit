@@ -105,60 +105,77 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<TaskCategory>(anexedEntity.ToString());
 
-						if ((from ne in db.TaskCategories
-							 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkTaskType == id
-							 select ne).Any())
-						{
-							resp = "Category already added to task type!";
-							return false;
-						}
-
 						ent.fkTaskType = id;
-						
-						ent.id = Convert.ToInt64(db.InsertWithIdentity(ent));
-												
-						// populate basic flows
-						int order = 1;
 
-						db.Insert(new TaskFlow()
+						if (ent.id == 0)
 						{
-							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
-							bForceOpen = true,
-							stName = "Open"
-						});
+							if ((from ne in db.TaskCategories
+								 where ne.stName.ToUpper() == ent.stName.ToUpper() 
+								 where ne.fkTaskType == id
+								 select ne).Any())
+							{
+								resp = "Category already added to task type!";
+								return false;
+							}
 
-						db.Insert(new TaskFlow()
-						{
-							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
-							bForceOpen = true,
-							stName = "Re-Open"
-						});
+							ent.id = Convert.ToInt64(db.InsertWithIdentity(ent));
 
-						db.Insert(new TaskFlow()
-						{
-							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
-							stName = "Analysis"
-						});
+							int order = 1;
 
-						db.Insert(new TaskFlow()
-						{
-							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
-							stName = "Development"
-						});
+							db.Insert(new TaskFlow()
+							{
+								fkTaskCategory = ent.id,
+								fkTaskType = id,
+								nuOrder = order++,
+								bForceOpen = true,
+								stName = "Open"
+							});
 
-						db.Insert(new TaskFlow()
-						{
-							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
-							bForceComplete = true,
-							stName = "Closed"
-						});
+							db.Insert(new TaskFlow()
+							{
+								fkTaskCategory = ent.id,
+								fkTaskType = id,
+								nuOrder = order++,
+								bForceOpen = true,
+								stName = "Re-Open"
+							});
 
-						db.Insert(new TaskFlow()
-						{
-							fkTaskCategory = ent.id, fkTaskType = id, nuOrder = order++,
-							bForceComplete = true,
-							stName = "Cancelled"
-						});
+							db.Insert(new TaskFlow()
+							{
+								fkTaskCategory = ent.id,
+								fkTaskType = id,
+								nuOrder = order++,
+								stName = "Analysis"
+							});
+
+							db.Insert(new TaskFlow()
+							{
+								fkTaskCategory = ent.id,
+								fkTaskType = id,
+								nuOrder = order++,
+								stName = "Development"
+							});
+
+							db.Insert(new TaskFlow()
+							{
+								fkTaskCategory = ent.id,
+								fkTaskType = id,
+								nuOrder = order++,
+								bForceComplete = true,
+								stName = "Closed"
+							});
+
+							db.Insert(new TaskFlow()
+							{
+								fkTaskCategory = ent.id,
+								fkTaskType = id,
+								nuOrder = order++,
+								bForceComplete = true,
+								stName = "Cancelled"
+							});
+						}
+						else
+							db.Update(ent);
 
 						categories = LoadCategories(db);
 

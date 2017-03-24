@@ -99,6 +99,10 @@
 											<tr data-ng-repeat="mdl in viewModel.categories">
 												<td>{{ mdl.stName }}</td>
 												<td>
+													<a href="" role="button" ng-click="editCategorie(mdl)">
+														<i class="glyphicon glyphicon-edit" style="color:white"></i>
+													</a>
+													&nbsp;&nbsp;
 													<a href="" role="button" ng-click="removeCategorie($index, viewModel.categories)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>

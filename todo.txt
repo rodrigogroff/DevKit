@@ -2,9 +2,8 @@
 melhorias
 ------------------
 
--ao criar a tarefa, não mostrou cabeçalho!
--software kit, via botao de install no setup
--acumulador do tipo dinheiro
+-templates, com todos os tipos de tarefas
+-projeto escolhe um template e cria uma cópia de todos os tipos
 
 -Sprint 
 	Accumulator Set
@@ -15,7 +14,10 @@ melhorias
 
 -textbox de data
 -poder anexar documentos nas tarefas
+-acumulador do tipo dinheiro
+
 -atualizar linq to db 
+
 
 ------------------
 bugs

@@ -18,15 +18,19 @@ function ($scope, $rootScope, $location, AuthService, version)
 
     	$scope.loading = true;
 
-        AuthService.login($scope.loginData).then(function (response) {
-
+    	AuthService.login($scope.loginData).then(function (response)
+    	{
         	$scope.loading = false;
+
         	$rootScope.exibirMenu = true;
-            $location.path('/');
+        	$rootScope.$broadcast('updateCounters');
+
+        	$location.path('/');
         },
-		function (err) {
+		function (err)
+		{
          	 $scope.loading = false;
              $scope.mensagem = err.error_description;
-         });
+        });
     };
 }]);

@@ -27,9 +27,8 @@ function ($scope, $rootScope, $location, AuthService, Api)
 
 	$rootScope.$on("updateCounters", function ()
 	{
-		console.log('received!');
-
-		Api.TaskCount.listPage({}, function (data) {
+		Api.TaskCount.listPage({}, function (data)
+		{
 			$scope.projectTasks = data.count_project_tasks;
 			$scope.userTasks = data.count_user_tasks;
 		});

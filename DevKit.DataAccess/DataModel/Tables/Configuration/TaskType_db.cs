@@ -32,7 +32,7 @@ namespace DataModel
 
 	public partial class TaskType
 	{
-		public IQueryable<TaskType> ComposedFilters(DevKitDB db, TaskTypeFilter filter)
+		public IQueryable<TaskType> ComposedFilters(DevKitDB db, TaskTypeFilter filter, List<long?> lstUserProjetcs)
 		{
 			var query = from e in db.TaskTypes select e;
 
@@ -41,6 +41,9 @@ namespace DataModel
 
 			if (filter.fkProject != null)
 				query = from e in query where e.fkProject.Equals(filter.fkProject) select e;
+
+			if (lstUserProjetcs.Count() > 0)
+				query = from e in query where lstUserProjetcs.Contains(e.fkProject) select e;
 
 			return query;
 		}

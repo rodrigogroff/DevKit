@@ -1,11 +1,18 @@
 ﻿<div class="form-group" style="color:white;">
 	<table>
 		<tr height="12px"> </tr>
-		<tr>
+		<tr height="36px">
 			<td width="20px"></td>
 			<td width="120px">Type Name</td>
 			<td>
 				<input type="text" focus="true" class="form-control input-transparent" ng-model="filtro.campos.busca" />
+			</td>
+		</tr>
+		<tr height="36px">
+			<td></td>
+			<td>Project</td>
+			<td>
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.project" ng-model="filtro.campos.fkProject" />
 			</td>
 		</tr>
 	</table>

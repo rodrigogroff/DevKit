@@ -1,9 +1,13 @@
 ﻿angular.module('app.controllers').controller('ListingTaskTypesController',
-['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api',
-function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
+['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
+function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
 	$scope.loading = false;
-	$scope.campos = {};
+	$scope.campos = {
+		selects: {
+			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
+		}
+	};
 	$scope.itensporpagina = 15;
 
 	$scope.permModel = {};	

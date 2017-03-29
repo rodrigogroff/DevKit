@@ -2,6 +2,7 @@
 <#@ output extension=".generated.cs"                                                   #>
 <#@ include file="$(ProjectDir)LinqToDB.Templates\LinqToDB.PostgreSQL.Tools.ttinclude" #>
 <#@ include file="$(ProjectDir)LinqToDB.Templates\PluralizationService.ttinclude"      #>
+
 <#
 	NamespaceName = "DataModel";
 

@@ -16,8 +16,6 @@ melhorias
 -poder anexar documentos nas tarefas
 -acumulador do tipo dinheiro
 
--atualizar linq to db 
-
 
 ------------------
 bugs

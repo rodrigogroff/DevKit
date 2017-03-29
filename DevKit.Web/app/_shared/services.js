@@ -104,7 +104,8 @@ angular.module('app.services', ['ngResource'])
 		Task: $resource('api/task/:id', {}, opcoes),
 		Priority: $resource('api/priority/:id', {}, opcoes),
 		UserKanban: $resource('api/userKanban/:id', {}, opcoes),
-		AccType: $resource('api/accumulatorType/:id', {}, opcoes)
+		AccType: $resource('api/accumulatorType/:id', {}, opcoes),
+		ProjectTemplate: $resource('api/projectTemplate/:id', {}, opcoes)
 
 	};
 }]);

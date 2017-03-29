@@ -34,6 +34,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		CheckPermissions();
 
 		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' });
+		$scope.selectProjectTemplate = ngSelects.obterConfiguracao(Api.ProjectTemplate, { tamanhoPagina: 15, campoNome: 'stName' });
 
 		if (id > 0)
 		{
@@ -71,8 +72,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		else
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
+			$scope.fkTemplate_fail = $scope.viewModel.fkProjectTemplate == undefined;
 	
-			if (!$scope.stName_fail)
+			if (!$scope.stName_fail && 
+				!$scope.fkTemplate_fail )
 			{
 				if (id > 0)
 				{

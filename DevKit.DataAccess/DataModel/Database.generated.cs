@@ -41,12 +41,16 @@ namespace DataModel
 
 		public DevKitDB()
 		{
+			InitDataContext();
 		}
 
 		public DevKitDB(string configuration)
 			: base(configuration)
 		{
+			InitDataContext();
 		}
+
+		partial void InitDataContext();
 	}
 
 	[Table(Schema="public", Name="Profile")]
@@ -60,10 +64,11 @@ namespace DataModel
 	[Table(Schema="public", Name="Project")]
 	public partial class Project
 	{
-		[PrimaryKey, Identity] public long      id         { get; set; } // bigint
-		[Column,     Nullable] public string    stName     { get; set; } // character varying(99)
-		[Column,     Nullable] public long?     fkUser     { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtCreation { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
+		[Column,     Nullable] public string    stName            { get; set; } // character varying(99)
+		[Column,     Nullable] public long?     fkUser            { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtCreation        { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkProjectTemplate { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="ProjectPhase")]
@@ -210,8 +215,9 @@ namespace DataModel
 	[Table(Schema="public", Name="TaskType")]
 	public partial class TaskType
 	{
-		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
-		[Column,     Nullable] public string stName { get; set; } // character varying(200)
+		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
+		[Column,     Nullable] public string stName    { get; set; } // character varying(200)
+		[Column,     Nullable] public long?  fkProject { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskTypeAccumulator")]
@@ -255,7 +261,7 @@ namespace DataModel
 		[Column,     Nullable] public string stDescription { get; set; } // character varying(50)
 	}
 
-	public static partial class tableExtensions
+	public static partial class TableExtensions
 	{
 		public static Profile Find(this ITable<Profile> table, long id)
 		{

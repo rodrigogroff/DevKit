@@ -148,9 +148,88 @@ namespace DataModel
 			
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 
+			var enum_projectTemplate = new EnumProjectTemplate();
+
+			switch ((long)fkProjectTemplate)
+			{
+				case EnumProjectTemplate.Custom:
+					break;
+
+				case EnumProjectTemplate.CMMI2:
+										
+					var ttypePlanning = new TaskType { fkProject = id, stName = "Software Planning" };
+
+					ttypePlanning.id = Convert.ToInt64(db.InsertWithIdentity(ttypePlanning));
+
+					var categScope = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR1", stName = "Scope", stDescription = "" };
+
+					categScope.id = Convert.ToInt64(db.InsertWithIdentity(categScope));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categScope.id);
+
+					var categProducts = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR2", stName = "Products", stDescription = "" };
+
+					categProducts.id = Convert.ToInt64(db.InsertWithIdentity(categProducts));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categProducts.id);
+
+					var categLifecycle = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR3", stName = "Lifecycle", stDescription = "" };
+
+					categLifecycle.id = Convert.ToInt64(db.InsertWithIdentity(categLifecycle));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categLifecycle.id);
+
+					var categEstimate = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR4", stName = "Cost estimation", stDescription = "" };
+
+					categEstimate.id = Convert.ToInt64(db.InsertWithIdentity(categEstimate));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categEstimate.id);
+
+					var categSchedule = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR5", stName = "Schedule", stDescription = "" };
+
+					categSchedule.id = Convert.ToInt64(db.InsertWithIdentity(categSchedule));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categSchedule.id);
+
+					var categRisk = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR6", stName = "Risks", stDescription = "" };
+
+					categRisk.id = Convert.ToInt64(db.InsertWithIdentity(categRisk));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categRisk.id);
+
+					var categResources = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR7", stName = "Resources", stDescription = "" };
+
+					categResources.id = Convert.ToInt64(db.InsertWithIdentity(categResources));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categResources.id);
+
+					var categData = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR8", stName = "Project Data", stDescription = "" };
+
+					categData.id = Convert.ToInt64(db.InsertWithIdentity(categData));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categData.id);
+
+					var categExePlan = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR9", stName = "Execution Plan", stDescription = "" };
+
+					categExePlan.id = Convert.ToInt64(db.InsertWithIdentity(categExePlan));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categExePlan.id);
+
+					break;
+			}
+
 			return true;
 		}
 
+		public void InsertCMMI2_DocumentationFlows(DevKitDB db, long _fktype, long _fkcateg)
+		{
+			db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = _fktype, fkTaskCategory = _fkcateg, nuOrder = 1, stName = "Open" });
+			db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = _fktype, fkTaskCategory = _fkcateg, nuOrder = 2, stName = "Revision" });
+			db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = _fktype, fkTaskCategory = _fkcateg, nuOrder = 3, stName = "Development" });
+			db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = _fktype, fkTaskCategory = _fkcateg, nuOrder = 4, stName = "Peer Review" });
+			db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = _fktype, fkTaskCategory = _fkcateg, nuOrder = 5, stName = "Done" });
+		}
+		
 		public bool Update(DevKitDB db, ref string resp)
 		{
 			if (CheckDuplicate(this, db))

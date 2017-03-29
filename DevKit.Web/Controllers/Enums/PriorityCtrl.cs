@@ -7,29 +7,27 @@ namespace DevKit.Web.Controllers
 {
 	public class PriorityController : ApiControllerBase
 	{
-		EnumPriority Priority = new EnumPriority();		
+		EnumPriority _enum = new EnumPriority();		
 
 		public IHttpActionResult Get()
 		{
-			{
-				string busca = Request.GetQueryStringValue("busca")?.ToUpper();
+			string busca = Request.GetQueryStringValue("busca")?.ToUpper();
 				
-				var query = (from e in Priority.lst select e);
+			var query = (from e in _enum.lst select e);
 
-				if (busca != null)
-					query = from e in query where e.stName.ToUpper().Contains(busca) select e;
+			if (busca != null)
+				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 				
-				return Ok(new
-				{
-					count = query.Count(),
-					results = query.ToList()
-				});
-			}
+			return Ok(new
+			{
+				count = query.Count(),
+				results = query.ToList()
+			});
 		}
 
 		public IHttpActionResult Get(long id)
 		{
-			var model = (from ne in Priority.lst select ne).
+			var model = (from ne in _enum.lst select ne).
 				Where(t => t.id == id).
 				FirstOrDefault();
 

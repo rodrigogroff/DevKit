@@ -41,6 +41,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, { tamanhoPagina: 15, campoNome: 'stName' });
 
+		$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' });
+
 		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, {
 			tamanhoPagina: 15, scope: $scope,
 			filtro: {
@@ -85,8 +87,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		else
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
+			$scope.fkProject_fail = $scope.viewModel.fkProject == undefined;
 	
-			if (!$scope.stName_fail)
+			if (!$scope.stName_fail && 
+				!$scope.fkProject_fail )
 			{
 				if (id > 0)
 				{

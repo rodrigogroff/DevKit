@@ -38,6 +38,16 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
+								<td>Project</td>
+								<td>
+									<button class="btn btn-xs btn-danger" ng-show="fkProject_fail">!</button>
+								</td>
+								<td>
+									<input type="hidden" name="user" style="width:100%" ui-select2="selectProject" ng-model="viewModel.fkProject" />
+								</td>
+							</tr>
+							<tr height="40px">
+								<td></td>
 								<td>Type</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
@@ -120,14 +130,15 @@
 											<thead>
 												<tr>
 													<th width="150px">Category</th>
+													<th width="150px">Abbrev.</th>
 													<th width="150px">Description</th>
 													<th width="70px">Actions</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.categories">
 												<td>{{ mdl.stName }}</td>
-												<td ng-show="mdl.stAbreviation.length > 0 "><b>{{ mdl.stAbreviation }}</b> {{ mdl.stDescription }}</td>
-												<td ng-show="mdl.stAbreviation.length == undefined ">{{ mdl.stDescription }}</td>
+												<td>{{ mdl.stAbreviation }}</td>
+												<td>{{ mdl.stDescription }}</td>
 												<td>
 													<a href="" role="button" ng-click="editCategorie(mdl)">
 														<i class="glyphicon glyphicon-edit" style="color:white"></i>

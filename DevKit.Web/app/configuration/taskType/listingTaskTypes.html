@@ -38,11 +38,13 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
+										<th width="180px">Project</th>
 										<th width="180px">Type</th>
 										<th width="180px">Categories</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+									<td>{{ mdl.project.stName }}</td>
 									<td>{{ mdl.stName }}</td>
 									<td><div data-ng-repeat="m in mdl.categories">{{ m.stName }}</div></td>
 								</tr>

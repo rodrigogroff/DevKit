@@ -10,6 +10,7 @@ namespace DataModel
 	{
 		public int skip, take;
 		public string busca;
+		public long? fkProject;
 	}
 
 	// --------------------------
@@ -19,6 +20,7 @@ namespace DataModel
 	public partial class TaskType
 	{
 		public List<TaskCategory> categories;
+		public Project project;
 		
 		public string updateCommand = "";
 		public object anexedEntity;
@@ -37,12 +39,18 @@ namespace DataModel
 			if (filter.busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
+			if (filter.fkProject != null)
+				query = from e in query where e.fkProject.Equals(filter.fkProject) select e;
+
 			return query;
 		}
 
 		public TaskType LoadAssociations(DevKitDB db)
 		{
 			categories = LoadCategories(db);
+
+			if (fkProject != null)
+				project = db.Project(fkProject);
 			
 			return this;
 		}

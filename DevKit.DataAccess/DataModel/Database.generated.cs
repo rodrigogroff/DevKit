@@ -67,8 +67,8 @@ namespace DataModel
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
 		[Column,     Nullable] public string    stName            { get; set; } // character varying(99)
 		[Column,     Nullable] public long?     fkUser            { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtCreation        { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkProjectTemplate { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtCreation        { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="ProjectPhase")]
@@ -164,8 +164,8 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkTaskType    { get; set; } // bigint
 		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
 		[Column,     Nullable] public bool?  bManagement   { get; set; } // boolean
-		[Column,     Nullable] public string stAbreviation { get; set; } // character varying(5)
-		[Column,     Nullable] public string stDescription { get; set; } // character varying(200)
+		[Column,     Nullable] public string stAbreviation { get; set; } // character varying(10)
+		[Column,     Nullable] public string stDescription { get; set; } // character varying(500)
 	}
 
 	[Table(Schema="public", Name="TaskFlow")]

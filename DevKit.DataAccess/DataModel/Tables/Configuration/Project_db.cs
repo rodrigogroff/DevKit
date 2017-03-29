@@ -203,17 +203,65 @@ namespace DataModel
 
 					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categResources.id);
 
-					var categData = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR8", stName = "Project Data", stDescription = "" };
+					var categEnvironment = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR8", stName = "Project Environment", stDescription = "" };
+
+					categEnvironment.id = Convert.ToInt64(db.InsertWithIdentity(categEnvironment));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categEnvironment.id);
+
+					var categData = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR9", stName = "Project Data", stDescription = "" };
 
 					categData.id = Convert.ToInt64(db.InsertWithIdentity(categData));
 
 					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categData.id);
 
-					var categExePlan = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR9", stName = "Execution Plan", stDescription = "" };
+					var categExePlan = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR10", stName = "Execution Plan", stDescription = "" };
 
 					categExePlan.id = Convert.ToInt64(db.InsertWithIdentity(categExePlan));
 
 					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categExePlan.id);
+
+					var categMilestonePlan = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR11", stName = "Milestones", stDescription = "" };
+
+					categMilestonePlan.id = Convert.ToInt64(db.InsertWithIdentity(categMilestonePlan));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categMilestonePlan.id);
+
+					var categCommitment = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR12", stName = "Commitments", stDescription = "" };
+
+					categCommitment.id = Convert.ToInt64(db.InsertWithIdentity(categCommitment));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categCommitment.id);
+
+					var categProgress = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR13", stName = "Project Progress", stDescription = "" };
+
+					categProgress.id = Convert.ToInt64(db.InsertWithIdentity(categProgress));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categProgress.id);
+
+					var categComm = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR14", stName = "Communication", stDescription = "" };
+
+					categComm.id = Convert.ToInt64(db.InsertWithIdentity(categComm));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categComm.id);
+
+					var categRev = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR15", stName = "Revisions", stDescription = "" };
+
+					categRev.id = Convert.ToInt64(db.InsertWithIdentity(categRev));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categRev.id);
+
+					var categIssues = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR16", stName = "Issues", stDescription = "" };
+
+					categIssues.id = Convert.ToInt64(db.InsertWithIdentity(categIssues));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categIssues.id);
+
+					var categCorrections = new TaskCategory { bManagement = true, fkTaskType = ttypePlanning.id, stAbreviation = "GPR17", stName = "Corrections", stDescription = "" };
+
+					categCorrections.id = Convert.ToInt64(db.InsertWithIdentity(categCorrections));
+
+					InsertCMMI2_DocumentationFlows(db, ttypePlanning.id, categCorrections.id);
 
 					break;
 			}

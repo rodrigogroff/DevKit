@@ -23,33 +23,27 @@
 		<div class="logo" style="padding-top:-4px; padding-left:-60px">
 			<img src='../../images/logo.png' height="112px" />
 		</div>
-		<div class="logo" style="padding-top:20px; padding-left:160px">
-			<table>
-				<tr>
-					<td width="50px"></td> 
-					<td width="130px">
-						 <button class="btn btn-success btn-xs" title="Total open tasks" ng-click="tasksClick()">{{projectTasks}}</button> Project tasks</td>
-					<td>						
-					</td>
-					<td width="20px"></td> 
-					<td width="130px">
-						 <button class="btn btn-primary btn-xs" title="Tasks associated to you" ng-click="tasksClick()">{{userTasks}}</button> User Tasks</td>
-					<td>
-					</td>
-					<td width="20px"></td> 
-					<td width="130px">
-						 @*<button class="btn btn-danger btn-xs" ng-click="tasksClick()">{{userDeadlineTasks}}</button> User Deadline</td>*@
-					<td>						
-					</td>
-				</tr>
-			</table>
-		</div>
 		<header class="page-header">
-			<div class="navbar pull-right" style="height: 72px; padding-top:-4px;">
-				<div class="pull-right" style="color:white">
-					Bem-vindo, <b>{{authentication.nameUser}}</b> &nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
-				</div>
+			<div class="navbar" style="height: 24px; padding-left:200px;padding-top:-4px;">
+				<table width="100%">
+					<tr>
+						<td width="130px">
+							<button class="btn btn-success btn-xs" title="Total open tasks" ng-click="tasksClick()">{{projectTasks}}</button> Project tasks
+						</td>
+						<td></td>
+						<td width="20px"></td>
+						<td width="130px">
+							<button class="btn btn-primary btn-xs" title="Tasks associated to you" ng-click="tasksClick()">{{userTasks}}</button> User Tasks
+						</td>
+						<td></td>
+						<td width="20px"></td>
+						<td align="right" valign="top">
+							@*<button class="btn btn-danger btn-xs" ng-click="tasksClick()">{{userDeadlineTasks}}</button> User Deadline</td>*@							
+							<span style="color:white">Bem-vindo, <b>{{authentication.nameUser}}</b> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
+						<td>
+					</tr>
+				</table>
 			</div>
 		</header>
 		<nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top: 60px">

@@ -156,6 +156,8 @@ CREATE TABLE public."TaskType"
     id bigserial NOT NULL,
     "stName" character varying(200),
 	"fkProject" bigint,
+	"bManaged" boolean,
+	"bCondensedView" boolean,	
     PRIMARY KEY (id)
 )
 WITH (
@@ -172,7 +174,6 @@ CREATE TABLE public."TaskCategory"
     id bigserial NOT NULL,
 	"fkTaskType" bigint,
     "stName" character varying(200),
-	"bManagement" boolean,
 	"stAbreviation" character varying(10),
 	"stDescription" character varying(500),
     PRIMARY KEY (id)

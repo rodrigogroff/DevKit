@@ -163,7 +163,6 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
 		[Column,     Nullable] public long?  fkTaskType    { get; set; } // bigint
 		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
-		[Column,     Nullable] public bool?  bManagement   { get; set; } // boolean
 		[Column,     Nullable] public string stAbreviation { get; set; } // character varying(10)
 		[Column,     Nullable] public string stDescription { get; set; } // character varying(500)
 	}
@@ -215,9 +214,11 @@ namespace DataModel
 	[Table(Schema="public", Name="TaskType")]
 	public partial class TaskType
 	{
-		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
-		[Column,     Nullable] public string stName    { get; set; } // character varying(200)
-		[Column,     Nullable] public long?  fkProject { get; set; } // bigint
+		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
+		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
+		[Column,     Nullable] public long?  fkProject      { get; set; } // bigint
+		[Column,     Nullable] public bool?  bCondensedView { get; set; } // boolean
+		[Column,     Nullable] public bool?  bManaged       { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="TaskTypeAccumulator")]

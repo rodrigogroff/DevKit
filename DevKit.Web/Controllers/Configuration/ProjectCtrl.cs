@@ -53,7 +53,12 @@ namespace DevKit.Web.Controllers
 					FirstOrDefault();
 
 				if (model != null)
-					return Ok(model.LoadAssociations(db));
+				{
+					if (!util.GetCurrentUserProjects(db).Contains(id))
+						return StatusCode(HttpStatusCode.NotFound);
+					else
+						return Ok(model.LoadAssociations(db));
+				}
 
 				return StatusCode(HttpStatusCode.NotFound);
 			}

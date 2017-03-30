@@ -1,4 +1,4 @@
-﻿<div class="webFormPostion">
+﻿<div class="webFormPostion" style="height:100%">
 	<section class="widgetForm" style="width:950px; height:100%">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
@@ -57,6 +57,24 @@
 										   ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
 								</td>
 							</tr>
+							<tr height="40px">
+								<td></td>
+								<td>Management</td>
+								<td></td>
+								<td>
+									<input type="checkbox" ng-disabled="!permModel.edicao" ng-model="viewModel.bManaged" />
+								</td>
+							</tr>
+							<tr height="40px">
+								<td></td>
+								<td>Condensed View</td>
+								<td>
+									
+								</td>
+								<td>
+									<input type="checkbox" ng-disabled="!permModel.edicao" ng-model="viewModel.bCondensedView" />
+								</td>
+							</tr>
 							<tr height="20px"></tr>
 						</table>
 					</div>
@@ -104,15 +122,6 @@
 															</td>
 															<td >
 																<input type="text" class="form-control input-transparent" width="100%" ng-model="newCategorie.stDescription">
-															</td>
-														</tr>
-														<tr height="42px">
-															<td >Management</td>
-															<td >
-																
-															</td>
-															<td >
-																<input type="checkbox" ng-model="newCategorie.bManagement"/>
 															</td>
 														</tr>
 													</table>

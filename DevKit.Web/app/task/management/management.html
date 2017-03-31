@@ -1,0 +1,35 @@
+﻿<div class="webFormPostion" style="width:99%">
+	<section class="widgetForm" style="width:100%">
+		<legend class="legendTop" style="width:100%">
+			<table><tr height="12px"><td> </td></tr></table>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td><b>Project Management </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td width="80px"></td>
+					<td><input type="submit" class="btn btn-success pull-right" value="New" ng-click="new()"></td>
+					<td width="20px"></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+		<div class="divWebFormListing" style="padding-left:35px;width:{{windowWidth}}px">
+			<table width="260px">
+				<tr height="40px">
+					<td width="130px">
+						Select project
+					</td>
+					<td width="200px">
+						<input type="hidden" name="user" style="width:100%" ui-select2="selectProjects" ng-model="fkProject" />
+					</td>
+				</tr>
+			</table>
+			<br />			
+			<div ng-show="viewModel != undefined">
+				sss
+			</div>
+			<br />
+			<br />
+		</div>
+	</section>
+</div>

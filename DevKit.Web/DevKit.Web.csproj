@@ -266,6 +266,8 @@
     <Content Include="app\task\kanban\listingUserKanban.html" />
     <Content Include="app\task\kanban\ListingUserKanbanController.js" />
     <Content Include="app\task\kanban\_filterUserKanban.html" />
+    <Content Include="app\task\management\management.html" />
+    <Content Include="app\task\management\ManagementController.js" />
     <Content Include="app\task\task\listingTasks.html" />
     <Content Include="app\task\task\ListingTasksController.js" />
     <Content Include="app\task\task\task.html" />
@@ -862,6 +864,7 @@
     <Compile Include="Controllers\Configuration\ProjectCtrl.cs" />
     <Compile Include="Controllers\Enums\PriorityCtrl.cs" />
     <Compile Include="Controllers\Task\TaskCountCtrl.cs" />
+    <Compile Include="Controllers\Task\ManagementCtrl.cs" />
     <Compile Include="Controllers\Task\UserKanbanCtrl.cs" />
     <Compile Include="Controllers\Task\TaskCtrl.cs" />
     <Compile Include="Controllers\Util.cs" />

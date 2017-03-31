@@ -60,7 +60,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' });
 
-		$scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskType, { tamanhoPagina: 15, campoNome: 'stName' });
+		$scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskType, {
+			tamanhoPagina: 15, scope: $scope, campoNome: 'stName',
+			filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' }
+		});
 
 		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, {
 				tamanhoPagina: 15, scope: $scope,

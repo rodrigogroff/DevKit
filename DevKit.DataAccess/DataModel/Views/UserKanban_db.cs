@@ -93,6 +93,8 @@ namespace DataModel
 
 			dto.projects = new List<KanbanProject>();
 
+			var foundProject = false;
+
 			foreach (var project in dbUserprojects)
 			{
 				var kb_proj = new KanbanProject()
@@ -118,9 +120,11 @@ namespace DataModel
 										select e).
 										ToList();
 
-				if (lstUsertasks.Count() == 0)
-					dto.fail = true;
-
+				if (lstUsertasks.Count() > 0)
+					foundProject = true;
+				else
+					continue;
+					
 				var lstSprints = (from e in lstUsertasks
 								  join sp in db.ProjectSprints on e.fkSprint equals sp.id
 								  select sp).Distinct().
@@ -223,7 +227,9 @@ namespace DataModel
 				
 				dto.projects.Add(kb_proj);
 			}
-				
+
+			dto.fail = !foundProject;
+
 			return dto;
 		}
 	}

@@ -61,7 +61,7 @@ namespace DataModel
 		List<TaskCategory> LoadCategories(DevKitDB db)
 		{
 			var lst = (from e in db.TaskCategories where e.fkTaskType == id select e).
-				OrderBy(t => t.stName).
+				OrderBy(t => t.stAbreviation).ThenBy ( y=> y.stName).
 				ToList();
 
 			return lst;

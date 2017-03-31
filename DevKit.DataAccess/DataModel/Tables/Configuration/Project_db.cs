@@ -166,39 +166,39 @@ namespace DataModel
 
 						#region - categories - 
 
-						var categScope = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR1", stName = "Scope", stDescription = "" };
+						var categScope = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR01", stName = "Scope", stDescription = "" };
 						categScope.id = Convert.ToInt64(db.InsertWithIdentity(categScope));
 						InsertDocumentationFlows(db, ttypePlanning.id, categScope.id);
 
-						var categProducts = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR2", stName = "Products", stDescription = "" };
+						var categProducts = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR02", stName = "Products", stDescription = "" };
 						categProducts.id = Convert.ToInt64(db.InsertWithIdentity(categProducts));
 						InsertDocumentationFlows(db, ttypePlanning.id, categProducts.id);
 
-						var categLifecycle = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR3", stName = "Lifecycle", stDescription = "" };
+						var categLifecycle = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR03", stName = "Lifecycle", stDescription = "" };
 						categLifecycle.id = Convert.ToInt64(db.InsertWithIdentity(categLifecycle));
 						InsertDocumentationFlows(db, ttypePlanning.id, categLifecycle.id);
 
-						var categEstimate = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR4", stName = "Cost estimation", stDescription = "" };
+						var categEstimate = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR04", stName = "Cost estimation", stDescription = "" };
 						categEstimate.id = Convert.ToInt64(db.InsertWithIdentity(categEstimate));
 						InsertDocumentationFlows(db, ttypePlanning.id, categEstimate.id);
 
-						var categSchedule = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR5", stName = "Schedule", stDescription = "" };
+						var categSchedule = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR05", stName = "Schedule", stDescription = "" };
 						categSchedule.id = Convert.ToInt64(db.InsertWithIdentity(categSchedule));
 						InsertDocumentationFlows(db, ttypePlanning.id, categSchedule.id);
 
-						var categRisk = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR6", stName = "Risks", stDescription = "" };
+						var categRisk = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR06", stName = "Risks", stDescription = "" };
 						categRisk.id = Convert.ToInt64(db.InsertWithIdentity(categRisk));
 						InsertDocumentationFlows(db, ttypePlanning.id, categRisk.id);
 
-						var categResources = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR7", stName = "Resources", stDescription = "" };
+						var categResources = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR07", stName = "Resources", stDescription = "" };
 						categResources.id = Convert.ToInt64(db.InsertWithIdentity(categResources));
 						InsertDocumentationFlows(db, ttypePlanning.id, categResources.id);
 
-						var categEnvironment = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR8", stName = "Project Environment", stDescription = "" };
+						var categEnvironment = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR08", stName = "Project Environment", stDescription = "" };
 						categEnvironment.id = Convert.ToInt64(db.InsertWithIdentity(categEnvironment));
 						InsertDocumentationFlows(db, ttypePlanning.id, categEnvironment.id);
 
-						var categData = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR9", stName = "Project Data", stDescription = "" };
+						var categData = new TaskCategory { fkTaskType = ttypePlanning.id, stAbreviation = "GPR09", stName = "Project Data", stDescription = "" };
 						categData.id = Convert.ToInt64(db.InsertWithIdentity(categData));
 						InsertDocumentationFlows(db, ttypePlanning.id, categData.id);
 

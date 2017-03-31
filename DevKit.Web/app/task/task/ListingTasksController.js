@@ -29,7 +29,10 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 				scope: $scope, filtro: { campo: 'fkPhase', valor: 'campos.fkPhase' }
 			}),
 
-			tasktype: ngSelects.obterConfiguracao(Api.TaskType, { tamanhoPagina: 15, campoNome: 'stName' }),
+			tasktype: ngSelects.obterConfiguracao(Api.TaskType, {
+				tamanhoPagina: 15, campoNome: 'stName',
+				scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' }
+			}),
 
 			taskcategory: ngSelects.obterConfiguracao(Api.TaskCategory, {
 				tamanhoPagina: 15, campoNome: 'stName',

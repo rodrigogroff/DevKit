@@ -12,6 +12,12 @@ namespace DataModel
 	{
 		public List<Priority> lst = new List<Priority>();
 
+		public const long	Emergency = 1,
+							High = 2,
+							Normal = 3,
+							Low = 4,
+							Register = 5;
+
 		public EnumPriority()
 		{
 			lst.Add(new Priority() { id = 1, stName = "Emergency" });

@@ -116,9 +116,10 @@ namespace DataModel
 	[Table(Schema="public", Name="Setup")]
 	public partial class Setup
 	{
-		[PrimaryKey, Identity] public long   id           { get; set; } // bigint
-		[Column,     Nullable] public string stPhoneMask  { get; set; } // character varying(99)
-		[Column,     Nullable] public string stDateFormat { get; set; } // character varying(99)
+		[PrimaryKey, Identity] public long   id               { get; set; } // bigint
+		[Column,     Nullable] public string stPhoneMask      { get; set; } // character varying(99)
+		[Column,     Nullable] public string stDateFormat     { get; set; } // character varying(99)
+		[Column,     Nullable] public string stProtocolFormat { get; set; } // character varying(20)
 	}
 
 	[Table(Schema="public", Name="Task")]
@@ -142,6 +143,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastEdit        { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public bool?     bComplete         { get; set; } // boolean
+		[Column,     Nullable] public string    stProtocol        { get; set; } // character varying(20)
 	}
 
 	[Table(Schema="public", Name="TaskAccumulatorValue")]

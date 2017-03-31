@@ -61,8 +61,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			$scope.stPhoneMask_fail = invalidCheck($scope.viewModel.stPhoneMask);
 			$scope.stDateFormat_fail = invalidCheck($scope.viewModel.stDateFormat);
+			$scope.stProtocolFormat_fail = invalidCheck($scope.viewModel.stProtocolFormat);
 
-			if (!$scope.stPhoneMask_fail && !$scope.stDateFormat_fail)
+			if (!$scope.stPhoneMask_fail &&
+				!$scope.stDateFormat_fail &&
+				!$scope.stProtocolFormat_fail)
 			{
 				Api.Setup.update({ id: 1 }, $scope.viewModel, function (data)
 				{

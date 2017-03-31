@@ -4,6 +4,7 @@ CREATE TABLE public."Setup"
     id bigserial NOT NULL,
     "stPhoneMask" character varying(99),
 	"stDateFormat" character varying(99),
+	"stProtocolFormat" character varying(20),
     PRIMARY KEY (id)
 )
 WITH (
@@ -242,6 +243,7 @@ CREATE TABLE public."Task"
 	"dtStart" timestamp without time zone,	
 	"dtLastEdit" timestamp without time zone,	
 	"bComplete" boolean,
+	"stProtocol" character varying(20),
     PRIMARY KEY (id)
 )
 WITH (

@@ -2,6 +2,7 @@
 melhorias
 ------------------
 
+-editar phase
 -templates, com todos os tipos de tarefas
 -projeto escolhe um template e cria uma cópia de todos os tipos
 

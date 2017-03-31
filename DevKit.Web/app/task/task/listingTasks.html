@@ -23,7 +23,7 @@
 					</td>
 				</tr>
 			</table>
-			<table>
+			<table width="100%">
 				<tr>
 					<td valign="top">
 						<div ng-show="list.length == 0">
@@ -58,20 +58,24 @@
 							<table class="table table-hover" ng-if="availWidth > 1400" style="width:100%">
 								<thead>
 									<tr>
-										<th width="100px">Date</th>
+										<th width="80px">Protocol</th>
+										<th width="130px">Date</th>
 										<th width="100px">Priority</th>
-										<th width="110px">Informed By</th>										
-										<th width="110px">Assigned To</th>
+										<th width="100px">State</th>
+										<th width="130px">Informed By</th>										
+										<th width="130px">Assigned To</th>
 										<th width="120px">Type</th>
-										<th width="120px">Category</th>
-										<th width="250px">Title / Localization</th>
+										<th width="150px">Category</th>
+										<th width="200px">Title / Localization</th>
 										<th width="130px">Project / PHASE</th>
 										<th width="180px">Sprint / VERSION</th>										
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+									<td>{{ mdl.stProtocol }}</td>
 									<td>{{ mdl.sdtStart }}</td>
-									<td><b>{{mdl.sfkTaskFlowCurrent}}</b><br />{{ mdl.snuPriority }}</td>
+									<td>{{ mdl.snuPriority }}</td>
+									<td>{{mdl.sfkTaskFlowCurrent}}</td>
 									<td>{{ mdl.sfkUserStart }}</td>									
 									<td>{{ mdl.sfkUserResponsible }}</td>
 									<td>{{ mdl.sfkTaskType }}</td>

@@ -363,6 +363,11 @@ namespace DataModel
 			return query.Any();
 		}
 
+		int RandomNumber(int min, int max)
+		{
+			return new Random().Next(min, max);
+		}
+
 		public bool Create(DevKitDB db, User usr, ref string resp)
 		{
 			bComplete = false;
@@ -376,6 +381,15 @@ namespace DataModel
 								 FirstOrDefault().
 								 id;
 			
+			var setup = db.Setup();
+
+			if (setup.stProtocolFormat != null)
+				foreach (var i in setup.stProtocolFormat)
+					if (Char.IsDigit(i))
+						stProtocol += RandomNumber(0, 9).ToString();
+					else
+						stProtocol += i;
+
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 
 			return true;

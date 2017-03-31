@@ -8,10 +8,6 @@ namespace DataModel
 		public long? fkUser;
 	}
 
-	// --------------------------
-	// functions
-	// --------------------------
-
 	public partial class ProjectUser
 	{
 		public IQueryable<ProjectUser> ComposedFilters(DevKitDB db, ProjectUserFilter filter)

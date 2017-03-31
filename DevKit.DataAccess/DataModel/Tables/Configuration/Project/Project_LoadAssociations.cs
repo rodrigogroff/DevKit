@@ -4,10 +4,6 @@ using System.Linq;
 
 namespace DataModel
 {
-	// --------------------------
-	// functions
-	// --------------------------
-
 	public partial class Project
 	{
 		public Project LoadAssociations(DevKitDB db)

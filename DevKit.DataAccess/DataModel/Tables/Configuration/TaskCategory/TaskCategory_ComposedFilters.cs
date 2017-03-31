@@ -11,10 +11,6 @@ namespace DataModel
 		public long? fkTaskType;		
 	}
 
-	// --------------------------
-	// functions
-	// --------------------------
-
 	public partial class TaskCategory
 	{
 		public IQueryable<TaskCategory> ComposedFilters(DevKitDB db, TaskCategoryFilter filter)
@@ -29,10 +25,5 @@ namespace DataModel
 
 			return query;
 		}
-
-		public TaskCategory LoadAssociations(DevKitDB db)
-		{
-			return this;
-		}		
 	}
 }

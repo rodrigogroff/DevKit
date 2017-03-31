@@ -1,5 +1,4 @@
 ﻿using LinqToDB;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DataModel
@@ -11,30 +10,6 @@ namespace DataModel
 
 		public long? fkTaskCategory;		
 	}
-
-	// --------------------------
-	// properties
-	// --------------------------
-
-	public partial class TaskTypeAccumulator
-	{
-		public string sfkFlow = "";
-
-		public List<LogAccumulatorValue> logs = new List<LogAccumulatorValue>();
-	}
-
-	// extra class
-
-	public class LogAccumulatorValue
-	{
-		public string sfkUser = "",
-			          sdtLog = "",
-					  sValue = "";
-	}
-	
-	// --------------------------
-	// functions
-	// --------------------------
 
 	public partial class TaskTypeAccumulator
 	{
@@ -50,12 +25,5 @@ namespace DataModel
 
 			return query;
 		}
-
-		public TaskTypeAccumulator LoadAssociations(DevKitDB db)
-		{
-			sfkFlow = db.TaskFlow(fkTaskFlow).stName;
-
-			return this;
-		}		
 	}
 }

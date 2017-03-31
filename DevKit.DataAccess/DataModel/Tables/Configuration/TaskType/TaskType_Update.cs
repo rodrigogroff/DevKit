@@ -1,101 +1,12 @@
 ﻿using LinqToDB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
+using System;
+using System.Linq;
 
 namespace DataModel
 {
-	public class TaskTypeFilter
-	{
-		public int skip, take;
-		public string busca;
-		public long? fkProject;
-	}
-
-	// --------------------------
-	// properties
-	// --------------------------
-
 	public partial class TaskType
 	{
-		public List<TaskCategory> categories;
-		public Project project;
-		
-		public string updateCommand = "";
-		public object anexedEntity;
-	}
-
-	// --------------------------
-	// functions
-	// --------------------------
-
-	public partial class TaskType
-	{
-		public IQueryable<TaskType> ComposedFilters(DevKitDB db, TaskTypeFilter filter, List<long?> lstUserProjetcs)
-		{
-			var query = from e in db.TaskTypes select e;
-
-			if (filter.busca != null)
-				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
-
-			if (filter.fkProject != null)
-				query = from e in query where e.fkProject.Equals(filter.fkProject) select e;
-
-			if (lstUserProjetcs.Count() > 0)
-				query = from e in query where lstUserProjetcs.Contains(e.fkProject) select e;
-
-			return query;
-		}
-
-		public TaskType LoadAssociations(DevKitDB db)
-		{
-			categories = LoadCategories(db);
-
-			if (fkProject != null)
-				project = db.Project(fkProject);
-			
-			return this;
-		}
-
-		List<TaskCategory> LoadCategories(DevKitDB db)
-		{
-			var lst = (from e in db.TaskCategories where e.fkTaskType == id select e).
-				OrderBy(t => t.stAbreviation).ThenBy ( y=> y.stName).
-				ToList();
-
-			return lst;
-		}
-
-		bool CheckDuplicate(TaskType item, DevKitDB db)
-		{
-			var query = from e in db.TaskTypes select e;
-
-			if (item.stName != null)
-			{
-				var _st = item.stName.ToUpper();
-				query = from e in query where e.stName.ToUpper().Contains(_st) select e;
-			}
-
-			if (item.id > 0)
-				query = from e in query where e.id != item.id select e;
-
-			return query.Any();
-		}
-
-		public bool Create(DevKitDB db, User usr, ref string resp)
-		{
-			if (CheckDuplicate(this, db))
-			{
-				resp = "Project name already taken";
-				return false;
-			}
-			
-			id = Convert.ToInt64(db.InsertWithIdentity(this));
-
-			return true;
-		}
-
 		public bool Update(DevKitDB db, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
@@ -283,17 +194,6 @@ namespace DataModel
 						db.Delete(accDel);
 						break;
 					}
-			}
-
-			return true;
-		}
-
-		public bool CanDelete(DevKitDB db, ref string resp)
-		{
-			if ((from e in db.Tasks where e.fkTaskType == id select e).Any())
-			{
-				resp = "This task type is being used in a task";
-				return false;
 			}
 
 			return true;

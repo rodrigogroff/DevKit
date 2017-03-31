@@ -3,6 +3,7 @@ melhorias
 ------------------
 
 -editar phase
+-editar version
 -ao selecionar categoria, mostrar o texto de descrição
 -templates, com todos os tipos de tarefas
 -projeto escolhe um template e cria uma cópia de todos os tipos

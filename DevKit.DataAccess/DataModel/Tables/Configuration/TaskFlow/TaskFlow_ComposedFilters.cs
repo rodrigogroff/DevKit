@@ -12,10 +12,6 @@ namespace DataModel
 						fkTaskCategory;
 	}
 
-	// --------------------------
-	// functions
-	// --------------------------
-
 	public partial class TaskFlow
 	{
 		public IQueryable<TaskFlow> ComposedFilters(DevKitDB db, TaskFlowFilter filter)
@@ -33,10 +29,5 @@ namespace DataModel
 
 			return query;
 		}
-
-		public TaskFlow LoadAssociations(DevKitDB db)
-		{
-			return this;
-		}		
 	}
 }

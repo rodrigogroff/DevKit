@@ -10,10 +10,6 @@ namespace DataModel
 
 		public int? fkSprint;		
 	}
-	
-	// --------------------------
-	// functions
-	// --------------------------
 
 	public partial class ProjectSprintVersion
 	{

@@ -11,10 +11,6 @@ namespace DataModel
 		public string busca;
 	}
 	
-	// --------------------------
-	// functions
-	// --------------------------
-
 	public partial class ProjectPhase
 	{
 		public IQueryable<ProjectPhase> ComposedFilters(DevKitDB db, ProjectPhaseFilter filter)
@@ -28,11 +24,6 @@ namespace DataModel
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
 			return query;
-		}
-
-		public ProjectPhase LoadAssociations(DevKitDB db)
-		{
-			return this;
 		}
 	}
 }

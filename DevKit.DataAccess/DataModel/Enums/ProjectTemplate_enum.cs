@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace DataModel
 {
@@ -19,6 +20,11 @@ namespace DataModel
 		{
 			lst.Add(new ProjectTemplate() { id = Custom, stName = "Custom" });
 			lst.Add(new ProjectTemplate() { id = CMMI2, stName = "CMMI-2 / MPSBR-G" });
+		}
+
+		public ProjectTemplate Get(long? _id)
+		{
+			return lst.Where(y => y.id == _id).FirstOrDefault();
 		}
 	}
 }

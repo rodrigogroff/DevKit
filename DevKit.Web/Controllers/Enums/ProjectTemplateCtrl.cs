@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using DataModel;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
-using DataModel;
 
 namespace DevKit.Web.Controllers
 {
@@ -27,9 +27,7 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-			var model = (from ne in _enum.lst select ne).
-				Where(t => t.id == id).
-				FirstOrDefault();
+			var model = _enum.Get(id);
 
 			if (model != null)
 				return Ok(model);

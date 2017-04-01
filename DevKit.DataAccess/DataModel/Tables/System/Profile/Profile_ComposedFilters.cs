@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace DataModel
 {
@@ -11,7 +12,7 @@ namespace DataModel
 
 	public partial class Profile
 	{
-		public IQueryable<Profile> ComposedFilters(DevKitDB db, ref int count, ProfileFilter filter)
+		public List<Profile> ComposedFilters(DevKitDB db, ref int count, ProfileFilter filter)
 		{
 			var query = from e in db.Profiles select e;
 

@@ -20,7 +20,7 @@ namespace DevKit.Web.Controllers
 			using (var db = new DevKitDB())
 			{
 				var usr = new Util().GetCurrentUser(db);
-				var perf = db.Profiles.Find((long)usr.fkProfile);
+				var perf = db.Profile(usr.fkProfile);
 
 				if (perf == null)
 					return StatusCode(HttpStatusCode.NotFound);

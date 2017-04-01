@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace DataModel
 {
@@ -25,6 +26,11 @@ namespace DataModel
 			lst.Add(new Priority() { id = 3, stName = "Normal" });
 			lst.Add(new Priority() { id = 4, stName = "Low" });
 			lst.Add(new Priority() { id = 5, stName = "Register" });
+		}
+
+		public Priority Get(long _id)
+		{
+			return lst.Where(y => y.id == _id).FirstOrDefault();
 		}
 	}
 }

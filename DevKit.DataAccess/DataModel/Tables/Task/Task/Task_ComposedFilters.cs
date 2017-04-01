@@ -26,7 +26,7 @@ namespace DataModel
 
 	public partial class Task
 	{
-		public IQueryable<Task> ComposedFilters(DevKitDB db, TaskFilter filter)
+		public List<Task> ComposedFilters(DevKitDB db, ref int count, TaskFilter filter)
 		{
 			var query = from e in db.Tasks select e;
 
@@ -73,7 +73,15 @@ namespace DataModel
 			if (filter.complete != null)
 				query = from e in query where e.bComplete == filter.complete select e;
 
-			return query;
+			count = query.Count();
+
+			query = query.OrderBy(y => y.nuPriority).ThenBy(y => y.fkSprint);
+
+			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+
+			results.ForEach(y => { y = y.LoadAssociations(db); });
+
+			return results;
 		}
 	}
 }

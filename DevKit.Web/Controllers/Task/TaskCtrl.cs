@@ -1,6 +1,4 @@
 ﻿using DataModel;
-using LinqToDB;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
 
@@ -12,7 +10,9 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var filter = new TaskFilter()
+				var count = 0; var mdl = new Task();
+
+				var results = mdl.ComposedFilters(db, ref count, new TaskFilter()
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
@@ -26,18 +26,10 @@ namespace DevKit.Web.Controllers
 					fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
 					fkTaskFlowCurrent = Request.GetQueryStringValue<long?>("fkTaskFlowCurrent", null),
 					fkUserStart = Request.GetQueryStringValue<long?>("fkUserStart", null),
-					fkUserResponsible = Request.GetQueryStringValue<long?>("fkUserResponsible", null),	
-				};
+					fkUserResponsible = Request.GetQueryStringValue<long?>("fkUserResponsible", null),
+				});
 
-				var mdl = new Task();
-
-				var query = mdl.ComposedFilters(db, filter).OrderByDescending(y => y.fkSprint);
-
-				var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-
-				results.ForEach(y => { y = y.LoadAssociations(db); });
-
-				return Ok(new { count = query.Count(), results = results });
+				return Ok(new { count = count, results = results });
 			}
 		}
 
@@ -45,9 +37,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Tasks select ne).
-					Where(t => t.id == id).
-					FirstOrDefault();
+				var model = db.Task(id);
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -88,9 +78,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Tasks select ne).
-					Where(t => t.id == id).
-					FirstOrDefault();
+				var model = db.Task(id);
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

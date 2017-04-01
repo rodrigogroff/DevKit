@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace DataModel
 {
@@ -13,7 +14,7 @@ namespace DataModel
 
 	public partial class User
 	{
-		public IQueryable<User> ComposedFilters(DevKitDB db, ref int count, UserFilter filter)
+		public List<User> ComposedFilters(DevKitDB db, ref int count, UserFilter filter)
 		{
 			var query = from e in db.Users select e;
 
@@ -28,7 +29,7 @@ namespace DataModel
 
 			count = query.Count();
 
-			query = query.OrderBy(y => y.stName);
+			query = query.OrderBy(y => y.stLogin);
 
 			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
 

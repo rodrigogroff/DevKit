@@ -18,18 +18,12 @@ namespace DevKit.Web.Controllers
 			if (busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 
-			return Ok(new
-			{
-				count = query.Count(),
-				results = query.ToList()
-			});
+			return Ok(new { count = query.Count(), results = query.ToList() });
 		}
 
 		public IHttpActionResult Get(long id)
 		{
-			var model = (from ne in _enum.lst select ne).
-				Where(t => t.id == id).
-				FirstOrDefault();
+			var model = _enum.Get(id);
 
 			if (model != null)
 				return Ok(model);

@@ -2,11 +2,10 @@
 melhorias
 ------------------
 
--composedFilters fazem o orderBy
+-management
+-'restricted user list' para passar para determinado fluxo
 -editar phase
 -editar version
--'restricted user list' para passar para determinado fluxo
--management
 -timesheet
 
 -ao selecionar categoria, mostrar o texto de descrição

@@ -22,6 +22,11 @@ namespace DataModel
 			lst.Add(new AccumulatorType() { id = 2, stName = "Hours" });
 		}
 
+		public AccumulatorType Get(long? _id)
+		{
+			return lst.Where(y => y.id == _id).FirstOrDefault();
+		}
+
 		public string GetName(long? _id)
 		{
 			var it = lst.Where(y => y.id == _id).FirstOrDefault();

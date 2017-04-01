@@ -68,6 +68,7 @@
     <Compile Include="DataModel\DevKit_db.cs" />
     <Compile Include="DataModel\Enums\AccumulatorType_enum.cs" />
     <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_ComposedFilters.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_Delete.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectUser\ProjectUser_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectUser\ProjectUser_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_Create.cs" />

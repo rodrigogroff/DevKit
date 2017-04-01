@@ -14,16 +14,4 @@ namespace DataModel
 		public string updateCommand = "";
 		public object anexedEntity;
 	}
-
-	public partial class ProjectUser
-	{
-		public string stUser = "";
-		public string sdtJoin = "";
-	}
-
-	public partial class ProjectPhase
-	{
-		public string sdtStart = "";
-		public string sdtEnd = "";
-	}
 }

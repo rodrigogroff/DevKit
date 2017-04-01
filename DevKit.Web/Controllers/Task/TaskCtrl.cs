@@ -3,7 +3,6 @@ using LinqToDB;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using System.Collections.Generic;
 
 namespace DevKit.Web.Controllers
 {
@@ -18,9 +17,7 @@ namespace DevKit.Web.Controllers
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-
 					complete = Request.GetQueryStringValue<bool?>("complete", null),
-
 					nuPriority = Request.GetQueryStringValue<long?>("nuPriority", null),
 					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 					fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
@@ -34,24 +31,14 @@ namespace DevKit.Web.Controllers
 
 				var mdl = new Task();
 
-				var query = mdl.ComposedFilters(db, filter).
-					OrderByDescending(y => y.fkSprint);
+				var query = mdl.ComposedFilters(db, filter).OrderByDescending(y => y.fkSprint);
 
-				return Ok(new
-				{
-					count = query.Count(),
-					results = Output (query.Skip(() => filter.skip).Take(() => filter.take), db)
-				});
+				var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+
+				results.ForEach(y => { y = y.LoadAssociations(db); });
+
+				return Ok(new { count = query.Count(), results = results });
 			}
-		}
-
-		List<Task> Output(IQueryable<Task> query, DevKitDB db)
-		{
-			var lst = query.ToList();
-
-			lst.ForEach(mdl => { mdl = mdl.LoadAssociations(db, true); });
-
-			return lst;
 		}
 
 		public IHttpActionResult Get(long id)

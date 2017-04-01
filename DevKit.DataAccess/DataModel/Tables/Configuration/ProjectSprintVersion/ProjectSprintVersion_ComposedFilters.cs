@@ -1,19 +1,19 @@
 ﻿using LinqToDB;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataModel
 {
-	public class ProjectVersionFilter
+	public class ProjectSprintVersionFilter
 	{
 		public int skip, take;
 		public string busca;
-
 		public int? fkSprint;		
 	}
 
 	public partial class ProjectSprintVersion
 	{
-		public IQueryable<ProjectSprintVersion> ComposedFilters(DevKitDB db, ProjectVersionFilter filter)
+		public List<ProjectSprintVersion> ComposedFilters(DevKitDB db, ref int count, ProjectSprintVersionFilter filter)
 		{
 			var query = from e in db.ProjectSprintVersions select e;
 
@@ -23,7 +23,13 @@ namespace DataModel
 			if (filter.busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
-			return query;
+			count = query.Count();
+
+			query = query.OrderBy(y => y.stName);
+
+			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+			
+			return results;
 		}
 	}
 }

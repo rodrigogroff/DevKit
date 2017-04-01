@@ -2,11 +2,14 @@
 melhorias
 ------------------
 
+-composedFilters fazem o orderBy
 -editar phase
 -editar version
+-'restricted user list' para passar para determinado fluxo
+-management
+-timesheet
+
 -ao selecionar categoria, mostrar o texto de descrição
--templates, com todos os tipos de tarefas
--projeto escolhe um template e cria uma cópia de todos os tipos
 
 -Sprint 
 	Accumulator Set

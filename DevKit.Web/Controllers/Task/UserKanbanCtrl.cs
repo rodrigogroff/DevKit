@@ -13,9 +13,7 @@ namespace DevKit.Web.Controllers
 				var filter = new UserKanbanFilter()
 				{
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-
 					complete = Request.GetQueryStringValue<bool?>("complete", null),
-
 					nuPriority = Request.GetQueryStringValue<long?>("nuPriority", null),
 					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 					fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),

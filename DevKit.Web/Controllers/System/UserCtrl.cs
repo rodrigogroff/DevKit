@@ -25,14 +25,11 @@ namespace DevKit.Web.Controllers
 
 				var mdl = new User();
 
-				var query = mdl.ComposedFilters(db, filter).
-					OrderBy(y => y.stLogin);
+				var query = mdl.ComposedFilters(db, filter).OrderBy(y => y.stLogin);
 
-				return Ok(new
-				{
-					count = query.Count(),
-					results = Output (query.Skip(() => filter.skip).Take(() => filter.take), db)
-				});
+				var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+				
+				return Ok(new { count = query.Count(), results = results });
 			}
 		}
 

@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace DataModel
 {
@@ -7,13 +8,12 @@ namespace DataModel
 	{
 		public int skip, take;
 		public int? fkProject;
-
 		public string busca;
 	}
 	
 	public partial class ProjectPhase
 	{
-		public IQueryable<ProjectPhase> ComposedFilters(DevKitDB db, ProjectPhaseFilter filter)
+		public List<ProjectPhase> ComposedFilters(DevKitDB db, ref int count, ProjectPhaseFilter filter)
 		{
 			var query = from e in db.ProjectPhases select e;
 
@@ -23,7 +23,15 @@ namespace DataModel
 			if (filter.busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
-			return query;
+			count = query.Count();
+
+			query = query.OrderBy(y => y.stName);
+
+			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+
+			results.ForEach(y => { y = y.LoadAssociations(db); });
+
+			return results;
 		}
 	}
 }

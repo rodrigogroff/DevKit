@@ -1,60 +1,37 @@
 ﻿using DataModel;
-using LinqToDB;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
-using System.Collections.Generic;
 
 namespace DevKit.Web.Controllers
 {
 	public class ProjectController : ApiControllerBase
 	{
-		Util util = new Util();
-
 		public IHttpActionResult Get()
 		{
 			using (var db = new DevKitDB())
 			{
-				var filter = new ProjectFilter()
+				var count = 0; var mdl = new Project();				
+
+				var results = mdl.ComposedFilters(db, ref count, new Util().GetCurrentUserProjects(db), new ProjectFilter
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper()
-				};
-
-				var mdl = new Project();				
-
-				var query = mdl.ComposedFilters(db, filter, util.GetCurrentUserProjects(db)).
-					OrderBy(y => y.stName);
-
-				return Ok(new
-				{
-					count = query.Count(),
-					results = Output (query.Skip(() => filter.skip).Take(() => filter.take), db)
 				});
+
+				return Ok(new { count = count, results = results });
 			}
-		}
-
-		List<Project> Output(IQueryable<Project> query, DevKitDB db)
-		{
-			var lst = query.ToList();
-
-			lst.ForEach(mdl => { mdl = mdl.LoadAssociations(db); });
-
-			return lst;
 		}
 
 		public IHttpActionResult Get(long id)
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Projects select ne).
-					Where(t => t.id == id).
-					FirstOrDefault();
+				var model = db.Project(id);
 
 				if (model != null)
 				{
-					if (!util.GetCurrentUserProjects(db).Contains(id))
+					if (!new Util().GetCurrentUserProjects(db).Contains(id))
 						return StatusCode(HttpStatusCode.NotFound);
 					else
 						return Ok(model.LoadAssociations(db));
@@ -70,7 +47,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Create(db, util.GetCurrentUser(db), ref resp))
+				if (!mdl.Create(db, new Util().GetCurrentUser(db), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);
@@ -94,9 +71,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Projects select ne).
-					Where(t => t.id == id).
-					FirstOrDefault();
+				var model = db.Project(id);
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

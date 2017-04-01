@@ -1,6 +1,5 @@
 ﻿using DataModel;
 using LinqToDB;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -22,26 +21,16 @@ namespace DevKit.Web.Controllers
 
 				var mdl = new Profile();
 
-				var query = mdl.ComposedFilters(db, filter).
-					OrderBy(y => y.stName);
+				var query = mdl.ComposedFilters(db, filter).OrderBy(y => y.stName);
 
-				return Ok(new
-				{
-					count = query.Count(),
-					results = Output(query.Skip(() => filter.skip).Take(() => filter.take), db)
-				});
+				var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+
+				results.ForEach(y => { y = y.LoadAssociations(db); });
+
+				return Ok(new { count = query.Count(), results = results });
 			}
 		}
-
-		List<Profile> Output(IQueryable<Profile> query, DevKitDB db)
-		{
-			var lst = query.ToList();
-
-			lst.ForEach(mdl => { mdl = mdl.LoadAssociations(db); });
-
-			return lst;
-		}
-
+		
 		public IHttpActionResult Get(long id)
 		{
 			using (var db = new DevKitDB())

@@ -62,6 +62,13 @@ namespace DataModel
 			return ret;
 		}
 
+		public TaskTypeAccumulator TaskTypeAccumulator(long? id)
+		{
+			var tag = "TaskTypeAccumulator" + id; var ret = Cache[tag] as TaskTypeAccumulator;
+			if (ret == null) { ret = TaskTypeAccumulators.Find((long)id); Cache[tag] = ret; }
+			return ret;
+		}
+
 		public TaskCategory TaskCategory(long? id)
 		{
 			var tag = "TaskCategory" + id; var ret = Cache[tag] as TaskCategory;

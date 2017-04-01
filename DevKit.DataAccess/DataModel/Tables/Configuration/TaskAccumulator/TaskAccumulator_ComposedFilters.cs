@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataModel
@@ -13,7 +14,7 @@ namespace DataModel
 
 	public partial class TaskTypeAccumulator
 	{
-		public IQueryable<TaskTypeAccumulator> ComposedFilters(DevKitDB db, TaskAccumulatorFilter filter)
+		public List<TaskTypeAccumulator> ComposedFilters(DevKitDB db, ref int count, TaskAccumulatorFilter filter)
 		{
 			var query = from e in db.TaskTypeAccumulators select e;
 
@@ -23,7 +24,15 @@ namespace DataModel
 			if (filter.busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
-			return query;
+			count = query.Count();
+
+			query = query.OrderBy(y => y.stName);
+
+			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+
+			results.ForEach(y => { y = y.LoadAssociations(db); });
+
+			return results;
 		}
 	}
 }

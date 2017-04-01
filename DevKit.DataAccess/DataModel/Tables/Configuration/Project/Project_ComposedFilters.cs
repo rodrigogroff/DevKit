@@ -12,7 +12,7 @@ namespace DataModel
 	
 	public partial class Project
 	{
-		public IQueryable<Project> ComposedFilters(DevKitDB db, ProjectFilter filter, List<long?> lstUserProjects)
+		public List<Project> ComposedFilters(DevKitDB db, ref int count, List<long?> lstUserProjects, ProjectFilter filter)
 		{
 			var query = from e in db.Projects select e;
 
@@ -22,7 +22,15 @@ namespace DataModel
 			if (lstUserProjects.Count() > 0)
 				query = from e in query where lstUserProjects.Contains(e.id) select e;
 
-			return query;
+			count = query.Count();
+
+			query = query.OrderBy(y => y.stName);
+
+			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+
+			results.ForEach(y => { y = y.LoadAssociations(db); });
+
+			return results;
 		}
 	}
 }

@@ -15,5 +15,10 @@ namespace DataModel
 
 			return true;
 		}
+
+		public void Delete(DevKitDB db)
+		{
+			db.Delete(this);
+		}
 	}
 }

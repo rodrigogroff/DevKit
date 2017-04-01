@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataModel
@@ -14,7 +15,7 @@ namespace DataModel
 
 	public partial class TaskFlow
 	{
-		public IQueryable<TaskFlow> ComposedFilters(DevKitDB db, TaskFlowFilter filter)
+		public List<TaskFlow> ComposedFilters(DevKitDB db, ref int count, TaskFlowFilter filter)
 		{
 			var query = from e in db.TaskFlows select e;
 
@@ -27,7 +28,15 @@ namespace DataModel
 			if (filter.busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
-			return query;
+			count = query.Count();
+
+			query = query.OrderBy(y => y.nuOrder);
+
+			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+
+			results.ForEach(y => { y = y.LoadAssociations(db); });
+
+			return results;
 		}
 	}
 }

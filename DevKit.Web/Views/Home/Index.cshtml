@@ -1,10 +1,8 @@
-﻿
-@{
+﻿@{
 	// Build version
 	var assembly = System.Reflection.Assembly.GetAssembly(typeof(Application));
 	var version = assembly.GetName().Version.ToString(3);
 }
-
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
 <head>
@@ -72,6 +70,7 @@
 						   data-parent="#side-nav" href="#forms-collapseTask"><span class="name">Tasks</span></a>
 						<ul id="forms-collapseTask" class="panel-collapse collapse">
 							<li><a ui-sref="management"><span>Management</span></a></li>
+							<li><a ui-sref="timesheet"><span>Timesheet</span></a></li>
 							<li><a ui-sref="userKanban"><span>Kanban View</span></a></li>
 							<li><a ui-sref="tasks"><span>Listing</span></a></li>
 							<li><a ui-sref="task-new"><span>New Task</span></a></li>

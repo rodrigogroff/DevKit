@@ -10,8 +10,7 @@ namespace DataModel
 		{
 			categories = LoadCategories(db);
 
-			if (fkProject != null)
-				project = db.Project(fkProject);
+			project = db.Project(fkProject);
 			
 			return this;
 		}

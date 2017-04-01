@@ -29,9 +29,7 @@ namespace DataModel
 			query = query.OrderBy(y => y.stName);
 
 			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-
-			results.ForEach(y => { y = y.LoadAssociations(db); });
-
+			
 			return results;
 		}
 	}

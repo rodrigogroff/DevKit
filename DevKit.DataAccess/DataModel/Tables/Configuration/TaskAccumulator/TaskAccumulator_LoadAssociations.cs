@@ -5,7 +5,7 @@ namespace DataModel
 	{
 		public TaskTypeAccumulator LoadAssociations(DevKitDB db)
 		{
-			sfkFlow = db.TaskFlow(fkTaskFlow).stName;
+			sfkFlow = db.TaskFlow(fkTaskFlow)?.stName;
 
 			return this;
 		}		

@@ -11,21 +11,17 @@ namespace DataModel
 			var setup = db.Setup();
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
-			snuPriority = new EnumPriority().lst.Where(t => t.id == nuPriority).FirstOrDefault().stName;
-			sfkUserStart = db.User(fkUserStart).stLogin;
+			snuPriority = new EnumPriority().Get((long)nuPriority).stName;
+			sfkUserStart = db.User(fkUserStart)?.stLogin;
 
-			sfkTaskCategory = db.TaskCategory(fkTaskCategory).stName;
-			sfkTaskType = db.TaskType(fkTaskType).stName;
-			sfkProject = db.Project(fkProject).stName;
-			sfkPhase = db.ProjectPhase(fkPhase).stName;
-			sfkSprint = db.ProjectSprint(fkSprint).stName;
-			sfkTaskFlowCurrent = db.TaskFlow(fkTaskFlowCurrent).stName;
-
-			if (fkVersion != null)
-				sfkVersion = db.ProjectSprintVersion(fkVersion).stName;
-
-			if (fkUserResponsible != null)
-				sfkUserResponsible = db.User(fkUserResponsible).stLogin;
+			sfkTaskCategory = db.TaskCategory(fkTaskCategory)?.stName;
+			sfkTaskType = db.TaskType(fkTaskType)?.stName;
+			sfkProject = db.Project(fkProject)?.stName;
+			sfkPhase = db.ProjectPhase(fkPhase)?.stName;
+			sfkSprint = db.ProjectSprint(fkSprint)?.stName;
+			sfkTaskFlowCurrent = db.TaskFlow(fkTaskFlowCurrent)?.stName;
+			sfkVersion = db.ProjectSprintVersion(fkVersion)?.stName;
+			sfkUserResponsible = db.User(fkUserResponsible)?.stLogin;
 
 			if (!IsListing)
 			{
@@ -115,8 +111,6 @@ namespace DataModel
 				item.sfkTaskAccType = stypes.Where(y => y.id == item.fkTaskAccType).FirstOrDefault().stName;
 
 				item.snuTotal = GetValueForType(db, item.sfkTaskAccType, id, item.id);
-
-				// logs
 
 				var logs = (from e in db.TaskAccumulatorValues
 							where e.fkTask == id

@@ -21,16 +21,7 @@ namespace DataModel
 
 			return this;
 		}
-
-		List<ProjectSprint> LoadSprints(DevKitDB db)
-		{
-			var lst = (from e in db.ProjectSprints where e.fkProject == id select e).
-				OrderBy(t => t.id).
-				ToList();
-
-			return lst;
-		}
-
+		
 		List<ProjectUser> LoadUsers(DevKitDB db)
 		{
 			var setup = db.Setup();
@@ -61,6 +52,15 @@ namespace DataModel
 				item.sdtStart = item.dtStart?.ToString(setup.stDateFormat);
 				item.sdtEnd = item.dtEnd?.ToString(setup.stDateFormat);
 			}
+
+			return lst;
+		}
+
+		List<ProjectSprint> LoadSprints(DevKitDB db)
+		{
+			var lst = (from e in db.ProjectSprints where e.fkProject == id select e).
+				OrderBy(t => t.id).
+				ToList();
 
 			return lst;
 		}

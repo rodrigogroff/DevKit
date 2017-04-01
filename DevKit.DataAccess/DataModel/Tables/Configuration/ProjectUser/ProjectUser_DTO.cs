@@ -1,6 +1,4 @@
-﻿using LinqToDB;
-using System.Linq;
-
+﻿
 namespace DataModel
 {
 	public partial class ProjectUser

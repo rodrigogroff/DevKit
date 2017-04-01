@@ -15,6 +15,7 @@ namespace DataModel
 
 		public User User(long? id)
 		{
+			if (id == null) return null;
 			var tag = "User" + id; var ret = Cache[tag] as User;
 			if (ret == null) { ret = Users.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -22,6 +23,7 @@ namespace DataModel
 
 		public Profile Profile(long? id)
 		{
+			if (id == null) return null;
 			var tag = "Profile" + id; var ret = Cache[tag] as Profile;
 			if (ret == null) { ret = Profiles.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -29,6 +31,7 @@ namespace DataModel
 
 		public Project Project(long? id)
 		{
+			if (id == null) return null;
 			var tag = "Project" + id; var ret = Cache[tag] as Project;
 			if (ret == null) { ret = Projects.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -36,6 +39,7 @@ namespace DataModel
 
 		public ProjectPhase ProjectPhase(long? id)
 		{
+			if (id == null) return null;
 			var tag = "ProjectPhase" + id; var ret = Cache[tag] as ProjectPhase;
 			if (ret == null) { ret = ProjectPhases.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -43,6 +47,7 @@ namespace DataModel
 
 		public ProjectSprint ProjectSprint(long? id)
 		{
+			if (id == null) return null;
 			var tag = "ProjectSprint" + id; var ret = Cache[tag] as ProjectSprint;
 			if (ret == null) { ret = ProjectSprints.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -50,6 +55,7 @@ namespace DataModel
 
 		public ProjectSprintVersion ProjectSprintVersion(long? id)
 		{
+			if (id == null) return null;
 			var tag = "ProjectSprintVersion" + id; var ret = Cache[tag] as ProjectSprintVersion;
 			if (ret == null) { ret = ProjectSprintVersions.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -57,6 +63,7 @@ namespace DataModel
 
 		public TaskType TaskType(long? id)
 		{
+			if (id == null) return null;
 			var tag = "TaskType" + id; var ret = Cache[tag] as TaskType;
 			if (ret == null) { ret = TaskTypes.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -64,6 +71,7 @@ namespace DataModel
 
 		public TaskTypeAccumulator TaskTypeAccumulator(long? id)
 		{
+			if (id == null) return null;
 			var tag = "TaskTypeAccumulator" + id; var ret = Cache[tag] as TaskTypeAccumulator;
 			if (ret == null) { ret = TaskTypeAccumulators.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -71,6 +79,7 @@ namespace DataModel
 
 		public TaskCategory TaskCategory(long? id)
 		{
+			if (id == null) return null;
 			var tag = "TaskCategory" + id; var ret = Cache[tag] as TaskCategory;
 			if (ret == null) { ret = TaskCategories.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -78,6 +87,7 @@ namespace DataModel
 
 		public TaskFlow TaskFlow(long? id)
 		{
+			if (id == null) return null;
 			var tag = "TaskFlow" + id; var ret = Cache[tag] as TaskFlow;
 			if (ret == null) { ret = TaskFlows.Find((long)id); Cache[tag] = ret; }
 			return ret;
@@ -85,6 +95,7 @@ namespace DataModel
 
 		public Task Task(long? id)
 		{
+			if (id == null) return null;
 			var tag = "Task" + id; var ret = Cache[tag] as Task;
 			if (ret == null) { ret = Tasks.Find((long)id); Cache[tag] = ret; }
 			return ret;

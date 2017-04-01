@@ -33,9 +33,7 @@ namespace DataModel
 			query = query.OrderBy(y => y.nuOrder);
 
 			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-
-			results.ForEach(y => { y = y.LoadAssociations(db); });
-
+			
 			return results;
 		}
 	}

@@ -12,12 +12,8 @@ namespace DataModel
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
 			sdtEnd = dtEnd?.ToString(setup.stDateFormat);
-
-			if (fkProject != null)
-				sfkProject = db.Project(fkProject).stName;
-
-			if (fkPhase != null)
-				sfkPhase = db.ProjectPhase(fkPhase).stName;
+			sfkProject = db.Project(fkProject)?.stName;
+			sfkPhase = db.ProjectPhase(fkPhase)?.stName;
 
 			versions = LoadVersions(db);
 

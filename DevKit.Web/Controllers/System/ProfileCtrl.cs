@@ -1,6 +1,4 @@
 ﻿using DataModel;
-using LinqToDB;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
 
@@ -12,22 +10,16 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var filter = new ProfileFilter()
+				var count = 0; var mdl = new Profile();
+
+				var results = mdl.ComposedFilters(db, ref count, new ProfileFilter()
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper()
-				};
+				});
 
-				var mdl = new Profile();
-
-				var query = mdl.ComposedFilters(db, filter).OrderBy(y => y.stName);
-
-				var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-
-				results.ForEach(y => { y = y.LoadAssociations(db); });
-
-				return Ok(new { count = query.Count(), results = results });
+				return Ok(new { count = count, results = results });
 			}
 		}
 		
@@ -35,9 +27,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Profiles select ne).
-					Where(t => t.id == id).
-					FirstOrDefault();
+				var model = db.Profile(id);
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -76,9 +66,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Profiles select ne).
-					Where(t => t.id == id).
-					FirstOrDefault();
+				var model = db.Profile(id);
 				
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

@@ -1,9 +1,6 @@
 ﻿using DataModel;
-using LinqToDB;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
-using System.Collections.Generic;
 
 namespace DevKit.Web.Controllers
 {
@@ -13,42 +10,26 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var filter = new UserFilter()
+				var count = 0; var mdl = new User();
+
+				var results = mdl.ComposedFilters(db, ref count, new UserFilter()
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-
 					fkPerfil = Request.GetQueryStringValue<long?>("fkPerfil", null),
-					ativo = Request.GetQueryStringValue<bool?>("ativo", null),					
-				};
+					ativo = Request.GetQueryStringValue<bool?>("ativo", null),
+				});
 
-				var mdl = new User();
-
-				var query = mdl.ComposedFilters(db, filter).OrderBy(y => y.stLogin);
-
-				var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-				
-				return Ok(new { count = query.Count(), results = results });
+				return Ok(new { count = count, results = results });
 			}
-		}
-
-		List<User> Output(IQueryable<User> query, DevKitDB db)
-		{
-			var lst = query.ToList();
-
-			lst.ForEach(mdl => { mdl = mdl.LoadAssociations(db); });
-
-			return lst;
 		}
 
 		public IHttpActionResult Get(long id)
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Users select ne).
-					Where(t => t.id == id).
-					FirstOrDefault();
+				var model = db.User(id);
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -87,9 +68,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = (from ne in db.Users select ne).
-					Where(t => t.id == id).
-					FirstOrDefault();
+				var model = db.User(id);
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

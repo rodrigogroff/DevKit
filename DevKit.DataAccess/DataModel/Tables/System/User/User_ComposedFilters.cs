@@ -13,7 +13,7 @@ namespace DataModel
 
 	public partial class User
 	{
-		public IQueryable<User> ComposedFilters(DevKitDB db, UserFilter filter)
+		public IQueryable<User> ComposedFilters(DevKitDB db, ref int count, UserFilter filter)
 		{
 			var query = from e in db.Users select e;
 
@@ -26,7 +26,15 @@ namespace DataModel
 			if (filter.fkPerfil != null)
 				query = from e in query where e.fkProfile == filter.fkPerfil select e;
 
-			return query;
+			count = query.Count();
+
+			query = query.OrderBy(y => y.stName);
+
+			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
+
+			results.ForEach(y => { y = y.LoadAssociations(db); });
+
+			return results;
 		}
 	}
 }

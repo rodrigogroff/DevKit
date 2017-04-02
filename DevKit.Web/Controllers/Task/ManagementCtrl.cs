@@ -16,7 +16,7 @@ namespace DevKit.Web.Controllers
 				};
 
 				var mdl = new Management();
-				var dto = mdl.ComposedFilters(db, filter, new Util().GetCurrentUser(db));
+				var dto = mdl.ComposedFilters(db, filter, new Util().GetCurrentUserProjects(db));
 
 				if (dto.fail)
 					return StatusCode(HttpStatusCode.NotFound);

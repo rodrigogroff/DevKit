@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace DataModel
 {
@@ -28,9 +29,12 @@ namespace DataModel
 			return query.Any();
 		}
 
+		Random random = new Random();
+
 		int RandomNumber(int min, int max)
 		{
-			return new Random().Next(min, max);
+			Thread.Sleep(1);
+			return random.Next(min, max);
 		}
 
 		public bool Create(DevKitDB db, User usr, ref string resp)

@@ -2,8 +2,8 @@
 melhorias
 ------------------
 
--management
 -'restricted user list' para passar para determinado fluxo
+-management
 -editar phase
 -editar version
 -timesheet

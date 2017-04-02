@@ -6,7 +6,7 @@
 				<tr>
 					<td width="20px"></td>
 					<td>
-						System \ User <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
+						System \ User \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stLogin}}&nbsp;</span></b>
 						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button>
 					</td>
 					<td width="20px"></td>
@@ -29,17 +29,6 @@
 								</tr>
 							</thead>
 							<tr height="12px"></tr>
-							<tr height="40px" ng-show="viewModel.id > 0">
-								<td></td>
-								<td>
-									Id
-								</td>
-								<td></td>
-								<td>
-									<b>{{viewModel.id}}</b>
-								</td>
-								<td></td>
-							</tr>
 							<tr height="40px">
 								<td></td>
 								<td>

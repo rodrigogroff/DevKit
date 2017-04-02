@@ -34,24 +34,19 @@ namespace DevKit.Web
 
 			app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
-			ConfigureOAuth(app);
-
-			container.Verify();
-		}
-
-		private void ConfigureOAuth(IAppBuilder app)
-		{
 			OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
 			{
 				AllowInsecureHttp = true,
 				TokenEndpointPath = new PathString("/token"),
-				AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+				AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
 				Provider = new SimpleAuthorizationServerProvider(),
 			};
 
 			// Geração do token
 			app.UseOAuthAuthorizationServer(OAuthServerOptions);
 			app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+
+			container.Verify();
 		}
 	}
 }

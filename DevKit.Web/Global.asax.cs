@@ -1,8 +1,8 @@
-﻿using System.Web.Optimization;
-using System.Web;
+﻿using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Optimization;
 
 namespace DevKit.Web
 {
@@ -10,13 +10,13 @@ namespace DevKit.Web
 	{
 		protected void Application_Start()
 		{
-			AreaRegistration.RegisterAllAreas();
+			//AreaRegistration.RegisterAllAreas();
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
-			RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+			//RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-			// Map attributes 
-			RouteTable.Routes.MapMvcAttributeRoutes();
+			//Map attributes 
+			//RouteTable.Routes.MapMvcAttributeRoutes();
 
 			RouteTable.Routes.MapRoute(
 				name: "Default",

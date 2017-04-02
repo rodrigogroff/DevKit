@@ -334,7 +334,6 @@
     <Content Include="css\toastr.css" />
     <Content Include="css\toastr.min.css" />
     <Content Include="css\vendor.css" />
-    <Content Include="Files\Files.txt" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -385,7 +384,6 @@
     <Content Include="img\play-pause.svg" />
     <Content Include="img\video-play.png" />
     <Content Include="img\video-play.svg" />
-    <Content Include="LinqToDB.Templates\CopyMe.PostgreSQL.tt.txt" />
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-animate.min.js" />
     <Content Include="scripts\angular-cookies.js" />
@@ -674,30 +672,6 @@
     <Content Include="openICS.psd" />
     <Content Include="css\bootstrap.css.map" />
     <Content Include="css\bootstrap-select.css.map" />
-    <Content Include="LinqToDB.Templates\LinqToDB.PostgreSQL.Tools.ttinclude" />
-    <Content Include="LinqToDB.Templates\Validation.ttinclude" />
-    <Content Include="LinqToDB.Templates\T4Model.ttinclude" />
-    <Content Include="LinqToDB.Templates\ReadMe.LinqToDB.md" />
-    <Content Include="LinqToDB.Templates\PluralizationService.ttinclude" />
-    <Content Include="LinqToDB.Templates\ObsoleteAttributes.ttinclude" />
-    <Content Include="LinqToDB.Templates\NotifyPropertyChanged.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Tools.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Sybase.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SQLite.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.SqlCe.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.PostgreSQL.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Oracle.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.MySql.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Informix.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Firebird.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.DB2.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.Access.ttinclude" />
-    <Content Include="LinqToDB.Templates\EditableObject.ttinclude" />
-    <Content Include="LinqToDB.Templates\DataModel.ttinclude" />
-    <Content Include="LinqToDB.Templates\DataAnnotations.ttinclude" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="scripts\jquery-2.1.0.js" />
@@ -883,9 +857,7 @@
     <Compile Include="Controllers\Login\Login.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Account\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>

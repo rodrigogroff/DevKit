@@ -31,7 +31,7 @@ namespace DevKit.Web.Controllers
 				var model = db.ProjectPhase(id);
 
 				if (model != null)
-					return Ok(model.LoadAssociations(db));
+					return Ok(model);
 
 				return StatusCode(HttpStatusCode.NotFound);
 			}

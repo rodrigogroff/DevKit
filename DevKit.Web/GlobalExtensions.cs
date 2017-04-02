@@ -3,18 +3,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using System.Text.RegularExpressions;
-
-public static class RegularExpressions
-{
-	public const string SpecialCharsPattern = @"[^a-zA-Z0-9]";
-
-	public static readonly Regex SpecialChars = new Regex(SpecialCharsPattern, RegexOptions.Compiled);
-
-	public const string MultiWhiteSpacesPattern = @"\s+";
-
-	public static readonly Regex MultiWhiteSpaces = new Regex(MultiWhiteSpacesPattern, RegexOptions.Compiled);
-}
 
 public static class GlobalExtensions
 {

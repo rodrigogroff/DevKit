@@ -162,6 +162,8 @@ namespace DataModel
 					{
 						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, stName = "Software Analysis" };
 
+						#region - categories - 
+
 						ttype.id = Convert.ToInt64(db.InsertWithIdentity(ttype));
 
 						{
@@ -269,10 +271,14 @@ namespace DataModel
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
+
+						#endregion
 					}
 
 					{
 						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, stName = "Software Development" };
+
+						#region  - categories -
 
 						ttype.id = Convert.ToInt64(db.InsertWithIdentity(ttype));
 
@@ -298,14 +304,18 @@ namespace DataModel
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Homologation" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
+
+						#endregion
 					}
 
 					{
 						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, stName = "Software Bugs" };
+
+						#region - categories - 
 
 						ttype.id = Convert.ToInt64(db.InsertWithIdentity(ttype));
 
@@ -331,7 +341,7 @@ namespace DataModel
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Validation" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
@@ -358,7 +368,7 @@ namespace DataModel
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Validation" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
@@ -389,6 +399,8 @@ namespace DataModel
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
 							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
+
+						#endregion
 					}
 
 					break;

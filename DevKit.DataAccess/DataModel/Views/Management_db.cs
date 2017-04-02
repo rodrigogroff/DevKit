@@ -34,7 +34,15 @@ namespace DataModel
 
 	public class ManagementDTO_CondensedType
 	{
-		public string stName;		
+		public string stName,
+						id,
+						open,
+						reopen,
+						development,
+						testing,
+						approval,
+						cancelled, 
+						done;
 	}
 
 	public class ManagementDTO_Version
@@ -70,12 +78,100 @@ namespace DataModel
 				{
 					if (type.bCondensedView == true)
 					{
-						var ctype = new ManagementDTO_CondensedType()
+						if (type.stName.ToUpper() == "SOFTWARE ANALYSIS")
 						{
-							stName = type.stName
-						};
+							dto.cTypes.Add(new ManagementDTO_CondensedType()
+							{
+								id = type.id.ToString(),
+								stName = type.stName,
 
-						dto.cTypes.Add(ctype);
+								open = (from e in db.Tasks
+										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "OPEN"
+										where e.fkTaskType == type.id
+										select e).Count().ToString(),
+
+								reopen = (from e in db.Tasks
+										  join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										  where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "RE-OPEN"
+										  where e.fkTaskType == type.id
+										  select e).Count().ToString(),
+
+								development = (from e in db.Tasks
+											   join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											   where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "CONSTRUCTION"
+											   where e.fkTaskType == type.id
+											   select e).Count().ToString(),
+
+								approval = (from e in db.Tasks
+											join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "APPROVAL"
+											where e.fkTaskType == type.id
+											select e).Count().ToString(),
+
+								cancelled = (from e in db.Tasks
+											 join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											 where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "CANCELLED"
+											 where e.fkTaskType == type.id
+											 where e.bComplete == false
+											 select e).Count().ToString(),
+
+								done = (from e in db.Tasks
+										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "DONE"
+										where e.fkTaskType == type.id
+										where e.bComplete == false
+										select e).Count().ToString(),
+
+							});
+						}
+						else if (type.stName.ToUpper() == "SOFTWARE DEVELOPMENT" || type.stName.ToUpper() == "SOFTWARE BUGS")
+						{
+							dto.cTypes.Add(new ManagementDTO_CondensedType()
+							{
+								id = type.id.ToString(),
+								stName = type.stName,
+
+								open = (from e in db.Tasks
+										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "OPEN"
+										where e.fkTaskType == type.id
+										select e).Count().ToString(),
+
+								reopen = (from e in db.Tasks
+										  join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										  where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "RE-OPEN"
+										  where e.fkTaskType == type.id
+										  select e).Count().ToString(),
+
+								development = (from e in db.Tasks
+											   join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											   where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "CONSTRUCTION"
+											   where e.fkTaskType == type.id
+											   select e).Count().ToString(),
+
+								testing = (from e in db.Tasks
+											join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "TESTING"
+											where e.fkTaskType == type.id
+											select e).Count().ToString(),
+
+								cancelled = (from e in db.Tasks
+											 join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											 where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "CANCELLED"
+											 where e.fkTaskType == type.id
+											 where e.bComplete == false
+											 select e).Count().ToString(),
+
+								done = (from e in db.Tasks
+										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "DONE"
+										where e.fkTaskType == type.id
+										where e.bComplete == false
+										select e).Count().ToString(),
+
+							});
+						}
 					}
 					else
 					{

@@ -21,15 +21,18 @@ namespace DataModel
 	{
 		public long id;
 		public string stName;
+		
 		public List<ManagementDTO_KPATypeCategory> categories = new List<ManagementDTO_KPATypeCategory>();
 	}
 
 	public class ManagementDTO_KPATypeCategory
 	{
-		public string stName;
-		public string stAbbrev;
-		public bool ok = false;
-		public string sFlow;
+		public string stName,
+						stAbbrev,
+						stDescription,
+						sFlow;
+
+		public bool ok = false;		
 	}
 
 	public class ManagementDTO_CondensedType
@@ -262,10 +265,10 @@ namespace DataModel
 							{
 								stName = category.stName,
 								stAbbrev = category.stAbreviation,
+								stDescription = category.stDescription
 							};
 
 							var lstTasks = (from e in db.Tasks
-											where e.bComplete == true
 											where e.fkTaskCategory == category.id
 											select e).
 											ToList();
@@ -273,7 +276,7 @@ namespace DataModel
 							if (lstTasks.Count() > 0)
 							{
 								tc.ok = lstTasks.All(y => y.bComplete == true);
-								tc.sFlow = db.TaskFlow(lstTasks.LastOrDefault().fkTaskFlowCurrent).stName;
+								tc.sFlow = "State: " + db.TaskFlow(lstTasks.LastOrDefault().fkTaskFlowCurrent).stName;
 							}
 							else
 							{

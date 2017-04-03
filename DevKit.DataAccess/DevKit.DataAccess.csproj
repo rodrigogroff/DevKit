@@ -96,6 +96,7 @@
     <Compile Include="DataModel\Tables\System\Profile\Profile_Delete.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_DTO.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_LoadAssociations.cs" />
+    <Compile Include="DataModel\Tables\System\Setup\Setup_Extras.cs" />
     <Compile Include="DataModel\Tables\System\User\User_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Create.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Delete.cs" />

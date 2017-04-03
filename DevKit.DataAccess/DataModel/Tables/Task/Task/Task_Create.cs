@@ -28,15 +28,7 @@ namespace DataModel
 
 			return query.Any();
 		}
-
-		Random random = new Random();
-
-		int RandomNumber(int min, int max)
-		{
-			Thread.Sleep(1);
-			return random.Next(min, max);
-		}
-
+		
 		public bool Create(DevKitDB db, User usr, ref string resp)
 		{
 			bComplete = false;
@@ -52,12 +44,7 @@ namespace DataModel
 			
 			var setup = db.Setup();
 
-			if (setup.stProtocolFormat != null)
-				foreach (var i in setup.stProtocolFormat)
-					if (Char.IsDigit(i))
-						stProtocol += RandomNumber(0, 9).ToString();
-					else
-						stProtocol += i;
+			stProtocol = setup.GetProtocol();	
 
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 

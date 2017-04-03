@@ -19,7 +19,7 @@ namespace DataModel
 		public EnumProjectTemplate()
 		{
 			lst.Add(new ProjectTemplate() { id = Custom, stName = "Custom" });
-			lst.Add(new ProjectTemplate() { id = CMMI2, stName = "CMMI-2 / MPSBR-G" });
+			lst.Add(new ProjectTemplate() { id = CMMI2, stName = "CMMI-2" });
 		}
 
 		public ProjectTemplate Get(long? _id)

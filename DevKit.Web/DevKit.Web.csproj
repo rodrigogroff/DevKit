@@ -830,6 +830,7 @@
     <Compile Include="Controllers\Configuration\PhaseCtrl.cs" />
     <Compile Include="Controllers\Configuration\TaskTypeCtrl.cs" />
     <Compile Include="Controllers\Configuration\SprintCtrl.cs" />
+    <Compile Include="Controllers\Enums\VersionStateCtrl.cs" />
     <Compile Include="Controllers\Enums\ProjectTemplateCtrl.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\System\SetupCtrl.cs" />

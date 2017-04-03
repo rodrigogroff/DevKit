@@ -201,7 +201,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					stName: ''
 				};
 
-				toastr.success('Category added', 'Success');
+				toastr.success('Category saved', 'Success');
 				$scope.viewModel.categories = data.categories;
 
 				$scope.addCategorie = false;
@@ -289,10 +289,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				if ($scope.newFlow.id != undefined)
-					toastr.success('Flow updated', 'Success');
-				else
-					toastr.success('Flow added', 'Success');
+				toastr.success('Flow saved', 'Success');
 
 				$scope.newFlow = {};
 				$scope.newFlow.fkTaskCategory = tmp;
@@ -380,10 +377,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				if ($scope.newAcc.id != undefined)
-					toastr.success('Accumulator updated', 'Success');
-				else
-					toastr.success('Accumulator added', 'Success');
+				toastr.success('Accumulator saved', 'Success');
 
 				$scope.newAcc = {};
 				$scope.newAcc.fkTaskCategory = tmp;

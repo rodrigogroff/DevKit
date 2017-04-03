@@ -26,9 +26,11 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<ProjectSprintVersion>(anexedEntity.ToString());
 
-						if ((from ne in db.ProjectSprintVersions
-							 where ne.stName == ent.stName && ne.fkSprint == id
-							 select ne).Any())
+						if (ent.id == 0)
+							if ((from ne in db.ProjectSprintVersions
+								 where ne.stName == ent.stName && ne.fkSprint == id
+								 select ne).
+								 Any())
 						{
 							resp = "Version already added to project!";
 							return false;
@@ -36,7 +38,11 @@ namespace DataModel
 
 						ent.fkSprint = id;
 						
-						db.Insert(ent);
+						if (ent.id == 0)
+							db.Insert(ent);
+						else
+							db.Update(ent);
+
 						versions = LoadVersions(db);
 						break;
 					}

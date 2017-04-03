@@ -100,6 +100,15 @@
 																<input type="text" class="form-control input-transparent" ng-model="newVersion.stName">
 															</td>
 														</tr>
+														<tr height="42px">
+															<td>State</td>
+															<td>
+																<button class="btn btn-xs btn-danger" ng-show="fkVersionState_fail">!</button>
+															</td>
+															<td>
+																<input type="hidden" style="width:100%" ui-select2="selectVersionStates" ng-model="newVersion.fkVersionState" />
+															</td>
+														</tr>
 													</table>
 												</td>
 											</tr>
@@ -115,12 +124,18 @@
 											<thead>
 												<tr>
 													<th width="150px">Version</th>
+													<th width="100px">State</th>
 													<th width="70px">Actions</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.versions">
 												<td>{{ mdl.stName }}</td>
+												<td>{{ mdl.sfkVersionState }}</td>
 												<td>
+													<a href="" role="button" ng-click="editVersion(mdl)">
+														<i class="glyphicon glyphicon-edit" style="color:white"></i>
+													</a>
+													&nbsp;&nbsp;
 													<a href="" role="button" ng-click="removeVersion($index, viewModel.versions)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>

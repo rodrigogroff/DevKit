@@ -254,10 +254,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					$scope.newAcc = { fkTask: id, fkTaskAcc: undefined, nuValue: '', nuHourValue : '', nuMinValue: '', fkUser: undefined };
 
-					if ($scope.newAcc.id != undefined)
-						toastr.success('Accumulator updated', 'Success');
-					else
-						toastr.success('Accumulator added', 'Success');
+					toastr.success('Accumulator saved', 'Success');
 
 					$scope.viewModel.accs = data.accs;
 

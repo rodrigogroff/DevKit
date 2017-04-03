@@ -67,9 +67,11 @@
     </Compile>
     <Compile Include="DataModel\DevKit_db.cs" />
     <Compile Include="DataModel\Enums\AccumulatorType_enum.cs" />
+    <Compile Include="DataModel\Enums\VersionState_enum.cs" />
     <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_ComposedFilters.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion\ProjectSprintVersion_ComposedFilters - Copy.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_Create.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_LoadAssociations.cs" />
@@ -112,7 +114,7 @@
     <Compile Include="DataModel\Views\Management_db.cs" />
     <Compile Include="DataModel\Views\UserKanban_db.cs" />
     <Compile Include="DataModel\Enums\Priority_enum.cs" />
-    <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion\ProjectSprintVersion_ComposedFilters.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion\ProjectSprintVersion_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_Update.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_Update.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_Update.cs" />

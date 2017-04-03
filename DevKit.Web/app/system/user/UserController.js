@@ -211,12 +211,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				Api.User.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newPhone = { stPhone: '', stDescription: '' };
+										
+					toastr.success('Phone saved', 'Success');
 					
-					if ($scope.newPhone.id != undefined)
-						toastr.success('Phone updated', 'Success');
-					else
-						toastr.success('Phone added', 'Success');
-
 					$scope.viewModel.phones = data.phones;
 
 				}, function (response) {
@@ -283,10 +280,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{					
 					$scope.newEmail = { stEmail: '' };
 
-					if ($scope.newEmail.id != undefined)
-						toastr.success('Email updated', 'Success');
-					else
-						toastr.success('Email added', 'Success');
+					toastr.success('Email saved', 'Success');
 
 					$scope.viewModel.emails = data.emails;
 

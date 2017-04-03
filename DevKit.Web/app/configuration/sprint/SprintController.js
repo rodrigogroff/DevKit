@@ -34,6 +34,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		CheckPermissions();
 
 		$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' });
+		$scope.selectVersionStates = ngSelects.obterConfiguracao(Api.VersionState, { tamanhoPagina: 15, campoNome: 'stName' });
 
 		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase,
 			{
@@ -166,14 +167,22 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.newVersion =
 		{
 			fkSprint: undefined,
+			fkVersionState: undefined,
 			stName: '',
 		};
+
+	$scope.editVersion = function (mdl) {
+		$scope.addVersion = true;
+		$scope.newVersion = mdl;
+	}
 
 	$scope.saveNewVersion = function ()
 	{
 		$scope.stVersion_fail = invalidCheck($scope.newVersion.stName);
+		$scope.fkVersionState_fail = $scope.newVersion.fkVersionState == undefined;
 
-		if (!$scope.stVersion_fail)
+		if (!$scope.stVersion_fail && 
+			!$scope.fkVersionState_fail)
 		{
 			$scope.viewModel.updateCommand = "newVersion";
 			$scope.viewModel.anexedEntity = $scope.newVersion;
@@ -183,6 +192,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newVersion =
 				{
 					fkSprint: undefined,
+					fkVersionState: undefined,
 					stName: '',
 				};
 

@@ -2,10 +2,11 @@
 melhorias
 ------------------
 
--'restricted user list' para passar para determinado fluxo
+-editar version, colocar state (analysis,development,homologation,production,closed)
+
 -management
 -editar phase
--editar version
+-'restricted user list' para passar para determinado fluxo
 -timesheet
 
 -ao selecionar categoria, mostrar o texto de descrição

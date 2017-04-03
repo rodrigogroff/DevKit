@@ -98,9 +98,10 @@ namespace DataModel
 	[Table(Schema="public", Name="ProjectSprintVersion")]
 	public partial class ProjectSprintVersion
 	{
-		[PrimaryKey, Identity] public long   id       { get; set; } // bigint
-		[Column,     Nullable] public long?  fkSprint { get; set; } // bigint
-		[Column,     Nullable] public string stName   { get; set; } // character varying(20)
+		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
+		[Column,     Nullable] public long?  fkSprint       { get; set; } // bigint
+		[Column,     Nullable] public string stName         { get; set; } // character varying(20)
+		[Column,     Nullable] public long?  fkVersionState { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="ProjectUser")]
@@ -219,8 +220,8 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
 		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
 		[Column,     Nullable] public long?  fkProject      { get; set; } // bigint
-		[Column,     Nullable] public bool?  bCondensedView { get; set; } // boolean
 		[Column,     Nullable] public bool?  bManaged       { get; set; } // boolean
+		[Column,     Nullable] public bool?  bCondensedView { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="TaskTypeAccumulator")]

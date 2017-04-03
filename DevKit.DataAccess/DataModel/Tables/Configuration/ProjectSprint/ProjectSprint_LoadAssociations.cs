@@ -26,6 +26,13 @@ namespace DataModel
 				OrderByDescending(t => t.id).
 				ToList();
 
+			var _enum = new EnumVersionState();
+
+			foreach (var item in lst)
+			{
+				item.sfkVersionState = _enum.Get((long)item.fkVersionState).stName;
+			}
+
 			return lst;
 		}
 	}

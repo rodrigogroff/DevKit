@@ -212,6 +212,7 @@ CREATE TABLE public."ProjectSprintVersion"
 (
     id bigserial NOT NULL,
     "fkSprint" bigint,
+	"fkVersionState" bigint,
 	"stName" character varying(20),
     PRIMARY KEY (id)
 )

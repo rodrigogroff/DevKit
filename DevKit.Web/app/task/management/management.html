@@ -24,7 +24,7 @@
 					</td>
 				</tr>
 			</table>
-			<br />			
+			<br />
 			<div ng-show="viewModel != undefined">
 				<div class="panel-group" data-ng-repeat="type in viewModel.kpaTypes" ng-show="viewModel.fail == false">
 					<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
@@ -43,7 +43,7 @@
 											<button class="btn btn-xs btn-success" ng-show="categ.ok == true">OK</button>
 										</td>
 										<td width="60px">
-											{{categ.stAbbrev}} 
+											{{categ.stAbbrev}}
 										</td>
 										<td width="180px">
 											{{categ.stName}}
@@ -53,89 +53,137 @@
 										</td>
 									</tr>
 								</table>
-
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel-group" data-ng-repeat="type in viewModel.cTypes" ng-show="viewModel.fail == false">
-					<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
-						<div class="panel-heading">
-							<a class="accordion-toggle" data-toggle="collapse" href="task/management#collapseType{{type.id}}">
-								<b>{{type.stName}}</b>
-							</a>
-						</div>
-						<div id="collapseType{{type.id}}" class="panel-collapse collapse" style="height: auto;">
-							<div class="panel-body">
-								<table class="table table-hover" style="width:220px" ng-show="type.stName == 'Software Analysis'">
-									<tr>
-										<td width="120px">OPEN</td>
-										<td width="60px">{{type.open}}</td>
-									</tr>
-									<tr>
-										<td>RE-OPENED</td>
-										<td>{{type.reopen}}</td>
-									</tr>
-									<tr>
-										<td>DEVELOPMENT</td>
-										<td>{{type.development}}</td>
-									</tr>
-									<tr>
-										<td>APPROVAL</td>
-										<td>{{type.approval}}</td>
-									</tr>
-									<tr>
-										<td>CANCELLED</td>
-										<td>{{type.cancelled}}</td>
-									</tr>
-									<tr>
-										<td>DONE</td>
-										<td>{{type.done}}</td>
-									</tr>
-								</table>
-								<table class="table table-hover" style="width:220px" ng-show="type.stName == 'Software Development' || type.stName == 'Software Bugs'">
-									<tr>
-										<td width="120px">OPEN</td>
-										<td width="60px">{{type.open}}</td>
-									</tr>
-									<tr>
-										<td>RE-OPENED</td>
-										<td>{{type.reopen}}</td>
-									</tr>
-									<tr>
-										<td>DEVELOPMENT</td>
-										<td>{{type.development}}</td>
-									</tr>
-									<tr>
-										<td>TESTING</td>
-										<td>{{type.testing}}</td>
-									</tr>
-									<tr>
-										<td>CANCELLED</td>
-										<td>{{type.cancelled}}</td>
-									</tr>
-									<tr>
-										<td>DONE</td>
-										<td>{{type.done}}</td>
-									</tr>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-				</div>
-				<div class="panel-group" ng-show="viewModel.fail == false">
-					<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
-						<div class="panel-heading">
-							<a class="accordion-toggle" data-toggle="collapse" href="task/management#collapseVersion">
-								<b>Versions</b>
-							</a>
 						</div>
 					</div>
 				</div>
 			</div>
-		<br />
-		<br />
+			<div ng-show="viewModel != undefined">
+				<div class="panel-group" ng-show="viewModel.fail == false">
+					<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
+						<div class="panel-heading">
+							<a class="accordion-toggle" data-toggle="collapse" href="task/management#collapseTypeCondensed">
+								Software Statistics
+							</a>
+						</div>
+						<div id="collapseTypeCondensed" class="panel-collapse collapse" style="height: auto;">
+							<div class="panel-body">
+								<table>
+									<tr>
+										<td valign="top">
+											<b>ANALYSIS ({{viewModel.sa.total}})</b><br />
+											<br />
+											<table class="table table-hover" style="width:180px">
+												<tr>
+													<td width="110px">OPEN</td>
+													<td width="70px">{{viewModel.sa.open}}</td>
+												</tr>
+												<tr>
+													<td>RE-OPENED</td>
+													<td>{{viewModel.sa.reopen}}</td>
+												</tr>
+												<tr>
+													<td>CONSTRUCTION</td>
+													<td>{{viewModel.sa.construction}}</td>
+												</tr>
+												<tr>
+													<td>PEER REVIEW</td>
+													<td>{{viewModel.sa.peerreview}}</td>
+												</tr>
+												<tr>
+													<td>APPROVAL</td>
+													<td>{{viewModel.sa.approval}}</td>
+												</tr>
+												<tr>
+													<td>CANCELLED</td>
+													<td>{{viewModel.sa.cancelled}}</td>
+												</tr>
+												<tr>
+													<td>DONE</td>
+													<td>{{viewModel.sa.done}}</td>
+												</tr>
+											</table>
+										</td>
+										<td width="20px"></td>
+										<td valign="top">
+											<b>DEVELOPMENT ({{viewModel.sd.total}})</b><br />
+											<br />
+											<table class="table table-hover" style="width:180px">
+												<tr>
+													<td width="110px">OPEN</td>
+													<td width="70px">{{viewModel.sd.open}}</td>
+												</tr>
+												<tr>
+													<td>RE-OPENED</td>
+													<td>{{viewModel.sd.reopen}}</td>
+												</tr>
+												<tr>
+													<td>DEVELOPMENT</td>
+													<td>{{viewModel.sd.development}}</td>
+												</tr>
+												<tr>
+													<td>TESTING</td>
+													<td>{{viewModel.sd.testing}}</td>
+												</tr>
+												<tr>
+													<td>CANCELLED</td>
+													<td>{{viewModel.sd.cancelled}}</td>
+												</tr>
+												<tr>
+													<td>DONE</td>
+													<td>{{viewModel.sd.done}}</td>
+												</tr>
+											</table>
+										</td>
+										<td width="20px"></td>
+										<td valign="top">
+											<b>BUGS ({{viewModel.sb.total}})</b><br />
+											<br />
+											<table class="table table-hover" style="width:180px">
+												<tr>
+													<td width="110px">OPEN</td>
+													<td width="70px">{{viewModel.sb.open}}</td>
+												</tr>
+												<tr>
+													<td>RE-OPENED</td>
+													<td>{{viewModel.sb.reopen}}</td>
+												</tr>
+												<tr>
+													<td>DEVELOPMENT</td>
+													<td>{{viewModel.sb.development}}</td>
+												</tr>
+												<tr>
+													<td>TESTING</td>
+													<td>{{viewModel.sb.testing}}</td>
+												</tr>
+												<tr>
+													<td>CANCELLED</td>
+													<td>{{viewModel.sb.cancelled}}</td>
+												</tr>
+												<tr>
+													<td>DONE</td>
+													<td>{{viewModel.sb.done}}</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-group" ng-show="viewModel.fail == false">
+				<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
+					<div class="panel-heading">
+						<a class="accordion-toggle" data-toggle="collapse" href="task/management#collapseVersion">
+							<b>Versions</b>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
+		<br />
+		<br />
 	</section>
 </div>

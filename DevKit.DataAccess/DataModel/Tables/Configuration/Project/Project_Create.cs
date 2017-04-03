@@ -126,7 +126,6 @@ namespace DataModel
 						InsertDocumentationFlows(db, ttypePlanning.id, categCorrections.id);
 
 						#endregion
-
 					}
 
 					{

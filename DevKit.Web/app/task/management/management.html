@@ -66,7 +66,7 @@
 					<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
 						<div class="panel-heading">
 							<a class="accordion-toggle" data-toggle="collapse" href="task/management#collapseTypeCondensed">
-								Software Statistics
+								<b>Software Statistics</b>
 							</a>
 						</div>
 						<div id="collapseTypeCondensed" class="panel-collapse collapse" style="height: auto;">
@@ -185,18 +185,32 @@
 					</div>
 					<div id="collapseVersion" class="panel-collapse collapse" style="height: auto;">
 						<div class="panel-body">
-							<table class="table table-hover" style="width:330px">
+							<table class="table table-hover" style="width:1120px">
 								<thead>
 									<tr>
-										<th width="120px">Phase</th>
-										<th width="120px">Sprint</th>
-										<th width="90px">Version</th>
+										<th width="200px">Phase</th>
+										<th width="200px">Sprint</th>
+										<th width="120px">Version</th>
+										<th width="90px">Analysis</th>
+										<th width="90px">Development</th>
+										<th width="90px">Bugs => </th>
+										<th width="90px">Internal</th>
+										<th width="90px">Homolog.</th>
+										<th width="90px">Production</th>
+										<th width="90px">Total</th>
 									</tr>
 								</thead>
 								<tr data-ng-repeat="mdl in viewModel.versions">
 									<td>{{ mdl.stPhase }}</td>
 									<td>{{ mdl.stSprint }}</td>
-									<td>{{ mdl.stVersion }}</td>
+									<td>{{ mdl.stVersion }}</td>									
+									<td>{{ mdl.analysis }}</td>
+									<td>{{ mdl.development }}</td>
+									<td>{{ mdl.bugs }}</td>
+									<td>{{ mdl.internal }}</td>
+									<td>{{ mdl.homologation }}</td>
+									<td>{{ mdl.production }}</td>
+									<td>{{ mdl.total }}</td>
 								</tr>
 							</table>
 						</div>

@@ -58,6 +58,14 @@ namespace DataModel
 		public string	stPhase,
 						stSprint,
 						stVersion;
+
+		public int? analysis, 
+					development, 
+					bugs, 
+					inhouse, 
+					homologation, 
+					production, 
+					total;
 	}
 
 	public class Management
@@ -78,13 +86,15 @@ namespace DataModel
 			{
 				dto.fail = false;
 
-				#region - tasks / condensed and kpas - 
-
 				var lstTypes = (from e in db.TaskTypes
 								where e.bManaged == true
 								where e.fkProject == filter.fkProject
 								select e).
 								ToList();
+
+				long	fkTaskType_SoftwareAnalysis = 0,
+						fkTaskType_SoftwareDevelopment = 0,
+						fkTaskType_SoftwareBugs = 0;
 
 				foreach (var type in lstTypes)
 				{
@@ -92,6 +102,8 @@ namespace DataModel
 					{
 						if (type.stName.ToUpper() == "SOFTWARE ANALYSIS")
 						{
+							fkTaskType_SoftwareAnalysis = type.id;
+
 							#region - code - 
 
 							dto.sa = new ManagementDTO_CondensedType
@@ -150,6 +162,8 @@ namespace DataModel
 						}
 						else if (type.stName.ToUpper() == "SOFTWARE DEVELOPMENT")
 						{
+							fkTaskType_SoftwareDevelopment = type.id;
+
 							#region - code - 
 
 							dto.sd = new ManagementDTO_CondensedType
@@ -208,6 +222,8 @@ namespace DataModel
 						}
 						else if (type.stName.ToUpper() == "SOFTWARE BUGS")
 						{
+							fkTaskType_SoftwareBugs = type.id;
+
 							#region - code - 
 
 							dto.sb = new ManagementDTO_CondensedType
@@ -267,6 +283,8 @@ namespace DataModel
 					}
 					else
 					{
+						#region - kpas -
+
 						var mType = new ManagementDTO_KPAType
 						{
 							id = type.id,
@@ -311,10 +329,10 @@ namespace DataModel
 						}
 
 						dto.kpaTypes.Add(mType);
-					}					
-				}
 
-				#endregion
+						#endregion
+					}
+				}
 
 				#region - versions (stats) - 
 
@@ -342,11 +360,57 @@ namespace DataModel
 
 						foreach (var version in lstVersions)
 						{
+							int? _total = (from e in db.Tasks
+										   where e.fkProject == filter.fkProject
+										   where e.fkPhase == phase.id
+										   where e.fkSprint == sprint.id
+										   where e.fkVersion == version.id
+										   select e).Count();
+
+							int? _analysis = (from e in db.Tasks
+										   where e.fkProject == filter.fkProject
+										   where e.fkPhase == phase.id
+										   where e.fkSprint == sprint.id
+										   where e.fkVersion == version.id
+										   where e.fkTaskType == fkTaskType_SoftwareAnalysis
+										   select e).Count();
+
+							int? _development = (from e in db.Tasks
+											  where e.fkProject == filter.fkProject
+											  where e.fkPhase == phase.id
+											  where e.fkSprint == sprint.id
+											  where e.fkVersion == version.id
+											  where e.fkTaskType == fkTaskType_SoftwareDevelopment
+											  select e).Count();
+
+							int? _bugs = (from e in db.Tasks
+												 where e.fkProject == filter.fkProject
+												 where e.fkPhase == phase.id
+												 where e.fkSprint == sprint.id
+												 where e.fkVersion == version.id
+												 where e.fkTaskType == fkTaskType_SoftwareBugs
+												 select e).Count();
+
+							/*
+							  inhouse, 
+								homologation, 
+								production, 
+							*/
+
+							if (_total == 0) _total = null;
+							if (_analysis == 0) _analysis = null;
+							if (_development == 0) _development = null;
+							if (_bugs == 0) _bugs = null;
+
 							dto.versions.Add(new ManagementDTO_Version
 							{
 								stPhase = phase.stName,
 								stSprint = sprint.stName,
-								stVersion = version.stName
+								stVersion = version.stName,
+								total = _total,
+								analysis = _analysis,
+								development = _development,
+								bugs = _bugs,
 							});
 						}
 					}

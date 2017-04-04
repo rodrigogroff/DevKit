@@ -52,7 +52,7 @@
 											<i>{{categ.stDescription}}</i>
 										</td>
 										<td width="90px">
-											<span class="btn btn-info btn-xs">{{categ.sFlow}}</span>
+											<span class="btn btn-info btn-xs" ng-click="showTask(categ.id)">{{categ.sFlow}}</span>
 										</td>
 									</tr>
 								</table>
@@ -182,6 +182,24 @@
 						<a class="accordion-toggle" data-toggle="collapse" href="task/management#collapseVersion">
 							<b>Versions</b>
 						</a>
+					</div>
+					<div id="collapseVersion" class="panel-collapse collapse" style="height: auto;">
+						<div class="panel-body">
+							<table class="table table-hover" style="width:330px">
+								<thead>
+									<tr>
+										<th width="120px">Phase</th>
+										<th width="120px">Sprint</th>
+										<th width="90px">Version</th>
+									</tr>
+								</thead>
+								<tr data-ng-repeat="mdl in viewModel.versions">
+									<td>{{ mdl.stPhase }}</td>
+									<td>{{ mdl.stSprint }}</td>
+									<td>{{ mdl.stVersion }}</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>

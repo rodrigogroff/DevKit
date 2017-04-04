@@ -27,17 +27,20 @@ namespace DataModel
 
 	public class ManagementDTO_KPATypeCategory
 	{
+		public long id;
+
+		public bool ok = false;
+
 		public string stName,
 						stAbbrev,
 						stDescription,
 						sFlow;
-
-		public bool ok = false;		
 	}
 
 	public class ManagementDTO_CondensedType
 	{
 		public string stName;
+
 		public int? open,
 					reopen,
 					development,
@@ -52,7 +55,9 @@ namespace DataModel
 
 	public class ManagementDTO_Version
 	{
-		public string stName;
+		public string	stPhase,
+						stSprint,
+						stVersion;
 	}
 
 	public class Management
@@ -72,7 +77,9 @@ namespace DataModel
 			else
 			{
 				dto.fail = false;
-				
+
+				#region - tasks / condensed and kpas - 
+
 				var lstTypes = (from e in db.TaskTypes
 								where e.bManaged == true
 								where e.fkProject == filter.fkProject
@@ -85,6 +92,8 @@ namespace DataModel
 					{
 						if (type.stName.ToUpper() == "SOFTWARE ANALYSIS")
 						{
+							#region - code - 
+
 							dto.sa = new ManagementDTO_CondensedType
 							{
 								stName = type.stName,
@@ -136,9 +145,13 @@ namespace DataModel
 							if (dto.sa.peerreview == 0) dto.sa.peerreview = null;
 							if (dto.sa.cancelled == 0) dto.sa.cancelled = null;
 							if (dto.sa.done == 0) dto.sa.done = null;
+
+							#endregion
 						}
 						else if (type.stName.ToUpper() == "SOFTWARE DEVELOPMENT")
 						{
+							#region - code - 
+
 							dto.sd = new ManagementDTO_CondensedType
 							{
 								stName = type.stName,
@@ -189,10 +202,14 @@ namespace DataModel
 							if (dto.sd.development == 0) dto.sd.development = null;
 							if (dto.sd.testing == 0) dto.sd.testing = null;
 							if (dto.sd.cancelled == 0) dto.sd.cancelled = null;
-							if (dto.sd.done == 0) dto.sd.done = null;							
+							if (dto.sd.done == 0) dto.sd.done = null;
+
+							#endregion
 						}
 						else if (type.stName.ToUpper() == "SOFTWARE BUGS")
 						{
+							#region - code - 
+
 							dto.sb = new ManagementDTO_CondensedType
 							{
 								stName = type.stName,
@@ -244,6 +261,8 @@ namespace DataModel
 							if (dto.sb.testing == 0) dto.sb.testing = null;
 							if (dto.sb.cancelled == 0) dto.sb.cancelled = null;
 							if (dto.sb.done == 0) dto.sb.done = null;
+
+							#endregion
 						}
 					}
 					else
@@ -276,7 +295,11 @@ namespace DataModel
 							if (lstTasks.Count() > 0)
 							{
 								tc.ok = lstTasks.All(y => y.bComplete == true);
-								tc.sFlow = "State: " + db.TaskFlow(lstTasks.LastOrDefault().fkTaskFlowCurrent).stName;
+
+								var last = lstTasks.LastOrDefault();
+
+								tc.id = last.id;
+								tc.sFlow = "State: " + db.TaskFlow(last.fkTaskFlowCurrent).stName;
 							}
 							else
 							{
@@ -290,6 +313,46 @@ namespace DataModel
 						dto.kpaTypes.Add(mType);
 					}					
 				}
+
+				#endregion
+
+				#region - versions (stats) - 
+
+				var lstPhases = (from e in db.ProjectPhases
+								 where e.fkProject == filter.fkProject
+								 select e).
+								 OrderBy(y => y.id).
+								 ToList();
+
+				foreach (var phase in lstPhases)
+				{
+					var lstSprints = (from e in db.ProjectSprints
+									  where e.fkProject == filter.fkProject && e.fkPhase == phase.id
+									  select e).
+									  OrderBy (y=> y.id).
+									  ToList();
+
+					foreach (var sprint in lstSprints)
+					{
+						var lstVersions = (from e in db.ProjectSprintVersions
+										   where e.fkSprint == sprint.id
+										   select e).
+										   OrderBy(y => y.id).
+										   ToList();
+
+						foreach (var version in lstVersions)
+						{
+							dto.versions.Add(new ManagementDTO_Version
+							{
+								stPhase = phase.stName,
+								stSprint = sprint.stName,
+								stVersion = version.stName
+							});
+						}
+					}
+				}
+
+				#endregion
 			}
 
 			return dto;

@@ -2,8 +2,6 @@
 melhorias
 ------------------
 
--editar version, colocar state (analysis,development,homologation,production,closed)
-
 -management
 -editar phase
 -'restricted user list' para passar para determinado fluxo

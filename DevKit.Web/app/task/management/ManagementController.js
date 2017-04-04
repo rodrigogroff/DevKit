@@ -68,4 +68,8 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$scope.loading = false;
 	}
 
+	$scope.showTask = function (id) {
+		$state.go('task', { id: id });
+	}
+
 }]);

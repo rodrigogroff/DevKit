@@ -85,14 +85,11 @@ namespace DataModel
 	[Table(Schema="public", Name="ProjectSprint")]
 	public partial class ProjectSprint
 	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkProject     { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPhase       { get; set; } // bigint
-		[Column,     Nullable] public string    stName        { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stDescription { get; set; } // character varying(1000)
-		[Column,     Nullable] public DateTime? dtStart       { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtEnd         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public bool?     bComplete     { get; set; } // boolean
+		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
+		[Column,     Nullable] public long?  fkProject     { get; set; } // bigint
+		[Column,     Nullable] public long?  fkPhase       { get; set; } // bigint
+		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
+		[Column,     Nullable] public string stDescription { get; set; } // character varying(1000)
 	}
 
 	[Table(Schema="public", Name="ProjectSprintVersion")]

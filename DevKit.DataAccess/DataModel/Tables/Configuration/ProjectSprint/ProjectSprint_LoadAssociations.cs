@@ -10,8 +10,6 @@ namespace DataModel
 		{
 			var setup = db.Setup();
 
-			sdtStart = dtStart?.ToString(setup.stDateFormat);
-			sdtEnd = dtEnd?.ToString(setup.stDateFormat);
 			sfkProject = db.Project(fkProject)?.stName;
 			sfkPhase = db.ProjectPhase(fkPhase)?.stName;
 

@@ -157,9 +157,6 @@ CREATE TABLE public."ProjectSprint"
 	"fkPhase" bigint,
 	"stName" character varying(200),
 	"stDescription" character varying(1000),
-	"dtStart" timestamp without time zone,
-	"dtEnd" timestamp without time zone,
-	"bComplete" boolean,
     PRIMARY KEY (id)
 )
 WITH (

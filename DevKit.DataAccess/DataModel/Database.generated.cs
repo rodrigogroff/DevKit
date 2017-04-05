@@ -75,27 +75,27 @@ namespace DataModel
 	public partial class ProjectPhase
 	{
 		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
-		[Column,     Nullable] public long?  fkProject { get; set; } // bigint
 		[Column,     Nullable] public string stName    { get; set; } // character varying(99)
+		[Column,     Nullable] public long?  fkProject { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="ProjectSprint")]
 	public partial class ProjectSprint
 	{
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
-		[Column,     Nullable] public long?  fkProject     { get; set; } // bigint
-		[Column,     Nullable] public long?  fkPhase       { get; set; } // bigint
 		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
 		[Column,     Nullable] public string stDescription { get; set; } // character varying(1000)
+		[Column,     Nullable] public long?  fkProject     { get; set; } // bigint
+		[Column,     Nullable] public long?  fkPhase       { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="ProjectSprintVersion")]
 	public partial class ProjectSprintVersion
 	{
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
+		[Column,     Nullable] public string stName         { get; set; } // character varying(20)
 		[Column,     Nullable] public long?  fkSprint       { get; set; } // bigint
 		[Column,     Nullable] public long?  fkVersionState { get; set; } // bigint
-		[Column,     Nullable] public string stName         { get; set; } // character varying(20)
 	}
 
 	[Table(Schema="public", Name="ProjectUser")]
@@ -121,11 +121,15 @@ namespace DataModel
 	public partial class Task
 	{
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
+		[Column,     Nullable] public bool?     bComplete         { get; set; } // boolean
+		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastEdit        { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stProtocol        { get; set; } // character varying(20)
 		[Column,     Nullable] public string    stTitle           { get; set; } // character varying(200)
 		[Column,     Nullable] public string    stLocalization    { get; set; } // character varying(200)
 		[Column,     Nullable] public string    stDescription     { get; set; } // character varying(4000)
-		[Column,     Nullable] public long?     fkProject         { get; set; } // bigint
 		[Column,     Nullable] public long?     nuPriority        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkProject         { get; set; } // bigint
 		[Column,     Nullable] public long?     fkPhase           { get; set; } // bigint
 		[Column,     Nullable] public long?     fkSprint          { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUserStart       { get; set; } // bigint
@@ -135,68 +139,64 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkTaskFlowCurrent { get; set; } // bigint
 		[Column,     Nullable] public long?     fkReleaseVersion  { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUserResponsible { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastEdit        { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public bool?     bComplete         { get; set; } // boolean
-		[Column,     Nullable] public string    stProtocol        { get; set; } // character varying(20)
 	}
 
 	[Table(Schema="public", Name="TaskAccumulatorValue")]
 	public partial class TaskAccumulatorValue
 	{
 		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTask      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTaskAcc   { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser      { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLog       { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     nuValue     { get; set; } // bigint
 		[Column,     Nullable] public long?     nuHourValue { get; set; } // bigint
 		[Column,     Nullable] public long?     nuMinValue  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTask      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTaskAcc   { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser      { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskCategory")]
 	public partial class TaskCategory
 	{
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
-		[Column,     Nullable] public long?  fkTaskType    { get; set; } // bigint
 		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
 		[Column,     Nullable] public string stAbreviation { get; set; } // character varying(10)
 		[Column,     Nullable] public string stDescription { get; set; } // character varying(500)
+		[Column,     Nullable] public long?  fkTaskType    { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskFlow")]
 	public partial class TaskFlow
 	{
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
-		[Column,     Nullable] public long?  fkTaskType     { get; set; } // bigint
-		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
-		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
-		[Column,     Nullable] public long?  nuOrder        { get; set; } // bigint
 		[Column,     Nullable] public bool?  bForceComplete { get; set; } // boolean
 		[Column,     Nullable] public bool?  bForceOpen     { get; set; } // boolean
+		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
+		[Column,     Nullable] public long?  nuOrder        { get; set; } // bigint
+		[Column,     Nullable] public long?  fkTaskType     { get; set; } // bigint
+		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskFlowChange")]
 	public partial class TaskFlowChange
 	{
 		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
+		[Column,     Nullable] public string    stMessage      { get; set; } // character varying(300)
+		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkTask         { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUser         { get; set; } // bigint
 		[Column,     Nullable] public long?     fkOldFlowState { get; set; } // bigint
 		[Column,     Nullable] public long?     fkNewFlowState { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stMessage      { get; set; } // character varying(300)
 	}
 
 	[Table(Schema="public", Name="TaskMessage")]
 	public partial class TaskMessage
 	{
 		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(999)
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkTask        { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
 		[Column,     Nullable] public long?     fkCurrentFlow { get; set; } // bigint
-		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(999)
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="TaskProgress")]
@@ -212,31 +212,32 @@ namespace DataModel
 	public partial class TaskType
 	{
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
-		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
-		[Column,     Nullable] public long?  fkProject      { get; set; } // bigint
 		[Column,     Nullable] public bool?  bManaged       { get; set; } // boolean
 		[Column,     Nullable] public bool?  bCondensedView { get; set; } // boolean
+		[Column,     Nullable] public bool?  bKPA           { get; set; } // boolean
+		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
+		[Column,     Nullable] public long?  fkProject      { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskTypeAccumulator")]
 	public partial class TaskTypeAccumulator
 	{
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
+		[Column,     Nullable] public bool?  bEstimate      { get; set; } // boolean
+		[Column,     Nullable] public string stName         { get; set; } // character varying(30)
 		[Column,     Nullable] public long?  fkTaskType     { get; set; } // bigint
 		[Column,     Nullable] public long?  fkTaskAccType  { get; set; } // bigint
 		[Column,     Nullable] public long?  fkTaskFlow     { get; set; } // bigint
 		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
-		[Column,     Nullable] public string stName         { get; set; } // character varying(30)
-		[Column,     Nullable] public bool?  bEstimate      { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="User")]
 	public partial class User
 	{
 		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
+		[Column,     Nullable] public bool?     bActive     { get; set; } // boolean
 		[Column,     Nullable] public string    stLogin     { get; set; } // character varying(200)
 		[Column,     Nullable] public string    stPassword  { get; set; } // character varying(30)
-		[Column,     Nullable] public bool?     bActive     { get; set; } // boolean
 		[Column,     Nullable] public long?     fkProfile   { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLastLogin { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtCreation  { get; set; } // timestamp (6) without time zone
@@ -246,17 +247,17 @@ namespace DataModel
 	public partial class UserEmail
 	{
 		[PrimaryKey, Identity] public long   id      { get; set; } // bigint
-		[Column,     Nullable] public long?  fkUser  { get; set; } // bigint
 		[Column,     Nullable] public string stEmail { get; set; } // character varying(250)
+		[Column,     Nullable] public long?  fkUser  { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="UserPhone")]
 	public partial class UserPhone
 	{
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
-		[Column,     Nullable] public long?  fkUser        { get; set; } // bigint
 		[Column,     Nullable] public string stPhone       { get; set; } // character varying(50)
 		[Column,     Nullable] public string stDescription { get; set; } // character varying(50)
+		[Column,     Nullable] public long?  fkUser        { get; set; } // bigint
 	}
 
 	public static partial class TableExtensions

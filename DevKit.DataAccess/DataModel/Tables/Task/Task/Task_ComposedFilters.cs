@@ -9,7 +9,7 @@ namespace DataModel
 		public int skip, take;
 		public string busca;
 
-		public bool? complete;
+		public bool? complete, kpa;
 
 		public long? nuPriority,
 						fkProject,
@@ -66,6 +66,17 @@ namespace DataModel
 			
 			if (filter.complete != null)
 				query = from e in query where e.bComplete == filter.complete select e;
+
+			if (filter.kpa != null)
+			{
+				var queryAux = from e in db.TaskTypes
+							   where e.bKPA == filter.kpa
+							   where filter.fkTaskType == null || e.id == filter.fkTaskType
+							   where filter.fkProject == null || e.fkProject == filter.fkProject
+							   select e.id;
+								
+				query = from e in query where queryAux.Contains((long)e.fkTaskType)	select e;
+			}
 
 			count = query.Count();
 

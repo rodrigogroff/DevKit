@@ -53,7 +53,7 @@ namespace DataModel
 				case EnumProjectTemplate.CMMI2:
 
 					{
-						var ttypePlanning = new TaskType { fkProject = id, bManaged = true, bCondensedView = false, stName = "KPA - Software Planning" };
+						var ttypePlanning = new TaskType { fkProject = id, bManaged = true, bCondensedView = false, bKPA= true, stName = "KPA - Software Planning" };
 
 						ttypePlanning.id = Convert.ToInt64(db.InsertWithIdentity(ttypePlanning));
 
@@ -131,7 +131,7 @@ namespace DataModel
 					}
 
 					{
-						var ttypeRequirements = new TaskType { fkProject = id, bManaged = true, bCondensedView = false, stName = "KPA - Software Requirements" };
+						var ttypeRequirements = new TaskType { fkProject = id, bManaged = true, bCondensedView = false, bKPA = true, stName = "KPA - Software Requirements" };
 
 						ttypeRequirements.id = Convert.ToInt64(db.InsertWithIdentity(ttypeRequirements));
 
@@ -161,7 +161,7 @@ namespace DataModel
 					}
 
 					{
-						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, stName = "Software Analysis" };
+						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, bKPA = false, stName = "Software Analysis" };
 
 						#region - categories - 
 
@@ -277,7 +277,7 @@ namespace DataModel
 					}
 
 					{
-						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, stName = "Software Development" };
+						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, bKPA = false, stName = "Software Development" };
 
 						#region  - categories -
 
@@ -325,7 +325,7 @@ namespace DataModel
 					}
 
 					{
-						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, stName = "Software Bugs" };
+						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, bKPA = false, stName = "Software Bugs" };
 
 						#region - categories - 
 

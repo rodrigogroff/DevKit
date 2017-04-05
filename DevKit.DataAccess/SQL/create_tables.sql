@@ -39,9 +39,9 @@ DROP TABLE public."User";
 CREATE TABLE public."User"
 (
     id bigserial NOT NULL,
-    "stLogin" character varying(200),
-    "stPassword" character varying(30),
     "bActive" boolean,
+	"stLogin" character varying(200),
+    "stPassword" character varying(30),    
     "fkProfile" bigint,
     "dtLastLogin" timestamp without time zone,
     "dtCreation" timestamp without time zone,
@@ -60,8 +60,8 @@ DROP TABLE public."UserEmail";
 CREATE TABLE public."UserEmail"
 (
     id bigserial NOT NULL,
-    "fkUser" bigint,
     "stEmail" character varying(250),
+	"fkUser" bigint,    
     PRIMARY KEY (id)
 )
 WITH (
@@ -77,9 +77,9 @@ DROP TABLE public."UserPhone";
 CREATE TABLE public."UserPhone"
 (
     id bigserial NOT NULL,
-    "fkUser" bigint,
     "stPhone" character varying(50),
     "stDescription" character varying(50),
+	"fkUser" bigint,
     PRIMARY KEY (id)
 )
 WITH (
@@ -133,8 +133,8 @@ DROP TABLE public."ProjectPhase";
 CREATE TABLE public."ProjectPhase"
 (
     id bigserial NOT NULL,
-    "fkProject" bigint,
 	"stName" character varying(99),
+	"fkProject" bigint,
     PRIMARY KEY (id)
 )
 WITH (
@@ -150,10 +150,10 @@ DROP TABLE public."ProjectSprint";
 CREATE TABLE public."ProjectSprint"
 (
     id bigserial NOT NULL,
-    "fkProject" bigint,
-	"fkPhase" bigint,
 	"stName" character varying(200),
 	"stDescription" character varying(1000),
+    "fkProject" bigint,
+	"fkPhase" bigint,
     PRIMARY KEY (id)
 )
 WITH (
@@ -169,11 +169,12 @@ DROP TABLE public."TaskType";
 CREATE TABLE public."TaskType"
 (
     id bigserial NOT NULL,
-    "stName" character varying(200),
-	"fkProject" bigint,
-	"bManaged" boolean,
+    "bManaged" boolean,
 	"bCondensedView" boolean,	
-    PRIMARY KEY (id)
+	"bKPA" boolean,
+	"stName" character varying(200),
+	"fkProject" bigint,
+	PRIMARY KEY (id)
 )
 WITH (
     OIDS = FALSE
@@ -188,10 +189,10 @@ DROP TABLE public."TaskCategory";
 CREATE TABLE public."TaskCategory"
 (
     id bigserial NOT NULL,
-	"fkTaskType" bigint,
     "stName" character varying(200),
 	"stAbreviation" character varying(10),
 	"stDescription" character varying(500),
+	"fkTaskType" bigint,
     PRIMARY KEY (id)
 )
 WITH (
@@ -207,12 +208,12 @@ DROP TABLE public."TaskFlow";
 CREATE TABLE public."TaskFlow"
 (
     id bigserial NOT NULL,
-	"fkTaskType" bigint,
-	"fkTaskCategory" bigint,
-    "stName" character varying(200),
-	"nuOrder" bigint,
-	"bForceComplete" boolean,
+    "bForceComplete" boolean,
 	"bForceOpen" boolean,
+	"stName" character varying(200),
+	"nuOrder" bigint,
+	"fkTaskType" bigint,
+	"fkTaskCategory" bigint,	
     PRIMARY KEY (id)
 )
 WITH (
@@ -228,9 +229,9 @@ DROP TABLE public."ProjectSprintVersion";
 CREATE TABLE public."ProjectSprintVersion"
 (
     id bigserial NOT NULL,
+	"stName" character varying(20),
     "fkSprint" bigint,
 	"fkVersionState" bigint,
-	"stName" character varying(20),
     PRIMARY KEY (id)
 )
 WITH (
@@ -246,11 +247,15 @@ DROP TABLE public."Task";
 CREATE TABLE public."Task"
 (
     id bigserial NOT NULL,
+	"bComplete" boolean,
+	"dtStart" timestamp without time zone,	
+	"dtLastEdit" timestamp without time zone,	
+	"stProtocol" character varying(20),
 	"stTitle" character varying(200),
 	"stLocalization" character varying(200),
 	"stDescription" character varying(4000),
-	"fkProject" bigint,
 	"nuPriority" bigint,
+	"fkProject" bigint,	
 	"fkPhase" bigint,
     "fkSprint" bigint,
 	"fkUserStart" bigint,
@@ -259,11 +264,7 @@ CREATE TABLE public."Task"
 	"fkTaskCategory" bigint,
 	"fkTaskFlowCurrent" bigint,
 	"fkReleaseVersion" bigint,
-	"fkUserResponsible" bigint,
-	"dtStart" timestamp without time zone,	
-	"dtLastEdit" timestamp without time zone,	
-	"bComplete" boolean,
-	"stProtocol" character varying(20),
+	"fkUserResponsible" bigint,	
     PRIMARY KEY (id)
 )
 WITH (
@@ -297,11 +298,11 @@ DROP TABLE public."TaskMessage";
 CREATE TABLE public."TaskMessage"
 (
     id bigserial NOT NULL,
-	"fkTask" bigint,
-	"fkUser" bigint,
-	"fkCurrentFlow" bigint,
 	"stMessage" character varying(999),
 	"dtLog" timestamp without time zone,	
+	"fkTask" bigint,
+	"fkUser" bigint,
+	"fkCurrentFlow" bigint,	
     PRIMARY KEY (id)
 )
 WITH (
@@ -317,12 +318,12 @@ DROP TABLE public."TaskFlowChange";
 CREATE TABLE public."TaskFlowChange"
 (
     id bigserial NOT NULL,
+	"stMessage" character varying(300),
+	"dtLog" timestamp without time zone,
 	"fkTask" bigint,
 	"fkUser" bigint,
 	"fkOldFlowState" bigint,
 	"fkNewFlowState" bigint,
-	"dtLog" timestamp without time zone,	
-	"stMessage" character varying(300),
     PRIMARY KEY (id)
 )
 WITH (
@@ -338,12 +339,12 @@ DROP TABLE public."TaskTypeAccumulator";
 CREATE TABLE public."TaskTypeAccumulator"
 (
     id bigserial NOT NULL,
+	"bEstimate" boolean,
+	"stName" character varying(30),
 	"fkTaskType" bigint,
 	"fkTaskAccType" bigint,
 	"fkTaskFlow" bigint,
-	"fkTaskCategory" bigint,
-	"stName" character varying(30),
-	"bEstimate" boolean,
+	"fkTaskCategory" bigint,	
     PRIMARY KEY (id)
 )
 WITH (
@@ -359,13 +360,13 @@ DROP TABLE public."TaskAccumulatorValue";
 CREATE TABLE public."TaskAccumulatorValue"
 (
     id bigserial NOT NULL,
-	"fkTask" bigint,
-	"fkTaskAcc" bigint,
-	"fkUser" bigint,
 	"dtLog" timestamp without time zone,
 	"nuValue" bigint,
 	"nuHourValue" bigint,
 	"nuMinValue" bigint,		
+	"fkTask" bigint,
+	"fkTaskAcc" bigint,
+	"fkUser" bigint,	
     PRIMARY KEY (id)
 )
 WITH (

@@ -41,28 +41,16 @@ namespace DataModel
 
 		List<ProjectPhase> LoadPhases(DevKitDB db)
 		{
-			var setup = db.Setup();
-
-			var lst = (from e in db.ProjectPhases where e.fkProject == id select e).
+			return (from e in db.ProjectPhases where e.fkProject == id select e).
 				OrderBy(t => t.id).
 				ToList();
-
-			foreach (var item in lst)
-			{
-				item.sdtStart = item.dtStart?.ToString(setup.stDateFormat);
-				item.sdtEnd = item.dtEnd?.ToString(setup.stDateFormat);
-			}
-
-			return lst;
 		}
 
 		List<ProjectSprint> LoadSprints(DevKitDB db)
 		{
-			var lst = (from e in db.ProjectSprints where e.fkProject == id select e).
+			return (from e in db.ProjectSprints where e.fkProject == id select e).
 				OrderBy(t => t.id).
 				ToList();
-
-			return lst;
 		}
 	}
 }

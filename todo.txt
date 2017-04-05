@@ -2,7 +2,6 @@
 melhorias
 ------------------
 
--sprint (simplificar)
 -management (bugs, rework)
 -'restricted user list' para passar para determinado fluxo
 -timesheet

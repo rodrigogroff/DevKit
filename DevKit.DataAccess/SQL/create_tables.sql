@@ -135,9 +135,6 @@ CREATE TABLE public."ProjectPhase"
     id bigserial NOT NULL,
     "fkProject" bigint,
 	"stName" character varying(99),
-	"dtStart" timestamp without time zone,
-	"dtEnd" timestamp without time zone,
-	"bComplete" boolean,
     PRIMARY KEY (id)
 )
 WITH (

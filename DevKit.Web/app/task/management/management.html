@@ -6,9 +6,6 @@
 				<tr>
 					<td width="20px"></td>
 					<td><b>Project Management </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-					<td width="80px"></td>
-					<td><input type="submit" class="btn btn-success pull-right" value="New" ng-click="new()"></td>
-					<td width="20px"></td>
 				</tr>
 				<tr height="12px"></tr>
 			</table>
@@ -66,7 +63,7 @@
 					<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
 						<div class="panel-heading">
 							<a class="accordion-toggle" data-toggle="collapse" href="task/management#collapseTypeCondensed">
-								<b>Software Statistics</b>
+								<b>Software Statistics (open versions)</b>
 							</a>
 						</div>
 						<div id="collapseTypeCondensed" class="panel-collapse collapse" style="height: auto;">
@@ -180,37 +177,39 @@
 				<div class="panel" style="width:100%;background:rgba(15, 43, 89, 0.25);">
 					<div class="panel-heading">
 						<a class="accordion-toggle" data-toggle="collapse" href="task/management#collapseVersion">
-							<b>Versions</b>
+							<b>Versions statistics (complete cycle)</b>
 						</a>
 					</div>
 					<div id="collapseVersion" class="panel-collapse collapse" style="height: auto;">
 						<div class="panel-body">
-							<table class="table table-hover" style="width:1120px">
+							<table class="table table-hover" style="width:100%">
 								<thead>
 									<tr>
-										<th width="200px">Phase</th>
-										<th width="200px">Sprint</th>
-										<th width="120px">Version</th>
-										<th width="90px">Analysis</th>
-										<th width="90px">Development</th>
-										<th width="90px">Bugs => </th>
-										<th width="90px">Internal</th>
-										<th width="90px">Homolog.</th>
-										<th width="90px">Production</th>
-										<th width="90px">Total</th>
+										<th>Phase /<br />Sprint</th>
+										<th>Version /<br />State</th>
+										<th> </th>
+										<th>Work<br />Analysis</th>
+										<th>Work<br />Development</th>
+										<th>Work %</th>
+										<th>Bugs</th>
+										<th>Bugs<br />Construction</th>
+										<th>Bugs<br />Homologation</th>
+										<th>Bugs<br />Production</th>
+										<th>Re-Work %</th>
 									</tr>
 								</thead>
 								<tr data-ng-repeat="mdl in viewModel.versions">
-									<td>{{ mdl.stPhase }}</td>
-									<td>{{ mdl.stSprint }}</td>
-									<td>{{ mdl.stVersion }}</td>									
-									<td>{{ mdl.analysis }}</td>
-									<td>{{ mdl.development }}</td>
-									<td>{{ mdl.bugs }}</td>
-									<td>{{ mdl.internal }}</td>
-									<td>{{ mdl.homologation }}</td>
-									<td>{{ mdl.production }}</td>
-									<td>{{ mdl.total }}</td>
+									<td>{{ mdl.stPhase }}<br />{{ mdl.stSprint }}</td>
+									<td>{{ mdl.stVersion }}<br />{{ mdl.stVersionState }}</td>
+									<td><i>Items<br />Hours</i></td>
+									<td>{{ mdl.analysis }}<br />{{ mdl.analysisH }}</td>
+									<td>{{ mdl.development }}<br />{{ mdl.developmentH }}</td>
+									<td><br />{{ mdl.workPct }}</td>
+									<td>{{ mdl.bugs }}<br />{{ mdl.bugsH }}</td>
+									<td>{{ mdl.inhouse }}<br />{{ mdl.inhouseH }}</td>
+									<td>{{ mdl.homologation }}<br />{{ mdl.homologationH }}</td>
+									<td>{{ mdl.production }}<br />{{ mdl.productionH }}</td>
+									<td><br />{{ mdl.reworkPct }}</td>
 								</tr>
 							</table>
 						</div>

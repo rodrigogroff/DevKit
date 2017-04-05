@@ -37,9 +37,6 @@ namespace DataModel
 								e.stTitle.ToUpper().Contains(filter.busca) 
 						select e;
 
-			if (filter.complete != null)
-				query = from e in query where e.bComplete == filter.complete select e;
-
 			if (filter.nuPriority != null)
 				query = from e in query where e.nuPriority == filter.nuPriority select e;
 
@@ -67,9 +64,6 @@ namespace DataModel
 			if (filter.fkTaskFlowCurrent != null)
 				query = from e in query where e.fkTaskFlowCurrent == filter.fkTaskFlowCurrent select e;
 			
-			if (filter.fkUserResponsible != null)
-				query = from e in query where e.fkUserResponsible == filter.fkUserResponsible select e;
-
 			if (filter.complete != null)
 				query = from e in query where e.bComplete == filter.complete select e;
 

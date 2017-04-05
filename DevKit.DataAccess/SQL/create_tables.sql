@@ -1,4 +1,6 @@
 ﻿
+DROP TABLE public."Setup";
+
 CREATE TABLE public."Setup"
 (
     id bigserial NOT NULL,
@@ -15,6 +17,8 @@ TABLESPACE pg_default;
 ALTER TABLE public."Setup"
     OWNER to postgres;
 
+DROP TABLE public."Profile";
+
 CREATE TABLE public."Profile"
 (
     id bigserial NOT NULL,
@@ -29,6 +33,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Profile"
     OWNER to postgres;
+
+DROP TABLE public."User";
 
 CREATE TABLE public."User"
 (
@@ -49,6 +55,8 @@ TABLESPACE pg_default;
 ALTER TABLE public."User"
     OWNER to postgres;
 
+DROP TABLE public."UserEmail";
+
 CREATE TABLE public."UserEmail"
 (
     id bigserial NOT NULL,
@@ -63,6 +71,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."UserEmail"
     OWNER to postgres;
+
+DROP TABLE public."UserPhone";
 
 CREATE TABLE public."UserPhone"
 (
@@ -79,6 +89,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."UserPhone"
     OWNER to postgres;
+
+DROP TABLE public."Project";
 
 CREATE TABLE public."Project"
 (
@@ -97,6 +109,8 @@ TABLESPACE pg_default;
 ALTER TABLE public."Project"
     OWNER to postgres;
 
+DROP TABLE public."ProjectUser";
+
 CREATE TABLE public."ProjectUser"
 (
     id bigserial NOT NULL,
@@ -113,6 +127,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."ProjectUser"
     OWNER to postgres;
+
+DROP TABLE public."ProjectPhase";
 
 CREATE TABLE public."ProjectPhase"
 (
@@ -131,6 +147,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."ProjectPhase"
     OWNER to postgres;
+
+DROP TABLE public."ProjectSprint";
 
 CREATE TABLE public."ProjectSprint"
 (
@@ -151,6 +169,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."ProjectSprint"
     OWNER to postgres;
+
+DROP TABLE public."TaskType";
 	
 CREATE TABLE public."TaskType"
 (
@@ -169,6 +189,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskType"
     OWNER to postgres;
 
+DROP TABLE public."TaskCategory";
 
 CREATE TABLE public."TaskCategory"
 (
@@ -187,6 +208,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskCategory"
     OWNER to postgres;
 
+DROP TABLE public."TaskFlow";
 
 CREATE TABLE public."TaskFlow"
 (
@@ -207,6 +229,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskFlow"
     OWNER to postgres;
 	
+DROP TABLE public."ProjectSprintVersion";
 
 CREATE TABLE public."ProjectSprintVersion"
 (
@@ -223,6 +246,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."ProjectSprintVersion"
     OWNER to postgres;
+
+DROP TABLE public."Task";
 
 CREATE TABLE public."Task"
 (
@@ -255,6 +280,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."Task"
     OWNER to postgres;
 
+DROP TABLE public."TaskProgress";
 
 CREATE TABLE public."TaskProgress"
 (
@@ -271,6 +297,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."TaskProgress"
     OWNER to postgres;
+
+DROP TABLE public."TaskMessage";
 
 CREATE TABLE public."TaskMessage"
 (
@@ -290,6 +318,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskMessage"
     OWNER to postgres;
 
+DROP TABLE public."TaskFlowChange";
 
 CREATE TABLE public."TaskFlowChange"
 (
@@ -310,6 +339,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskFlowChange"
     OWNER to postgres;
 
+DROP TABLE public."TaskTypeAccumulator";
 	
 CREATE TABLE public."TaskTypeAccumulator"
 (
@@ -319,7 +349,7 @@ CREATE TABLE public."TaskTypeAccumulator"
 	"fkTaskFlow" bigint,
 	"fkTaskCategory" bigint,
 	"stName" character varying(30),
-	"stDisplay" character varying(30),
+	"bEstimate" boolean,
     PRIMARY KEY (id)
 )
 WITH (
@@ -330,6 +360,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskTypeAccumulator"
     OWNER to postgres;
 
+DROP TABLE public."TaskAccumulatorValue";
 
 CREATE TABLE public."TaskAccumulatorValue"
 (
@@ -340,7 +371,7 @@ CREATE TABLE public."TaskAccumulatorValue"
 	"dtLog" timestamp without time zone,
 	"nuValue" bigint,
 	"nuHourValue" bigint,
-	"nuMinValue" bigint,	
+	"nuMinValue" bigint,		
     PRIMARY KEY (id)
 )
 WITH (

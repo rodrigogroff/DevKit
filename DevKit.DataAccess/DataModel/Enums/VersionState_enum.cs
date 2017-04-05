@@ -13,11 +13,11 @@ namespace DataModel
 	{
 		public List<VersionState> lst = new List<VersionState>();
 
-		public const long	Emergency = 1,
-							High = 2,
-							Normal = 3,
-							Low = 4,
-							Register = 5;
+		public const long Analysis = 1,
+							Development = 2,
+							Homologation = 3,
+							Production = 4,
+							Closed = 5;
 
 		public EnumVersionState()
 		{

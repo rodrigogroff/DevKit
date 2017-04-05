@@ -100,8 +100,8 @@ namespace DataModel
 	{
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
 		[Column,     Nullable] public long?  fkSprint       { get; set; } // bigint
-		[Column,     Nullable] public string stName         { get; set; } // character varying(20)
 		[Column,     Nullable] public long?  fkVersionState { get; set; } // bigint
+		[Column,     Nullable] public string stName         { get; set; } // character varying(20)
 	}
 
 	[Table(Schema="public", Name="ProjectUser")]
@@ -233,7 +233,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkTaskFlow     { get; set; } // bigint
 		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
 		[Column,     Nullable] public string stName         { get; set; } // character varying(30)
-		[Column,     Nullable] public string stDisplay      { get; set; } // character varying(30)
+		[Column,     Nullable] public bool?  bEstimate      { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="User")]

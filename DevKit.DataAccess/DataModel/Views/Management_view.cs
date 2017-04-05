@@ -57,15 +57,24 @@ namespace DataModel
 	{
 		public string	stPhase,
 						stSprint,
-						stVersion;
+						stVersion,
+						stVersionState;
 
 		public int? analysis, 
-					development, 
+					development,
 					bugs, 
-					inhouse, 
-					homologation, 
-					production, 
-					total;
+					construction,
+					homologation,
+					production;
+
+		public string	analysisH,
+						developmentH,
+						bugsH,
+						constructionH,
+						homologationH,
+						productionH,
+						workPct, 
+						reworkPct;
 	}
 
 	public class Management
@@ -73,6 +82,7 @@ namespace DataModel
 		public ManagementDTO ComposedFilters(DevKitDB db, ManagementFilter filter, List<long?> lstUserProjects)
 		{
 			var dto = new ManagementDTO();
+			var vs = new EnumVersionState();
 
 			if (filter.fkProject == null)
 			{
@@ -336,6 +346,24 @@ namespace DataModel
 
 				#region - versions (stats) - 
 
+				var fkConstructionBug = (from e in db.TaskCategories
+										 where e.fkTaskType == fkTaskType_SoftwareBugs
+										 where e.stName == "Construction Bugs"
+										 select e.id).
+										 FirstOrDefault();
+
+				var fkHomologationBug = (from e in db.TaskCategories
+										 where e.fkTaskType == fkTaskType_SoftwareBugs
+										 where e.stName == "Homologation Bugs"
+										 select e.id).
+										 FirstOrDefault();
+
+				var fkProductionBug = (from e in db.TaskCategories
+										 where e.fkTaskType == fkTaskType_SoftwareBugs
+										 where e.stName == "Production Bugs"
+										 select e.id).
+										 FirstOrDefault();
+
 				var lstPhases = (from e in db.ProjectPhases
 								 where e.fkProject == filter.fkProject
 								 select e).
@@ -360,57 +388,183 @@ namespace DataModel
 
 						foreach (var version in lstVersions)
 						{
-							int? _total = (from e in db.Tasks
-										   where e.fkProject == filter.fkProject
-										   where e.fkPhase == phase.id
-										   where e.fkSprint == sprint.id
-										   where e.fkVersion == version.id
-										   select e).Count();
+							if (version.fkVersionState == EnumVersionState.Closed)
+								continue;
 
-							int? _analysis = (from e in db.Tasks
-										   where e.fkProject == filter.fkProject
-										   where e.fkPhase == phase.id
-										   where e.fkSprint == sprint.id
-										   where e.fkVersion == version.id
-										   where e.fkTaskType == fkTaskType_SoftwareAnalysis
-										   select e).Count();
+							// -- ANALYSIS ----------------------------------
 
-							int? _development = (from e in db.Tasks
-											  where e.fkProject == filter.fkProject
-											  where e.fkPhase == phase.id
-											  where e.fkSprint == sprint.id
-											  where e.fkVersion == version.id
-											  where e.fkTaskType == fkTaskType_SoftwareDevelopment
-											  select e).Count();
+							var task_A_IdList = (from e in db.Tasks
+											where e.fkProject == filter.fkProject
+											where e.fkPhase == phase.id
+											where e.fkSprint == sprint.id
+											where e.fkVersion == version.id
+											where e.fkTaskType == fkTaskType_SoftwareAnalysis
+											select e.id).ToList();
 
-							int? _bugs = (from e in db.Tasks
+							int? _analysis = task_A_IdList.Count();
+
+							long fkAcc_A = (from e in db.TaskTypeAccumulators
+											where e.fkTaskType == fkTaskType_SoftwareAnalysis
+											where e.stName == "Design Construction Hours"
+											select e.id).FirstOrDefault();
+
+							long? _analysis_HH = (	from e in db.TaskAccumulatorValues
+													where task_A_IdList.Contains((long)e.fkTask)
+													where e.fkTaskAcc == fkAcc_A
+													select e).Sum(y => y.nuHourValue);
+
+							long? _analysis_MM = (  from e in db.TaskAccumulatorValues
+													where task_A_IdList.Contains((long)e.fkTask)
+													where e.fkTaskAcc == fkAcc_A
+													select e).Sum(y => y.nuMinValue);
+
+							if (_analysis_MM > 59)
+							{
+								long hours = (long)_analysis_MM / 60;
+								_analysis_HH += hours;
+								_analysis_MM -= hours * 60;
+							}
+
+							string _analysis_H = "";
+
+							if (_analysis_HH != null)
+								_analysis_H += _analysis_HH.ToString() + ":";
+							
+							if (_analysis_MM != null)
+								_analysis_H += _analysis_MM.ToString();
+							else 
+								if (_analysis_HH != null)
+									_analysis_H += "00";
+														
+							// DEVELOPMENT ------------------------------------
+
+							var task_D_IdList = (from e in db.Tasks
 												 where e.fkProject == filter.fkProject
 												 where e.fkPhase == phase.id
 												 where e.fkSprint == sprint.id
 												 where e.fkVersion == version.id
-												 where e.fkTaskType == fkTaskType_SoftwareBugs
-												 select e).Count();
+												 where e.fkTaskType == fkTaskType_SoftwareDevelopment
+												 select e.id).ToList();
 
-							/*
-							  inhouse, 
-								homologation, 
-								production, 
-							*/
+							int ? _development = task_D_IdList.Count();
 
-							if (_total == 0) _total = null;
+							long fkAcc_D = (from e in db.TaskTypeAccumulators
+											where e.fkTaskType == fkTaskType_SoftwareDevelopment
+											where e.stName == "Coding Hours"
+											select e.id).FirstOrDefault();
+
+							long fkAcc_ED = (from e in db.TaskTypeAccumulators
+											 where e.fkTaskType == fkTaskType_SoftwareDevelopment
+											 where e.stName == "Estimate Coding Hours"
+											 select e.id).FirstOrDefault();
+
+							long? _development_HH = (from e in db.TaskAccumulatorValues
+												  where task_D_IdList.Contains((long)e.fkTask)
+												  where e.fkTaskAcc == fkAcc_D
+												  select e).Sum(y => y.nuHourValue);
+
+							if (_development_HH == null) _development_HH = 0;
+
+							long? _development_MM = (from e in db.TaskAccumulatorValues
+												  where task_A_IdList.Contains((long)e.fkTask)
+												  where e.fkTaskAcc == fkAcc_D
+												  select e).Sum(y => y.nuMinValue);
+
+							if (_development_MM == null) _development_MM = 0;
+
+							long? _development_EHH = (from e in db.TaskAccumulatorValues
+													 where task_D_IdList.Contains((long)e.fkTask)
+													 where e.fkTaskAcc == fkAcc_ED
+													  select e).Sum(y => y.nuHourValue);
+
+							if (_development_EHH == null) _development_EHH = 0;
+
+							long? _development_EMM = (from e in db.TaskAccumulatorValues
+													 where task_A_IdList.Contains((long)e.fkTask)
+													 where e.fkTaskAcc == fkAcc_ED
+													  select e).Sum(y => y.nuMinValue);
+
+							if (_development_EMM == null) _development_EMM = 0;
+
+							string _workPct = "";
+
+							if ((_development_HH > 0 || _development_MM > 0) && (_development_EHH > 0 || _development_EMM > 0 ))
+							{
+								long tot_Est = (long)_development_EHH * 60 + (long)_development_EMM;
+								long tot_W = (long)_development_HH * 60 + (long)_development_MM;
+
+								_workPct = (tot_W * 100 / tot_Est).ToString() + "%";
+							}
+
+							if (_development_MM > 59)
+							{
+								long hours = (long)_development_MM / 60;
+								_development_HH += hours;
+								_development_MM -= hours * 60;
+							}
+
+							string _development_H = "E " + _development_EHH + ":" + _development_EMM.ToString().PadLeft(2,'0') + 
+													" / D " + _development_HH + ":" + _development_MM.ToString().PadLeft(2, '0');
+
+							// ----------------------------------------------------
+
+							int ? _bugs = (	from e in db.Tasks
+											where e.fkProject == filter.fkProject
+											where e.fkPhase == phase.id
+											where e.fkSprint == sprint.id
+											where e.fkVersion == version.id
+											where e.fkTaskType == fkTaskType_SoftwareBugs
+											select e).Count();
+
+							int? _construction = (	from e in db.Tasks
+													where e.fkProject == filter.fkProject
+													where e.fkPhase == phase.id
+													where e.fkSprint == sprint.id
+													where e.fkVersion == version.id
+													where e.fkTaskType == fkTaskType_SoftwareBugs
+													where e.fkTaskCategory == fkConstructionBug
+													select e).Count();
+
+							int? _homologation = (	from e in db.Tasks
+													where e.fkProject == filter.fkProject
+													where e.fkPhase == phase.id
+													where e.fkSprint == sprint.id
+													where e.fkVersion == version.id
+													where e.fkTaskType == fkTaskType_SoftwareBugs
+													where e.fkTaskCategory == fkHomologationBug
+													select e).Count();
+
+							int? _production = (	from e in db.Tasks
+													where e.fkProject == filter.fkProject
+													where e.fkPhase == phase.id
+													where e.fkSprint == sprint.id
+													where e.fkVersion == version.id
+													where e.fkTaskType == fkTaskType_SoftwareBugs
+													where e.fkTaskCategory == fkProductionBug
+													select e).Count();
+														
 							if (_analysis == 0) _analysis = null;
 							if (_development == 0) _development = null;
 							if (_bugs == 0) _bugs = null;
+							if (_construction == 0) _construction = null;
+							if (_homologation == 0) _homologation = null;
+							if (_production == 0) _production = null;
 
 							dto.versions.Add(new ManagementDTO_Version
 							{
 								stPhase = phase.stName,
 								stSprint = sprint.stName,
 								stVersion = version.stName,
-								total = _total,
+								stVersionState = vs.Get((long)version.fkVersionState).stName,
 								analysis = _analysis,
+								analysisH = _analysis_H,
 								development = _development,
+								developmentH = _development_H,
+								workPct = _workPct,
 								bugs = _bugs,
+								construction = _construction,
+								homologation = _homologation,
+								production = _production,
 							});
 						}
 					}

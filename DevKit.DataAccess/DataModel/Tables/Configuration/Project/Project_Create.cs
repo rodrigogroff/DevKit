@@ -294,6 +294,16 @@ namespace DataModel
 
 							{
 								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+								
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									bEstimate = true,
+									stName = "Estimate Coding Hours"
+								});
 
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -301,7 +311,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Resource Coding Hours"
+									bEstimate = false,
+									stName = "Coding Hours"
 								});
 							}
 
@@ -338,7 +349,7 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Coding Bug Hours"
+									stName = "Coding Hours"
 								});
 							}
 
@@ -365,7 +376,7 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Coding H. Bug Hours"
+									stName = "Coding Hours"
 								});
 							}
 
@@ -392,7 +403,7 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Coding P. Bug Hours"
+									stName = "Coding Hours"
 								});
 							}
 

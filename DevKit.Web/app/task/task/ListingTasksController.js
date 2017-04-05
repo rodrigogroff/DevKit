@@ -10,10 +10,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	  true ); w.bind('resize', function () { $scope.$apply();	});
 
 	$scope.campos = {
-		complete: 'false',
-		fkProject: 0,
-		fkProject: 0,
-
+		complete: false,
 		selects: {
 			user: ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' }),
 			priority: ngSelects.obterConfiguracao(Api.Priority, { tamanhoPagina: 15, campoNome: 'stName' }),

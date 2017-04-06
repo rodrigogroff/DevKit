@@ -345,127 +345,139 @@ namespace DataModel
 					}
 				}
 
-				#region - versions (stats) - 
-
-				var fkConstructionBug = (from e in db.TaskCategories
-										 where e.fkTaskType == fkTaskType_SoftwareBugs
-										 where e.stName == "Construction Bugs"
-										 select e.id).
-										 FirstOrDefault();
-
-				var fkHomologationBug = (from e in db.TaskCategories
-										 where e.fkTaskType == fkTaskType_SoftwareBugs
-										 where e.stName == "Homologation Bugs"
-										 select e.id).
-										 FirstOrDefault();
-
-				var fkProductionBug = (from e in db.TaskCategories
-										 where e.fkTaskType == fkTaskType_SoftwareBugs
-										 where e.stName == "Production Bugs"
-										 select e.id).
-										 FirstOrDefault();
-
-				var lstPhases = (from e in db.ProjectPhases
-								 where e.fkProject == filter.fkProject
-								 select e).
-								 OrderBy(y => y.id).
-								 ToList();
+				#region - versions detail - 
 
 				var lstValidVersions = new List<long>();
 
-				foreach (var phase in lstPhases)
+				foreach (var phase in (from e in db.ProjectPhases
+									   where e.fkProject == filter.fkProject
+									   select e).OrderBy(y => y.id).ToList())
 				{
-					var lstSprints = (from e in db.ProjectSprints
-									  where e.fkProject == filter.fkProject && e.fkPhase == phase.id
-									  select e).
-									  OrderBy(y => y.id).
-									  ToList();
-
-					foreach (var sprint in lstSprints)
+					foreach (var sprint in (from e in db.ProjectSprints
+											where e.fkProject == filter.fkProject && e.fkPhase == phase.id
+											select e).OrderBy(y => y.id).ToList())
 					{
-						var lstVersions = (from e in db.ProjectSprintVersions
-										   where e.fkSprint == sprint.id
-										   select e).
-										   OrderBy(y => y.id).
-										   ToList();
-
-						foreach (var version in lstVersions)
+						foreach (var version in (from e in db.ProjectSprintVersions
+												 where e.fkSprint == sprint.id
+												 select e).OrderBy(y => y.id).ToList())
 						{
 							if (version.fkVersionState == EnumVersionState.Closed)
 								continue;
-
+							
 							lstValidVersions.Add(version.id);
 						}
 					}
 				}
 
-				long fkAcc_A = (from e in db.TaskTypeAccumulators
+				#region - setup bugs fks - 
+
+				var lstValidBugCategs = (from e in db.TaskCategories
+										 where e.fkTaskType == fkTaskType_SoftwareBugs
+										 select e).
+										 ToList();
+
+				var fkConstructionBug = (from e in lstValidBugCategs
+										 where e.stName == "Construction Bugs"
+										 select e.id).
+										 FirstOrDefault();
+
+				var fkHomologationBug = (from e in lstValidBugCategs
+										 where e.stName == "Homologation Bugs"
+										 select e.id).
+										 FirstOrDefault();
+
+				var fkProductionBug = (from e in lstValidBugCategs
+									   where e.stName == "Production Bugs"
+									   select e.id).
+									   FirstOrDefault();
+
+				#endregion
+
+				#region - setup accs fks - 
+				
+				var lstValidAccsFks = (from e in db.TaskTypeAccumulators
+									   where e.fkTaskType == fkTaskType_SoftwareAnalysis ||
+											 e.fkTaskType == fkTaskType_SoftwareDevelopment ||
+											 e.fkTaskType == fkTaskType_SoftwareBugs
+									   select e).ToList();
+				
+				long fkAcc_A = (from e in lstValidAccsFks
 								where e.fkTaskType == fkTaskType_SoftwareAnalysis
 								where e.stName == "Design Construction Hours"
 								select e.id).
 								FirstOrDefault();
 
-				long fkAcc_D = (from e in db.TaskTypeAccumulators
+				long fkAcc_D = (from e in lstValidAccsFks
 								where e.fkTaskType == fkTaskType_SoftwareDevelopment
 								where e.stName == "Coding Hours"
 								select e.id).
 								FirstOrDefault();
 
-				long fkAcc_ED = (from e in db.TaskTypeAccumulators
+				long fkAcc_ED = (from e in lstValidAccsFks
 								 where e.fkTaskType == fkTaskType_SoftwareDevelopment
 								 where e.stName == "Estimate Coding Hours"
 								 select e.id).
 								 FirstOrDefault();
 
-				long fkAcc_B_Construction = (from e in db.TaskTypeAccumulators
+				long fkAcc_B_Construction = (from e in lstValidAccsFks
 											 where e.fkTaskType == fkTaskType_SoftwareBugs
 											 where e.fkTaskCategory == fkConstructionBug
 											 where e.stName == "Coding Hours"
 											 select e.id).
 											 FirstOrDefault();
 
-				long fkAcc_B_Homologation = (from e in db.TaskTypeAccumulators
+				long fkAcc_B_Homologation = (from e in lstValidAccsFks
 											 where e.fkTaskType == fkTaskType_SoftwareBugs
 											 where e.fkTaskCategory == fkHomologationBug
 											 where e.stName == "Coding Hours"
 											 select e.id).
 											 FirstOrDefault();
 
-				long fkAcc_B_Production = (from e in db.TaskTypeAccumulators
+				long fkAcc_B_Production = (from e in lstValidAccsFks
 										   where e.fkTaskType == fkTaskType_SoftwareBugs
 										   where e.fkTaskCategory == fkProductionBug
 										   where e.stName == "Coding Hours"
 										   select e.id).
 										   FirstOrDefault();
 
-				var lstValidAccs = new List<long>();
+				#endregion
 
-				lstValidAccs.Add(fkAcc_A);
-				lstValidAccs.Add(fkAcc_D);
-				lstValidAccs.Add(fkAcc_ED);
-				lstValidAccs.Add(fkAcc_B_Construction);
-				lstValidAccs.Add(fkAcc_B_Homologation);
-				lstValidAccs.Add(fkAcc_B_Production);
+				#region - setup accs values - 
+				
+				var lstValidAccsIds = new List<long>();
+
+				lstValidAccsIds.Add(fkAcc_A);
+				lstValidAccsIds.Add(fkAcc_D);
+				lstValidAccsIds.Add(fkAcc_ED);
+				lstValidAccsIds.Add(fkAcc_B_Construction);
+				lstValidAccsIds.Add(fkAcc_B_Homologation);
+				lstValidAccsIds.Add(fkAcc_B_Production);
 
 				var lstValidAccValues = (from e in db.TaskAccumulatorValues
-										 where lstValidAccs.Contains((long)e.fkTaskAcc)
+										 where lstValidAccsIds.Contains((long)e.fkTaskAcc)
 										 select e).
 										 ToList();
+
+				#endregion
+
+				// all tasks version
 
 				var lstValidTasks = (from e in db.Tasks
 									 where lstValidVersions.Contains((long)e.fkVersion)
 									 select e).
 									 ToList();
+
+				// main loop (using memory LINQ)
 				
 				foreach (var ver in lstValidVersions)
 				{
 					var version = db.ProjectSprintVersion(ver);
 					var sprint = db.ProjectSprint(version.fkSprint);
 					var phase = db.ProjectPhase(sprint.fkPhase);
-					
-					// -- ANALYSIS ----------------------------------
 
-					var task_A_IdList = ( from e in lstValidTasks
+					#region - analysis - 
+
+					var task_Analysis_IdList = ( from e in lstValidTasks
 										  where e.fkPhase == phase.id
 										  where e.fkSprint == sprint.id
 										  where e.fkVersion == version.id
@@ -473,15 +485,15 @@ namespace DataModel
 										  select e.id).
 										  ToList();
 
-					int? _analysis = task_A_IdList.Count();
+					int? _analysis = task_Analysis_IdList.Count();
 
-					long? _analysis_HH = (	from e in db.TaskAccumulatorValues
-											where task_A_IdList.Contains((long)e.fkTask)
+					long? _analysis_HH = (	from e in lstValidAccValues
+											where task_Analysis_IdList.Contains((long)e.fkTask)
 											where e.fkTaskAcc == fkAcc_A
 											select e).Sum(y => y.nuHourValue);
 
-					long? _analysis_MM = (  from e in db.TaskAccumulatorValues
-											where task_A_IdList.Contains((long)e.fkTask)
+					long? _analysis_MM = (  from e in lstValidAccValues
+											where task_Analysis_IdList.Contains((long)e.fkTask)
 											where e.fkTaskAcc == fkAcc_A
 											select e).Sum(y => y.nuMinValue);
 
@@ -502,8 +514,10 @@ namespace DataModel
 					else 
 						if (_analysis_HH != null)
 							_analysis_H += "00";
-														
-					// DEVELOPMENT ------------------------------------
+
+					#endregion
+
+					#region - development - 
 
 					var task_D_IdList = (from e in lstValidTasks
 											where e.fkPhase == phase.id
@@ -514,29 +528,29 @@ namespace DataModel
 
 					int ? _development = task_D_IdList.Count();
 
-					long? _development_HH = (from e in db.TaskAccumulatorValues
-											where task_D_IdList.Contains((long)e.fkTask)
+					long? _development_HH = (from e in lstValidAccValues
+											 where task_D_IdList.Contains((long)e.fkTask)
 											where e.fkTaskAcc == fkAcc_D
 											select e).Sum(y => y.nuHourValue);
 
 					if (_development_HH == null) _development_HH = 0;
 
-					long? _development_MM = (from e in db.TaskAccumulatorValues
-											where task_A_IdList.Contains((long)e.fkTask)
+					long? _development_MM = (from e in lstValidAccValues
+											 where task_Analysis_IdList.Contains((long)e.fkTask)
 											where e.fkTaskAcc == fkAcc_D
 											select e).Sum(y => y.nuMinValue);
 
 					if (_development_MM == null) _development_MM = 0;
 
-					long? _development_EHH = (from e in db.TaskAccumulatorValues
-												where task_D_IdList.Contains((long)e.fkTask)
+					long? _development_EHH = (from e in lstValidAccValues
+											  where task_D_IdList.Contains((long)e.fkTask)
 												where e.fkTaskAcc == fkAcc_ED
 												select e).Sum(y => y.nuHourValue);
 
 					if (_development_EHH == null) _development_EHH = 0;
 
-					long? _development_EMM = (from e in db.TaskAccumulatorValues
-												where task_A_IdList.Contains((long)e.fkTask)
+					long? _development_EMM = (from e in lstValidAccValues
+											  where task_Analysis_IdList.Contains((long)e.fkTask)
 												where e.fkTaskAcc == fkAcc_ED
 												select e).Sum(y => y.nuMinValue);
 
@@ -562,11 +576,12 @@ namespace DataModel
 					string _development_H = "E " + _development_EHH + ":" + _development_EMM.ToString().PadLeft(2,'0') + 
 											" / D " + _development_HH + ":" + _development_MM.ToString().PadLeft(2, '0');
 
-					// BUGS ------------------------------------
+					#endregion
 
-					long _tot_bug_HH = 0, _tot_bug_MM = 0;
+					#region - bugs - 
 
-							
+					long _tot_bug_HH = 0, 
+						 _tot_bug_MM = 0;							
 
 					var task_B_IdList = (from e in lstValidTasks
 										 where e.fkPhase == phase.id
@@ -578,8 +593,8 @@ namespace DataModel
 
 					int ? _bugs = task_B_IdList.Count();
 
-					// ---------- construction hours ------------------
-
+					#region - construction - 
+					
 					int? _construction = (	from e in lstValidTasks
 											where e.fkPhase == phase.id
 											where e.fkSprint == sprint.id
@@ -588,12 +603,12 @@ namespace DataModel
 											where e.fkTaskCategory == fkConstructionBug
 											select e).Count();
 
-					long? _bug_construction_HH = (from e in db.TaskAccumulatorValues
-											where task_B_IdList.Contains((long)e.fkTask)
+					long? _bug_construction_HH = (from e in lstValidAccValues
+												  where task_B_IdList.Contains((long)e.fkTask)
 											where e.fkTaskAcc == fkAcc_B_Construction
 													select e).Sum(y => y.nuHourValue);
 
-					long? _bug_construction_MM = (	from e in db.TaskAccumulatorValues
+					long? _bug_construction_MM = (	from e in lstValidAccValues
 													where task_B_IdList.Contains((long)e.fkTask)
 													where e.fkTaskAcc == fkAcc_B_Construction
 													select e).Sum(y => y.nuMinValue);
@@ -622,8 +637,10 @@ namespace DataModel
 						if (_bug_construction_HH != null)
 						_constructionH += "00";
 
-					// --------------
+					#endregion
 
+					#region - homologation - 
+					
 					int? _homologation = (	from e in lstValidTasks
 											where e.fkPhase == phase.id
 											where e.fkSprint == sprint.id
@@ -632,13 +649,13 @@ namespace DataModel
 											where e.fkTaskCategory == fkHomologationBug
 											select e).Count();
 
-					long? _bug_homologation_HH = (from e in db.TaskAccumulatorValues
-													where task_B_IdList.Contains((long)e.fkTask)
+					long? _bug_homologation_HH = (from e in lstValidAccValues
+												  where task_B_IdList.Contains((long)e.fkTask)
 													where e.fkTaskAcc == fkAcc_B_Homologation
 													select e).Sum(y => y.nuHourValue);
 
-					long? _bug_homologation_MM = (from e in db.TaskAccumulatorValues
-													where task_B_IdList.Contains((long)e.fkTask)
+					long? _bug_homologation_MM = (from e in lstValidAccValues
+												  where task_B_IdList.Contains((long)e.fkTask)
 													where e.fkTaskAcc == fkAcc_B_Homologation
 													select e).Sum(y => y.nuMinValue);
 
@@ -666,7 +683,9 @@ namespace DataModel
 						if (_bug_homologation_HH != null)
 						_homologationH += "00";
 
-					// ---------------------------
+					#endregion
+
+					#region - production - 
 
 					int? _production = (	from e in lstValidTasks
 											where e.fkPhase == phase.id
@@ -676,13 +695,13 @@ namespace DataModel
 											where e.fkTaskCategory == fkProductionBug
 											select e).Count();
 
-					long? _bug_production_HH = (from e in db.TaskAccumulatorValues
-													where task_B_IdList.Contains((long)e.fkTask)
+					long? _bug_production_HH = (from e in lstValidAccValues
+												where task_B_IdList.Contains((long)e.fkTask)
 													where e.fkTaskAcc == fkAcc_B_Production
 													select e).Sum(y => y.nuHourValue);
 
-					long? _bug_production_MM = (from e in db.TaskAccumulatorValues
-													where task_B_IdList.Contains((long)e.fkTask)
+					long? _bug_production_MM = (from e in lstValidAccValues
+												where task_B_IdList.Contains((long)e.fkTask)
 													where e.fkTaskAcc == fkAcc_B_Production
 													select e).Sum(y => y.nuMinValue);
 
@@ -710,7 +729,9 @@ namespace DataModel
 						if (_bug_production_HH != null)
 							_productionH += "00";
 
-					// ---- end 
+					#endregion
+
+					#region - total rework calculation - 
 
 					if (_tot_bug_MM > 59)
 					{
@@ -768,6 +789,10 @@ namespace DataModel
 							_productionH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
 						}
 					}
+
+					#endregion
+
+					#endregion
 
 					if (_analysis == 0) _analysis = null;
 					if (_development == 0) _development = null;

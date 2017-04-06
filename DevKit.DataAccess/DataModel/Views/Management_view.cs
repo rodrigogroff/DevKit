@@ -73,6 +73,7 @@ namespace DataModel
 						constructionH,
 						homologationH,
 						productionH,
+						totBugsH,
 						workPct, 
 						reworkPct;
 	}
@@ -425,7 +426,7 @@ namespace DataModel
 								_analysis_MM -= hours * 60;
 							}
 
-							string _analysis_H = "";
+							string _analysis_H = "A ";
 
 							if (_analysis_HH != null)
 								_analysis_H += _analysis_HH.ToString() + ":";
@@ -506,15 +507,43 @@ namespace DataModel
 							string _development_H = "E " + _development_EHH + ":" + _development_EMM.ToString().PadLeft(2,'0') + 
 													" / D " + _development_HH + ":" + _development_MM.ToString().PadLeft(2, '0');
 
-							// ----------------------------------------------------
+							// BUGS ------------------------------------
 
-							int ? _bugs = (	from e in db.Tasks
-											where e.fkProject == filter.fkProject
-											where e.fkPhase == phase.id
-											where e.fkSprint == sprint.id
-											where e.fkVersion == version.id
-											where e.fkTaskType == fkTaskType_SoftwareBugs
-											select e).Count();
+							long _tot_bug_HH = 0, _tot_bug_MM = 0;
+
+							long fkAcc_B_Construction = (from e in db.TaskTypeAccumulators
+														 where e.fkTaskType == fkTaskType_SoftwareBugs
+														 where e.fkTaskCategory == fkConstructionBug
+														 where e.stName == "Coding Hours"
+													     select e.id).
+														 FirstOrDefault();
+
+							long fkAcc_B_Homologation = (from e in db.TaskTypeAccumulators
+														 where e.fkTaskType == fkTaskType_SoftwareBugs
+														 where e.fkTaskCategory == fkHomologationBug
+														 where e.stName == "Coding Hours"
+														 select e.id).
+														 FirstOrDefault();
+
+							long fkAcc_B_Production = (from e in db.TaskTypeAccumulators
+														 where e.fkTaskType == fkTaskType_SoftwareBugs
+														 where e.fkTaskCategory == fkProductionBug
+														 where e.stName == "Coding Hours"
+														 select e.id).
+														 FirstOrDefault();
+
+							var task_B_IdList = (from e in db.Tasks
+												 where e.fkProject == filter.fkProject
+												 where e.fkPhase == phase.id
+												 where e.fkSprint == sprint.id
+												 where e.fkVersion == version.id
+												 where e.fkTaskType == fkTaskType_SoftwareBugs
+												 select e.id).
+												 ToList();
+
+							int ? _bugs = task_B_IdList.Count();
+
+							// ---------- construction hours ------------------
 
 							int? _construction = (	from e in db.Tasks
 													where e.fkProject == filter.fkProject
@@ -525,6 +554,42 @@ namespace DataModel
 													where e.fkTaskCategory == fkConstructionBug
 													select e).Count();
 
+							long? _bug_construction_HH = (from e in db.TaskAccumulatorValues
+												  where task_B_IdList.Contains((long)e.fkTask)
+												  where e.fkTaskAcc == fkAcc_B_Construction
+														  select e).Sum(y => y.nuHourValue);
+
+							long? _bug_construction_MM = (	from e in db.TaskAccumulatorValues
+															where task_B_IdList.Contains((long)e.fkTask)
+															where e.fkTaskAcc == fkAcc_B_Construction
+															select e).Sum(y => y.nuMinValue);
+
+							if (_bug_construction_MM > 59)
+							{
+								long hours = (long)_bug_construction_MM / 60;
+								_bug_construction_HH += hours;
+								_bug_construction_MM -= hours * 60;
+							}
+
+							string _constructionH = "B ";
+
+							if (_bug_construction_HH != null)
+							{
+								_tot_bug_HH += (long)_bug_construction_HH;
+								_constructionH += _bug_construction_HH.ToString() + ":";
+							}
+
+							if (_bug_construction_MM != null)
+							{
+								_tot_bug_MM += (long)_bug_construction_MM;
+								_constructionH += _bug_construction_MM.ToString().PadLeft(2, '0');
+							}								
+							else
+								if (_bug_construction_HH != null)
+								_constructionH += "00";
+
+							// --------------
+
 							int? _homologation = (	from e in db.Tasks
 													where e.fkProject == filter.fkProject
 													where e.fkPhase == phase.id
@@ -534,6 +599,42 @@ namespace DataModel
 													where e.fkTaskCategory == fkHomologationBug
 													select e).Count();
 
+							long? _bug_homologation_HH = (from e in db.TaskAccumulatorValues
+														  where task_B_IdList.Contains((long)e.fkTask)
+														  where e.fkTaskAcc == fkAcc_B_Homologation
+														  select e).Sum(y => y.nuHourValue);
+
+							long? _bug_homologation_MM = (from e in db.TaskAccumulatorValues
+														  where task_B_IdList.Contains((long)e.fkTask)
+														  where e.fkTaskAcc == fkAcc_B_Homologation
+														  select e).Sum(y => y.nuMinValue);
+
+							if (_bug_homologation_MM > 59)
+							{
+								long hours = (long)_bug_homologation_MM / 60;
+								_bug_homologation_HH += hours;
+								_bug_homologation_MM -= hours * 60;
+							}
+
+							string _homologationH = "B ";
+
+							if (_bug_homologation_HH != null)
+							{
+								_tot_bug_HH += (long)_bug_homologation_HH;
+								_homologationH += _bug_homologation_HH.ToString() + ":";
+							}								
+
+							if (_bug_homologation_MM != null)
+							{
+								_tot_bug_MM += (long)_bug_homologation_MM;
+								_homologationH += _bug_homologation_MM.ToString().PadLeft(2, '0');
+							}								
+							else
+								if (_bug_homologation_HH != null)
+								_homologationH += "00";
+
+							// ---------------------------
+
 							int? _production = (	from e in db.Tasks
 													where e.fkProject == filter.fkProject
 													where e.fkPhase == phase.id
@@ -542,7 +643,100 @@ namespace DataModel
 													where e.fkTaskType == fkTaskType_SoftwareBugs
 													where e.fkTaskCategory == fkProductionBug
 													select e).Count();
-														
+
+							long? _bug_production_HH = (from e in db.TaskAccumulatorValues
+														  where task_B_IdList.Contains((long)e.fkTask)
+														  where e.fkTaskAcc == fkAcc_B_Production
+														  select e).Sum(y => y.nuHourValue);
+
+							long? _bug_production_MM = (from e in db.TaskAccumulatorValues
+														  where task_B_IdList.Contains((long)e.fkTask)
+														  where e.fkTaskAcc == fkAcc_B_Production
+															select e).Sum(y => y.nuMinValue);
+
+							if (_bug_production_MM > 59)
+							{
+								long hours = (long)_bug_production_MM / 60;
+								_bug_production_HH += hours;
+								_bug_production_MM -= hours * 60;
+							}
+
+							string _productionH = "B ";
+
+							if (_bug_production_HH != null)
+							{
+								_tot_bug_HH += (long)_bug_production_HH;
+								_productionH += _bug_production_HH.ToString() + ":";
+							}								
+
+							if (_bug_production_MM != null)
+							{
+								_tot_bug_MM += (long)_bug_production_MM;
+								_productionH += _bug_production_MM.ToString().PadLeft(2, '0');
+							}								
+							else
+								if (_bug_production_HH != null)
+									_productionH += "00";
+
+							// ---- end 
+
+							if (_tot_bug_MM > 59)
+							{
+								long hours = (long)_tot_bug_MM / 60;
+								_tot_bug_HH += hours;
+								_tot_bug_MM -= hours * 60;
+							}
+
+							var _totBugsH = "B " + _tot_bug_HH + ":" + _tot_bug_MM;
+
+							string _reworkPct = "";
+
+							if ((_development_HH > 0 || _development_MM > 0) && (_development_EHH > 0 || _development_EMM > 0))
+							{
+								long tot_Est = _tot_bug_HH * 60 + _tot_bug_MM;
+								long tot_W = (long)_development_HH * 60 + (long)_development_MM;
+
+								_reworkPct = (tot_Est * 100 / tot_W).ToString() + "%";
+							}
+
+							if (_tot_bug_HH > 0 && _tot_bug_MM > 0)
+							{
+								long tot_Est = _tot_bug_HH * 60 + _tot_bug_MM;
+
+								// construction
+								if (_bug_construction_HH == null) _bug_construction_HH = 0;
+								if (_bug_construction_MM == null) _bug_construction_MM = 0;
+								
+								if (_bug_construction_HH > 0 || _bug_construction_MM > 0)
+								{
+									long tot_W = (long)_bug_construction_HH * 60 + (long)_bug_construction_MM;
+
+									_constructionH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
+								}
+
+								// homologation
+								if (_bug_homologation_HH == null) _bug_homologation_HH = 0;
+								if (_bug_homologation_MM == null) _bug_homologation_MM = 0;
+
+								if (_bug_homologation_HH > 0 || _bug_homologation_MM > 0)
+								{
+									long tot_W = (long)_bug_homologation_HH * 60 + (long)_bug_homologation_MM;
+
+									_homologationH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
+								}
+
+								// production
+								if (_bug_production_HH == null) _bug_production_HH = 0;
+								if (_bug_production_MM == null) _bug_production_MM = 0;
+
+								if (_bug_production_HH > 0 || _bug_production_MM > 0)
+								{
+									long tot_W = (long)_bug_production_HH * 60 + (long)_bug_production_MM;
+
+									_productionH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
+								}
+							}
+
 							if (_analysis == 0) _analysis = null;
 							if (_development == 0) _development = null;
 							if (_bugs == 0) _bugs = null;
@@ -561,10 +755,15 @@ namespace DataModel
 								development = _development,
 								developmentH = _development_H,
 								workPct = _workPct,
+								reworkPct = _reworkPct,
 								bugs = _bugs,
 								construction = _construction,
+								constructionH = _constructionH,
 								homologation = _homologation,
+								homologationH = _homologationH,
 								production = _production,
+								productionH = _productionH,
+								totBugsH = _totBugsH
 							});
 						}
 					}

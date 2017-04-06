@@ -1,5 +1,4 @@
 ﻿using DataModel;
-using System.Net;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -27,9 +26,6 @@ namespace DevKit.Web.Controllers
 
 				var mdl = new UserKanban();
 				var dto = mdl.ComposedFilters(db, filter, new Util().GetCurrentUser(db));
-
-				if (dto.fail)
-					return StatusCode(HttpStatusCode.NotFound);
 
 				return Ok(dto);				
 			}

@@ -71,12 +71,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 		{
 			$scope.viewModel = data;
 			$scope.loading = false;
-			$scope.fail = false;
-		},
-		function (response)
-		{
-			$scope.loading = false;
-			$scope.fail = true;
+			$scope.fail = data.fail;
 		});
 	}
 

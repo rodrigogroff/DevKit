@@ -10,8 +10,8 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	  true ); w.bind('resize', function () { $scope.$apply();	});
 
 	$scope.campos = {
-		complete: false,
-		kpa: false,
+	  	kpa: 'false',
+		complete: 'false',
 		selects: {
 			user: ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' }),
 			priority: ngSelects.obterConfiguracao(Api.Priority, { tamanhoPagina: 15, campoNome: 'stName' }),
@@ -60,8 +60,6 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	{
 		CheckPermissions();
 
-		$rootScope.$broadcast('updateCounters');
-
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;		
 	}
@@ -76,13 +74,13 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	{
 		$scope.loading = true;
 
-		var options = { skip: skip, take: take };
+		var options = { skip: skip, take: take, kpa: $scope.campos.kpa, complete: $scope.campos.complete };
 
 		var filter = ngHistoricoFiltro.filtro.filtroGerado;
 
 		if (filter)
 			angular.extend(options, filter);
-
+		
 		delete options.selects;
 
 		Api.Task.listPage(options, function (data) {

@@ -371,12 +371,14 @@ namespace DataModel
 								 OrderBy(y => y.id).
 								 ToList();
 
+				var lstValidVersions = new List<long>();
+
 				foreach (var phase in lstPhases)
 				{
 					var lstSprints = (from e in db.ProjectSprints
 									  where e.fkProject == filter.fkProject && e.fkPhase == phase.id
 									  select e).
-									  OrderBy (y=> y.id).
+									  OrderBy(y => y.id).
 									  ToList();
 
 					foreach (var sprint in lstSprints)
@@ -392,381 +394,392 @@ namespace DataModel
 							if (version.fkVersionState == EnumVersionState.Closed)
 								continue;
 
-							// -- ANALYSIS ----------------------------------
+							lstValidVersions.Add(version.id);
+						}
+					}
+				}
 
-							var task_A_IdList = (from e in db.Tasks
-											where e.fkProject == filter.fkProject
+				long fkAcc_A = (from e in db.TaskTypeAccumulators
+								where e.fkTaskType == fkTaskType_SoftwareAnalysis
+								where e.stName == "Design Construction Hours"
+								select e.id).
+								FirstOrDefault();
+
+				long fkAcc_D = (from e in db.TaskTypeAccumulators
+								where e.fkTaskType == fkTaskType_SoftwareDevelopment
+								where e.stName == "Coding Hours"
+								select e.id).
+								FirstOrDefault();
+
+				long fkAcc_ED = (from e in db.TaskTypeAccumulators
+								 where e.fkTaskType == fkTaskType_SoftwareDevelopment
+								 where e.stName == "Estimate Coding Hours"
+								 select e.id).
+								 FirstOrDefault();
+
+				long fkAcc_B_Construction = (from e in db.TaskTypeAccumulators
+											 where e.fkTaskType == fkTaskType_SoftwareBugs
+											 where e.fkTaskCategory == fkConstructionBug
+											 where e.stName == "Coding Hours"
+											 select e.id).
+											 FirstOrDefault();
+
+				long fkAcc_B_Homologation = (from e in db.TaskTypeAccumulators
+											 where e.fkTaskType == fkTaskType_SoftwareBugs
+											 where e.fkTaskCategory == fkHomologationBug
+											 where e.stName == "Coding Hours"
+											 select e.id).
+											 FirstOrDefault();
+
+				long fkAcc_B_Production = (from e in db.TaskTypeAccumulators
+										   where e.fkTaskType == fkTaskType_SoftwareBugs
+										   where e.fkTaskCategory == fkProductionBug
+										   where e.stName == "Coding Hours"
+										   select e.id).
+										   FirstOrDefault();
+
+				var lstValidTasks = (from e in db.Tasks where lstValidVersions.Contains((long)e.fkVersion) select e).ToList();
+				
+				foreach (var ver in lstValidVersions)
+				{
+					var version = db.ProjectSprintVersion(ver);
+					var sprint = db.ProjectSprint(version.fkSprint);
+					var phase = db.ProjectPhase(sprint.fkPhase);
+					
+					// -- ANALYSIS ----------------------------------
+
+					var task_A_IdList = ( from e in lstValidTasks
+										  where e.fkPhase == phase.id
+										  where e.fkSprint == sprint.id
+										  where e.fkVersion == version.id
+										  where e.fkTaskType == fkTaskType_SoftwareAnalysis
+										  select e.id).
+										  ToList();
+
+					int? _analysis = task_A_IdList.Count();
+
+					long? _analysis_HH = (	from e in db.TaskAccumulatorValues
+											where task_A_IdList.Contains((long)e.fkTask)
+											where e.fkTaskAcc == fkAcc_A
+											select e).Sum(y => y.nuHourValue);
+
+					long? _analysis_MM = (  from e in db.TaskAccumulatorValues
+											where task_A_IdList.Contains((long)e.fkTask)
+											where e.fkTaskAcc == fkAcc_A
+											select e).Sum(y => y.nuMinValue);
+
+					if (_analysis_MM > 59)
+					{
+						long hours = (long)_analysis_MM / 60;
+						_analysis_HH += hours;
+						_analysis_MM -= hours * 60;
+					}
+
+					string _analysis_H = "A ";
+
+					if (_analysis_HH != null)
+						_analysis_H += _analysis_HH.ToString() + ":";
+							
+					if (_analysis_MM != null)
+						_analysis_H += _analysis_MM.ToString();
+					else 
+						if (_analysis_HH != null)
+							_analysis_H += "00";
+														
+					// DEVELOPMENT ------------------------------------
+
+					var task_D_IdList = (from e in lstValidTasks
 											where e.fkPhase == phase.id
 											where e.fkSprint == sprint.id
 											where e.fkVersion == version.id
-											where e.fkTaskType == fkTaskType_SoftwareAnalysis
+											where e.fkTaskType == fkTaskType_SoftwareDevelopment
 											select e.id).ToList();
 
-							int? _analysis = task_A_IdList.Count();
+					int ? _development = task_D_IdList.Count();
 
-							long fkAcc_A = (from e in db.TaskTypeAccumulators
-											where e.fkTaskType == fkTaskType_SoftwareAnalysis
-											where e.stName == "Design Construction Hours"
-											select e.id).FirstOrDefault();
+					long? _development_HH = (from e in db.TaskAccumulatorValues
+											where task_D_IdList.Contains((long)e.fkTask)
+											where e.fkTaskAcc == fkAcc_D
+											select e).Sum(y => y.nuHourValue);
 
-							long? _analysis_HH = (	from e in db.TaskAccumulatorValues
-													where task_A_IdList.Contains((long)e.fkTask)
-													where e.fkTaskAcc == fkAcc_A
+					if (_development_HH == null) _development_HH = 0;
+
+					long? _development_MM = (from e in db.TaskAccumulatorValues
+											where task_A_IdList.Contains((long)e.fkTask)
+											where e.fkTaskAcc == fkAcc_D
+											select e).Sum(y => y.nuMinValue);
+
+					if (_development_MM == null) _development_MM = 0;
+
+					long? _development_EHH = (from e in db.TaskAccumulatorValues
+												where task_D_IdList.Contains((long)e.fkTask)
+												where e.fkTaskAcc == fkAcc_ED
+												select e).Sum(y => y.nuHourValue);
+
+					if (_development_EHH == null) _development_EHH = 0;
+
+					long? _development_EMM = (from e in db.TaskAccumulatorValues
+												where task_A_IdList.Contains((long)e.fkTask)
+												where e.fkTaskAcc == fkAcc_ED
+												select e).Sum(y => y.nuMinValue);
+
+					if (_development_EMM == null) _development_EMM = 0;
+
+					string _workPct = "";
+
+					if ((_development_HH > 0 || _development_MM > 0) && (_development_EHH > 0 || _development_EMM > 0 ))
+					{
+						long tot_Est = (long)_development_EHH * 60 + (long)_development_EMM;
+						long tot_W = (long)_development_HH * 60 + (long)_development_MM;
+
+						_workPct = (tot_W * 100 / tot_Est).ToString() + "%";
+					}
+
+					if (_development_MM > 59)
+					{
+						long hours = (long)_development_MM / 60;
+						_development_HH += hours;
+						_development_MM -= hours * 60;
+					}
+
+					string _development_H = "E " + _development_EHH + ":" + _development_EMM.ToString().PadLeft(2,'0') + 
+											" / D " + _development_HH + ":" + _development_MM.ToString().PadLeft(2, '0');
+
+					// BUGS ------------------------------------
+
+					long _tot_bug_HH = 0, _tot_bug_MM = 0;
+
+							
+
+					var task_B_IdList = (from e in lstValidTasks
+										 where e.fkPhase == phase.id
+										 where e.fkSprint == sprint.id
+										 where e.fkVersion == version.id
+										 where e.fkTaskType == fkTaskType_SoftwareBugs
+										 select e.id).
+										 ToList();
+
+					int ? _bugs = task_B_IdList.Count();
+
+					// ---------- construction hours ------------------
+
+					int? _construction = (	from e in lstValidTasks
+											where e.fkPhase == phase.id
+											where e.fkSprint == sprint.id
+											where e.fkVersion == version.id
+											where e.fkTaskType == fkTaskType_SoftwareBugs
+											where e.fkTaskCategory == fkConstructionBug
+											select e).Count();
+
+					long? _bug_construction_HH = (from e in db.TaskAccumulatorValues
+											where task_B_IdList.Contains((long)e.fkTask)
+											where e.fkTaskAcc == fkAcc_B_Construction
 													select e).Sum(y => y.nuHourValue);
 
-							long? _analysis_MM = (  from e in db.TaskAccumulatorValues
-													where task_A_IdList.Contains((long)e.fkTask)
-													where e.fkTaskAcc == fkAcc_A
+					long? _bug_construction_MM = (	from e in db.TaskAccumulatorValues
+													where task_B_IdList.Contains((long)e.fkTask)
+													where e.fkTaskAcc == fkAcc_B_Construction
 													select e).Sum(y => y.nuMinValue);
 
-							if (_analysis_MM > 59)
-							{
-								long hours = (long)_analysis_MM / 60;
-								_analysis_HH += hours;
-								_analysis_MM -= hours * 60;
-							}
+					if (_bug_construction_MM > 59)
+					{
+						long hours = (long)_bug_construction_MM / 60;
+						_bug_construction_HH += hours;
+						_bug_construction_MM -= hours * 60;
+					}
 
-							string _analysis_H = "A ";
+					string _constructionH = "B ";
 
-							if (_analysis_HH != null)
-								_analysis_H += _analysis_HH.ToString() + ":";
-							
-							if (_analysis_MM != null)
-								_analysis_H += _analysis_MM.ToString();
-							else 
-								if (_analysis_HH != null)
-									_analysis_H += "00";
-														
-							// DEVELOPMENT ------------------------------------
+					if (_bug_construction_HH != null)
+					{
+						_tot_bug_HH += (long)_bug_construction_HH;
+						_constructionH += _bug_construction_HH.ToString() + ":";
+					}
 
-							var task_D_IdList = (from e in db.Tasks
-												 where e.fkProject == filter.fkProject
-												 where e.fkPhase == phase.id
-												 where e.fkSprint == sprint.id
-												 where e.fkVersion == version.id
-												 where e.fkTaskType == fkTaskType_SoftwareDevelopment
-												 select e.id).ToList();
+					if (_bug_construction_MM != null)
+					{
+						_tot_bug_MM += (long)_bug_construction_MM;
+						_constructionH += _bug_construction_MM.ToString().PadLeft(2, '0');
+					}								
+					else
+						if (_bug_construction_HH != null)
+						_constructionH += "00";
 
-							int ? _development = task_D_IdList.Count();
+					// --------------
 
-							long fkAcc_D = (from e in db.TaskTypeAccumulators
-											where e.fkTaskType == fkTaskType_SoftwareDevelopment
-											where e.stName == "Coding Hours"
-											select e.id).FirstOrDefault();
+					int? _homologation = (	from e in lstValidTasks
+											where e.fkPhase == phase.id
+											where e.fkSprint == sprint.id
+											where e.fkVersion == version.id
+											where e.fkTaskType == fkTaskType_SoftwareBugs
+											where e.fkTaskCategory == fkHomologationBug
+											select e).Count();
 
-							long fkAcc_ED = (from e in db.TaskTypeAccumulators
-											 where e.fkTaskType == fkTaskType_SoftwareDevelopment
-											 where e.stName == "Estimate Coding Hours"
-											 select e.id).FirstOrDefault();
+					long? _bug_homologation_HH = (from e in db.TaskAccumulatorValues
+													where task_B_IdList.Contains((long)e.fkTask)
+													where e.fkTaskAcc == fkAcc_B_Homologation
+													select e).Sum(y => y.nuHourValue);
 
-							long? _development_HH = (from e in db.TaskAccumulatorValues
-												  where task_D_IdList.Contains((long)e.fkTask)
-												  where e.fkTaskAcc == fkAcc_D
-												  select e).Sum(y => y.nuHourValue);
+					long? _bug_homologation_MM = (from e in db.TaskAccumulatorValues
+													where task_B_IdList.Contains((long)e.fkTask)
+													where e.fkTaskAcc == fkAcc_B_Homologation
+													select e).Sum(y => y.nuMinValue);
 
-							if (_development_HH == null) _development_HH = 0;
+					if (_bug_homologation_MM > 59)
+					{
+						long hours = (long)_bug_homologation_MM / 60;
+						_bug_homologation_HH += hours;
+						_bug_homologation_MM -= hours * 60;
+					}
 
-							long? _development_MM = (from e in db.TaskAccumulatorValues
-												  where task_A_IdList.Contains((long)e.fkTask)
-												  where e.fkTaskAcc == fkAcc_D
-												  select e).Sum(y => y.nuMinValue);
+					string _homologationH = "B ";
 
-							if (_development_MM == null) _development_MM = 0;
+					if (_bug_homologation_HH != null)
+					{
+						_tot_bug_HH += (long)_bug_homologation_HH;
+						_homologationH += _bug_homologation_HH.ToString() + ":";
+					}								
 
-							long? _development_EHH = (from e in db.TaskAccumulatorValues
-													 where task_D_IdList.Contains((long)e.fkTask)
-													 where e.fkTaskAcc == fkAcc_ED
-													  select e).Sum(y => y.nuHourValue);
+					if (_bug_homologation_MM != null)
+					{
+						_tot_bug_MM += (long)_bug_homologation_MM;
+						_homologationH += _bug_homologation_MM.ToString().PadLeft(2, '0');
+					}								
+					else
+						if (_bug_homologation_HH != null)
+						_homologationH += "00";
 
-							if (_development_EHH == null) _development_EHH = 0;
+					// ---------------------------
 
-							long? _development_EMM = (from e in db.TaskAccumulatorValues
-													 where task_A_IdList.Contains((long)e.fkTask)
-													 where e.fkTaskAcc == fkAcc_ED
-													  select e).Sum(y => y.nuMinValue);
+					int? _production = (	from e in lstValidTasks
+											where e.fkPhase == phase.id
+											where e.fkSprint == sprint.id
+											where e.fkVersion == version.id
+											where e.fkTaskType == fkTaskType_SoftwareBugs
+											where e.fkTaskCategory == fkProductionBug
+											select e).Count();
 
-							if (_development_EMM == null) _development_EMM = 0;
+					long? _bug_production_HH = (from e in db.TaskAccumulatorValues
+													where task_B_IdList.Contains((long)e.fkTask)
+													where e.fkTaskAcc == fkAcc_B_Production
+													select e).Sum(y => y.nuHourValue);
 
-							string _workPct = "";
+					long? _bug_production_MM = (from e in db.TaskAccumulatorValues
+													where task_B_IdList.Contains((long)e.fkTask)
+													where e.fkTaskAcc == fkAcc_B_Production
+													select e).Sum(y => y.nuMinValue);
 
-							if ((_development_HH > 0 || _development_MM > 0) && (_development_EHH > 0 || _development_EMM > 0 ))
-							{
-								long tot_Est = (long)_development_EHH * 60 + (long)_development_EMM;
-								long tot_W = (long)_development_HH * 60 + (long)_development_MM;
+					if (_bug_production_MM > 59)
+					{
+						long hours = (long)_bug_production_MM / 60;
+						_bug_production_HH += hours;
+						_bug_production_MM -= hours * 60;
+					}
 
-								_workPct = (tot_W * 100 / tot_Est).ToString() + "%";
-							}
+					string _productionH = "B ";
 
-							if (_development_MM > 59)
-							{
-								long hours = (long)_development_MM / 60;
-								_development_HH += hours;
-								_development_MM -= hours * 60;
-							}
+					if (_bug_production_HH != null)
+					{
+						_tot_bug_HH += (long)_bug_production_HH;
+						_productionH += _bug_production_HH.ToString() + ":";
+					}								
 
-							string _development_H = "E " + _development_EHH + ":" + _development_EMM.ToString().PadLeft(2,'0') + 
-													" / D " + _development_HH + ":" + _development_MM.ToString().PadLeft(2, '0');
+					if (_bug_production_MM != null)
+					{
+						_tot_bug_MM += (long)_bug_production_MM;
+						_productionH += _bug_production_MM.ToString().PadLeft(2, '0');
+					}								
+					else
+						if (_bug_production_HH != null)
+							_productionH += "00";
 
-							// BUGS ------------------------------------
+					// ---- end 
 
-							long _tot_bug_HH = 0, _tot_bug_MM = 0;
+					if (_tot_bug_MM > 59)
+					{
+						long hours = (long)_tot_bug_MM / 60;
+						_tot_bug_HH += hours;
+						_tot_bug_MM -= hours * 60;
+					}
 
-							long fkAcc_B_Construction = (from e in db.TaskTypeAccumulators
-														 where e.fkTaskType == fkTaskType_SoftwareBugs
-														 where e.fkTaskCategory == fkConstructionBug
-														 where e.stName == "Coding Hours"
-													     select e.id).
-														 FirstOrDefault();
+					var _totBugsH = "B " + _tot_bug_HH + ":" + _tot_bug_MM;
 
-							long fkAcc_B_Homologation = (from e in db.TaskTypeAccumulators
-														 where e.fkTaskType == fkTaskType_SoftwareBugs
-														 where e.fkTaskCategory == fkHomologationBug
-														 where e.stName == "Coding Hours"
-														 select e.id).
-														 FirstOrDefault();
+					string _reworkPct = "";
 
-							long fkAcc_B_Production = (from e in db.TaskTypeAccumulators
-														 where e.fkTaskType == fkTaskType_SoftwareBugs
-														 where e.fkTaskCategory == fkProductionBug
-														 where e.stName == "Coding Hours"
-														 select e.id).
-														 FirstOrDefault();
+					if ((_development_HH > 0 || _development_MM > 0) && (_development_EHH > 0 || _development_EMM > 0))
+					{
+						long tot_Est = _tot_bug_HH * 60 + _tot_bug_MM;
+						long tot_W = (long)_development_HH * 60 + (long)_development_MM;
 
-							var task_B_IdList = (from e in db.Tasks
-												 where e.fkProject == filter.fkProject
-												 where e.fkPhase == phase.id
-												 where e.fkSprint == sprint.id
-												 where e.fkVersion == version.id
-												 where e.fkTaskType == fkTaskType_SoftwareBugs
-												 select e.id).
-												 ToList();
+						_reworkPct = (tot_Est * 100 / tot_W).ToString() + "%";
+					}
 
-							int ? _bugs = task_B_IdList.Count();
+					if (_tot_bug_HH > 0 && _tot_bug_MM > 0)
+					{
+						long tot_Est = _tot_bug_HH * 60 + _tot_bug_MM;
 
-							// ---------- construction hours ------------------
-
-							int? _construction = (	from e in db.Tasks
-													where e.fkProject == filter.fkProject
-													where e.fkPhase == phase.id
-													where e.fkSprint == sprint.id
-													where e.fkVersion == version.id
-													where e.fkTaskType == fkTaskType_SoftwareBugs
-													where e.fkTaskCategory == fkConstructionBug
-													select e).Count();
-
-							long? _bug_construction_HH = (from e in db.TaskAccumulatorValues
-												  where task_B_IdList.Contains((long)e.fkTask)
-												  where e.fkTaskAcc == fkAcc_B_Construction
-														  select e).Sum(y => y.nuHourValue);
-
-							long? _bug_construction_MM = (	from e in db.TaskAccumulatorValues
-															where task_B_IdList.Contains((long)e.fkTask)
-															where e.fkTaskAcc == fkAcc_B_Construction
-															select e).Sum(y => y.nuMinValue);
-
-							if (_bug_construction_MM > 59)
-							{
-								long hours = (long)_bug_construction_MM / 60;
-								_bug_construction_HH += hours;
-								_bug_construction_MM -= hours * 60;
-							}
-
-							string _constructionH = "B ";
-
-							if (_bug_construction_HH != null)
-							{
-								_tot_bug_HH += (long)_bug_construction_HH;
-								_constructionH += _bug_construction_HH.ToString() + ":";
-							}
-
-							if (_bug_construction_MM != null)
-							{
-								_tot_bug_MM += (long)_bug_construction_MM;
-								_constructionH += _bug_construction_MM.ToString().PadLeft(2, '0');
-							}								
-							else
-								if (_bug_construction_HH != null)
-								_constructionH += "00";
-
-							// --------------
-
-							int? _homologation = (	from e in db.Tasks
-													where e.fkProject == filter.fkProject
-													where e.fkPhase == phase.id
-													where e.fkSprint == sprint.id
-													where e.fkVersion == version.id
-													where e.fkTaskType == fkTaskType_SoftwareBugs
-													where e.fkTaskCategory == fkHomologationBug
-													select e).Count();
-
-							long? _bug_homologation_HH = (from e in db.TaskAccumulatorValues
-														  where task_B_IdList.Contains((long)e.fkTask)
-														  where e.fkTaskAcc == fkAcc_B_Homologation
-														  select e).Sum(y => y.nuHourValue);
-
-							long? _bug_homologation_MM = (from e in db.TaskAccumulatorValues
-														  where task_B_IdList.Contains((long)e.fkTask)
-														  where e.fkTaskAcc == fkAcc_B_Homologation
-														  select e).Sum(y => y.nuMinValue);
-
-							if (_bug_homologation_MM > 59)
-							{
-								long hours = (long)_bug_homologation_MM / 60;
-								_bug_homologation_HH += hours;
-								_bug_homologation_MM -= hours * 60;
-							}
-
-							string _homologationH = "B ";
-
-							if (_bug_homologation_HH != null)
-							{
-								_tot_bug_HH += (long)_bug_homologation_HH;
-								_homologationH += _bug_homologation_HH.ToString() + ":";
-							}								
-
-							if (_bug_homologation_MM != null)
-							{
-								_tot_bug_MM += (long)_bug_homologation_MM;
-								_homologationH += _bug_homologation_MM.ToString().PadLeft(2, '0');
-							}								
-							else
-								if (_bug_homologation_HH != null)
-								_homologationH += "00";
-
-							// ---------------------------
-
-							int? _production = (	from e in db.Tasks
-													where e.fkProject == filter.fkProject
-													where e.fkPhase == phase.id
-													where e.fkSprint == sprint.id
-													where e.fkVersion == version.id
-													where e.fkTaskType == fkTaskType_SoftwareBugs
-													where e.fkTaskCategory == fkProductionBug
-													select e).Count();
-
-							long? _bug_production_HH = (from e in db.TaskAccumulatorValues
-														  where task_B_IdList.Contains((long)e.fkTask)
-														  where e.fkTaskAcc == fkAcc_B_Production
-														  select e).Sum(y => y.nuHourValue);
-
-							long? _bug_production_MM = (from e in db.TaskAccumulatorValues
-														  where task_B_IdList.Contains((long)e.fkTask)
-														  where e.fkTaskAcc == fkAcc_B_Production
-															select e).Sum(y => y.nuMinValue);
-
-							if (_bug_production_MM > 59)
-							{
-								long hours = (long)_bug_production_MM / 60;
-								_bug_production_HH += hours;
-								_bug_production_MM -= hours * 60;
-							}
-
-							string _productionH = "B ";
-
-							if (_bug_production_HH != null)
-							{
-								_tot_bug_HH += (long)_bug_production_HH;
-								_productionH += _bug_production_HH.ToString() + ":";
-							}								
-
-							if (_bug_production_MM != null)
-							{
-								_tot_bug_MM += (long)_bug_production_MM;
-								_productionH += _bug_production_MM.ToString().PadLeft(2, '0');
-							}								
-							else
-								if (_bug_production_HH != null)
-									_productionH += "00";
-
-							// ---- end 
-
-							if (_tot_bug_MM > 59)
-							{
-								long hours = (long)_tot_bug_MM / 60;
-								_tot_bug_HH += hours;
-								_tot_bug_MM -= hours * 60;
-							}
-
-							var _totBugsH = "B " + _tot_bug_HH + ":" + _tot_bug_MM;
-
-							string _reworkPct = "";
-
-							if ((_development_HH > 0 || _development_MM > 0) && (_development_EHH > 0 || _development_EMM > 0))
-							{
-								long tot_Est = _tot_bug_HH * 60 + _tot_bug_MM;
-								long tot_W = (long)_development_HH * 60 + (long)_development_MM;
-
-								_reworkPct = (tot_Est * 100 / tot_W).ToString() + "%";
-							}
-
-							if (_tot_bug_HH > 0 && _tot_bug_MM > 0)
-							{
-								long tot_Est = _tot_bug_HH * 60 + _tot_bug_MM;
-
-								// construction
-								if (_bug_construction_HH == null) _bug_construction_HH = 0;
-								if (_bug_construction_MM == null) _bug_construction_MM = 0;
+						// construction
+						if (_bug_construction_HH == null) _bug_construction_HH = 0;
+						if (_bug_construction_MM == null) _bug_construction_MM = 0;
 								
-								if (_bug_construction_HH > 0 || _bug_construction_MM > 0)
-								{
-									long tot_W = (long)_bug_construction_HH * 60 + (long)_bug_construction_MM;
+						if (_bug_construction_HH > 0 || _bug_construction_MM > 0)
+						{
+							long tot_W = (long)_bug_construction_HH * 60 + (long)_bug_construction_MM;
 
-									_constructionH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
-								}
+							_constructionH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
+						}
 
-								// homologation
-								if (_bug_homologation_HH == null) _bug_homologation_HH = 0;
-								if (_bug_homologation_MM == null) _bug_homologation_MM = 0;
+						// homologation
+						if (_bug_homologation_HH == null) _bug_homologation_HH = 0;
+						if (_bug_homologation_MM == null) _bug_homologation_MM = 0;
 
-								if (_bug_homologation_HH > 0 || _bug_homologation_MM > 0)
-								{
-									long tot_W = (long)_bug_homologation_HH * 60 + (long)_bug_homologation_MM;
+						if (_bug_homologation_HH > 0 || _bug_homologation_MM > 0)
+						{
+							long tot_W = (long)_bug_homologation_HH * 60 + (long)_bug_homologation_MM;
 
-									_homologationH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
-								}
+							_homologationH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
+						}
 
-								// production
-								if (_bug_production_HH == null) _bug_production_HH = 0;
-								if (_bug_production_MM == null) _bug_production_MM = 0;
+						// production
+						if (_bug_production_HH == null) _bug_production_HH = 0;
+						if (_bug_production_MM == null) _bug_production_MM = 0;
 
-								if (_bug_production_HH > 0 || _bug_production_MM > 0)
-								{
-									long tot_W = (long)_bug_production_HH * 60 + (long)_bug_production_MM;
+						if (_bug_production_HH > 0 || _bug_production_MM > 0)
+						{
+							long tot_W = (long)_bug_production_HH * 60 + (long)_bug_production_MM;
 
-									_productionH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
-								}
-							}
-
-							if (_analysis == 0) _analysis = null;
-							if (_development == 0) _development = null;
-							if (_bugs == 0) _bugs = null;
-							if (_construction == 0) _construction = null;
-							if (_homologation == 0) _homologation = null;
-							if (_production == 0) _production = null;
-
-							dto.versions.Add(new ManagementDTO_Version
-							{
-								stPhase = phase.stName,
-								stSprint = sprint.stName,
-								stVersion = version.stName,
-								stVersionState = vs.Get((long)version.fkVersionState).stName,
-								analysis = _analysis,
-								analysisH = _analysis_H,
-								development = _development,
-								developmentH = _development_H,
-								workPct = _workPct,
-								reworkPct = _reworkPct,
-								bugs = _bugs,
-								construction = _construction,
-								constructionH = _constructionH,
-								homologation = _homologation,
-								homologationH = _homologationH,
-								production = _production,
-								productionH = _productionH,
-								totBugsH = _totBugsH
-							});
+							_productionH += " (" + (tot_W * 100 / tot_Est).ToString() + "%)";
 						}
 					}
+
+					if (_analysis == 0) _analysis = null;
+					if (_development == 0) _development = null;
+					if (_bugs == 0) _bugs = null;
+					if (_construction == 0) _construction = null;
+					if (_homologation == 0) _homologation = null;
+					if (_production == 0) _production = null;
+
+					dto.versions.Add(new ManagementDTO_Version
+					{
+						stPhase = phase.stName,
+						stSprint = sprint.stName,
+						stVersion = version.stName,
+						stVersionState = vs.Get((long)version.fkVersionState).stName,
+						analysis = _analysis,
+						analysisH = _analysis_H,
+						development = _development,
+						developmentH = _development_H,
+						workPct = _workPct,
+						reworkPct = _reworkPct,
+						bugs = _bugs,
+						construction = _construction,
+						constructionH = _constructionH,
+						homologation = _homologation,
+						homologationH = _homologationH,
+						production = _production,
+						productionH = _productionH,
+						totBugsH = _totBugsH
+					});
 				}
 
 				#endregion

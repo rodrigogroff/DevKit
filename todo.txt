@@ -2,18 +2,19 @@
 melhorias
 ------------------
 
--management (bugs, rework)
--'restricted user list' para passar para determinado fluxo
--timesheet
+-criar sprint e versão dentro do projeto
+-remover sprint do menu
 
+-timesheet
+-'restricted user list' para passar para determinado fluxo
 -ao selecionar categoria, mostrar o texto de descrição
 
 -Sprint 
 	Accumulator Set
 		Work						
-		Re-work			[1]		Type: Software BUg 
-								Category: Homologation
-								Accumulator: Development hours
+		Re-work [1]		Type: Software Bug 
+						Category: Homologation
+						Accumulator: Development hours
 
 -textbox de data
 -poder anexar documentos nas tarefas

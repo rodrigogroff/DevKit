@@ -62,8 +62,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		$scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskType, {
 			tamanhoPagina: 15, scope: $scope, campoNome: 'stName',
-			filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' }
-		});
+			filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
 
 		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, {
 				tamanhoPagina: 15, scope: $scope,
@@ -71,13 +70,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, {
 				tamanhoPagina: 15, scope: $scope,
-				filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' }
-		});
+				filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
 
 		$scope.selectTaskAcc = ngSelects.obterConfiguracao(Api.TaskAccumulator, {
 			tamanhoPagina: 15, scope: $scope,
-			filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' }
-		});
+			filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
 
 		if (id > 0)
 		{
@@ -122,6 +119,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.fkProject_fail = $scope.viewModel.fkProject == undefined;
 			$scope.fkPhase_fail = $scope.viewModel.fkPhase == undefined;
 			$scope.fkSprint_fail = $scope.viewModel.fkSprint == undefined;
+			$scope.fkVersion_fail = $scope.viewModel.fkVersion == undefined;
 			$scope.nuPriority_fail = $scope.viewModel.nuPriority == undefined;
 			$scope.fkTaskType_fail = $scope.viewModel.fkTaskType == undefined;
 			$scope.fkTaskCategory_fail = $scope.viewModel.fkTaskCategory == undefined;
@@ -131,7 +129,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				!$scope.stDescription_fail &&
 				!$scope.fkProject_fail &&
 				!$scope.fkPhase_fail && 
-				!$scope.fkSprint_fail && 
+				!$scope.fkSprint_fail &&
+				!$scope.fkVersion_fail &&
 				!$scope.nuPriority_fail)
 			{
 				if (id > 0)

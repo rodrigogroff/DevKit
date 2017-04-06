@@ -117,7 +117,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Project">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
@@ -133,8 +132,7 @@
 									<th width="180px"></th>
 									<th width="20px"></th>
 								</tr>
-							</thead>
-							
+							</thead>							
 							<tr height="20px"></tr>
 							<tr height="40px">
 								<td></td>
@@ -170,9 +168,11 @@
 								</td>
 								<td></td>
 								<td valign="middle">Version</td>
-								<td></td>
+								<td>
+									<button class="btn btn-xs btn-danger" ng-show="fkVersion_fail">!</button>
+								</td>
 								<td valign="middle">
-									<input type="hidden" name="user" style="width:100%" ui-select2="selectVersions" ng-model="viewModel.fkVersion" />
+									<input type="hidden" name="user" style="width:100%" ng-disabled="viewModel.id > 0" ui-select2="selectVersions" ng-model="viewModel.fkVersion" />
 								</td>
 							</tr>
 							<tr height="40px"></tr>
@@ -221,7 +221,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Assignment">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);padding-left:10px">
 						<table>
@@ -277,7 +276,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Work Flow" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Work Flow" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -358,7 +356,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="User Messages" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="User Messages" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -415,7 +412,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Accumulators" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Accumulators" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -523,7 +519,6 @@
 						</table>
 					</div>
 				</tab>
-
 			</tabset>
 			<br />
 			<br />

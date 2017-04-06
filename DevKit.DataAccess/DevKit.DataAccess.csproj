@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="DataModel\DevKit_db.cs" />
     <Compile Include="DataModel\Enums\AccumulatorType_enum.cs" />
+    <Compile Include="DataModel\Enums\Month_enum.cs" />
     <Compile Include="DataModel\Enums\VersionState_enum.cs" />
     <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_ComposedFilters.cs" />

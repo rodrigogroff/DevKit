@@ -13,12 +13,12 @@ namespace DataModel
 	{
 		public List<AccumulatorType> lst = new List<AccumulatorType>();
 
-		public const long	Money = 1,
+		public const long	//Money = 1,
 							Hours = 2;
 
 		public EnumAccumulatorType()
 		{
-			lst.Add(new AccumulatorType() { id = 1, stName = "Money" });
+			//lst.Add(new AccumulatorType() { id = 1, stName = "Money" });
 			lst.Add(new AccumulatorType() { id = 2, stName = "Hours" });
 		}
 

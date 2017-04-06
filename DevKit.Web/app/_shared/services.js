@@ -108,7 +108,7 @@ angular.module('app.services', ['ngResource'])
 		AccType: $resource('api/accumulatorType/:id', {}, opcoes),
 		Month: $resource('api/month/:id', {}, opcoes),		
 		VersionState: $resource('api/versionState/:id', {}, opcoes),
-		Timesheet: $resource('api/versionState/:id', {}, opcoes)
+		Timesheet: $resource('api/timeSheet/:id', {}, opcoes)
 
 	};
 }]);

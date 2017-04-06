@@ -39,7 +39,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$scope.selectMonths = ngSelects.obterConfiguracao(Api.Month, { tamanhoPagina: 99, campoNome: 'stName' });
 	}
 	
-	function load()
+	$scope.load = function()
 	{		
 		$scope.viewModel = undefined;
 		$scope.loading = true;

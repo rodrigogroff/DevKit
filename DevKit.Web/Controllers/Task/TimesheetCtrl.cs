@@ -17,7 +17,7 @@ namespace DevKit.Web.Controllers
 				};
 
 				var mdl = new Timesheet();
-				var dto = mdl.ComposedFilters(db, filter, new Util().GetCurrentUserProjects(db));
+				var dto = mdl.ComposedFilters(db, filter, new Util().GetCurrentUser(db));
 
 				return Ok(dto);				
 			}

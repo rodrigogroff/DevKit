@@ -106,8 +106,9 @@ angular.module('app.services', ['ngResource'])
 		UserKanban: $resource('api/userKanban/:id', {}, opcoes),
 		Management: $resource('api/management/:id', {}, opcoes),
 		AccType: $resource('api/accumulatorType/:id', {}, opcoes),
-		ProjectTemplate: $resource('api/projectTemplate/:id', {}, opcoes),
-		VersionState: $resource('api/versionState/:id', {}, opcoes)
+		Month: $resource('api/month/:id', {}, opcoes),		
+		VersionState: $resource('api/versionState/:id', {}, opcoes),
+		Timesheet: $resource('api/versionState/:id', {}, opcoes)
 
 	};
 }]);

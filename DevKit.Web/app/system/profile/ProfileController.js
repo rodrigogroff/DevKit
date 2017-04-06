@@ -43,6 +43,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1071: false,
 			// management
 			tg1081: false,
+			// timesheet
+			tg1091: false,
 		};
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -113,6 +115,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				// user Kanban  
 				if (data.stPermissions.indexOf('|1081|') >= 0) data.tg1081 = true; else data.tg1081 = false;
+
+				// timesheet
+				if (data.stPermissions.indexOf('|1091|') >= 0) data.tg1091 = true; else data.tg1091 = false;
 				
 				$scope.viewModel = data;
 
@@ -182,6 +187,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				// management
 				if (_mdl.tg1081 == true) perms += '|1081|';
+
+				// timesheet
+				if (_mdl.tg1091 == true) perms += '|1091|';
 
 				$scope.viewModel.stPermissions = perms;
 

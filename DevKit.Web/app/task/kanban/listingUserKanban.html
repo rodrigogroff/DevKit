@@ -76,15 +76,13 @@
 																		</td>
 																	</tr>
 																</table>
-																<div data-ng-repeat="acc in cat.accs">
-																	<table class="table table-hover" style="width:250px">
-																		<tr>
-																			<td>{{ acc.stName }}</td>
-																			<td width="20px"></td>
-																			<td width="70px">{{ acc.sValue }}</td>
-																		</tr>
-																	</table>																	 
-																</div>
+																<table class="table table-hover" style="width:300px">
+																	<tr data-ng-repeat="acc in cat.accs">
+																		<td>{{ acc.stName }}</td>
+																		<td width="20px"></td>
+																		<td width="70px">{{ acc.sValue }}</td>
+																	</tr>
+																</table>																
 															</div>
 														</div>
 													</div>

@@ -9,6 +9,7 @@ melhorias
 -criar sprint e versão dentro do projeto
 -remover sprint do menu
 
+-modais de confirmação de exclusão
 -textbox de data
 -poder anexar documentos nas tarefas
 

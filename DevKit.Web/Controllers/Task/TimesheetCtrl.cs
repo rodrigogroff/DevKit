@@ -4,18 +4,19 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class ManagementController : ApiControllerBase
+	public class TimesheetController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
 			using (var db = new DevKitDB())
 			{
-				var filter = new ManagementFilter()
+				var filter = new TimesheetFilter()
 				{
-					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
+					nuYear = Request.GetQueryStringValue<long?>("nuYear", null),
+					nuMonth = Request.GetQueryStringValue<long?>("nuMonth", null),
 				};
 
-				var mdl = new Management();
+				var mdl = new Timesheet();
 				var dto = mdl.ComposedFilters(db, filter, new Util().GetCurrentUserProjects(db));
 
 				return Ok(dto);				

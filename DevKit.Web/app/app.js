@@ -38,6 +38,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 
 	.state('userKanban', { url: '/task/kanban', templateUrl: 'app/task/kanban/listingUserKanban.html', controller: 'ListingUserKanbanController' })
 	.state('management', { url: '/task/management', templateUrl: 'app/task/management/management.html', controller: 'ManagementController' })
+	.state('timesheet', { url: '/task/timesheet', templateUrl: 'app/task/timesheet/timesheet.html', controller: 'TimesheetController' })
 
 	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 

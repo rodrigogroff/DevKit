@@ -111,6 +111,7 @@
     <Compile Include="DataModel\Tables\Task\Task\Task_Delete.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_DTO.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_LoadAssociations.cs" />
+    <Compile Include="DataModel\Views\Timesheet_view.cs" />
     <Compile Include="DataModel\Views\Management_view.cs" />
     <Compile Include="DataModel\Views\UserKanban_view.cs" />
     <Compile Include="DataModel\Enums\Priority_enum.cs" />

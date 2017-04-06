@@ -1,4 +1,4 @@
-﻿angular.module('app.controllers').controller('ManagementController',
+﻿angular.module('app.controllers').controller('TimesheetController',
 ['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
@@ -10,7 +10,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	  true ); w.bind('resize', function () { $scope.$apply();	});
 
 	$scope.permModel = {};	
-	$scope.permID = 108;
+	$scope.permID = 109;
 
 	function CheckPermissions() {
 		Api.Permission.get({ id: $scope.permID }, function (data) {
@@ -23,19 +23,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		function (response) { });
 	}
 
-	$scope.fkProject = 0;
 	$scope.viewModel = undefined;
-
-	$scope.$watch('fkProject', function (newState, oldState)
-	{
-		if (newState == undefined)
-		{
-			$scope.viewModel = undefined;
-		}
-		else
-			if (newState != oldState)
-				load();		
-	});
 
 	init();
 
@@ -43,7 +31,12 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	{
 		CheckPermissions();
 
-		$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' });
+		var currentDate = new Date();
+
+		$scope.nuYear = currentDate.getFullYear();
+		$scope.nuMonth = currentDate.getMonth() + 1;
+
+		$scope.selectMonths = ngSelects.obterConfiguracao(Api.Month, { tamanhoPagina: 99, campoNome: 'stName' });
 	}
 	
 	function load()
@@ -51,9 +44,9 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$scope.viewModel = undefined;
 		$scope.loading = true;
 
-		var options = { fkProject: $scope.fkProject };
+		var options = { nuYear: $scope.nuYear, nuMonth: $scope.nuMonth };
 
-		Api.Management.listPage(options, function (data)
+		Api.Timesheet.listPage(options, function (data)
 		{
 			if (data.fail == true)
 				$scope.viewModel = undefined;

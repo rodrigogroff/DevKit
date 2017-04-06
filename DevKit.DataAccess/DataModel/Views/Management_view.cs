@@ -438,7 +438,24 @@ namespace DataModel
 										   select e.id).
 										   FirstOrDefault();
 
-				var lstValidTasks = (from e in db.Tasks where lstValidVersions.Contains((long)e.fkVersion) select e).ToList();
+				var lstValidAccs = new List<long>();
+
+				lstValidAccs.Add(fkAcc_A);
+				lstValidAccs.Add(fkAcc_D);
+				lstValidAccs.Add(fkAcc_ED);
+				lstValidAccs.Add(fkAcc_B_Construction);
+				lstValidAccs.Add(fkAcc_B_Homologation);
+				lstValidAccs.Add(fkAcc_B_Production);
+
+				var lstValidAccValues = (from e in db.TaskAccumulatorValues
+										 where lstValidAccs.Contains((long)e.fkTaskAcc)
+										 select e).
+										 ToList();
+
+				var lstValidTasks = (from e in db.Tasks
+									 where lstValidVersions.Contains((long)e.fkVersion)
+									 select e).
+									 ToList();
 				
 				foreach (var ver in lstValidVersions)
 				{

@@ -2,8 +2,6 @@
 melhorias
 ------------------
 
--poder ver timesheet de outros usuários
-
 -modais de confirmação de exclusão
 -textbox de data
 -poder anexar documentos nas tarefas

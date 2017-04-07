@@ -43,7 +43,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	{
 		CheckPermissions();
 
-		$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' });
+		$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, { });
 	}
 	
 	function load()

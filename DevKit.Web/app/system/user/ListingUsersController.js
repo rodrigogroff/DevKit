@@ -6,7 +6,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	$scope.campos = {
 		ativo: 'true',
 		selects: {
-			perfil: ngSelects.obterConfiguracao(Api.Profile, { tamanhoPagina: 15, campoNome: 'stName' }),
+			perfil: ngSelects.obterConfiguracao(Api.Profile, { }),
 		}
 	};
 	$scope.itensporpagina = 15;

@@ -8,7 +8,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 		condensed: '',
 		kpa: '',
 		selects: {
-			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
+			project: ngSelects.obterConfiguracao(Api.Project, { }),
 		}
 	};
 	$scope.itensporpagina = 15;

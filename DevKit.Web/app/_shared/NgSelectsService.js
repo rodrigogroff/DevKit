@@ -48,18 +48,15 @@
 				}
 			},
 
-			formatSelection: function (item) {
-
-				// Item recebe o objeto original
+			formatSelection: function (item)
+			{
 				configuracao.itemSelecionado = item.source;
-
 				return item.text;
 			},
 
-			formatResult: function (item) {
-
+			formatResult: function (item)
+			{
 				return item.text;
-
 			},
 
 			query: function (query)
@@ -67,7 +64,6 @@
 				var objFiltro = {};
 
 				var apenasAtivos = parametros.apenasAtivos != undefined ? parametros.apenasAtivos : true;
-
 
 				if (parametros && parametros.filtro)
 				{
@@ -102,15 +98,6 @@
 				api.listPage(objFiltro, function (data)
 				{
 					var lista = [];
-
-					if (parametros && parametros.buscaPorTrecho && query.page == 1 && query.term)
-					{
-						lista.push({
-							id: -1,
-							text: 'Contendo "' + query.term + '"',
-							buscaPorTrecho: query.term
-						});
-					}
 
 					$.each(data.results, function (index, item)
 					{

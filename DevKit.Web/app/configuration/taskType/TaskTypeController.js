@@ -33,22 +33,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		CheckPermissions();
 
-		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, {
-			tamanhoPagina: 15, scope: $scope,
-			filtro: {
-				campo: 'fkTaskType', valor: 'viewModel.id' }
-		});
-
-		$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, { tamanhoPagina: 15, campoNome: 'stName' });
-
-		$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' });
-
-		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, {
-			tamanhoPagina: 15, scope: $scope,
-			filtro: {
-				campo: 'fkTaskCategory', valor: 'newAcc.fkTaskCategory'
-			}
-		});
+		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.id' } });
+		$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, { });
+		$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, { });
+		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'newAcc.fkTaskCategory' } });
 
 		if (id > 0)
 		{

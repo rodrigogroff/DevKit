@@ -22276,11 +22276,11 @@ a.text-gray-lighter:focus {
 .sidebar {
   position: absolute;
   width: 160px;
-  padding: 12px 0;
+  padding: 6px 0;
   top: 0;
   color: #ffffff;
   z-index: 1;
-  margin: 90px 0 0 25px;
+  margin: 90px 0 0 16px;
   font-weight: 300;
 }
 

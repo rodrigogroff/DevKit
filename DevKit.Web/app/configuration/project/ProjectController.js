@@ -33,13 +33,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		CheckPermissions();
 
-		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' });
-		$scope.selectProjectTemplate = ngSelects.obterConfiguracao(Api.ProjectTemplate, { tamanhoPagina: 15, campoNome: 'stName' });
-
-		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, {
-			tamanhoPagina: 15, scope: $scope,
-			filtro: { campo: 'fkProject', valor: 'viewModel.id' }
-		});
+		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' });
+		$scope.selectProjectTemplate = ngSelects.obterConfiguracao(Api.ProjectTemplate, { });
+		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.id' } });
 
 		if (id > 0)
 		{

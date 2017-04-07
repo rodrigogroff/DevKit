@@ -43,7 +43,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		CheckPermissions();
 		loadSetup();
 
-		$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Profile, { tamanhoPagina: 15, campoNome: 'stName' });
+		$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Profile, { });
 
 		if (id > 0)
 		{

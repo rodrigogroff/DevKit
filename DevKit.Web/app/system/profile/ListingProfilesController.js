@@ -5,7 +5,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	$scope.loading = false;
 	$scope.campos = {
 		selects: {
-			user: ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' }),
+			user: ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' }),
 		}
 	};
 	$scope.itensporpagina = 15;

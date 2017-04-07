@@ -5,11 +5,8 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	$scope.loading = false;
 	$scope.campos = {
 		selects: {
-			project: ngSelects.obterConfiguracao(Api.Project, { tamanhoPagina: 15, campoNome: 'stName' }),
-			phase: ngSelects.obterConfiguracao(Api.Phase, {
-				tamanhoPagina: 15, campoNome: 'stName',
-				scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' }
-			}),
+			project: ngSelects.obterConfiguracao(Api.Project, { }),
+			phase: ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' } }),
 		}
 	};
 	$scope.itensporpagina = 15;

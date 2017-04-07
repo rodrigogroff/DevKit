@@ -11,14 +11,27 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 
 	$scope.permModel = {};	
 	$scope.permID = 109;
+	$scope.userId = 0;
+	$scope.adminTimesheet = false;
 
-	function CheckPermissions() {
+	function CheckPermissions()
+	{
 		Api.Permission.get({ id: $scope.permID }, function (data) {
 			$scope.permModel = data;
+			$scope.userId = data.idUser;
+
 			if (!$scope.permModel.listagem) {
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
 			}			
+		},
+		function (response) { });
+
+		Api.Permission.get({ id: 110 }, function (data) {
+			
+			if ($scope.permModel.listagem) {
+				$scope.adminTimesheet = true;
+			}
 		},
 		function (response) { });
 	}
@@ -37,6 +50,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$scope.nuMonth = currentDate.getMonth() + 1;
 
 		$scope.selectMonths = ngSelects.obterConfiguracao(Api.Month, { tamanhoPagina: 99, campoNome: 'stName' });
+		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 99, campoNome: 'stLogin' });
 	}
 	
 	$scope.load = function()
@@ -44,7 +58,11 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$scope.viewModel = undefined;
 		$scope.loading = true;
 
-		var options = { nuYear: $scope.nuYear, nuMonth: $scope.nuMonth };
+		var options = {
+			nuYear: $scope.nuYear,
+			nuMonth: $scope.nuMonth,
+			fkUser: $scope.userId
+		};
 
 		Api.Timesheet.listPage(options, function (data)
 		{

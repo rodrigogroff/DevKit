@@ -6,6 +6,8 @@ namespace DevKit.Web.Controllers
 {
 	public class TabelaPermissao
 	{
+		public long idUser = 0;
+
 		public bool listagem = false,
 					visualizar = false,
 					edicao = false, 
@@ -27,6 +29,7 @@ namespace DevKit.Web.Controllers
 
 				var tblPerm = new TabelaPermissao();
 
+				tblPerm.idUser = usr.id;
 				tblPerm.listagem = perf.stPermissions.Contains("|" + id + "1|");
 				tblPerm.visualizar = perf.stPermissions.Contains("|" + id + "2|");
 				tblPerm.edicao = perf.stPermissions.Contains("|" + id + "3|");

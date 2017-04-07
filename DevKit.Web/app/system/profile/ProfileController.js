@@ -45,6 +45,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1081: false,
 			// timesheet
 			tg1091: false,
+			// timesheet
+			tg1101: false,
 		};
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -118,6 +120,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				// timesheet
 				if (data.stPermissions.indexOf('|1091|') >= 0) data.tg1091 = true; else data.tg1091 = false;
+
+				// timesheet
+				if (data.stPermissions.indexOf('|1101|') >= 0) data.tg1091 = true; else data.tg1091 = false;
 				
 				$scope.viewModel = data;
 
@@ -190,6 +195,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				// timesheet
 				if (_mdl.tg1091 == true) perms += '|1091|';
+
+				// admin timesheet
+				if (_mdl.tg1101 == true) perms += '|1101|';
 
 				$scope.viewModel.stPermissions = perms;
 

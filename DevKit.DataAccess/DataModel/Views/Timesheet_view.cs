@@ -6,7 +6,9 @@ namespace DataModel
 {
 	public class TimesheetFilter
 	{
-		public long? nuYear, nuMonth;
+		public long? nuYear, 
+						nuMonth, 
+						fkUser;
 	}
 
 	public class TimesheetDTO
@@ -36,7 +38,7 @@ namespace DataModel
 
 	public class Timesheet
 	{
-		public TimesheetDTO ComposedFilters(DevKitDB db, TimesheetFilter filter, User user)
+		public TimesheetDTO ComposedFilters(DevKitDB db, TimesheetFilter filter)
 		{
 			var dto = new TimesheetDTO();
 
@@ -44,7 +46,7 @@ namespace DataModel
 			var dtFim = dtIni.AddMonths(1).AddSeconds(-1);
 
 			var lstHours = (from e in db.TaskAccumulatorValues
-							where e.fkUser == user.id
+							where e.fkUser == filter.fkUser
 							where e.dtLog > dtIni && e.dtLog < dtFim
 							select e).
 							ToList();

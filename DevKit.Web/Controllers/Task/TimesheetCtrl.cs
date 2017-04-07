@@ -14,10 +14,11 @@ namespace DevKit.Web.Controllers
 				{
 					nuYear = Request.GetQueryStringValue<long?>("nuYear", null),
 					nuMonth = Request.GetQueryStringValue<long?>("nuMonth", null),
+					fkUser = Request.GetQueryStringValue<long?>("nuMonth", null),
 				};
 
 				var mdl = new Timesheet();
-				var dto = mdl.ComposedFilters(db, filter, new Util().GetCurrentUser(db));
+				var dto = mdl.ComposedFilters(db, filter);
 
 				return Ok(dto);				
 			}

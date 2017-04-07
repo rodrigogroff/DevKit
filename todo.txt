@@ -2,7 +2,8 @@
 melhorias
 ------------------
 
--task types filters (management, kpa, condensed view)
+-poder ver timesheet de outros usuários
+
 -modais de confirmação de exclusão
 -textbox de data
 -poder anexar documentos nas tarefas

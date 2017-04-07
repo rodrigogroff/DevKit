@@ -34,7 +34,8 @@ namespace DataModel
 				query = from e in query
 						where	e.stDescription.ToUpper().Contains(filter.busca) ||
 								e.stLocalization.ToUpper().Contains(filter.busca) ||
-								e.stTitle.ToUpper().Contains(filter.busca) 
+								e.stTitle.ToUpper().Contains(filter.busca) ||
+								e.stProtocol.ToUpper().Contains(filter.busca) 
 						select e;
 
 			if (filter.nuPriority != null)

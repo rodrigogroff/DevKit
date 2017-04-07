@@ -1,13 +1,14 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('MenuController',
-['$scope', '$rootScope', '$location', 'AuthService', 'Api', 'version',
-function ($scope, $rootScope, $location, AuthService, Api, version)
+['$scope', '$rootScope', '$location', 'AuthService', 'Api', 'version','$state',
+function ($scope, $rootScope, $location, AuthService, Api, version, $state)
 {
 	$scope.version = version;
 	$scope.userTasks = 0;
 	$scope.projectTasks = 0;
 	$scope.userDeadlineTasks = 0;
+	$scope.searchParam = '';
 
 	init();
 
@@ -34,6 +35,11 @@ function ($scope, $rootScope, $location, AuthService, Api, version)
 			$scope.userTasks = data.count_user_tasks;
 		});
 	});
+
+	$scope.searchSystem = function ()
+	{
+		$location.path('/task/tasks').search({ searchSystem: $scope.searchParam });
+	}
 
     $scope.logOut = function ()
     {

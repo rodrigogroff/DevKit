@@ -22,9 +22,12 @@
 			<img src='../../images/logo.png' height="112px" />
 		</div>
 		<header class="page-header">
-			<div class="navbar" style="height: 38px; padding-left:200px;padding-top:-4px;">
+			<div class="navbar" style="height: 38px; padding-left:175px;padding-top:-4px;">
 				<table width="100%">
 					<tr>
+						<td width="200px">
+							<span style="color:black">Bem-vindo, <b>{{authentication.nameUser}}</b> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+						</td>
 						<td width="130px">
 							<button class="btn btn-success btn-xs" title="Total open tasks" ng-click="tasksClick()">{{projectTasks}}</button> Project tasks
 						</td>
@@ -33,12 +36,23 @@
 						<td width="130px">
 							<button class="btn btn-primary btn-xs" title="Tasks associated to you" ng-click="tasksClick()">{{userTasks}}</button> User Tasks
 						</td>
-						<td></td>
+						<td width="20px"></td>
+						<td width="250px">
+							<table>
+								<tr>
+									<td>
+										<input type="text" width="150px" class="form-control input-transparent" ng-model="searchParam" />
+									</td>
+									<td width="20px"></td>
+									<td>
+										<button class="btn btn-success btn-xs" ng-click="searchSystem()">Search</button>
+									</td>
+								</tr>
+							</table>
+						</td>
 						<td width="20px"></td>
 						<td align="right" valign="top">
-							@*<button class="btn btn-danger btn-xs" ng-click="tasksClick()">{{userDeadlineTasks}}</button> User Deadline</td>*@							
-							<span style="color:white">Bem-vindo, <b>{{authentication.nameUser}}</b> &nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
+							<span style="color:white">Sign Out</span> &nbsp;&nbsp;<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
 						<td>
 					</tr>
 				</table>
@@ -90,7 +104,7 @@
 	<table align="left" style="width:100%">
 		<tr>
 			<td>
-				<div id="ui-view" style="width:100%" class="container" ui-view></div>
+				<div id="ui-view" style="width:100%" ui-view></div>
 			</td>
 		</tr>
 	</table>

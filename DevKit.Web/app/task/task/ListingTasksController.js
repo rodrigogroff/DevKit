@@ -1,6 +1,6 @@
 ﻿angular.module('app.controllers').controller('ListingTasksController',
-['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects','$stateParams', '$location',
+function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $stateParams, $location)
 {
 	$scope.loading = false;
 
@@ -61,7 +61,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		CheckPermissions();
 
 		if (ngHistoricoFiltro.filtro)
-			ngHistoricoFiltro.filtro.exibeFiltro = false;		
+			ngHistoricoFiltro.filtro.exibeFiltro = false;
 	}
 	
 	$scope.search = function ()
@@ -74,12 +74,25 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	{
 		$scope.loading = true;
 
-		var options = { skip: skip, take: take, kpa: $scope.campos.kpa, complete: $scope.campos.complete };
+		var urlParams = $location.search();
+
+		if (urlParams.searchSystem != undefined)
+			$scope.campos.busca = urlParams.searchSystem;
+			
+		var options = {
+			skip: skip,
+			take: take,
+			kpa: $scope.campos.kpa,
+			complete: $scope.campos.complete
+		};
 
 		var filter = ngHistoricoFiltro.filtro.filtroGerado;
 
 		if (filter)
 			angular.extend(options, filter);
+
+		if (urlParams.searchSystem != undefined)
+			angular.extend(options, $scope.campos );
 		
 		delete options.selects;
 

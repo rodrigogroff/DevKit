@@ -13850,6 +13850,7 @@ textarea + .help-block,
 .search-query, .navbar-form .search-query {
   border-radius: 3px;
   line-height: 18px;
+  color: red;
 }
 
 .form-horizontal input + .help-block,

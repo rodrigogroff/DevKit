@@ -1,9 +1,10 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('MenuController',
-['$scope', '$rootScope', '$location', 'AuthService', 'Api',
-function ($scope, $rootScope, $location, AuthService, Api)
+['$scope', '$rootScope', '$location', 'AuthService', 'Api', 'version',
+function ($scope, $rootScope, $location, AuthService, Api, version)
 {
+	$scope.version = version;
 	$scope.userTasks = 0;
 	$scope.projectTasks = 0;
 	$scope.userDeadlineTasks = 0;

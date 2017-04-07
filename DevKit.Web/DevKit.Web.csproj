@@ -286,7 +286,6 @@
     <Content Include="app\_shared\filters.js" />
     <Content Include="app\login\login.html" />
     <Content Include="app\login\LoginController.js" />
-    <Content Include="app\_shared\SelectsService.js" />
     <Content Include="app\_shared\templateExportacao.html" />
     <Content Include="app\_shared\templateInformacao.html" />
     <Content Include="app\_shared\404.html" />

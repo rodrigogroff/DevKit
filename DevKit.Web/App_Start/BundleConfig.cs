@@ -93,7 +93,6 @@ namespace DevKit.Web
 				"~/app/login/AuthService.js",
 				"~/app/login/LoginController.js",
 				"~/app/_shared/MenuController.js",
-				"~/app/_shared/SelectsService.js",
 				"~/app/_shared/NgSelectsService.js",
 				"~/app/app.js",
 

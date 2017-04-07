@@ -416,6 +416,265 @@ namespace DataModel
 					}
 
 					break;
+
+				case EnumProjectTemplate.SoftwareMaintenance:
+					
+					{
+						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, bKPA = false, stName = "Software Analysis" };
+
+						#region - categories - 
+
+						ttype.id = Convert.ToInt64(db.InsertWithIdentity(ttype));
+
+						{
+							var categ = new TaskCategory { fkTaskType = ttype.id, stAbreviation = "", stName = "Design Docs", stDescription = "" };
+							categ.id = Convert.ToInt64(db.InsertWithIdentity(categ));
+
+							var t = 0;
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Construction" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									stName = "Design Construction Hours"
+								});
+							}
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Peer Review" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									stName = "Design Peer Review Hours"
+								});
+							}
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Approval" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+						}
+
+						{
+							var categ = new TaskCategory { fkTaskType = ttype.id, stAbreviation = "", stName = "Change Requirement", stDescription = "" };
+							categ.id = Convert.ToInt64(db.InsertWithIdentity(categ));
+
+							var t = 0;
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Construction" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									stName = "Change Analysis Hours"
+								});
+							}
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Peer Review" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									stName = "Change Peer Review Hours"
+								});
+							}
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Approval" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+						}
+
+						{
+							var categ = new TaskCategory { fkTaskType = ttype.id, stAbreviation = "", stName = "Task Estimation", stDescription = "" };
+							categ.id = Convert.ToInt64(db.InsertWithIdentity(categ));
+
+							var t = 0;
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Estimating" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									stName = "Analysis Estimating Hours"
+								});
+							}
+
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+						}
+
+						#endregion
+					}
+
+					{
+						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, bKPA = false, stName = "Software Development" };
+
+						#region  - categories -
+
+						ttype.id = Convert.ToInt64(db.InsertWithIdentity(ttype));
+
+						{
+							var categ = new TaskCategory { fkTaskType = ttype.id, stAbreviation = "", stName = "Resource Build", stDescription = "" };
+							categ.id = Convert.ToInt64(db.InsertWithIdentity(categ));
+
+							var t = 0;
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									bEstimate = true,
+									stName = "Estimate Coding Hours"
+								});
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									bEstimate = false,
+									stName = "Coding Hours"
+								});
+							}
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+						}
+
+						#endregion
+					}
+
+					{
+						var ttype = new TaskType { fkProject = id, bManaged = true, bCondensedView = true, bKPA = false, stName = "Software Bugs" };
+
+						#region - categories - 
+
+						ttype.id = Convert.ToInt64(db.InsertWithIdentity(ttype));
+
+						{
+							var categ = new TaskCategory { fkTaskType = ttype.id, stAbreviation = "", stName = "Construction Bugs", stDescription = "" };
+							categ.id = Convert.ToInt64(db.InsertWithIdentity(categ));
+
+							var t = 0;
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									stName = "Coding Hours"
+								});
+							}
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+						}
+
+						{
+							var categ = new TaskCategory { fkTaskType = ttype.id, stAbreviation = "", stName = "Homologation Bugs", stDescription = "" };
+							categ.id = Convert.ToInt64(db.InsertWithIdentity(categ));
+
+							var t = 0;
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									stName = "Coding Hours"
+								});
+							}
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+						}
+
+						{
+							var categ = new TaskCategory { fkTaskType = ttype.id, stAbreviation = "", stName = "Production Bugs", stDescription = "" };
+							categ.id = Convert.ToInt64(db.InsertWithIdentity(categ));
+
+							var t = 0;
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									stName = "Coding Hours"
+								});
+							}
+
+							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Validation" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+						}
+
+						#endregion
+					}
+
+					break;
 			}
 
 			return true;

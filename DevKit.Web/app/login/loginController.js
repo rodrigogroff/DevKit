@@ -14,23 +14,29 @@ function ($scope, $rootScope, $location, AuthService, version)
 
     $scope.mensagem = "";
 
-    $scope.login = function () {
-
+    $scope.login = function ()
+    {
     	$scope.loading = true;
 
-    	AuthService.login($scope.loginData).then(function (response)
+    	if ($scope.loginData.userName == '' || $scope.loginData.password == '')
     	{
-        	$scope.loading = false;
+    		$scope.loading = false;
+    		$scope.mensagem = 'Please enter valid credentials';
+    	}
+    	else
+    	{
+    		AuthService.login($scope.loginData).then(function (response) {
+    			$scope.loading = false;
 
-        	$rootScope.exibirMenu = true;
-        	$rootScope.$broadcast('updateCounters');
+    			$rootScope.exibirMenu = true;
+    			$rootScope.$broadcast('updateCounters');
 
-        	$location.path('/');
-        },
-		function (err)
-		{
-         	 $scope.loading = false;
-             $scope.mensagem = err.error_description;
-        });
+    			$location.path('/');
+    		},
+			function (err) {
+				$scope.loading = false;
+				$scope.mensagem = err.error_description;
+			});
+    	}
     };
 }]);

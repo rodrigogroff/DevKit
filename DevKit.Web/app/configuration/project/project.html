@@ -88,7 +88,7 @@
 												<td>
 													<table>
 														<tr height="42px">
-															<td width="120px">New User</td>
+															<td width="120px">User</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="fkUser_fail">!</button>
 															</td>
@@ -130,6 +130,10 @@
 												<td>{{ mdl.stRole }}</td>
 												<td>{{ mdl.sdtJoin }}</td>
 												<td>
+													<a href="" role="button" ng-click="editUser(mdl)">
+														<i class="glyphicon glyphicon-edit" style="color:white"></i>
+													</a>
+													&nbsp;&nbsp;
 													<a href="" role="button" ng-click="removeUser($index, viewModel.users)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>
@@ -162,7 +166,7 @@
 												<td>
 													<table>
 														<tr height="42px">
-															<td width="120px">New Phase name</td>
+															<td width="120px">Phase name</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newphase_stName_fail">!</button>
 															</td>
@@ -184,21 +188,17 @@
 										<table class="table table-hover" style="width:100%">
 											<thead>
 												<tr>
-													<th width="80px">Status</th>
 													<th width="150px">Phase</th>
-													<th width="150px">Sprints</th>
-													<th width="120px">Start</th>
-													<th width="120px">End</th>
 													<th width="70px">Actions</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.phases">
-												<td>{{ mdl.bCompleted ? 'Complete' : 'Active' }}</td>
 												<td>{{ mdl.stName }}</td>
-												<td></td>
-												<td>{{ mdl.sdtStart }}</td>
-												<td>{{ mdl.sdtEnd }}</td>
 												<td>
+													<a href="" role="button" ng-click="editPhase(mdl)">
+														<i class="glyphicon glyphicon-edit" style="color:white"></i>
+													</a>
+													&nbsp;&nbsp;
 													<a href="" role="button" ng-click="removePhase($index, viewModel.phases)">
 														<i class="glyphicon glyphicon-remove" style="color:white"></i>
 													</a>
@@ -222,21 +222,69 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:aliceblue">
-										Sprints for project
+										Sprints 
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewSprint()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
-
+									<div ng-if="addSprint == true">
+										<table>
+											<tr>
+												<td>
+													<table>
+														<tr height="42px">
+															<td width="120px">Phase</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="fkSprintPhase_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="hidden" name="user" style="width:100%" ui-select2="selectPhases" ng-model="newSprint.fkPhase" />
+															</td>
+														</tr>
+														<tr height="42px">
+															<td width="120px">Sprint</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="stSprint_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="text" class="form-control input-transparent" ng-model="newSprint.stName">
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										<br />
+										<button class="btn btn-primary" ng-click="saveNewSprint()">Save </button>
+										<br />
+										<br />
+									</div>
 									<div ng-show="viewModel.sprints.length > 0">
 										<br />
 										<table class="table table-hover">
 											<thead>
 												<tr>
-													<th width="80px">Status</th>
+													<th width="150px">Phase</th>
 													<th width="150px">Sprint</th>
+													<th width="150px">Configuration</th>
+													<th width="150px">Actions</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.sprints">
-												<td>{{ mdl.bCompleted ? 'Complete' : 'Active' }}</td>
+												<td>{{ mdl.sfkPhase }}</td>
 												<td>{{ mdl.stName }}</td>
+												<td>
+													<a href="" role="button" ng-click="goSprint(mdl)">
+														<i class="glyphicon glyphicon-share" style="color:white"></i>
+													</a>
+												 </td>
+												<td>
+													<a href="" role="button" ng-click="editSprint(mdl)">
+														<i class="glyphicon glyphicon-edit" style="color:white"></i>
+													</a>
+													&nbsp;&nbsp;
+													<a href="" role="button" ng-click="removeSprint($index, viewModel.sprints)">
+														<i class="glyphicon glyphicon-remove" style="color:white"></i>
+													</a>
+												</td>
 											</tr>
 										</table>
 									</div>

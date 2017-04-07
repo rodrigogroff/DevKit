@@ -19,9 +19,7 @@ namespace DevKit.Web
                 {
                     var state = modelState[key];
                     if (state.Errors.Any())
-                    {
                         errors[key] = state.Errors.First().ErrorMessage;
-                    }
                 }
 
                 context.Response = context.Request.CreateResponse<JObject>(HttpStatusCode.BadRequest, errors);

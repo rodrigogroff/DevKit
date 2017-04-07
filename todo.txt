@@ -2,19 +2,11 @@
 melhorias
 ------------------
 
--timesheet
-
--'restricted user list' para passar para determinado fluxo
-
--criar sprint e versão dentro do projeto
--remover sprint do menu
-
 -modais de confirmação de exclusão
 -textbox de data
 -poder anexar documentos nas tarefas
 
 -acumulador do tipo dinheiro
-
 
 ------------------
 bugs

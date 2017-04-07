@@ -27,18 +27,24 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<ProjectUser>(anexedEntity.ToString());
 
-						if ((from ne in db.ProjectUsers
-							 where ne.fkUser == ent.fkUser && ne.fkProject == id
-							 select ne).Any())
+						if (ent.id == 0)
 						{
-							resp = "User already added to project!";
-							return false;
-						}
+							if ((from ne in db.ProjectUsers
+								 where ne.fkUser == ent.fkUser && ne.fkProject == id
+								 select ne).Any())
+							{
+								resp = "User already added to project!";
+								return false;
+							}
+						
+							ent.fkProject = id;
+							ent.dtJoin = DateTime.Now;
 
-						ent.fkProject = id;
-						ent.dtJoin = DateTime.Now;
+							db.Insert(ent);
+						}							
+						else
+							db.Update(ent);
 
-						db.Insert(ent);
 						users = LoadUsers(db);
 						break;
 					}
@@ -54,35 +60,83 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString());
 
-						if ((from ne in db.ProjectPhases
-							 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkProject == id
-							 select ne).Any())
-						{
-							resp = "Phase already added to project!";
-							return false;
-						}
+						if (ent.id == 0)
+						{ 
+							if ((from ne in db.ProjectPhases
+								 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkProject == id
+								 select ne).Any())
+							{
+								resp = "Phase already added to project!";
+								return false;
+							}
+							
+							ent.fkProject = id;
 
-						ent.fkProject = id;
-						
-						db.Insert(ent);
+							db.Insert(ent);
+						}							
+						else
+							db.Update(ent);
+
 						phases = LoadPhases(db);
 						break;
 					}
-										
+
 				case "removePhase":
 					{
-						var phaseDel = JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString());
+						var mdlDel = JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkPhase == phaseDel.id select e).Any())
+						if ((from e in db.Tasks where e.fkPhase == mdlDel.id select e).Any())
 						{
 							resp = "This phase is being used in a task";
 							return false;
 						}
-						
-						db.Delete(phaseDel);
+
+						db.Delete(mdlDel);
 						phases = LoadPhases(db);
 						break;
 					}
+
+				case "newSprint":
+					{
+						var ent = JsonConvert.DeserializeObject<ProjectSprint>(anexedEntity.ToString());
+
+						if (ent.id == 0)
+						{
+							if ((from ne in db.ProjectSprints
+								 where ne.fkPhase == id
+								 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkProject == id
+								 select ne).Any())
+							{
+								resp = "Sprint already added to project!";
+								return false;
+							}
+
+							ent.fkProject = id;
+
+							db.Insert(ent);
+						}
+						else
+							db.Update(ent);
+
+						sprints = LoadSprints(db);
+						break;
+					}
+
+				case "removeSprint":
+					{
+						var mdlDel = JsonConvert.DeserializeObject<ProjectSprint>(anexedEntity.ToString());
+
+						if ((from e in db.Tasks where e.fkSprint == mdlDel.id select e).Any())
+						{
+							resp = "This sprint is being used in a task";
+							return false;
+						}
+
+						db.Delete(mdlDel);
+						sprints = LoadSprints(db);
+						break;
+					}
+
 			}
 
 			return true;

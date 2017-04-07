@@ -48,9 +48,14 @@ namespace DataModel
 
 		List<ProjectSprint> LoadSprints(DevKitDB db)
 		{
-			return (from e in db.ProjectSprints where e.fkProject == id select e).
+			var resp = (from e in db.ProjectSprints where e.fkProject == id select e).
 				OrderBy(t => t.id).
 				ToList();
+
+			foreach (var item in resp)
+				item.LoadAssociations(db);
+
+			return resp;
 		}
 	}
 }

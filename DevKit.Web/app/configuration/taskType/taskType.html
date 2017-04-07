@@ -136,10 +136,10 @@
 										<table class="table table-hover" style="width:100%">
 											<thead>
 												<tr>
-													<th width="150px">Category</th>
-													<th width="150px">Abbrev.</th>
-													<th width="150px">Description</th>
-													<th width="70px">Actions</th>
+													<th width="120px">Category</th>
+													<th width="50px">Abbrev.</th>
+													<th width="220px">Description</th>
+													<th width="40px"></th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.categories">
@@ -147,13 +147,15 @@
 												<td>{{ mdl.stAbreviation }}</td>
 												<td>{{ mdl.stDescription }}</td>
 												<td>
-													<a href="" role="button" ng-click="editCategorie(mdl)">
-														<i class="glyphicon glyphicon-edit" style="color:white"></i>
-													</a>
-													&nbsp;&nbsp;
-													<a href="" role="button" ng-click="removeCategorie($index, viewModel.categories)">
-														<i class="glyphicon glyphicon-remove" style="color:white"></i>
-													</a>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="editCategorie(mdl)">
+															<i class="glyphicon glyphicon-edit" style="color:white"></i>
+														</a>
+														&nbsp;&nbsp;
+														<a href="" role="button" ng-click="removeCategorie($index, viewModel.categories)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>
 												</td>
 											</tr>
 										</table>

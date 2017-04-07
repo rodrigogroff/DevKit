@@ -50,7 +50,7 @@
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
 									<td><div data-ng-repeat="m in mdl.phases">{{ m.stName }}</div></td>
-									<td>{{ mdl.sprints.length }}</td>
+									<td><div data-ng-repeat="m in mdl.sprints">{{ m.stName }}</div></td>
 									<td><div data-ng-repeat="m in mdl.users">{{ m.stUser }} - {{ m.stRole }}</div></td>
 								</tr>
 							</table>

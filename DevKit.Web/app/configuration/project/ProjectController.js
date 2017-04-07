@@ -36,6 +36,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' });
 		$scope.selectProjectTemplate = ngSelects.obterConfiguracao(Api.ProjectTemplate, { tamanhoPagina: 15, campoNome: 'stName' });
 
+		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, {
+			tamanhoPagina: 15, scope: $scope,
+			filtro: { campo: 'fkProject', valor: 'viewModel.id' }
+		});
+
 		if (id > 0)
 		{
 			$scope.loading = true;
@@ -158,6 +163,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addUser = !$scope.addUser;
 	}
 
+	$scope.editUser = function (mdl)
+	{
+		$scope.addUser = true;
+		$scope.newUser = mdl;
+	}
+
 	$scope.newUser =
 		{
 			fkUser: undefined,
@@ -222,6 +233,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addPhase = !$scope.addPhase;
 	}
 
+	$scope.editPhase = function (mdl)
+	{
+		$scope.addPhase = true;
+		$scope.newPhase = mdl;
+	}
+
 	$scope.newPhase =
 		{
 			stName: '',
@@ -255,6 +272,83 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.viewModel.phases = data.phases;
 
 				$scope.addPhase = false;
+
+			}, function (response) {
+				toastr.error(response.data.message, 'Error');
+			});
+		}
+	}
+
+	// ---------------------------------
+	// sprints
+	// ---------------------------------
+
+	$scope.addSprint = false;
+
+	$scope.removeSprint = function (index, lista)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else {
+			$scope.viewModel.updateCommand = "removeSprint";
+			$scope.viewModel.anexedEntity = lista[index];
+
+			Api.Project.update({ id: id }, $scope.viewModel, function (data) {
+				toastr.success('Sprint removed', 'Success');
+				$scope.viewModel.sprints = data.sprints;
+			});
+		}
+	}
+
+	$scope.addNewSprint = function () {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addSprint = !$scope.addSprint;
+	}
+
+	$scope.editSprint = function (mdl) {
+		$scope.addSprint = true;
+		$scope.newSprint = mdl;
+	}
+
+	$scope.goSprint = function (mdl)
+	{
+		$state.go('sprint', { id: mdl.id });
+	}
+
+	$scope.newSprint =
+		{
+			fkProject: undefined,
+			fkPhase: undefined,
+			stName: ''			
+		};
+
+	$scope.saveNewSprint = function ()
+	{
+		$scope.fkSprintPhase_fail = $scope.newSprint.fkPhase == undefined;
+		$scope.stSprint_fail = invalidCheck($scope.newSprint.stName);
+
+		if (!$scope.fkSprintPhase_fail &&
+			!$scope.stSprint_fail)
+		{
+			$scope.viewModel.updateCommand = "newSprint";
+			$scope.viewModel.anexedEntity = $scope.newSprint;
+
+			Api.Project.update({ id: id }, $scope.viewModel, function (data)
+			{				
+				$scope.newSprint =
+				{
+					fkProject: undefined,
+					fkPhase: undefined,
+					stName: ''
+					
+				};
+
+				toastr.success('Sprint saved', 'Success');
+				$scope.viewModel.sprints = data.sprints;
+
+				$scope.addSprint = false;
 
 			}, function (response) {
 				toastr.error(response.data.message, 'Error');

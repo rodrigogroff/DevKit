@@ -20,6 +20,7 @@ namespace DevKit.Web.Controllers
 				task.ComposedFilters(db, ref count_project_tasks, new TaskFilter
 				{
 					complete = false,
+					kpa = false,
 					lstProjects = util.GetCurrentUserProjects(db, usr.id)
 				});
 
@@ -28,7 +29,8 @@ namespace DevKit.Web.Controllers
 					fkUserResponsible = usr.id,
 				});
 				
-				return Ok(new { count_project_tasks = count_project_tasks, count_user_tasks = count_user_tasks });
+				return Ok(new { count_project_tasks = count_project_tasks,
+								count_user_tasks = count_user_tasks });
 			}
 		}
 	}

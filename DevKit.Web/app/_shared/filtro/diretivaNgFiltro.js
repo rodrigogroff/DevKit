@@ -51,15 +51,10 @@ angular.module('app.directives').directive('ngFiltro', function () {
 			placeholder: '@',
 			templateAvancado: '@',
 			funcaoPesquisar: '=',
-			funcaoSetTab: '=',
-			currentTab: '=?',
-			funcaoLimpar: '=',
-			theme: '@'
+			funcaoLimpar: '='
 		},
 
 		controller: ['$scope', '$rootScope', '$timeout', 'ngHistoricoFiltro', function ($scope, $rootScope, $timeout, ngHistoricoFiltro) {
-
-			$scope.currentTab = $scope.currentTab || 0;
 
 			$scope.filtro = ngHistoricoFiltro.filtro;
 
@@ -70,7 +65,6 @@ angular.module('app.directives').directive('ngFiltro', function () {
 			{
 				$scope.filtro.tipo = $scope.tipo;
 				$scope.filtro.campos = $scope.campos;
-				$scope.filtro.currentTab = $scope.currentTab;
 			
 				ngHistoricoFiltro.filtro.paginaAtual = 0;
 				ngHistoricoFiltro.filtro.itensporpaginastored = 15;
@@ -99,25 +93,6 @@ angular.module('app.directives').directive('ngFiltro', function () {
 				var opcoes = { filtroBasico: !$scope.filtro.exibeFiltro };
 
 				$scope.filtro.filtroGerado = $scope.constroiFiltro(opcoes);
-
-				// Verifica se campo de tabs tem dados preenchidos
-				if ($scope.filtro.campos && $scope.filtro.campos.tabs) {
-					var tabs = $scope.filtro.campos.tabs;
-					for (var idx = 0; idx < tabs.length; idx++) {
-						var tab = tabs[idx];
-						if (tab && tab.keys) {
-							for (var idxKey = 0; idxKey < tab.keys.length; idxKey++) {
-								var key = tab.keys[idxKey];
-								if (key) {
-									tab.hasValue = $scope.filtro.campos[key];
-									if (tab.hasValue) {
-										break;
-									}
-								}
-							}
-						}
-					}
-				}
 
 			}, true);
 
@@ -172,37 +147,17 @@ angular.module('app.directives').directive('ngFiltro', function () {
 				}
 				else
 				{
-					var tabs = null;
 					var selects = null;
-
-					if ($scope.filtro && $scope.filtro.campos && $scope.filtro.campos.tabs)
-						tabs = $scope.filtro.campos.tabs;
 
 					if ($scope.filtro && $scope.filtro.campos && $scope.filtro.campos.selects)
 						selects = $scope.filtro.campos.selects;
 
-					$scope.filtro.campos = {
-						
-					}
+					$scope.filtro.campos = { }
 
-					if (tabs) {
-						$scope.filtro.campos.tabs = tabs;
-					}
-
-					if (selects) {
+					if (selects) 
 						$scope.filtro.campos.selects = selects;
-					}
 				}
 
-			}
-
-			$scope.setTab = function (tabNumber) {
-
-				if ($scope.funcaoSetTab) {
-					$scope.funcaoSetTab(tabNumber);
-				}
-
-				$scope.filtro.currentTab = tabNumber;
 			}
 
 		}],

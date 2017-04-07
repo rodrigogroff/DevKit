@@ -12,6 +12,8 @@ melhorias
 bugs
 ------------------
 
+-ao redsigitar campo de pesquisa e clicar no botão, nada acontece
+-eventualmente, filtros perdem os dropdowns
 -ao fazer login, mostra brevemente layout do site para depois entrar de fato na tela
 -ao iniciar site fora do login, tela fica não-responsiva
 -ao apertar F5, perde-se a view e fica somente a tela em questão

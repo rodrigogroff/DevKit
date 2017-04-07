@@ -14,7 +14,7 @@ namespace DevKit.Web.Controllers
 				{
 					nuYear = Request.GetQueryStringValue<long?>("nuYear", null),
 					nuMonth = Request.GetQueryStringValue<long?>("nuMonth", null),
-					fkUser = Request.GetQueryStringValue<long?>("nuMonth", null),
+					fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
 				};
 
 				var mdl = new Timesheet();

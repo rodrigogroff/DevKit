@@ -82,7 +82,7 @@
 										Phone list
 										<button class="btn btn-info btn-xs pull-right" ng-click="addNewPhone()"><i class="fa fa-plus"> </i>  Add new </button>
 									</legend>
-									<div ng-show="viewModel.phones.length == 0">
+									<div ng-show="viewModel.phones.length == 0 && addPhone == false">
 										<br />
 										<div class="btn btn-info btn-lg">No records found.</div>
 									</div>
@@ -168,7 +168,7 @@
 										Email list
 										<button class="btn btn-info btn-xs pull-right" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
-									<div ng-show="viewModel.emails.length == 0">
+									<div ng-show="viewModel.emails.length == 0 && addEmail == false">
 										<br />
 										<div class="btn btn-info btn-lg">No records found.</div>
 									</div>

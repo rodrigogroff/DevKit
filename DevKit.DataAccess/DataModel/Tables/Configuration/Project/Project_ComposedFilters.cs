@@ -8,6 +8,7 @@ namespace DataModel
 	{
 		public int skip, take;
 		public string busca;
+		public long? fkUser;
 	}
 	
 	public partial class Project
@@ -21,6 +22,15 @@ namespace DataModel
 
 			if (lstUserProjects.Count() > 0)
 				query = from e in query where lstUserProjects.Contains(e.id) select e;
+
+			if (filter.fkUser != null)
+			{
+				query = from e in query
+						join eUser in db.ProjectUsers on e.id equals eUser.fkProject
+						where e.id == eUser.fkProject
+						where eUser.fkUser == filter.fkUser
+						select e;
+			}
 
 			count = query.Count();
 

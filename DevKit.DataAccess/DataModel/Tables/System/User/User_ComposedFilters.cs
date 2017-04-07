@@ -7,7 +7,7 @@ namespace DataModel
 	public class UserFilter
 	{
 		public int skip, take;
-		public string busca;
+		public string busca, email, phone;
 		public bool? ativo;
 		public long? fkPerfil;
 	}
@@ -26,6 +26,24 @@ namespace DataModel
 
 			if (filter.fkPerfil != null)
 				query = from e in query where e.fkProfile == filter.fkPerfil select e;
+
+			if (filter.email != null)
+			{
+				query = from e in query
+						join eMail in db.UserEmails on e.id equals eMail.fkUser
+						where e.id == eMail.fkUser
+						where eMail.stEmail.ToUpper().Contains (filter.email)
+						select e;
+			}
+
+			if (filter.phone != null)
+			{
+				query = from e in query
+						join ePhone in db.UserPhones on e.id equals ePhone.fkUser
+						where e.id == ePhone.fkUser
+						where ePhone.stPhone.ToUpper().Contains(filter.phone)
+						select e;
+			}
 
 			count = query.Count();
 

@@ -4,8 +4,13 @@
 		<tr>
 			<td width="20px"></td>
 			<td width="120px">Project Name</td>
-			<td>
+			<td width="120px">
 				<input type="text" focus="true" class="form-control input-transparent" ng-model="filtro.campos.busca" />
+			</td>
+			<td width="20px"></td>
+			<td width="120px">User</td>
+			<td width="160px">
+				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.user" ng-model="filtro.campos.fkUser" />
 			</td>
 		</tr>
 	</table>

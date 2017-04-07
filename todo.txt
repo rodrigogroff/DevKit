@@ -2,8 +2,6 @@
 melhorias
 ------------------
 
--users filters (combo profile ferrado, status não marcado por default)
--projects filters (user)
 -task types filters (project [combo], management, kpa, condensed view)
 -modais de confirmação de exclusão
 -textbox de data

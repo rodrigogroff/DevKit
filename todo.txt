@@ -2,7 +2,7 @@
 melhorias
 ------------------
 
--task types filters (project [combo], management, kpa, condensed view)
+-task types filters (management, kpa, condensed view)
 -modais de confirmação de exclusão
 -textbox de data
 -poder anexar documentos nas tarefas

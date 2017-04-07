@@ -9,6 +9,7 @@ namespace DataModel
 		public int skip, take;
 		public string busca;
 		public long? fkProject;
+		public bool? managed, condensed, kpa;
 	}
 
 	public partial class TaskType
@@ -25,6 +26,15 @@ namespace DataModel
 
 			if (lstUserProjetcs.Count() > 0)
 				query = from e in query where lstUserProjetcs.Contains(e.fkProject) select e;
+
+			if (filter.managed != null)
+				query = from e in query where e.bManaged == filter.managed select e;
+
+			if (filter.condensed != null)
+				query = from e in query where e.bCondensedView == filter.condensed select e;
+
+			if (filter.kpa != null)
+				query = from e in query where e.bKPA == filter.kpa select e;
 
 			count = query.Count();
 

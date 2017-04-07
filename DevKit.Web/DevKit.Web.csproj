@@ -802,11 +802,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="app\views\404.cshtml" />
-    <Content Include="app\views\Login.cshtml" />
-    <Content Include="app\views\_Layout.cshtml" />
-    <Content Include="app\views\_PageStart.cshtml" />
-    <Content Include="app\views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Packages.config">
       <SubType>Designer</SubType>

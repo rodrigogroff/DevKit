@@ -16,7 +16,9 @@ namespace DevKit.Web.Controllers
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
-					busca = Request.GetQueryStringValue("busca")?.ToUpper()
+					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+					stPermission = Request.GetQueryStringValue("stPermission")?.ToUpper(),
+					fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
 				});
 
 				return Ok(new { count = count, results = results });

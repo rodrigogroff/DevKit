@@ -43,7 +43,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Users" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Users [{{viewModel.users.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -78,7 +77,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Permissions" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Permissions" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -101,7 +99,7 @@
 											</tr>
 										</thead>
 										<tr>
-											<td>System setup</td>
+											<td><b>[100]</b> System setup</td>
 											<td></td>
 											<td><input name="tg1002" type="checkbox" ng-model="viewModel.tg1002" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1003" type="checkbox" ng-model="viewModel.tg1003" ng-disabled="!permModel.edicao"></td>
@@ -109,7 +107,7 @@
 											<td></td>
 										</tr>
 										<tr>
-											<td>Users profiles</td>
+											<td><b>[101]</b> Users profiles</td>
 											<td><input name="tg1011" type="checkbox" ng-model="viewModel.tg1011" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1012" type="checkbox" ng-model="viewModel.tg1012" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1013" type="checkbox" ng-model="viewModel.tg1013" ng-disabled="!permModel.edicao"></td>
@@ -117,7 +115,7 @@
 											<td><input name="tg1015" type="checkbox" ng-model="viewModel.tg1015" ng-disabled="!permModel.edicao"></td>
 										</tr>
 										<tr>
-											<td>Users maintenance</td>
+											<td><b>[102]</b> Users maintenance</td>
 											<td><input name="tg1021" type="checkbox" ng-model="viewModel.tg1021" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1022" type="checkbox" ng-model="viewModel.tg1022" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1023" type="checkbox" ng-model="viewModel.tg1023" ng-disabled="!permModel.edicao"></td>
@@ -125,7 +123,7 @@
 											<td><input name="tg1025" type="checkbox" ng-model="viewModel.tg1025" ng-disabled="!permModel.edicao"></td>
 										</tr>
 										<tr>
-											<td>Projects maintenance</td>
+											<td><b>[103]</b> Projects maintenance</td>
 											<td><input name="tg1031" type="checkbox" ng-model="viewModel.tg1031" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1032" type="checkbox" ng-model="viewModel.tg1032" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1033" type="checkbox" ng-model="viewModel.tg1033" ng-disabled="!permModel.edicao"></td>
@@ -133,7 +131,7 @@
 											<td><input name="tg1035" type="checkbox" ng-model="viewModel.tg1035" ng-disabled="!permModel.edicao"></td>
 										</tr>
 										<tr>
-											<td>Sprints maintenance</td>
+											<td><b>[104]</b> Sprints maintenance</td>
 											<td><input name="tg1041" type="checkbox" ng-model="viewModel.tg1041" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1042" type="checkbox" ng-model="viewModel.tg1042" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1043" type="checkbox" ng-model="viewModel.tg1043" ng-disabled="!permModel.edicao"></td>
@@ -141,7 +139,7 @@
 											<td><input name="tg1045" type="checkbox" ng-model="viewModel.tg1045" ng-disabled="!permModel.edicao"></td>
 										</tr>
 										<tr>
-											<td>Task type maintenance</td>
+											<td><b>[105]</b> Task type maintenance</td>
 											<td><input name="tg1051" type="checkbox" ng-model="viewModel.tg1051" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1052" type="checkbox" ng-model="viewModel.tg1052" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1053" type="checkbox" ng-model="viewModel.tg1053" ng-disabled="!permModel.edicao"></td>
@@ -149,7 +147,7 @@
 											<td><input name="tg1055" type="checkbox" ng-model="viewModel.tg1055" ng-disabled="!permModel.edicao"></td>
 										</tr>
 										<tr>
-											<td>Task maintenance</td>
+											<td><b>[106]</b> Task maintenance</td>
 											<td><input name="tg1061" type="checkbox" ng-model="viewModel.tg1061" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1062" type="checkbox" ng-model="viewModel.tg1062" ng-disabled="!permModel.edicao"></td>
 											<td><input name="tg1063" type="checkbox" ng-model="viewModel.tg1063" ng-disabled="!permModel.edicao"></td>
@@ -157,7 +155,7 @@
 											<td><input name="tg1065" type="checkbox" ng-model="viewModel.tg1065" ng-disabled="!permModel.edicao"></td>
 										</tr>
 										<tr>
-											<td>Kanban view</td>
+											<td><b>[107]</b> User Kanban view</td>
 											<td><input name="tg1071" type="checkbox" ng-model="viewModel.tg1071" ng-disabled="!permModel.edicao"></td>
 											<td></td>
 											<td></td>
@@ -165,7 +163,7 @@
 											<td></td>
 										</tr>
 										<tr>
-											<td>Management view</td>
+											<td><b>[108]</b> Management view</td>
 											<td><input name="tg1081" type="checkbox" ng-model="viewModel.tg1081" ng-disabled="!permModel.edicao"></td>
 											<td></td>
 											<td></td>
@@ -173,7 +171,7 @@
 											<td></td>
 										</tr>
 										<tr>
-											<td>Timesheet view</td>
+											<td><b>[109]</b> Timesheet view</td>
 											<td><input name="tg1091" type="checkbox" ng-model="viewModel.tg1091" ng-disabled="!permModel.edicao"></td>
 											<td></td>
 											<td></td>
@@ -187,7 +185,6 @@
 						</table>
 					</div>
 				</tab>
-
 			</tabset>
 			<br />
 			<br />

@@ -7,7 +7,8 @@ namespace DataModel
 	public class ProfileFilter
 	{
 		public int skip, take;				
-		public string busca;
+		public string busca, stPermission;
+		public long? fkUser;
 	}
 
 	public partial class Profile
@@ -18,6 +19,18 @@ namespace DataModel
 
 			if (filter.busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
+
+			if (filter.stPermission != null)
+				query = from e in query where e.stPermissions.ToUpper().Contains("||" + filter.stPermission) select e;
+
+			if (filter.fkUser != null)
+			{
+				query = from e in query
+						join eUser in db.Users on e.id equals eUser.fkProfile
+						where eUser.id == filter.fkUser
+						where eUser.fkProfile == e.id
+						select e;
+			}
 
 			count = query.Count();
 

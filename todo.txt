@@ -2,8 +2,6 @@
 melhorias
 ------------------
 
--permissões (colocar numero antes da descrição)
--profile (acrescentar 'user name' no filtro e código da permissão)
 -users filters (combo profile ferrado, status não marcado por default)
 -projects filters (user)
 -task types filters (project [combo], management, kpa, condensed view)

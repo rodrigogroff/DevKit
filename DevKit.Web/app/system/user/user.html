@@ -70,7 +70,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Phones" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Phones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -83,6 +82,10 @@
 										Phone list
 										<button class="btn btn-info btn-xs pull-right" ng-click="addNewPhone()"><i class="fa fa-plus"> </i>  Add new </button>
 									</legend>
+									<div ng-show="viewModel.phones.length == 0">
+										<br />
+										<div class="btn btn-info btn-lg">No records found.</div>
+									</div>
 									<div ng-if="addPhone == true">
 										<table>
 											<tr>
@@ -153,7 +156,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Emails" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Emails [{{viewModel.emails.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -166,6 +168,10 @@
 										Email list
 										<button class="btn btn-info btn-xs pull-right" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
+									<div ng-show="viewModel.emails.length == 0">
+										<br />
+										<div class="btn btn-info btn-lg">No records found.</div>
+									</div>
 									<div ng-if="addEmail == true">
 										<table>
 											<tr>
@@ -222,7 +228,6 @@
 						</table>
 					</div>
 				</tab>
-
 			</tabset>
 			<br />
 			<br />

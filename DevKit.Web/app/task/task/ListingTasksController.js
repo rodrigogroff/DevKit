@@ -11,7 +11,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 
 	$scope.campos = {
 	  	kpa: 'false',
-		complete: 'false',
+	  	complete: 'false',
 		selects: {
 			user: ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' }),
 			priority: ngSelects.obterConfiguracao(Api.Priority, { tamanhoPagina: 15, campoNome: 'stName' }),

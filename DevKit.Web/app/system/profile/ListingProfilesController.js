@@ -1,11 +1,14 @@
 ﻿angular.module('app.controllers').controller('ListingProfilesController',
-['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api',
-function ($scope, AuthService, $state, ngHistoricoFiltro, Api)
+['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
+function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
 	$scope.loading = false;
-	$scope.campos = {};
+	$scope.campos = {
+		selects: {
+			user: ngSelects.obterConfiguracao(Api.User, { tamanhoPagina: 15, campoNome: 'stLogin' }),
+		}
+	};
 	$scope.itensporpagina = 15;
-
 	$scope.permModel = {};	
 	$scope.permID = 101;
 

@@ -1,11 +1,11 @@
-﻿<div class="webFormPostion" style="width:99%">
-	<section class="widgetForm" style="width:100%">
-		<legend class="legendTop" style="width:100%">
+﻿<div class="webFormPostion" style="width:1000px">
+	<section class="widgetForm" style="width:1000px">
+		<legend class="legendTop" style="width:1000px">
 			<table><tr height="12px"><td> </td></tr></table>
-			<table style="color:white; width:100%">
+			<table style="color:white; width:1000px">
 				<tr>
 					<td width="20px"></td>
-					<td><b>TimeSheet </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td><b>User TimeSheet </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
 				</tr>
 				<tr height="12px"></tr>
 			</table>
@@ -34,8 +34,36 @@
 				</tr>
 			</table>
 			<br />
+			<br />
+			<div ng-show="viewModel != undefined">
+				<table style="width:870px" class="table table-hover">
+					<thead>
+						<tr>
+							<th>Day</th>
+							<th>Hours</th>
+							<th>Tasks</th>
+						</tr>
+					</thead>
+					<tr height="24px" data-ng-repeat="mdl in viewModel.days">
+						<td width="30px">{{mdl.day}}</td>
+						<td width="40px">{{mdl.hhmm}}</td>
+						<td width="800px">
+							<span data-ng-repeat="t in mdl.tasks">
+								<button class="btn btn-info btn-xs" ng-click="show(t.id)">{{t.protocol}} T{{t.nuPriority}} [{{t.hhmm}}] </button>
+								&nbsp;
+							</span>
+						</td>
+					</tr>
+				</table>
+				<br />
+				Total: <b>{{viewModel.total_hhmm}}</b>
+				<br />
+			</div>
+			<br />
 		</div>
 		<br />
 		<br />
 	</section>
+	<br />
+	<br />
 </div>

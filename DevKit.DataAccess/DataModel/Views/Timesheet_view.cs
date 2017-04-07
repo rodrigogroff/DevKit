@@ -14,6 +14,8 @@ namespace DataModel
 		public bool fail = false;
 
 		public List<TimeTable> days = new List<TimeTable>();
+
+		public string total_hhmm;
 	}
 
 	public class TimeTable
@@ -21,9 +23,17 @@ namespace DataModel
 		public string	day,
 						hhmm;
 
-		public List<long> tasks = new List<long>();
+		public List<TaskTimeSheet> tasks = new List<TaskTimeSheet>();
 	}
-		
+
+	public class TaskTimeSheet
+	{
+		public string protocol,
+						id,
+						hhmm,
+						nuPriority;
+	}
+
 	public class Timesheet
 	{
 		public TimesheetDTO ComposedFilters(DevKitDB db, TimesheetFilter filter, User user)
@@ -46,45 +56,92 @@ namespace DataModel
 						   select e).
 						   ToList();
 
-			for (int i = dtIni.Day; i < dtFim.Day; i++)
+			long totHH = 0, totMM = 0;
+
+			for (int i = dtIni.Day; i <= dtFim.Day; i++)
 			{
 				var dtCurrent = new DateTime((int)filter.nuYear, (int)filter.nuMonth, i);
 				var dtCurrentFim = dtCurrent.AddDays(1).AddSeconds(-1);
 
-				var hh = (from e in lstHours
-						  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
-						  select e).
-						  Sum(y => y.nuHourValue);
+				var _hours = "";
 
-				var mm = (from e in lstHours
-						  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
-						  select e).
-						  Sum(y => y.nuMinValue);
-
-				if (hh == null) hh = 0;
-				if (mm == null) mm = 0;
-
-				if (mm > 59)
 				{
-					var hours = (long) mm / 60;
-					hh += hours;
-					mm -= hours * 60;
-				}
+					var hh = (from e in lstHours
+							  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
+							  select e).
+							  Sum(y => y.nuHourValue);
 
-				var _hours = hh + ":" + mm.ToString().PadLeft(2, '0');
+					var mm = (from e in lstHours
+							  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
+							  select e).
+							  Sum(y => y.nuMinValue);
+
+					if (hh == null) hh = 0;
+					if (mm == null) mm = 0;
+
+					if (mm > 59)
+					{
+						var hours = (long)mm / 60;
+						hh += hours;
+						mm -= hours * 60;
+
+						totHH += (long) hh;
+						totMM += (long) mm;
+					}
+
+					_hours = hh + ":" + mm.ToString().PadLeft(2, '0');
+				}
+				
+				var lstTaskTimesheet = new List<TaskTimeSheet>();
+
+				foreach (var item in (from e in lstHours
+									  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
+									  select e).
+									  Distinct().
+									  ToList())
+				{
+					var task = lstTasks.Where(y => y.id == item.fkTask).
+						FirstOrDefault();
+
+					var hh = item.nuHourValue;
+					var mm = item.nuMinValue;
+
+					if (hh == null) hh = 0;
+					if (mm == null) mm = 0;
+
+					if (mm > 59)
+					{
+						var hours = (long)mm / 60;
+						hh += hours;
+						mm -= hours * 60;
+					}
+
+					lstTaskTimesheet.Add(new TaskTimeSheet
+					{
+						id = task.id.ToString(),
+						protocol = task.stProtocol,
+						hhmm = hh + ":" + mm.ToString().PadLeft(2, '0'),
+						nuPriority = task.nuPriority.ToString()
+					});
+				}
 
 				dto.days.Add(new TimeTable
 				{
 					day = dtCurrent.Day.ToString(),
 					hhmm = _hours,
-					tasks = (from e in lstHours
-							 where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
-							 select (long)e.fkTask).
-							 Distinct().
-							 ToList()
+					tasks = lstTaskTimesheet
 				});
 			}
-			
+
+			if (totMM > 59)
+			{
+				var hours = (long)totMM / 60;
+				totHH += hours;
+				totMM -= hours * 60;
+			}
+
+			dto.total_hhmm = totHH + ":" + totMM.ToString().PadLeft(2,'0');
+
 			return dto;
 		}
 	}

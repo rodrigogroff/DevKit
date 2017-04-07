@@ -139,7 +139,7 @@
 													<th width="120px">Category</th>
 													<th width="50px">Abbrev.</th>
 													<th width="220px">Description</th>
-													<th width="40px"></th>
+													<th></th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.categories">
@@ -267,7 +267,7 @@
 													<th width="120px">Flow</th>
 													<th width="70px">Opens?</th>
 													<th width="70px">Completes?</th>													
-													<th width="70px">Actions</th>
+													<th></th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in flows">
@@ -276,13 +276,15 @@
 												<td>{{ mdl.bForceOpen == true ? 'Y' : 'N' }}</td>
 												<td>{{ mdl.bForceComplete == true ? 'Y' : 'N' }}</td>												
 												<td>
-													<a href="" role="button" ng-click="editFlow(mdl)">
-														<i class="glyphicon glyphicon-edit" style="color:white"></i>
-													</a>
-													&nbsp;&nbsp;
-													<a href="" role="button" ng-click="removeFlow($index, flows)">
-														<i class="glyphicon glyphicon-remove" style="color:white"></i>
-													</a>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="editFlow(mdl)">
+															<i class="glyphicon glyphicon-edit" style="color:white"></i>
+														</a>
+														&nbsp;&nbsp;
+														<a href="" role="button" ng-click="removeFlow($index, flows)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>
 												</td>
 											</tr>
 										</table>
@@ -386,20 +388,22 @@
 												<tr>
 													<th width="150px">Name</th>
 													<th width="150px">Flow</th>
-													<th width="70px">Actions</th>
+													<th></th>
 												</tr>
 											</thead>
 											<tr ng-click="editAcc(mdl)" data-ng-repeat="mdl in accs">
 												<td>{{ mdl.stName }}</td>
 												<td>{{ mdl.sfkFlow }}</td>
 												<td>
-													<a href="" role="button" ng-click="editAcc(mdl)">
-														<i class="glyphicon glyphicon-edit" style="color:white"></i>
-													</a>
-													&nbsp;&nbsp;
-													<a href="" role="button" ng-click="removeAcc($index, accs)">
-														<i class="glyphicon glyphicon-remove" style="color:white"></i>
-													</a>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="editAcc(mdl)">
+															<i class="glyphicon glyphicon-edit" style="color:white"></i>
+														</a>
+														&nbsp;&nbsp;
+														<a href="" role="button" ng-click="removeAcc($index, accs)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>
 												</td>
 											</tr>
 										</table>

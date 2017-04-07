@@ -115,20 +115,22 @@
 												<tr>
 													<th width="150px">Version</th>
 													<th width="100px">State</th>
-													<th width="70px">Actions</th>
+													<th></th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.versions">
 												<td>{{ mdl.stName }}</td>
 												<td>{{ mdl.sfkVersionState }}</td>
 												<td>
-													<a href="" role="button" ng-click="editVersion(mdl)">
-														<i class="glyphicon glyphicon-edit" style="color:white"></i>
-													</a>
-													&nbsp;&nbsp;
-													<a href="" role="button" ng-click="removeVersion($index, viewModel.versions)">
-														<i class="glyphicon glyphicon-remove" style="color:white"></i>
-													</a>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="editVersion(mdl)">
+															<i class="glyphicon glyphicon-edit" style="color:white"></i>
+														</a>
+														&nbsp;&nbsp;
+														<a href="" role="button" ng-click="removeVersion($index, viewModel.versions)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>
 												</td>
 											</tr>
 										</table>

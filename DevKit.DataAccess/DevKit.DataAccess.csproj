@@ -67,16 +67,16 @@
     </Compile>
     <Compile Include="DataModel\DevKit_db.cs" />
     <Compile Include="DataModel\Enums\AccumulatorType_enum.cs" />
+    <Compile Include="DataModel\Enums\AuditAction_enum.cs" />
     <Compile Include="DataModel\Enums\Month_enum.cs" />
     <Compile Include="DataModel\Enums\VersionState_enum.cs" />
     <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_ComposedFilters.cs" />
-    <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion\ProjectSprintVersion_ComposedFilters - Copy.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion\ProjectSprintVersion_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_ComposedFilters.cs" />
-    <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_Create.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_DTO.cs" />
-    <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_Delete.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_Update.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectUser\ProjectUser_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_Create.cs" />
@@ -93,6 +93,7 @@
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_Delete.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_LoadAssociations.cs" />
+    <Compile Include="DataModel\Tables\System\AuditLog\AuditLog_Create.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_Create.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_Delete.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="DataModel\Tables\System\User\User_Create.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Delete.cs" />
     <Compile Include="DataModel\Tables\System\User\User_DTO.cs" />
+    <Compile Include="DataModel\Tables\System\User\User_Login.cs" />
     <Compile Include="DataModel\Tables\System\User\User_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Update.cs" />
     <Compile Include="DataModel\Tables\Task\TaskTypeAccumulator\TaskTypeAccumulator_DTO.cs" />
@@ -118,7 +120,6 @@
     <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion\ProjectSprintVersion_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_Update.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_Update.cs" />
-    <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_Update.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_Delete.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_Update.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Extras.cs" />

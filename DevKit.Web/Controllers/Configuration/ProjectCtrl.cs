@@ -10,9 +10,9 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var count = 0; var mdl = new Project();				
+				var count = 0; var mdl = new Project();	var util = new Util();
 
-				var results = mdl.ComposedFilters(db, ref count, new Util().GetCurrentUserProjects(db), new ProjectFilter
+				var results = mdl.ComposedFilters(db, util.GetCurrentUser(db), ref count, new Util().GetCurrentUserProjects(db), new ProjectFilter
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
@@ -61,7 +61,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Update(db, ref resp))
+				if (!mdl.Update(db, new Util().GetCurrentUser(db), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);				
@@ -82,7 +82,7 @@ namespace DevKit.Web.Controllers
 				if (!model.CanDelete(db, ref resp))
 					return BadRequest(resp);
 
-				model.Delete(db);
+				model.Delete(db, new Util().GetCurrentUser(db));
 								
 				return Ok();
 			}

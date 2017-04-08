@@ -6,6 +6,15 @@ namespace DataModel
 {
 	public partial class User
 	{
+		public bool Update(DevKitDB db)
+		{
+			var resp = "";
+
+			Update(db, ref resp);
+
+			return true;
+		}
+
 		public bool Update(DevKitDB db, ref string resp)
 		{
 			if (CheckDuplicate(this, db))

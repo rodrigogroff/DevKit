@@ -7,7 +7,12 @@ namespace DataModel
 {
 	public partial class Project
 	{
-		public bool Update(DevKitDB db, ref string resp)
+		public string TrackChanges()
+		{
+			return "";
+		}
+
+		public bool Update(DevKitDB db, User user, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
 			{
@@ -19,6 +24,8 @@ namespace DataModel
 			{
 				case "entity":
 					{
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdate }.Create(db, TrackChanges(), "");
+
 						db.Update(this);
 						break;
 					}
@@ -41,9 +48,15 @@ namespace DataModel
 							ent.dtJoin = DateTime.Now;
 
 							db.Insert(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateAddUser }.Create(db, TrackChanges(), "");
 						}							
 						else
+						{
 							db.Update(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdateUser }.Create(db, "", "");
+						}							
 
 						users = LoadUsers(db);
 						break;
@@ -52,6 +65,9 @@ namespace DataModel
 				case "removeUser":
 					{
 						db.Delete(JsonConvert.DeserializeObject<ProjectUser>(anexedEntity.ToString()));
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateRemoveUser }.Create(db, "", "");
+
 						users = LoadUsers(db);
 						break;
 					}
@@ -73,10 +89,16 @@ namespace DataModel
 							ent.fkProject = id;
 
 							db.Insert(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateAddPhase }.Create(db, "", "");
 						}							
 						else
+						{
 							db.Update(ent);
 
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdatePhase }.Create(db, "", "");
+						}
+							
 						phases = LoadPhases(db);
 						break;
 					}
@@ -92,6 +114,9 @@ namespace DataModel
 						}
 
 						db.Delete(mdlDel);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateRemovePhase }.Create(db, "", "");
+
 						phases = LoadPhases(db);
 						break;
 					}
@@ -114,9 +139,15 @@ namespace DataModel
 							ent.fkProject = id;
 
 							db.Insert(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateAddSprint }.Create(db, "", "");
 						}
 						else
+						{
 							db.Update(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint }.Create(db, "", "");
+						}							
 
 						sprints = LoadSprints(db);
 						break;
@@ -133,6 +164,9 @@ namespace DataModel
 						}
 
 						db.Delete(mdlDel);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateRemoveSprint }.Create(db, "", "");
+
 						sprints = LoadSprints(db);
 						break;
 					}

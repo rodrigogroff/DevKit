@@ -6,14 +6,17 @@ namespace DataModel
 {
 	public partial class User
 	{
-		public User LoadAssociations(DevKitDB db)
+		public User LoadAssociations(DevKitDB db, bool simplifyed = false)
 		{
+			profile = db.Profile(fkProfile);
+
+			if (simplifyed)
+				return this;
+
 			var setup = db.Setup();
 
 			sdtLastLogin = dtLastLogin?.ToString(setup.stDateFormat);
 			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
-
-			profile = db.Profile(fkProfile);
 
 			phones = LoadPhones(db);
 			emails = LoadEmails(db);

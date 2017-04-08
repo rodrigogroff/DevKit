@@ -7,7 +7,7 @@ namespace DataModel
 {
 	public partial class TaskType
 	{
-		public bool Update(DevKitDB db, ref string resp)
+		public bool Update(DevKitDB db, User user, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
 			{
@@ -20,6 +20,9 @@ namespace DataModel
 				case "entity":
 					{
 						db.Update(this);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeUpdate }.Create(db, "", "");
+
 						break;
 					}
 
@@ -95,9 +98,15 @@ namespace DataModel
 								bForceComplete = true,
 								stName = "Cancelled"
 							});
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeUpdate }.Create(db, "", "");
 						}
 						else
+						{
 							db.Update(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeUpdateCategory }.Create(db, "", "");
+						}							
 
 						categories = LoadCategories(db);
 
@@ -115,6 +124,8 @@ namespace DataModel
 						}
 
 						db.Delete(categDel);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeRemoveCategory }.Create(db, "", "");
 
 						categories = LoadCategories(db);
 						break;
@@ -139,9 +150,15 @@ namespace DataModel
 							ent.fkTaskType = id;
 
 							db.Insert(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryAddFlow }.Create(db, "", "");
 						}
 						else
+						{
 							db.Update(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryUpdateFlow }.Create(db, "", "");
+						}							
 						
 						break;
 					}
@@ -157,6 +174,9 @@ namespace DataModel
 						}
 
 						db.Delete(flowDel);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryRemoveFlow }.Create(db, "", "");
+
 						break;
 					}
 
@@ -180,9 +200,15 @@ namespace DataModel
 							ent.fkTaskType = id;
 
 							db.Insert(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryAddAccumulator }.Create(db, "", "");
 						}
 						else
+						{
 							db.Update(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryUpdateAccumulator }.Create(db, "", "");
+						}							
 
 						break;
 					}
@@ -192,6 +218,9 @@ namespace DataModel
 						var accDel = JsonConvert.DeserializeObject<TaskTypeAccumulator>(anexedEntity.ToString());
 
 						db.Delete(accDel);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryRemoveAccumulator }.Create(db, "", "");
+
 						break;
 					}
 			}

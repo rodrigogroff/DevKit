@@ -16,11 +16,11 @@ namespace DataModel
 			return true;
 		}
 
-		public void Delete(DevKitDB db)
+		public void Delete(DevKitDB db, User user)
 		{
 			foreach (var item in (from e in db.ProjectSprints where e.fkProject == id select e))
-				item.Delete(db);
-
+				db.Delete(item);
+				
 			foreach (var item in (from e in db.ProjectPhases where e.fkProject == id select e))
 				db.Delete(item);
 
@@ -28,6 +28,8 @@ namespace DataModel
 				db.Delete(item);
 
 			db.Delete(this);
+
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectDelete }.Create(db, "", "");
 		}
 	}
 }

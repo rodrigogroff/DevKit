@@ -376,3 +376,23 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."TaskAccumulatorValue"
     OWNER to postgres;
+
+DROP TABLE public."AuditLog";
+
+CREATE TABLE public."AuditLog"
+(
+    id bigserial NOT NULL,
+	"dtLog" timestamp without time zone,
+	"fkUser" bigint,
+	"fkActionLog" bigint,
+	"stLog" character varying(999),
+	"stDetailLog" character varying(3999),	
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."AuditLog"
+    OWNER to postgres;

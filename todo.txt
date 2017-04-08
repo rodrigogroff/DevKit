@@ -1,19 +1,43 @@
+
+------------------------------
+FEATURES
+------------------------------
+	
+	------------------------
+	log de auditoria
+	------------------------
+		- Enum de ações													ok
+		- Tabela nova no banco											ok
+		- varrer controles e inserir os registros
+		- nos detalhes do usuário, mostrar periodo e combo de ação
+		- paginar resultados
+		- permissão de visualizar auditoria de usuários
+	
+
 ------------------
-melhorias
+bugs power!
 ------------------
 
--modais de confirmação de exclusão
--textbox de data
--poder anexar documentos nas tarefas
+	-eventualmente, filtros perdem os dropdowns
+	-ao apertar F5, perde-se a view e fica somente a tela (parcial) em questão
 
--acumulador do tipo dinheiro
+----------------------------------
+melhorias emergenciais!
+----------------------------------
+
+	-modais de confirmação de exclusão
+	-poder anexar documentos nas tarefas
 
 ------------------
-bugs
+melhorias postergáveis
 ------------------
 
--ao redsigitar campo de pesquisa e clicar no botão, nada acontece
--eventualmente, filtros perdem os dropdowns
--ao fazer login, mostra brevemente layout do site para depois entrar de fato na tela
--ao iniciar site fora do login, tela fica não-responsiva
--ao apertar F5, perde-se a view e fica somente a tela em questão
+	-acumulador do tipo dinheiro (pensar em prospecção de contratos, funil de vendas (100) valor final (10))
+
+------------------
+bugs chatos
+------------------
+
+	-ao redigitar campo de pesquisa (masterview) e clicar no botão, nada acontece
+	-ao fazer login, mostra brevemente layout do site para depois entrar de fato na tela
+	-ao iniciar site fora do login, tela fica não-responsiva

@@ -37,51 +37,5 @@ namespace DevKit.Web.Controllers
 				return StatusCode(HttpStatusCode.NotFound);
 			}
 		}
-
-		public IHttpActionResult Post(ProjectSprint mdl)
-		{
-			using (var db = new DevKitDB())
-			{
-				var resp = "";
-
-				if (!mdl.Create(db, new Util().GetCurrentUser(db), ref resp))
-					return BadRequest(resp);
-
-				return Ok(mdl);
-			}
-		}
-
-		public IHttpActionResult Put(long id, ProjectSprint mdl)
-		{
-			using (var db = new DevKitDB())
-			{
-				var resp = "";
-
-				if (!mdl.Update(db, ref resp))
-					return BadRequest(resp);
-
-				return Ok(mdl);				
-			}
-		}
-
-		public IHttpActionResult Delete(long id)
-		{
-			using (var db = new DevKitDB())
-			{
-				var model = db.ProjectSprint(id);
-
-				if (model == null)
-					return StatusCode(HttpStatusCode.NotFound);
-
-				var resp = "";
-
-				if (!model.CanDelete(db, ref resp))
-					return BadRequest(resp);
-
-				model.Delete(db);
-				
-				return Ok();
-			}
-		}
 	}
 }

@@ -19,6 +19,7 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
+		public ITable<AuditLog>             AuditLogs             { get { return this.GetTable<AuditLog>(); } }
 		public ITable<Profile>              Profiles              { get { return this.GetTable<Profile>(); } }
 		public ITable<Project>              Projects              { get { return this.GetTable<Project>(); } }
 		public ITable<ProjectPhase>         ProjectPhases         { get { return this.GetTable<ProjectPhase>(); } }
@@ -51,6 +52,17 @@ namespace DataModel
 		}
 
 		partial void InitDataContext();
+	}
+
+	[Table(Schema="public", Name="AuditLog")]
+	public partial class AuditLog
+	{
+		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog       { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUser      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkActionLog { get; set; } // bigint
+		[Column,     Nullable] public string    stLog       { get; set; } // character varying(999)
+		[Column,     Nullable] public string    stDetailLog { get; set; } // character varying(3999)
 	}
 
 	[Table(Schema="public", Name="Profile")]
@@ -262,6 +274,12 @@ namespace DataModel
 
 	public static partial class TableExtensions
 	{
+		public static AuditLog Find(this ITable<AuditLog> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
 		public static Profile Find(this ITable<Profile> table, long id)
 		{
 			return table.FirstOrDefault(t =>

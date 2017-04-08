@@ -23,19 +23,12 @@ namespace DevKit.Web
 
 			using (var db = new DevKitDB())
 			{
-				var usuario = (from e in db.Users
-							   where e.stLogin.ToUpper() == context.UserName.ToUpper()
-							   where e.stPassword.ToUpper() == context.Password.ToUpper()
-							   where e.bActive == true
-							   select e).FirstOrDefault();
+				var usuario = new User().Login(db,context.UserName, context.Password);
 
 				if (usuario != null)
 				{
 					usuario.dtLastLogin = DateTime.Now;
-
-					db.Update(usuario);
-					
-					usuario = usuario.LoadAssociations(db);
+					usuario.Update(db);					
 
 					var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 

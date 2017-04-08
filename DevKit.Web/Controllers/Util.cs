@@ -10,21 +10,25 @@ namespace DevKit.Web.Controllers
 	{
 		string identityName = Thread.CurrentPrincipal.Identity.Name.ToUpper();
 
+		public User currentUser = null;
+
 		public User GetCurrentUser(DevKitDB db)
 		{
-			return (from ne in db.Users
-					where ne.stLogin.ToUpper() == identityName
-					select ne).FirstOrDefault();
+			if (currentUser == null)
+				currentUser = (from ne in db.Users
+							   where ne.stLogin.ToUpper() == identityName
+							   select ne).FirstOrDefault();
+
+			return currentUser;
 		}
 
 		public List<long?> GetCurrentUserProjects(DevKitDB db)
 		{
-			var user = (from ne in db.Users
-						where ne.stLogin.ToUpper() == identityName
-						select ne).FirstOrDefault();
+			if (currentUser == null)
+				currentUser = GetCurrentUser(db);
 
 			return (from e in db.ProjectUsers
-					where e.fkUser == user.id
+					where e.fkUser == currentUser.id
 					select e.fkProject).
 					ToList();
 		}

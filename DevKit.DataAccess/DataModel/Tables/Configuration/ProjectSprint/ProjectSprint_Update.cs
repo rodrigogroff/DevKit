@@ -1,4 +1,4 @@
-﻿using LinqToDB;
+using LinqToDB;
 using System.Linq;
 using Newtonsoft.Json;
 
@@ -6,7 +6,33 @@ namespace DataModel
 {
 	public partial class ProjectSprint
 	{
-		public bool Update(DevKitDB db, ref string resp)
+		bool CheckDuplicate(ProjectSprint item, DevKitDB db)
+		{
+			var query = from e in db.ProjectSprints select e;
+
+			if (item.stName != null)
+			{
+				var _st = item.stName.ToUpper();
+				query = from e in query where e.stName.ToUpper().Contains(_st) select e;
+			}
+
+			if (item.fkPhase > 0)
+				query = from e in query where e.fkPhase == item.fkPhase select e;
+
+			if (item.id > 0)
+				query = from e in query where e.id != item.id select e;
+
+			return query.Any();
+		}
+
+		public string TrackChanges()
+		{
+			var ret = "";
+
+			return ret;
+		}
+
+		public bool Update(DevKitDB db, User user, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
 			{
@@ -19,6 +45,9 @@ namespace DataModel
 				case "entity":
 					{
 						db.Update(this);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint }.Create(db, TrackChanges(), "");
+
 						break;
 					}
 
@@ -27,22 +56,29 @@ namespace DataModel
 						var ent = JsonConvert.DeserializeObject<ProjectSprintVersion>(anexedEntity.ToString());
 
 						if (ent.id == 0)
+						{
 							if ((from ne in db.ProjectSprintVersions
 								 where ne.stName == ent.stName && ne.fkSprint == id
 								 select ne).
 								 Any())
-						{
-							resp = "Version already added to project!";
-							return false;
-						}
+							{
+								resp = "Version already added to project!";
+								return false;
+							}
 
-						ent.fkSprint = id;
-						
-						if (ent.id == 0)
+							ent.fkSprint = id;
+							
 							db.Insert(ent);
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintAddVersion }.Create(db, "", "");
+						}
 						else
+						{
 							db.Update(ent);
 
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintUpdateVersion }.Create(db, "", "");
+						}
+						
 						versions = LoadVersions(db);
 						break;
 					}
@@ -58,6 +94,9 @@ namespace DataModel
 						}
 
 						db.Delete(versionDel);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintRemoveVersion }.Create(db, "", "");
+
 						versions = LoadVersions(db);
 						break;
 					}

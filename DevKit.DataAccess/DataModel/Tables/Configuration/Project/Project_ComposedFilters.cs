@@ -9,11 +9,24 @@ namespace DataModel
 		public int skip, take;
 		public string busca;
 		public long? fkUser;
+
+		public string ExportString()
+		{
+			var ret = "";
+
+			ret += "Skip: " + skip + " ";
+			ret += "take: " + take + " ";
+
+			if (fkUser!= null)
+				ret += "fkUser: " + fkUser + " ";
+
+			return ret;
+		}
 	}
 	
 	public partial class Project
 	{
-		public List<Project> ComposedFilters(DevKitDB db, ref int count, List<long?> lstUserProjects, ProjectFilter filter)
+		public List<Project> ComposedFilters(DevKitDB db, User user, ref int count, List<long?> lstUserProjects, ProjectFilter filter)
 		{
 			var query = from e in db.Projects select e;
 
@@ -39,6 +52,8 @@ namespace DataModel
 			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
 
 			results.ForEach(y => { y = y.LoadAssociations(db); });
+
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectListing }.Create(db, filter.ExportString(), "count: " + count);
 
 			return results;
 		}

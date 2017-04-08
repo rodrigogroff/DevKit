@@ -29,11 +29,11 @@ namespace DataModel
 			return query.Any();
 		}
 		
-		public bool Create(DevKitDB db, User usr, ref string resp)
+		public bool Create(DevKitDB db, User user, ref string resp)
 		{
 			bComplete = false;
 			dtStart = DateTime.Now;
-			fkUserStart = usr.id;
+			fkUserStart = user.id;
 			fkTaskFlowCurrent = (from e in db.TaskFlows
 								 where e.fkTaskType == this.fkTaskType
 								 where e.fkTaskCategory == this.fkTaskCategory
@@ -47,6 +47,8 @@ namespace DataModel
 			stProtocol = setup.GetProtocol();	
 
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
+
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskCreate }.Create(db, "", "");
 
 			return true;
 		}

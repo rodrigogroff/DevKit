@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
 			{
 				var count = 0; var mdl = new TaskType();
 
-				var results = mdl.ComposedFilters(db, ref count, new Util().GetCurrentUserProjects(db), new TaskTypeFilter
+				var results = mdl.ComposedFilters(db, ref count, db.GetCurrentUserProjects(), new TaskTypeFilter
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
@@ -43,7 +43,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Create(db, new Util().GetCurrentUser(db), ref resp))
+				if (!mdl.Create(db, db.GetCurrentUser(), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);
@@ -56,7 +56,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Update(db, new Util().GetCurrentUser(db), ref resp))
+				if (!mdl.Update(db, db.GetCurrentUser(), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);				
@@ -77,7 +77,7 @@ namespace DevKit.Web.Controllers
 				if (!model.CanDelete(db, ref resp))
 					return BadRequest(resp);
 				
-				model.Delete(db, new Util().GetCurrentUser(db));
+				model.Delete(db, db.GetCurrentUser());
 				
 				return Ok();
 			}

@@ -25,7 +25,7 @@ namespace DevKit.Web.Controllers
 				};
 
 				var mdl = new UserKanban();
-				var dto = mdl.ComposedFilters(db, filter, new Util().GetCurrentUser(db));
+				var dto = mdl.ComposedFilters(db, filter, db.GetCurrentUser());
 
 				return Ok(dto);				
 			}

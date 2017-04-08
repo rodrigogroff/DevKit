@@ -6,16 +6,16 @@ namespace DataModel
 {
 	public partial class User
 	{
-		public bool Update(DevKitDB db)
+		public bool Update(DevKitDB db, User user)
 		{
 			var resp = "";
 
-			Update(db, ref resp);
+			Update(db, user, ref resp);
 
 			return true;
 		}
 
-		public bool Update(DevKitDB db, ref string resp)
+		public bool Update(DevKitDB db, User user, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
 			{
@@ -28,6 +28,9 @@ namespace DataModel
 				case "entity":
 					{
 						db.Update(this);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemUserUpdate }.Create(db, "", "");
+
 						break;
 					}
 									

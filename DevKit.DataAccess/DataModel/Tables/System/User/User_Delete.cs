@@ -28,7 +28,7 @@ namespace DataModel
 			return true;
 		}
 
-		public void Delete(DevKitDB db)
+		public void Delete(DevKitDB db, User user)
 		{
 			foreach (var item in (from e in db.UserPhones where e.fkUser == id select e))
 				db.Delete(item);
@@ -36,7 +36,9 @@ namespace DataModel
 			foreach (var item in (from e in db.UserEmails where e.fkUser == id select e))
 				db.Delete(item);
 
-			db.Delete(this);			
+			db.Delete(this);
+
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemUserDelete }.Create(db, "", "");
 		}
 	}
 }

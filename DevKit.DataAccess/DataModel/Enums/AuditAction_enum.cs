@@ -41,7 +41,21 @@ namespace DataModel
 							CategoryRemoveFlow = 26,
 							CategoryAddAccumulator = 27,
 							CategoryUpdateAccumulator = 28,
-							CategoryRemoveAccumulator = 29;
+							CategoryRemoveAccumulator = 29,
+							SystemProfileAdd = 30,
+							SystemProfileRemove = 31,
+							SystemProfileUpdate = 32,
+							SystemSetupUpdate = 33,
+							SystemUserCreate = 34,
+							SystemUserUpdate = 35,
+							SystemUserDelete = 36,
+							TaskCreate = 37,
+							TaskDelete = 38,
+							TaskUpdate = 39,
+							TaskUpdateProgress = 40,
+							TaskUpdateMessage = 41,
+							TaskUpdateFlowChange = 42,
+							TaskUpdateAccSaved = 43;
 
 		public EnumAuditAction()
 		{
@@ -74,6 +88,20 @@ namespace DataModel
 			lst.Add(new AuditAction() { id = CategoryAddAccumulator, stName = "Configuration \\ Task Category, adding accumulator" });
 			lst.Add(new AuditAction() { id = CategoryUpdateAccumulator, stName = "Configuration \\ Task Category, updating accumulator" });
 			lst.Add(new AuditAction() { id = CategoryRemoveAccumulator, stName = "Configuration \\ Task Category, removing accumulator" });
+			lst.Add(new AuditAction() { id = SystemProfileAdd, stName = "System \\ Profile Creation" });
+			lst.Add(new AuditAction() { id = SystemProfileRemove, stName = "System \\ Profile Delete" });
+			lst.Add(new AuditAction() { id = SystemProfileUpdate, stName = "System \\ Profile Update" });
+			lst.Add(new AuditAction() { id = SystemSetupUpdate, stName = "System \\ Setup Update" });
+			lst.Add(new AuditAction() { id = SystemUserCreate, stName = "System \\ User Creation" });
+			lst.Add(new AuditAction() { id = SystemUserUpdate, stName = "System \\ User Update" });
+			lst.Add(new AuditAction() { id = SystemUserDelete, stName = "System \\ User Delete" });
+			lst.Add(new AuditAction() { id = TaskCreate, stName = "Task \\ Task Creation" });
+			lst.Add(new AuditAction() { id = TaskDelete, stName = "Task \\ Task Delete" });
+			lst.Add(new AuditAction() { id = TaskUpdate, stName = "Task \\ Task Update" });
+			lst.Add(new AuditAction() { id = TaskUpdateProgress, stName = "Task \\ Task Update, progress saved" });
+			lst.Add(new AuditAction() { id = TaskUpdateMessage, stName = "Task \\ Task Update, message saved" });
+			lst.Add(new AuditAction() { id = TaskUpdateFlowChange, stName = "Task \\ Task Update, flow change" });
+			lst.Add(new AuditAction() { id = TaskUpdateAccSaved, stName = "Task \\ Task Update, accumulator value saved" });
 
 			lst.OrderBy(y => y.stName);
 		}

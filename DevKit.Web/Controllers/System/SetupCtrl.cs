@@ -25,7 +25,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Update(db, ref resp))
+				if (!mdl.Update(db, db.GetCurrentUser(), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);

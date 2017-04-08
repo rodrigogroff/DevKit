@@ -7,7 +7,7 @@ namespace DataModel
 {
 	public partial class Task
 	{
-		public bool Update(DevKitDB db, User userLogged, ref string resp)
+		public bool Update(DevKitDB db, User user, ref string resp)
 		{
 			switch (updateCommand)
 			{
@@ -24,6 +24,8 @@ namespace DataModel
 								fkTask = id,
 								fkUserAssigned = fkUserResponsible
 							});
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateProgress }.Create(db, "", "");
 						}
 
 						if (stUserMessage != "")
@@ -33,11 +35,13 @@ namespace DataModel
 								stMessage = stUserMessage,
 								dtLog = DateTime.Now,
 								fkTask = id,
-								fkUser = userLogged.id,
+								fkUser = user.id,
 								fkCurrentFlow = fkTaskFlowCurrent
 							});
 
 							stUserMessage = "";
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateProgress }.Create(db, "", "");
 						}
 
 						if (fkNewFlow != null && oldTask.fkTaskFlowCurrent != fkNewFlow)
@@ -46,7 +50,7 @@ namespace DataModel
 							{
 								dtLog = DateTime.Now,
 								fkTask = id,
-								fkUser = userLogged.id,
+								fkUser = user.id,
 								stMessage = fkNewFlow_Message,
 								fkNewFlowState = fkNewFlow,
 								fkOldFlowState = fkTaskFlowCurrent
@@ -66,24 +70,30 @@ namespace DataModel
 
 							if (flowState.bForceOpen == true)
 								this.bComplete = false;
+
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateProgress }.Create(db, "", "");
 						}
 
 						db.Update(this);
-						LoadAssociations(db);
 
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdate }.Create(db, "", "");
+
+						LoadAssociations(db);
 						break;
 					}
 
 				case "newAcc":
 					{
 						var ent = JsonConvert.DeserializeObject<TaskAccumulatorValue>(anexedEntity.ToString());
-
-						
+												
 						ent.fkTask = id;
-						ent.fkUser = userLogged.id;
+						ent.fkUser = user.id;
 						ent.dtLog = DateTime.Now;
 						
 						db.Insert(ent);
+
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateAccSaved }.Create(db, "", "");
+
 						accs = LoadAccs(db);						
 						break;
 					}

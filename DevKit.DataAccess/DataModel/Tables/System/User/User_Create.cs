@@ -25,7 +25,7 @@ namespace DataModel
 			return query.Any();
 		}
 
-		public bool Create(DevKitDB db, ref string resp)
+		public bool Create(DevKitDB db, User user, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
 			{
@@ -36,6 +36,8 @@ namespace DataModel
 			dtCreation = DateTime.Now;
 
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
+
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemUserCreate }.Create(db, "", "");
 
 			return true;
 		}

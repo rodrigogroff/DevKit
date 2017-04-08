@@ -44,7 +44,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Create(db, ref resp))
+				if (!mdl.Create(db, db.GetCurrentUser(), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);
@@ -57,7 +57,7 @@ namespace DevKit.Web.Controllers
 			{
 				var resp = "";
 
-				if (!mdl.Update(db, ref resp))
+				if (!mdl.Update(db, db.GetCurrentUser(), ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);
@@ -78,7 +78,7 @@ namespace DevKit.Web.Controllers
 				if (!model.CanDelete(db, ref resp))
 					return BadRequest(resp);
 
-				model.Delete(db);
+				model.Delete(db, db.GetCurrentUser());
 				
 				return Ok();
 			}

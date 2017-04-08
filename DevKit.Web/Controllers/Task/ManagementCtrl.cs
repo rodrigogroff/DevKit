@@ -16,7 +16,7 @@ namespace DevKit.Web.Controllers
 				};
 
 				var mdl = new Management();
-				var dto = mdl.ComposedFilters(db, filter, new Util().GetCurrentUserProjects(db));
+				var dto = mdl.ComposedFilters(db, filter, db.GetCurrentUserProjects());
 
 				return Ok(dto);				
 			}

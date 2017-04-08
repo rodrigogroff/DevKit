@@ -28,7 +28,7 @@ namespace DevKit.Web
 				if (usuario != null)
 				{
 					usuario.dtLastLogin = DateTime.Now;
-					usuario.Update(db);					
+					usuario.Update(db, usuario);					
 
 					var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 

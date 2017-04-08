@@ -4,7 +4,7 @@ namespace DataModel
 {
 	public partial class Profile
 	{
-		public bool Update(DevKitDB db, ref string resp)
+		public bool Update(DevKitDB db, User user, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
 			{
@@ -13,6 +13,8 @@ namespace DataModel
 			}
 
 			db.Update(this);
+
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemProfileUpdate }.Create(db, "", "");
 
 			return true;
 		}

@@ -9,10 +9,8 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var util = new Util();
 				var task = new Task();
-
-				var usr = util.GetCurrentUser(db);
+				var usr = db.GetCurrentUser();
 
 				int count_project_tasks = 0, 
 					count_user_tasks = 0;
@@ -21,7 +19,7 @@ namespace DevKit.Web.Controllers
 				{
 					complete = false,
 					kpa = false,
-					lstProjects = util.GetCurrentUserProjects(db, usr.id)
+					lstProjects = db.GetCurrentUserProjects(usr.id)
 				});
 
 				task.ComposedFilters(db, ref count_user_tasks, new TaskFilter

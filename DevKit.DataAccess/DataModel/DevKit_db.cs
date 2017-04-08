@@ -1,9 +1,45 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
+using System.Threading;
+using System.Collections.Generic;
 
 namespace DataModel
 {
 	public partial class DevKitDB
 	{
+		string identityName = Thread.CurrentPrincipal.Identity.Name.ToUpper();
+
+		public User currentUser = null;
+
+		public User GetCurrentUser()
+		{
+			if (currentUser == null)
+				currentUser = (from ne in Users
+							   where ne.stLogin.ToUpper() == identityName
+							   select ne).FirstOrDefault();
+
+			return currentUser;
+		}
+
+		public List<long?> GetCurrentUserProjects()
+		{
+			if (currentUser == null)
+				currentUser = GetCurrentUser();
+
+			return (from e in ProjectUsers
+					where e.fkUser == currentUser.id
+					select e.fkProject).
+					ToList();
+		}
+
+		public List<long?> GetCurrentUserProjects(long userId)
+		{
+			return (from e in ProjectUsers
+					where e.fkUser == userId
+					select e.fkProject).
+					ToList();
+		}
+
 		private Hashtable Cache = new Hashtable();
 				
 		public Setup Setup()

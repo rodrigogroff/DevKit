@@ -22,9 +22,11 @@ namespace DataModel
 			return true;
 		}
 
-		public void Delete(DevKitDB db)
+		public void Delete(DevKitDB db, User user )
 		{
 			db.Delete(this);
+
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemProfileRemove }.Create(db, "", "");
 		}
 	}
 }

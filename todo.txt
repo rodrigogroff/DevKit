@@ -7,8 +7,7 @@ FEATURES
 	log de auditoria
 	------------------------
 
-		Task		= 4,
-		Setup		= 7;
+		Setup (colocar tab e log de audit)
 				
 	------------------------
 	documentação

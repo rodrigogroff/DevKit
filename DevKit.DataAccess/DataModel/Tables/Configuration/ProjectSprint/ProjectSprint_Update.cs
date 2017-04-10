@@ -46,7 +46,7 @@ namespace DataModel
 						Create(db, TrackChanges(db), "");
 
 						db.Update(this);
-
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -91,6 +91,7 @@ namespace DataModel
 						}
 						
 						versions = LoadVersions(db);
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -115,6 +116,7 @@ namespace DataModel
 						Create(db, "", "");
 
 						versions = LoadVersions(db);
+						logs = LoadLogs(db);
 						break;
 					}
 			}

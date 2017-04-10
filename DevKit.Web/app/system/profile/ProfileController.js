@@ -66,6 +66,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1151: false,
 			// audit log (profile)
 			tg1161: false,
+			// audit log (sprint)
+			tg1171: false,
 		};
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -151,6 +153,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (data.stPermissions.indexOf('|1151|') >= 0) data.tg1151 = true; else data.tg1151 = false;
 				// audit log (profile)
 				if (data.stPermissions.indexOf('|1161|') >= 0) data.tg1161 = true; else data.tg1161 = false;
+				// audit log (profile)
+				if (data.stPermissions.indexOf('|1171|') >= 0) data.tg1171 = true; else data.tg1171 = false;
 				
 				$scope.viewModel = data;
 
@@ -235,6 +239,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (_mdl.tg1151 == true) perms += '|1151|';
 				// audit log (profile)
 				if (_mdl.tg1161 == true) perms += '|1161|';
+				// audit log (profile)
+				if (_mdl.tg1171 == true) perms += '|1171|';
 
 				$scope.viewModel.stPermissions = perms;
 

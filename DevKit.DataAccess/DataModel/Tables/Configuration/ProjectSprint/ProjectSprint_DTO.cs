@@ -4,12 +4,20 @@ namespace DataModel
 {
 	public partial class ProjectSprint
 	{
-		public string sfkProject = "";
-		public string sfkPhase = "";
+		public object anexedEntity;
+
+		public string sfkProject = "",
+						sfkPhase = "",
+						updateCommand = "";
 
 		public List<ProjectSprintVersion> versions;
+		public List<SprintLog> logs;
+	}
 
-		public string updateCommand = "";
-		public object anexedEntity;		
+	public class SprintLog
+	{
+		public string sdtLog,
+						stUser,
+						stDetails;
 	}
 }

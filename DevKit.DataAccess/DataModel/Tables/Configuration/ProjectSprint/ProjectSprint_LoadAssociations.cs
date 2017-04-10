@@ -14,24 +14,56 @@ namespace DataModel
 			sfkPhase = db.ProjectPhase(fkPhase)?.stName;
 
 			versions = LoadVersions(db);
+			logs = LoadLogs(db);
 
 			return this;
 		}
 
 		List<ProjectSprintVersion> LoadVersions(DevKitDB db)
 		{
-			var lst = (from e in db.ProjectSprintVersions where e.fkSprint == id select e).
-				OrderByDescending(t => t.id).
-				ToList();
+			var lst = (from e in db.ProjectSprintVersions
+						where e.fkSprint == id
+						select e).
+						OrderByDescending(t => t.id).
+						ToList();
 
 			var _enum = new EnumVersionState();
 
 			foreach (var item in lst)
-			{
 				item.sfkVersionState = _enum.Get((long)item.fkVersionState).stName;
-			}
 
 			return lst;
+		}
+
+		List<SprintLog> LoadLogs(DevKitDB db)
+		{
+			var setup = db.Setup();
+
+			var lstLogs = (from e in db.AuditLogs
+						   where e.nuType == EnumAuditType.Sprint
+						   where e.fkTarget == this.id
+						   select e).
+						   OrderByDescending(y => y.id).
+						   ToList();
+
+			var lstUsers = (from e in lstLogs
+							join eUser in db.Users on e.fkUser equals eUser.id
+							select eUser).
+							ToList();
+
+			var ret = new List<SprintLog>();
+
+			foreach (var item in lstLogs)
+			{
+				ret.Add(new SprintLog
+				{
+					sdtLog = item.dtLog?.ToString(setup.stDateFormat),
+					stUser = lstUsers.Where(y => y.id == item.fkUser).FirstOrDefault().stLogin,
+					stDetails = item.stLog
+				});
+			}
+
+			return ret;
 		}
 	}
 }

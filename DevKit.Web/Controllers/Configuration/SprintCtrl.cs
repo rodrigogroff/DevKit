@@ -37,5 +37,18 @@ namespace DevKit.Web.Controllers
 				return StatusCode(HttpStatusCode.NotFound);
 			}
 		}
+
+		public IHttpActionResult Put(long id, ProjectSprint mdl)
+		{
+			using (var db = new DevKitDB())
+			{
+				var resp = "";
+
+				if (!mdl.Update(db, db.GetCurrentUser(), ref resp))
+					return BadRequest(resp);
+
+				return Ok(mdl);
+			}
+		}
 	}
 }

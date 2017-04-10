@@ -9,6 +9,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.viewModel = {};
 	$scope.permModel = {};	
 	$scope.permID = 104;
+	$scope.auditLogPerm = 111;
 
 	function CheckPermissions()
 	{
@@ -21,6 +22,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
 			}
+		},
+		function (response) { });
+
+		Api.Permission.get({ id: $scope.auditLogPerm }, function (data) {
+			$scope.auditLogView = $scope.permModel.visualizar;
 		},
 		function (response) { });
 	}
@@ -86,6 +92,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Sprint saved!', 'Success');
+						$scope.viewModel.logs = data.logs;
 					},
 					function (response)
 					{
@@ -148,6 +155,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				toastr.success('Version removed', 'Success');
 				$scope.viewModel.versions = data.versions;
+				$scope.viewModel.logs = data.logs;
 			});
 		}
 	}
@@ -193,6 +201,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				toastr.success('Version added', 'Success');
 				$scope.viewModel.versions = data.versions;
+				$scope.viewModel.logs = data.logs;
 
 				$scope.addVersion = false;
 

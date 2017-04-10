@@ -5,10 +5,10 @@ namespace DataModel
 {
 	public partial class AuditLog
 	{
-		public bool Create(DevKitDB db, string _stLog, string _stDetail)
+		public bool Create(DevKitDB db, string log, string detail)
 		{
-			stLog = _stLog;
-			stDetailLog = _stDetail;
+			stLog = log;
+			stDetailLog = detail;
 			dtLog = DateTime.Now;
 
 			id = Convert.ToInt64(db.InsertWithIdentity(this));

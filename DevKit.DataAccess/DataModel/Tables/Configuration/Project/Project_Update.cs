@@ -28,6 +28,9 @@ namespace DataModel
 						Create(db, TrackChanges(db), "");
 
 						db.Update(this);
+
+						logs = LoadLogs(db);
+
 						break;
 					}
 
@@ -72,6 +75,7 @@ namespace DataModel
 						}							
 
 						users = LoadUsers(db);
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -88,6 +92,7 @@ namespace DataModel
 						Create(db, "", "");
 
 						users = LoadUsers(db);
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -131,6 +136,7 @@ namespace DataModel
 						}
 							
 						phases = LoadPhases(db);
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -155,6 +161,7 @@ namespace DataModel
 						Create(db, "", "");
 
 						phases = LoadPhases(db);
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -207,6 +214,7 @@ namespace DataModel
 						}							
 
 						sprints = LoadSprints(db);
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -231,6 +239,7 @@ namespace DataModel
 						Create(db, "", "");
 
 						sprints = LoadSprints(db);
+						logs = LoadLogs(db);
 						break;
 					}
 			}

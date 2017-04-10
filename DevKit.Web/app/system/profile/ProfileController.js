@@ -8,18 +8,25 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	
 	$scope.permModel = {};	
 	$scope.permID = 101;
+	$scope.auditLogPerm = 116;
 
 	function CheckPermissions()
 	{
-		Api.Permission.get({ id: $scope.permID }, function (data) {
+		Api.Permission.get({ id: $scope.permID }, function (data)
+		{
 			$scope.permModel = data;
-
 			if (!$scope.permModel.visualizar) {
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
 			}
 		},
 		function (response) { });
+		
+		Api.Permission.get({ id: $scope.auditLogPerm }, function (data)
+		{
+			$scope.auditLogView = $scope.permModel.visualizar;
+		},
+		function (response) { });		
 	}
 
 	$scope.viewModel =
@@ -45,8 +52,20 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1081: false,
 			// timesheet
 			tg1091: false,
-			// timesheet
+			// timesheet admin
 			tg1101: false,
+			// audit log (project)
+			tg1111: false,
+			// audit log (user)
+			tg1121: false,
+			// audit log (task type)
+			tg1131: false,
+			// audit log (setup)
+			tg1141: false,
+			// audit log (task)
+			tg1151: false,
+			// audit log (profile)
+			tg1161: false,
 		};
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -114,15 +133,24 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				// user Kanban  
 				if (data.stPermissions.indexOf('|1071|') >= 0) data.tg1071 = true; else data.tg1071 = false;
-
-				// user Kanban  
+				// management  
 				if (data.stPermissions.indexOf('|1081|') >= 0) data.tg1081 = true; else data.tg1081 = false;
-
 				// timesheet
 				if (data.stPermissions.indexOf('|1091|') >= 0) data.tg1091 = true; else data.tg1091 = false;
-
-				// timesheet
-				if (data.stPermissions.indexOf('|1101|') >= 0) data.tg1091 = true; else data.tg1091 = false;
+				// timesheet admin
+				if (data.stPermissions.indexOf('|1101|') >= 0) data.tg1101 = true; else data.tg1101 = false;
+				// audit log (project)
+				if (data.stPermissions.indexOf('|1111|') >= 0) data.tg1111 = true; else data.tg1111 = false;
+				// audit log (user)
+				if (data.stPermissions.indexOf('|1121|') >= 0) data.tg1121 = true; else data.tg1121 = false;
+				// audit log (tasktype)
+				if (data.stPermissions.indexOf('|1131|') >= 0) data.tg1131 = true; else data.tg1131 = false;
+				// audit log (setup)
+				if (data.stPermissions.indexOf('|1141|') >= 0) data.tg1141 = true; else data.tg1141 = false;
+				// audit log (task)
+				if (data.stPermissions.indexOf('|1151|') >= 0) data.tg1151 = true; else data.tg1151 = false;
+				// audit log (profile)
+				if (data.stPermissions.indexOf('|1161|') >= 0) data.tg1161 = true; else data.tg1161 = false;
 				
 				$scope.viewModel = data;
 
@@ -189,15 +217,24 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				// user Kanban
 				if (_mdl.tg1071 == true) perms += '|1071|';
-
 				// management
 				if (_mdl.tg1081 == true) perms += '|1081|';
-
 				// timesheet
 				if (_mdl.tg1091 == true) perms += '|1091|';
-
 				// admin timesheet
 				if (_mdl.tg1101 == true) perms += '|1101|';
+				// audit log (project)
+				if (_mdl.tg1111 == true) perms += '|1111|';
+				// audit log (user)
+				if (_mdl.tg1121 == true) perms += '|1121|';
+				// audit log (tasktype)
+				if (_mdl.tg1131 == true) perms += '|1131|';
+				// audit log (setup)
+				if (_mdl.tg1141 == true) perms += '|1141|';
+				// audit log (task)
+				if (_mdl.tg1151 == true) perms += '|1151|';
+				// audit log (profile)
+				if (_mdl.tg1161 == true) perms += '|1161|';
 
 				$scope.viewModel.stPermissions = perms;
 
@@ -206,6 +243,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Profile.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Profile saved!', 'Success');
+
+						$scope.viewModel.logs = data.logs;
 					},
 					function (response)
 					{

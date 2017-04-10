@@ -4,14 +4,22 @@ namespace DataModel
 {
 	public partial class Project
 	{
-		public string stUser = "";
-		public string sdtCreation = "";
+		public object anexedEntity;
+
+		public string stUser = "",
+						sdtCreation = "",
+						updateCommand = "";
 
 		public List<ProjectUser> users;
 		public List<ProjectPhase> phases;
 		public List<ProjectSprint> sprints;
+		public List<ProjectLog> logs;
+	}
 
-		public string updateCommand = "";
-		public object anexedEntity;
+	public class ProjectLog
+	{
+		public string sdtLog,
+						stUser,
+						stDetails;
 	}
 }

@@ -6,6 +6,14 @@ namespace DataModel
 	{
 		public int qttyPermissions = 0;
 
-		public List<User> Users;
+		public List<User> users;
+		public List<ProfileLog> logs;
+	}
+
+	public class ProfileLog
+	{
+		public string	sdtLog, 
+						stUser, 
+						stDetails;
 	}
 }

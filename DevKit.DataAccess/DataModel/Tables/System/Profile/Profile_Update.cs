@@ -12,8 +12,6 @@ namespace DataModel
 				return false;
 			}
 
-			db.Update(this);
-
 			new AuditLog {
 				fkUser = user.id,
 				fkActionLog = EnumAuditAction.SystemProfileUpdate,
@@ -21,6 +19,10 @@ namespace DataModel
 				fkTarget = this.id				
 			}.
 			Create(db, TrackChanges(db), "");
+
+			db.Update(this);
+
+			logs = LoadLogs(db);
 
 			return true;
 		}

@@ -2,26 +2,17 @@
 ------------------------------
 FEATURES
 ------------------------------
-	
-	------------------------
-	timesheet
-	------------------------
-		- visualizar todos sintético (ao remover usuário e tiver permissão admin)
 
 	------------------------
 	log de auditoria
 	------------------------
-	    - implementar todos os track changes (projeto,sprint,tasktype,user,profile,setup)
-
 		- nos detalhes do usuário, mostrar periodo e combo de ação
 		- nos detalhes do projeto, mostrar periodo e combo de ação
 		- nos detalhes do task type, mostrar periodo e combo de ação
 		- nos detalhes do perfil, mostrar periodo e combo de ação
 		- nos detalhes do sprint, mostrar periodo e combo de ação
-
 		- paginar resultados
-		- tela específica de auditoria
-
+		
 	------------------------
 	documentação
 	------------------------

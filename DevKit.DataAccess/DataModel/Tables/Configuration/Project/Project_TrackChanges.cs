@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace DataModel
 {
 	public partial class Project
@@ -12,7 +11,7 @@ namespace DataModel
 
 			if (oldEntity.stName != this.stName)
 			{
-				ret += "From: " + oldEntity.stName + " => " + this.stName + ";";
+				ret += "Name: " + oldEntity.stName + " => " + this.stName + ";";
 			}
 
 			return ret;

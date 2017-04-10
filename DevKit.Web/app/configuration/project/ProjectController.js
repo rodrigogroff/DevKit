@@ -9,6 +9,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.viewModel = {};
 	$scope.permModel = {};	
 	$scope.permID = 103;
+	$scope.auditLogPerm = 111;
 
 	function CheckPermissions()
 	{
@@ -21,6 +22,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
 			}
+		},
+		function (response) { });
+
+		Api.Permission.get({ id: $scope.auditLogPerm }, function (data) {
+			$scope.auditLogView = $scope.permModel.visualizar;
 		},
 		function (response) { });
 	}
@@ -85,6 +91,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Project.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Project saved!', 'Success');
+						$scope.viewModel.logs = data.logs;
 					},
 					function (response)
 					{
@@ -147,6 +154,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				toastr.success('User removed', 'Success');
 				$scope.viewModel.users = data.users;
+				$scope.viewModel.logs = data.logs;
 			});
 		}
 	}
@@ -188,6 +196,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				toastr.success('User added', 'Success');
 				$scope.viewModel.users = data.users;
+				$scope.viewModel.logs = data.logs;
 
 				$scope.addUser = false;
 
@@ -217,6 +226,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				toastr.success('Phase removed', 'Success');
 				$scope.viewModel.phases = data.phases;
+				$scope.viewModel.logs = data.logs;
 			});
 		}
 	}
@@ -266,6 +276,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				toastr.success('Phase added', 'Success');
 				$scope.viewModel.phases = data.phases;
+				$scope.viewModel.logs = data.logs;
 
 				$scope.addPhase = false;
 
@@ -292,6 +303,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.Project.update({ id: id }, $scope.viewModel, function (data) {
 				toastr.success('Sprint removed', 'Success');
 				$scope.viewModel.sprints = data.sprints;
+				$scope.viewModel.logs = data.logs;
 			});
 		}
 	}
@@ -343,6 +355,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				toastr.success('Sprint saved', 'Success');
 				$scope.viewModel.sprints = data.sprints;
+				$scope.viewModel.logs = data.logs;
 
 				$scope.addSprint = false;
 

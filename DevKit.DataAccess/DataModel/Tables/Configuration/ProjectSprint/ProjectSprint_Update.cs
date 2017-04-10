@@ -37,8 +37,6 @@ namespace DataModel
 			{
 				case "entity":
 					{
-						db.Update(this);
-
 						new AuditLog {
 							fkUser = user.id,
 							fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint,
@@ -46,6 +44,8 @@ namespace DataModel
 							fkTarget = this.id
 						}.
 						Create(db, TrackChanges(db), "");
+
+						db.Update(this);
 
 						break;
 					}

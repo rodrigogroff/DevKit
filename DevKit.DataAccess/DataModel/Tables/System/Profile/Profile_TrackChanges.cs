@@ -15,27 +15,24 @@ namespace DataModel
 				ret += "Name: " + oldEntity.stName + " => " + this.stName + "; ";
 			}
 			
-			if (oldEntity.stPermissions != this.stPermissions)
-			{
-				Hashtable hshOldPerms = new Hashtable(),
-						  hshNewPerms = new Hashtable();
+			Hashtable hshOldPerms = new Hashtable(),
+						hshNewPerms = new Hashtable();
 
-				var oldPerms = oldEntity.stPermissions.Replace("||", "|").Split('|');
-				var newPerms = oldEntity.stPermissions.Replace("||", "|").Split('|');
+			var oldPerms = oldEntity.stPermissions.Replace("||", "|").Split('|');
+			var newPerms = stPermissions.Replace("||", "|").Split('|');
 
-				foreach (var perm in oldPerms) hshOldPerms[perm] = true;
-				foreach (var perm in newPerms) hshNewPerms[perm] = true;
+			foreach (var perm in oldPerms) hshOldPerms[perm] = true;
+			foreach (var perm in newPerms) hshNewPerms[perm] = true;
 
-				foreach (var perm in oldPerms)
-					if (perm != "")
-						if (hshNewPerms[perm] == null)
-							ret += "Permission removed: " + perm + "; ";
+			foreach (var perm in oldPerms)
+				if (perm != "")
+					if (hshNewPerms[perm] == null)
+						ret += "Permission removed: " + perm.Substring(0,3) + "; ";
 
-				foreach (var perm in newPerms)
-					if (perm != "")
-						if (hshOldPerms[perm] == null)
-							ret += "Permission added: " + perm + "; ";
-			}
+			foreach (var perm in newPerms)
+				if (perm != "")
+					if (hshOldPerms[perm] == null)
+						ret += "Permission added: " + perm.Substring(0, 3) + "; ";
 
 			return ret;
 		}

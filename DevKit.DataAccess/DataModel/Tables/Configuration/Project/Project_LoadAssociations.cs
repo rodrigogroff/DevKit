@@ -18,6 +18,7 @@ namespace DataModel
 			users = LoadUsers(db);
 			phases = LoadPhases(db);
 			sprints = LoadSprints(db);
+			logs = LoadLogs(db);
 
 			return this;
 		}
@@ -56,6 +57,37 @@ namespace DataModel
 				item.LoadAssociations(db);
 
 			return resp;
+		}
+
+		List<ProjectLog> LoadLogs(DevKitDB db)
+		{
+			var setup = db.Setup();
+
+			var lstLogs = (from e in db.AuditLogs
+						   where e.nuType == EnumAuditType.Project
+						   where e.fkTarget == this.id
+						   select e).
+						   OrderByDescending(y => y.id).
+						   ToList();
+
+			var lstUsers = (from e in lstLogs
+							join eUser in db.Users on e.fkUser equals eUser.id
+							select eUser).
+							ToList();
+
+			var ret = new List<ProjectLog>();
+
+			foreach (var item in lstLogs)
+			{
+				ret.Add(new ProjectLog
+				{
+					sdtLog = item.dtLog?.ToString(setup.stDateFormat),
+					stUser = lstUsers.Where(y => y.id == item.fkUser).FirstOrDefault().stLogin,
+					stDetails = item.stLog
+				});
+			}
+
+			return ret;
 		}
 	}
 }

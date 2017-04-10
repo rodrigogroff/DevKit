@@ -24,14 +24,7 @@ namespace DataModel
 
 			return query.Any();
 		}
-
-		public string TrackChanges()
-		{
-			var ret = "";
-
-			return ret;
-		}
-
+		
 		public bool Update(DevKitDB db, User user, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
@@ -46,7 +39,13 @@ namespace DataModel
 					{
 						db.Update(this);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint, nuType = EnumAuditType.Sprint }.Create(db, TrackChanges(), "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint,
+							nuType = EnumAuditType.Sprint,
+							fkTarget = this.id
+						}.
+						Create(db, TrackChanges(db), "");
 
 						break;
 					}
@@ -70,13 +69,25 @@ namespace DataModel
 							
 							db.Insert(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintAddVersion, nuType = EnumAuditType.Sprint }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.SprintAddVersion,
+								nuType = EnumAuditType.Sprint,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}
 						else
 						{
 							db.Update(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintUpdateVersion, nuType = EnumAuditType.Sprint }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.SprintUpdateVersion,
+								nuType = EnumAuditType.Sprint,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}
 						
 						versions = LoadVersions(db);
@@ -95,7 +106,13 @@ namespace DataModel
 
 						db.Delete(versionDel);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintRemoveVersion, nuType = EnumAuditType.Sprint }.Create(db, "", "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.SprintRemoveVersion,
+							nuType = EnumAuditType.Sprint,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						versions = LoadVersions(db);
 						break;

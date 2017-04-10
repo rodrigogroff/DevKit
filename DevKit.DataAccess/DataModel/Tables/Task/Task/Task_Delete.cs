@@ -11,9 +11,15 @@ namespace DataModel
 
 		public void Delete(DevKitDB db, User user)
 		{
-			db.Delete(this);
+			new AuditLog {
+				fkUser = user.id,
+				fkActionLog = EnumAuditAction.TaskDelete,
+				nuType = EnumAuditType.Task,
+				fkTarget = this.id
+			}.
+			Create(db, "", "");
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskDelete, nuType = EnumAuditType.Task }.Create(db, "", "");
+			db.Delete(this);
 		}
 	}
 }

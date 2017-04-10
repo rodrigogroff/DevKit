@@ -7,11 +7,6 @@ namespace DataModel
 {
 	public partial class Project
 	{
-		public string TrackChanges()
-		{
-			return "";
-		}
-
 		public bool Update(DevKitDB db, User user, ref string resp)
 		{
 			if (CheckDuplicate(this, db))
@@ -24,7 +19,13 @@ namespace DataModel
 			{
 				case "entity":
 					{
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdate, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, TrackChanges(), "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.ProjectUpdate,
+							nuType = EnumAuditType.Project,
+							fkTarget = this.id
+						}.
+						Create(db, TrackChanges(db), "");
 
 						db.Update(this);
 						break;
@@ -49,13 +50,25 @@ namespace DataModel
 
 							db.Insert(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateAddUser, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, TrackChanges(), "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.ProjectUpdateAddUser,
+								nuType = EnumAuditType.Project,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}							
 						else
 						{
 							db.Update(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdateUser, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.ProjectUpdateUpdateUser,
+								nuType = EnumAuditType.Project,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}							
 
 						users = LoadUsers(db);
@@ -66,7 +79,13 @@ namespace DataModel
 					{
 						db.Delete(JsonConvert.DeserializeObject<ProjectUser>(anexedEntity.ToString()));
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateRemoveUser, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, "", "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.ProjectUpdateRemoveUser,
+							nuType = EnumAuditType.Project,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						users = LoadUsers(db);
 						break;
@@ -90,13 +109,25 @@ namespace DataModel
 
 							db.Insert(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateAddPhase, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.ProjectUpdateAddPhase,
+								nuType = EnumAuditType.Project,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}							
 						else
 						{
 							db.Update(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdatePhase, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.ProjectUpdateUpdatePhase,
+								nuType = EnumAuditType.Project,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}
 							
 						phases = LoadPhases(db);
@@ -115,7 +146,13 @@ namespace DataModel
 
 						db.Delete(mdlDel);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateRemovePhase, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, "", "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.ProjectUpdateRemovePhase,
+							nuType = EnumAuditType.Project,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						phases = LoadPhases(db);
 						break;
@@ -140,13 +177,33 @@ namespace DataModel
 
 							db.Insert(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateAddSprint, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.ProjectUpdateAddSprint,
+								nuType = EnumAuditType.Project,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
+
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint,
+								nuType = EnumAuditType.Sprint,
+								fkTarget = ent.id
+							}.
+							Create(db, "", "");
 						}
 						else
 						{
 							db.Update(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint,
+								nuType = EnumAuditType.Project,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}							
 
 						sprints = LoadSprints(db);
@@ -165,12 +222,17 @@ namespace DataModel
 
 						db.Delete(mdlDel);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateRemoveSprint, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, "", "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.ProjectUpdateRemoveSprint,
+							nuType = EnumAuditType.Project,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						sprints = LoadSprints(db);
 						break;
 					}
-
 			}
 
 			return true;

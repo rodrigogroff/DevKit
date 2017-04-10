@@ -15,18 +15,16 @@ namespace DataModel
 
 		public const long Project = 1,
 							Sprint = 2,
-							Category = 3,
-							TaskType = 4,
-							Task = 5,
-							User = 6,
-							Profile = 7,
-							Setup = 8;
+							TaskType = 3,
+							Task = 4,
+							User = 5,
+							Profile = 6,
+							Setup = 7;
 
 		public EnumAuditType()
 		{
 			lst.Add(new AuditType() { id = Project, stName = "Project" });
 			lst.Add(new AuditType() { id = Sprint, stName = "Sprint" });
-			lst.Add(new AuditType() { id = Category, stName = "Category" });
 			lst.Add(new AuditType() { id = TaskType, stName = "TaskType" });
 			lst.Add(new AuditType() { id = Task, stName = "Task" });
 			lst.Add(new AuditType() { id = User, stName = "User" });

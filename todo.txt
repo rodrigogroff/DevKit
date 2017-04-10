@@ -6,19 +6,26 @@ FEATURES
 	------------------------
 	timesheet
 	------------------------
-		- visualizar todos sintético
+		- visualizar todos sintético (ao remover usuário e tiver permissão admin)
 
 	------------------------
 	log de auditoria
 	------------------------
-	    - miplementar todos os track changes		
-		- Enum de ações													ok
-		- Tabela nova no banco											ok
-		- varrer controles e inserir os registros
+	    - implementar todos os track changes (projeto,sprint,tasktype,user,profile,setup)
+
 		- nos detalhes do usuário, mostrar periodo e combo de ação
+		- nos detalhes do projeto, mostrar periodo e combo de ação
+		- nos detalhes do task type, mostrar periodo e combo de ação
+		- nos detalhes do perfil, mostrar periodo e combo de ação
+		- nos detalhes do sprint, mostrar periodo e combo de ação
+
 		- paginar resultados
-		- permissão de visualizar auditoria de usuários
-	
+		- tela específica de auditoria
+
+	------------------------
+	documentação
+	------------------------
+		- gerar documentação em inglês (nivel cmmi-2)
 
 ------------------
 bugs power!

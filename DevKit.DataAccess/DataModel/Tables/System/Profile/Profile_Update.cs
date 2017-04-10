@@ -14,7 +14,13 @@ namespace DataModel
 
 			db.Update(this);
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemProfileUpdate, nuType = EnumAuditType.Profile }.Create(db, "", "");
+			new AuditLog {
+				fkUser = user.id,
+				fkActionLog = EnumAuditAction.SystemProfileUpdate,
+				nuType = EnumAuditType.Profile,
+				fkTarget = this.id				
+			}.
+			Create(db, TrackChanges(db), "");
 
 			return true;
 		}

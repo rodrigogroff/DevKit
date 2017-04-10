@@ -486,7 +486,13 @@ namespace DataModel
 					break;
 			}
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectCreation, nuType = EnumAuditType.Project, fkTarget = this.id }.Create(db, "type: " + strType, "");
+			new AuditLog {
+				fkUser = user.id,
+				fkActionLog = EnumAuditAction.ProjectCreation,
+				nuType = EnumAuditType.Project,
+				fkTarget = this.id
+			}.
+			Create(db, "type: " + strType, "");
 
 			return true;
 		}

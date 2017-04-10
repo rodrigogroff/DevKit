@@ -21,7 +21,13 @@ namespace DataModel
 					{
 						db.Update(this);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeUpdate, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.TaskTypeUpdate,
+							nuType = EnumAuditType.TaskType,
+							fkTarget = this.id
+						}.
+						Create(db, TrackChanges(db), "");
 
 						break;
 					}
@@ -99,13 +105,25 @@ namespace DataModel
 								stName = "Cancelled"
 							});
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeUpdate, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.TaskTypeUpdate,
+								nuType = EnumAuditType.TaskType,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}
 						else
 						{
 							db.Update(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeUpdateCategory, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.TaskTypeUpdateCategory,
+								nuType = EnumAuditType.TaskType,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}							
 
 						categories = LoadCategories(db);
@@ -125,7 +143,13 @@ namespace DataModel
 
 						db.Delete(categDel);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeRemoveCategory, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.TaskTypeRemoveCategory,
+							nuType = EnumAuditType.TaskType,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						categories = LoadCategories(db);
 						break;
@@ -151,13 +175,25 @@ namespace DataModel
 
 							db.Insert(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryAddFlow, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.CategoryAddFlow,
+								nuType = EnumAuditType.TaskType,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}
 						else
 						{
 							db.Update(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryUpdateFlow, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.CategoryUpdateFlow,
+								nuType = EnumAuditType.TaskType,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}							
 						
 						break;
@@ -175,7 +211,13 @@ namespace DataModel
 
 						db.Delete(flowDel);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryRemoveFlow, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.CategoryRemoveFlow,
+							nuType = EnumAuditType.TaskType,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						break;
 					}
@@ -201,13 +243,25 @@ namespace DataModel
 
 							db.Insert(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryAddAccumulator, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.CategoryAddAccumulator,
+								nuType = EnumAuditType.TaskType,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}
 						else
 						{
 							db.Update(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryUpdateAccumulator, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.CategoryUpdateAccumulator,
+								nuType = EnumAuditType.TaskType,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}							
 
 						break;
@@ -219,7 +273,13 @@ namespace DataModel
 
 						db.Delete(accDel);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.CategoryRemoveAccumulator, nuType = EnumAuditType.TaskType }.Create(db, "", "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.CategoryRemoveAccumulator,
+							nuType = EnumAuditType.TaskType,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						break;
 					}

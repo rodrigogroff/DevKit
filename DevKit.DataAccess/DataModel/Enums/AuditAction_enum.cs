@@ -55,11 +55,18 @@ namespace DataModel
 							TaskUpdateProgress = 40,
 							TaskUpdateMessage = 41,
 							TaskUpdateFlowChange = 42,
-							TaskUpdateAccSaved = 43;
+							TaskUpdateAccSaved = 43,
+							UserAddPhone = 44,
+							UserEditPhone = 45,
+							UserRemovePhone = 46,
+							UserAddEmail = 47,
+							UserEditEmail = 48,
+							UserRemoveEmail = 49;
 
 		public EnumAuditAction()
 		{
 			lst.Add(new AuditAction() { id = Login, stName = "System \\ Login" });
+
 			lst.Add(new AuditAction() { id = ProjectListing, stName = "Configuration \\ Project Listing" });
 			lst.Add(new AuditAction() { id = ProjectCreation, stName = "Configuration \\ Project Creation" });
 			lst.Add(new AuditAction() { id = ProjectUpdate, stName = "Configuration \\ Project Update" });
@@ -73,21 +80,25 @@ namespace DataModel
 			lst.Add(new AuditAction() { id = ProjectUpdateUpdateSprint, stName = "Configuration \\ Project update, updating sprint" });
 			lst.Add(new AuditAction() { id = ProjectUpdateRemoveSprint, stName = "Configuration \\ Project update, removing sprint" });
 			lst.Add(new AuditAction() { id = ProjectDelete, stName = "Configuration \\ Project Delete" });
+
 			lst.Add(new AuditAction() { id = SprintAddVersion, stName = "Configuration \\ Sprint update, adding version" });
 			lst.Add(new AuditAction() { id = SprintUpdateVersion, stName = "Configuration \\ Sprint update, updating version" });
 			lst.Add(new AuditAction() { id = SprintRemoveVersion, stName = "Configuration \\ Sprint update, removing version" });
+
 			lst.Add(new AuditAction() { id = TaskTypeAdd, stName = "Configuration \\ Task Type Added" });
 			lst.Add(new AuditAction() { id = TaskTypeDelete, stName = "Configuration \\ Task Type Delete" });
 			lst.Add(new AuditAction() { id = TaskTypeUpdate, stName = "Configuration \\ Task Type Update" });
 			lst.Add(new AuditAction() { id = TaskTypeAddCategory, stName = "Configuration \\ Task Type, adding category" });
 			lst.Add(new AuditAction() { id = TaskTypeUpdateCategory, stName = "Configuration \\ Task Type, updating category" });
 			lst.Add(new AuditAction() { id = TaskTypeRemoveCategory, stName = "Configuration \\ Task Type, removing category" });
+
 			lst.Add(new AuditAction() { id = CategoryAddFlow, stName = "Configuration \\ Task Category, adding flow" });
 			lst.Add(new AuditAction() { id = CategoryUpdateFlow, stName = "Configuration \\ Task Category, updating flow" });
 			lst.Add(new AuditAction() { id = CategoryRemoveFlow, stName = "Configuration \\ Task Category, removing flow" });
 			lst.Add(new AuditAction() { id = CategoryAddAccumulator, stName = "Configuration \\ Task Category, adding accumulator" });
 			lst.Add(new AuditAction() { id = CategoryUpdateAccumulator, stName = "Configuration \\ Task Category, updating accumulator" });
 			lst.Add(new AuditAction() { id = CategoryRemoveAccumulator, stName = "Configuration \\ Task Category, removing accumulator" });
+
 			lst.Add(new AuditAction() { id = SystemProfileAdd, stName = "System \\ Profile Creation" });
 			lst.Add(new AuditAction() { id = SystemProfileRemove, stName = "System \\ Profile Delete" });
 			lst.Add(new AuditAction() { id = SystemProfileUpdate, stName = "System \\ Profile Update" });
@@ -95,6 +106,13 @@ namespace DataModel
 			lst.Add(new AuditAction() { id = SystemUserCreate, stName = "System \\ User Creation" });
 			lst.Add(new AuditAction() { id = SystemUserUpdate, stName = "System \\ User Update" });
 			lst.Add(new AuditAction() { id = SystemUserDelete, stName = "System \\ User Delete" });
+			lst.Add(new AuditAction() { id = UserAddPhone, stName = "System \\ User update, adding phone" });
+			lst.Add(new AuditAction() { id = UserEditPhone, stName = "System \\ User update, editing phone" });
+			lst.Add(new AuditAction() { id = UserRemovePhone, stName = "System \\ User update, removing phone" });
+			lst.Add(new AuditAction() { id = UserAddEmail, stName = "System \\ User update, adding email" });
+			lst.Add(new AuditAction() { id = UserEditEmail, stName = "System \\ User update, editing email" });
+			lst.Add(new AuditAction() { id = UserRemoveEmail, stName = "System \\ User update, removing email" });
+
 			lst.Add(new AuditAction() { id = TaskCreate, stName = "Task \\ Task Creation" });
 			lst.Add(new AuditAction() { id = TaskDelete, stName = "Task \\ Task Delete" });
 			lst.Add(new AuditAction() { id = TaskUpdate, stName = "Task \\ Task Update" });

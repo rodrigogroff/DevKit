@@ -38,7 +38,14 @@ namespace DataModel
 
 			db.Delete(this);
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemUserDelete, nuType = EnumAuditType.User }.Create(db, "", "");
+			new AuditLog
+			{
+				fkUser = user.id,
+				fkActionLog = EnumAuditAction.SystemUserDelete,
+				nuType = EnumAuditType.User,
+				fkTarget = this.id
+			}.
+			Create(db, "", "");
 		}
 	}
 }

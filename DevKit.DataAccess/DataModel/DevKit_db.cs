@@ -6,8 +6,10 @@ using System.Collections.Generic;
 namespace DataModel
 {
 	public partial class DevKitDB
-	{
-		string identityName = Thread.CurrentPrincipal.Identity.Name.ToUpper();
+	{				
+		// ----------------------------------
+		// Current system user 
+		// ----------------------------------
 
 		public User currentUser = null;
 
@@ -15,7 +17,7 @@ namespace DataModel
 		{
 			if (currentUser == null)
 				currentUser = (from ne in Users
-							   where ne.stLogin.ToUpper() == identityName
+							   where ne.stLogin.ToUpper() == Thread.CurrentPrincipal.Identity.Name.ToUpper()
 							   select ne).FirstOrDefault();
 
 			return currentUser;
@@ -40,8 +42,12 @@ namespace DataModel
 					ToList();
 		}
 
-		private Hashtable Cache = new Hashtable();
-				
+		// ----------------------------------
+		// Tables by Id (using cache)
+		// ----------------------------------
+
+		Hashtable Cache = new Hashtable();
+
 		public Setup Setup()
 		{
 			var ret = Cache["Setup"] as Setup;

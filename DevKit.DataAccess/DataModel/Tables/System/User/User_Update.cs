@@ -29,7 +29,13 @@ namespace DataModel
 					{
 						db.Update(this);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemUserUpdate, nuType = EnumAuditType.User }.Create(db, "", "");
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.SystemUserUpdate,
+							nuType = EnumAuditType.User,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						break;
 					}
@@ -50,9 +56,27 @@ namespace DataModel
 							}
 
 							db.Insert(ent);
+
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.UserAddPhone,
+								nuType = EnumAuditType.User,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}
 						else
+						{
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.UserEditPhone,
+								nuType = EnumAuditType.User,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
+
 							db.Update(ent);
+						}							
 
 						phones = LoadPhones(db);
 						break;
@@ -61,6 +85,14 @@ namespace DataModel
 				case "removePhone":
 					{
 						db.Delete(JsonConvert.DeserializeObject<UserPhone>(anexedEntity.ToString()));
+
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.UserRemovePhone,
+							nuType = EnumAuditType.User,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						phones = LoadPhones(db);
 						break;
@@ -81,10 +113,28 @@ namespace DataModel
 							}
 
 							db.Insert(ent);
+
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.UserAddEmail,
+								nuType = EnumAuditType.User,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 						}
 						else
-							db.Update(ent);
+						{
+							new AuditLog {
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.UserEditEmail,
+								nuType = EnumAuditType.User,
+								fkTarget = this.id
+							}.
+							Create(db, "", "");
 
+							db.Update(ent);
+						}
+							
 						emails = LoadEmails(db);
 						break;
 					}
@@ -92,6 +142,14 @@ namespace DataModel
 				case "removeEmail":
 					{
 						db.Delete(JsonConvert.DeserializeObject<UserEmail>(anexedEntity.ToString()));
+
+						new AuditLog {
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.UserRemoveEmail,
+							nuType = EnumAuditType.User,
+							fkTarget = this.id
+						}.
+						Create(db, "", "");
 
 						emails = LoadEmails(db);
 						break;

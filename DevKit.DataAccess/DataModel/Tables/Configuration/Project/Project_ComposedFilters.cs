@@ -56,7 +56,12 @@ namespace DataModel
 
 			results.ForEach(y => { y = y.LoadAssociations(db); });
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectListing, nuType = EnumAuditType.Project }.Create(db, filter.ExportString(), "count: " + count);
+			new AuditLog {
+				fkUser = user.id,
+				fkActionLog = EnumAuditAction.ProjectListing,
+				nuType = EnumAuditType.Project
+			}.
+			Create(db, filter.ExportString(), "count: " + count);
 
 			return results;
 		}

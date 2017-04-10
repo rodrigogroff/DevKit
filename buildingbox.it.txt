@@ -1,0 +1,97 @@
+
+--- Building Box ----------
+
+# Starter solutions -----------------------------------------
+     
+     - exclusive private network
+     - no user limitations
+	 - monthly subscription
+	 - scalable archictecture
+
+# Software delivered -----------------------------------------
+
+	- unique templates (CMMI (2 to 5), Agile, Maintenance)
+	- projects, sprints, phases, versions, task types and categories
+	- administrative, kanban and timesheet views
+		 
+# Custom development -----------------------------------------
+
+    - development kits (20 hours)
+	- we implement changes in documentation requirements 
+    - unique source code branch
+
+# Infrastructure -----------------------------------------
+
+    - internet availability using VULTR hosts
+    - storage scalability (up to terabytes)
+    - processing scalability (load balancing)
+
+# Technology -----------------------------------------
+
+    - angularJS, MVC 5, Web API
+    - Advanced bootstrap template
+    - PostgreSQL / LinqToDB
+
+# Availability per proximity  -----------------------------------------
+
+    - continents: america, europe, australia, asia
+
+    - cities (america): Dallas, Miami, Silicon Valley, Atlanta, Chicago, Los-Angeles, New York (NJ), Seattle
+    - cities (europe): Frankfurt (Germany), Paris (France), Amsterdam (Netherlands), London (UK)
+    - cities (australia): Sydney
+    - cities (asia): Singapore (Singapore), Tokyo (Japan)
+
+# Internet processing  -----------------------------------------
+
+    - standard compute (4CPU) = 70 US$
+    - premium compute (6CPU) = 110 US$
+    - standard storage (500GB) = 50 US$
+    - premium storage (1TB) = 70 US$
+   
+    *** Economy solution  -----------------------------------------
+
+        (up to 70 users) // 1WP = 35 users
+
+        - task management module = 150 US$
+        - premium compute (6CPU, 200GB) = 110 US$
+            (2 worker process + database)
+        - maintenance = 5$
+        - total: 265 US$ / month (2WP)
+
+    *** Basic solution  -----------------------------------------
+
+        (up to 140 users)
+
+        - task management module = 150 US$
+        - standard compute (4CPU) = 50 US$
+        - standard compute (4CPU) = 50 US$ (database machine)
+        - standard storage (500GB) = 50 US$
+        - maintenance = 10$
+        - total: 310 US$ / month (4WP)
+
+    *** Advanced solution  -----------------------------------------
+
+        (up to ~300 users)
+
+        - task management module = 150 US$
+        - network load balancer (2CPU) = 40 US$
+        - standard compute (4CPU) = 70 US$ x 2 = 140 US$
+        - standard compute (4CPU) = 70 US$ (database machine)
+        - standard storage (500GB) = 30 US$
+        - maintenance = 20$
+        - total: 450 US$ / month (9WP)
+
+    *** Premium solution  -----------------------------------------
+
+        (up to ~800 users)
+
+        - task management module = 150 US$
+        - network load balancer (2CPU) = 40 US$ (1 worker process)
+        - standard compute (4CPU) = 70 US$ x 6 = 420 US$ (*)
+        - premium compute (6CPU, 200GB) = 110 US$ (database machine) (**)
+        - premium storage (1TB) = 70 US$ x 2 = 140 US$
+        - maintenance = 50$
+        - total: 910 US$ / month (25WP)
+
+        (*) add as many as needed
+        (**) can be upgraded as high as 20 CPU)

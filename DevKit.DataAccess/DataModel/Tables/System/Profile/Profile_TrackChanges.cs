@@ -1,4 +1,4 @@
-﻿using LinqToDB;
+﻿using System.Collections;
 
 namespace DataModel
 {
@@ -17,8 +17,24 @@ namespace DataModel
 			
 			if (oldEntity.stPermissions != this.stPermissions)
 			{
-				//TODO! // Added, Removed
-				ret += "Name: " + oldEntity.stPermissions + " => " + this.stPermissions + "; ";
+				Hashtable hshOldPerms = new Hashtable(),
+						  hshNewPerms = new Hashtable();
+
+				var oldPerms = oldEntity.stPermissions.Replace("||", "|").Split('|');
+				var newPerms = oldEntity.stPermissions.Replace("||", "|").Split('|');
+
+				foreach (var perm in oldPerms) hshOldPerms[perm] = true;
+				foreach (var perm in newPerms) hshNewPerms[perm] = true;
+
+				foreach (var perm in oldPerms)
+					if (perm != "")
+						if (hshNewPerms[perm] == null)
+							ret += "Permission removed: " + perm + "; ";
+
+				foreach (var perm in newPerms)
+					if (perm != "")
+						if (hshOldPerms[perm] == null)
+							ret += "Permission added: " + perm + "; ";
 			}
 
 			return ret;

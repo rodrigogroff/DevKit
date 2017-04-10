@@ -12,7 +12,7 @@ namespace DataModel
 						   where e.bActive == true
 						   select e).
 						   FirstOrDefault();
-
+			
 			if (user != null)
 			{
 				user.LoadAssociations(db, true);
@@ -23,7 +23,7 @@ namespace DataModel
 					nuType = EnumAuditType.User,
 					fkTarget = this.id
 				}.
-				Create(db, TrackChanges(db), "");
+				Create(db, "", "");
 
 				return user;
 			}

@@ -50,28 +50,48 @@
 				</tr>
 			</table>
 			<div ng-show="viewModel != undefined">
-				<table style="width:870px" class="table table-hover">
-					<thead>
-						<tr>
-							<th>Day</th>
-							<th>Hours</th>
-							<th>Tasks</th>
+				<div ng-show="viewModel.multiUser == false">
+					<table style="width:870px" class="table table-hover">
+						<thead>
+							<tr>
+								<th>Day</th>
+								<th>Hours</th>
+								<th>Tasks</th>
+							</tr>
+						</thead>
+						<tr height="24px" data-ng-repeat="mdl in viewModel.days">
+							<td width="30px">{{mdl.day}}</td>
+							<td width="40px">{{mdl.hhmm}}</td>
+							<td width="800px">
+								<span data-ng-repeat="t in mdl.tasks">
+									<button class="btn btn-info btn-xs" ng-click="show(t.id)">{{t.protocol}} T{{t.nuPriority}} [{{t.hhmm}}] </button>
+									&nbsp;
+								</span>
+							</td>
 						</tr>
-					</thead>
-					<tr height="24px" data-ng-repeat="mdl in viewModel.days">
-						<td width="30px">{{mdl.day}}</td>
-						<td width="40px">{{mdl.hhmm}}</td>
-						<td width="800px">
-							<span data-ng-repeat="t in mdl.tasks">
-								<button class="btn btn-info btn-xs" ng-click="show(t.id)">{{t.protocol}} T{{t.nuPriority}} [{{t.hhmm}}] </button>
-								&nbsp;
-							</span>
-						</td>
-					</tr>
-				</table>
-				<br />
-				Total: <b>{{viewModel.total_hhmm}}</b>
-				<br />
+					</table>
+					<br />
+					Total: <b>{{viewModel.total_hhmm}}</b>
+					<br />
+				</div>
+				<div ng-show="viewModel.multiUser == true">
+					<table style="width:870px" class="table table-hover">
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Hours</th>
+							</tr>
+						</thead>
+						<tr height="24px" data-ng-repeat="mdl in viewModel.users">
+							<td width="30px">{{mdl.user}}</td>
+							<td width="40px">{{mdl.hhmm}}</td>
+						</tr>
+					</table>
+					<br />
+					Users ({{viewModel.users.length}}), Total hours: <b>{{viewModel.total_hhmm}}</b><br />
+					<br />
+				</div>
+
 			</div>
 			<br />
 		</div>

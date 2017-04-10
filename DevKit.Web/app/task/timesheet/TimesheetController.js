@@ -59,10 +59,9 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$scope.stMessage = '';
 
 		if ($scope.nuYear == '' ||
-			$scope.nuMonth == undefined ||
-			$scope.userId == undefined)
+			$scope.nuMonth == undefined )
 		{
-			$scope.stMessage = 'Please inform all selection fields';
+			$scope.stMessage = 'Please inform all date fields';
 		}
 		else
 		{

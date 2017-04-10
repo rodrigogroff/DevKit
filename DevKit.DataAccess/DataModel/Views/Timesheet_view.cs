@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
-using System;
 
 namespace DataModel
 {
@@ -10,20 +10,28 @@ namespace DataModel
 						nuMonth, 
 						fkUser;
 	}
+	
+	public class TimeTableUser
+	{
+		public string user,
+						hhmm;
+	}
 
 	public class TimesheetDTO
 	{
-		public bool fail = false;
+		public bool fail = false,
+					multiUser = false;
 
 		public List<TimeTable> days = new List<TimeTable>();
+		public List<TimeTableUser> users = new List<TimeTableUser>();
 
 		public string total_hhmm;
 	}
 
 	public class TimeTable
 	{
-		public string	day,
-						hhmm;
+		public string day,
+					  hhmm;
 
 		public List<TaskTimeSheet> tasks = new List<TaskTimeSheet>();
 	}
@@ -45,36 +53,34 @@ namespace DataModel
 			var dtIni = new DateTime((int)filter.nuYear, (int)filter.nuMonth, 1);
 			var dtFim = dtIni.AddMonths(1).AddSeconds(-1);
 
-			var lstHours = (from e in db.TaskAccumulatorValues
-							where e.fkUser == filter.fkUser
-							where e.dtLog > dtIni && e.dtLog < dtFim
-							select e).
-							ToList();
-
-			var idsTasks = lstHours.Select(y => y.fkTask).Distinct().ToList();
-
-			var lstTasks = (from e in db.Tasks
-						   where idsTasks.Contains(e.id)
-						   select e).
-						   ToList();
-
-			long totHH = 0, totMM = 0;
-
-			for (int i = dtIni.Day; i <= dtFim.Day; i++)
+			if (filter.fkUser == null)
 			{
-				var dtCurrent = new DateTime((int)filter.nuYear, (int)filter.nuMonth, i);
-				var dtCurrentFim = dtCurrent.AddDays(1).AddSeconds(-1);
+				dto.multiUser = true;
 
-				var _hours = "";
+				var lstUsers = (from e in db.Users
+								where e.bActive == true
+								select e).
+								ToList();
 
+				var lstUserIds = (from e in lstUsers select e.id).ToList();
+
+				var lstHours = (from e in db.TaskAccumulatorValues
+								where lstUserIds.Contains((long)e.fkUser)
+								where e.dtLog > dtIni && e.dtLog < dtFim
+								select e).
+								ToList();
+
+				long totHH = 0, totMM = 0;
+
+				foreach (var usr in lstUsers)
 				{
 					var hh = (from e in lstHours
-							  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
+							  where e.fkUser == usr.id
 							  select e).
-							  Sum(y => y.nuHourValue);
+								  Sum(y => y.nuHourValue);
 
 					var mm = (from e in lstHours
-							  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
+							  where e.fkUser == usr.id
 							  select e).
 							  Sum(y => y.nuMinValue);
 
@@ -87,62 +93,130 @@ namespace DataModel
 						hh += hours;
 						mm -= hours * 60;
 
-						totHH += (long) hh;
-						totMM += (long) mm;
+						totHH += (long)hh;
+						totMM += (long)mm;
 					}
 
-					_hours = hh + ":" + mm.ToString().PadLeft(2, '0');
-				}
-				
-				var lstTaskTimesheet = new List<TaskTimeSheet>();
+					var _hours = hh + ":" + mm.ToString().PadLeft(2, '0');
 
-				foreach (var item in (from e in lstHours
-									  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
-									  select e).
-									  Distinct().
-									  ToList())
-				{
-					var task = lstTasks.Where(y => y.id == item.fkTask).
-						FirstOrDefault();
-
-					var hh = item.nuHourValue;
-					var mm = item.nuMinValue;
-
-					if (hh == null) hh = 0;
-					if (mm == null) mm = 0;
-
-					if (mm > 59)
+					dto.users.Add(new TimeTableUser
 					{
-						var hours = (long)mm / 60;
-						hh += hours;
-						mm -= hours * 60;
-					}
-
-					lstTaskTimesheet.Add(new TaskTimeSheet
-					{
-						id = task.id.ToString(),
-						protocol = task.stProtocol,
-						hhmm = hh + ":" + mm.ToString().PadLeft(2, '0'),
-						nuPriority = task.nuPriority.ToString()
+						user = usr.stLogin,
+						hhmm = _hours
 					});
 				}
 
-				dto.days.Add(new TimeTable
+				if (totMM > 59)
 				{
-					day = dtCurrent.Day.ToString(),
-					hhmm = _hours,
-					tasks = lstTaskTimesheet
-				});
-			}
+					var hours = (long)totMM / 60;
+					totHH += hours;
+					totMM -= hours * 60;
+				}
 
-			if (totMM > 59)
+				dto.total_hhmm = totHH + ":" + totMM.ToString().PadLeft(2, '0');
+			}
+			else
 			{
-				var hours = (long)totMM / 60;
-				totHH += hours;
-				totMM -= hours * 60;
-			}
+				var lstHours = (from e in db.TaskAccumulatorValues
+								where e.fkUser == filter.fkUser
+								where e.dtLog > dtIni && e.dtLog < dtFim
+								select e).
+								ToList();
 
-			dto.total_hhmm = totHH + ":" + totMM.ToString().PadLeft(2,'0');
+				var idsTasks = lstHours.Select(y => y.fkTask).Distinct().ToList();
+
+				var lstTasks = (from e in db.Tasks
+								where idsTasks.Contains(e.id)
+								select e).
+							   ToList();
+
+				long totHH = 0, 
+					totMM = 0;
+
+				for (int i = dtIni.Day; i <= dtFim.Day; i++)
+				{
+					var dtCurrent = new DateTime((int)filter.nuYear, (int)filter.nuMonth, i);
+					var dtCurrentFim = dtCurrent.AddDays(1).AddSeconds(-1);
+
+					var _hours = "";
+
+					{
+						var hh = (from e in lstHours
+								  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
+								  select e).
+								  Sum(y => y.nuHourValue);
+
+						var mm = (from e in lstHours
+								  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
+								  select e).
+								  Sum(y => y.nuMinValue);
+
+						if (hh == null) hh = 0;
+						if (mm == null) mm = 0;
+
+						if (mm > 59)
+						{
+							var hours = (long)mm / 60;
+							hh += hours;
+							mm -= hours * 60;
+
+							totHH += (long)hh;
+							totMM += (long)mm;
+						}
+
+						_hours = hh + ":" + mm.ToString().PadLeft(2, '0');
+					}
+
+					var lstTaskTimesheet = new List<TaskTimeSheet>();
+
+					foreach (var item in (from e in lstHours
+										  where e.dtLog > dtCurrent && e.dtLog < dtCurrentFim
+										  select e).
+										  Distinct().
+										  ToList())
+					{
+						var task = lstTasks.Where(y => y.id == item.fkTask).
+							FirstOrDefault();
+
+						var hh = item.nuHourValue;
+						var mm = item.nuMinValue;
+
+						if (hh == null) hh = 0;
+						if (mm == null) mm = 0;
+
+						if (mm > 59)
+						{
+							var hours = (long)mm / 60;
+							hh += hours;
+							mm -= hours * 60;
+						}
+
+						lstTaskTimesheet.Add(new TaskTimeSheet
+						{
+							id = task.id.ToString(),
+							protocol = task.stProtocol,
+							hhmm = hh + ":" + mm.ToString().PadLeft(2, '0'),
+							nuPriority = task.nuPriority.ToString()
+						});
+					}
+
+					dto.days.Add(new TimeTable
+					{
+						day = dtCurrent.Day.ToString(),
+						hhmm = _hours,
+						tasks = lstTaskTimesheet
+					});
+				}
+
+				if (totMM > 59)
+				{
+					var hours = (long)totMM / 60;
+					totHH += hours;
+					totMM -= hours * 60;
+				}
+
+				dto.total_hhmm = totHH + ":" + totMM.ToString().PadLeft(2, '0');
+			}
 
 			return dto;
 		}

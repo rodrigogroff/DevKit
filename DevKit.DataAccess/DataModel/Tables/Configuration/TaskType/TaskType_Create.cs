@@ -32,7 +32,7 @@ namespace DataModel
 			
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeAdd }.Create(db, "", "");
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskTypeAdd, nuType = EnumAuditType.TaskType }.Create(db, "", "");
 
 			return true;
 		}

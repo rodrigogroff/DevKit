@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
 			{
 				var count = 0; var mdl = new TaskType();
 
-				var results = mdl.ComposedFilters(db, ref count, db.GetCurrentUserProjects(), new TaskTypeFilter
+				var results = mdl.ComposedFilters(db, ref count, new TaskTypeFilter
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),

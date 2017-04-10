@@ -61,6 +61,8 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog       { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkUser      { get; set; } // bigint
 		[Column,     Nullable] public long?     fkActionLog { get; set; } // bigint
+		[Column,     Nullable] public long?     nuType      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTarget    { get; set; } // bigint
 		[Column,     Nullable] public string    stLog       { get; set; } // character varying(999)
 		[Column,     Nullable] public string    stDetailLog { get; set; } // character varying(3999)
 	}

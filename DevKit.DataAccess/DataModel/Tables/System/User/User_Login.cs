@@ -17,7 +17,7 @@ namespace DataModel
 			{
 				user.LoadAssociations(db, true);
 
-				new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.Login }.Create(db, "", "");
+				new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.Login, nuType = EnumAuditType.User }.Create(db, "", "");
 
 				return user;
 			}

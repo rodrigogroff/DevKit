@@ -25,7 +25,7 @@ namespace DataModel
 								fkUserAssigned = fkUserResponsible
 							});
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateProgress }.Create(db, "", "");
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateProgress, nuType = EnumAuditType.Task }.Create(db, "", "");
 						}
 
 						if (stUserMessage != "")
@@ -41,7 +41,7 @@ namespace DataModel
 
 							stUserMessage = "";
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateProgress }.Create(db, "", "");
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateProgress, nuType = EnumAuditType.Task }.Create(db, "", "");
 						}
 
 						if (fkNewFlow != null && oldTask.fkTaskFlowCurrent != fkNewFlow)
@@ -71,12 +71,12 @@ namespace DataModel
 							if (flowState.bForceOpen == true)
 								this.bComplete = false;
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateProgress }.Create(db, "", "");
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateProgress, nuType = EnumAuditType.Task }.Create(db, "", "");
 						}
 
 						db.Update(this);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdate }.Create(db, "", "");
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdate, nuType = EnumAuditType.Task }.Create(db, "", "");
 
 						LoadAssociations(db);
 						break;
@@ -92,7 +92,7 @@ namespace DataModel
 						
 						db.Insert(ent);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateAccSaved }.Create(db, "", "");
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.TaskUpdateAccSaved, nuType = EnumAuditType.Task }.Create(db, "", "");
 
 						accs = LoadAccs(db);						
 						break;

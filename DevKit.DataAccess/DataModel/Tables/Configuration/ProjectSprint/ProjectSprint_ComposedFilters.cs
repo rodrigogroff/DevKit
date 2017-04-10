@@ -14,8 +14,10 @@ namespace DataModel
 
 	public partial class ProjectSprint
 	{
-		public List<ProjectSprint> ComposedFilters(DevKitDB db, ref int count, List<long?> lstUserProjects, ProjectSprintFilter filter)
+		public List<ProjectSprint> ComposedFilters(DevKitDB db, ref int count, ProjectSprintFilter filter)
 		{
+			var lstUserProjects = db.GetCurrentUserProjects();
+
 			var query = from e in db.ProjectSprints select e;
 
 			if (filter.busca != null)

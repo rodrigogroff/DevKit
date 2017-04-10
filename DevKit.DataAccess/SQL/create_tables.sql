@@ -385,6 +385,8 @@ CREATE TABLE public."AuditLog"
 	"dtLog" timestamp without time zone,
 	"fkUser" bigint,
 	"fkActionLog" bigint,
+	"nuType" bigint,
+	"fkTarget" bigint,
 	"stLog" character varying(999),
 	"stDetailLog" character varying(3999),	
     PRIMARY KEY (id)

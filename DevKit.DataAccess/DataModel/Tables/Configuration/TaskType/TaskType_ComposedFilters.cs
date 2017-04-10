@@ -14,8 +14,10 @@ namespace DataModel
 
 	public partial class TaskType
 	{
-		public List<TaskType> ComposedFilters(DevKitDB db, ref int count, List<long?> lstUserProjetcs, TaskTypeFilter filter)
+		public List<TaskType> ComposedFilters(DevKitDB db, ref int count, TaskTypeFilter filter)
 		{
+			var lstUserProjetcs = db.GetCurrentUserProjects();
+
 			var query = from e in db.TaskTypes select e;
 
 			if (filter.busca != null)

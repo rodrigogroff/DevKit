@@ -46,7 +46,7 @@ namespace DataModel
 					{
 						db.Update(this);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint }.Create(db, TrackChanges(), "");
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectUpdateUpdateSprint, nuType = EnumAuditType.Sprint }.Create(db, TrackChanges(), "");
 
 						break;
 					}
@@ -70,13 +70,13 @@ namespace DataModel
 							
 							db.Insert(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintAddVersion }.Create(db, "", "");
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintAddVersion, nuType = EnumAuditType.Sprint }.Create(db, "", "");
 						}
 						else
 						{
 							db.Update(ent);
 
-							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintUpdateVersion }.Create(db, "", "");
+							new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintUpdateVersion, nuType = EnumAuditType.Sprint }.Create(db, "", "");
 						}
 						
 						versions = LoadVersions(db);
@@ -95,7 +95,7 @@ namespace DataModel
 
 						db.Delete(versionDel);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintRemoveVersion }.Create(db, "", "");
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SprintRemoveVersion, nuType = EnumAuditType.Sprint }.Create(db, "", "");
 
 						versions = LoadVersions(db);
 						break;

@@ -80,10 +80,12 @@ namespace DataModel
 
 	public class Management
 	{
-		public ManagementDTO ComposedFilters(DevKitDB db, ManagementFilter filter, List<long?> lstUserProjects)
+		public ManagementDTO ComposedFilters(DevKitDB db, ManagementFilter filter)
 		{
 			var dto = new ManagementDTO();
 			var vs = new EnumVersionState();
+
+			var lstUserProjects = db.GetCurrentUserProjects();
 
 			if (filter.fkProject == null)
 			{

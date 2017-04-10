@@ -8,7 +8,7 @@ namespace DataModel
 		{
 			db.Update(this);
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemSetupUpdate }.Create(db, "", "");
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemSetupUpdate, nuType = EnumAuditType.Setup }.Create(db, "", "");
 
 			return true;
 		}

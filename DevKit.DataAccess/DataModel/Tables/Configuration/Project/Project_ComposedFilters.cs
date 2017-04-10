@@ -26,8 +26,11 @@ namespace DataModel
 	
 	public partial class Project
 	{
-		public List<Project> ComposedFilters(DevKitDB db, User user, ref int count, List<long?> lstUserProjects, ProjectFilter filter)
+		public List<Project> ComposedFilters(DevKitDB db, ref int count, ProjectFilter filter)
 		{
+			var user = db.GetCurrentUser();
+			var lstUserProjects = db.GetCurrentUserProjects();
+
 			var query = from e in db.Projects select e;
 
 			if (filter.busca != null)
@@ -53,7 +56,7 @@ namespace DataModel
 
 			results.ForEach(y => { y = y.LoadAssociations(db); });
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectListing }.Create(db, filter.ExportString(), "count: " + count);
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectListing, nuType = EnumAuditType.Project }.Create(db, filter.ExportString(), "count: " + count);
 
 			return results;
 		}

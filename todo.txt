@@ -4,8 +4,14 @@ FEATURES
 ------------------------------
 	
 	------------------------
+	timesheet
+	------------------------
+		- visualizar todos sintético
+
+	------------------------
 	log de auditoria
 	------------------------
+	    - miplementar todos os track changes		
 		- Enum de ações													ok
 		- Tabela nova no banco											ok
 		- varrer controles e inserir os registros

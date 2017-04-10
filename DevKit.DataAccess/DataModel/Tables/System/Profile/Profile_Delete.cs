@@ -26,7 +26,7 @@ namespace DataModel
 		{
 			db.Delete(this);
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemProfileRemove }.Create(db, "", "");
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemProfileRemove, nuType = EnumAuditType.Profile }.Create(db, "", "");
 		}
 	}
 }

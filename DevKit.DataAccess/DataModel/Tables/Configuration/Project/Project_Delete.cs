@@ -29,7 +29,7 @@ namespace DataModel
 
 			db.Delete(this);
 
-			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectDelete }.Create(db, "", "");
+			new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.ProjectDelete, nuType = EnumAuditType.Project }.Create(db, "", "");
 		}
 	}
 }

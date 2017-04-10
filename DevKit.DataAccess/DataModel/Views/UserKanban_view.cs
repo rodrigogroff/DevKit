@@ -75,11 +75,12 @@ namespace DataModel
 
 	public class UserKanban
 	{
-		public UserKanban_dto ComposedFilters(DevKitDB db, UserKanbanFilter filter, User user)
+		public UserKanban_dto ComposedFilters(DevKitDB db, UserKanbanFilter filter)
 		{
 			var dto = new UserKanban_dto();
 			var task_helper = new Task();
 			var accTypeEnum = new EnumAccumulatorType();
+			var user = db.GetCurrentUser();
 
 			var dbUserprojects = ( from e in db.Projects
 									join pu in db.ProjectUsers on e.id equals pu.fkProject

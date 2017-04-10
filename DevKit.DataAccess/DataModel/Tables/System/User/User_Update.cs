@@ -29,7 +29,7 @@ namespace DataModel
 					{
 						db.Update(this);
 
-						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemUserUpdate }.Create(db, "", "");
+						new AuditLog { fkUser = user.id, fkActionLog = EnumAuditAction.SystemUserUpdate, nuType = EnumAuditType.User }.Create(db, "", "");
 
 						break;
 					}

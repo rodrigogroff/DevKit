@@ -10,6 +10,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.viewModel = {};
 	$scope.permModel = {};	
 	$scope.permID = 102;
+	$scope.auditLogPerm = 112;
 
 	function CheckPermissions()
 	{
@@ -22,6 +23,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
 			}
+		},
+		function (response) { });
+
+		Api.Permission.get({ id: $scope.auditLogPerm }, function (data) {
+			$scope.auditLogView = $scope.permModel.visualizar;
 		},
 		function (response) { });
 	}
@@ -108,6 +114,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.User.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('User saved!', 'Success');
+						$scope.viewModel.logs = data.logs;
 					},
 					function (response)
 					{
@@ -171,6 +178,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				toastr.success('Phone removed', 'Success');
 				$scope.viewModel.phones = data.phones;
+				$scope.viewModel.logs = data.logs;
 			});
 		}
 	}
@@ -210,13 +218,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				Api.User.update({ id: id }, $scope.viewModel, function (data)
 				{
-					$scope.newPhone = { stPhone: '', stDescription: '' };
-										
-					toastr.success('Phone saved', 'Success');
-					
+					$scope.newPhone = { stPhone: '', stDescription: '' };										
+					toastr.success('Phone saved', 'Success');					
 					$scope.viewModel.phones = data.phones;
-
-				}, function (response) {
+					$scope.viewModel.logs = data.logs;
+				},
+				function (response) {
 					toastr.error(response.data.message, 'Error');
 				});
 			}
@@ -242,6 +249,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				toastr.success('Email removed', 'Success');
 				$scope.viewModel.emails = data.emails;
+				$scope.viewModel.logs = data.logs;
 			});
 		}
 	}
@@ -279,12 +287,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				Api.User.update({ id: id }, $scope.viewModel, function (data)
 				{					
 					$scope.newEmail = { stEmail: '' };
-
 					toastr.success('Email saved', 'Success');
-
 					$scope.viewModel.emails = data.emails;
-
-				}, function (response) {
+					$scope.viewModel.logs = data.logs;
+				},
+				function (response) {
 					toastr.error(response.data.message, 'Error');
 				});
 			}

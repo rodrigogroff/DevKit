@@ -59,7 +59,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "New user: " + db.User(ent.fkUser).stLogin + ";Role: " + ent.stRole, "");
 						}							
 						else
 						{
@@ -71,7 +71,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "Updated role: " + ent.stRole, "");
 						}							
 
 						users = LoadUsers(db);
@@ -81,7 +81,9 @@ namespace DataModel
 
 				case "removeUser":
 					{
-						db.Delete(JsonConvert.DeserializeObject<ProjectUser>(anexedEntity.ToString()));
+						var ent = JsonConvert.DeserializeObject<ProjectUser>(anexedEntity.ToString());
+
+						db.Delete(ent);
 
 						new AuditLog {
 							fkUser = user.id,
@@ -89,7 +91,7 @@ namespace DataModel
 							nuType = EnumAuditType.Project,
 							fkTarget = this.id
 						}.
-						Create(db, "", "");
+						Create(db, "User removed: " + db.User(ent.fkUser), "");
 
 						users = LoadUsers(db);
 						logs = LoadLogs(db);
@@ -120,7 +122,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "Phase added: " + ent.stName, "");
 						}							
 						else
 						{
@@ -132,7 +134,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "Phase edited: " + ent.stName, "");
 						}
 							
 						phases = LoadPhases(db);
@@ -142,15 +144,15 @@ namespace DataModel
 
 				case "removePhase":
 					{
-						var mdlDel = JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString());
+						var ent = JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkPhase == mdlDel.id select e).Any())
+						if ((from e in db.Tasks where e.fkPhase == ent.id select e).Any())
 						{
 							resp = "This phase is being used in a task";
 							return false;
 						}
 
-						db.Delete(mdlDel);
+						db.Delete(ent);
 
 						new AuditLog {
 							fkUser = user.id,
@@ -158,7 +160,7 @@ namespace DataModel
 							nuType = EnumAuditType.Project,
 							fkTarget = this.id
 						}.
-						Create(db, "", "");
+						Create(db, "Phase deleted: " + ent.stName, "");
 
 						phases = LoadPhases(db);
 						logs = LoadLogs(db);
@@ -190,7 +192,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "New sprint: " + ent.stName, "");
 
 							new AuditLog {
 								fkUser = user.id,
@@ -220,15 +222,15 @@ namespace DataModel
 
 				case "removeSprint":
 					{
-						var mdlDel = JsonConvert.DeserializeObject<ProjectSprint>(anexedEntity.ToString());
+						var ent = JsonConvert.DeserializeObject<ProjectSprint>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkSprint == mdlDel.id select e).Any())
+						if ((from e in db.Tasks where e.fkSprint == ent.id select e).Any())
 						{
 							resp = "This sprint is being used in a task";
 							return false;
 						}
 
-						db.Delete(mdlDel);
+						db.Delete(ent);
 
 						new AuditLog {
 							fkUser = user.id,
@@ -236,7 +238,7 @@ namespace DataModel
 							nuType = EnumAuditType.Project,
 							fkTarget = this.id
 						}.
-						Create(db, "", "");
+						Create(db, "Sprint deleted: " + ent.stName , "");
 
 						sprints = LoadSprints(db);
 						logs = LoadLogs(db);

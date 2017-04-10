@@ -228,6 +228,42 @@
 						</table>
 					</div>
 				</tab>
+				<tab heading="Audit Log" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Audit Log" ng-if="viewModel.id != undefined && auditLogView == true">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td width="400px">
+									<legend style="color:white">Audit Log Track</legend>
+									<br />
+									<table>
+										<tr>
+											<td>
+												<table class="table table-hover" ng-if="viewModel.logs.length > 0">
+													<thead>
+														<tr>
+															<th width="130px">Date</th>
+															<th width="110px">User</th>
+															<th width="280px">Details</th>
+														</tr>
+													</thead>
+													<tr data-ng-repeat="mdl in viewModel.logs">
+														<td>{{ mdl.sdtLog }}</td>
+														<td>{{ mdl.stUser }}</td>
+														<td>{{ mdl.stDetails }}</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
 			</tabset>
 			<br />
 			<br />

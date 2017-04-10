@@ -4,10 +4,20 @@ namespace DataModel
 {
 	public partial class TaskType
 	{
-		public List<TaskCategory> categories;
-		public Project project;
-		
-		public string updateCommand = "";
 		public object anexedEntity;
+
+		public string updateCommand = "";		
+
+		public Project project;
+
+		public List<TaskCategory> categories;
+		public List<TaskTypeLog> logs;
+	}
+
+	public class TaskTypeLog
+	{
+		public string sdtLog,
+						stUser,
+						stDetails;
 	}
 }

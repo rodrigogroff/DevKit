@@ -75,7 +75,7 @@ namespace DataModel
 								nuType = EnumAuditType.Sprint,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "Added version: " + ent.stName, "");
 						}
 						else
 						{
@@ -87,7 +87,7 @@ namespace DataModel
 								nuType = EnumAuditType.Sprint,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "Updated version: " + ent.stName, "");
 						}
 						
 						versions = LoadVersions(db);
@@ -113,7 +113,7 @@ namespace DataModel
 							nuType = EnumAuditType.Sprint,
 							fkTarget = this.id
 						}.
-						Create(db, "", "");
+						Create(db, "Version deleted " + versionDel.stName, "");
 
 						versions = LoadVersions(db);
 						logs = LoadLogs(db);

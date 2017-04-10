@@ -29,6 +29,7 @@ namespace DataModel
 				usrMessages = LoadMessages(db);
 				flows = LoadFlows(db);
 				accs = LoadAccs(db);
+				logs = LoadLogs(db);
 			}
 
 			return this;
@@ -133,93 +134,32 @@ namespace DataModel
 			return ret;
 		}
 
-		public string GetValueForType(DevKitDB db, string _type, long task_id, long task_acc, long accVal_id = 0, List<long> lstRange = null )
+		List<TaskLog> LoadLogs(DevKitDB db)
 		{
-			var ret = "";
+			var setup = db.Setup();
 
-			switch (_type)
+			var lstLogs = (from e in db.AuditLogs
+						   where e.nuType == EnumAuditType.Task
+						   where e.fkTarget == this.id
+						   select e).
+						   OrderByDescending(y => y.id).
+						   ToList();
+
+			var lstUsers = (from e in lstLogs
+							join eUser in db.Users on e.fkUser equals eUser.id
+							select eUser).
+							ToList();
+
+			var ret = new List<TaskLog>();
+
+			foreach (var item in lstLogs)
 			{
-				case "Money":
-
-					if (accVal_id == 0)
-						ret = ( from e in db.TaskAccumulatorValues
-								where accVal_id == 0 || e.id == accVal_id 
-								where task_id ==0 || e.fkTask == task_id
-								where lstRange == null || lstRange.Contains ( (long)e.fkTask)
-								where e.fkTaskAcc == task_acc
-								select e).Select(y => y.nuValue).ToString();
-					else
-						ret = ( from e in db.TaskAccumulatorValues
-								where task_id == 0 || e.fkTask == task_id
-								where e.fkTaskAcc == task_acc
-								select e).Sum(y => y.nuValue).ToString();
-
-					break;
-
-				case "Hours":
-
-					long? hh = 0, mm = 0;
-
-					if (accVal_id == 0)
-					{
-						hh = (from e in db.TaskAccumulatorValues
-							  where task_id == 0 || e.fkTask == task_id
-							  where lstRange == null || lstRange.Contains((long)e.fkTask)
-							  where e.fkTaskAcc == task_acc
-							  select e).Sum(y => y.nuHourValue) * 60;
-
-						if (hh == null) hh = 0;
-					}						
-					else
-					{
-						hh = (from e in db.TaskAccumulatorValues
-							  where e.id == accVal_id
-							  where task_id == 0 || e.fkTask == task_id
-							  where e.fkTaskAcc == task_acc
-							  select e).FirstOrDefault().nuHourValue;
-
-						if (hh != null)
-							hh = hh * 60;
-						else
-							hh = 0;
-					}
-
-					if (accVal_id == 0)
-					{
-						mm = (from e in db.TaskAccumulatorValues
-							  where task_id == 0 || e.fkTask == task_id
-							  where lstRange == null || lstRange.Contains((long)e.fkTask)
-							  where e.fkTaskAcc == task_acc
-							  select e).Sum(y => y.nuMinValue);
-
-						if (mm == null)
-							mm = 0;
-					}
-					else
-					{
-						mm = (from e in db.TaskAccumulatorValues
-							  where e.id == accVal_id
-							  where task_id == 0 || e.fkTask == task_id
-							  where e.fkTaskAcc == task_acc
-							  select e).FirstOrDefault().nuMinValue;
-
-						if (mm == null)
-							mm = 0;
-					}
-
-					var tot = hh + mm;
-
-					if (tot != 0)
-					{
-						var totHours = (hh + mm) / 60;
-						var totMins = tot - totHours * 60;
-
-						ret = totHours.ToString() + ":" + totMins.ToString().PadLeft(2, '0');
-					}
-					else
-						ret = "00:00";
-
-					break;
+				ret.Add(new TaskLog
+				{
+					sdtLog = item.dtLog?.ToString(setup.stDateFormat),
+					stUser = lstUsers.Where(y => y.id == item.fkUser).FirstOrDefault().stLogin,
+					stDetails = item.stLog
+				});
 			}
 
 			return ret;

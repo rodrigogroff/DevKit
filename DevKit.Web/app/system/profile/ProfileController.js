@@ -249,7 +249,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Profile.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Profile saved!', 'Success');
-
 						$scope.viewModel.logs = data.logs;
 					},
 					function (response)

@@ -43,7 +43,7 @@ namespace DataModel
 				nuType = EnumAuditType.User,
 				fkTarget = this.id
 			}.
-			Create(db, "", "");
+			Create(db, "New user: " + stLogin, "");
 
 			return true;
 		}

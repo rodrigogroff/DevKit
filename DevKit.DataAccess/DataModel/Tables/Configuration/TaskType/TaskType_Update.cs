@@ -29,6 +29,7 @@ namespace DataModel
 
 						db.Update(this);
 
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -111,7 +112,7 @@ namespace DataModel
 								nuType = EnumAuditType.TaskType,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "New category: " + ent.stName, "");
 						}
 						else
 						{
@@ -123,25 +124,26 @@ namespace DataModel
 								nuType = EnumAuditType.TaskType,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "Edit category: " + ent.stName, "");
 						}							
 
 						categories = LoadCategories(db);
+						logs = LoadLogs(db);
 
 						break;
 					}
 
 				case "removeCategorie":
 					{
-						var categDel = JsonConvert.DeserializeObject<TaskCategory>(anexedEntity.ToString());
+						var ent = JsonConvert.DeserializeObject<TaskCategory>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkTaskCategory == categDel.id select e).Any())
+						if ((from e in db.Tasks where e.fkTaskCategory == ent.id select e).Any())
 						{
 							resp = "This category is being used in a task";
 							return false;
 						}
 
-						db.Delete(categDel);
+						db.Delete(ent);
 
 						new AuditLog {
 							fkUser = user.id,
@@ -149,9 +151,10 @@ namespace DataModel
 							nuType = EnumAuditType.TaskType,
 							fkTarget = this.id
 						}.
-						Create(db, "", "");
+						Create(db, "Category deleted: " + ent.stName, "");
 
 						categories = LoadCategories(db);
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -181,7 +184,7 @@ namespace DataModel
 								nuType = EnumAuditType.TaskType,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "New flow: " + ent.stName, "");
 						}
 						else
 						{
@@ -193,23 +196,24 @@ namespace DataModel
 								nuType = EnumAuditType.TaskType,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
-						}							
-						
+							Create(db, "Edit flow: " + ent.stName, "");
+						}
+
+						logs = LoadLogs(db);
 						break;
 					}
 
 				case "removeFlow":
 					{
-						var flowDel = JsonConvert.DeserializeObject<TaskFlow>(anexedEntity.ToString());
+						var ent = JsonConvert.DeserializeObject<TaskFlow>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkTaskFlowCurrent == flowDel.id select e).Any())
+						if ((from e in db.Tasks where e.fkTaskFlowCurrent == ent.id select e).Any())
 						{
 							resp = "This flow is being used in a task";
 							return false;
 						}
 
-						db.Delete(flowDel);
+						db.Delete(ent);
 
 						new AuditLog {
 							fkUser = user.id,
@@ -217,8 +221,9 @@ namespace DataModel
 							nuType = EnumAuditType.TaskType,
 							fkTarget = this.id
 						}.
-						Create(db, "", "");
+						Create(db, "Flow delete: " + ent.stName, "");
 
+						logs = LoadLogs(db);
 						break;
 					}
 
@@ -249,7 +254,7 @@ namespace DataModel
 								nuType = EnumAuditType.TaskType,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "New accumulator: " + ent.stName, "");
 						}
 						else
 						{
@@ -261,17 +266,18 @@ namespace DataModel
 								nuType = EnumAuditType.TaskType,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
-						}							
+							Create(db, "Edit accumulator: " + ent.stName, "");
+						}
 
+						logs = LoadLogs(db);
 						break;
 					}
 
 				case "removeAcc":
 					{
-						var accDel = JsonConvert.DeserializeObject<TaskTypeAccumulator>(anexedEntity.ToString());
+						var ent = JsonConvert.DeserializeObject<TaskTypeAccumulator>(anexedEntity.ToString());
 
-						db.Delete(accDel);
+						db.Delete(ent);
 
 						new AuditLog {
 							fkUser = user.id,
@@ -279,8 +285,9 @@ namespace DataModel
 							nuType = EnumAuditType.TaskType,
 							fkTarget = this.id
 						}.
-						Create(db, "", "");
+						Create(db, "Accumulator deleted: " + ent.stName, "");
 
+						logs = LoadLogs(db);
 						break;
 					}
 			}

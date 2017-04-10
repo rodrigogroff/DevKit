@@ -6,13 +6,10 @@ FEATURES
 	------------------------
 	log de auditoria
 	------------------------
-		- nos detalhes do usuário, mostrar periodo e combo de ação
-		- nos detalhes do projeto, mostrar periodo e combo de ação
-		- nos detalhes do task type, mostrar periodo e combo de ação
-		- nos detalhes do perfil, mostrar periodo e combo de ação
-		- nos detalhes do sprint, mostrar periodo e combo de ação
-		- paginar resultados
-		
+
+		Task		= 4,
+		Setup		= 7;
+				
 	------------------------
 	documentação
 	------------------------

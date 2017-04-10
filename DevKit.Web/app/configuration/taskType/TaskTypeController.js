@@ -9,6 +9,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.viewModel = {};
 	$scope.permModel = {};	
 	$scope.permID = 105;
+	$scope.auditLogPerm = 113;
 
 	function CheckPermissions()
 	{
@@ -23,6 +24,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			}
 		},
 		function (response) { });
+
+		Api.Permission.get({ id: $scope.auditLogPerm }, function (data) {
+			$scope.auditLogView = $scope.permModel.visualizar;
+		},
+		function (response) { });
 	}
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -33,9 +39,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		CheckPermissions();
 
+		$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, {});
+		$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, {});
 		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.id' } });
-		$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, { });
-		$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, { });
 		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'newAcc.fkTaskCategory' } });
 
 		if (id > 0)
@@ -87,6 +93,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Task type saved!', 'Success');
+						$scope.viewModel.logs = data.logs;
 					},
 					function (response)
 					{
@@ -149,6 +156,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				toastr.success('Category removed', 'Success');
 				$scope.viewModel.categories = data.categories;
+				$scope.viewModel.logs = data.logs;
 			});
 		}
 	}
@@ -191,7 +199,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				toastr.success('Category saved', 'Success');
 				$scope.viewModel.categories = data.categories;
-
+				$scope.viewModel.logs = data.logs;
 				$scope.addCategorie = false;
 
 			}, function (response)
@@ -248,6 +256,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Flow removed', 'Success');
+				$scope.viewModel.logs = data.logs;
 				$scope.loadFlows();
 			});
 		}
@@ -282,6 +291,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newFlow = {};
 				$scope.newFlow.fkTaskCategory = tmp;
 
+				$scope.viewModel.logs = data.logs;
 				$scope.loadFlows();
 
 				$scope.addFlow = false;
@@ -370,11 +380,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newAcc = {};
 				$scope.newAcc.fkTaskCategory = tmp;
 
+				$scope.viewModel.logs = data.logs;
 				$scope.loadAccs();
 
 				$scope.addAcc = false;
 
-			}, function (response) {
+			},
+			function (response) {
 				toastr.error(response.data.message, 'Error');
 			});
 		}

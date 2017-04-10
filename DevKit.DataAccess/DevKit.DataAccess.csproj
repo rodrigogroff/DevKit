@@ -115,10 +115,12 @@
     <Compile Include="DataModel\Tables\System\User\User_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Update.cs" />
     <Compile Include="DataModel\Tables\Task\TaskTypeAccumulator\TaskTypeAccumulator_DTO.cs" />
+    <Compile Include="DataModel\Tables\Task\Task\Task_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_Create.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_Delete.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_DTO.cs" />
+    <Compile Include="DataModel\Tables\Task\Task\Task_Extras.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_LoadAssociations.cs" />
     <Compile Include="DataModel\Views\Timesheet_view.cs" />
     <Compile Include="DataModel\Views\Management_view.cs" />

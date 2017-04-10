@@ -31,7 +31,7 @@ namespace DataModel
 								nuType = EnumAuditType.Task,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "New assigned: " + db.User(fkUserResponsible).stLogin, "");
 						}
 
 						if (stUserMessage != "")
@@ -53,7 +53,7 @@ namespace DataModel
 								nuType = EnumAuditType.Task,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "New message", "");
 						}
 
 						if (fkNewFlow != null && oldTask.fkTaskFlowCurrent != fkNewFlow)
@@ -89,20 +89,22 @@ namespace DataModel
 								nuType = EnumAuditType.Task,
 								fkTarget = this.id
 							}.
-							Create(db, "", "");
+							Create(db, "State changed -> " + db.TaskFlow(fkNewFlow).stName, "");
 						}
 
-						db.Update(this);
-
-						new AuditLog {
+						new AuditLog
+						{
 							fkUser = user.id,
 							fkActionLog = EnumAuditAction.TaskUpdate,
 							nuType = EnumAuditType.Task,
 							fkTarget = this.id
 						}.
-						Create(db, "", "");
+						Create(db, TrackChanges(db), "");
+
+						db.Update(this);
 
 						LoadAssociations(db);
+
 						break;
 					}
 
@@ -122,9 +124,10 @@ namespace DataModel
 							nuType = EnumAuditType.Task,
 							fkTarget = this.id
 						}.
-						Create(db, "", "");
+						Create(db, "New time added: " + ent.nuHourValue.ToString() + ":" + ent.nuMinValue.ToString(), "");
 
-						accs = LoadAccs(db);						
+						accs = LoadAccs(db);
+						logs = LoadLogs(db);
 						break;
 					}
 			}

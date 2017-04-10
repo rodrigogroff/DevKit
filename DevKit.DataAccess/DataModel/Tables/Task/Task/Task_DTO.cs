@@ -4,6 +4,8 @@ namespace DataModel
 {
 	public partial class Task
 	{
+		public object anexedEntity;
+
 		public string	sdtStart = "",
 						snuPriority = "",
 						sfkUserStart = "",
@@ -15,18 +17,24 @@ namespace DataModel
 						sfkPhase = "",
 						sfkSprint = "",
 						sfkVersion = "";
+		
+		public string stUserMessage = "",
+						fkNewFlow_Message = "",
+						updateCommand = "";
+
+		public long? fkNewFlow = null;
 
 		public List<TaskProgress> usrProgress;
 		public List<TaskMessage> usrMessages;
 		public List<TaskFlowChange> flows;
 		public List<TaskTypeAccumulator> accs;
+		public List<TaskLog> logs;
+	}
 
-		public string stUserMessage = "";
-
-		public long? fkNewFlow = null;
-		public string fkNewFlow_Message = "";
-
-		public string updateCommand = "";
-		public object anexedEntity;
+	public class TaskLog
+	{
+		public string sdtLog,
+						stUser,
+						stDetails;
 	}
 }

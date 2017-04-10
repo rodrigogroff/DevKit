@@ -38,7 +38,7 @@ namespace DataModel
 				nuType = EnumAuditType.Profile,
 				fkTarget = this.id
 			}.
-			Create(db, "", "");
+			Create(db, "New profile: " + this.stName, "");
 
 			return true;
 		}

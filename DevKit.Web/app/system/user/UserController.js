@@ -98,6 +98,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.save = function ()
 	{
+		$scope.resetPassword = undefined;
+
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
@@ -139,6 +141,19 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.list = function () {
 		$state.go('users');
+	}
+
+	$scope.resetPass = function ()
+	{
+		$scope.viewModel.updateCommand = "resetPassword";
+
+		Api.User.update({ id: id }, $scope.viewModel, function (data)
+		{			
+			$scope.resetPassword = data.resetPassword;
+		},
+		function (response) {
+			toastr.error(response.data.message, 'Error');
+		});
 	}
 
 	$scope.remove = function ()

@@ -98,6 +98,7 @@ namespace DevKit.Web
 
 				"~/app/system/setup/SetupController.js",
 				"~/app/system/user/UserController.js",
+				"~/app/system/user/UserPasswordController.js",
 				"~/app/system/user/ListingUsersController.js",
 				"~/app/system/profile/ProfileController.js",
 				"~/app/system/profile/ListingProfilesController.js",

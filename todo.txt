@@ -3,6 +3,10 @@
 FEATURES
 ------------------------------
 
+	-troca de senha
+
+	-check points (por categoria)
+	
 	------------------------
 	log de auditoria
 	------------------------

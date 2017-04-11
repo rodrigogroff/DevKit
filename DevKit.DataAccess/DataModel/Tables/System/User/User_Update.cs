@@ -25,6 +25,52 @@ namespace DataModel
 
 			switch (updateCommand)
 			{
+				case "changePassword":
+					{
+						var ent = JsonConvert.DeserializeObject<UserPasswordChange>(anexedEntity.ToString());
+
+						if (ent.stCurrentPassword.ToUpper() != this.stPassword.ToUpper() )
+						{
+							resp = "Current password does not match!";
+							return false;
+						}
+
+						this.stPassword = ent.stNewPassword;
+
+						db.Update(this);
+
+						new AuditLog
+						{
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.UserPasswordReset,
+							nuType = EnumAuditType.User,
+							fkTarget = this.id
+						}.
+						Create(db, "Password changed by user", "");
+
+						break;
+					}
+
+				case "resetPassword":
+					{
+						this.stPassword = GetRandomString(8);
+						
+						db.Update(this);
+
+						resetPassword = this.stPassword;
+
+						new AuditLog
+						{
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.UserPasswordReset,
+							nuType = EnumAuditType.User,
+							fkTarget = this.id
+						}.
+						Create(db, "A new password was generated [" + this.stPassword + "]", "");
+
+						break;
+					}
+
 				case "entity":
 					{
 						new AuditLog {

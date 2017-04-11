@@ -258,6 +258,8 @@
     <Content Include="app\configuration\project\_filterProject.html" />
     <Content Include="app\system\setup\setup.html" />
     <Content Include="app\system\setup\SetupController.js" />
+    <Content Include="app\system\user\UserPasswordController.js" />
+    <Content Include="app\system\user\userPassword.html" />
     <Content Include="app\system\user\user.html" />
     <Content Include="app\system\user\UserController.js" />
     <Content Include="app\system\user\listingUsers.html" />

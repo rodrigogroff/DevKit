@@ -8,13 +8,20 @@ namespace DataModel
 
 		public string sdtLastLogin = "",
 						sdtCreation = "",
-						updateCommand = "";
+						updateCommand = "",
+						resetPassword = "";
 
 		public Profile profile;
 
 		public List<UserPhone> phones;
 		public List<UserEmail> emails;
 		public List<UserLog> logs;
+	}
+
+	public class UserPasswordChange
+	{
+		public string stCurrentPassword,
+						stNewPassword;
 	}
 
 	public class UserLog

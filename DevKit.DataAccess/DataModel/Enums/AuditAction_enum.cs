@@ -61,7 +61,9 @@ namespace DataModel
 							UserRemovePhone = 46,
 							UserAddEmail = 47,
 							UserEditEmail = 48,
-							UserRemoveEmail = 49;
+							UserRemoveEmail = 49,
+							UserPasswordReset = 50,
+							UserPasswordChange = 51;
 
 		public EnumAuditAction()
 		{
@@ -112,6 +114,8 @@ namespace DataModel
 			lst.Add(new AuditAction() { id = UserAddEmail, stName = "System \\ User update, adding email" });
 			lst.Add(new AuditAction() { id = UserEditEmail, stName = "System \\ User update, editing email" });
 			lst.Add(new AuditAction() { id = UserRemoveEmail, stName = "System \\ User update, removing email" });
+			lst.Add(new AuditAction() { id = UserPasswordReset, stName = "System \\ User update, password reset" });
+			lst.Add(new AuditAction() { id = UserPasswordChange, stName = "System \\ User update, password change" });
 
 			lst.Add(new AuditAction() { id = TaskCreate, stName = "Task \\ Task Creation" });
 			lst.Add(new AuditAction() { id = TaskDelete, stName = "Task \\ Task Delete" });

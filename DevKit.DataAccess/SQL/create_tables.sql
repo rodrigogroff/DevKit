@@ -1,5 +1,24 @@
 ﻿
 DROP TABLE public."Setup";
+DROP TABLE public."Profile";
+DROP TABLE public."User";
+DROP TABLE public."UserEmail";
+DROP TABLE public."UserPhone";
+DROP TABLE public."Project";
+DROP TABLE public."ProjectUser";
+DROP TABLE public."ProjectPhase";
+DROP TABLE public."ProjectSprint";
+DROP TABLE public."TaskType";
+DROP TABLE public."TaskCategory";
+DROP TABLE public."TaskFlow";
+DROP TABLE public."ProjectSprintVersion";
+DROP TABLE public."Task";
+DROP TABLE public."TaskProgress";
+DROP TABLE public."TaskMessage";
+DROP TABLE public."TaskFlowChange";
+DROP TABLE public."TaskTypeAccumulator";
+DROP TABLE public."TaskAccumulatorValue";
+DROP TABLE public."AuditLog";
 
 CREATE TABLE public."Setup"
 (
@@ -17,8 +36,6 @@ TABLESPACE pg_default;
 ALTER TABLE public."Setup"
     OWNER to postgres;
 
-DROP TABLE public."Profile";
-
 CREATE TABLE public."Profile"
 (
     id bigserial NOT NULL,
@@ -33,8 +50,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Profile"
     OWNER to postgres;
-
-DROP TABLE public."User";
 
 CREATE TABLE public."User"
 (
@@ -55,8 +70,6 @@ TABLESPACE pg_default;
 ALTER TABLE public."User"
     OWNER to postgres;
 
-DROP TABLE public."UserEmail";
-
 CREATE TABLE public."UserEmail"
 (
     id bigserial NOT NULL,
@@ -72,7 +85,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."UserEmail"
     OWNER to postgres;
 
-DROP TABLE public."UserPhone";
+
 
 CREATE TABLE public."UserPhone"
 (
@@ -90,7 +103,7 @@ TABLESPACE pg_default;
 ALTER TABLE public."UserPhone"
     OWNER to postgres;
 
-DROP TABLE public."Project";
+
 
 CREATE TABLE public."Project"
 (
@@ -109,8 +122,6 @@ TABLESPACE pg_default;
 ALTER TABLE public."Project"
     OWNER to postgres;
 
-DROP TABLE public."ProjectUser";
-
 CREATE TABLE public."ProjectUser"
 (
     id bigserial NOT NULL,
@@ -128,8 +139,6 @@ TABLESPACE pg_default;
 ALTER TABLE public."ProjectUser"
     OWNER to postgres;
 
-DROP TABLE public."ProjectPhase";
-
 CREATE TABLE public."ProjectPhase"
 (
     id bigserial NOT NULL,
@@ -144,8 +153,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."ProjectPhase"
     OWNER to postgres;
-
-DROP TABLE public."ProjectSprint";
 
 CREATE TABLE public."ProjectSprint"
 (
@@ -164,7 +171,6 @@ TABLESPACE pg_default;
 ALTER TABLE public."ProjectSprint"
     OWNER to postgres;
 
-DROP TABLE public."TaskType";
 	
 CREATE TABLE public."TaskType"
 (
@@ -184,7 +190,6 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskType"
     OWNER to postgres;
 
-DROP TABLE public."TaskCategory";
 
 CREATE TABLE public."TaskCategory"
 (
@@ -202,8 +207,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."TaskCategory"
     OWNER to postgres;
-
-DROP TABLE public."TaskFlow";
 
 CREATE TABLE public."TaskFlow"
 (
@@ -224,8 +227,6 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskFlow"
     OWNER to postgres;
 	
-DROP TABLE public."ProjectSprintVersion";
-
 CREATE TABLE public."ProjectSprintVersion"
 (
     id bigserial NOT NULL,
@@ -241,8 +242,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."ProjectSprintVersion"
     OWNER to postgres;
-
-DROP TABLE public."Task";
 
 CREATE TABLE public."Task"
 (
@@ -275,8 +274,6 @@ TABLESPACE pg_default;
 ALTER TABLE public."Task"
     OWNER to postgres;
 
-DROP TABLE public."TaskProgress";
-
 CREATE TABLE public."TaskProgress"
 (
     id bigserial NOT NULL,
@@ -292,8 +289,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."TaskProgress"
     OWNER to postgres;
-
-DROP TABLE public."TaskMessage";
 
 CREATE TABLE public."TaskMessage"
 (
@@ -312,8 +307,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."TaskMessage"
     OWNER to postgres;
-
-DROP TABLE public."TaskFlowChange";
 
 CREATE TABLE public."TaskFlowChange"
 (
@@ -334,8 +327,6 @@ TABLESPACE pg_default;
 ALTER TABLE public."TaskFlowChange"
     OWNER to postgres;
 
-DROP TABLE public."TaskTypeAccumulator";
-	
 CREATE TABLE public."TaskTypeAccumulator"
 (
     id bigserial NOT NULL,
@@ -354,8 +345,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."TaskTypeAccumulator"
     OWNER to postgres;
-
-DROP TABLE public."TaskAccumulatorValue";
 
 CREATE TABLE public."TaskAccumulatorValue"
 (
@@ -376,8 +365,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."TaskAccumulatorValue"
     OWNER to postgres;
-
-DROP TABLE public."AuditLog";
 
 CREATE TABLE public."AuditLog"
 (

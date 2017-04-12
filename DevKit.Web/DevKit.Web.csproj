@@ -414,6 +414,7 @@
     <Content Include="scripts\angular-strap.tpl.min.js" />
     <Content Include="scripts\angular-touch.js" />
     <Content Include="scripts\angular-touch.min.js" />
+    <Content Include="scripts\angular-trix.min.js" />
     <Content Include="scripts\angular-ui-router.min.js" />
     <Content Include="scripts\angular-ui-mask.min.js" />
     <Content Include="scripts\angular-ui-tree.min.js" />

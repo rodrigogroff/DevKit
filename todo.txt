@@ -14,7 +14,8 @@ FEATURES
 	log de auditoria
 	------------------------
 
-		- logar pesquisas!
+		- logar tb pesquisas!
+		- visualizar no usuário tudo que ele fez (paginado)
 				
 	------------------------
 	documentação
@@ -34,6 +35,7 @@ melhorias emergenciais!
 
 	-modais de confirmação de exclusão
 	-poder anexar documentos nas tarefas
+	-usar editor trix ou similar para noticias / descrição de tarefas
 
 ------------------
 melhorias postergáveis

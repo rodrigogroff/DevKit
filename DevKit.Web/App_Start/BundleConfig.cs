@@ -73,6 +73,7 @@ namespace DevKit.Web
 				"~/scripts/jquery.fileupload-validate.js",
 				"~/scripts/jquery.fileupload-angular.js",
 				"~/scripts/angular-ui-tree.min.js",
+				//"~/scripts/angular-trix.min.js",
 				"~/scripts/ng-currency.js"
 				));
 

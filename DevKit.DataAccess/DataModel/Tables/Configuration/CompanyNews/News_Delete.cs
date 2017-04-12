@@ -3,15 +3,17 @@ using System.Linq;
 
 namespace DataModel
 {
-	public partial class TaskType
-	{
+	public partial class CompanyNews
+	{		
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
-			if ((from e in db.Tasks where e.fkTaskType == id select e).Any())
+			/*
+			if ((from e in db.Tasks where e.fkProject == id select e).Any())
 			{
-				resp = "This task type is being used in a task";
+				resp = "This project is being used in a task";
 				return false;
 			}
+			*/
 
 			return true;
 		}
@@ -22,13 +24,14 @@ namespace DataModel
 
 			db.Delete(this);
 
+			/*
 			new AuditLog {
 				fkUser = user.id,
-				fkActionLog = EnumAuditAction.TaskTypeDelete,
-				nuType = EnumAuditType.TaskType,
-				fkTarget = this.id
+				fkActionLog = EnumAuditAction.ProjectDelete,
+				nuType = EnumAuditType.Project
 			}.
 			Create(db, "", "");
+			*/
 		}
 	}
 }

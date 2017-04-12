@@ -20,6 +20,7 @@ namespace DataModel
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
 		public ITable<AuditLog>             AuditLogs             { get { return this.GetTable<AuditLog>(); } }
+		public ITable<CompanyNews>          CompanyNews           { get { return this.GetTable<CompanyNews>(); } }
 		public ITable<Profile>              Profiles              { get { return this.GetTable<Profile>(); } }
 		public ITable<Project>              Projects              { get { return this.GetTable<Project>(); } }
 		public ITable<ProjectPhase>         ProjectPhases         { get { return this.GetTable<ProjectPhase>(); } }
@@ -27,6 +28,9 @@ namespace DataModel
 		public ITable<ProjectSprintVersion> ProjectSprintVersions { get { return this.GetTable<ProjectSprintVersion>(); } }
 		public ITable<ProjectUser>          ProjectUsers          { get { return this.GetTable<ProjectUser>(); } }
 		public ITable<Setup>                Setups                { get { return this.GetTable<Setup>(); } }
+		public ITable<Survey>               Surveys               { get { return this.GetTable<Survey>(); } }
+		public ITable<SurveyOption>         SurveyOptions         { get { return this.GetTable<SurveyOption>(); } }
+		public ITable<SurveyUserOption>     SurveyUserOptions     { get { return this.GetTable<SurveyUserOption>(); } }
 		public ITable<Task>                 Tasks                 { get { return this.GetTable<Task>(); } }
 		public ITable<TaskAccumulatorValue> TaskAccumulatorValues { get { return this.GetTable<TaskAccumulatorValue>(); } }
 		public ITable<TaskCategory>         TaskCategories        { get { return this.GetTable<TaskCategory>(); } }
@@ -38,6 +42,7 @@ namespace DataModel
 		public ITable<TaskTypeAccumulator>  TaskTypeAccumulators  { get { return this.GetTable<TaskTypeAccumulator>(); } }
 		public ITable<User>                 Users                 { get { return this.GetTable<User>(); } }
 		public ITable<UserEmail>            UserEmails            { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserNewsRead>         UserNewsReads         { get { return this.GetTable<UserNewsRead>(); } }
 		public ITable<UserPhone>            UserPhones            { get { return this.GetTable<UserPhone>(); } }
 
 		public DevKitDB()
@@ -65,6 +70,18 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkTarget    { get; set; } // bigint
 		[Column,     Nullable] public string    stLog       { get; set; } // character varying(999)
 		[Column,     Nullable] public string    stDetailLog { get; set; } // character varying(3999)
+	}
+
+	[Table(Schema="public", Name="CompanyNews")]
+	public partial class CompanyNews
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public string    stTitle   { get; set; } // character varying(200)
+		[Column,     Nullable] public string    stMessage { get; set; } // character varying(2000)
+		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
+		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="Profile")]
@@ -129,6 +146,36 @@ namespace DataModel
 		[Column,     Nullable] public string stPhoneMask      { get; set; } // character varying(99)
 		[Column,     Nullable] public string stDateFormat     { get; set; } // character varying(99)
 		[Column,     Nullable] public string stProtocolFormat { get; set; } // character varying(20)
+	}
+
+	[Table(Schema="public", Name="Survey")]
+	public partial class Survey
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public string    stTitle   { get; set; } // character varying(200)
+		[Column,     Nullable] public string    stMessage { get; set; } // character varying(2000)
+		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
+		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
+	}
+
+	[Table(Schema="public", Name="SurveyOption")]
+	public partial class SurveyOption
+	{
+		[PrimaryKey, Identity] public long   id       { get; set; } // bigint
+		[Column,     Nullable] public long?  fkSurvey { get; set; } // bigint
+		[Column,     Nullable] public int?   nuOrder  { get; set; } // integer
+		[Column,     Nullable] public string stOption { get; set; } // character varying(200)
+	}
+
+	[Table(Schema="public", Name="SurveyUserOption")]
+	public partial class SurveyUserOption
+	{
+		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
+		[Column,     Nullable] public long?     fkSurvey       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkSurveyOption { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="Task")]
@@ -265,6 +312,15 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkUser  { get; set; } // bigint
 	}
 
+	[Table(Schema="public", Name="UserNewsRead")]
+	public partial class UserNewsRead
+	{
+		[PrimaryKey, Identity] public long      id     { get; set; } // bigint
+		[Column,     Nullable] public long?     fkNews { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog  { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUser { get; set; } // bigint
+	}
+
 	[Table(Schema="public", Name="UserPhone")]
 	public partial class UserPhone
 	{
@@ -277,6 +333,12 @@ namespace DataModel
 	public static partial class TableExtensions
 	{
 		public static AuditLog Find(this ITable<AuditLog> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static CompanyNews Find(this ITable<CompanyNews> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);
@@ -319,6 +381,24 @@ namespace DataModel
 		}
 
 		public static Setup Find(this ITable<Setup> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Survey Find(this ITable<Survey> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SurveyOption Find(this ITable<SurveyOption> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SurveyUserOption Find(this ITable<SurveyUserOption> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);
@@ -385,6 +465,12 @@ namespace DataModel
 		}
 
 		public static UserEmail Find(this ITable<UserEmail> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static UserNewsRead Find(this ITable<UserNewsRead> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

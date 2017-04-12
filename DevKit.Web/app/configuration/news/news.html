@@ -1,0 +1,351 @@
+﻿<div class="webFormPostion">
+	<section class="widgetForm" style="width:950px; height:100%">
+		<legend class="legendTop">
+			<table><tr height="12px"><td> </td></tr></table>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td>
+						Configuration \ Project \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stName}}&nbsp;</span></b>
+						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button>
+					</td>
+					<td width="20px"></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+		<div class="divWebForm">
+			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
+				<tab heading="Project">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table>
+							<thead>
+								<tr>
+									<th width="20px"></th>
+									<th width="120px"></th>
+									<th width="20px"></th>
+									<th width="240px"></th>
+								</tr>
+							</thead>
+							<tr height="12px"></tr>
+							<tr height="40px" ng-show="viewModel.id > 0">
+								<td></td>
+								<td>Creation Date</td>
+								<td></td>
+								<td>
+									<b>{{viewModel.sdtCreation }}</b>
+								</td>
+							</tr>
+							<tr height="40px" ng-show="viewModel.id > 0">
+								<td></td>
+								<td>Created By</td>
+								<td></td>
+								<td>
+									<b>{{viewModel.stUser}}</b>
+								</td>
+							</tr>
+							<tr height="40px">
+								<td></td>
+								<td>Project name</td>
+								<td>
+									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
+								</td>
+								<td>
+									<input type="text" class="form-control input-transparent" maxlength="150"
+										   ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
+								</td>
+							</tr>
+							<tr height="40px">
+								<td></td>
+								<td>Project Template</td>
+								<td>
+									<button class="btn btn-xs btn-danger" ng-show="fkTemplate_fail">!</button>
+								</td>
+								<td>
+									<input type="hidden" name="user" style="width:100%" ui-select2="selectProjectTemplate" ng-model="viewModel.fkProjectTemplate" />
+								</td>
+							</tr>
+							<tr height="20px"></tr>
+						</table>
+					</div>
+				</tab>
+
+				<tab heading="Users" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Users [{{viewModel.users.length}}]" ng-if="viewModel.id != undefined">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<legend style="color:aliceblue">
+										Users allocated for project
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewUser()"><i class="fa fa-plus"> </i> Add new </button>
+									</legend>
+									<div ng-if="addUser == true">
+										<table>
+											<tr>
+												<td>
+													<table>
+														<tr height="42px">
+															<td width="120px">User</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="fkUser_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="hidden" name="user" style="width:100%" ui-select2="selectUsers" ng-model="newUser.fkUser" />
+															</td>
+														</tr>
+														<tr height="42px">
+															<td width="120px">Role</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="stRole_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="text" class="form-control input-transparent" ng-model="newUser.stRole">
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										<br />
+										<button class="btn btn-primary" ng-click="saveNewUser()">Save </button>
+										<br />
+										<br />
+									</div>
+									<div ng-show="viewModel.users.length > 0">
+										<br />
+										<table class="table table-hover" style="width:100%">
+											<thead>
+												<tr>
+													<th width="150px">User</th>
+													<th width="150px">Role</th>
+													<th width="120px">Join Date</th>
+													<th width="70px"></th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="mdl in viewModel.users">
+												<td>{{ mdl.stUser }}</td>
+												<td>{{ mdl.stRole }}</td>
+												<td>{{ mdl.sdtJoin }}</td>
+												<td>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="editUser(mdl)">
+															<i class="glyphicon glyphicon-edit" style="color:white"></i>
+														</a>
+														&nbsp;&nbsp;
+														<a href="" role="button" ng-click="removeUser($index, viewModel.users)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>													
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
+
+				<tab heading="Phases" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Phases [{{viewModel.phases.length}}]" ng-if="viewModel.id != undefined">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<legend style="color:aliceblue">
+										Phases estabilished for project
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewPhase()"><i class="fa fa-plus"> </i> Add new </button>
+									</legend>
+									<div ng-if="addPhase == true">
+										<table>
+											<tr>
+												<td>
+													<table>
+														<tr height="42px">
+															<td width="120px">Phase name</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="newphase_stName_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="text" class="form-control input-transparent" ng-model="newPhase.stName">
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										<br />
+										<button class="btn btn-primary" ng-click="saveNewPhase()">Save </button>
+										<br />
+										<br />
+									</div>
+									<div ng-show="viewModel.phases.length > 0">
+										<br />
+										<table class="table table-hover" style="width:100%">
+											<thead>
+												<tr>
+													<th>Phase</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="mdl in viewModel.phases">
+												<td>{{ mdl.stName }}</td>
+												<td>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="editPhase(mdl)">
+															<i class="glyphicon glyphicon-edit" style="color:white"></i>
+														</a>
+														&nbsp;&nbsp;
+														<a href="" role="button" ng-click="removePhase($index, viewModel.phases)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
+
+				<tab heading="Sprints" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Sprints [{{viewModel.sprints.length}}]" ng-if="viewModel.id != undefined">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<legend style="color:aliceblue">
+										Sprints 
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewSprint()"><i class="fa fa-plus"> </i> Add new </button>
+									</legend>
+									<div ng-if="addSprint == true">
+										<table>
+											<tr>
+												<td>
+													<table>
+														<tr height="42px">
+															<td width="120px">Phase</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="fkSprintPhase_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="hidden" name="user" style="width:100%" ui-select2="selectPhases" ng-model="newSprint.fkPhase" />
+															</td>
+														</tr>
+														<tr height="42px">
+															<td width="120px">Sprint</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="stSprint_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="text" class="form-control input-transparent" ng-model="newSprint.stName">
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										<br />
+										<button class="btn btn-primary" ng-click="saveNewSprint()">Save </button>
+										<br />
+										<br />
+									</div>
+									<div ng-show="viewModel.sprints.length > 0">
+										<br />
+										<table class="table table-hover"  style="width:100%">
+											<thead>
+												<tr>
+													<th width="150px">Phase</th>
+													<th width="150px">Sprint</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="mdl in viewModel.sprints">
+												<td>{{ mdl.sfkPhase }}</td>
+												<td>{{ mdl.stName }}</td>
+												<td>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="goSprint(mdl)">
+															<i class="glyphicon glyphicon-share" style="color:white"></i>
+														</a>
+														&nbsp;&nbsp;
+														<a href="" role="button" ng-click="editSprint(mdl)">
+															<i class="glyphicon glyphicon-edit" style="color:white"></i>
+														</a>
+														&nbsp;&nbsp;
+														<a href="" role="button" ng-click="removeSprint($index, viewModel.sprints)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>													
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
+				<tab heading="Audit Log" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Audit Log" ng-if="viewModel.id != undefined && auditLogView == true">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td width="400px">
+									<legend style="color:white">Audit Log Track</legend>
+									<br />
+									<table>
+										<tr>
+											<td>
+												<table class="table table-hover" ng-if="viewModel.logs.length > 0">
+													<thead>
+														<tr>
+															<th width="130px">Date</th>
+															<th width="110px">User</th>
+															<th width="380px">Details</th>
+														</tr>
+													</thead>
+													<tr data-ng-repeat="mdl in viewModel.logs">
+														<td>{{ mdl.sdtLog }}</td>
+														<td>{{ mdl.stUser }}</td>
+														<td>{{ mdl.stDetails }}</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
+			</tabset>
+			<br />
+			<br />
+			<table>
+				<tr>
+					<td><button class="btn btn-default" ng-click="list()">Cancel</button> </td>
+					<td width="34px"></td>
+					<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+		</div>
+	</section>
+</div>

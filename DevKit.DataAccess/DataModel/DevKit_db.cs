@@ -79,6 +79,14 @@ namespace DataModel
 			return ret;
 		}
 
+		public CompanyNews News(long? id)
+		{
+			if (id == null) return null;
+			var tag = "CompanyNews" + id; var ret = Cache[tag] as CompanyNews;
+			if (ret == null) { ret = CompanyNews.Find((long)id); Cache[tag] = ret; }
+			return ret;
+		}
+
 		public ProjectPhase ProjectPhase(long? id)
 		{
 			if (id == null) return null;

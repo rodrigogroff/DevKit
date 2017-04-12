@@ -9,8 +9,10 @@ namespace DataModel
 			return false;
 		}
 
-		public void Delete(DevKitDB db, User user)
+		public void Delete(DevKitDB db)
 		{
+			var user = db.GetCurrentUser();
+
 			new AuditLog {
 				fkUser = user.id,
 				fkActionLog = EnumAuditAction.TaskDelete,

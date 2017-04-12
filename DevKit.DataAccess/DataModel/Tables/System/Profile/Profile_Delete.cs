@@ -22,8 +22,10 @@ namespace DataModel
 			return true;
 		}
 
-		public void Delete(DevKitDB db, User user )
+		public void Delete(DevKitDB db)
 		{
+			var user = db.GetCurrentUser();
+
 			db.Delete(this);
 
 			new AuditLog {

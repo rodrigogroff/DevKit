@@ -6,17 +6,10 @@ namespace DataModel
 {
 	public partial class User
 	{
-		public bool Update(DevKitDB db, User user)
+		public bool Update(DevKitDB db, ref string resp)
 		{
-			var resp = "";
+			var user = db.GetCurrentUser();
 
-			Update(db, user, ref resp);
-
-			return true;
-		}
-
-		public bool Update(DevKitDB db, User user, ref string resp)
-		{
 			if (CheckDuplicate(this, db))
 			{
 				resp = "Login already taken";

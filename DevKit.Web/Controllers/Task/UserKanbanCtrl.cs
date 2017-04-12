@@ -10,8 +10,8 @@ namespace DevKit.Web.Controllers
 			using (var db = new DevKitDB())
 			{
 				var mdl = new UserKanban();
-
-				var dto = mdl.ComposedFilters(db, new UserKanbanFilter()
+				
+				return Ok(mdl.ComposedFilters(db, new UserKanbanFilter()
 				{
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
 					complete = Request.GetQueryStringValue<bool?>("complete", null),
@@ -24,9 +24,7 @@ namespace DevKit.Web.Controllers
 					fkTaskFlowCurrent = Request.GetQueryStringValue<long?>("fkTaskFlowCurrent", null),
 					fkUserStart = Request.GetQueryStringValue<long?>("fkUserStart", null),
 					fkUserAssigned = Request.GetQueryStringValue<long?>("fkUserAssigned", null)
-				});
-
-				return Ok(dto);				
+				}));				
 			}
 		}
 	}

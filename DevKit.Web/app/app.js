@@ -42,6 +42,10 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 	.state('management', { url: '/task/management', templateUrl: 'app/task/management/management.html', controller: 'ManagementController' })
 	.state('timesheet', { url: '/task/timesheet', templateUrl: 'app/task/timesheet/timesheet.html', controller: 'TimesheetController' })
 
+	.state('newsListing', { url: '/configuration/newsListing', templateUrl: 'app/configuration/news/listingNews.html', controller: 'ListingNewsController' })
+    .state('news-new', { url: '/configuration/news/new', templateUrl: 'app/configuration/news/news.html', controller: 'NewsController' })
+    .state('news', { url: '/configuration/news/:id', templateUrl: 'app/configuration/news/news.html', controller: 'NewsController' })
+
 	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);

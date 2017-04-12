@@ -29,8 +29,10 @@ namespace DataModel
 			return query.Any();
 		}
 		
-		public bool Create(DevKitDB db, User user, ref string resp)
+		public bool Create(DevKitDB db, ref string resp)
 		{
+			var user = db.GetCurrentUser();
+
 			bComplete = false;
 			dtStart = DateTime.Now;
 			fkUserStart = user.id;

@@ -18,9 +18,8 @@ namespace DevKit.Web.Controllers
 				};
 
 				var mdl = new Timesheet();
-				var dto = mdl.ComposedFilters(db, filter);
 
-				return Ok(dto);				
+				return Ok(mdl.ComposedFilters(db, filter));
 			}
 		}
 	}

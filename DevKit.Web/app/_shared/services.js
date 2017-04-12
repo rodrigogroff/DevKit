@@ -109,6 +109,7 @@ angular.module('app.services', ['ngResource'])
 		Month: $resource('api/month/:id', {}, opcoes),		
 		VersionState: $resource('api/versionState/:id', {}, opcoes),
 		ProjectTemplate: $resource('api/projectTemplate/:id', {}, opcoes),
-		Timesheet: $resource('api/timeSheet/:id', {}, opcoes)
+		Timesheet: $resource('api/timeSheet/:id', {}, opcoes),
+		News: $resource('api/news/:id', {}, opcoes),
 	};
 }]);

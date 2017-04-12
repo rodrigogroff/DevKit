@@ -7,8 +7,10 @@ namespace DataModel
 {
 	public partial class TaskType
 	{
-		public bool Update(DevKitDB db, User user, ref string resp)
+		public bool Update(DevKitDB db, ref string resp)
 		{
+			var user = db.GetCurrentUser();
+
 			if (CheckDuplicate(this, db))
 			{
 				resp = "Task type name already taken";

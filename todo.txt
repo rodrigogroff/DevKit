@@ -7,12 +7,14 @@ FEATURES
 	-avisos
 	-enquetes
 	-confirmacao de aceite
+
+	-tags nas tarefas (projeto tem o cadastro de tags)
 	
 	------------------------
 	log de auditoria
 	------------------------
 
-		Setup (colocar tab e log de audit)
+		- logar pesquisas!
 				
 	------------------------
 	documentação

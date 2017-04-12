@@ -4,31 +4,31 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class TaskTypeController : ApiControllerBase
+	public class NewsController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
 			using (var db = new DevKitDB())
 			{
-				var count = 0; var mdl = new TaskType();
+				var count = 0; var mdl = new CompanyNews();
 
-				var results = mdl.ComposedFilters(db, ref count, new TaskTypeFilter
+				var results = mdl.ComposedFilters(db, ref count, new CompanyNewsFilter
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-					fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
+					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 				});
 
 				return Ok(new { count = count, results = results });
 			}
 		}
-		
+
 		public IHttpActionResult Get(long id)
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.TaskType(id);
+				var model = db.News(id);
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -37,7 +37,7 @@ namespace DevKit.Web.Controllers
 			}
 		}
 
-		public IHttpActionResult Post(TaskType mdl)
+		public IHttpActionResult Post(CompanyNews mdl)
 		{
 			using (var db = new DevKitDB())
 			{
@@ -50,7 +50,7 @@ namespace DevKit.Web.Controllers
 			}
 		}
 
-		public IHttpActionResult Put(long id, TaskType mdl)
+		public IHttpActionResult Put(long id, CompanyNews mdl)
 		{
 			using (var db = new DevKitDB())
 			{
@@ -67,7 +67,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.TaskType(id);
+				var model = db.News(id);
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);
@@ -76,9 +76,9 @@ namespace DevKit.Web.Controllers
 
 				if (!model.CanDelete(db, ref resp))
 					return BadRequest(resp);
-				
+
 				model.Delete(db);
-				
+								
 				return Ok();
 			}
 		}

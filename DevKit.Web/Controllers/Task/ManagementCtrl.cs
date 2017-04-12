@@ -11,13 +11,11 @@ namespace DevKit.Web.Controllers
 			using (var db = new DevKitDB())
 			{
 				var mdl = new Management();
-
-				var dto = mdl.ComposedFilters(db, new ManagementFilter()
+				
+				return Ok(mdl.ComposedFilters(db, new ManagementFilter()
 				{
 					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
-				});
-
-				return Ok(dto);				
+				}));				
 			}
 		}
 	}

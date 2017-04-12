@@ -3,7 +3,6 @@ using LinqToDB;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
-using System.Threading;
 using System.Linq;
 using System.Security.Claims;
 
@@ -19,8 +18,6 @@ namespace DevKit.Web
 
 		public override async System.Threading.Tasks.Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
-			Thread.Sleep(999);
-
 			using (var db = new DevKitDB())
 			{
 				var usuario = new User().Login(db,context.UserName, context.Password);
@@ -28,7 +25,7 @@ namespace DevKit.Web
 				if (usuario != null)
 				{
 					usuario.dtLastLogin = DateTime.Now;
-					usuario.Update(db, usuario);					
+					db.Update(usuario);
 
 					var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 

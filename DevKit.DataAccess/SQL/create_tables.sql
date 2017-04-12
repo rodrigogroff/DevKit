@@ -19,6 +19,11 @@ DROP TABLE public."TaskFlowChange";
 DROP TABLE public."TaskTypeAccumulator";
 DROP TABLE public."TaskAccumulatorValue";
 DROP TABLE public."AuditLog";
+DROP TABLE public."Survey";
+DROP TABLE public."SurveyOption";
+DROP TABLE public."SurveyUserOption"
+DROP TABLE public."CompanyNews"
+DROP TABLE public."UserNewsRead"
 
 CREATE TABLE public."Setup"
 (
@@ -384,4 +389,90 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE public."AuditLog"
+    OWNER to postgres;
+
+CREATE TABLE public."Survey"
+(
+    id bigserial NOT NULL,
+    "stTitle" character varying(200),
+	"stMessage" character varying(2000),
+	"fkProject" bigint,
+	"dtLog" timestamp without time zone,
+	"fkUser" bigint,
+	"bActive" boolean,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Survey"
+    OWNER to postgres;
+
+CREATE TABLE public."SurveyOption"
+(
+    id bigserial NOT NULL,
+	"fkSurvey" bigint,
+	"nuOrder" int,
+	"stOption" character varying(200),
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."SurveyOption"
+    OWNER to postgres;
+
+CREATE TABLE public."SurveyUserOption"
+(
+    id bigserial NOT NULL,
+	"fkSurvey" bigint,
+	"fkSurveyOption" bigint,
+	"dtLog" timestamp without time zone,	
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."SurveyUserOption"
+    OWNER to postgres;
+	
+CREATE TABLE public."CompanyNews"
+(
+    id bigserial NOT NULL,
+    "stTitle" character varying(200),
+	"stMessage" character varying(2000),
+	"fkProject" bigint,
+	"dtLog" timestamp without time zone,
+	"fkUser" bigint,
+	"bActive" boolean,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."CompanyNews"
+    OWNER to postgres;
+	
+CREATE TABLE public."UserNewsRead"
+(
+    id bigserial NOT NULL,
+	"fkNews" bigint,
+	"dtLog" timestamp without time zone,
+	"fkUser" bigint,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."UserNewsRead"
     OWNER to postgres;

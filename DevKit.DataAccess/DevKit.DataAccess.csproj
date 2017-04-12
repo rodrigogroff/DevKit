@@ -72,6 +72,13 @@
     <Compile Include="DataModel\Enums\Month_enum.cs" />
     <Compile Include="DataModel\Enums\VersionState_enum.cs" />
     <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
+    <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_ComposedFilters.cs" />
+    <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_Create.cs" />
+    <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_Delete.cs" />
+    <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_DTO.cs" />
+    <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_LoadAssociations.cs" />
+    <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_TrackChanges.cs" />
+    <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_Update.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion\ProjectSprintVersion_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_ComposedFilters.cs" />

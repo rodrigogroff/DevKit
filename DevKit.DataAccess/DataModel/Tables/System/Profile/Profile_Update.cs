@@ -4,8 +4,10 @@ namespace DataModel
 {
 	public partial class Profile
 	{
-		public bool Update(DevKitDB db, User user, ref string resp)
+		public bool Update(DevKitDB db, ref string resp)
 		{
+			var user = db.GetCurrentUser();
+
 			if (CheckDuplicate(this, db))
 			{
 				resp = "The name '" + stName + "' is already taken";

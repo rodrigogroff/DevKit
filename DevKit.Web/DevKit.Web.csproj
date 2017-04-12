@@ -236,6 +236,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\configuration\news\listingNews.html" />
+    <Content Include="app\configuration\news\ListingNewsController.js" />
+    <Content Include="app\configuration\news\news.html" />
+    <Content Include="app\configuration\news\NewsController.js" />
+    <Content Include="app\configuration\news\_filterNews.html" />
     <Content Include="app\configuration\taskType\listingTaskTypes.html" />
     <Content Include="app\configuration\taskType\ListingTaskTypesController.js" />
     <Content Include="app\configuration\taskType\taskType.html" />
@@ -821,6 +826,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Configuration\NewsCtrl.cs" />
     <Compile Include="Controllers\Enums\AccumulatorTypeCtrl.cs" />
     <Compile Include="Controllers\Configuration\TaskAccumulatorCtrl.cs" />
     <Compile Include="Controllers\Configuration\TaskCategoryCtrl.cs" />

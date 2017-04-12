@@ -46,6 +46,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1051: false, tg1052: false, tg1053: false, tg1054: false, tg1055: false,
 			// task 
 			tg1061: false, tg1062: false, tg1063: false, tg1064: false, tg1065: false,
+			// news 
+			tg1181: false, tg1182: false, tg1183: false, tg1184: false, tg1185: false,
+			// surveys 
+			tg1191: false, tg1192: false, tg1063: false, tg1194: false, tg1195: false,
 			// user Kanban
 			tg1071: false,
 			// management
@@ -135,6 +139,20 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (data.stPermissions.indexOf('|1064|') >= 0) data.tg1064 = true; else data.tg1064 = false;
 				if (data.stPermissions.indexOf('|1065|') >= 0) data.tg1065 = true; else data.tg1065 = false;
 
+				// news 
+				if (data.stPermissions.indexOf('|1181|') >= 0) data.tg1181 = true; else data.tg1181 = false;
+				if (data.stPermissions.indexOf('|1182|') >= 0) data.tg1182 = true; else data.tg1182 = false;
+				if (data.stPermissions.indexOf('|1183|') >= 0) data.tg1183 = true; else data.tg1183 = false;
+				if (data.stPermissions.indexOf('|1184|') >= 0) data.tg1184 = true; else data.tg1184 = false;
+				if (data.stPermissions.indexOf('|1185|') >= 0) data.tg1185 = true; else data.tg1185 = false;
+
+				// surveys
+				if (data.stPermissions.indexOf('|1191|') >= 0) data.tg1191 = true; else data.tg1191 = false;
+				if (data.stPermissions.indexOf('|1192|') >= 0) data.tg1192 = true; else data.tg1192 = false;
+				if (data.stPermissions.indexOf('|1193|') >= 0) data.tg1193 = true; else data.tg1193 = false;
+				if (data.stPermissions.indexOf('|1194|') >= 0) data.tg1194 = true; else data.tg1194 = false;
+				if (data.stPermissions.indexOf('|1195|') >= 0) data.tg1195 = true; else data.tg1195 = false;
+
 				// user Kanban  
 				if (data.stPermissions.indexOf('|1071|') >= 0) data.tg1071 = true; else data.tg1071 = false;
 				// management  
@@ -200,31 +218,30 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				// setup
 				if (_mdl.tg1001 == true) perms += '|1001|'; if (_mdl.tg1002 == true) perms += '|1002|'; if (_mdl.tg1003 == true) perms += '|1003|';
 				if (_mdl.tg1004 == true) perms += '|1004|'; if (_mdl.tg1005 == true) perms += '|1005|';
-
 				// profiles
 				if (_mdl.tg1011 == true) perms += '|1011|'; if (_mdl.tg1012 == true) perms += '|1012|'; if (_mdl.tg1013 == true) perms += '|1013|';
 				if (_mdl.tg1014 == true) perms += '|1014|'; if (_mdl.tg1015 == true) perms += '|1015|';
-
 				// users
 				if (_mdl.tg1021 == true) perms += '|1021|'; if (_mdl.tg1022 == true) perms += '|1022|'; if (_mdl.tg1023 == true) perms += '|1023|';
 				if (_mdl.tg1024 == true) perms += '|1024|'; if (_mdl.tg1025 == true) perms += '|1025|';
-
 				// projects
 				if (_mdl.tg1031 == true) perms += '|1031|'; if (_mdl.tg1032 == true) perms += '|1032|'; if (_mdl.tg1033 == true) perms += '|1033|';
 				if (_mdl.tg1034 == true) perms += '|1034|'; if (_mdl.tg1035 == true) perms += '|1035|';
-
 				// sprints
 				if (_mdl.tg1041 == true) perms += '|1041|'; if (_mdl.tg1042 == true) perms += '|1042|'; if (_mdl.tg1043 == true) perms += '|1043|';
 				if (_mdl.tg1044 == true) perms += '|1044|'; if (_mdl.tg1045 == true) perms += '|1045|';
-
 				// task type
 				if (_mdl.tg1051 == true) perms += '|1051|'; if (_mdl.tg1052 == true) perms += '|1052|'; if (_mdl.tg1053 == true) perms += '|1053|';
 				if (_mdl.tg1054 == true) perms += '|1054|'; if (_mdl.tg1055 == true) perms += '|1055|';
-
 				// task 
 				if (_mdl.tg1061 == true) perms += '|1061|'; if (_mdl.tg1062 == true) perms += '|1062|'; if (_mdl.tg1063 == true) perms += '|1063|';
 				if (_mdl.tg1064 == true) perms += '|1064|'; if (_mdl.tg1065 == true) perms += '|1065|';
-
+				// news
+				if (_mdl.tg1181 == true) perms += '|1181|'; if (_mdl.tg1182 == true) perms += '|1182|'; if (_mdl.tg1183 == true) perms += '|1183|';
+				if (_mdl.tg1184 == true) perms += '|1184|'; if (_mdl.tg1185 == true) perms += '|1185|';
+				// surveys
+				if (_mdl.tg1191 == true) perms += '|1191|'; if (_mdl.tg1192 == true) perms += '|1192|'; if (_mdl.tg1193 == true) perms += '|1193|';
+				if (_mdl.tg1194 == true) perms += '|1194|'; if (_mdl.tg1195 == true) perms += '|1195|';
 				// user Kanban
 				if (_mdl.tg1071 == true) perms += '|1071|';
 				// management

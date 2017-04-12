@@ -95,26 +95,25 @@ namespace DevKit.Web
 				"~/app/_shared/MenuController.js",
 				"~/app/_shared/NgSelectsService.js",
 				"~/app/app.js",
-
 				"~/app/system/setup/SetupController.js",
 				"~/app/system/user/UserController.js",
 				"~/app/system/user/UserPasswordController.js",
 				"~/app/system/user/ListingUsersController.js",
 				"~/app/system/profile/ProfileController.js",
 				"~/app/system/profile/ListingProfilesController.js",
-
 				"~/app/configuration/project/ProjectController.js",
 				"~/app/configuration/project/ListingProjectsController.js",
 				"~/app/configuration/sprint/SprintController.js",
 				"~/app/configuration/sprint/ListingSprintsController.js",
 				"~/app/configuration/taskType/TaskTypeController.js",
 				"~/app/configuration/taskType/ListingTaskTypesController.js",
-
 				"~/app/task/task/TaskController.js",
 				"~/app/task/task/ListingTasksController.js",
 				"~/app/task/kanban/ListingUserKanbanController.js",
 				"~/app/task/management/ManagementController.js",
-				"~/app/task/timesheet/TimesheetController.js"
+				"~/app/task/timesheet/TimesheetController.js",
+				"~/app/configuration/news/NewsController.js",
+				"~/app/configuration/news/ListingNewsController.js"
 
 				));
 

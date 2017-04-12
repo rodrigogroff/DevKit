@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('app.controllers').controller('NewsController',
+angular.module('app.controllers').controller('SurveyController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects', 
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects )
 {
@@ -8,7 +8,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.viewModel = {};
 	$scope.permModel = {};	
-	$scope.permID = 118;
+	$scope.permID = 119;
 	
 	function CheckPermissions()
 	{
@@ -39,7 +39,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			$scope.loading = true;
 
-			Api.News.get({ id: id }, function (data)
+			Api.Survey.get({ id: id }, function (data)
 			{
 				$scope.viewModel = data;
 				$scope.loading = false;
@@ -80,9 +80,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					$scope.viewModel.updateCommand = "entity";
 
-					Api.News.update({ id: id }, $scope.viewModel, function (data)
+					Api.Survey.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('News saved!', 'Success');
+						toastr.success('Survey saved!', 'Success');
 					},
 					function (response)
 					{
@@ -91,9 +91,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				}
 				else
 				{
-					Api.News.add($scope.viewModel, function (data)
+					Api.Survey.add($scope.viewModel, function (data)
 					{
-						toastr.success('News added!', 'Success');
+						toastr.success('Survey added!', 'Success');
 						$state.go('news', { id: data.id });
 					},
 					function (response)
@@ -106,7 +106,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	};
 
 	$scope.list = function () {
-		$state.go('newsListing');
+		$state.go('surveysListing');
 	}
 
 	$scope.remove = function ()
@@ -115,9 +115,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			Api.News.remove({ id: id }, {}, function (data)
+			Api.Survey.remove({ id: id }, {}, function (data)
 			{
-				toastr.success('News removed!', 'Success');
+				toastr.success('Survey removed!', 'Success');
 				$scope.list();
 			},
 			function (response) {

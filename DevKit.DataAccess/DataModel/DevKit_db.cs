@@ -87,6 +87,14 @@ namespace DataModel
 			return ret;
 		}
 
+		public Survey Survey(long? id)
+		{
+			if (id == null) return null;
+			var tag = "Survey" + id; var ret = Cache[tag] as Survey;
+			if (ret == null) { ret = Surveys.Find((long)id); Cache[tag] = ret; }
+			return ret;
+		}
+
 		public ProjectPhase ProjectPhase(long? id)
 		{
 			if (id == null) return null;

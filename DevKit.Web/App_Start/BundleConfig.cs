@@ -114,7 +114,9 @@ namespace DevKit.Web
 				"~/app/task/management/ManagementController.js",
 				"~/app/task/timesheet/TimesheetController.js",
 				"~/app/configuration/news/NewsController.js",
-				"~/app/configuration/news/ListingNewsController.js"
+				"~/app/configuration/news/ListingNewsController.js",
+				"~/app/configuration/surveys/SurveyController.js",
+				"~/app/configuration/surveys/ListingSurveysController.js"
 
 				));
 

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DataModel
 {
-	public partial class CompanyNews
+	public partial class Survey
 	{
 		public bool Update(DevKitDB db, ref string resp)
 		{
@@ -13,7 +13,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "News title already taken";
+				resp = "Survey title already taken";
 				return false;
 			}
 

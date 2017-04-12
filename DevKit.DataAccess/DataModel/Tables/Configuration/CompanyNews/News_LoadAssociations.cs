@@ -12,8 +12,13 @@ namespace DataModel
 
 			var mdlUser = db.User(this.fkUser);
 
-			sfkUser = mdlUser.stLogin;
+			if (mdlUser != null)
+				sfkUser = mdlUser.stLogin;
+
 			sdtLog = dtLog?.ToString(setup.stDateFormat);
+
+			if (fkProject != null)
+				sfkProject = db.Project(fkProject).stName;
 
 			//logs = LoadLogs(db);
 

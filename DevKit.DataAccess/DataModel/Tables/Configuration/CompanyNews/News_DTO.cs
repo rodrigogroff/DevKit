@@ -7,6 +7,7 @@ namespace DataModel
 		public object anexedEntity;
 
 		public string sfkUser = "",
+						sfkProject = "",
 						sdtLog = "",
 						updateCommand = "";
 

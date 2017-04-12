@@ -32,6 +32,9 @@ namespace DataModel
 				return false;
 			}
 
+			fkUser = user.id;
+			dtLog = DateTime.Now;
+
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 			
 			/*

@@ -70,6 +70,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				Api.Setup.update({ id: 1 }, $scope.viewModel, function (data)
 				{
 					toastr.success('Setup preferences saved!', 'Success');
+					$scope.viewModel.logs = data.logs;
 				},
 				function (response)
 				{

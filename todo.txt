@@ -4,6 +4,9 @@ FEATURES
 ------------------------------
 
 	-check points (por categoria)
+	-avisos
+	-enquetes
+	-confirmacao de aceite
 	
 	------------------------
 	log de auditoria

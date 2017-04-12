@@ -104,6 +104,8 @@
     <Compile Include="DataModel\Tables\System\Profile\Profile_DTO.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_TrackChanges.cs" />
+    <Compile Include="DataModel\Tables\System\Setup\Setup_LoadAssociations.cs" />
+    <Compile Include="DataModel\Tables\System\Setup\Setup_DTO.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_Extras.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\System\User\User_ComposedFilters.cs" />

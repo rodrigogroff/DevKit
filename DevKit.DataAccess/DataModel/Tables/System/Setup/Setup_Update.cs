@@ -4,16 +4,20 @@ namespace DataModel
 {
 	public partial class Setup
 	{
-		public bool Update(DevKitDB db, User user, ref string resp)
+		public bool Update(DevKitDB db, ref string resp)
 		{
-			db.Update(this);
+			var user = db.GetCurrentUser();
 
 			new AuditLog {
 				fkUser = user.id,
 				fkActionLog = EnumAuditAction.SystemSetupUpdate,
 				nuType = EnumAuditType.Setup
 			}.
-			Create(db, "", "");
+			Create(db, TrackChanges(db), "");
+
+			db.Update(this);
+
+			logs = LoadLogs(db);
 
 			return true;
 		}

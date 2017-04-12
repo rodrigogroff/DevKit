@@ -136,6 +136,7 @@
     <Compile Include="DataModel\Tables\Task\Task\Task_DTO.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_Extras.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_LoadAssociations.cs" />
+    <Compile Include="DataModel\Views\Home_view.cs" />
     <Compile Include="DataModel\Views\Timesheet_view.cs" />
     <Compile Include="DataModel\Views\Management_view.cs" />
     <Compile Include="DataModel\Views\UserKanban_view.cs" />

@@ -21,6 +21,17 @@ FEATURES
 	------------------------
 		- gerar documentação em inglês (nivel cmmi-2)
 
+
+
+
+
+
+
+
+
+
+
+
 ------------------
 bugs power!
 ------------------

@@ -20,7 +20,9 @@
 <body class="background">
 	<div class="header" ng-show="exibirMenu" ng-controller="MenuController">
 		<div class="logo" style="padding-top:-4px; padding-left:-60px">
-			<img src='../../images/logo.png' height="112px" />
+			<a ng-click="goHome()">
+				<img src='../../images/logo.png' height="112px" />
+			</a>
 		</div>
 		<header class="page-header">
 			<div class="navbar" style="height:38px; padding-left:175px;padding-top:-4px;">

@@ -86,8 +86,7 @@ angular.module('app.services', ['ngResource'])
 		'remove': { method: 'DELETE' }
 	};
 
-	return {
-		
+	return {		
 		Setup: $resource('api/setup/:id', {}, opcoes),
 		User: $resource('api/user/:id', {}, opcoes),
 		Profile: $resource('api/profile/:id', {}, opcoes),
@@ -103,14 +102,15 @@ angular.module('app.services', ['ngResource'])
 		TaskAccumulator: $resource('api/taskAccumulator/:id', {}, opcoes),
 		Task: $resource('api/task/:id', {}, opcoes),
 		Priority: $resource('api/priority/:id', {}, opcoes),
-		UserKanban: $resource('api/userKanban/:id', {}, opcoes),
-		Management: $resource('api/management/:id', {}, opcoes),
+		UserKanban: $resource('api/userKanbanView/:id', {}, opcoes),
+		Management: $resource('api/managementView/:id', {}, opcoes),
 		AccType: $resource('api/accumulatorType/:id', {}, opcoes),
 		Month: $resource('api/month/:id', {}, opcoes),		
 		VersionState: $resource('api/versionState/:id', {}, opcoes),
 		ProjectTemplate: $resource('api/projectTemplate/:id', {}, opcoes),
-		Timesheet: $resource('api/timeSheet/:id', {}, opcoes),
+		Timesheet: $resource('api/timesheetView/:id', {}, opcoes),
 		News: $resource('api/news/:id', {}, opcoes),
-		Survey: $resource('api/survey/:id', {}, opcoes)
+		Survey: $resource('api/survey/:id', {}, opcoes),
+		HomeView: $resource('api/homeView/:id', {}, opcoes)
 	};
 }]);

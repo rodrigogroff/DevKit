@@ -256,6 +256,7 @@
     <Content Include="app\configuration\sprint\sprint.html" />
     <Content Include="app\configuration\sprint\SprintController.js" />
     <Content Include="app\configuration\sprint\_filterSprint.html" />
+    <Content Include="app\home\HomeController.js" />
     <Content Include="app\system\profile\listingProfiles.html" />
     <Content Include="app\system\profile\ListingProfilesController.js" />
     <Content Include="app\system\profile\profile.html" />
@@ -846,15 +847,16 @@
     <Compile Include="Controllers\Enums\VersionStateCtrl.cs" />
     <Compile Include="Controllers\Enums\ProjectTemplateCtrl.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Views\HomeViewCtrl.cs" />
     <Compile Include="Controllers\System\SetupCtrl.cs" />
     <Compile Include="Controllers\System\ProfileCtrl.cs" />
     <Compile Include="Controllers\System\PermissionCtrl.cs" />
     <Compile Include="Controllers\Configuration\ProjectCtrl.cs" />
     <Compile Include="Controllers\Enums\PriorityCtrl.cs" />
-    <Compile Include="Controllers\Task\TimesheetCtrl.cs" />
+    <Compile Include="Controllers\Views\Tasks\TimesheetViewCtrl.cs" />
     <Compile Include="Controllers\Task\TaskCountCtrl.cs" />
-    <Compile Include="Controllers\Task\ManagementCtrl.cs" />
-    <Compile Include="Controllers\Task\UserKanbanCtrl.cs" />
+    <Compile Include="Controllers\Views\Tasks\ManagementViewCtrl.cs" />
+    <Compile Include="Controllers\Views\Tasks\UserKanbanViewCtrl.cs" />
     <Compile Include="Controllers\Task\TaskCtrl.cs" />
     <Compile Include="GlobalExtensions.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

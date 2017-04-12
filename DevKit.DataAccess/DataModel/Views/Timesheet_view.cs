@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-	public class TimesheetFilter
+	public class TimesheetViewFilter
 	{
 		public long? nuYear, 
 						nuMonth, 
@@ -44,9 +44,9 @@ namespace DataModel
 						nuPriority;
 	}
 
-	public class Timesheet
+	public class TimesheetView
 	{
-		public TimesheetDTO ComposedFilters(DevKitDB db, TimesheetFilter filter)
+		public TimesheetDTO ComposedFilters(DevKitDB db, TimesheetViewFilter filter)
 		{
 			var dto = new TimesheetDTO();
 

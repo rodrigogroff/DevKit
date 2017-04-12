@@ -4,15 +4,15 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class ManagementController : ApiControllerBase
+	public class ManagementViewController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
 			using (var db = new DevKitDB())
 			{
-				var mdl = new Management();
+				var mdl = new ManagementView();
 				
-				return Ok(mdl.ComposedFilters(db, new ManagementFilter()
+				return Ok(mdl.ComposedFilters(db, new ManagementViewFilter()
 				{
 					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 				}));				

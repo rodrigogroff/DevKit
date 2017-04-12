@@ -3,15 +3,15 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class UserKanbanController : ApiControllerBase
+	public class UserKanbanViewController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
 			using (var db = new DevKitDB())
 			{
-				var mdl = new UserKanban();
+				var mdl = new UserKanbanView();
 				
-				return Ok(mdl.ComposedFilters(db, new UserKanbanFilter()
+				return Ok(mdl.ComposedFilters(db, new UserKanbanViewFilter()
 				{
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
 					complete = Request.GetQueryStringValue<bool?>("complete", null),

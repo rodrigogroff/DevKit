@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-	public class UserKanbanFilter
+	public class UserKanbanViewFilter
 	{
 		public string busca;
 		public bool? complete;
@@ -73,9 +73,9 @@ namespace DataModel
 		public List<Task> tasks = new List<Task>();		
 	}
 
-	public class UserKanban
+	public class UserKanbanView
 	{
-		public UserKanban_dto ComposedFilters(DevKitDB db, UserKanbanFilter filter)
+		public UserKanban_dto ComposedFilters(DevKitDB db, UserKanbanViewFilter filter)
 		{
 			var dto = new UserKanban_dto();
 			var task_helper = new Task();

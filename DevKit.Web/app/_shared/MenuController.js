@@ -36,8 +36,11 @@ function ($scope, $rootScope, $location, AuthService, Api, version, $state)
 		});
 	});
 
-	$scope.searchSystem = function ()
-	{
+	$scope.goHome = function () {
+		$state.go('home');
+	}
+
+	$scope.searchSystem = function () {
 		$location.path('/task/tasks').search({ searchSystem: $scope.searchParam });
 	}
 
@@ -47,8 +50,7 @@ function ($scope, $rootScope, $location, AuthService, Api, version, $state)
         $location.path('/login');
     };
 
-    $scope.tasksClick = function ()
-    {
+    $scope.tasksClick = function () {
     	$location.path('/task/kanban');
     };
 

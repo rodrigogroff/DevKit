@@ -116,7 +116,8 @@ namespace DevKit.Web
 				"~/app/configuration/news/NewsController.js",
 				"~/app/configuration/news/ListingNewsController.js",
 				"~/app/configuration/surveys/SurveyController.js",
-				"~/app/configuration/surveys/ListingSurveysController.js"
+				"~/app/configuration/surveys/ListingSurveysController.js",
+				"~/app/home/HomeController.js"
 
 				));
 

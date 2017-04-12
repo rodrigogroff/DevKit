@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-	public class ManagementFilter
+	public class ManagementViewFilter
 	{
 		public long? fkProject;
 	}
@@ -78,9 +78,9 @@ namespace DataModel
 						reworkPct;
 	}
 
-	public class Management
+	public class ManagementView
 	{
-		public ManagementDTO ComposedFilters(DevKitDB db, ManagementFilter filter)
+		public ManagementDTO ComposedFilters(DevKitDB db, ManagementViewFilter filter)
 		{
 			var dto = new ManagementDTO();
 			var vs = new EnumVersionState();

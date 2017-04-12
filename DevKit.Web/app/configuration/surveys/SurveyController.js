@@ -126,4 +126,68 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}		
 	
+	// ============================================
+	// options 
+	// ============================================
+
+	$scope.addOption = false;
+
+	$scope.removeOption = function (index, lista) {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else {
+			$scope.viewModel.updateCommand = "removeOption";
+			$scope.viewModel.anexedEntity = $scope.viewModel.options[index];
+
+			Api.Survey.update({ id: id }, $scope.viewModel, function (data) {
+				toastr.success('Phone removed', 'Success');
+				$scope.viewModel.options = data.options;
+			});
+		}
+	}
+
+	$scope.addNewOption = function () {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addOption = !$scope.addOption;
+	}
+
+	$scope.newOption = { nuOrder: '', stOption: '' };
+
+	$scope.editOption = function (mdl) {
+		$scope.addOption = true;
+		$scope.newOption = mdl;
+	}
+
+	$scope.saveNewOption = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.stOrder_fail = invalidCheck($scope.newOption.nuOrder);
+			$scope.stOption_fail = invalidCheck($scope.newOption.stOption);
+
+			if (!$scope.stOrder_fail &&
+				!$scope.stOption_fail)
+			{
+				$scope.addOption = false;
+
+				$scope.viewModel.updateCommand = "newOption";
+				$scope.viewModel.anexedEntity = $scope.newOption;
+
+				Api.Survey.update({ id: id }, $scope.viewModel, function (data)
+				{
+					$scope.newOption = { nuOrder: '', stOption: '' };
+					toastr.success('Option saved', 'Success');
+					$scope.viewModel.options = data.options;
+				},
+				function (response) {
+					toastr.error(response.data.message, 'Error');
+				});
+			}
+		}
+	}
+
 }]);

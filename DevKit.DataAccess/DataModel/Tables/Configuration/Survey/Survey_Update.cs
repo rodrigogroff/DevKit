@@ -1,7 +1,5 @@
 ﻿using LinqToDB;
 using Newtonsoft.Json;
-using System;
-using System.Linq;
 
 namespace DataModel
 {
@@ -21,20 +19,34 @@ namespace DataModel
 			{
 				case "entity":
 					{
-						/*
-						new AuditLog {
-							fkUser = user.id,
-							fkActionLog = EnumAuditAction.ProjectUpdate,
-							nuType = EnumAuditType.Project,
-							fkTarget = this.id
-						}.
-						Create(db, TrackChanges(db), "");
-						*/
-
 						db.Update(this);
 
-						//logs = LoadLogs(db);
+						options = LoadOptions(db);
+						break;
+					}
 
+				case "newOption":
+					{
+						var ent = JsonConvert.DeserializeObject<SurveyOption>(anexedEntity.ToString());
+
+						ent.fkSurvey = id;
+
+						if (ent.id == 0)
+							db.Insert(ent);
+						else
+							db.Update(ent);
+
+						options = LoadOptions(db);						
+						break;
+					}
+
+				case "removeOption":
+					{
+						var ent = JsonConvert.DeserializeObject<SurveyOption>(anexedEntity.ToString());
+
+						db.Delete(ent);
+
+						options = LoadOptions(db);
 						break;
 					}
 			}

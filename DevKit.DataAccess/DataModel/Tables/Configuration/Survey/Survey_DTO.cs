@@ -11,14 +11,6 @@ namespace DataModel
 						sdtLog = "",
 						updateCommand = "";
 
-		//public List<ProjectLog> logs;
+		public List<SurveyOption> options;
 	}
-
-	/*
-	public class ProjectLog
-	{
-		public string sdtLog,
-						stUser,
-						stDetails;
-	}*/
 }

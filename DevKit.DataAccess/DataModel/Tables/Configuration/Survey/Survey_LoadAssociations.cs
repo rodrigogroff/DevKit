@@ -20,9 +20,16 @@ namespace DataModel
 			if (fkProject != null)
 				sfkProject = db.Project(fkProject).stName;
 
-			//logs = LoadLogs(db);
+			options = LoadOptions(db);
 
 			return this;
+		}
+
+		List<SurveyOption> LoadOptions(DevKitDB db)
+		{
+			return (from e in db.SurveyOptions where e.fkSurvey == id select e).
+				OrderBy(t => t.nuOrder).
+				ToList();
 		}
 	}
 }

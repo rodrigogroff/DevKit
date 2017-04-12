@@ -4,10 +4,8 @@ FEATURES
 ------------------------------
 
 	-check points (por categoria)
-	-avisos
 	-enquetes
 	-confirmacao de aceite
-
 	-tags nas tarefas (projeto tem o cadastro de tags)
 	
 	------------------------

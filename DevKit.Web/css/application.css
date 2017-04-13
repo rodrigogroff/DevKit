@@ -22569,6 +22569,16 @@ a.text-gray-lighter:focus {
   margin-top: 25px;
 }
 
+.widgetFormNews {
+  border-radius: 3px;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  color: black;
+  background: rgba(255, 255, 255, 0.95	);
+  margin-top: 25px;
+}
+
 .widgetForm.normal {
   height: 220px;
 }

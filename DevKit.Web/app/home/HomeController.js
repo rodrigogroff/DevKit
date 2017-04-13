@@ -15,16 +15,13 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 
 	function init()
 	{
-		CheckPermissions();
-
 		$scope.loading = true;
 
 		Api.HomeView.listPage({ }, function (data)
 		{
 			$scope.viewModel = data;
+			$scope.loading = false;
 		});
-
-		$scope.loading = false;
 	}
 
 }]);

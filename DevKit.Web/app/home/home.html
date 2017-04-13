@@ -1,3 +1,11 @@
 ﻿<div class="webFormPostion">
-	Hello world!
+	<table>
+		<tr>
+			<td>
+				<div style="width:100%;background:rgba(15, 43, 89, 0.25);" data-ng-repeat="mdl in viewModel.news" ng-show="viewModel.news.length > 0">
+					<b>{{mdl.stTitle}}</b>
+				</div>
+			</td>
+		</tr>
+	</table>	
 </div>

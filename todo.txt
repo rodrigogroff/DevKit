@@ -3,6 +3,8 @@
 FEATURES
 ------------------------------
 
+	-sla na categoria v
+
 	-check points (por categoria)
 	-enquetes
 	-confirmacao de aceite

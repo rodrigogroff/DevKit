@@ -22,15 +22,21 @@ namespace DataModel
 
 			dto.name = "Hi " + user.stLogin;
 
-			// noticias não lidas
-
-			dto.news = (from e in db.CompanyNews
-						join eNR in db.UserNewsReads on e.id equals eNR.fkNews
-						where e.id != eNR.fkNews
-						where eNR.fkUser == user.id
+			var news = from e in db.CompanyNews
 						where e.fkProject == null || projects.Contains(e.fkProject)
-						select e).
-						ToList();
+						select e;
+
+			var newsRead = from e in db.UserNewsReads where e.fkUser == user.id select e;
+
+			if (newsRead.Count() > 0)
+			{
+				news = from e in news
+					   join eRead in newsRead on e.id equals eRead.fkNews
+					   where e.id != eRead.fkNews
+					   select e;
+			}
+
+			dto.news = news.ToList();
 
 			foreach (var item in dto.news)
 				item.LoadAssociations(db);

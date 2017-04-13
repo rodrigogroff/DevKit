@@ -176,6 +176,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkSurvey       { get; set; } // bigint
 		[Column,     Nullable] public long?     fkSurveyOption { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUser         { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Task")]

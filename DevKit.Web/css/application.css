@@ -7,7 +7,6 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
-  font-family: 'Roboto Condensed', sans-serif;
   font-size: 10px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -26225,6 +26224,11 @@ body {
 	background-attachment: fixed, fixed;
 }
 		
+.bodyNews {
+	color: black;
+	background: rgba(220, 230, 255, 0.90);
+}
+
 .dropdown {
 	position: relative;
 	display: inline-block;

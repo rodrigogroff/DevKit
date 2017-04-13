@@ -24,4 +24,39 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		});
 	}
 
+	$scope.markAsRead = function(mdl)
+	{
+		mdl.updateCommand = 'maskAsRead';
+
+		Api.News.update({ id: mdl.id }, mdl, function (data)
+		{
+			init();
+		},
+		function (response) {
+			toastr.error(response.data.message, 'Error');
+		});
+	}
+
+	$scope.currentOption = undefined;
+
+	$scope.surveySelectOption = function (option)
+	{		
+		$scope.currentOption = option.id;
+	}
+
+	$scope.confirmChoiceSurvey = function (mdl)
+	{		
+		mdl.updateCommand = 'optionSelect';
+		mdl.anexedEntity = { id: $scope.currentOption };
+
+		Api.Survey.update({ id: mdl.id }, mdl, function (data)
+		{
+			init();
+			$scope.currentOption = undefined;
+		},
+		function (response) {
+			toastr.error(response.data.message, 'Error');
+		});
+	}
+
 }]);

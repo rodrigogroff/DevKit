@@ -13,4 +13,9 @@ namespace DataModel
 
 		public List<SurveyOption> options;
 	}
+
+	public class SurveySelOption
+	{
+		public long id = 0;
+	}
 }

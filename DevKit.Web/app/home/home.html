@@ -1,10 +1,143 @@
 ﻿<div class="webFormPostion">
 	<table>
 		<tr>
-			<td>
-				<div style="width:100%;background:rgba(15, 43, 89, 0.25);" data-ng-repeat="mdl in viewModel.news" ng-show="viewModel.news.length > 0">
-					<b>{{mdl.stTitle}}</b>
-				</div>
+			<td width="450px" valign="top">
+				<section class="widgetForm" style="width:450px; height:100%" ng-show="viewModel.news.length > 0">
+					<legend class="legendTop">
+						<table><tr height="12px"><td> </td></tr></table>
+						<table style="color:white; width:100%">
+							<tr>
+								<td width="20px"></td>
+								<td>
+									Company News
+								</td>
+								<td width="20px"></td>
+							</tr>
+							<tr height="12px"></tr>
+						</table>
+					</legend>
+					<div data-ng-repeat="mdl in viewModel.news" ng-show="viewModel.news.length > 0">
+						<table width="100%">
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<div style="background: rgba(15, 43, 89, 0.2);width:400px">
+										<table>
+											<tr height="32px">
+												<td width="10px"></td>
+												<td width="360px">
+													<br />{{mdl.sdtLog}} by <b>{{mdl.sfkUser}}</b><br /><b>{{mdl.stTitle}}<br /><br /></b>
+												</td>
+												<td width="20px"></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>
+													<div class="bodyNews" width="100%">
+														<table>
+															<tr>
+																<td width="10px"></td>
+																<td><br /><p ng-bind-html="mdl.stMessage" /></td>
+																<td width="10px"></td>
+															</tr>
+														</table>
+														<br />
+													</div>
+												</td>
+												<td></td>
+											</tr>
+											<tr height="32px">
+												<td></td>
+												<td>
+													<br />
+													<button class="btn btn-xs btn-transparent pull-right" ng-click="markAsRead(mdl)">Mark as read</button>
+												</td>
+												<td></td>
+											</tr>
+										</table>
+										<br />
+									</div>
+								</td>
+							</tr>
+						</table>
+						<br />
+					</div>
+				</section>
+			</td>
+			<td width="60px"></td>
+			<td width="450px" valign="top">
+				<section class="widgetForm" style="width:450px; height:100%" ng-show="viewModel.surveys.length > 0">
+					<legend class="legendTop">
+						<table><tr height="12px"><td> </td></tr></table>
+						<table style="color:white; width:100%">
+							<tr>
+								<td width="20px"></td>
+								<td>
+									Company Surveys
+								</td>
+								<td width="20px"></td>
+							</tr>
+							<tr height="12px"></tr>
+						</table>
+					</legend>
+					<div data-ng-repeat="mdl in viewModel.surveys" ng-show="viewModel.surveys.length > 0">
+						<table width="100%">
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<div style="background: rgba(15, 43, 89, 0.2);width:400px">
+										<table>
+											<tr height="32px">
+												<td width="10px"></td>
+												<td width="360px">
+													<br />{{mdl.sdtLog}} by <b>{{mdl.sfkUser}}</b><br /><b>{{mdl.stTitle}}<br /><br /></b>
+												</td>
+												<td width="20px"></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>
+													<div class="bodyNews" width="100%">
+														<table>
+															<tr>
+																<td width="10px"></td>
+																<td><br /><p ng-bind-html="mdl.stMessage" /></td>
+																<td width="10px"></td>
+															</tr>
+														</table>
+														<br />
+													</div>
+												</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>
+													<br />
+													<div ng-repeat="option in mdl.options" id="radio-{{option.id}}">
+														<label>
+															<input type="radio" name="option" ng-checked="surveySelectOption(option)">&nbsp;&nbsp;{{option.stOption}}
+														</label>
+													</div>
+												</td>
+											</tr>
+											<tr height="32px">
+												<td></td>
+												<td>
+													<br />
+													<button class="btn btn-xs btn-transparent pull-left" ng-click="confirmChoiceSurvey(mdl)">Confirm Choice</button>
+												</td>
+												<td></td>
+											</tr>
+										</table>
+										<br />
+									</div>
+								</td>
+							</tr>
+						</table>
+						<br />
+					</div>
+				</section>
 			</td>
 		</tr>
 	</table>	

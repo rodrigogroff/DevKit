@@ -94,7 +94,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Survey.add($scope.viewModel, function (data)
 					{
 						toastr.success('Survey added!', 'Success');
-						$state.go('news', { id: data.id });
+						$state.go('survey', { id: data.id });
 					},
 					function (response)
 					{

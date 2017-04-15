@@ -1,7 +1,5 @@
 ﻿using LinqToDB;
-using Newtonsoft.Json;
 using System;
-using System.Linq;
 
 namespace DataModel
 {
@@ -21,19 +19,17 @@ namespace DataModel
 			{
 				case "entity":
 					{
-						/*
-						new AuditLog {
-							fkUser = user.id,
-							fkActionLog = EnumAuditAction.ProjectUpdate,
-							nuType = EnumAuditType.Project,
-							fkTarget = this.id
-						}.
-						Create(db, TrackChanges(db), "");
-						*/
-
 						db.Update(this);
+						break;
+					}
 
-						//logs = LoadLogs(db);
+				case "maskAsRead":
+					{
+						db.Insert(new UserNewsRead {
+							dtLog = DateTime.Now,
+							fkNews = this.id,
+							fkUser = user.id
+						});
 
 						break;
 					}

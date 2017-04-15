@@ -430,6 +430,7 @@ CREATE TABLE public."SurveyUserOption"
 (
     id bigserial NOT NULL,
 	"fkSurvey" bigint,
+	"fkUser" bigint,
 	"fkSurveyOption" bigint,
 	"dtLog" timestamp without time zone,	
     PRIMARY KEY (id)

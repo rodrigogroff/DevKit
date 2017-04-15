@@ -1,7 +1,4 @@
-﻿using LinqToDB;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿
 namespace DataModel
 {
 	public partial class CompanyNews
@@ -20,8 +17,8 @@ namespace DataModel
 			if (fkProject != null)
 				sfkProject = db.Project(fkProject).stName;
 
-			//logs = LoadLogs(db);
-
+			stMessage = stMessage.Replace("\n", "<br>");
+			
 			return this;
 		}
 	}

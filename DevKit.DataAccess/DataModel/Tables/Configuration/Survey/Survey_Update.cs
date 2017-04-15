@@ -49,6 +49,20 @@ namespace DataModel
 						options = LoadOptions(db);
 						break;
 					}
+
+				case "optionSelect":
+					{
+						var ent = JsonConvert.DeserializeObject<SurveySelOption>(anexedEntity.ToString());
+
+						db.Insert(new SurveyUserOption
+						{
+							fkSurvey = this.id,
+							fkSurveyOption = ent.id,
+							fkUser = user.id
+						});
+																		
+						break;
+					}
 			}
 
 			return true;

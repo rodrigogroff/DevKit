@@ -4,6 +4,10 @@ angular.module('app.controllers').controller('ProjectController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' });
+	$scope.selectProjectTemplate = ngSelects.obterConfiguracao(Api.ProjectTemplate, {});
+	$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.id' } });
+
 	$scope.loading = false;
 
 	$scope.viewModel = {};
@@ -38,10 +42,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	function init()
 	{
 		CheckPermissions();
-
-		$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' });
-		$scope.selectProjectTemplate = ngSelects.obterConfiguracao(Api.ProjectTemplate, { });
-		$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.id' } });
 
 		if (id > 0)
 		{

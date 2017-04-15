@@ -4,6 +4,11 @@ angular.module('app.controllers').controller('TaskTypeController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, {});
+	$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, {});
+	$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.id' } });
+	$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'newAcc.fkTaskCategory' } });
+
 	$scope.loading = false;
 
 	$scope.viewModel = {};
@@ -38,11 +43,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	function init()
 	{
 		CheckPermissions();
-
-		$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, {});
-		$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, {});
-		$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.id' } });
-		$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'newAcc.fkTaskCategory' } });
 
 		if (id > 0)
 		{

@@ -4,6 +4,8 @@ angular.module('app.controllers').controller('UserController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Profile, {});
+
 	$scope.loading = false;
 
 	$scope.setupModel = { stPhoneMask: '' }	
@@ -48,8 +50,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		CheckPermissions();
 		loadSetup();
-
-		$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Profile, { });
 
 		if (id > 0)
 		{

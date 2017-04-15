@@ -4,6 +4,8 @@ angular.module('app.controllers').controller('SurveyController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects', 
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects )
 {
+	$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, {});
+
 	$scope.loading = false;
 
 	$scope.viewModel = {};
@@ -33,8 +35,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		CheckPermissions();
 
-		$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, {});
-		
 		if (id > 0)
 		{
 			$scope.loading = true;

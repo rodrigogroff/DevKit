@@ -5,7 +5,7 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 	$scope.loading = false;
 	$scope.campos = {
 		selects: {
-			projec: ngSelects.obterConfiguracao(Api.Project, { }),
+			project: ngSelects.obterConfiguracao(Api.Project, { }),
 		}
 	};
 	$scope.itensporpagina = 15;
@@ -54,6 +54,8 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 
 		if (filtro)
 			angular.extend(opcoes, filtro);
+
+		delete opcoes.selects;
 
 		Api.Survey.listPage(opcoes, function (data) {
 			$scope.list = data.results;

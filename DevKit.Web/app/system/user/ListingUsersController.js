@@ -47,9 +47,13 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 		$scope.loading = true;
 
 		var options = { active: 'true', skip: skip, take: take };
+
 		var filter = ngHistoricoFiltro.filtro.filtroGerado;
+
 		if (filter)
 			angular.extend(options, filter);
+
+		delete opcoes.selects;
 
 		Api.User.listPage(options, function (data) {
 			$scope.list = data.results;

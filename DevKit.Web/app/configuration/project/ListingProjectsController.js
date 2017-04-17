@@ -55,6 +55,8 @@ function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 		if (filtro)
 			angular.extend(opcoes, filtro);
 
+		delete opcoes.selects;
+
 		Api.Project.listPage(opcoes, function (data) {
 			$scope.list = data.results;
 			$scope.total = data.count;		

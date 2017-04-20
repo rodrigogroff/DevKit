@@ -309,7 +309,7 @@
     <Content Include="app\_shared\controllers.spec.js" />
     <Content Include="app\_shared\directives.js" />
     <Content Include="app\_shared\directives.spec.js" />
-    <Content Include="app\_shared\services.js" />
+    <Content Include="app\services.js" />
     <Content Include="app\_shared\services.spec.js" />
     <Content Include="app\home\home.html" />
     <Content Include="app\_shared\NgSelectsService.js" />

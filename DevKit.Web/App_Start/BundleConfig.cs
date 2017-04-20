@@ -79,7 +79,7 @@ namespace DevKit.Web
 
 			bundles.Add(new ScriptBundle("~/bundles/app").Include(
 				"~/app/_shared/filters.js",
-				"~/app/_shared/services.js",
+				"~/app/services.js",
 				"~/app/_shared/directives.js",
 				"~/app/_shared/directives.validator.js",
 				"~/app/_shared/filtro/diretivaFiltro.js",

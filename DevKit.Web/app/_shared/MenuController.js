@@ -20,11 +20,11 @@ function ($scope, $rootScope, $location, AuthService, Api, version, $state)
 
 		if (!AuthService.authentication.isAuth)
 			$location.path('/login');
-
-		Api.TaskCount.listPage({}, function (data) {
-			$scope.projectTasks = data.count_project_tasks;
-			$scope.userTasks = data.count_user_tasks;
-		});
+		else
+			Api.TaskCount.listPage({}, function (data) {
+				$scope.projectTasks = data.count_project_tasks;
+				$scope.userTasks = data.count_user_tasks;
+			});
 	}
 
 	$rootScope.$on("updateCounters", function ()
@@ -51,7 +51,7 @@ function ($scope, $rootScope, $location, AuthService, Api, version, $state)
     };
 
     $scope.tasksClick = function () {
-    	$location.path('/task/kanban');
+    	$location.path('/task/tasks');
     };
 
 }]);

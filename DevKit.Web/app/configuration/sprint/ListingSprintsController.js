@@ -1,14 +1,18 @@
 ﻿angular.module('app.controllers').controller('ListingSprintsController',
-['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
+function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
+	$rootScope.exibirMenu = true;
+
 	$scope.loading = false;
+
 	$scope.campos = {
 		selects: {
 			project: ngSelects.obterConfiguracao(Api.Project, { }),
 			phase: ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' } }),
 		}
 	};
+
 	$scope.itensporpagina = 15;
 
 	$scope.permModel = {};	

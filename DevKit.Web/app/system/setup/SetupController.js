@@ -1,9 +1,11 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('SetupController',
-['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
-function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
+['$scope', '$rootScope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
+function ($scope, $rootScope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$rootScope.exibirMenu = true;
+
 	$scope.loading = false;
 
 	$scope.permModel = {};

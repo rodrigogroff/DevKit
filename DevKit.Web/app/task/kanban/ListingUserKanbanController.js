@@ -1,9 +1,13 @@
 ﻿angular.module('app.controllers').controller('ListingUserKanbanController',
-['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 
-function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
+['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
+function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 {
+	$rootScope.exibirMenu = true;
+
 	$scope.loading = false;
+
 	$scope.fail = false;
+
 	$scope.campos = {
 		complete: 'false',
 		selects: {

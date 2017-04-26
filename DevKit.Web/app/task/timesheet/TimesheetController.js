@@ -2,6 +2,8 @@
 ['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
+	$rootScope.exibirMenu = true;
+
 	$scope.loading = false;
 
 	$scope.windowWidth = 900; var w = angular.element($window);

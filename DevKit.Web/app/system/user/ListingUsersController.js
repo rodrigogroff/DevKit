@@ -1,8 +1,11 @@
 ﻿angular.module('app.controllers').controller('ListingUsersController',
-['$scope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
+function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
+	$rootScope.exibirMenu = true;
+
 	$scope.loading = false;
+
 	$scope.campos = {
 		ativo: 'true',
 		selects: {

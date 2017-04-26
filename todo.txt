@@ -1,22 +1,11 @@
 
 ------------------------------
-FEATURES
+a fazer
 ------------------------------
 
-	-sla na categoria v
-
 	-check points (por categoria)
-	-enquetes
-	-confirmacao de aceite
+	-confirmacao de aceite em projeto
 	-tags nas tarefas (projeto tem o cadastro de tags)
-	
-	------------------------
-	log de auditoria
-	------------------------
-
-		- Survey e News
-		- logar tb pesquisas!
-		- visualizar no usuário tudo que ele fez (paginado)
 				
 	------------------------
 	documentação
@@ -39,8 +28,7 @@ bugs power!
 ------------------
 
 	-eventualmente, filtros perdem os dropdowns
-	-ao apertar F5, perde-se a view e fica somente a tela (parcial) em questão
-
+	
 ----------------------------------
 melhorias emergenciais!
 ----------------------------------

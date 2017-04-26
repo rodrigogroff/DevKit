@@ -4,6 +4,8 @@ angular.module('app.controllers').controller('TaskController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$rootScope.exibirMenu = true;
+
 	$scope.selectPriority = ngSelects.obterConfiguracao(Api.Priority, {});
 	$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, {});
 	$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });

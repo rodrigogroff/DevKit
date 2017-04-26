@@ -4,6 +4,8 @@ angular.module('app.controllers').controller('TaskTypeController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$rootScope.exibirMenu = true;
+
 	$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, {});
 	$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, {});
 	$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.id' } });

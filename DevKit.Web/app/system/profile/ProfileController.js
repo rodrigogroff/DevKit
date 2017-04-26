@@ -4,6 +4,8 @@ angular.module('app.controllers').controller('ProfileController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$rootScope.exibirMenu = true;
+
 	$scope.loading = false;
 	
 	$scope.permModel = {};	

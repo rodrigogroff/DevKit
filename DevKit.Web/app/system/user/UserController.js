@@ -4,6 +4,8 @@ angular.module('app.controllers').controller('UserController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
+	$rootScope.exibirMenu = true;
+
 	$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Profile, {});
 
 	$scope.loading = false;

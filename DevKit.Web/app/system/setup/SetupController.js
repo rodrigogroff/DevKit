@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('SetupController',
-['$scope', '$rootScope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
+['$scope', '$rootScope', 'AuthService', '$state', '$stateParams', '$location', 'Api', 'ngSelects',
+function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
 

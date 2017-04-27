@@ -11,6 +11,9 @@ namespace DataModel
 			stDetailLog = detail;
 			dtLog = DateTime.Now;
 
+			if (stLog.Length > 999)
+				stLog = stLog.Substring(0, 996) + "...";
+
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 
 			return true;

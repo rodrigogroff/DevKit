@@ -16,6 +16,107 @@
 		</legend>
 		<div class="divWebForm">
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">				
+				<tab heading="Information">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table>
+							<thead>
+								<tr>
+									<th width="20px"></th>
+									<th width="105px"></th>
+									<th width="20px"></th>
+									<th width="180px"></th>
+									<th width="20px"></th>
+									<th width="105px"></th>
+									<th width="20px"></th>
+									<th width="180px"></th>
+									<th width="20px"></th>
+								</tr>
+							</thead>
+							<tr height="10px"></tr>
+							<tr height="24px" ng-show="viewModel.id > 0">
+								<td></td>
+								<td valign="middle">
+									Protocol
+								</td>
+								<td></td>
+								<td>
+									<b>{{viewModel.stProtocol}}</b>
+								</td>
+								<td></td>
+								<td valign="middle">
+									State
+								</td>
+								<td></td>
+								<td valign="middle">
+									<b>{{viewModel.bComplete == true ? 'CLOSED' : 'OPEN'}}</b>
+								</td>
+								<td></td>
+							</tr>
+							<tr height="40px" ng-show="viewModel.id > 0">
+								<td></td>
+								<td valign="middle">
+									Start Date
+								</td>
+								<td></td>
+								<td valign="middle">
+									<b>{{viewModel.sdtStart}}</b>
+								</td>
+								<td></td>
+								<td valign="middle">
+									Opened by
+								</td>
+								<td></td>
+								<td valign="middle">
+									<b>{{viewModel.sfkUserStart}}</b>
+								</td>
+								<td></td>
+							</tr>
+							<tr height="40px">
+								<td></td>
+								<td valign="middle">
+									Title
+								</td>
+								<td width="20px" valign="middle">
+									<button class="btn btn-xs btn-danger" ng-show="stTitle_fail">!</button>
+								</td>
+								<td colspan="5" valign="middle">
+									<input type="text" class="form-control input-transparent" maxlength="200"
+										   ng-disabled="!permModel.edicao" ng-model="viewModel.stTitle">
+								</td>
+								<td></td>
+							</tr>
+							<tr height="40px">
+								<td></td>
+								<td valign="middle">
+									Localization
+								</td>
+								<td width="20px" valign="middle">
+									<button class="btn btn-xs btn-danger" ng-show="stLocalization_fail">!</button>
+								</td>
+								<td colspan="5" valign="middle">
+									<input type="text" class="form-control input-transparent" maxlength="200"
+										   ng-disabled="!permModel.edicao" ng-model="viewModel.stLocalization">
+								</td>
+								<td></td>
+							</tr>
+							<tr height="110px">
+								<td></td>
+								<td valign="middle">
+									Description
+								</td>
+								<td width="20px" valign="middle">
+									<button class="btn btn-xs btn-danger" ng-show="stDescription_fail">!</button>
+								</td>
+								<td colspan="5" valign="middle">
+									<textarea rows="12" type="text" class="form-control input-transparent" maxlength="2000"
+											  ng-disabled="!permModel.edicao" ng-model="viewModel.stDescription"></textarea>
+								</td>
+								<td></td>
+							</tr>
+							<tr height="40px"></tr>
+						</table>
+					</div>
+				</tab>
 				<tab heading="Project">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
@@ -120,107 +221,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Information">
-					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-						<table>
-							<thead>
-								<tr>
-									<th width="20px"></th>
-									<th width="105px"></th>
-									<th width="20px"></th>
-									<th width="180px"></th>
-									<th width="20px"></th>
-									<th width="105px"></th>
-									<th width="20px"></th>
-									<th width="180px"></th>
-									<th width="20px"></th>
-								</tr>
-							</thead>
-							<tr height="10px"></tr>
-							<tr height="24px" ng-show="viewModel.id > 0">
-								<td></td>
-								<td valign="middle">
-									Protocol
-								</td>
-								<td></td>
-								<td>
-									<b>{{viewModel.stProtocol}}</b>
-								</td>
-								<td></td>
-								<td valign="middle">
-									State
-								</td>
-								<td></td>
-								<td valign="middle">
-									<b>{{viewModel.bComplete == true ? 'CLOSED' : 'OPEN'}}</b>
-								</td>
-								<td></td>
-							</tr>
-							<tr height="40px" ng-show="viewModel.id > 0">
-								<td></td>
-								<td valign="middle">
-									Start Date
-								</td>
-								<td></td>
-								<td valign="middle">
-									<b>{{viewModel.sdtStart}}</b>
-								</td>
-								<td></td>
-								<td valign="middle">
-									Opened by
-								</td>
-								<td></td>
-								<td valign="middle">
-									<b>{{viewModel.sfkUserStart}}</b>
-								</td>
-								<td></td>
-							</tr>
-							<tr height="40px">
-								<td></td>
-								<td valign="middle">
-									Title
-								</td>
-								<td width="20px" valign="middle">
-									<button class="btn btn-xs btn-danger" ng-show="stTitle_fail">!</button>
-								</td>
-								<td colspan="5" valign="middle">
-									<input type="text" class="form-control input-transparent" maxlength="200"
-										   ng-disabled="!permModel.edicao" ng-model="viewModel.stTitle">
-								</td>
-								<td></td>
-							</tr>
-							<tr height="40px">
-								<td></td>
-								<td valign="middle">
-									Localization
-								</td>
-								<td width="20px" valign="middle">
-									<button class="btn btn-xs btn-danger" ng-show="stLocalization_fail">!</button>
-								</td>
-								<td colspan="5" valign="middle">
-									<input type="text" class="form-control input-transparent" maxlength="200"
-										   ng-disabled="!permModel.edicao" ng-model="viewModel.stLocalization">
-								</td>
-								<td></td>
-							</tr>
-							<tr height="110px">
-								<td></td>
-								<td valign="middle">
-									Description
-								</td>
-								<td width="20px" valign="middle">
-									<button class="btn btn-xs btn-danger" ng-show="stDescription_fail">!</button>
-								</td>
-								<td colspan="5" valign="middle">
-									<textarea rows="4" type="text" class="form-control input-transparent" maxlength="2000"
-											  ng-disabled="!permModel.edicao" ng-model="viewModel.stDescription"></textarea>
-								</td>
-								<td></td>
-							</tr>
-							<tr height="40px"></tr>
-						</table>
-					</div>
-				</tab>
+				
 				<tab heading="Assignment">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);padding-left:10px">
 						<table>

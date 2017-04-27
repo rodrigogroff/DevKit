@@ -3,25 +3,18 @@
 a fazer
 ------------------------------
 
-	
-	-check points (por categoria)
-	-confirmacao de aceite em projeto
-	-tags nas tarefas (projeto tem o cadastro de tags)
+	-sort by (combo) na listagem de tarefas
+	-tarefas que dependem de outras tarefas
+	-questionamentos (com respostas)
+	-tarefas do usuário na sua dashboard (só titulo/localização)
+		
+	-check points (por categoria?)
 				
 	------------------------
 	documentação
 	------------------------
-		- gerar documentação em inglês (nivel cmmi-2)
-
-
-
-
-
-
-
-
-
-
+		- gerar documentação em inglês
+		
 
 
 ------------------
@@ -34,6 +27,7 @@ bugs power!
 melhorias emergenciais!
 ----------------------------------
 
+	-criar nova tarefa em nova aba
 	-modais de confirmação de exclusão
 	-poder anexar documentos nas tarefas
 	-usar editor trix ou similar para noticias / descrição de tarefas

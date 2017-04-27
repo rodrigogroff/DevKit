@@ -65,6 +65,8 @@ namespace DataModel
 				var lstUserIds = (from e in lstUsers select e.id).ToList();
 
 				var lstHours = (from e in db.TaskAccumulatorValues
+								join eA in db.TaskTypeAccumulators on e.fkTaskAcc equals eA.id
+								where eA.bEstimate != true
 								where lstUserIds.Contains((long)e.fkUser)
 								where e.dtLog > dtIni && e.dtLog < dtFim
 								select e).
@@ -118,6 +120,8 @@ namespace DataModel
 			else
 			{
 				var lstHours = (from e in db.TaskAccumulatorValues
+								join eA in db.TaskTypeAccumulators on e.fkTaskAcc equals eA.id
+								where eA.bEstimate != true
 								where e.fkUser == filter.fkUser
 								where e.dtLog > dtIni && e.dtLog < dtFim
 								select e).

@@ -189,11 +189,11 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
 
 							{
-								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Construction" }));
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Construction" }));
 
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -206,7 +206,7 @@ namespace DataModel
 							}
 
 							{
-								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Peer Review" }));
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Peer Review" }));
 
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -218,9 +218,9 @@ namespace DataModel
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Approval" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Approval" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						{
@@ -229,11 +229,11 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
 
 							{
-								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Construction" }));
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Construction" }));
 
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -246,7 +246,7 @@ namespace DataModel
 							}
 
 							{
-								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Peer Review" }));
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Peer Review" }));
 
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -258,9 +258,9 @@ namespace DataModel
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Approval" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Approval" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						{
@@ -269,11 +269,11 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
 
 							{
-								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Estimating" }));
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Estimating" }));
 
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -281,12 +281,12 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Analysis Estimating Hours"
+									stName = "Estimating Hours"
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						#endregion
@@ -305,11 +305,11 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
 
 							{
-								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
 								
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -332,9 +332,47 @@ namespace DataModel
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+						}
+
+						{
+							var categ = new TaskCategory { fkTaskType = ttype.id, stAbreviation = "", stName = "Resource Refactory", stDescription = "" };
+							categ.id = Convert.ToInt64(db.InsertWithIdentity(categ));
+
+							var t = 0;
+
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+
+							{
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									bEstimate = true,
+									stName = "Estimate Coding Hours"
+								});
+
+								db.Insert(new TaskTypeAccumulator
+								{
+									fkTaskAccType = EnumAccumulatorType.Hours,
+									fkTaskCategory = categ.id,
+									fkTaskFlow = flow_id,
+									fkTaskType = ttype.id,
+									bEstimate = false,
+									stName = "Coding Hours"
+								});
+							}
+
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						#endregion
@@ -353,11 +391,11 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
 
 							{
-								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
 
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -369,9 +407,9 @@ namespace DataModel
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						{
@@ -380,11 +418,11 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
 
 							{
-								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
 
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -396,9 +434,9 @@ namespace DataModel
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Testing" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						{
@@ -407,11 +445,11 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Open" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Re-Open" });
 
 							{
-								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
+								var flow_id = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Development" }));
 
 								db.Insert(new TaskTypeAccumulator
 								{
@@ -423,9 +461,9 @@ namespace DataModel
 								});
 							}
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Validation" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Validation" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						#endregion
@@ -444,9 +482,9 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Planned" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Planned" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						{
@@ -455,9 +493,9 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Planned" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Planned" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						{
@@ -466,9 +504,9 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Planned" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Planned" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						{
@@ -477,9 +515,9 @@ namespace DataModel
 
 							var t = 0;
 
-							db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Planned" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
-							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
+							db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Planned" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Done" });
+							db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = ttype.id, fkTaskCategory = categ.id, nuOrder = t++, stName = "Cancelled" });
 						}
 
 						#endregion
@@ -501,11 +539,11 @@ namespace DataModel
 
 		public void InsertDocumentationFlows(DevKitDB db, TaskType _fktype, TaskCategory _fkcateg, Setup setup)
 		{
-			var idFlowOpen = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 1, stName = "Open" }));
-			db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = true, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 2, stName = "Revision" });
-			db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 3, stName = "Development" });
-			db.Insert(new TaskFlow { bForceComplete = null, bForceOpen = null, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 4, stName = "Peer Review" });
-			db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = null, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 5, stName = "Done" });
+			var idFlowOpen = Convert.ToInt64(db.InsertWithIdentity(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 1, stName = "Open" }));
+			db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = true, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 2, stName = "Revision" });
+			db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 3, stName = "Development" });
+			db.Insert(new TaskFlow { bForceComplete = false, bForceOpen = false, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 4, stName = "Peer Review" });
+			db.Insert(new TaskFlow { bForceComplete = true, bForceOpen = false, fkTaskType = _fktype.id, fkTaskCategory = _fkcateg.id, nuOrder = 5, stName = "Done" });
 
 			db.Insert( new Task
 			{

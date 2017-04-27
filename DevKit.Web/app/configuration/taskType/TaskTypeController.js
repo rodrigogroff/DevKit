@@ -315,7 +315,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.accs = [];
 
-	$scope.loadAccs = function () {
+	$scope.loadAccs = function ()
+	{
+		$scope.addAcc = false;
+
 		var opcoes =
 			{
 				fkTaskCategory: $scope.newAcc.fkTaskCategory
@@ -332,8 +335,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.editAcc = function (mdl)
 	{
-		$scope.addAcc = true;
-		$scope.newAcc = mdl;
+		if ($scope.addAcc == false)
+		{
+			$scope.addAcc = true;
+			$scope.newAcc = mdl;
+		}		
 	}
 
 	$scope.removeAcc = function (index, lista)

@@ -201,7 +201,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					stName: '',
 				};
 
-				toastr.success('Version added', 'Success');
+				toastr.success('Version saved', 'Success');
 				$scope.viewModel.versions = data.versions;
 				$scope.viewModel.logs = data.logs;
 

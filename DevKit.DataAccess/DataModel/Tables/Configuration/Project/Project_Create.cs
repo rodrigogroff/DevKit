@@ -201,7 +201,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Design Construction Hours"
+									stName = "Design Construction Hours",
+									bEstimate = false
 								});
 							}
 
@@ -214,7 +215,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Design Peer Review Hours"
+									stName = "Design Peer Review Hours",
+									bEstimate = false
 								});
 							}
 
@@ -241,7 +243,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Change Analysis Hours"
+									stName = "Change Analysis Hours",
+									bEstimate = false
 								});
 							}
 
@@ -254,7 +257,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Change Peer Review Hours"
+									stName = "Change Peer Review Hours",
+									bEstimate = false
 								});
 							}
 
@@ -281,7 +285,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Estimating Hours"
+									stName = "Estimating Hours",
+									bEstimate = false
 								});
 							}
 
@@ -317,8 +322,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
+									stName = "Estimate Coding Hours",
 									bEstimate = true,
-									stName = "Estimate Coding Hours"
 								});
 
 								db.Insert(new TaskTypeAccumulator
@@ -327,8 +332,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
+									stName = "Coding Hours",
 									bEstimate = false,
-									stName = "Coding Hours"
 								});
 							}
 
@@ -355,8 +360,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
+									stName = "Estimate Coding Hours",
 									bEstimate = true,
-									stName = "Estimate Coding Hours"
 								});
 
 								db.Insert(new TaskTypeAccumulator
@@ -365,8 +370,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
+									stName = "Coding Hours",
 									bEstimate = false,
-									stName = "Coding Hours"
 								});
 							}
 
@@ -403,7 +408,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Coding Hours"
+									stName = "Coding Hours",
+									bEstimate = false,
 								});
 							}
 
@@ -430,7 +436,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Coding Hours"
+									stName = "Coding Hours",
+									bEstimate = false,
 								});
 							}
 
@@ -457,7 +464,8 @@ namespace DataModel
 									fkTaskCategory = categ.id,
 									fkTaskFlow = flow_id,
 									fkTaskType = ttype.id,
-									stName = "Coding Hours"
+									stName = "Coding Hours",
+									bEstimate = false,
 								});
 							}
 

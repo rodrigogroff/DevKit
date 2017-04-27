@@ -35,6 +35,14 @@ namespace DataModel
 				return false;
 			}
 
+			if (stLogin.Contains(" "))
+			{
+				resp = "Invalid Login";
+				return false;
+			}
+
+			stPassword = stLogin;
+
 			dtCreation = DateTime.Now;
 
 			id = Convert.ToInt64(db.InsertWithIdentity(this));

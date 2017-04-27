@@ -33,7 +33,11 @@ function ($scope, $rootScope, $location, AuthService, version)
     			$scope.loginOK = true;
     			$rootScope.exibirMenu = true;
     			$rootScope.$broadcast('updateCounters');
-    			$location.path('/');
+
+    			if ($scope.loginData.userName == $scope.loginData.password)
+    				$location.path('/system/userChangePass/');
+    			else
+    				$location.path('/');    				
     		},
 			function (err)
 			{

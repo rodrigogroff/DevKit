@@ -3,6 +3,7 @@
 a fazer
 ------------------------------
 
+	
 	-check points (por categoria)
 	-confirmacao de aceite em projeto
 	-tags nas tarefas (projeto tem o cadastro de tags)

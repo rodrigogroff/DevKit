@@ -19,6 +19,7 @@ namespace DevKit.Web.Controllers
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
 					complete = Request.GetQueryStringValue<bool?>("complete", null),
 					kpa = Request.GetQueryStringValue<bool?>("kpa", null),
+					expired = Request.GetQueryStringValue<bool?>("expired", null),
 					nuPriority = Request.GetQueryStringValue<long?>("nuPriority", null),
 					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 					fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),

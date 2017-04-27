@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace DataModel
 {
@@ -9,7 +10,7 @@ namespace DataModel
 		public int skip, take;
 		public string busca;
 
-		public bool? complete, kpa;
+		public bool? complete, kpa, expired;
 
 		public long? nuPriority,
 						fkProject,
@@ -37,6 +38,14 @@ namespace DataModel
 								e.stTitle.ToUpper().Contains(filter.busca) ||
 								e.stProtocol.ToUpper().Contains(filter.busca) 
 						select e;
+
+			if (filter.expired != null)
+			{
+				if (filter.expired == true)
+					query = from e in query where e.dtExpired != null && DateTime.Now > e.dtExpired select e;
+				else
+					query = from e in query where e.dtExpired != null && DateTime.Now < e.dtExpired select e;
+			}				
 
 			if (filter.nuPriority != null)
 				query = from e in query where e.nuPriority == filter.nuPriority select e;

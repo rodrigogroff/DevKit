@@ -12,45 +12,7 @@
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.priority" ng-model="filtro.campos.nuPriority" />
 			</td>
 			<td width="25px"></td>
-		</tr>
-		<tr height="36px">
-			<td></td>
-			<td><b>State</b></td>
-			<td>
-				<table>
-					<tr>
-						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.complete" /></td>
-						<td> Open</td>
-						<td width="20px"></td>
-						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.complete" /></td>
-						<td> Closed</td>
-					</tr>
-				</table>
-			</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr height="36px">
-			<td></td>
-			<td><b>KPA</b></td>
-			<td>
-				<table>
-					<tr>
-						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.kpa" /></td>
-						<td> Yes</td>
-						<td width="20px"></td>
-						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.kpa" /></td>
-						<td> No</td>
-					</tr>
-				</table>
-			</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
+		</tr>		
 		<tr height="36px">
 			<td></td>
 			<td><b>Project</b></td>
@@ -99,6 +61,63 @@
 			<td>
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.taskcategory" ng-model="filtro.campos.fkTaskCategory" />
 			</td>
+			<td></td>
+		</tr>		
+		<tr height="36px">
+			<td></td>
+			<td><b>KPA</b></td>
+			<td>
+				<table>
+					<tr>
+						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.kpa" /></td>
+						<td> Yes</td>
+						<td width="20px"></td>
+						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.kpa" /></td>
+						<td> No</td>
+					</tr>
+				</table>
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr height="36px">
+			<td></td>
+			<td><b>Expired?</b></td>
+			<td>
+				<table>
+					<tr>
+						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.expired" /></td>
+						<td> No</td>
+						<td width="20px"></td>
+						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.expired" /></td>
+						<td> Yes</td>
+					</tr>
+				</table>
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr height="36px">
+			<td></td>
+			<td><b>State</b></td>
+			<td>
+				<table>
+					<tr>
+						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.complete" /></td>
+						<td> Open</td>
+						<td width="20px"></td>
+						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.complete" /></td>
+						<td> Closed</td>
+					</tr>
+				</table>
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
 			<td></td>
 		</tr>
 	</table>

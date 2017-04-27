@@ -201,6 +201,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkTaskFlowCurrent { get; set; } // bigint
 		[Column,     Nullable] public long?     fkReleaseVersion  { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUserResponsible { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtExpired         { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="TaskAccumulatorValue")]
@@ -219,11 +220,15 @@ namespace DataModel
 	[Table(Schema="public", Name="TaskCategory")]
 	public partial class TaskCategory
 	{
-		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
-		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
-		[Column,     Nullable] public string stAbreviation { get; set; } // character varying(10)
-		[Column,     Nullable] public string stDescription { get; set; } // character varying(500)
-		[Column,     Nullable] public long?  fkTaskType    { get; set; } // bigint
+		[PrimaryKey, Identity] public long   id               { get; set; } // bigint
+		[Column,     Nullable] public string stName           { get; set; } // character varying(200)
+		[Column,     Nullable] public string stAbreviation    { get; set; } // character varying(10)
+		[Column,     Nullable] public string stDescription    { get; set; } // character varying(500)
+		[Column,     Nullable] public long?  fkTaskType       { get; set; } // bigint
+		[Column,     Nullable] public bool?  bExpires         { get; set; } // boolean
+		[Column,     Nullable] public long?  nuExpiresDays    { get; set; } // bigint
+		[Column,     Nullable] public long?  nuExpiresHours   { get; set; } // bigint
+		[Column,     Nullable] public long?  nuExpiresMinutes { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskFlow")]

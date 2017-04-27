@@ -31,7 +31,9 @@ namespace DataModel
 		
 		public bool Create(DevKitDB db, ref string resp)
 		{
+			var setup = db.Setup();
 			var user = db.GetCurrentUser();
+			var category = db.TaskCategory(this.fkTaskCategory);
 
 			bComplete = false;
 			dtStart = DateTime.Now;
@@ -43,8 +45,20 @@ namespace DataModel
 								 OrderBy(t => t.nuOrder).
 								 FirstOrDefault().
 								 id;
-			
-			var setup = db.Setup();
+
+			if (category.bExpires == true)
+			{
+				this.dtExpired = DateTime.Now;
+
+				if (category.nuExpiresDays > 0)
+					this.dtExpired = dtExpired.Value.AddDays((int)category.nuExpiresDays);
+
+				if (category.nuExpiresHours > 0)
+					this.dtExpired = dtExpired.Value.AddHours((int)category.nuExpiresHours);
+
+				if (category.nuExpiresMinutes > 0)
+					this.dtExpired = dtExpired.Value.AddMinutes((int)category.nuExpiresMinutes);
+			}
 
 			stProtocol = setup.GetProtocol();	
 

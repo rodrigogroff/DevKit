@@ -105,9 +105,7 @@ namespace DataModel
 				};
 
 				var lstUsertasks = (	from e in db.Tasks
-										where e.fkProject == project.id
-										where e.fkUserResponsible == user.id
-
+										where e.fkProject == project.id										
 										where filter.complete == null || e.bComplete == filter.complete
 										where filter.nuPriority == null || e.nuPriority == filter.nuPriority
 										where filter.fkPhase == null || e.fkPhase == filter.fkPhase
@@ -117,7 +115,6 @@ namespace DataModel
 										where filter.fkTaskType == null || e.fkTaskType == filter.fkTaskType
 										where filter.fkTaskFlowCurrent == null || e.fkTaskFlowCurrent == filter.fkTaskFlowCurrent
 										where filter.fkTaskCategory == null || e.fkTaskCategory == filter.fkTaskCategory
-
 										select e).
 										ToList();
 
@@ -176,7 +173,9 @@ namespace DataModel
 							var flows = (from e in db.TaskFlows
 										 where e.fkTaskType == tasktype.id
 										 where e.fkTaskCategory == category.id
-										 select e).OrderBy( y=> y.nuOrder).ToList();
+										 select e).
+										 OrderBy( y=> y.nuOrder).
+										 ToList();
 
 							var currentTaskRang = new List<long>();
 
@@ -198,6 +197,11 @@ namespace DataModel
 											 OrderBy(y => y.id).
 											 ToList();
 
+								var count = ktf.tasks.Count();
+
+								if (count > 0)
+									ktf.flow += " (" + count + ")";
+
 								currentTaskRang.AddRange(ktf.tasks.Select ( y=> y.id));
 
 								ktc.flows.Add(ktf);
@@ -206,7 +210,8 @@ namespace DataModel
 							var accs = (from e in db.TaskTypeAccumulators
 										where e.fkTaskType == tasktype.id
 										where e.fkTaskCategory == category.id
-										select e).ToList();
+										select e).
+										ToList();
 
 							foreach (var i_acc in accs)
 							{

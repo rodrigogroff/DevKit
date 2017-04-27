@@ -91,7 +91,7 @@ namespace DataModel
 								nuType = EnumAuditType.Task,
 								fkTarget = this.id
 							}.
-							Create(db, "State changed -> " + db.TaskFlow(fkNewFlow).stName, "");
+							Create(db, "State changed -> " + db.TaskFlow(fkTaskFlowCurrent).stName, "");
 						}
 
 						new AuditLog

@@ -124,6 +124,7 @@ namespace DataModel
 				{
 					item.logs.Add(new LogAccumulatorValue()
 					{
+						id = l.id,
 						sfkUser = db.User(l.fkUser).stLogin,
 						sdtLog = l.dtLog?.ToString(setup.stDateFormat),
 						sValue = GetValueForType(db, item.sfkTaskAccType, id, item.id, l.id)

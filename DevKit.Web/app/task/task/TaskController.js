@@ -243,4 +243,20 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+	$scope.removeAccValue = function (accVal)
+	{
+		$scope.viewModel.updateCommand = "removeAccValue";
+		$scope.viewModel.anexedEntity = accVal;
+
+		Api.Task.update({ id: id }, $scope.viewModel, function (data)
+		{
+			toastr.success('Accumulator removed', 'Success');
+
+			$scope.viewModel.accs = data.accs;
+
+		}, function (response) {
+			toastr.error(response.data.message, 'Error');
+		});
+	}	
+
 }]);

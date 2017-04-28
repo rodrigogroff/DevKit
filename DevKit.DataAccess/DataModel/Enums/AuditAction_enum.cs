@@ -56,14 +56,15 @@ namespace DataModel
 							TaskUpdateMessage = 41,
 							TaskUpdateFlowChange = 42,
 							TaskUpdateAccSaved = 43,
-							UserAddPhone = 44,
-							UserEditPhone = 45,
-							UserRemovePhone = 46,
-							UserAddEmail = 47,
-							UserEditEmail = 48,
-							UserRemoveEmail = 49,
-							UserPasswordReset = 50,
-							UserPasswordChange = 51;
+							TaskUpdateAccRemoved = 44,
+							UserAddPhone = 45,
+							UserEditPhone = 46,
+							UserRemovePhone = 47,
+							UserAddEmail = 48,
+							UserEditEmail = 49,
+							UserRemoveEmail = 50,
+							UserPasswordReset = 51,
+							UserPasswordChange = 52;
 
 		public EnumAuditAction()
 		{
@@ -124,6 +125,7 @@ namespace DataModel
 			lst.Add(new AuditAction() { id = TaskUpdateMessage, stName = "Task \\ Task Update, message saved" });
 			lst.Add(new AuditAction() { id = TaskUpdateFlowChange, stName = "Task \\ Task Update, flow change" });
 			lst.Add(new AuditAction() { id = TaskUpdateAccSaved, stName = "Task \\ Task Update, accumulator value saved" });
+			lst.Add(new AuditAction() { id = TaskUpdateAccRemoved, stName = "Task \\ Task Update, accumulator value removed" });
 
 			lst.OrderBy(y => y.stName);
 		}

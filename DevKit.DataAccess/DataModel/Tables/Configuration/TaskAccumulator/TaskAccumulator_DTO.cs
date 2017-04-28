@@ -11,6 +11,8 @@ namespace DataModel
 
 	public class LogAccumulatorValue
 	{
+		public long id = 0;
+
 		public string sfkUser = "",
 			          sdtLog = "",
 					  sValue = "";

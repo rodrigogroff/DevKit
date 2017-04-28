@@ -277,6 +277,7 @@
 						</table>
 					</div>
 				</tab>
+
 				<tab heading="Work Flow" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Work Flow" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -509,7 +510,14 @@
 												<td>{{ mdl.sfkTaskAccType }}</td>
 												<td>{{ mdl.snuTotal }}</td>
 												<td>
-													<div data-ng-repeat="m in mdl.logs">{{ m.sdtLog }} | {{ m.sfkUser }} | {{ m.sValue }}</div>
+													<div data-ng-repeat="m in mdl.logs">
+														{{ m.sdtLog }}, {{ m.sfkUser }}, {{ m.sValue }}
+														<div class="pull-right">
+															<a href="" role="button" ng-click="removeAccValue(m)">
+																<i class="glyphicon glyphicon-remove" style="color:white"></i>
+															</a>
+														</div>
+													</div>
 												</td>
 											</tr>
 										</table>

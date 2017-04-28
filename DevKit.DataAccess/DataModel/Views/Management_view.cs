@@ -42,6 +42,7 @@ namespace DataModel
 		public string stName;
 
 		public int? open,
+					estimating,
 					reopen,
 					development,
 					construction,
@@ -162,6 +163,11 @@ namespace DataModel
 										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "OPEN"
 										select e).Count(),
 
+								estimating = (from e in lstValidTaks
+											  join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											  where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "ESTIMATING"
+											  select e).Count(),
+
 								reopen = (from e in lstValidTaks
 										  join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
 										  where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "RE-OPEN"
@@ -188,10 +194,17 @@ namespace DataModel
 										select e).Count()
 							};
 
-							dto.sa.total = dto.sa.open + dto.sa.reopen + dto.sa.construction + dto.sa.peerreview + dto.sa.cancelled + dto.sa.done;
+							dto.sa.total =	dto.sa.open + 
+											dto.sa.estimating + 
+											dto.sa.reopen + 
+											dto.sa.construction + 
+											dto.sa.peerreview + 
+											dto.sa.cancelled + 
+											dto.sa.done;
 
-							if (dto.sa.open == 0) dto.sa.open = null;
+							if (dto.sa.open == 0) dto.sa.open = null;							
 							if (dto.sa.reopen == 0) dto.sa.reopen = null;
+							if (dto.sa.estimating == 0) dto.sa.estimating = null;
 							if (dto.sa.construction == 0) dto.sa.construction = null;
 							if (dto.sa.peerreview == 0) dto.sa.peerreview = null;
 							if (dto.sa.cancelled == 0) dto.sa.cancelled = null;
@@ -408,12 +421,6 @@ namespace DataModel
 								select e.id).
 								FirstOrDefault();
 
-				long fkAcc_ED = (from e in lstValidAccsFks
-								 where e.fkTaskType == fkTaskType_SoftwareDevelopment
-								 where e.stName == "Estimate Coding Hours"
-								 select e.id).
-								 FirstOrDefault();
-
 				long fkAcc_B_Construction = (from e in lstValidAccsFks
 											 where e.fkTaskType == fkTaskType_SoftwareBugs
 											 where e.fkTaskCategory == fkConstructionBug
@@ -438,18 +445,29 @@ namespace DataModel
 				#endregion
 
 				#region - setup accs values - 
-				
-				var lstValidAccsIds = new List<long>();
+								
+				var lstValidEstimateAccsIds = new List<long>();
 
-				lstValidAccsIds.Add(fkAcc_A);
-				lstValidAccsIds.Add(fkAcc_D);
-				lstValidAccsIds.Add(fkAcc_ED);
-				lstValidAccsIds.Add(fkAcc_B_Construction);
-				lstValidAccsIds.Add(fkAcc_B_Homologation);
-				lstValidAccsIds.Add(fkAcc_B_Production);
+				lstValidEstimateAccsIds.AddRange((from e in lstValidAccsFks
+												  where e.fkTaskType == fkTaskType_SoftwareDevelopment
+												  where e.stName == "Estimate Coding Hours"
+												  select e.id).ToList());
+
+				var lstValidCodingAccsIds = new List<long>();
+
+				lstValidCodingAccsIds.Add(fkAcc_A);
+				lstValidCodingAccsIds.Add(fkAcc_D);				
+				lstValidCodingAccsIds.Add(fkAcc_B_Construction);
+				lstValidCodingAccsIds.Add(fkAcc_B_Homologation);
+				lstValidCodingAccsIds.Add(fkAcc_B_Production);
+
+				var lstValidAccEstValues = (from e in db.TaskAccumulatorValues
+											where lstValidEstimateAccsIds.Contains((long)e.fkTaskAcc)
+											select e).
+											ToList();
 
 				var lstValidAccValues = (from e in db.TaskAccumulatorValues
-										 where lstValidAccsIds.Contains((long)e.fkTaskAcc)
+										 where lstValidCodingAccsIds.Contains((long)e.fkTaskAcc)
 										 select e).
 										 ToList();
 
@@ -567,21 +585,23 @@ namespace DataModel
 
 					if (_development_MM == null) _development_MM = 0;
 
-					long? _development_EHH = (from e in lstValidAccValues
-											  where task_D_IdList.Contains((long)e.fkTask)
-												where e.fkTaskAcc == fkAcc_ED
-												select e).
-												Sum(y => y.nuHourValue);
+					// estimation
+
+					long? _development_EHH = (from e in lstValidAccEstValues
+											  where task_D_IdList.Contains((long)e.fkTask)												
+											  select e).
+											  Sum(y => y.nuHourValue);
 
 					if (_development_EHH == null) _development_EHH = 0;
 
-					long? _development_EMM = (from e in lstValidAccValues
+					long? _development_EMM = (from e in lstValidAccEstValues
 											  where task_Analysis_IdList.Contains((long)e.fkTask)
-												where e.fkTaskAcc == fkAcc_ED
-												select e).
-												Sum(y => y.nuMinValue);
+											  select e).
+											  Sum(y => y.nuMinValue);
 
 					if (_development_EMM == null) _development_EMM = 0;
+
+					// percent
 
 					string _workPct = "";
 

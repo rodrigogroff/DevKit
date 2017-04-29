@@ -7,6 +7,7 @@ namespace DataModel
 	{
 		public string name;
 
+		public List<Task> tasks = new List<Task>();
 		public List<CompanyNews> news = new List<CompanyNews>();
 		public List<Survey> surveys = new List<Survey>();
 	}
@@ -21,6 +22,20 @@ namespace DataModel
 			var dto = new HomeDTO();
 
 			dto.name = "Hi " + user.stLogin;
+
+			#region - tasks -
+			{
+				dto.tasks = (from e in db.Tasks
+							 where e.fkUserResponsible == user.id
+							 where e.bComplete == false
+							 select e).
+							 OrderBy(y=>y.nuPriority).
+							 ToList();
+				
+				foreach (var item in dto.tasks)
+					item.LoadAssociations(db);
+			}
+			#endregion
 
 			#region - news - 
 			{

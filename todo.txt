@@ -7,8 +7,7 @@ a fazer
 	-tarefas que dependem de outras tarefas
 	-questionamentos (com respostas)
 	-check points na categoria da tarefa, só fecha com tudo marcado
-	-tarefas do usuário na sua dashboard (só titulo/localização)
-		
+			
 	-poder cancelar valores de acumulador
 				
 	------------------------

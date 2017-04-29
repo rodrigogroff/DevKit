@@ -1,8 +1,49 @@
 ﻿<div class="webFormPostion">
 	<table>
 		<tr>
-			<td width="450px" valign="top">
-				<section class="widgetFormNews" style="width:450px; height:100%" ng-show="viewModel.surveys.length > 0">
+			<td width="600px" valign="top" ng-show="viewModel.tasks.length > 0">
+				<section class="widgetForm" style="width:600px; height:100%">
+					<legend class="legendTop">
+						<table><tr height="12px"><td> </td></tr></table>
+						<table style="color:white; width:100%">
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<span style="color:white">Open Tasks ({{viewModel.tasks.length}})</span>
+								</td>
+								<td width="20px"></td>
+							</tr>
+							<tr height="12px"></tr>
+						</table>
+					</legend>
+					<table width="100%">
+						<tr>
+							<td width="20px"></td>
+							<td>
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>Protocol </th>
+											<th>Type / Category </th>
+											<th>Title / Localization </th>
+											<th>Priority </th>
+										</tr>
+									</thead>
+									<tr ng-click="showTask(mdl)" data-ng-repeat="mdl in viewModel.tasks">
+										<td>{{ mdl.stProtocol }}</td>
+										<td>{{ mdl.sfkTaskType }} <br /> {{mdl.sfkTaskCategory}}</td>
+										<td>{{ mdl.stTitle }}<br />{{ mdl.stLocalization }}</td>
+										<td>{{ mdl.snuPriority }}</td>
+									</tr>
+								</table>
+							</td>
+							<td width="20px"></td>
+						</tr>
+					</table>					
+				</section>
+			</td>
+			<td width="450px" valign="top" ng-show="viewModel.surveys.length > 0">
+				<section class="widgetFormNews" style="width:450px; height:100%; padding-left:60px">
 					<legend class="legendTop">
 						<table><tr height="12px"><td> </td></tr></table>
 						<table style="color:white; width:100%">
@@ -102,9 +143,8 @@
 					</div>
 				</section>
 			</td>
-			<td width="60px"></td>
-			<td width="450px" valign="top">
-				<section class="widgetFormNews" style="width:450px; height:100%" ng-show="viewModel.news.length > 0">
+			<td width="450px" valign="top" ng-show="viewModel.news.length > 0">
+				<section class="widgetFormNews" style="width:450px; height:100%; padding-left:60px">
 					<legend class="legendTop">
 						<table><tr height="12px"><td> </td></tr></table>
 						<table style="color:white; width:100%">

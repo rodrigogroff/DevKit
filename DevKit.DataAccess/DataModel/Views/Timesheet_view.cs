@@ -79,7 +79,7 @@ namespace DataModel
 					var hh = (from e in lstHours
 							  where e.fkUser == usr.id
 							  select e).
-								  Sum(y => y.nuHourValue);
+							  Sum(y => y.nuHourValue);
 
 					var mm = (from e in lstHours
 							  where e.fkUser == usr.id
@@ -89,13 +89,14 @@ namespace DataModel
 					if (hh == null) hh = 0;
 					if (mm == null) mm = 0;
 
-					if (mm > 59)
-					{
-						var hours = (long)mm / 60;
-						hh += hours;
-						mm -= hours * 60;
+					var hoursU = (long)mm / 60;
+					hh += hoursU;
 
-						totHH += (long)hh;
+					totHH += (long)hh;
+
+					if (mm > 59)
+					{						
+						mm -= hoursU * 60;						
 						totMM += (long)mm;
 					}
 
@@ -108,12 +109,11 @@ namespace DataModel
 					});
 				}
 
+				var hours = (long)totMM / 60;
+				totHH += hours;
+
 				if (totMM > 59)
-				{
-					var hours = (long)totMM / 60;
-					totHH += hours;
 					totMM -= hours * 60;
-				}
 
 				dto.total_hhmm = totHH + ":" + totMM.ToString().PadLeft(2, '0');
 			}
@@ -158,13 +158,14 @@ namespace DataModel
 						if (hh == null) hh = 0;
 						if (mm == null) mm = 0;
 
+						var hours = (long)mm / 60;
+						hh += hours;
+
+						totHH += (long)hh;
+
 						if (mm > 59)
 						{
-							var hours = (long)mm / 60;
-							hh += hours;
 							mm -= hours * 60;
-
-							totHH += (long)hh;
 							totMM += (long)mm;
 						}
 
@@ -212,12 +213,11 @@ namespace DataModel
 					});
 				}
 
+				var hoursF = (long)totMM / 60;
+				totHH += hoursF;
+
 				if (totMM > 59)
-				{
-					var hours = (long)totMM / 60;
-					totHH += hours;
-					totMM -= hours * 60;
-				}
+					totMM -= hoursF * 60;
 
 				dto.total_hhmm = totHH + ":" + totMM.ToString().PadLeft(2, '0');
 			}

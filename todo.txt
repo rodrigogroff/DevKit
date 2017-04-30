@@ -3,11 +3,9 @@
 a fazer
 ------------------------------
 	
-	-cancel junto com os saves
-		
-	-sort by (combo) na listagem de tarefas	
-	-questionamentos (com respostas)
 	-check points na categoria da tarefa, só fecha com tudo marcado
+	-questionamentos (com respostas)
+	-sort by (combo) na listagem de tarefas	
 				
 	------------------------
 	documentação

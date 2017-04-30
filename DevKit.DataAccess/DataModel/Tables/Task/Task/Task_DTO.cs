@@ -29,12 +29,22 @@ namespace DataModel
 		public List<TaskFlowChange> flows;
 		public List<TaskTypeAccumulator> accs;
 		public List<TaskLog> logs;
+		public List<TaskDependency> dependencies;
 	}
-
+	
 	public class TaskLog
 	{
 		public string  sdtLog,
 						stUser,
 						stDetails;
+	}
+
+	public partial class TaskDependency
+	{
+		public string sdtLog,
+						sfkUser,
+						stProtocol,
+						stTitle,
+						stLocalization;
 	}
 }

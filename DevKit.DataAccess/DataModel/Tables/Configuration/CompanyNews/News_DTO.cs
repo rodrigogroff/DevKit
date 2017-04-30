@@ -10,15 +10,5 @@ namespace DataModel
 						sfkProject = "",
 						sdtLog = "",
 						updateCommand = "";
-
-		//public List<ProjectLog> logs;
 	}
-
-	/*
-	public class ProjectLog
-	{
-		public string sdtLog,
-						stUser,
-						stDetails;
-	}*/
 }

@@ -259,4 +259,69 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		});
 	}	
 
+	// ============================================
+	// Subtask 
+	// ============================================
+
+	$scope.addSubtask = false;
+
+	$scope.removeSubtask = function (entity)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.viewModel.updateCommand = "removeSubtask";
+			$scope.viewModel.anexedEntity = entity;
+
+			Api.Task.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Sub-task removed', 'Success');
+
+				$scope.viewModel.anexedEntity = {};
+
+				$scope.viewModel.dependencies = data.dependencies;
+				$scope.viewModel.logs = data.logs;
+			});
+		}
+	}
+
+	$scope.addNewSubtask = function () {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addSubtask = !$scope.addSubtask;
+	}
+
+	$scope.newSubtask = {};
+
+	$scope.saveNewSubtask = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.newSubtask_fail = invalidCheck($scope.newSubtask.stProtocol);
+
+			if (!$scope.newSubtask_fail)
+			{
+				$scope.addSubtask = false;
+
+				$scope.viewModel.updateCommand = "newSubtask";
+				$scope.viewModel.anexedEntity = $scope.newSubtask;
+
+				Api.Task.update({ id: id }, $scope.viewModel, function (data)
+				{
+					$scope.newSubtask = { };
+					toastr.success('Sub-task saved', 'Success');
+					$scope.viewModel.dependencies = data.dependencies;
+					$scope.viewModel.logs = data.logs;
+				},
+				function (response) {
+					toastr.error(response.data.message, 'Error');
+				});
+			}
+		}
+	}
+
 }]);

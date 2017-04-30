@@ -200,3 +200,11 @@ ALTER TABLE public."UserNewsRead" OWNER to postgres;
 ALTER TABLE public."UserNewsRead" ADD COLUMN if not exists "fkNews" bigint;
 ALTER TABLE public."UserNewsRead" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 ALTER TABLE public."UserNewsRead" ADD COLUMN if not exists "fkUser" bigint;
+	
+CREATE TABLE IF NOT EXISTS public."TaskDependency" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."TaskDependency" OWNER to postgres;
+ALTER TABLE public."TaskDependency" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."TaskDependency" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."TaskDependency" ADD COLUMN if not exists "fkMainTask" bigint;
+ALTER TABLE public."TaskDependency" ADD COLUMN if not exists "fkSubTask" bigint;
+

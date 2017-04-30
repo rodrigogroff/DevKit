@@ -34,6 +34,7 @@ namespace DataModel
 		public ITable<Task>                 Tasks                 { get { return this.GetTable<Task>(); } }
 		public ITable<TaskAccumulatorValue> TaskAccumulatorValues { get { return this.GetTable<TaskAccumulatorValue>(); } }
 		public ITable<TaskCategory>         TaskCategories        { get { return this.GetTable<TaskCategory>(); } }
+		public ITable<TaskDependency>       TaskDependencies      { get { return this.GetTable<TaskDependency>(); } }
 		public ITable<TaskFlow>             TaskFlows             { get { return this.GetTable<TaskFlow>(); } }
 		public ITable<TaskFlowChange>       TaskFlowChanges       { get { return this.GetTable<TaskFlowChange>(); } }
 		public ITable<TaskMessage>          TaskMessages          { get { return this.GetTable<TaskMessage>(); } }
@@ -96,8 +97,8 @@ namespace DataModel
 	public partial class Project
 	{
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
-		[Column,     Nullable] public string    stName            { get; set; } // character varying(99)
 		[Column,     Nullable] public long?     fkUser            { get; set; } // bigint
+		[Column,     Nullable] public string    stName            { get; set; } // character varying(99)
 		[Column,     Nullable] public long?     fkProjectTemplate { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtCreation        { get; set; } // timestamp (6) without time zone
 	}
@@ -133,8 +134,8 @@ namespace DataModel
 	public partial class ProjectUser
 	{
 		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
+		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
 		[Column,     Nullable] public string    stRole    { get; set; } // character varying(99)
 		[Column,     Nullable] public DateTime? dtJoin    { get; set; } // timestamp (6) without time zone
 	}
@@ -174,9 +175,9 @@ namespace DataModel
 	{
 		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
 		[Column,     Nullable] public long?     fkSurvey       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser         { get; set; } // bigint
 		[Column,     Nullable] public long?     fkSurveyOption { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser         { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Task")]
@@ -229,6 +230,16 @@ namespace DataModel
 		[Column,     Nullable] public long?  nuExpiresDays    { get; set; } // bigint
 		[Column,     Nullable] public long?  nuExpiresHours   { get; set; } // bigint
 		[Column,     Nullable] public long?  nuExpiresMinutes { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="TaskDependency")]
+	public partial class TaskDependency
+	{
+		[PrimaryKey, Identity] public long      id         { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog      { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUser     { get; set; } // bigint
+		[Column,     Nullable] public long?     fkMainTask { get; set; } // bigint
+		[Column,     Nullable] public long?     fkSubTask  { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskFlow")]
@@ -314,8 +325,8 @@ namespace DataModel
 	public partial class UserEmail
 	{
 		[PrimaryKey, Identity] public long   id      { get; set; } // bigint
-		[Column,     Nullable] public string stEmail { get; set; } // character varying(250)
 		[Column,     Nullable] public long?  fkUser  { get; set; } // bigint
+		[Column,     Nullable] public string stEmail { get; set; } // character varying(250)
 	}
 
 	[Table(Schema="public", Name="UserNewsRead")]
@@ -331,9 +342,9 @@ namespace DataModel
 	public partial class UserPhone
 	{
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
+		[Column,     Nullable] public long?  fkUser        { get; set; } // bigint
 		[Column,     Nullable] public string stPhone       { get; set; } // character varying(50)
 		[Column,     Nullable] public string stDescription { get; set; } // character varying(50)
-		[Column,     Nullable] public long?  fkUser        { get; set; } // bigint
 	}
 
 	public static partial class TableExtensions
@@ -423,6 +434,12 @@ namespace DataModel
 		}
 
 		public static TaskCategory Find(this ITable<TaskCategory> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskDependency Find(this ITable<TaskDependency> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

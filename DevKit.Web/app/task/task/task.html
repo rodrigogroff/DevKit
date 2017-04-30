@@ -220,8 +220,7 @@
 							</tr>
 						</table>
 					</div>
-				</tab>
-				
+				</tab>				
 				<tab heading="Assignment">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);padding-left:10px">
 						<table>
@@ -277,7 +276,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Work Flow" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Work Flow" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -518,6 +516,74 @@
 															</a>
 														</div>
 													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
+				<tab heading="Dependencies" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Dependencies ({{viewModel.dependencies.length}})" ng-show="viewModel.id > 0">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<legend style="color:white">
+										Sub-Tasks dependencies
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewSubtask()"><i class="fa fa-plus"> </i> Add sub-task </button>
+									</legend>
+									<div ng-if="addSubtask == true">
+										<table>
+											<tr>
+												<td>
+													<table>
+														<tr height="42px">
+															<td width="120px">
+																Protocol
+															</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="newSubtask_fail">!</button>
+															</td>
+															<td width="250px">
+																<input type="text" class="form-control input-transparent" maxlength="20" ng-model="newSubtask.stProtocol">
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										<br />
+										<button class="btn btn-primary" ng-click="saveNewSubtask()">Save </button>
+										<br />
+										<br />
+									</div>
+									<div ng-show="viewModel.dependencies.length > 0">
+										<br />
+										<table class="table table-hover" style="width:100%">
+											<thead>
+												<tr>
+													<th>Date / User</th>
+													<th>Protocol</th>
+													<th>Title / Localization</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="mdl in viewModel.dependencies">
+												<td>{{ mdl.sdtLog }} <br /><b>{{ mdl.sfkUser }}</b></td>
+												<td>{{ mdl.stProtocol }}</td>
+												<td>{{ mdl.stTitle }}<br />{{mdl.stLocalization}}</td>
+												<td>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="removeSubtask(mdl)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>													
 												</td>
 											</tr>
 										</table>

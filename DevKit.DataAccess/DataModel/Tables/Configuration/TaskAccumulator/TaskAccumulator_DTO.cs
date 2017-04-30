@@ -6,7 +6,7 @@ namespace DataModel
 	{
 		public string sfkFlow = "";
 
-		public List<LogAccumulatorValue> logs = new List<LogAccumulatorValue>();
+		public List<LogAccumulatorValue> logs;
 	}
 
 	public class LogAccumulatorValue

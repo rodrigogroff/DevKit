@@ -30,6 +30,7 @@ namespace DataModel
 				flows = LoadFlows(db);
 				accs = LoadAccs(db);
 				logs = LoadLogs(db);
+				dependencies = LoadDependencies(db);
 			}
 
 			return this;
@@ -37,7 +38,11 @@ namespace DataModel
 
 		public List<TaskProgress> LoadProgress(DevKitDB db)
 		{
-			var ret = (from e in db.TaskProgresses where e.fkTask == id select e).OrderByDescending(t => t.dtLog).ToList();
+			var ret = (from e in db.TaskProgresses
+					   where e.fkTask == id
+					   select e).
+					   OrderByDescending(t => t.dtLog).
+					   ToList();
 
 			var setup = db.Setup();
 
@@ -52,9 +57,40 @@ namespace DataModel
 			return ret;
 		}
 
+		public List<TaskDependency> LoadDependencies(DevKitDB db)
+		{
+			var ret = (from e in db.TaskDependencies
+					   where e.fkMainTask == id
+					   select e).
+					   OrderByDescending(t => t.dtLog).
+					   ToList();
+
+			var setup = db.Setup();
+
+			for (int i = 0; i < ret.Count(); i++)
+			{
+				var item = ret.ElementAt(i);
+
+				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
+				item.sfkUser = db.User(item.fkUser).stLogin;
+
+				var subTask = db.Task(item.fkSubTask);
+
+				item.stProtocol = subTask.stProtocol;
+				item.stTitle = subTask.stTitle;
+				item.stLocalization = subTask.stLocalization;
+			}
+
+			return ret;
+		}
+		
 		public List<TaskMessage> LoadMessages(DevKitDB db)
 		{
-			var ret = (from e in db.TaskMessages where e.fkTask == id select e).OrderByDescending(t => t.dtLog).ToList();
+			var ret = (from e in db.TaskMessages
+					   where e.fkTask == id
+					   select e).
+					   OrderByDescending(t => t.dtLog).
+					   ToList();
 
 			var setup = db.Setup();
 
@@ -74,9 +110,11 @@ namespace DataModel
 
 		public List<TaskFlowChange> LoadFlows(DevKitDB db)
 		{
-			var ret = (from e in db.TaskFlowChanges where e.fkTask == id select e).
-				OrderByDescending(t => t.dtLog).
-				ToList();
+			var ret =  (from e in db.TaskFlowChanges
+					    where e.fkTask == id
+					    select e).
+						OrderByDescending(t => t.dtLog).
+						ToList();
 
 			var setup = db.Setup();
 
@@ -99,12 +137,14 @@ namespace DataModel
 
 		public List<TaskTypeAccumulator> LoadAccs(DevKitDB db)
 		{
-			var ret = (from e in db.TaskTypeAccumulators where e.fkTaskCategory == this.fkTaskCategory select e).
-				ToList();
-
 			var setup = db.Setup();
 			var stypes = new EnumAccumulatorType().lst;
 
+			var ret = (from e in db.TaskTypeAccumulators
+					   where e.fkTaskCategory == this.fkTaskCategory
+					   select e).
+					   ToList();
+			
 			for (int i = 0; i < ret.Count(); i++)
 			{
 				var item = ret.ElementAt(i);
@@ -119,6 +159,8 @@ namespace DataModel
 							select e).
 							OrderByDescending ( y=> y.id ).
 							ToList();
+
+				item.logs = new List<LogAccumulatorValue>();
 
 				foreach (var l in logs)
 				{

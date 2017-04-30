@@ -110,7 +110,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-primary" ng-click="saveNewUser()">Save </button>
+										<button class="btn btn-default" ng-click="cancelUser()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewUser()">Save </button>
 										<br />
 										<br />
 									</div>
@@ -149,7 +149,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Phases" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Phases [{{viewModel.phases.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -181,7 +180,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-primary" ng-click="saveNewPhase()">Save </button>
+										<button class="btn btn-default" ng-click="cancelPhase()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewPhase()">Save </button>
 										<br />
 										<br />
 									</div>
@@ -216,7 +215,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Sprints" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Sprints [{{viewModel.sprints.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -257,7 +255,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-primary" ng-click="saveNewSprint()">Save </button>
+										<button class="btn btn-default" ng-click="cancelSprint()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewSprint()">Save </button>
 										<br />
 										<br />
 									</div>

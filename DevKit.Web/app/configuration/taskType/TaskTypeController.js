@@ -176,11 +176,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.newCategorie = mdl;
 	}
 
-	$scope.newCategorie =
-		{
-			fkTaskType: undefined,
-			stName: ''			
-		};
+	$scope.cancelCategorie = function () {
+		$scope.addCategorie = false;
+		$scope.newCategorie = {};
+	}
+
+	$scope.newCategorie = { };
 
 	$scope.saveNewCategorie = function ()
 	{
@@ -193,11 +194,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				$scope.newCategorie =
-				{
-					fkTaskType: undefined,
-					stName: ''
-				};
+				$scope.newCategorie = {};
 
 				toastr.success('Category saved', 'Success');
 				$scope.viewModel.categories = data.categories;
@@ -272,6 +269,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addFlow = !$scope.addFlow;
 	}
 
+	$scope.cancelFlow = function () {
+		$scope.addFlow = false;
+		$scope.newFlow = {};
+	}
+
 	$scope.newFlow = { };
 
 	$scope.saveNewFlow = function ()
@@ -340,6 +342,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addAcc = true;
 			$scope.newAcc = mdl;
 		}		
+	}
+
+	$scope.cancelAcc = function () {
+		$scope.addAcc = false;
+		$scope.newAcc = {};
 	}
 
 	$scope.removeAcc = function (index, lista)

@@ -169,12 +169,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addVersion = !$scope.addVersion;
 	}
 
-	$scope.newVersion =
-		{
-			fkSprint: undefined,
-			fkVersionState: undefined,
-			stName: '',
-		};
+	$scope.cancelVersion = function () {
+		$scope.addVersion = false;
+		$scope.newVersion = {};
+	}
+	
+	$scope.newVersion = { };
 
 	$scope.editVersion = function (mdl) {
 		$scope.addVersion = true;
@@ -194,12 +194,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
 			{
-				$scope.newVersion =
-				{
-					fkSprint: undefined,
-					fkVersionState: undefined,
-					stName: '',
-				};
+				$scope.newVersion = {};
 
 				toastr.success('Version saved', 'Success');
 				$scope.viewModel.versions = data.versions;

@@ -208,12 +208,17 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addPhone = !$scope.addPhone;
 	}
 
-	$scope.newPhone = { stPhone: '', stDescription: '' };
+	$scope.newPhone = { };
 
 	$scope.editPhone = function (mdl)
 	{
 		$scope.addPhone = true;
 		$scope.newPhone = mdl;
+	}
+
+	$scope.cancelPhone = function () {
+		$scope.addPhone = false;
+		$scope.newPhone = {};
 	}
 
 	$scope.saveNewPhone = function ()
@@ -235,7 +240,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				Api.User.update({ id: id }, $scope.viewModel, function (data)
 				{
-					$scope.newPhone = { stPhone: '', stDescription: '' };										
+					$scope.newPhone = {};
 					toastr.success('Phone saved', 'Success');					
 					$scope.viewModel.phones = data.phones;
 					$scope.viewModel.logs = data.logs;
@@ -279,11 +284,16 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addEmail = !$scope.addEmail;
 	}
 
-	$scope.newEmail = { stEmail: '' };
+	$scope.newEmail = { };
 
 	$scope.editEmail = function (mdl) {
 		$scope.addEmail = true;
 		$scope.newEmail = mdl;
+	}
+
+	$scope.cancelEmail = function () {
+		$scope.addEmail = false;
+		$scope.newEmail = {};
 	}
 
 	$scope.saveNewEmail = function ()
@@ -303,7 +313,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				Api.User.update({ id: id }, $scope.viewModel, function (data)
 				{					
-					$scope.newEmail = { stEmail: '' };
+					$scope.newEmail = {};
 					toastr.success('Email saved', 'Success');
 					$scope.viewModel.emails = data.emails;
 					$scope.viewModel.logs = data.logs;

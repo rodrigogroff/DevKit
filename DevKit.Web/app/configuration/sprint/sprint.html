@@ -63,7 +63,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Versions" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Versions [{{viewModel.versions.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -104,7 +103,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-primary" ng-click="saveNewVersion()">Save </button>
+										<button class="btn btn-default" ng-click="cancelVersion()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewVersion()">Save </button>
 										<br />
 										<br />
 									</div>

@@ -175,12 +175,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.newUser = mdl;
 	}
 
-	$scope.newUser =
-		{
-			fkUser: undefined,
-			stRole: '', 
-			fkProject: undefined
-		};
+	$scope.cancelUser = function (mdl) {
+		$scope.addUser = false;
+		$scope.newUser = {};
+	}
+
+	$scope.newUser = { };
 
 	$scope.saveNewUser = function ()
 	{
@@ -194,7 +194,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
-				$scope.newUser = { fkUser: undefined, stRole: '', fkProject: undefined };
+				$scope.newUser = {};
 
 				toastr.success('User added', 'Success');
 				$scope.viewModel.users = data.users;
@@ -241,20 +241,18 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addPhase = !$scope.addPhase;
 	}
 
+	$scope.cancelPhase = function (mdl) {
+		$scope.addPhase = false;
+		$scope.newPhase = {};
+	}
+
 	$scope.editPhase = function (mdl)
 	{
 		$scope.addPhase = true;
 		$scope.newPhase = mdl;
 	}
 
-	$scope.newPhase =
-		{
-			stName: '',
-			dtStart: '',
-			dtEnd: '',
-			bComplete: false,
-			fkProject: undefined
-		};
+	$scope.newPhase = { bComplete: false };
 
 	$scope.saveNewPhase = function ()
 	{		
@@ -267,14 +265,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
-				$scope.newPhase =
-					{
-						stName: '',
-						dtStart: '',
-						dtEnd: '',
-						bComplete: false,
-						fkProject: undefined
-					};
+				$scope.newPhase = { bComplete: false };
 
 				toastr.success('Phase added', 'Success');
 				$scope.viewModel.phases = data.phases;
@@ -317,6 +308,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addSprint = !$scope.addSprint;
 	}
 
+	$scope.cancelSprint = function () {
+		$scope.addSprint = false;
+		$scope.newSprint = {};
+	}
+
 	$scope.editSprint = function (mdl) {
 		$scope.addSprint = true;
 		$scope.newSprint = mdl;
@@ -327,12 +323,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$state.go('sprint', { id: mdl.id });
 	}
 
-	$scope.newSprint =
-		{
-			fkProject: undefined,
-			fkPhase: undefined,
-			stName: ''			
-		};
+	$scope.newSprint = { };
 
 	$scope.saveNewSprint = function ()
 	{
@@ -347,13 +338,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{				
-				$scope.newSprint =
-				{
-					fkProject: undefined,
-					fkPhase: undefined,
-					stName: ''
-					
-				};
+				$scope.newSprint = {};
 
 				toastr.success('Sprint saved', 'Success');
 				$scope.viewModel.sprints = data.sprints;

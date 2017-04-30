@@ -155,11 +155,16 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addOption = !$scope.addOption;
 	}
 
-	$scope.newOption = { nuOrder: '', stOption: '' };
+	$scope.newOption = { };
 
 	$scope.editOption = function (mdl) {
 		$scope.addOption = true;
 		$scope.newOption = mdl;
+	}
+
+	$scope.cancelOption = function () {
+		$scope.addOption = false;
+		$scope.newOption = {};
 	}
 
 	$scope.saveNewOption = function ()
@@ -181,7 +186,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				Api.Survey.update({ id: id }, $scope.viewModel, function (data)
 				{
-					$scope.newOption = { nuOrder: '', stOption: '' };
+					$scope.newOption = {};
 					toastr.success('Option saved', 'Success');
 					$scope.viewModel.options = data.options;
 				},

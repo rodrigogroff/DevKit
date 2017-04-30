@@ -3,7 +3,6 @@
 a fazer
 ------------------------------
 	
-	-limpeza de crud
 	-cancel junto com os saves
 		
 	-sort by (combo) na listagem de tarefas	

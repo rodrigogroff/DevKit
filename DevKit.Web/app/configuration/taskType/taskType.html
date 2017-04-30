@@ -77,7 +77,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Categories" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Categories [{{viewModel.categories.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -156,7 +155,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-primary" ng-click="saveNewCategorie()">Save </button>
+										<button class="btn btn-default" ng-click="cancelCategorie()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewCategorie()">Save </button>
 										<br />
 										<br />
 									</div>
@@ -195,7 +194,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Work flows" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Work flows" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -282,7 +280,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-primary" ng-click="saveNewFlow()">Save </button>
+										<button class="btn btn-default" ng-click="cancelFlow()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewFlow()">Save </button>
 										<br />
 										<br />
 									</div>
@@ -325,7 +323,6 @@
 						</table>
 					</div>
 				</tab>
-
 				<tab heading="Accumulators" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Accumulators" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -403,7 +400,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-primary" ng-click="saveNewAcc()">Save </button>
+										<button class="btn btn-default" ng-click="cancelAcc()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewAcc()">Save </button>
 										<br />
 										<br />
 									</div>

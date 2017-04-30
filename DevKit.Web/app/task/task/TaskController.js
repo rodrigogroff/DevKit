@@ -204,7 +204,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addAcc = !$scope.addAcc;
 	}
 
-	$scope.newAcc = { fkTask: id, fkTaskAcc: undefined, nuValue: '', nuHourValue : '', nuMinValue: '', fkUser: undefined };
+	$scope.cancelAcc = function () {
+		$scope.addAcc = false;
+		$scope.newAcc = { fkTask: id };
+	}
+
+	$scope.newAcc = { fkTask: id };
 
 	$scope.saveNewAcc = function ()
 	{
@@ -230,7 +235,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 				Api.Task.update({ id: id }, $scope.viewModel, function (data) 
 				{
-					$scope.newAcc = { fkTask: id, fkTaskAcc: undefined, nuValue: '', nuHourValue : '', nuMinValue: '', fkUser: undefined };
+					$scope.newAcc = { fkTask: id };
 
 					toastr.success('Accumulator saved', 'Success');
 
@@ -291,6 +296,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 			$scope.addSubtask = !$scope.addSubtask;
+	}
+
+	$scope.cancelDep = function () {
+		$scope.addSubtask = false;
+		$scope.newSubtask = { };
 	}
 
 	$scope.newSubtask = {};

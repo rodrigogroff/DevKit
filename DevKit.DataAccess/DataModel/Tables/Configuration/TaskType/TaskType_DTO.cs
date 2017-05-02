@@ -12,6 +12,7 @@ namespace DataModel
 
 		public List<TaskCategory> categories;
 		public List<TaskTypeLog> logs;
+		public List<TaskCheckPoint> checkpoints;
 	}
 
 	public class TaskTypeLog

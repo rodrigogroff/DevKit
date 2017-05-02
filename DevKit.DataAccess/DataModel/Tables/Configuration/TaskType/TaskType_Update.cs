@@ -292,6 +292,71 @@ namespace DataModel
 						logs = LoadLogs(db);
 						break;
 					}
+
+				case "newCC":
+					{
+						var ent = JsonConvert.DeserializeObject<TaskCheckPoint>(anexedEntity.ToString());
+
+						if (ent.id == 0)
+						{
+							if ((from e in db.TaskCheckPoints
+								 where e.fkCategory == ent.fkCategory
+								 where e.stName.ToUpper() == ent.stName.ToUpper()
+								 select e).Any())
+							{
+								resp = "Check Point already added to task type!";
+								return false;
+							}
+
+							db.Insert(ent);
+
+							new AuditLog
+							{
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.CategoryAddAccumulator,
+								nuType = EnumAuditType.TaskType,
+								fkTarget = this.id
+							}.
+							Create(db, "New category check point: " + ent.stName, "");
+						}
+						else
+						{
+							db.Update(ent);
+
+							new AuditLog
+							{
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.CategoryEditCheckPoint,
+								nuType = EnumAuditType.TaskType,
+								fkTarget = this.id
+							}.
+							Create(db, "Edit accumulator: " + ent.stName, "");
+						}
+
+						checkpoints = LoadCheckpoints(db);
+						logs = LoadLogs(db);
+						break;
+					}
+
+					case "removeCC":
+					{
+						var ent = JsonConvert.DeserializeObject<TaskCheckPoint>(anexedEntity.ToString());
+
+						db.Delete(ent);
+
+						new AuditLog
+						{
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.CategoryRemoveCheckPoint,
+							nuType = EnumAuditType.TaskType,
+							fkTarget = this.id
+						}.
+						Create(db, "Checkpoint deleted: " + ent.stName, "");
+
+						checkpoints = LoadCheckpoints(db);
+						logs = LoadLogs(db);
+						break;
+					}
 			}
 
 			return true;

@@ -143,6 +143,14 @@ namespace DataModel
 			return ret;
 		}
 
+		public TaskCheckPoint TaskCheckPoint(long? id)
+		{
+			if (id == null) return null;
+			var tag = "TaskCheckPoint" + id; var ret = Cache[tag] as TaskCheckPoint;
+			if (ret == null) { ret = TaskCheckPoints.Find((long)id); Cache[tag] = ret; }
+			return ret;
+		}
+
 		public TaskFlow TaskFlow(long? id)
 		{
 			if (id == null) return null;

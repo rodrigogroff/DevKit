@@ -69,11 +69,22 @@ ALTER TABLE public."TaskCategory" OWNER to postgres;
 ALTER TABLE public."TaskCategory" ADD COLUMN if not exists "stName" character varying(200);
 ALTER TABLE public."TaskCategory" ADD COLUMN if not exists "stAbreviation" character varying(10);
 ALTER TABLE public."TaskCategory" ADD COLUMN if not exists "stDescription" character varying(500);
-ALTER TABLE public."TaskCategory" ADD COLUMN if not exists "fkTaskType" bigint;    
+ALTER TABLE public."TaskCategory" ADD COLUMN if not exists "fkTaskType" bigint;
 ALTER TABLE public."TaskCategory" ADD COLUMN if not exists "bExpires" boolean;
 ALTER TABLE public."TaskCategory" ADD COLUMN if not exists "nuExpiresDays" bigint;
 ALTER TABLE public."TaskCategory" ADD COLUMN if not exists "nuExpiresHours" bigint;
 ALTER TABLE public."TaskCategory" ADD COLUMN if not exists "nuExpiresMinutes" bigint;
+
+CREATE TABLE IF NOT EXISTS public."TaskCheckPoint" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."TaskCheckPoint" OWNER to postgres;
+ALTER TABLE public."TaskCheckPoint" ADD COLUMN if not exists "stName" character varying(50);
+ALTER TABLE public."TaskCheckPoint" ADD COLUMN if not exists "fkCategory" bigint;
+ALTER TABLE public."TaskCheckPoint" ADD COLUMN if not exists "bMandatory" boolean;
+
+CREATE TABLE IF NOT EXISTS public."TaskCheckPointMark" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."TaskCheckPointMark" OWNER to postgres;
+ALTER TABLE public."TaskCheckPointMark" ADD COLUMN if not exists "fkCheckPoint" bigint;
+ALTER TABLE public."TaskCheckPointMark" ADD COLUMN if not exists "fkUser" bigint;
 
 CREATE TABLE IF NOT EXISTS public."TaskFlow" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."TaskFlow" OWNER to postgres;

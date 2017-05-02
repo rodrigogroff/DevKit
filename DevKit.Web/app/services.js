@@ -100,6 +100,7 @@ angular.module('app.services', ['ngResource'])
 		TaskFlow: $resource('api/taskFlow/:id', {}, opcoes),
 		TaskCount: $resource('api/taskCount/:id', {}, opcoes),
 		TaskAccumulator: $resource('api/taskAccumulator/:id', {}, opcoes),
+		TaskCheckPoint: $resource('api/taskCheckPoint/:id', {}, opcoes),
 		Task: $resource('api/task/:id', {}, opcoes),
 		Priority: $resource('api/priority/:id', {}, opcoes),
 		UserKanban: $resource('api/userKanbanView/:id', {}, opcoes),

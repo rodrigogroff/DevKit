@@ -59,6 +59,11 @@ namespace DataModel
 							TaskUpdateAccRemoved = 44,
 							TaskUpdateAccAddDependency = 45,
 							TaskUpdateAccRemoveDependency = 46,
+
+							CategoryAddCheckPoint = 47,
+							CategoryEditCheckPoint = 48,
+							CategoryRemoveCheckPoint = 49,
+
 							UserAddPhone = 70,
 							UserEditPhone = 71,
 							UserRemovePhone = 72,

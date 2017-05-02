@@ -835,6 +835,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Configuration\SurveyCtrl.cs" />
     <Compile Include="Controllers\Configuration\NewsCtrl.cs" />
+    <Compile Include="Controllers\Configuration\TaskCheckPointCtrl.cs" />
     <Compile Include="Controllers\Enums\AccumulatorTypeCtrl.cs" />
     <Compile Include="Controllers\Configuration\TaskAccumulatorCtrl.cs" />
     <Compile Include="Controllers\Configuration\TaskCategoryCtrl.cs" />

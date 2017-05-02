@@ -3,8 +3,9 @@
 a fazer
 ------------------------------
 	
-	-check points na categoria da tarefa, só fecha com tudo marcado
-	-questionamentos (com respostas)
+	-check points (opcional ou não), definidos e herdados da categoria da tarefa,
+		só fecha com tudo marcado nas não opcionais
+	-questionamentos (com respostas) -sim ou nao
 	-sort by (combo) na listagem de tarefas	
 				
 	------------------------

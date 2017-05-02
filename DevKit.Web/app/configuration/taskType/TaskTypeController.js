@@ -407,4 +407,99 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+	// ---------------------------------
+	// check points
+	// ---------------------------------
+		
+	$scope.$watch('newCC.fkCategory', function (newState, oldState) {
+		if (newState !== oldState)
+			$scope.loadCCs();
+	});
+
+	$scope.checkpoints = [];
+
+	$scope.loadCCs = function ()
+	{
+		$scope.addCC = false;
+
+		var opcoes =
+			{
+				fkCategory: $scope.newCC.fkCategory
+			};
+
+		$scope.checkpoints = [];
+
+		Api.TaskCheckPoint.listPage(opcoes, function (data)
+		{
+			$scope.checkpoints = data.results;
+		});
+	}
+
+	$scope.addCC = false;
+
+	$scope.editCC = function (mdl)
+	{
+		if ($scope.addCC == false) {
+			$scope.addCC = true;
+			$scope.newCC = mdl;
+		}
+	}
+
+	$scope.cancelCC = function () {
+		$scope.addCC = false;
+		$scope.newCC = {};
+	}
+
+	$scope.removeCC = function (index, lista)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else {
+			$scope.viewModel.updateCommand = "removeCC";
+			$scope.viewModel.anexedEntity = lista[index];
+
+			Api.TaskType.update({ id: id }, $scope.viewModel, function (data) {
+				toastr.success('Check Point removed', 'Success');
+				$scope.loadCCs();
+			});
+		}
+	}
+
+	$scope.addNewCC = function () {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addCC = !$scope.addCC;
+	}
+
+	$scope.newCC = {};
+
+	$scope.saveNewCC = function () {
+		$scope.stCCName_fail = invalidCheck($scope.newCC.stName);
+
+		if (!$scope.stAccName_fail)
+		{
+			var tmp = $scope.newCC.fkCategory;
+
+			$scope.viewModel.updateCommand = "newCC";
+			$scope.viewModel.anexedEntity = $scope.newCC;
+
+			Api.TaskType.update({ id: id }, $scope.viewModel, function (data) {
+				toastr.success('Check Point saved', 'Success');
+
+				$scope.newCC = {};
+				$scope.newCC.fkCategory = tmp;
+
+				$scope.viewModel.checkpoints = data.checkpoints;
+				$scope.loadCCs();
+
+				$scope.addCC = false;
+
+			},
+			function (response) {
+				toastr.error(response.data.message, 'Error');
+			});
+		}
+	}
+
 }]);

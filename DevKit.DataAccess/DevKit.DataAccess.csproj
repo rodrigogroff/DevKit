@@ -102,6 +102,7 @@
     <Compile Include="DataModel\Tables\Configuration\TaskAccumulator\TaskAccumulator_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskAccumulator\TaskAccumulator_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskCategory\TaskCategory_ComposedFilters.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskCheckPoint\TaskCheckPoint_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskFlow\TaskFlow_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_Create.cs" />

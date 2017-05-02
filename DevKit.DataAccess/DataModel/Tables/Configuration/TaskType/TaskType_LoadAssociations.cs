@@ -12,6 +12,7 @@ namespace DataModel
 
 			categories = LoadCategories(db);
 			logs = LoadLogs(db);
+			checkpoints = LoadCheckpoints(db);
 
 			return this;
 		}
@@ -54,6 +55,15 @@ namespace DataModel
 			}
 
 			return ret;
+		}
+
+		List<TaskCheckPoint> LoadCheckpoints(DevKitDB db)
+		{
+			return (from e in db.TaskCheckPoints
+					where e.fkCategory == this.id
+					select e).
+					OrderByDescending(y => y.id).
+					ToList();
 		}
 	}
 }

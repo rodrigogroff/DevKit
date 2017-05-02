@@ -34,6 +34,8 @@ namespace DataModel
 		public ITable<Task>                 Tasks                 { get { return this.GetTable<Task>(); } }
 		public ITable<TaskAccumulatorValue> TaskAccumulatorValues { get { return this.GetTable<TaskAccumulatorValue>(); } }
 		public ITable<TaskCategory>         TaskCategories        { get { return this.GetTable<TaskCategory>(); } }
+		public ITable<TaskCheckPoint>       TaskCheckPoints       { get { return this.GetTable<TaskCheckPoint>(); } }
+		public ITable<TaskCheckPointMark>   TaskCheckPointMarks   { get { return this.GetTable<TaskCheckPointMark>(); } }
 		public ITable<TaskDependency>       TaskDependencies      { get { return this.GetTable<TaskDependency>(); } }
 		public ITable<TaskFlow>             TaskFlows             { get { return this.GetTable<TaskFlow>(); } }
 		public ITable<TaskFlowChange>       TaskFlowChanges       { get { return this.GetTable<TaskFlowChange>(); } }
@@ -230,6 +232,23 @@ namespace DataModel
 		[Column,     Nullable] public long?  nuExpiresDays    { get; set; } // bigint
 		[Column,     Nullable] public long?  nuExpiresHours   { get; set; } // bigint
 		[Column,     Nullable] public long?  nuExpiresMinutes { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="TaskCheckPoint")]
+	public partial class TaskCheckPoint
+	{
+		[PrimaryKey, Identity] public long   id         { get; set; } // bigint
+		[Column,     Nullable] public string stName     { get; set; } // character varying(50)
+		[Column,     Nullable] public long?  fkCategory { get; set; } // bigint
+		[Column,     Nullable] public bool?  bMandatory { get; set; } // boolean
+	}
+
+	[Table(Schema="public", Name="TaskCheckPointMark")]
+	public partial class TaskCheckPointMark
+	{
+		[PrimaryKey, Identity] public long  id           { get; set; } // bigint
+		[Column,     Nullable] public long? fkCheckPoint { get; set; } // bigint
+		[Column,     Nullable] public long? fkUser       { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="TaskDependency")]
@@ -434,6 +453,18 @@ namespace DataModel
 		}
 
 		public static TaskCategory Find(this ITable<TaskCategory> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskCheckPoint Find(this ITable<TaskCheckPoint> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskCheckPointMark Find(this ITable<TaskCheckPointMark> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

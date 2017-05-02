@@ -80,7 +80,7 @@
 								<td>
 									<legend style="color:white">
 										Users allocated for project
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewUser()"><i class="fa fa-plus"> </i> Add new </button>
+										<button class="btn btn-info btn-xs pull-right" ng-if="addUser == false" ng-click="addNewUser()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
 									<div ng-if="addUser == true">
 										<table>
@@ -159,7 +159,7 @@
 								<td>
 									<legend style="color:white">
 										Phases estabilished for project
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewPhase()"><i class="fa fa-plus"> </i> Add new </button>
+										<button class="btn btn-info btn-xs pull-right" ng-if="addPhase == false" ng-click="addNewPhase()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
 									<div ng-if="addPhase == true">
 										<table>
@@ -225,7 +225,7 @@
 								<td>
 									<legend style="color:white">
 										Sprints 
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewSprint()"><i class="fa fa-plus"> </i> Add new </button>
+										<button class="btn btn-info btn-xs pull-right" ng-if="addSprint == false" ng-click="addNewSprint()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
 									<div ng-if="addSprint == true">
 										<table>

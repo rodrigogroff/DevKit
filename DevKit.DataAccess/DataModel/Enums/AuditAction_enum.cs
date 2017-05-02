@@ -64,6 +64,10 @@ namespace DataModel
 							CategoryEditCheckPoint = 48,
 							CategoryRemoveCheckPoint = 49,
 
+							TaskUpdateAddQuestion = 50,
+							TaskUpdateEditQuestion = 51,
+							TaskUpdateRemoveQuestion = 52,
+
 							UserAddPhone = 70,
 							UserEditPhone = 71,
 							UserRemovePhone = 72,
@@ -135,6 +139,14 @@ namespace DataModel
 			lst.Add(new AuditAction() { id = TaskUpdateAccRemoved, stName = "Task \\ Task Update, accumulator value removed" });
 			lst.Add(new AuditAction() { id = TaskUpdateAccAddDependency, stName = "Task \\ Task Update, dependency task added" });
 			lst.Add(new AuditAction() { id = TaskUpdateAccRemoveDependency, stName = "Task \\ Task Update, dependency task removed" });
+
+			lst.Add(new AuditAction() { id = CategoryAddCheckPoint, stName = "Configuration \\ Task Category, adding checkpoint" });
+			lst.Add(new AuditAction() { id = CategoryEditCheckPoint, stName = "Configuration \\ Task Category, edit checkpoint" });
+			lst.Add(new AuditAction() { id = CategoryRemoveCheckPoint, stName = "Configuration \\ Task Category, remove checkpoint" });
+			
+			lst.Add(new AuditAction() { id = TaskUpdateAddQuestion, stName = "Task \\ Task Update, adding question" });
+			lst.Add(new AuditAction() { id = TaskUpdateEditQuestion, stName = "Task \\ Task Update, remove question" });
+			lst.Add(new AuditAction() { id = TaskUpdateRemoveQuestion, stName = "Task \\ Task Update, remove question" });
 
 			lst.OrderBy(y => y.stName);
 		}

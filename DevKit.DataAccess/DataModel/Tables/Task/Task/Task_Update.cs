@@ -19,7 +19,7 @@ namespace DataModel
 
 						if (oldTask.fkUserResponsible != fkUserResponsible) 
 						{
-							#region - code - 
+							#region - code (change assignee) - 
 
 							db.Insert(new TaskProgress()
 							{
@@ -42,7 +42,7 @@ namespace DataModel
 
 						if (stUserMessage != "")
 						{
-							#region - code - 
+							#region - code (save message) - 
 
 							db.Insert(new TaskMessage()
 							{
@@ -69,6 +69,8 @@ namespace DataModel
 
 						if (checkpoints != null && checkpoints.Count() > 0)
 						{
+							#region - code (mark / unmark checkpoints) -
+
 							foreach (var itemCheck in checkpoints)
 							{
 								var reg = (from e in db.TaskCheckPointMarks
@@ -91,6 +93,8 @@ namespace DataModel
 								else
 									db.Delete(reg);
 							}
+
+							#endregion
 						}
 
 						if (fkNewFlow != null && oldTask.fkTaskFlowCurrent != fkNewFlow)
@@ -100,15 +104,20 @@ namespace DataModel
 													select e).
 													FirstOrDefault();
 
-							#region - code - 
-							
+							#region - code (changing state) - 
+
 							if (flowDestinyState.bForceComplete == true)
 							{
-								dependencies = LoadDependencies(db);
+								#region - code (check dependencies) -
 
-								if (dependencies.Count() > 0)
+								var tmp_dependencies = (from e in db.TaskDependencies
+										   			    where e.fkMainTask == id
+														select e).
+														ToList();
+
+								if (tmp_dependencies.Count() > 0)
 								{
-									foreach (var item in dependencies)
+									foreach (var item in tmp_dependencies)
 									{
 										var subTask = db.Task(item.fkSubTask);
 
@@ -119,6 +128,10 @@ namespace DataModel
 										}
 									}
 								}
+
+								#endregion
+
+								#region - code (check points) -
 
 								var lstChecks = (from e in db.TaskCheckPoints
 												 where e.fkCategory == this.fkTaskCategory
@@ -138,7 +151,9 @@ namespace DataModel
 										return false;
 									}
 								}
-							}							
+
+								#endregion
+							}
 
 							db.Insert(new TaskFlowChange()
 							{
@@ -295,6 +310,78 @@ namespace DataModel
 						db.Delete(entDb);
 
 						dependencies = LoadDependencies(db);
+						logs = LoadLogs(db);
+						break;
+					}
+
+				case "newQuestion":
+					{
+						var ent = JsonConvert.DeserializeObject<TaskQuestion>(anexedEntity.ToString());
+
+						if (ent.id == 0)
+						{
+							ent.fkTask = this.id;
+							ent.bFinal = false;
+							ent.dtOpen = DateTime.Now;
+							ent.fkUserOpen = user.id;
+
+							db.Insert(ent);
+
+							new AuditLog
+							{
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.TaskUpdateAddQuestion,
+								nuType = EnumAuditType.Task,
+								fkTarget = this.id
+							}.
+							Create(db, "New question added", "");
+						}
+						else
+						{
+							if (ent.bFinal == true)
+								if (ent.dtClosed == null)
+									ent.dtClosed = DateTime.Now;
+
+							ent.fkUserDirected = user.id;
+							
+							db.Update(ent);
+
+							new AuditLog
+							{
+								fkUser = user.id,
+								fkActionLog = EnumAuditAction.TaskUpdateEditQuestion,
+								nuType = EnumAuditType.Task,
+								fkTarget = this.id
+							}.
+							Create(db, "Edit question", "");
+						}
+						
+						questions = LoadQuestions(db);
+						logs = LoadLogs(db);
+						break;
+					}
+
+				case "removeQuestion":
+					{
+						var ent = JsonConvert.DeserializeObject<TaskQuestion>(anexedEntity.ToString());
+
+						var entDb = (from e in db.TaskQuestions
+									 where e.id == ent.id
+									 select e).
+									 FirstOrDefault();
+
+						new AuditLog
+						{
+							fkUser = user.id,
+							fkActionLog = EnumAuditAction.TaskUpdateRemoveQuestion,
+							nuType = EnumAuditType.Task,
+							fkTarget = this.id
+						}.
+						Create(db, "Question removed", "");
+
+						db.Delete(entDb);
+
+						questions = LoadQuestions(db);
 						logs = LoadLogs(db);
 						break;
 					}

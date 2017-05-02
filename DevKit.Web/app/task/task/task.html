@@ -36,26 +36,28 @@
 							<tr height="24px" ng-show="viewModel.id > 0">
 								<td></td>
 								<td valign="middle">
-									Protocol
+									<b>Protocol</b>
 								</td>
 								<td></td>
 								<td>
-									<b>{{viewModel.stProtocol}}</b>
+									{{viewModel.stProtocol}}
 								</td>
 								<td></td>
 								<td valign="middle">
-									State
+									<b>State</b>
 								</td>
 								<td></td>
 								<td valign="middle">
-									<b>{{viewModel.bComplete == true ? 'CLOSED' : 'OPEN'}}</b>
+									<span class="btn btn-primary">
+										<b>{{viewModel.bComplete == true ? 'CLOSED' : 'OPEN'}}</b>
+									</span>
 								</td>
 								<td></td>
 							</tr>
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
 								<td valign="middle">
-									Start Date
+									<b>Start Date</b>
 								</td>
 								<td></td>
 								<td valign="middle">
@@ -63,7 +65,7 @@
 								</td>
 								<td></td>
 								<td valign="middle">
-									Opened by
+									<b>Opened by</b>
 								</td>
 								<td></td>
 								<td valign="middle">
@@ -74,7 +76,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									Title
+									<b>Title</b>
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="stTitle_fail">!</button>
@@ -88,7 +90,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									Localization
+									<b>Localization</b>
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="stLocalization_fail">!</button>
@@ -102,7 +104,7 @@
 							<tr height="262px">
 								<td></td>
 								<td valign="middle">
-									Description
+									<b>Description</b>
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="stDescription_fail">!</button>
@@ -137,7 +139,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									Project
+									<b>Project</b>
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkProject_fail">!</button>
@@ -147,7 +149,7 @@
 								</td>
 								<td></td>
 								<td valign="middle">
-									Phase
+									<b>Phase</b>									
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkPhase_fail">!</button>
@@ -159,7 +161,9 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="middle">Sprint</td>
+								<td valign="middle">
+									<b>Sprint</b>									
+								</td>
 								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkSprint_fail">!</button>
 								</td>
@@ -167,7 +171,9 @@
 									<input type="hidden" style="width:100%" ng-disabled="viewModel.id > 0" ui-select2="selectSprints" ng-model="viewModel.fkSprint" />
 								</td>
 								<td></td>
-								<td valign="middle">Version</td>
+								<td valign="middle">
+									<b>Version</b>
+								</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="fkVersion_fail">!</button>
 								</td>
@@ -178,7 +184,9 @@
 							<tr height="40px"></tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="middle">Task Type</td>
+								<td valign="middle">
+									<b>Task Type</b>
+								</td>
 								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkTaskType_fail">!</button>
 								</td>
@@ -192,7 +200,9 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="middle">Task Category</td>
+								<td valign="middle">
+									<b>Task Category</b>
+								</td>
 								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkTaskCategory_fail">!</button>
 								</td>
@@ -206,7 +216,9 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="middle">Priority</td>
+								<td valign="middle">
+									<b>Priority</b>
+								</td>
 								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="nuPriority_fail">!</button>
 								</td>
@@ -240,7 +252,9 @@
 							<tr height="20px"></tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="middle">Assigned To</td>
+								<td valign="middle">
+									<b>Assigned To</b>
+								</td>
 								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkUserResponsible_fail">!</button>
 								</td>
@@ -296,7 +310,9 @@
 							<tr height="20px"></tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="middle"> <b>Current State</b></td>
+								<td valign="middle">
+									<b>Current State</b>
+								</td>
 								<td></td>
 								<td valign="middle">
 									<input type="hidden" style="width:100%" ng-disabled="true" ui-select2="selectTaskFlow" ng-model="viewModel.fkTaskFlowCurrent" />
@@ -309,7 +325,9 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="middle"> New State</td>
+								<td valign="middle"> 
+									<b>New State</b>
+								</td>
 								<td></td>
 								<td valign="middle">
 									<input type="hidden" style="width:100%" ui-select2="selectTaskFlow" ng-model="viewModel.fkNewFlow" />
@@ -322,7 +340,9 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="middle"> Message</td>
+								<td valign="middle">
+									<b>Message</b>
+								</td>
 								<td></td>
 								<td colspan="5" valign="middle">
 									<input type="text" class="form-control input-transparent" maxlength="200"
@@ -372,7 +392,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									Your message
+									<b>Your message</b>									
 								</td>
 								<td valign="middle">
 									<textarea rows="2" type="text" class="form-control input-transparent" maxlength="999"
@@ -422,7 +442,7 @@
 								<td>
 									<legend style="color:white">
 										Accumulators for task
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewAcc()"><i class="fa fa-plus"> </i> Add value </button>
+										<button class="btn btn-info btn-xs pull-right" ng-if="addAcc == false" ng-click="addNewAcc()"><i class="fa fa-plus"> </i> Add value </button>
 									</legend>
 									<div ng-if="addAcc == true">
 										<table>
@@ -431,7 +451,7 @@
 													<table>
 														<tr height="42px">
 															<td width="120px">
-																Accumulator
+																<b>Accumulator</b>																
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_fkTaskAcc_fail">!</button>
@@ -440,10 +460,9 @@
 																<input type="hidden" style="width:100%" ui-select2="selectTaskAcc" ng-model="newAcc.fkTaskAcc" />
 															</td>
 														</tr>
-
 														<tr height="42px" ng-show="fkTaskAccType == 1">
 															<td width="120px">
-																Money to be added
+																<b>Money to be added</b>																
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_val_fail">!</button>
@@ -453,10 +472,9 @@
 																	   ng-disabled="!permModel.edicao" ng-model="newAcc.nuValue">
 															</td>
 														</tr>
-
 														<tr height="42px" ng-show="fkTaskAccType == 2">
 															<td width="120px">
-																Hours to be added
+																<b>Hours to be added</b>																
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_val_fail">!</button>
@@ -482,7 +500,6 @@
 																</table>
 															</td>
 														</tr>
-
 													</table>
 												</td>
 											</tr>
@@ -559,8 +576,116 @@
 						</table>
 					</div>
 				</tab>
+				<tab heading="Questions" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Questions ({{viewModel.questions.length}})" ng-show="viewModel.id > 0">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<legend style="color:white">
+										Questions
+										<button class="btn btn-info btn-xs pull-right" ng-if="addQuestion == false" ng-if="addQuestion == false" ng-click="addNewQuestion()"><i class="fa fa-plus"> </i> Add question </button>
+									</legend>
+									<div ng-if="addQuestion == true">
+										<table>
+											<tr>
+												<td>
+													<table>
+														<tr height="42px">
+															<td width="120px">
+																<b>Statement</b>
+															</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="newQuestion_Statement_fail">!</button>
+															</td>
+															<td width="550px">
+																<textarea rows="3" type="text" class="form-control input-transparent" maxlength="2000" ng-model="newQuestion.stStatement"></textarea>
+															</td>
+														</tr>
+														<tr height="42px">
+															<td>
+																<b>Directed to</b>
+															</td>
+															<td>
+																<button class="btn btn-xs btn-danger" ng-show="newQuestion_user_fail">!</button>
+															</td>
+															<td>
+																<input type="hidden" style="width:100%" ui-select2="selectUsers" ng-model="newQuestion.fkUserDirected" />
+															</td>
+														</tr>
+														<tr height="42px">
+															<td>
+																<b>Answer</b>
+															</td>
+															<td>
+																<button class="btn btn-xs btn-danger" ng-show="newQuestion_Answer_fail">!</button>
+															</td>
+															<td>
+																<textarea rows="3" type="text" class="form-control input-transparent" maxlength="2000" ng-model="newQuestion.stAnswer"></textarea>
+															</td>
+														</tr>
+														<tr height="42px">
+															<td>
+																<b>Final</b>
+															</td>
+															<td></td>
+															<td>
+																<input type="checkbox" ng-disabled="!permModel.edicao" ng-model="newQuestion.bFinal" /> Yes
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										<br />
+										<button class="btn btn-default" ng-click="cancelQuestion()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewQuestion()">Save </button>
+										<br />
+										<br />
+									</div>
+									<div ng-show="viewModel.questions.length > 0">
+										<br />
+										<table class="table table-hover" style="width:100%">
+											<thead>
+												<tr>
+													<th>From</th>
+													<th>To</th>
+													<th>Question / Answer</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="mdl in viewModel.questions">
+												<td>{{ mdl.sfkUserOpen }}</td>
+												<td>{{ mdl.sfkUserDirected }}</td>
+												<td>
+													Q: {{mdl.stStatement}}<br />
+													A: {{mdl.stAnswer}}<br />																								
+													<span ng-show="mdl.sdtClosed != undefined">
+														Final: <b>{{ mdl.bFinal == true ? 'Yes' : 'No' }}</b> - answered by <b>{{mdl.sfkUserDirected}}</b>, Date: <b>{{mdl.sdtClosed}}</b>
+													</span>												
+												</td>
+												<td>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="editQuestion(mdl)">
+															<i class="glyphicon glyphicon-edit" style="color:white"></i>
+														</a>
+														<a href="" role="button" ng-click="removeQuestion(mdl)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
 				<tab heading="Dependencies" disabled="true" ng-if="viewModel.id == undefined"></tab>
-				<tab heading="Dependencies ({{viewModel.dependencies.length}})" ng-show="viewModel.id > 0 && viewModel.dependencies.length >0">
+				<tab heading="Dependencies ({{viewModel.dependencies.length}})" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
@@ -569,7 +694,7 @@
 								<td>
 									<legend style="color:white">
 										Sub-Tasks dependencies
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewSubtask()"><i class="fa fa-plus"> </i> Add sub-task </button>
+										<button class="btn btn-info btn-xs pull-right" ng-if="addSubtask == false" ng-click="addNewSubtask()"><i class="fa fa-plus"> </i> Add sub-task </button>
 									</legend>
 									<div ng-if="addSubtask == true">
 										<table>
@@ -578,7 +703,7 @@
 													<table>
 														<tr height="42px">
 															<td width="120px">
-																Protocol
+																<b>Protocol</b>																
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newSubtask_fail">!</button>

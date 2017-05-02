@@ -41,6 +41,7 @@ namespace DataModel
 		public ITable<TaskFlowChange>       TaskFlowChanges       { get { return this.GetTable<TaskFlowChange>(); } }
 		public ITable<TaskMessage>          TaskMessages          { get { return this.GetTable<TaskMessage>(); } }
 		public ITable<TaskProgress>         TaskProgresses        { get { return this.GetTable<TaskProgress>(); } }
+		public ITable<TaskQuestion>         TaskQuestions         { get { return this.GetTable<TaskQuestion>(); } }
 		public ITable<TaskType>             TaskTypes             { get { return this.GetTable<TaskType>(); } }
 		public ITable<TaskTypeAccumulator>  TaskTypeAccumulators  { get { return this.GetTable<TaskTypeAccumulator>(); } }
 		public ITable<User>                 Users                 { get { return this.GetTable<User>(); } }
@@ -307,6 +308,20 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
 	}
 
+	[Table(Schema="public", Name="TaskQuestion")]
+	public partial class TaskQuestion
+	{
+		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
+		[Column,     Nullable] public string    stStatement    { get; set; } // character varying(2000)
+		[Column,     Nullable] public string    stAnswer       { get; set; } // character varying(2000)
+		[Column,     Nullable] public long?     fkTask         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserOpen     { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserDirected { get; set; } // bigint
+		[Column,     Nullable] public bool?     bFinal         { get; set; } // boolean
+		[Column,     Nullable] public DateTime? dtOpen         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtClosed       { get; set; } // timestamp (6) without time zone
+	}
+
 	[Table(Schema="public", Name="TaskType")]
 	public partial class TaskType
 	{
@@ -497,6 +512,12 @@ namespace DataModel
 		}
 
 		public static TaskProgress Find(this ITable<TaskProgress> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskQuestion Find(this ITable<TaskQuestion> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

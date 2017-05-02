@@ -48,11 +48,13 @@ namespace DataModel
 
 		Hashtable Cache = new Hashtable();
 
+		Setup _setup = null;
+
 		public Setup Setup()
 		{
-			var ret = Cache["Setup"] as Setup;
-			if (ret == null) { ret = Setups.Find(1); Cache["Setup"] = ret; }
-			return ret;
+			if (_setup == null)
+				_setup = Setups.Find(1); 
+			return _setup;
 		}
 
 		public User User(long? id)

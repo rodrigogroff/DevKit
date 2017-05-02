@@ -87,7 +87,7 @@
 								<td>
 									<legend style="color:white">
 										Categories available for task type
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewCategorie()"><i class="fa fa-plus"> </i> Add new </button>
+										<button class="btn btn-info btn-xs pull-right" ng-if="addCategorie == false" ng-click="addNewCategorie()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
 									<div ng-if="addCategorie == true">
 										<table>
@@ -216,7 +216,7 @@
 											</td>
 											<td width="20px"></td>
 											<td>
-												<button ng-if="newFlow.fkTaskCategory > 0" class="btn btn-info btn-xs" ng-click="addNewFlow()"><i class="fa fa-plus"> </i> Add new </button>
+												<button ng-if="newFlow.fkTaskCategory > 0 && addFlow == false" class="btn btn-info btn-xs" ng-click="addNewFlow()"><i class="fa fa-plus"> </i> Add new </button>
 											</td>
 										</tr>
 									</table>
@@ -345,7 +345,7 @@
 											</td>
 											<td width="20px"></td>
 											<td>
-												<button ng-if="newAcc.fkTaskCategory > 0" class="btn btn-info btn-xs" ng-click="addNewAcc()"><i class="fa fa-plus"> </i> Add new </button>
+												<button ng-if="newAcc.fkTaskCategory > 0 && addAcc == false" class="btn btn-info btn-xs" ng-click="addNewAcc()"><i class="fa fa-plus"> </i> Add new </button>
 											</td>
 										</tr>
 									</table>
@@ -457,7 +457,7 @@
 											</td>
 											<td width="20px"></td>
 											<td>
-												<button ng-if="newCC.fkCategory > 0" class="btn btn-info btn-xs" ng-click="addNewCC()"><i class="fa fa-plus"> </i> Add new </button>
+												<button ng-if="newCC.fkCategory > 0 && accCC == false" class="btn btn-info btn-xs" ng-click="addNewCC()"><i class="fa fa-plus"> </i> Add new </button>
 											</td>
 										</tr>
 									</table>

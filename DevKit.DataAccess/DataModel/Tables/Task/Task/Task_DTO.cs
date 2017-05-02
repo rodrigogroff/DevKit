@@ -31,6 +31,7 @@ namespace DataModel
 		public List<TaskLog> logs;
 		public List<TaskDependency> dependencies;
 		public List<TaskCheckPoint> checkpoints;
+		public List<TaskQuestion> questions;
 	}
 	
 	public class TaskLog
@@ -46,6 +47,14 @@ namespace DataModel
 
 		public string sfkUser,
 					  sdtLog;
+	}
+
+	public partial class TaskQuestion
+	{
+		public string sfkUserOpen,
+					  sfkUserDirected,
+					  sdtOpen,
+					  sdtClosed;
 	}
 
 	public partial class TaskDependency

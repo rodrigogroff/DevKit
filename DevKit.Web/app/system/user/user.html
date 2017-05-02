@@ -166,7 +166,7 @@
 								<td>
 									<legend style="color:white">
 										Email list
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Add new </button>
+										<button class="btn btn-info btn-xs pull-right" ng-if="addEmail == false" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
 									<div ng-show="viewModel.emails.length == 0 && addEmail == false">
 										<br />

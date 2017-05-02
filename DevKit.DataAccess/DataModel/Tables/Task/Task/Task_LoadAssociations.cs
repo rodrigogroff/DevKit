@@ -32,9 +32,31 @@ namespace DataModel
 				logs = LoadLogs(db);
 				dependencies = LoadDependencies(db);
 				checkpoints = LoadCheckpoints(db);
+				questions = LoadQuestions(db);
 			}
 
 			return this;
+		}
+
+		public List<TaskQuestion> LoadQuestions(DevKitDB db)
+		{
+			var ret = (from e in db.TaskQuestions
+					   where e.fkTask == id
+					   select e).
+					   OrderByDescending(t => t.id).
+					   ToList();
+
+			var setup = db.Setup();
+
+			foreach (var item in ret)
+			{
+				item.sfkUserOpen = db.User(item.fkUserOpen).stLogin;
+				item.sfkUserDirected = db.User(item.fkUserDirected).stLogin;
+				item.sdtOpen = item.dtOpen?.ToString(setup.stDateFormat);
+				item.sdtClosed = item.dtClosed?.ToString(setup.stDateFormat);
+			}
+
+			return ret;
 		}
 
 		public List<TaskProgress> LoadProgress(DevKitDB db)
@@ -47,10 +69,8 @@ namespace DataModel
 
 			var setup = db.Setup();
 
-			for (int i = 0; i < ret.Count(); i++)
-			{
-				var item = ret.ElementAt(i);
-
+			foreach (var item in ret)
+			{ 
 				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
 				item.sfkUserAssigned = db.User(item.fkUserAssigned).stLogin;
 			}
@@ -68,10 +88,8 @@ namespace DataModel
 
 			var setup = db.Setup();
 
-			for (int i = 0; i < ret.Count(); i++)
+			foreach (var item in ret)
 			{
-				var item = ret.ElementAt(i);
-
 				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
 				item.sfkUser = db.User(item.fkUser).stLogin;
 
@@ -96,10 +114,8 @@ namespace DataModel
 
 			var setup = db.Setup();
 
-			for (int i = 0; i < ret.Count(); i++)
+			foreach (var item in ret)
 			{
-				var item = ret.ElementAt(i);
-
 				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
 				item.sfkUser = db.User(item.fkUser).stLogin;
 
@@ -120,10 +136,8 @@ namespace DataModel
 
 			var setup = db.Setup();
 
-			for (int i = 0; i < ret.Count(); i++)
+			foreach (var item in ret)
 			{
-				var item = ret.ElementAt(i);
-
 				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
 				item.sfkUser = db.User(item.fkUser).stLogin;
 
@@ -146,12 +160,13 @@ namespace DataModel
 					   where e.fkTaskCategory == this.fkTaskCategory
 					   select e).
 					   ToList();
-			
-			for (int i = 0; i < ret.Count(); i++)
-			{
-				var item = ret.ElementAt(i);
 
-				item.sfkTaskAccType = stypes.Where(y => y.id == item.fkTaskAccType).FirstOrDefault().stName;
+			foreach (var item in ret)
+			{
+				item.sfkTaskAccType = stypes.
+					Where(y => y.id == item.fkTaskAccType).
+						FirstOrDefault().
+							stName;
 
 				item.snuTotal = GetValueForType(db, item.sfkTaskAccType, id, item.id);
 
@@ -232,7 +247,12 @@ namespace DataModel
 				ret.Add(new TaskLog
 				{
 					sdtLog = item.dtLog?.ToString(setup.stDateFormat),
-					stUser = lstUsers.Where(y => y.id == item.fkUser).FirstOrDefault().stLogin,
+
+					stUser = lstUsers.
+								Where(y => y.id == item.fkUser).
+									FirstOrDefault().
+										stLogin,
+
 					stDetails = item.stLog
 				});
 			}

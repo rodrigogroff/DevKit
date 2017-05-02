@@ -73,7 +73,7 @@
 								<td>
 									<legend style="color:white">
 										Versions generated for sprint
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewVersion()"><i class="fa fa-plus"> </i> Add new </button>
+										<button class="btn btn-info btn-xs pull-right" ng-if="addVersion == false" ng-click="addNewVersion()"><i class="fa fa-plus"> </i> Add new </button>
 									</legend>
 									<div ng-if="addVersion == true">
 										<table>

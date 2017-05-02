@@ -221,3 +221,13 @@ ALTER TABLE public."TaskDependency" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."TaskDependency" ADD COLUMN if not exists "fkMainTask" bigint;
 ALTER TABLE public."TaskDependency" ADD COLUMN if not exists "fkSubTask" bigint;
 
+CREATE TABLE IF NOT EXISTS public."TaskQuestion" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."TaskQuestion" OWNER to postgres;
+ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "dtOpen" timestamp without time zone;
+ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "dtClosed" timestamp without time zone;
+ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "stStatement" character varying(2000);
+ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "stAnswer" character varying(2000);
+ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "fkTask" bigint;
+ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "fkUserOpen" bigint;
+ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "fkUserDirected" bigint;
+ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "bFinal" boolean;

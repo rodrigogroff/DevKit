@@ -343,4 +343,75 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		mdl.bSelected = !mdl.bSelected;
 	}
 
+	// ============================================
+	// questions 
+	// ============================================
+
+	$scope.addQuestion = false;
+
+	$scope.removeQuestion = function (index, lista)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.viewModel.updateCommand = "removeQuestion";
+			$scope.viewModel.anexedEntity = $scope.viewModel.questions[index];
+
+			Api.Task.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Question removed', 'Success');
+				$scope.viewModel.questions = data.questions;
+				$scope.viewModel.logs = data.logs;
+			});
+		}
+	}
+
+	$scope.addNewQuestion = function () {
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addQuestion = !$scope.addQuestion;
+	}
+
+	$scope.newQuestion = {};
+
+	$scope.editQuestion = function (mdl) {
+		$scope.addQuestion = true;
+		$scope.newQuestion = mdl;
+	}
+
+	$scope.cancelQuestion = function () {
+		$scope.addQuestion = false;
+		$scope.newQuestion = {};
+	}
+
+	$scope.saveNewQuestion = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.newQuestion_Statement_fail = invalidCheck($scope.newQuestion.stStatement);
+		
+			if (!$scope.newQuestion_Statement_fail)
+			{
+				$scope.addQuestion = false;
+
+				$scope.viewModel.updateCommand = "newQuestion";
+				$scope.viewModel.anexedEntity = $scope.newQuestion;
+
+				Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+					$scope.newQuestion = {};
+					toastr.success('Question saved', 'Success');
+					$scope.viewModel.questions = data.questions;
+					$scope.viewModel.logs = data.logs;
+				},
+				function (response) {
+					toastr.error(response.data.message, 'Error');
+				});
+			}
+		}
+	}
+
 }]);

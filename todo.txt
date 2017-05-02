@@ -2,8 +2,9 @@
 ------------------------------
 a fazer
 ------------------------------
-	
+		
 	-questionamentos (com respostas) -sim ou nao
+	-surveys e em baixo news na pagina inicial
 
 	-sort by (combo) na listagem de tarefas	
 	-verificar filtros faltantes

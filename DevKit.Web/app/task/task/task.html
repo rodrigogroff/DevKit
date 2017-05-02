@@ -541,12 +541,14 @@
 										<thead>
 											<tr>
 												<th>Name</th>
+												<th>Mandatory</th>
 												<th>State</th>
 												<th>Confirmed by</th>
 											</tr>
 										</thead>
 										<tr ng-click="selectCheckpoint(mdl)" data-ng-repeat="mdl in viewModel.checkpoints">
 											<td>{{ mdl.stName }}</td>
+											<td>{{ mdl.bMandatory == true ? 'YES' : '' }}</td>
 											<td>{{ mdl.bSelected == true ? 'OK' : '' }}</td>
 											<td>{{ mdl.sfkUser }} {{ mdl.sdtLog }}</td>
 										</tr>											

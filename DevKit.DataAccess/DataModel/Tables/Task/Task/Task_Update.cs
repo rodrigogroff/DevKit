@@ -128,7 +128,7 @@ namespace DataModel
 
 								foreach (var item in lstChecks)
 								{									
-									if ( (from e in db.TaskCheckPointMarks
+									if ( !(from e in db.TaskCheckPointMarks
 										  where e.fkCheckPoint == item.id
 										  where e.fkTask == this.id
 										  select e).

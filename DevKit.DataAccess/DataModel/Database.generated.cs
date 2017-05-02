@@ -246,9 +246,11 @@ namespace DataModel
 	[Table(Schema="public", Name="TaskCheckPointMark")]
 	public partial class TaskCheckPointMark
 	{
-		[PrimaryKey, Identity] public long  id           { get; set; } // bigint
-		[Column,     Nullable] public long? fkCheckPoint { get; set; } // bigint
-		[Column,     Nullable] public long? fkUser       { get; set; } // bigint
+		[PrimaryKey, Identity] public long      id           { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCheckPoint { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTask       { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog        { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="TaskDependency")]

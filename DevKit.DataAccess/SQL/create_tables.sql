@@ -84,7 +84,9 @@ ALTER TABLE public."TaskCheckPoint" ADD COLUMN if not exists "bMandatory" boolea
 CREATE TABLE IF NOT EXISTS public."TaskCheckPointMark" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."TaskCheckPointMark" OWNER to postgres;
 ALTER TABLE public."TaskCheckPointMark" ADD COLUMN if not exists "fkCheckPoint" bigint;
+ALTER TABLE public."TaskCheckPointMark" ADD COLUMN if not exists "fkTask" bigint;
 ALTER TABLE public."TaskCheckPointMark" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."TaskCheckPointMark" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 
 CREATE TABLE IF NOT EXISTS public."TaskFlow" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."TaskFlow" OWNER to postgres;

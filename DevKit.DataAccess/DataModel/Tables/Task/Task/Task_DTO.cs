@@ -30,7 +30,7 @@ namespace DataModel
 		public List<TaskTypeAccumulator> accs;
 		public List<TaskLog> logs;
 		public List<TaskDependency> dependencies;
-		public List<TaskCheckPointState> checkpoints;
+		public List<TaskCheckPoint> checkpoints;
 	}
 	
 	public class TaskLog
@@ -40,15 +40,19 @@ namespace DataModel
 						stDetails;
 	}
 
-	public class TaskCheckPointState
+	public partial class TaskCheckPoint
 	{
 		public bool bSelected;
+
+		public string sfkUser,
+					  sdtLog;
 	}
 
 	public partial class TaskDependency
 	{
 		public string sdtLog,
 						sfkUser,
+						sfkTaskFlowCurrent,
 						stProtocol,
 						stTitle,
 						stLocalization;

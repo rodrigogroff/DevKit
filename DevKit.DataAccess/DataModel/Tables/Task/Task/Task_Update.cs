@@ -15,8 +15,7 @@ namespace DataModel
 			{
 				case "entity":
 					{
-						var oldTask = (from ne in db.Tasks where ne.id == id select ne).
-							FirstOrDefault();
+						var oldTask = (from ne in db.Tasks where ne.id == id select ne).FirstOrDefault();
 
 						if (oldTask.fkUserResponsible != fkUserResponsible) 
 						{
@@ -68,6 +67,32 @@ namespace DataModel
 							#endregion
 						}
 
+						if (checkpoints != null && checkpoints.Count() > 0)
+						{
+							foreach (var itemCheck in checkpoints)
+							{
+								var reg = (from e in db.TaskCheckPointMarks
+										   where e.fkCheckPoint == itemCheck.id
+										   where e.fkTask == this.id
+										   select e).
+										   FirstOrDefault();
+								
+								if (itemCheck.bSelected == true)
+								{
+									if (reg == null)
+										db.Insert(new TaskCheckPointMark
+										{
+											fkCheckPoint = itemCheck.id,
+											fkTask = this.id,
+											fkUser = user.id,
+											dtLog = DateTime.Now
+										});
+								}
+								else
+									db.Delete(reg);
+							}
+						}
+
 						if (fkNewFlow != null && oldTask.fkTaskFlowCurrent != fkNewFlow)
 						{
 							var flowDestinyState = (from e in db.TaskFlows
@@ -93,7 +118,26 @@ namespace DataModel
 											return false;
 										}
 									}
-								}								
+								}
+
+								var lstChecks = (from e in db.TaskCheckPoints
+												 where e.fkCategory == this.fkTaskCategory
+												 where e.bMandatory == true
+												 select e).
+										         ToList();
+
+								foreach (var item in lstChecks)
+								{									
+									if ( (from e in db.TaskCheckPointMarks
+										  where e.fkCheckPoint == item.id
+										  where e.fkTask == this.id
+										  select e).
+										  Any())
+									{
+										resp = "Check Point mandatory: " + item.stName;
+										return false;
+									}
+								}
 							}							
 
 							db.Insert(new TaskFlowChange()

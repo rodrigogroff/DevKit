@@ -525,9 +525,40 @@
 							</tr>
 						</table>
 					</div>
+				</tab>						
+				<tab heading="Check Points ({{viewModel.checkpoints.length}})" ng-show="viewModel.id > 0 && viewModel.checkpoints.length > 0">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<legend style="color:white">
+										Category Check Points
+									</legend>
+									<br />
+									<table class="table table-hover" style="width:100%">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>State</th>
+												<th>Confirmed by</th>
+											</tr>
+										</thead>
+										<tr ng-click="selectCheckpoint(mdl)" data-ng-repeat="mdl in viewModel.checkpoints">
+											<td>{{ mdl.stName }}</td>
+											<td>{{ mdl.bSelected == true ? 'OK' : '' }}</td>
+											<td>{{ mdl.sfkUser }} {{ mdl.sdtLog }}</td>
+										</tr>											
+									</table>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
 				</tab>
 				<tab heading="Dependencies" disabled="true" ng-if="viewModel.id == undefined"></tab>
-				<tab heading="Dependencies ({{viewModel.dependencies.length}})" ng-show="viewModel.id > 0">
+				<tab heading="Dependencies ({{viewModel.dependencies.length}})" ng-show="viewModel.id > 0 && viewModel.dependencies.length >0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
@@ -570,14 +601,14 @@
 												<tr>
 													<th>Date / User</th>
 													<th>Protocol</th>
-													<th>Title / Localization</th>
+													<th>State / Title / Localization</th>
 													<th></th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.dependencies">
 												<td>{{ mdl.sdtLog }} <br /><b>{{ mdl.sfkUser }}</b></td>
 												<td>{{ mdl.stProtocol }}</td>
-												<td>{{ mdl.stTitle }}<br />{{mdl.stLocalization}}</td>
+												<td>{{ mdl.sfkTaskFlowCurrent }}<br />{{ mdl.stTitle }}<br />{{mdl.stLocalization}}</td>
 												<td>
 													<div class="pull-right">
 														<a href="" role="button" ng-click="removeSubtask(mdl)">

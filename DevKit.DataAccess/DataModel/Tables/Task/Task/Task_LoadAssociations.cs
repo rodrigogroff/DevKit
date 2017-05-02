@@ -31,6 +31,7 @@ namespace DataModel
 				accs = LoadAccs(db);
 				logs = LoadLogs(db);
 				dependencies = LoadDependencies(db);
+				checkpoints = LoadCheckpoints(db);
 			}
 
 			return this;
@@ -76,6 +77,7 @@ namespace DataModel
 
 				var subTask = db.Task(item.fkSubTask);
 
+				item.sfkTaskFlowCurrent = db.TaskFlow(subTask.fkTaskFlowCurrent).stName;
 				item.stProtocol = subTask.stProtocol;
 				item.stTitle = subTask.stTitle;
 				item.stLocalization = subTask.stLocalization;
@@ -175,6 +177,36 @@ namespace DataModel
 			}
 
 			return ret;
+		}
+
+		List<TaskCheckPoint> LoadCheckpoints(DevKitDB db)
+		{
+			var setup = db.Setup();
+
+			var lst = (from e in db.TaskCheckPoints
+					   where e.fkCategory == this.fkTaskCategory
+					   select e).
+					   ToList();
+
+			foreach (var item in lst)
+			{
+				var mark = (from e in db.TaskCheckPointMarks
+							where e.fkCheckPoint == item.id
+							where e.fkTask == this.id
+							select e).
+							FirstOrDefault();
+
+				if (mark != null)
+				{
+					item.bSelected = true;
+					item.sdtLog = mark.dtLog?.ToString(setup.stDateFormat);
+					item.sfkUser = db.User(mark.fkUser).stLogin;
+				}
+				else
+					item.bSelected = false;
+			}
+
+			return lst;
 		}
 
 		List<TaskLog> LoadLogs(DevKitDB db)

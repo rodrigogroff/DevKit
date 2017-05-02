@@ -334,4 +334,13 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+	// ============================================
+	// checkpoints
+	// ============================================
+
+	$scope.selectCheckpoint = function (mdl)
+	{
+		mdl.bSelected = !mdl.bSelected;
+	}
+
 }]);

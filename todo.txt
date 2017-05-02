@@ -3,17 +3,15 @@
 a fazer
 ------------------------------
 	
-	-check points (opcional ou não), definidos e herdados da categoria da tarefa,
-		só fecha com tudo marcado nas não opcionais
 	-questionamentos (com respostas) -sim ou nao
+
 	-sort by (combo) na listagem de tarefas	
+	-verificar filtros faltantes
 				
 	------------------------
 	documentação
 	------------------------
 		- gerar documentação em inglês
-		
-
 
 ------------------
 bugs power!

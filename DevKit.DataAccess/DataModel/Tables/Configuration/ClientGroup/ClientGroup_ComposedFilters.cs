@@ -10,7 +10,7 @@ namespace DataModel
 		public string busca;
 	}
 	
-	public partial class Client
+	public partial class ClientGroup
 	{
 		public List<ClientGroup> ComposedFilters(DevKitDB db, ref int count, ClientGroupFilter filter)
 		{

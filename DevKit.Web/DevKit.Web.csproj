@@ -833,6 +833,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Configuration\ClientGroupCtrl.cs" />
+    <Compile Include="Controllers\Configuration\ClientCtrl.cs" />
     <Compile Include="Controllers\Configuration\SurveyCtrl.cs" />
     <Compile Include="Controllers\Configuration\NewsCtrl.cs" />
     <Compile Include="Controllers\Configuration\TaskCheckPointCtrl.cs" />

@@ -3,6 +3,9 @@
 a fazer
 ------------------------------
 		
+	-criar cadastro de cliente
+	-criar cadastro de 
+
 	-sort by (combo) na listagem de tarefas
 	-implementar acumulador de dinheiro
 		

@@ -39,6 +39,8 @@ namespace DataModel
 		public ITable<TaskCategory>           TaskCategories          { get { return this.GetTable<TaskCategory>(); } }
 		public ITable<TaskCheckPoint>         TaskCheckPoints         { get { return this.GetTable<TaskCheckPoint>(); } }
 		public ITable<TaskCheckPointMark>     TaskCheckPointMarks     { get { return this.GetTable<TaskCheckPointMark>(); } }
+		public ITable<TaskClient>             TaskClients             { get { return this.GetTable<TaskClient>(); } }
+		public ITable<TaskClientGroup>        TaskClientGroups        { get { return this.GetTable<TaskClientGroup>(); } }
 		public ITable<TaskDependency>         TaskDependencies        { get { return this.GetTable<TaskDependency>(); } }
 		public ITable<TaskFlow>               TaskFlows               { get { return this.GetTable<TaskFlow>(); } }
 		public ITable<TaskFlowChange>         TaskFlowChanges         { get { return this.GetTable<TaskFlowChange>(); } }
@@ -287,6 +289,22 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog        { get; set; } // timestamp (6) without time zone
 	}
 
+	[Table(Schema="public", Name="TaskClient")]
+	public partial class TaskClient
+	{
+		[PrimaryKey, Identity] public long  id       { get; set; } // bigint
+		[Column,     Nullable] public long? fkTask   { get; set; } // bigint
+		[Column,     Nullable] public long? fkClient { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="TaskClientGroup")]
+	public partial class TaskClientGroup
+	{
+		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
+		[Column,     Nullable] public long? fkTask        { get; set; } // bigint
+		[Column,     Nullable] public long? fkClientGroup { get; set; } // bigint
+	}
+
 	[Table(Schema="public", Name="TaskDependency")]
 	public partial class TaskDependency
 	{
@@ -533,6 +551,18 @@ namespace DataModel
 		}
 
 		public static TaskCheckPointMark Find(this ITable<TaskCheckPointMark> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskClient Find(this ITable<TaskClient> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskClientGroup Find(this ITable<TaskClientGroup> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

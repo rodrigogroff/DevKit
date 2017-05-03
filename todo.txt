@@ -11,6 +11,7 @@ a fazer (groff)
 	-sort by (combo) na listagem de tarefas
 	-implementar acumulador de dinheiro
 	-pensar prazos!
+	-pensar data nas listing / kanban
 	- gerar documentação em inglês	
 
 ------------------------------

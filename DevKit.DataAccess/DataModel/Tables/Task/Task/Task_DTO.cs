@@ -32,38 +32,7 @@ namespace DataModel
 		public List<TaskDependency> dependencies;
 		public List<TaskCheckPoint> checkpoints;
 		public List<TaskQuestion> questions;
-	}
-	
-	public class TaskLog
-	{
-		public string  sdtLog,
-						stUser,
-						stDetails;
-	}
-
-	public partial class TaskCheckPoint
-	{
-		public bool bSelected;
-
-		public string sfkUser,
-					  sdtLog;
-	}
-
-	public partial class TaskQuestion
-	{
-		public string sfkUserOpen,
-					  sfkUserDirected,
-					  sdtOpen,
-					  sdtClosed;
-	}
-
-	public partial class TaskDependency
-	{
-		public string sdtLog,
-						sfkUser,
-						sfkTaskFlowCurrent,
-						stProtocol,
-						stTitle,
-						stLocalization;
+		public List<TaskClient> clients;
+		public List<TaskClientGroup> clientGroups;
 	}
 }

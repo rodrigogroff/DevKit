@@ -14,6 +14,8 @@ namespace DataModel
 
 		public long? nuPriority,
 						fkProject,
+						fkClient,
+						fkClientGroup,
 						fkPhase,
 						fkSprint,
 						fkUserStart,
@@ -86,6 +88,24 @@ namespace DataModel
 							   select e.id;
 								
 				query = from e in query where queryAux.Contains((long)e.fkTaskType)	select e;
+			}
+
+			if (filter.fkClient != null)
+			{
+				var queryAux = from e in db.TaskClients
+							   where filter.fkClient == e.fkClient
+							   select e.fkTask;
+
+				query = from e in query where queryAux.Contains((long)e.id) select e;
+			}
+
+			if (filter.fkClientGroup != null)
+			{
+				var queryAux = from e in db.TaskClientGroups
+							   where filter.fkClientGroup == e.fkClientGroup
+							   select e.fkTask;
+
+				query = from e in query where queryAux.Contains((long)e.id) select e;
 			}
 
 			count = query.Count();

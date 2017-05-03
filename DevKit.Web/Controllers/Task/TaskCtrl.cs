@@ -24,11 +24,13 @@ namespace DevKit.Web.Controllers
 					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 					fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
 					fkSprint = Request.GetQueryStringValue<long?>("fkSprint", null),
-					fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
+					fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),					
 					fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
 					fkTaskFlowCurrent = Request.GetQueryStringValue<long?>("fkTaskFlowCurrent", null),
 					fkUserStart = Request.GetQueryStringValue<long?>("fkUserStart", null),
 					fkUserResponsible = Request.GetQueryStringValue<long?>("fkUserResponsible", null),
+					fkClient = Request.GetQueryStringValue<long?>("fkClient", null),
+					fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
 				});
 
 				return Ok(new { count = count, results = results });

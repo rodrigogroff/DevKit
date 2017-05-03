@@ -252,3 +252,14 @@ CREATE TABLE IF NOT EXISTS public."ClientGroupAssociation" ( id bigserial NOT NU
 ALTER TABLE public."ClientGroupAssociation" OWNER to postgres;
 ALTER TABLE public."ClientGroupAssociation" ADD COLUMN if not exists "fkClient" bigint;
 ALTER TABLE public."ClientGroupAssociation" ADD COLUMN if not exists "fkClientGroup" bigint;
+
+CREATE TABLE IF NOT EXISTS public."TaskClient" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."TaskClient" OWNER to postgres;
+ALTER TABLE public."TaskClient" ADD COLUMN if not exists "fkTask" bigint;
+ALTER TABLE public."TaskClient" ADD COLUMN if not exists "fkClient" bigint;
+
+CREATE TABLE IF NOT EXISTS public."TaskClientGroup" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."TaskClientGroup" OWNER to postgres;
+ALTER TABLE public."TaskClientGroup" ADD COLUMN if not exists "fkTask" bigint;
+ALTER TABLE public."TaskClientGroup" ADD COLUMN if not exists "fkClientGroup" bigint;
+

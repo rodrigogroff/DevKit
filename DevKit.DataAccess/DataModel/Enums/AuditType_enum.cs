@@ -19,7 +19,9 @@ namespace DataModel
 							Task = 4,
 							User = 5,
 							Profile = 6,
-							Setup = 7;
+							Setup = 7,
+							Client = 8,
+							ClientGroup = 9;
 
 		public EnumAuditType()
 		{
@@ -30,6 +32,8 @@ namespace DataModel
 			lst.Add(new AuditType() { id = User, stName = "User" });
 			lst.Add(new AuditType() { id = Profile, stName = "Profile" });
 			lst.Add(new AuditType() { id = Setup, stName = "Setup" });
+			lst.Add(new AuditType() { id = Client, stName = "Client" });
+			lst.Add(new AuditType() { id = ClientGroup, stName = "ClientGroup" });
 
 			lst.OrderBy(y => y.stName);
 		}

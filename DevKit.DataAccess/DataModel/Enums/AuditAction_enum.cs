@@ -75,7 +75,17 @@ namespace DataModel
 							UserEditEmail = 73,
 							UserRemoveEmail = 74,
 							UserPasswordReset = 75,
-							UserPasswordChange = 76;
+							UserPasswordChange = 76,
+
+							ClientListing = 100,
+							ClientNew = 101,
+							ClientEdit = 102,
+							ClientDelete = 103,
+
+							ClientGroupListing = 110,
+							ClientGroupNew = 111,
+							ClientGroupEdit = 112,
+							ClientGroupDelete = 113;
 
 		public EnumAuditAction()
 		{

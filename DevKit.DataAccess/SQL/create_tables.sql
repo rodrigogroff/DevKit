@@ -231,3 +231,24 @@ ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "fkTask" bigint;
 ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "fkUserOpen" bigint;
 ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "fkUserDirected" bigint;
 ALTER TABLE public."TaskQuestion" ADD COLUMN if not exists "bFinal" boolean;
+
+CREATE TABLE IF NOT EXISTS public."Client" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."Client" OWNER to postgres;
+ALTER TABLE public."Client" ADD COLUMN if not exists "dtStart" timestamp without time zone;
+ALTER TABLE public."Client" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."Client" ADD COLUMN if not exists "stName" character varying(200);
+ALTER TABLE public."Client" ADD COLUMN if not exists "stContactEmail" character varying(200);
+ALTER TABLE public."Client" ADD COLUMN if not exists "stContactPhone" character varying(20);
+ALTER TABLE public."Client" ADD COLUMN if not exists "stContactPerson" character varying(200);
+ALTER TABLE public."Client" ADD COLUMN if not exists "stInfo" character varying(2000);
+
+CREATE TABLE IF NOT EXISTS public."ClientGroup" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."ClientGroup" OWNER to postgres;
+ALTER TABLE public."ClientGroup" ADD COLUMN if not exists "dtStart" timestamp without time zone;
+ALTER TABLE public."ClientGroup" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."ClientGroup" ADD COLUMN if not exists "stName" character varying(200);
+
+CREATE TABLE IF NOT EXISTS public."ClientGroupAssociation" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."ClientGroupAssociation" OWNER to postgres;
+ALTER TABLE public."ClientGroupAssociation" ADD COLUMN if not exists "fkClient" bigint;
+ALTER TABLE public."ClientGroupAssociation" ADD COLUMN if not exists "fkClientGroup" bigint;

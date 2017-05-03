@@ -5,15 +5,11 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$rootScope.exibirMenu = true;
 
 	$scope.loading = false;
-	$scope.campos = {
-		selects: {
-			user: ngSelects.obterConfiguracao(Api.User, { }),
-		}
-	};
+	$scope.campos = {};
 	$scope.itensporpagina = 15;
 
 	$scope.permModel = {};	
-	$scope.permID = 103;
+	$scope.permID = 121;
 
 	function CheckPermissions()
 	{
@@ -59,7 +55,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 		delete opcoes.selects;
 
-		Api.Project.listPage(opcoes, function (data) {
+		Api.ClientGroup.listPage(opcoes, function (data) {
 			$scope.list = data.results;
 			$scope.total = data.count;		
 			$scope.loading = false;
@@ -71,7 +67,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		if (!$scope.permModel.visualizar) 
 			toastr.error('Access denied!', 'Permission');
 		else
-			$state.go('project', { id: mdl.id });
+			$state.go('clientgroup', { id: mdl.id });
 	}
 
 	$scope.new = function ()
@@ -79,7 +75,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		if (!$scope.permModel.novo)
 			toastr.error('Access denied!', 'Permission');
 		else
-			$state.go('project-new');
+			$state.go('clientgroup-new');
 	}
 	
 }]);

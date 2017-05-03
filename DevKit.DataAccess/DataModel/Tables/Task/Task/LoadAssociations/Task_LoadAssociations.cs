@@ -25,13 +25,14 @@ namespace DataModel
 				usrProgress = LoadProgress(db);
 				usrMessages = LoadMessages(db);
 				flows = LoadFlows(db);
-				accs = LoadAccs(db);
-				logs = LoadLogs(db);
+				accs = LoadAccs(db);				
 				dependencies = LoadDependencies(db);
 				checkpoints = LoadCheckpoints(db);
 				questions = LoadQuestions(db);
 				clients = LoadClients(db);
 				clientGroups = LoadClientGroups(db);
+
+				logs = LoadLogs(db);
 			}
 
 			return this;

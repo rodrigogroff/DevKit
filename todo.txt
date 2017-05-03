@@ -3,11 +3,9 @@
 a fazer (groff)
 ------------------------------
 		
-	-criar cadastro de cliente
-	-criar cadastro de grupo de clientes
-	-anexar clientes e grupos em projetos
 	-anexar clientes e grupos em tarefas
-
+	-anexar clientes e grupos em projetos
+	
 	-sort by (combo) na listagem de tarefas
 	-implementar acumulador de dinheiro
 	-pensar prazos!

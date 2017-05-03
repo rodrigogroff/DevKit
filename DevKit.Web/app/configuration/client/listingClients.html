@@ -40,10 +40,16 @@
 								<thead>
 									<tr>
 										<th width="180px">Client</th>
+										<th width="180px">Contact Person</th>
+										<th width="180px">Contact Phone</th>
+										<th width="180px">Contact Email</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
+									<td>{{ mdl.stContactPerson }}</td>
+									<td>{{ mdl.stContactPhone }}</td>
+									<td>{{ mdl.stContactEmail }}</td>
 								</tr>
 							</table>
 						</div>

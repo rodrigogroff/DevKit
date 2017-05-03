@@ -8,6 +8,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.loading = false;
 
+	$scope.selectClients = ngSelects.obterConfiguracao(Api.Client, {});
+
 	$scope.viewModel = {};
 	$scope.permModel = {};	
 	$scope.permID = 121;
@@ -124,5 +126,78 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			});
 		}
 	}
+
+	// ============================================
+	// client 
+	// ============================================
+
+	$scope.addClient = false;
+
+	$scope.removeClient = function (index, lista)
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{
+			$scope.viewModel.updateCommand = "removeClient";
+			$scope.viewModel.anexedEntity = $scope.viewModel.clients[index];
+
+			Api.ClientGroup.update({ id: id }, $scope.viewModel, function (data)
+			{
+				toastr.success('Client removed', 'Success');
+				$scope.viewModel.clients = data.clients;
+			});
+		}
+	}
+
+	$scope.addNewClient = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+			$scope.addClient = !$scope.addClient;
+	}
+
+	$scope.newClient = {};
+
+	$scope.editClient = function (mdl) {
+		$scope.addClient = true;
+		$scope.newClient = mdl;
+	}
+
+	$scope.cancelClient = function () {
+		$scope.addClient = false;
+		$scope.newClient = {};
+	}
+
+	$scope.saveNewClient = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+			toastr.error('Access denied!', 'Permission');
+		else
+		{			
+			$scope.fkClient_fail = $scope.newClient.fkClient == undefined;
+
+			if (!$scope.fkClient_fail)
+			{
+				$scope.addClient = false;
+
+				$scope.viewModel.updateCommand = "newClient";
+				$scope.viewModel.anexedEntity = $scope.newClient;
+
+				Api.ClientGroup.update({ id: id }, $scope.viewModel, function (data)
+				{
+					$scope.newClient = {};
+					toastr.success('Client saved', 'Success');
+
+					$scope.viewModel.clients = data.clients;					
+				},
+				function (response) {
+					toastr.error(response.data.message, 'Error');
+				});
+			}
+		}
+	}
+
 		
 }]);

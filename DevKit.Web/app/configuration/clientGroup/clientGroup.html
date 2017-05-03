@@ -58,6 +58,73 @@
 						</table>
 					</div>
 				</tab>
+				<tab heading="Clients" disabled="true" ng-if="viewModel.id == undefined"></tab>
+				<tab heading="Clients [{{viewModel.clients.length}}]" ng-if="viewModel.id != undefined">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<legend style="color:white">
+										Client list
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewClient()"><i class="fa fa-plus"> </i>  Add new </button>
+									</legend>
+									<div ng-show="viewModel.clients.length == 0 && addClient == false">
+										<br />
+										<div class="btn btn-info btn-lg">No records found.</div>
+									</div>
+									<div ng-if="addClient == true">
+										<table>
+											<tr>
+												<td>
+													<table>
+														<tr height="42px">
+															<td width="120px">
+																Client
+															</td>
+															<td width="20px">
+																<button class="btn btn-xs btn-danger" ng-show="fkClient_fail">!</button>
+															</td>
+															<td width="200px">
+																<input type="hidden" style="width:100%" ui-select2="selectClients" ng-model="newClient.fkClient" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										<br />
+										<button class="btn btn-default" ng-click="cancelClient()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewClient()">Save </button>
+										<br />
+										<br />
+									</div>
+									<div ng-show="viewModel.clients.length > 0">
+										<br />
+										<table class="table table-hover" style="width:100%">
+											<thead>
+												<tr>
+													<th>Client Name</th>
+												</tr>
+											</thead>
+											<tr data-ng-repeat="mdl in viewModel.clients">
+												<td>{{ mdl.stName }}</td>
+												<td>
+													<div class="pull-right">
+														<a href="" role="button" ng-click="removeClient($index, viewModel.clients)">
+															<i class="glyphicon glyphicon-remove" style="color:white"></i>
+														</a>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
 			</tabset>
 			<br />
 			<br />

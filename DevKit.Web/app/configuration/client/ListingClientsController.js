@@ -7,7 +7,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.loading = false;
 	$scope.campos = { };
 	$scope.itensporpagina = 15;
-
 	$scope.permModel = {};	
 	$scope.permID = 120;
 

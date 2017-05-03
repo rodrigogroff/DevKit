@@ -8,6 +8,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.loading = false;
 
+	$scope.setupModel = { stPhoneMask: '' }
 	$scope.viewModel = {};
 	$scope.permModel = {};	
 	$scope.permID = 120;
@@ -34,6 +35,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	function init()
 	{
 		CheckPermissions();
+
+		Api.Setup.get({ id: 1 }, function (data) {
+			$scope.setupModel = data;
+		});
 
 		if (id > 0)
 		{
@@ -64,6 +69,20 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		return false;
 	}
 
+	var invalidEmail = function (element) {
+		if (element == undefined)
+			return true;
+		else {
+			if (element.length == 0)
+				return true;
+
+			if (element.indexOf('@') > 1)
+				return true;
+		}
+
+		return false;
+	}
+
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
@@ -71,8 +90,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		else
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
+			$scope.stEmail_fail = invalidEmail($scope.viewModel.stContactEmail);
 				
-			if (!$scope.stName_fail )
+			if (!$scope.stName_fail && !$scope.stEmail_fail )
 			{
 				if (id > 0)
 				{

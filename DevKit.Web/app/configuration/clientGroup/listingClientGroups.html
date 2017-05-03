@@ -19,8 +19,7 @@
 				<tr>
 					<td width="15px"></td>
 					<td valign="top">
-						<ng-filtro tipo="project" campos="campos" template-avancado="app/configuration/project/_filterProject.html" 
-								   funcao-pesquisar="search"></ng-filtro>
+						<ng-filtro tipo="client" campos="campos" template-avancado="app/configuration/clientGroup/_filterClientGroup.html" funcao-pesquisar="search"></ng-filtro>
 					</td>
 				</tr>
 			</table>
@@ -42,10 +41,12 @@
 								<thead>
 									<tr>
 										<th width="180px">Name</th>
+										<th width="180px">Clients</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
+									<td>{{ mdl.clients.length }}</td>
 								</tr>
 							</table>
 						</div>

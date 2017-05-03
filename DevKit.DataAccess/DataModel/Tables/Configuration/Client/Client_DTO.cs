@@ -4,7 +4,7 @@
 	{
 		public object anexedEntity;
 
-		public string stUser = "",
+		public string sfkUser = "",
 						sdtStart = "",
 						updateCommand = "";
 	}

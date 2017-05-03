@@ -6,7 +6,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 	$scope.loading = false;
 
-	
+	$scope.campos = {
+		selects: {
+			user: ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' }),
+		}
+	};
+
 	$scope.itensporpagina = 15;
 	$scope.permModel = {};	
 	$scope.permID = 101;
@@ -30,13 +35,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		CheckPermissions();
 
 		if (ngHistoricoFiltro.filtro)
-			ngHistoricoFiltro.filtro.exibeFiltro = false;
-
-		$scope.campos = {
-			selects: {
-				user: ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' }),
-			}
-		};
+			ngHistoricoFiltro.filtro.exibeFiltro = false;		
 	}
 
 	$scope.search = function ()

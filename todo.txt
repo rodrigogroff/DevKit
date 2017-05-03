@@ -1,14 +1,22 @@
 
 ------------------------------
-a fazer
+a fazer (groff)
 ------------------------------
 		
 	-criar cadastro de cliente
-	-criar cadastro de 
+	-criar cadastro de grupo de clientes
+	-anexar clientes e grupos em projetos
+	-anexar clientes e grupos em tarefas
 
 	-sort by (combo) na listagem de tarefas
 	-implementar acumulador de dinheiro
-		
+	-pensar prazos!
+	- gerar documentação em inglês	
+
+------------------------------
+a fazer (ramiro)
+------------------------------
+
 	-na listagem de perfils, trazer cinco primeiros users em nova coluna 'users'
 	-na listagem de projetos, trazer em coluna 'tasks' o count geral de todas as tarefas do projeto
 	-na listagem de projetos, trazer em coluna 'versions' o count geral de todas as versões de todos os sprints do projeto
@@ -16,23 +24,20 @@ a fazer
 	-na listagem de 'task type', trazer o count de tarefas 'TASKS' pela task type em nova coluna
 	-na listagem de 'news', trazer o campo padrão 'Search' e a combo de projeto nos filtros
 	-na listagem de 'surveys', trazer o campo padrão 'Search' e a combo de projeto nos filtros
-	
-	-modais de confirmação de exclusão
-	-poder anexar documentos nas tarefas
-	-usar editor trix (anexando imagens) para noticias / descrição de tarefass	
-			
-------------------
-bugs chatos
-------------------
 
-	-filtros perdem os dropdowns 
+	-selenium para diversos cruds
+
+------------------------------
+a fazer (thiago)
+------------------------------
+
+	-modais de confirmação de exclusão (prototipo em remover telefone de usuário)
+	-poder anexar documentos nas tarefas
+	-usar editor trix (anexando imagens) para noticias / descrição das tarefas
+	-ao re-digitar campo de pesquisa (na segunda vez!) - ao clicar no botão, nada acontece
+
+	-filtros perdem os dropdowns!! 
 		( logar, listar users, abrir filtros, listar profiles, 
 			abrir filtros (falta combo de usuário) e 
 				na console aparece query funtion undefined )
 
-	-ao re-digitar campo de pesquisa (na segunda vez!) - ao clicar no botão, nada acontece
-
-------------------------
-documentação
-------------------------
-	- gerar documentação em inglês

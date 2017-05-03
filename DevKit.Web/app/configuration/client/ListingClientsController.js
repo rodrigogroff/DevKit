@@ -1,29 +1,27 @@
-﻿angular.module('app.controllers').controller('ListingProfilesController',
+﻿angular.module('app.controllers').controller('ListingClientsController',
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
 
 	$scope.loading = false;
-
-	$scope.campos = {
-		selects: {
-			user: ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' }),
-		}
-	};
-
+	$scope.campos = { };
 	$scope.itensporpagina = 15;
-	$scope.permModel = {};	
-	$scope.permID = 101;
 
-	function CheckPermissions() {
-		Api.Permission.get({ id: $scope.permID }, function (data) {
+	$scope.permModel = {};	
+	$scope.permID = 120;
+
+	function CheckPermissions()
+	{
+		Api.Permission.get({ id: $scope.permID }, function (data)
+		{
 			$scope.permModel = data;
 
-			if (!$scope.permModel.listagem) {
+			if (!$scope.permModel.listagem)
+			{
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
-			}
+			}				
 		},
 		function (response) { });
 	}
@@ -37,7 +35,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;
 	}
-
+	
 	$scope.search = function ()
 	{
 		$scope.load(0, $scope.itensporpagina);
@@ -57,7 +55,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 		delete opcoes.selects;
 
-		Api.Profile.listPage(opcoes, function (data) {
+		Api.Client.listPage(opcoes, function (data) {
 			$scope.list = data.results;
 			$scope.total = data.count;		
 			$scope.loading = false;
@@ -69,7 +67,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		if (!$scope.permModel.visualizar) 
 			toastr.error('Access denied!', 'Permission');
 		else
-			$state.go('profile', { id: mdl.id });
+			$state.go('client', { id: mdl.id });
 	}
 
 	$scope.new = function ()
@@ -77,7 +75,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		if (!$scope.permModel.novo)
 			toastr.error('Access denied!', 'Permission');
 		else
-			$state.go('profile-new');
+			$state.go('client-new');
 	}
 	
 }]);

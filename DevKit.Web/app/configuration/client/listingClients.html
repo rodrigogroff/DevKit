@@ -1,0 +1,56 @@
+﻿<div class="webFormPostion">
+	<section class="widgetForm" style="width:975px">
+		<legend class="legendTop">
+			<table><tr height="12px"><td> </td></tr></table>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td><b>Clients </b> listing <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td width="80px"></td>
+					<td><input type="submit" class="btn btn-success pull-right" value="New" ng-click="new()"></td>
+					<td width="20px"></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+		<div class="divWebForm">
+			<table width="100%">
+				<tr>
+					<td width="15px"></td>
+					<td valign="top">
+						<ng-filtro tipo="client" campos="campos" template-avancado="app/configuration/client/_filterClient.html" funcao-pesquisar="search"></ng-filtro>
+					</td>
+				</tr>
+			</table>
+			<table width="100%">
+				<tr>
+					<td valign="top">
+						<div ng-show="list.length == 0">
+							<br />
+							<br />
+							<div class="btn btn-info btn-lg">No records found.</div>
+							<br />
+							<br />
+						</div>
+						<div ng-show="list.length > 0">
+							<br />
+							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+							<br />
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th width="180px">Client</th>
+									</tr>
+								</thead>
+								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+									<td>{{ mdl.stName }}</td>
+								</tr>
+							</table>
+						</div>
+						<br />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+</div>

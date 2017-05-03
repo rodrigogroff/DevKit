@@ -48,6 +48,14 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('survey-new', { url: '/configuration/survey/new', templateUrl: 'app/configuration/surveys/survey.html', controller: 'SurveyController' })
     .state('survey', { url: '/configuration/survey/:id', templateUrl: 'app/configuration/surveys/survey.html', controller: 'SurveyController' })
 
+	.state('clients', { url: '/configuration/clients', templateUrl: 'app/configuration/client/listingClients.html', controller: 'ListingClientsController' })
+    .state('client-new', { url: '/configuration/client/new', templateUrl: 'app/configuration/client/client.html', controller: 'ClientController' })
+    .state('client', { url: '/configuration/client/:id', templateUrl: 'app/configuration/client/client.html', controller: 'ClientController' })
+
+	.state('clientgroups', { url: '/configuration/clientgroups', templateUrl: 'app/configuration/clientgroup/listingClientGroups.html', controller: 'ListingClientGroupsController' })
+    .state('clientgroup-new', { url: '/configuration/clientgroup/new', templateUrl: 'app/configuration/clientgroup/clientGroup.html', controller: 'ClientGroupController' })
+    .state('clientgroup', { url: '/configuration/clientgroup/:id', templateUrl: 'app/configuration/clientgroup/clientGroup.html', controller: 'ClientGroupController' })
+
 	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);

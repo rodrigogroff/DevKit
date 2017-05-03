@@ -236,11 +236,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\configuration\clientGroup\clientGroup.html" />
+    <Content Include="app\configuration\clientGroup\ClientGroupController.js" />
+    <Content Include="app\configuration\clientGroup\listingClientGroups.html" />
+    <Content Include="app\configuration\clientGroup\ListingClientGroupsController.js" />
+    <Content Include="app\configuration\clientGroup\_filterClientGroup.html" />
     <Content Include="app\configuration\news\listingNews.html" />
     <Content Include="app\configuration\news\ListingNewsController.js" />
     <Content Include="app\configuration\news\news.html" />
     <Content Include="app\configuration\news\NewsController.js" />
     <Content Include="app\configuration\news\_filterNews.html" />
+    <Content Include="app\configuration\client\listingClients.html" />
+    <Content Include="app\configuration\client\ListingClientsController.js" />
+    <Content Include="app\configuration\client\client.html" />
+    <Content Include="app\configuration\client\ClientController.js" />
+    <Content Include="app\configuration\client\_filterClient.html" />
     <Content Include="app\configuration\surveys\listingSurveys.html" />
     <Content Include="app\configuration\surveys\ListingSurveysController.js" />
     <Content Include="app\configuration\surveys\survey.html" />

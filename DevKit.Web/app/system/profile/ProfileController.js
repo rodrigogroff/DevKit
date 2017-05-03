@@ -52,6 +52,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			tg1181: false, tg1182: false, tg1183: false, tg1184: false, tg1185: false,
 			// surveys 
 			tg1191: false, tg1192: false, tg1063: false, tg1194: false, tg1195: false,
+			// clients
+			tg1201: false, tg1202: false, tg1203: false, tg1204: false, tg1205: false,
+			// client groups
+			tg1211: false, tg1212: false, tg1213: false, tg1214: false, tg1215: false,
 			// user Kanban
 			tg1071: false,
 			// management
@@ -155,6 +159,20 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (data.stPermissions.indexOf('|1194|') >= 0) data.tg1194 = true; else data.tg1194 = false;
 				if (data.stPermissions.indexOf('|1195|') >= 0) data.tg1195 = true; else data.tg1195 = false;
 
+				// clients
+				if (data.stPermissions.indexOf('|1201|') >= 0) data.tg1201 = true; else data.tg1201 = false;
+				if (data.stPermissions.indexOf('|1202|') >= 0) data.tg1202 = true; else data.tg1202 = false;
+				if (data.stPermissions.indexOf('|1203|') >= 0) data.tg1203 = true; else data.tg1203 = false;
+				if (data.stPermissions.indexOf('|1204|') >= 0) data.tg1204 = true; else data.tg1204 = false;
+				if (data.stPermissions.indexOf('|1205|') >= 0) data.tg1205 = true; else data.tg1205 = false;
+
+				// client groups
+				if (data.stPermissions.indexOf('|1211|') >= 0) data.tg1211 = true; else data.tg1211 = false;
+				if (data.stPermissions.indexOf('|1212|') >= 0) data.tg1212 = true; else data.tg1212 = false;
+				if (data.stPermissions.indexOf('|1213|') >= 0) data.tg1213 = true; else data.tg1213 = false;
+				if (data.stPermissions.indexOf('|1214|') >= 0) data.tg1214 = true; else data.tg1214 = false;
+				if (data.stPermissions.indexOf('|1215|') >= 0) data.tg1215 = true; else data.tg1215 = false;
+
 				// user Kanban  
 				if (data.stPermissions.indexOf('|1071|') >= 0) data.tg1071 = true; else data.tg1071 = false;
 				// management  
@@ -244,6 +262,15 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				// surveys
 				if (_mdl.tg1191 == true) perms += '|1191|'; if (_mdl.tg1192 == true) perms += '|1192|'; if (_mdl.tg1193 == true) perms += '|1193|';
 				if (_mdl.tg1194 == true) perms += '|1194|'; if (_mdl.tg1195 == true) perms += '|1195|';
+
+				// clients
+				if (_mdl.tg1201 == true) perms += '|1201|'; if (_mdl.tg1202 == true) perms += '|1202|'; if (_mdl.tg1203 == true) perms += '|1203|';
+				if (_mdl.tg1204 == true) perms += '|1204|'; if (_mdl.tg1205 == true) perms += '|1205|';
+
+				// client groups
+				if (_mdl.tg1211 == true) perms += '|1211|'; if (_mdl.tg1212 == true) perms += '|1212|'; if (_mdl.tg1213 == true) perms += '|1213|';
+				if (_mdl.tg1214 == true) perms += '|1214|'; if (_mdl.tg1215 == true) perms += '|1215|';
+
 				// user Kanban
 				if (_mdl.tg1071 == true) perms += '|1071|';
 				// management

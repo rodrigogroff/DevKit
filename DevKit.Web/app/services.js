@@ -28,53 +28,6 @@ angular.module('app.services', ['ngResource'])
 	return confirmacao;
 }])
 
-.service('$informacao', ['$modal', '$rootScope', '$q', function ($modal, $rootScope, $q) {
-
-	var deferred;
-	var scope = $rootScope.$new();
-
-	scope.resposta = function (res) {
-		deferred.resolve(res);
-		confirmacao.hide();
-	}
-
-	var confirmacao = $modal({ template: 'app/_shared/templateInformacao.html', scope: scope, show: false });
-	var parentShow = confirmacao.show;
-
-	confirmacao.exibir = function (titulo, mensagem) {
-		scope.titulo = titulo;
-		scope.mensagem = mensagem;
-		deferred = $q.defer();
-		parentShow();
-		return deferred.promise;
-	}
-
-	return confirmacao;
-}])
-
-.service('$mensagemErro', ['$modal', '$rootScope', '$q', function ($modal, $rootScope, $q) {
-
-	var deferred;
-	var scope = $rootScope.$new();
-
-	scope.fechar = function () {
-		janela.hide();
-	}
-
-	var janela = $modal({ template: 'app/_shared/templateMensagemErro.html', scope: scope, show: false });
-	var parentShow = janela.show;
-
-	janela.exibir = function (titulo, mensagem) {
-		scope.titulo = titulo;
-		scope.mensagem = mensagem;
-		deferred = $q.defer();
-		parentShow();
-		return deferred.promise;
-	}
-
-	return janela;
-}])
-
 .factory('Api', ['$resource', function ($resource)
 {
 	var opcoes = {
@@ -92,6 +45,8 @@ angular.module('app.services', ['ngResource'])
 		Profile: $resource('api/profile/:id', {}, opcoes),
 		Permission: $resource('api/permission/:id', {}, opcoes),
 		Project: $resource('api/project/:id', {}, opcoes),
+		Client: $resource('api/client/:id', {}, opcoes),
+		ClientGroup: $resource('api/clientGroup/:id', {}, opcoes),
 		Phase: $resource('api/phase/:id', {}, opcoes),
 		Version: $resource('api/version/:id', {}, opcoes),
 		Sprint: $resource('api/sprint/:id', {}, opcoes),

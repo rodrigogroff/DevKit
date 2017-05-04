@@ -148,6 +148,7 @@
     <Compile Include="DataModel\Tables\Task\TaskClient\TaskClient_DTO.cs" />
     <Compile Include="DataModel\Tables\Task\TaskDependency\TaskDependency_DTO.cs" />
     <Compile Include="DataModel\Tables\Task\TaskLog\TaskLog_DTO.cs" />
+    <Compile Include="DataModel\Tables\Task\TaskQuestion\TaskQuestion_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Task\TaskTypeAccumulator\TaskTypeAccumulator_DTO.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\ClientGroups.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Clients.cs" />

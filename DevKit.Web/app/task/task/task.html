@@ -661,6 +661,11 @@
 												<td>
 													Q: {{mdl.stStatement}}<br />
 													A: {{mdl.stAnswer}}<br />																								
+
+													<span ng-show="mdl.sdtClosed == undefined">
+														<i>Pending</i>
+													</span>												
+
 													<span ng-show="mdl.sdtClosed != undefined">
 														Final: <b>{{ mdl.bFinal == true ? 'Yes' : 'No' }}</b> - answered by <b>{{mdl.sfkUserDirected}}</b>, Date: <b>{{mdl.sdtClosed}}</b>
 													</span>												

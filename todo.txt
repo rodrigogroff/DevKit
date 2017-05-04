@@ -3,6 +3,7 @@
 a fazer (groff)
 ------------------------------
 		
+	-perguntas na tela principal
 	-anexar clientes e grupos em tarefas
 	-anexar clientes e grupos em projetos
 	

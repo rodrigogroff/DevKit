@@ -8,6 +8,7 @@ namespace DataModel
 		public string name;
 
 		public List<Task> tasks = new List<Task>();
+		public List<TaskQuestion> questions = new List<TaskQuestion>();
 		public List<CompanyNews> news = new List<CompanyNews>();
 		public List<Survey> surveys = new List<Survey>();
 	}
@@ -22,8 +23,7 @@ namespace DataModel
 			var dto = new HomeDTO();
 
 			dto.name = "Hi " + user.stLogin;
-
-			#region - tasks -
+						
 			{
 				dto.tasks = (from e in db.Tasks
 							 where e.fkUserResponsible == user.id
@@ -35,9 +35,19 @@ namespace DataModel
 				foreach (var item in dto.tasks)
 					item.LoadAssociations(db);
 			}
-			#endregion
 
-			#region - news - 
+			{
+				dto.questions = (from e in db.TaskQuestions
+								 where e.fkUserDirected == user.id
+								 where e.bFinal == false
+								 select e).
+								 OrderBy(y => y.dtOpen).
+								 ToList();
+
+				foreach (var item in dto.questions)
+					item.LoadAssociations(db);
+			}
+
 			{
 				var news = from e in db.CompanyNews
 						   where e.fkProject == null || projects.Contains(e.fkProject)
@@ -53,9 +63,7 @@ namespace DataModel
 				foreach (var item in dto.news)
 					item.LoadAssociations(db);
 			}
-			#endregion
-
-			#region - survey - 
+			
 			{
 				var surveys = from e in db.Surveys
 							  where e.fkProject == null || projects.Contains(e.fkProject)
@@ -69,16 +77,19 @@ namespace DataModel
 
 				dto.surveys = surveys.OrderByDescending(y => y.id).ToList();
 
-				var nuGlobalUsers = (from e in db.Users where e.bActive == true select e).Count();
+				var nuGlobalUsers = (from e in db.Users
+									 where e.bActive == true
+									 select e).
+									 Count();
 
 				foreach (var survey in dto.surveys)
 				{
 					survey.LoadAssociations(db);
 
 					var nuSelUsers = (from e in db.SurveyUserOptions
-											where e.fkSurvey == survey.id
-											select e).
-											Count();
+									  where e.fkSurvey == survey.id
+									  select e).
+									  Count();
 
 					if (survey.fkProject == null)
 					{
@@ -86,7 +97,10 @@ namespace DataModel
 					}
 					else
 					{
-						var nuProjectUsers = (from e in db.ProjectUsers where e.fkProject == survey.fkProject select e).Count();
+						var nuProjectUsers = (from e in db.ProjectUsers
+											  where e.fkProject == survey.fkProject
+											  select e).
+											  Count();
 
 						survey.sNuPct = (nuSelUsers * 100 / nuProjectUsers).ToString();
 					}					
@@ -107,8 +121,7 @@ namespace DataModel
 					}
 				}					
 			}
-			#endregion
-
+			
 			return dto;
 		}
 	}

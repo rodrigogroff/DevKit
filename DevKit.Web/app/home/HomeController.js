@@ -30,6 +30,10 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$state.go('task', { id: mdl.id });
 	}
 
+	$scope.showQuestion = function (mdl) {
+		$state.go('task', { id: mdl.fkTask });
+	}
+
 	$scope.markAsRead = function(mdl)
 	{
 		mdl.updateCommand = 'maskAsRead';

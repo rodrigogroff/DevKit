@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{31992D7E-A656-4D93-82E6-259739B034FF}"
 	ProjectSection(SolutionItems) = preProject
 		DevKit_Standard_v01.00.docx = DevKit_Standard_v01.00.docx
+		management.txt = management.txt
 		todo.txt = todo.txt
 	EndProjectSection
 EndProject

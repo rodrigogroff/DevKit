@@ -3,7 +3,6 @@
 a fazer (groff)
 ------------------------------
 		
-	-perguntas na tela principal
 	-anexar clientes e grupos em tarefas
 	-anexar clientes e grupos em projetos
 	
@@ -11,7 +10,8 @@ a fazer (groff)
 	-implementar acumulador de dinheiro
 	-pensar prazos!
 	-pensar data nas listing / kanban
-	- gerar documentação em inglês	
+	
+	-gerar documentação em inglês	
 
 ------------------------------
 a fazer (ramiro)

@@ -14,7 +14,7 @@ a fazer (groff)
 	-gerar documentação em inglês	
 
 ------------------------------
-a fazer (ramiro)OK
+a fazer (ramiro)OK!
 ------------------------------
 
 	-na listagem de perfils, trazer cinco primeiros users em nova coluna 'users'

@@ -263,3 +263,10 @@ ALTER TABLE public."TaskClientGroup" OWNER to postgres;
 ALTER TABLE public."TaskClientGroup" ADD COLUMN if not exists "fkTask" bigint;
 ALTER TABLE public."TaskClientGroup" ADD COLUMN if not exists "fkClientGroup" bigint;
 
+CREATE TABLE IF NOT EXISTS public."TaskCustomStep" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."TaskCustomStep" OWNER to postgres;
+ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "fkTask" bigint;
+ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "bSelected" boolean;
+ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "stName" character varying(150);
+ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "dtLog" timestamp without time zone;

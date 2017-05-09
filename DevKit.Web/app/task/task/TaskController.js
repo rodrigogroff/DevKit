@@ -464,13 +464,101 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+    // ============================================
+    // CustomStep 
+    // ============================================
+
+	$scope.addCustomStep = false;
+
+	$scope.removeCustomStep = function (entity) {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else {
+	        $scope.viewModel.updateCommand = "removeCustomStep";
+	        $scope.viewModel.anexedEntity = entity;
+
+	        Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	            toastr.success('Custom step removed', 'Success');
+
+	            $scope.viewModel.anexedEntity = {};
+
+	            $scope.viewModel.customSteps = data.customSteps;
+	            $scope.viewModel.logs = data.logs;
+	        });
+	    }
+	}
+
+	$scope.addNewCustomStep = function () {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else
+	        $scope.addCustomStep = !$scope.addCustomStep;
+	}
+
+	$scope.cancelCustomStep = function () {
+	    $scope.addCustomStep = false;
+	    $scope.newCustomStep = {};
+	}
+
+	$scope.newCustomStep = {};
+
+	$scope.saveNewCustomStep = function () {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else {
+	        $scope.newCustomStep_fail = invalidCheck($scope.newCustomStep.stName);
+
+	        if (!$scope.newCustomStep_fail) {
+	            $scope.addCustomStep = false;
+
+	            $scope.viewModel.updateCommand = "newCustomStep";
+	            $scope.viewModel.anexedEntity = $scope.newCustomStep;
+
+	            Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	                $scope.newCustomStep = {};
+	                toastr.success('Custom step saved', 'Success');
+	                $scope.viewModel.customSteps = data.customSteps;
+	                $scope.viewModel.logs = data.logs;
+	            },
+				function (response) {
+				    toastr.error(response.data.message, 'Error');
+				});
+	        }
+	    }
+	}
+
+	$scope.selectCustomStep = function (mdl)
+	{
+	    mdl.bSelected = !mdl.bSelected;
+
+	    $scope.viewModel.updateCommand = "entity";
+
+	    Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	        toastr.success('Custom step saved!', 'Success');
+	        $scope.viewModel = data;
+	    },
+		function (response) {
+		    toastr.error(response.data.message, 'Error');
+		});
+	}
+
 	// ============================================
 	// checkpoints
 	// ============================================
 
 	$scope.selectCheckpoint = function (mdl)
 	{
-		mdl.bSelected = !mdl.bSelected;
+	    mdl.bSelected = !mdl.bSelected;
+
+	    $scope.viewModel.updateCommand = "entity";
+
+	    Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	        toastr.success('Check point saved!', 'Success');
+	        $scope.viewModel = data;
+	    },
+		function (response) {
+			toastr.error(response.data.message, 'Error');
+		});
 	}
 
 	// ============================================

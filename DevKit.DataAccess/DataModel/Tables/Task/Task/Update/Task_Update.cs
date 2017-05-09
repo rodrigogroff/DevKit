@@ -20,7 +20,9 @@ namespace DataModel
 				case "removeClient": return Update_removeClient(db, user, ref resp);
 				case "newClientGroup": return Update_newClientGroup(db, user, ref resp);
 				case "removeClientGroup": return Update_removeClientGroup(db, user, ref resp);
-			}
+                case "newCustomStep": return Update_newCustomStep(db, user, ref resp);
+                case "removeCustomStep": return Update_removeCustomStep(db, user, ref resp);
+            }
 
 			return true;
 		}

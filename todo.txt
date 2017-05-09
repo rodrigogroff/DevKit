@@ -3,8 +3,6 @@
 a fazer (groff)
 ------------------------------
 		
-	-anexar clientes e grupos em tarefas
-	-anexar clientes e grupos em projetos
 	-custom steps nas tarefas
 	-implementar acumulador de dinheiro
 	-pensar prazos!

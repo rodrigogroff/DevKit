@@ -33,5 +33,6 @@ namespace DataModel
 		public List<TaskQuestion> questions;
 		public List<TaskClient> clients;
 		public List<TaskClientGroup> clientGroups;
-	}
+        public List<TaskCustomStep> customSteps;
+    }
 }

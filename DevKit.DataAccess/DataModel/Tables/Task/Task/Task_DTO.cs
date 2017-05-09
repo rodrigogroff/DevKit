@@ -16,9 +16,8 @@ namespace DataModel
 						sfkProject = "",
 						sfkPhase = "",
 						sfkSprint = "",
-						sfkVersion = "";
-		
-		public string stUserMessage = "",
+						sfkVersion = "",
+		                stUserMessage = "",
 						fkNewFlow_Message = "",
 						updateCommand = "";
 

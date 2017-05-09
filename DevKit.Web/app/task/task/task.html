@@ -290,7 +290,6 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Work Flow" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Work Flow" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
@@ -376,7 +375,6 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="User Messages" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="User Messages" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
@@ -432,7 +430,6 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Accumulators" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Accumulators" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
@@ -542,7 +539,133 @@
 							</tr>
 						</table>
 					</div>
-				</tab>						
+				</tab>
+                <tab heading="Clients ({{viewModel.clients.length}})" ng-show="viewModel.id > 0">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="12px"></tr>
+                            <tr>
+                                <td width="20px"></td>
+                                <td>
+                                    <legend style="color:white">
+                                        Clients for task
+                                        <button class="btn btn-info btn-xs pull-right" ng-if="addClient == false" ng-click="addNewClient()"><i class="fa fa-plus"> </i> Add Client </button>
+                                    </legend>
+                                    <div ng-if="addClient == true">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr height="42px">
+                                                            <td width="120px">
+                                                                <b>Client</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="newClient_fail">!</button>
+                                                            </td>
+                                                            <td width="250px">
+                                                                <input type="hidden" style="width:100%" ui-select2="selectClients" ng-model="newClient.fkClient" />
+                                                            </td>
+                                                        </tr>                                                        
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                        <button class="btn btn-default" ng-click="cancelClient()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewClient()">Save </button>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div ng-show="viewModel.clients.length > 0">
+                                        <br />
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Client</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="mdl in viewModel.clients">
+                                                <td>{{ mdl.sfkClient }}</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="removeClient(mdl)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+                <tab heading="Client Groups ({{viewModel.clientGroups.length}})" ng-show="viewModel.id > 0">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="12px"></tr>
+                            <tr>
+                                <td width="20px"></td>
+                                <td>
+                                    <legend style="color:white">
+                                        Client Groups for task
+                                        <button class="btn btn-info btn-xs pull-right" ng-if="addClientGroup == false" ng-click="addNewClientGroup()"><i class="fa fa-plus"> </i> Add Client Group </button>
+                                    </legend>
+                                    <div ng-if="addClientGroup == true">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr height="42px">
+                                                            <td width="120px">
+                                                                <b>Client Group</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="newClientGroup_fail">!</button>
+                                                            </td>
+                                                            <td width="250px">
+                                                                <input type="hidden" style="width:100%" ui-select2="selectClientGroups" ng-model="newClientGroup.fkClientGroup" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                        <button class="btn btn-default" ng-click="cancelClientGroup()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewClientGroup()">Save </button>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div ng-show="viewModel.clientGroups.length > 0">
+                                        <br />
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Client</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="mdl in viewModel.clientGroups">
+                                                <td>{{ mdl.sfkClientGroup }}</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="removeClientGroup(mdl)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
 				<tab heading="Check Points ({{viewModel.checkpoints.length}})" ng-show="viewModel.id > 0 && viewModel.checkpoints.length > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
@@ -576,7 +699,6 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Questions" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Questions ({{viewModel.questions.length}})" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
@@ -689,7 +811,6 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Dependencies" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Dependencies ({{viewModel.dependencies.length}})" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
@@ -722,7 +843,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-default" ng-click="cancelDep()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewSubtask()">Save </button>
+										<button class="btn btn-default" ng-click="cancelSubtask()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewSubtask()">Save </button>
 										<br />
 										<br />
 									</div>

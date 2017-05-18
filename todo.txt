@@ -3,7 +3,6 @@
 a fazer (groff)
 ------------------------------
 		
-	-custom steps nas tarefas
 	-implementar acumulador de dinheiro
 	-pensar prazos!
 	-pensar data nas listing / kanban

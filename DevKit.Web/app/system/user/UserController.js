@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('UserController',
-['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
+['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects', 
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
@@ -188,15 +188,14 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			$scope.viewModel.updateCommand = "removePhone";
-			$scope.viewModel.anexedEntity = $scope.viewModel.phones[index];
+		    $scope.viewModel.updateCommand = "removePhone";
+		    $scope.viewModel.anexedEntity = $scope.viewModel.phones[index];
 
-			Api.User.update({ id: id }, $scope.viewModel, function (data)
-			{
-				toastr.success('Phone removed', 'Success');
-				$scope.viewModel.phones = data.phones;
-				$scope.viewModel.logs = data.logs;
-			});
+		    Api.User.update({ id: id }, $scope.viewModel, function (data) {
+		        toastr.success('Phone removed', 'Success');
+		        $scope.viewModel.phones = data.phones;
+		        $scope.viewModel.logs = data.logs;
+		    });
 		}
 	}
 

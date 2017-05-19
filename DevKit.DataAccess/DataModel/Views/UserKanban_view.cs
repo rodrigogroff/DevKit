@@ -118,18 +118,24 @@ namespace DataModel
 										select e).
 										ToList();
 
-				if (lstUsertasks.Count() > 0)
-					foundProject = true;
+
+                var lstSprints = (from e in lstUsertasks
+                                  join sp in db.ProjectSprints on e.fkSprint equals sp.id
+                                  select sp).Distinct().
+                  OrderBy(y => y.stName).
+                  ToList();
+                
+                if (lstUsertasks.Count() > 0)
+                {
+                    if (lstSprints.Count == 0)
+                        continue;
+
+                    foundProject = true;
+                }					
 				else
 					continue;
-					
-				var lstSprints = (from e in lstUsertasks
-								  join sp in db.ProjectSprints on e.fkSprint equals sp.id
-								  select sp).Distinct().
-								  OrderBy(y => y.stName).
-								  ToList();
-				
-				foreach (var sprint in lstSprints)
+                                
+                foreach (var sprint in lstSprints)
 				{
 					var ks = new KanbanSprint()
 					{

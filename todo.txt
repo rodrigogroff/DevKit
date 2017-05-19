@@ -29,6 +29,7 @@ a fazer (ramiro)OK!
 a fazer (thiago)
 ------------------------------
 
+	-http://embed.plnkr.co/DgWeerIlDjFpZO6DCzDD/ para dinheiro em task.html
 	-modais de confirmação de exclusão (somente um prototipo em remover telefone de usuário)
 	-poder anexar documentos nas tarefas
 	-usar editor trix (anexando imagens) para noticias / descrição das tarefas

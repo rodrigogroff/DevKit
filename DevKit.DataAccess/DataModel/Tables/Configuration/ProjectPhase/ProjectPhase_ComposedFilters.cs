@@ -20,8 +20,8 @@ namespace DataModel
 			if (filter.fkProject != null)
 				query = from e in query where e.fkProject == filter.fkProject select e;
 
-			if (filter.busca != null)
-				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
+            if (!string.IsNullOrEmpty(filter.busca))
+                query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
 			count = query.Count();
 

@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace DataModel
 {
@@ -9,25 +10,35 @@ namespace DataModel
 		public string GetValueForType(DevKitDB db, string _type, long task_id, long task_acc, long accVal_id = 0, List<long> lstRange = null )
 		{
 			var ret = "";
+            var enumAcc = new EnumAccumulatorType();
 
 			switch (_type)
 			{
 				case "Money":
 
-					#region - code - 
+                    #region - code - 
 
-					if (accVal_id == 0)
-						ret = ( from e in db.TaskAccumulatorValues
-								where accVal_id == 0 || e.id == accVal_id 
-								where task_id ==0 || e.fkTask == task_id
-								where lstRange == null || lstRange.Contains ( (long)e.fkTask)
-								where e.fkTaskAcc == task_acc
-								select e).Select(y => y.nuValue).ToString();
-					else
-						ret = ( from e in db.TaskAccumulatorValues
-								where task_id == 0 || e.fkTask == task_id
-								where e.fkTaskAcc == task_acc
-								select e).Sum(y => y.nuValue).ToString();
+                    if (accVal_id == 0)
+                    {
+                        var _sum = (from e in db.TaskAccumulatorValues
+                                    where accVal_id == 0 || e.id == accVal_id
+                                    where task_id == 0 || e.fkTask == task_id
+                                    where lstRange == null || lstRange.Contains((long)e.fkTask)
+                                    where e.fkTaskAcc == task_acc
+                                    select e).Sum(y => y.nuValue).ToString();
+
+                        ret = enumAcc.transformMoneyFromLong(Convert.ToInt64(_sum.PadLeft(1,'0')));
+                    }
+                    else
+                    {
+                        var _sum = (from e in db.TaskAccumulatorValues
+                                    where accVal_id == 0 || e.id == accVal_id
+                                    where task_id == 0 || e.fkTask == task_id
+                                    where e.fkTaskAcc == task_acc
+                                    select e).FirstOrDefault().nuValue.ToString();
+
+                        ret = enumAcc.transformMoneyFromLong(Convert.ToInt64(_sum.PadLeft(1, '0')));
+                    }
 
 					#endregion
 

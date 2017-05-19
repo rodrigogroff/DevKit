@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', 'ngAnimate', 'ui.router', 'angularSpinner', 'perfect_scrollbar', 'ngSanitize', 'ng-currency', 'ui.select', 'ui.select2', 'pasvaz.bindonce', 'app.filters', 'app.services', 'app.directives', 'app.controllers', 'ui.sortable', 'ui.keypress', 'ui.tree', 'ui.mask' ])
-
+     
 .config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider)
 {
     $stateProvider

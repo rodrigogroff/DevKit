@@ -9,11 +9,16 @@ namespace DataModel
 	{
 		public bool Update_newAcc(DevKitDB db, User user, ref string resp)
 		{
-			var ent = JsonConvert.DeserializeObject<TaskAccumulatorValue>(anexedEntity.ToString());
+            var enAcc = new EnumAccumulatorType();
+
+            var ent = JsonConvert.DeserializeObject<TaskAccumulatorValue>(anexedEntity.ToString());
 
 			ent.fkTask = id;
 			ent.fkUser = user.id;
 			ent.dtLog = DateTime.Now;
+
+            if (ent.sMoneyVal != "")
+                ent.nuValue = Convert.ToInt64(ent.sMoneyVal.Replace(".", "").Replace(",", ""));
 
 			db.Insert(ent);
 

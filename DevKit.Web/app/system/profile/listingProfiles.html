@@ -46,12 +46,7 @@
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
-									<td>{{ mdl.users[0].stLogin}} <br /> 
-                                        {{ mdl.users[1].stLogin}} <br />
-                                        {{ mdl.users[2].stLogin}} <br />
-                                        {{ mdl.users[3].stLogin}} <br />
-                                        {{ mdl.users[4].stLogin}} <br />
-                                    </td>
+									<td><div data-ng-repeat="m in mdl.users | limitTo:5">{{ m.stLogin}}</div></td>
 									<td>{{ mdl.qttyPermissions }}</td>
 								</tr>
 							</table>

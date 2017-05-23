@@ -41,6 +41,7 @@ namespace DataModel
 		public ITable<TaskCheckPointMark>     TaskCheckPointMarks     { get { return this.GetTable<TaskCheckPointMark>(); } }
 		public ITable<TaskClient>             TaskClients             { get { return this.GetTable<TaskClient>(); } }
 		public ITable<TaskClientGroup>        TaskClientGroups        { get { return this.GetTable<TaskClientGroup>(); } }
+		public ITable<TaskCustomStep>         TaskCustomSteps         { get { return this.GetTable<TaskCustomStep>(); } }
 		public ITable<TaskDependency>         TaskDependencies        { get { return this.GetTable<TaskDependency>(); } }
 		public ITable<TaskFlow>               TaskFlows               { get { return this.GetTable<TaskFlow>(); } }
 		public ITable<TaskFlowChange>         TaskFlowChanges         { get { return this.GetTable<TaskFlowChange>(); } }
@@ -305,6 +306,17 @@ namespace DataModel
 		[Column,     Nullable] public long? fkClientGroup { get; set; } // bigint
 	}
 
+	[Table(Schema="public", Name="TaskCustomStep")]
+	public partial class TaskCustomStep
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkTask    { get; set; } // bigint
+		[Column,     Nullable] public bool?     bSelected { get; set; } // boolean
+		[Column,     Nullable] public string    stName    { get; set; } // character varying(150)
+		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+	}
+
 	[Table(Schema="public", Name="TaskDependency")]
 	public partial class TaskDependency
 	{
@@ -563,6 +575,12 @@ namespace DataModel
 		}
 
 		public static TaskClientGroup Find(this ITable<TaskClientGroup> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TaskCustomStep Find(this ITable<TaskCustomStep> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

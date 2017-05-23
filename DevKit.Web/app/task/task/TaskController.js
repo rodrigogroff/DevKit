@@ -8,6 +8,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.selectPriority = ngSelects.obterConfiguracao(Api.Priority, {});
 	$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, {});
+	$scope.selectClients = ngSelects.obterConfiguracao(Api.Client, {});
+	$scope.selectClientGroups = ngSelects.obterConfiguracao(Api.ClientGroup, {});
 	$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
 	$scope.selectSprints = ngSelects.obterConfiguracao(Api.Sprint, { scope: $scope, filtro: { campo: 'fkPhase', valor: 'viewModel.fkPhase' } });
 	$scope.selectVersions = ngSelects.obterConfiguracao(Api.Version, { scope: $scope, filtro: { campo: 'fkSprint', valor: 'viewModel.fkSprint' } });
@@ -220,7 +222,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.newAcc_fkTaskAcc_fail = $scope.newAcc.fkTaskAcc == undefined;
 
 			if ($scope.fkTaskAccType == 1)
-				$scope.newAcc_val_fail = invalidCheck($scope.newAcc.nuValue);
+				$scope.newAcc_val_fail = invalidCheck($scope.newAcc.sMoneyVal);
 			else
 				if ($scope.fkTaskAccType == 2)
 					$scope.newAcc_val_fail = invalidCheck($scope.newAcc.nuHourValue) && invalidCheck($scope.newAcc.nuMinValue);
@@ -262,7 +264,135 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}, function (response) {
 			toastr.error(response.data.message, 'Error');
 		});
-	}	
+	}
+
+    // ============================================
+    // Clients 
+    // ============================================
+
+	$scope.addClient = false;
+
+	$scope.removeClient = function (entity) {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else {
+	        $scope.viewModel.updateCommand = "removeClient";
+	        $scope.viewModel.anexedEntity = entity;
+
+	        Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	            toastr.success('Client removed', 'Success');
+
+	            $scope.viewModel.anexedEntity = {};
+
+	            $scope.viewModel.clients = data.clients;
+	            $scope.viewModel.logs = data.logs;
+	        });
+	    }
+	}
+
+	$scope.addNewClient= function () {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else
+	        $scope.addClient = !$scope.addClient;
+	}
+
+	$scope.cancelClient = function () {
+	    $scope.addClient = false;
+	    $scope.newClient = {};
+	}
+
+	$scope.newClient = {};
+
+	$scope.saveNewClient = function ()
+	{
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else {
+	        $scope.newClient_fail = $scope.newClient.fkClient == undefined;
+
+	        if (!$scope.newClient_fail) {
+	            $scope.addClient = false;
+
+	            $scope.viewModel.updateCommand = "newClient";
+	            $scope.viewModel.anexedEntity = $scope.newClient;
+
+	            Api.Task.update({ id: id }, $scope.viewModel, function (data)
+	            {
+	                $scope.newClient = {};
+	                toastr.success('Client added', 'Success');
+	                $scope.viewModel.clients = data.clients;
+	                $scope.viewModel.logs = data.logs;
+	            },
+				function (response) {
+				    toastr.error(response.data.message, 'Error');
+				});
+	        }
+	    }
+	}
+
+    // ============================================
+    // Client Groups 
+    // ============================================
+
+	$scope.addClientGroup = false;
+
+	$scope.removeClientGroup = function (entity) {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else {
+	        $scope.viewModel.updateCommand = "removeClientGroup";
+	        $scope.viewModel.anexedEntity = entity;
+
+	        Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	            toastr.success('Client Group removed', 'Success');
+
+	            $scope.viewModel.anexedEntity = {};
+
+	            $scope.viewModel.clientGroups = data.clientGroups;
+	            $scope.viewModel.logs = data.logs;
+	        });
+	    }
+	}
+
+	$scope.addNewClientGroup = function () {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else
+	        $scope.addClientGroup = !$scope.addClientGroup;
+	}
+
+	$scope.cancelClientGroup = function () {
+	    $scope.addClientGroup = false;
+	    $scope.newClientGroup = {};
+	}
+
+	$scope.newClientGroup = {};
+
+	$scope.saveNewClientGroup = function () {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else {
+	        $scope.newClientGroup_fail = $scope.newClientGroup.fkClientGroup == undefined;
+
+	        if (!$scope.newClientGroup_fail) {
+	            $scope.addClientGroup = false;
+
+	            $scope.viewModel.updateCommand = "newClientGroup";
+	            $scope.viewModel.anexedEntity = $scope.newClientGroup;
+
+	            Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	                $scope.newClientGroup = {};
+	                toastr.success('Client group added', 'Success');
+	                $scope.viewModel.clientGroups = data.clientGroups;
+	                $scope.viewModel.logs = data.logs;
+	            },
+				function (response) {
+				    toastr.error(response.data.message, 'Error');
+				});
+	        }
+	    }
+	}
 
 	// ============================================
 	// Subtask 
@@ -298,7 +428,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.addSubtask = !$scope.addSubtask;
 	}
 
-	$scope.cancelDep = function () {
+	$scope.cancelSubtask = function () {
 		$scope.addSubtask = false;
 		$scope.newSubtask = { };
 	}
@@ -334,13 +464,101 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 	}
 
+    // ============================================
+    // CustomStep 
+    // ============================================
+
+	$scope.addCustomStep = false;
+
+	$scope.removeCustomStep = function (entity) {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else {
+	        $scope.viewModel.updateCommand = "removeCustomStep";
+	        $scope.viewModel.anexedEntity = entity;
+
+	        Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	            toastr.success('Custom step removed', 'Success');
+
+	            $scope.viewModel.anexedEntity = {};
+
+	            $scope.viewModel.customSteps = data.customSteps;
+	            $scope.viewModel.logs = data.logs;
+	        });
+	    }
+	}
+
+	$scope.addNewCustomStep = function () {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else
+	        $scope.addCustomStep = !$scope.addCustomStep;
+	}
+
+	$scope.cancelCustomStep = function () {
+	    $scope.addCustomStep = false;
+	    $scope.newCustomStep = {};
+	}
+
+	$scope.newCustomStep = {};
+
+	$scope.saveNewCustomStep = function () {
+	    if (!$scope.permModel.novo && !$scope.permModel.edicao)
+	        toastr.error('Access denied!', 'Permission');
+	    else {
+	        $scope.newCustomStep_fail = invalidCheck($scope.newCustomStep.stName);
+
+	        if (!$scope.newCustomStep_fail) {
+	            $scope.addCustomStep = false;
+
+	            $scope.viewModel.updateCommand = "newCustomStep";
+	            $scope.viewModel.anexedEntity = $scope.newCustomStep;
+
+	            Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	                $scope.newCustomStep = {};
+	                toastr.success('Custom step saved', 'Success');
+	                $scope.viewModel.customSteps = data.customSteps;
+	                $scope.viewModel.logs = data.logs;
+	            },
+				function (response) {
+				    toastr.error(response.data.message, 'Error');
+				});
+	        }
+	    }
+	}
+
+	$scope.selectCustomStep = function (mdl)
+	{
+	    mdl.bSelected = !mdl.bSelected;
+
+	    $scope.viewModel.updateCommand = "entity";
+
+	    Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	        toastr.success('Custom step saved!', 'Success');
+	        $scope.viewModel = data;
+	    },
+		function (response) {
+		    toastr.error(response.data.message, 'Error');
+		});
+	}
+
 	// ============================================
 	// checkpoints
 	// ============================================
 
 	$scope.selectCheckpoint = function (mdl)
 	{
-		mdl.bSelected = !mdl.bSelected;
+	    mdl.bSelected = !mdl.bSelected;
+
+	    $scope.viewModel.updateCommand = "entity";
+
+	    Api.Task.update({ id: id }, $scope.viewModel, function (data) {
+	        toastr.success('Check point saved!', 'Success');
+	        $scope.viewModel = data;
+	    },
+		function (response) {
+			toastr.error(response.data.message, 'Error');
+		});
 	}
 
 	// ============================================

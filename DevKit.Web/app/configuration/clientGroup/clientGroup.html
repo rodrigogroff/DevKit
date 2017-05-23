@@ -58,7 +58,6 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Clients" disabled="true" ng-if="viewModel.id == undefined"></tab>
 				<tab heading="Clients [{{viewModel.clients.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
@@ -104,11 +103,14 @@
 										<table class="table table-hover" style="width:100%">
 											<thead>
 												<tr>
-													<th>Client Name</th>
+													<th>Client</th>
+                                                    <th>Date Joined</th>
+                                                    <th></th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.clients">
 												<td>{{ mdl.stName }}</td>
+                                                <td></td>
 												<td>
 													<div class="pull-right">
 														<a href="" role="button" ng-click="removeClient($index, viewModel.clients)">

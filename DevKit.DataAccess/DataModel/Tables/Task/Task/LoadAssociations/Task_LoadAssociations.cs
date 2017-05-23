@@ -31,8 +31,9 @@ namespace DataModel
 				questions = LoadQuestions(db);
 				clients = LoadClients(db);
 				clientGroups = LoadClientGroups(db);
+                customSteps = LoadCustomSteps(db);
 
-				logs = LoadLogs(db);
+                logs = LoadLogs(db);
 			}
 
 			return this;

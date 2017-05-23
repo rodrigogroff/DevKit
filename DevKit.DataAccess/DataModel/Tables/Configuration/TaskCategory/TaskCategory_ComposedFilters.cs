@@ -21,8 +21,8 @@ namespace DataModel
 			if (filter.fkTaskType != null)
 				query = from e in query where e.fkTaskType == filter.fkTaskType select e;
 
-			if (filter.busca != null)
-				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
+            if (!string.IsNullOrEmpty(filter.busca))
+                query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
 			count = query.Count();
 

@@ -16,9 +16,8 @@ namespace DataModel
 						sfkProject = "",
 						sfkPhase = "",
 						sfkSprint = "",
-						sfkVersion = "";
-		
-		public string stUserMessage = "",
+						sfkVersion = "",
+		                stUserMessage = "",
 						fkNewFlow_Message = "",
 						updateCommand = "";
 
@@ -34,5 +33,6 @@ namespace DataModel
 		public List<TaskQuestion> questions;
 		public List<TaskClient> clients;
 		public List<TaskClientGroup> clientGroups;
-	}
+        public List<TaskCustomStep> customSteps;
+    }
 }

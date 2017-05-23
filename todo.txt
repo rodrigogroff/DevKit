@@ -3,14 +3,11 @@
 a fazer (groff)
 ------------------------------
 		
-	-anexar clientes e grupos em tarefas
-	-anexar clientes e grupos em projetos
-	
-	-sort by (combo) na listagem de tarefas
 	-implementar acumulador de dinheiro
 	-pensar prazos!
 	-pensar data nas listing / kanban
-	
+	-sort by (combo) na listagem de tarefas
+
 	-gerar documentação em inglês	
 
 ------------------------------
@@ -23,7 +20,8 @@ a fazer (ramiro)OK!
 	-na listagem de 'task type', procurar nas categorias por um texto qualquer (novo filtro 'Category' por texto)
 	-na listagem de 'task type', trazer o count de tarefas 'TASKS' pela task type em nova coluna
 	-na listagem de 'news', trazer o campo padrão 'Search' e a combo de projeto nos filtros
-	-na listagem de 'surveys', trazer o campo padrão 'Search' e a combo de projeto nos filtros
+	-na listagem de 'surveys', trazer o campo padrão 'Search' e a combo de projeto nos filtros	
+	-ao acrescentar um cliente em um grupo de clientes, criar campo dtJoin e mostrar na visualização do item
 
 	-selenium para diversos cruds
 
@@ -31,10 +29,11 @@ a fazer (ramiro)OK!
 a fazer (thiago)
 ------------------------------
 
-	-modais de confirmação de exclusão (prototipo em remover telefone de usuário)
+	-http://embed.plnkr.co/DgWeerIlDjFpZO6DCzDD/ para dinheiro em task.html
+	-modais de confirmação de exclusão (somente um prototipo em remover telefone de usuário)
 	-poder anexar documentos nas tarefas
 	-usar editor trix (anexando imagens) para noticias / descrição das tarefas
-	-ao re-digitar campo de pesquisa (na segunda vez!) - ao clicar no botão, nada acontece
+	-ao re-digitar campo de pesquisa (na segunda vez!) e ao clicar no botão, nada acontece
 
 	-filtros perdem os dropdowns!! 
 		( logar, listar users, abrir filtros, listar profiles, 

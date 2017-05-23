@@ -17,8 +17,8 @@ namespace DataModel
 		{
 			var query = from e in db.Profiles select e;
 
-			if (filter.busca != null)
-				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
+            if (!string.IsNullOrEmpty(filter.busca))
+                query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
 			if (filter.stPermission != null)
 				query = from e in query where e.stPermissions.ToUpper().Contains("||" + filter.stPermission) select e;

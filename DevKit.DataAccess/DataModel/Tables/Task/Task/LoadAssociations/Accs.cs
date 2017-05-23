@@ -9,16 +9,16 @@ namespace DataModel
 		public List<TaskTypeAccumulator> LoadAccs(DevKitDB db)
 		{
 			var setup = db.Setup();
-			var stypes = new EnumAccumulatorType().lst;
+			var lstAccTypes = new EnumAccumulatorType().lst;
 
-			var ret = (from e in db.TaskTypeAccumulators
+			var lstAccs = (from e in db.TaskTypeAccumulators
 					   where e.fkTaskCategory == this.fkTaskCategory
 					   select e).
 					   ToList();
 
-			foreach (var item in ret)
+			foreach (var item in lstAccs)
 			{
-				item.sfkTaskAccType = stypes.
+				item.sfkTaskAccType = lstAccTypes.
 					Where(y => y.id == item.fkTaskAccType).
 						FirstOrDefault().
 							stName;
@@ -46,7 +46,7 @@ namespace DataModel
 				}
 			}
 
-			return ret;
+			return lstAccs;
 		}
 	}
 }

@@ -90,7 +90,38 @@ namespace DataModel
 				#endregion
 			}
 
-			if (fkNewFlow != null && oldTask.fkTaskFlowCurrent != fkNewFlow)
+            if (customSteps != null && customSteps.Count() > 0)
+            {
+                #region - code (mark / unmark customSteps) -
+
+                foreach (var itemCheck in customSteps)
+                {
+                    var reg = (from e in db.TaskCustomSteps
+                               where e.id == itemCheck.id
+                               select e).
+                               FirstOrDefault();
+                                        
+                    reg.bSelected = itemCheck.bSelected;
+
+                    if (reg.bSelected == true)
+                    {
+                        reg.fkUser = user.id;
+                        reg.dtLog = DateTime.Now;
+                    }
+                    else
+                    {
+                        reg.fkUser = null;
+                        reg.dtLog = null;
+                    }
+
+                    db.Update(reg);
+                    break;                    
+                }
+
+                #endregion
+            }
+
+            if (fkNewFlow != null && oldTask.fkTaskFlowCurrent != fkNewFlow)
 			{
 				var flowDestinyState = (from e in db.TaskFlows
 										where e.id == fkNewFlow

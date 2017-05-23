@@ -717,6 +717,7 @@
     <Content Include="scripts\knockout-2.2.1.debug.js" />
     <Content Include="scripts\load-image.min.js" />
     <Content Include="scripts\loading-bar.min.js" />
+    <Content Include="scripts\maskMoney.js" />
     <Content Include="scripts\moment.js" />
     <Content Include="scripts\ng-currency.js" />
     <Content Include="scripts\ng-infinite-scroll.min.js" />

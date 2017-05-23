@@ -33,8 +33,8 @@ namespace DataModel
 
 			var query = from e in db.Projects select e;
 
-			if (filter.busca != null)
-				query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
+            if (!string.IsNullOrEmpty(filter.busca))
+                query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
 			if (lstUserProjects.Count() > 0)
 				query = from e in query where lstUserProjects.Contains(e.id) select e;

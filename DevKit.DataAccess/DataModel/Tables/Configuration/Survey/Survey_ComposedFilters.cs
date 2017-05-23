@@ -33,8 +33,8 @@ namespace DataModel
 
 			var query = from e in db.Surveys select e;
 
-			if (filter.busca != null)
-				query = from e in query
+            if (!string.IsNullOrEmpty(filter.busca))
+                query = from e in query
 						where e.stTitle.ToUpper().Contains(filter.busca) ||
 							  e.stMessage.ToUpper().Contains(filter.busca)
 						select e;

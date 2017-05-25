@@ -16,7 +16,7 @@ namespace DataModel
 	{
 		public List<User> ComposedFilters(DevKitDB db, ref int count, UserFilter filter)
 		{
-			var query = from e in db.Users select e;
+			var query = from e in db.User select e;
 
 			if (filter.ativo != null)
 				query = from e in query where e.bActive == filter.ativo select e;
@@ -30,7 +30,7 @@ namespace DataModel
 			if (filter.email != null)
 			{
 				query = from e in query
-						join eMail in db.UserEmails on e.id equals eMail.fkUser
+						join eMail in db.UserEmail on e.id equals eMail.fkUser
 						where e.id == eMail.fkUser
 						where eMail.stEmail.ToUpper().Contains (filter.email)
 						select e;
@@ -39,7 +39,7 @@ namespace DataModel
 			if (filter.phone != null)
 			{
 				query = from e in query
-						join ePhone in db.UserPhones on e.id equals ePhone.fkUser
+						join ePhone in db.UserPhone on e.id equals ePhone.fkUser
 						where e.id == ePhone.fkUser
 						where ePhone.stPhone.ToUpper().Contains(filter.phone)
 						select e;

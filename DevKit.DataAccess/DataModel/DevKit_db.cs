@@ -16,7 +16,7 @@ namespace DataModel
 		public User GetCurrentUser()
 		{
 			if (currentUser == null)
-				currentUser = (from ne in Users
+				currentUser = (from ne in User
 							   where ne.stLogin.ToUpper() == Thread.CurrentPrincipal.Identity.Name.ToUpper()
 							   select ne).FirstOrDefault();
 
@@ -28,7 +28,7 @@ namespace DataModel
 			if (currentUser == null)
 				currentUser = GetCurrentUser();
 
-			return (from e in ProjectUsers
+			return (from e in ProjectUser
 					where e.fkUser == currentUser.id
 					select e.fkProject).
 					ToList();
@@ -36,68 +36,64 @@ namespace DataModel
 
 		public List<long?> GetCurrentUserProjects(long userId)
 		{
-			return (from e in ProjectUsers
+			return (from e in ProjectUser
 					where e.fkUser == userId
 					select e.fkProject).
 					ToList();
 		}
 
-		// ----------------------------------
-		// Tables by Id (using cache)
-		// ----------------------------------
+		public Hashtable Cache = new Hashtable();
 
-		Hashtable Cache = new Hashtable();
+        Setup _setup = null;
 
-		Setup _setup = null;
-
-		public Setup Setup()
+		public Setup GetSetup()
 		{
 			if (_setup == null)
-				_setup = Setups.Find(1); 
+				_setup = Setup.Find(1); 
 			return _setup;
 		}
 
-		public User User(long? id)
+		public User GetUser(long? id)
 		{
 			if (id == null) return null;
 			var tag = "User" + id; var ret = Cache[tag] as User;
-			if (ret == null) { ret = Users.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = User.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public Profile Profile(long? id)
+		public Profile GetProfile(long? id)
 		{
 			if (id == null) return null;
 			var tag = "Profile" + id; var ret = Cache[tag] as Profile;
-			if (ret == null) { ret = Profiles.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = Profile.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public Project Project(long? id)
+		public Project GetProject(long? id)
 		{
 			if (id == null) return null;
 			var tag = "Project" + id; var ret = Cache[tag] as Project;
-			if (ret == null) { ret = Projects.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = Project.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public Client Client(long? id)
+		public Client GetClient(long? id)
 		{
 			if (id == null) return null;
 			var tag = "Client" + id; var ret = Cache[tag] as Client;
-			if (ret == null) { ret = Clients.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = Client.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public ClientGroup ClientGroup(long? id)
+		public ClientGroup GetClientGroup(long? id)
 		{
 			if (id == null) return null;
 			var tag = "ClientGroup" + id; var ret = Cache[tag] as ClientGroup;
-			if (ret == null) { ret = ClientGroups.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = ClientGroup.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public CompanyNews News(long? id)
+		public CompanyNews GetNews(long? id)
 		{
 			if (id == null) return null;
 			var tag = "CompanyNews" + id; var ret = Cache[tag] as CompanyNews;
@@ -105,83 +101,83 @@ namespace DataModel
 			return ret;
 		}
 
-		public Survey Survey(long? id)
+		public Survey GetSurvey(long? id)
 		{
 			if (id == null) return null;
 			var tag = "Survey" + id; var ret = Cache[tag] as Survey;
-			if (ret == null) { ret = Surveys.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = Survey.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public ProjectPhase ProjectPhase(long? id)
+		public ProjectPhase GetProjectPhase(long? id)
 		{
 			if (id == null) return null;
 			var tag = "ProjectPhase" + id; var ret = Cache[tag] as ProjectPhase;
-			if (ret == null) { ret = ProjectPhases.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = ProjectPhase.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public ProjectSprint ProjectSprint(long? id)
+		public ProjectSprint GetProjectSprint(long? id)
 		{
 			if (id == null) return null;
 			var tag = "ProjectSprint" + id; var ret = Cache[tag] as ProjectSprint;
-			if (ret == null) { ret = ProjectSprints.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = ProjectSprint.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public ProjectSprintVersion ProjectSprintVersion(long? id)
+		public ProjectSprintVersion GetProjectSprintVersion(long? id)
 		{
 			if (id == null) return null;
 			var tag = "ProjectSprintVersion" + id; var ret = Cache[tag] as ProjectSprintVersion;
-			if (ret == null) { ret = ProjectSprintVersions.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = ProjectSprintVersion.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public TaskType TaskType(long? id)
+		public TaskType GetTaskType(long? id)
 		{
 			if (id == null) return null;
 			var tag = "TaskType" + id; var ret = Cache[tag] as TaskType;
-			if (ret == null) { ret = TaskTypes.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = TaskType.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public TaskTypeAccumulator TaskTypeAccumulator(long? id)
+		public TaskTypeAccumulator GetTaskTypeAccumulator(long? id)
 		{
 			if (id == null) return null;
 			var tag = "TaskTypeAccumulator" + id; var ret = Cache[tag] as TaskTypeAccumulator;
-			if (ret == null) { ret = TaskTypeAccumulators.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = TaskTypeAccumulator.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public TaskCategory TaskCategory(long? id)
+		public TaskCategory GetTaskCategory(long? id)
 		{
 			if (id == null) return null;
 			var tag = "TaskCategory" + id; var ret = Cache[tag] as TaskCategory;
-			if (ret == null) { ret = TaskCategories.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = TaskCategory.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public TaskCheckPoint TaskCheckPoint(long? id)
+		public TaskCheckPoint GetTaskCheckPoint(long? id)
 		{
 			if (id == null) return null;
 			var tag = "TaskCheckPoint" + id; var ret = Cache[tag] as TaskCheckPoint;
-			if (ret == null) { ret = TaskCheckPoints.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = TaskCheckPoint.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public TaskFlow TaskFlow(long? id)
+		public TaskFlow GetTaskFlow(long? id)
 		{
 			if (id == null) return null;
 			var tag = "TaskFlow" + id; var ret = Cache[tag] as TaskFlow;
-			if (ret == null) { ret = TaskFlows.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = TaskFlow.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 
-		public Task Task(long? id)
+		public Task GetTask(long? id)
 		{
 			if (id == null) return null;
 			var tag = "Task" + id; var ret = Cache[tag] as Task;
-			if (ret == null) { ret = Tasks.Find((long)id); Cache[tag] = ret; }
+			if (ret == null) { ret = Task.Find((long)id); Cache[tag] = ret; }
 			return ret;
 		}
 	}

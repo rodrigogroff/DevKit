@@ -19,41 +19,41 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<AuditLog>               AuditLogs               { get { return this.GetTable<AuditLog>(); } }
-		public ITable<Client>                 Clients                 { get { return this.GetTable<Client>(); } }
-		public ITable<ClientGroup>            ClientGroups            { get { return this.GetTable<ClientGroup>(); } }
-		public ITable<ClientGroupAssociation> ClientGroupAssociations { get { return this.GetTable<ClientGroupAssociation>(); } }
-		public ITable<CompanyNews>            CompanyNews             { get { return this.GetTable<CompanyNews>(); } }
-		public ITable<Profile>                Profiles                { get { return this.GetTable<Profile>(); } }
-		public ITable<Project>                Projects                { get { return this.GetTable<Project>(); } }
-		public ITable<ProjectPhase>           ProjectPhases           { get { return this.GetTable<ProjectPhase>(); } }
-		public ITable<ProjectSprint>          ProjectSprints          { get { return this.GetTable<ProjectSprint>(); } }
-		public ITable<ProjectSprintVersion>   ProjectSprintVersions   { get { return this.GetTable<ProjectSprintVersion>(); } }
-		public ITable<ProjectUser>            ProjectUsers            { get { return this.GetTable<ProjectUser>(); } }
-		public ITable<Setup>                  Setups                  { get { return this.GetTable<Setup>(); } }
-		public ITable<Survey>                 Surveys                 { get { return this.GetTable<Survey>(); } }
-		public ITable<SurveyOption>           SurveyOptions           { get { return this.GetTable<SurveyOption>(); } }
-		public ITable<SurveyUserOption>       SurveyUserOptions       { get { return this.GetTable<SurveyUserOption>(); } }
-		public ITable<Task>                   Tasks                   { get { return this.GetTable<Task>(); } }
-		public ITable<TaskAccumulatorValue>   TaskAccumulatorValues   { get { return this.GetTable<TaskAccumulatorValue>(); } }
-		public ITable<TaskCategory>           TaskCategories          { get { return this.GetTable<TaskCategory>(); } }
-		public ITable<TaskCheckPoint>         TaskCheckPoints         { get { return this.GetTable<TaskCheckPoint>(); } }
-		public ITable<TaskCheckPointMark>     TaskCheckPointMarks     { get { return this.GetTable<TaskCheckPointMark>(); } }
-		public ITable<TaskClient>             TaskClients             { get { return this.GetTable<TaskClient>(); } }
-		public ITable<TaskClientGroup>        TaskClientGroups        { get { return this.GetTable<TaskClientGroup>(); } }
-		public ITable<TaskCustomStep>         TaskCustomSteps         { get { return this.GetTable<TaskCustomStep>(); } }
-		public ITable<TaskDependency>         TaskDependencies        { get { return this.GetTable<TaskDependency>(); } }
-		public ITable<TaskFlow>               TaskFlows               { get { return this.GetTable<TaskFlow>(); } }
-		public ITable<TaskFlowChange>         TaskFlowChanges         { get { return this.GetTable<TaskFlowChange>(); } }
-		public ITable<TaskMessage>            TaskMessages            { get { return this.GetTable<TaskMessage>(); } }
-		public ITable<TaskProgress>           TaskProgresses          { get { return this.GetTable<TaskProgress>(); } }
-		public ITable<TaskQuestion>           TaskQuestions           { get { return this.GetTable<TaskQuestion>(); } }
-		public ITable<TaskType>               TaskTypes               { get { return this.GetTable<TaskType>(); } }
-		public ITable<TaskTypeAccumulator>    TaskTypeAccumulators    { get { return this.GetTable<TaskTypeAccumulator>(); } }
-		public ITable<User>                   Users                   { get { return this.GetTable<User>(); } }
-		public ITable<UserEmail>              UserEmails              { get { return this.GetTable<UserEmail>(); } }
-		public ITable<UserNewsRead>           UserNewsReads           { get { return this.GetTable<UserNewsRead>(); } }
-		public ITable<UserPhone>              UserPhones              { get { return this.GetTable<UserPhone>(); } }
+		public ITable<AuditLog>               AuditLog               { get { return this.GetTable<AuditLog>(); } }
+		public ITable<Client>                 Client                 { get { return this.GetTable<Client>(); } }
+		public ITable<ClientGroup>            ClientGroup            { get { return this.GetTable<ClientGroup>(); } }
+		public ITable<ClientGroupAssociation> ClientGroupAssociation { get { return this.GetTable<ClientGroupAssociation>(); } }
+		public ITable<CompanyNews>            CompanyNews            { get { return this.GetTable<CompanyNews>(); } }
+		public ITable<Profile>                Profile                { get { return this.GetTable<Profile>(); } }
+		public ITable<Project>                Project                { get { return this.GetTable<Project>(); } }
+		public ITable<ProjectPhase>           ProjectPhase           { get { return this.GetTable<ProjectPhase>(); } }
+		public ITable<ProjectSprint>          ProjectSprint          { get { return this.GetTable<ProjectSprint>(); } }
+		public ITable<ProjectSprintVersion>   ProjectSprintVersion   { get { return this.GetTable<ProjectSprintVersion>(); } }
+		public ITable<ProjectUser>            ProjectUser            { get { return this.GetTable<ProjectUser>(); } }
+		public ITable<Setup>                  Setup                  { get { return this.GetTable<Setup>(); } }
+		public ITable<Survey>                 Survey                 { get { return this.GetTable<Survey>(); } }
+		public ITable<SurveyOption>           SurveyOption           { get { return this.GetTable<SurveyOption>(); } }
+		public ITable<SurveyUserOption>       SurveyUserOption       { get { return this.GetTable<SurveyUserOption>(); } }
+		public ITable<Task>                   Task                   { get { return this.GetTable<Task>(); } }
+		public ITable<TaskAccumulatorValue>   TaskAccumulatorValue   { get { return this.GetTable<TaskAccumulatorValue>(); } }
+		public ITable<TaskCategory>           TaskCategory           { get { return this.GetTable<TaskCategory>(); } }
+		public ITable<TaskCheckPoint>         TaskCheckPoint         { get { return this.GetTable<TaskCheckPoint>(); } }
+		public ITable<TaskCheckPointMark>     TaskCheckPointMark     { get { return this.GetTable<TaskCheckPointMark>(); } }
+		public ITable<TaskClient>             TaskClient             { get { return this.GetTable<TaskClient>(); } }
+		public ITable<TaskClientGroup>        TaskClientGroup        { get { return this.GetTable<TaskClientGroup>(); } }
+		public ITable<TaskCustomStep>         TaskCustomStep         { get { return this.GetTable<TaskCustomStep>(); } }
+		public ITable<TaskDependency>         TaskDependency         { get { return this.GetTable<TaskDependency>(); } }
+		public ITable<TaskFlow>               TaskFlow               { get { return this.GetTable<TaskFlow>(); } }
+		public ITable<TaskFlowChange>         TaskFlowChange         { get { return this.GetTable<TaskFlowChange>(); } }
+		public ITable<TaskMessage>            TaskMessage            { get { return this.GetTable<TaskMessage>(); } }
+		public ITable<TaskProgress>           TaskProgress           { get { return this.GetTable<TaskProgress>(); } }
+		public ITable<TaskQuestion>           TaskQuestion           { get { return this.GetTable<TaskQuestion>(); } }
+		public ITable<TaskType>               TaskType               { get { return this.GetTable<TaskType>(); } }
+		public ITable<TaskTypeAccumulator>    TaskTypeAccumulator    { get { return this.GetTable<TaskTypeAccumulator>(); } }
+		public ITable<User>                   User                   { get { return this.GetTable<User>(); } }
+		public ITable<UserEmail>              UserEmail              { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserNewsRead>           UserNewsRead           { get { return this.GetTable<UserNewsRead>(); } }
+		public ITable<UserPhone>              UserPhone              { get { return this.GetTable<UserPhone>(); } }
 
 		public DevKitDB()
 		{
@@ -285,8 +285,8 @@ namespace DataModel
 	{
 		[PrimaryKey, Identity] public long      id           { get; set; } // bigint
 		[Column,     Nullable] public long?     fkCheckPoint { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser       { get; set; } // bigint
 		[Column,     Nullable] public long?     fkTask       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser       { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLog        { get; set; } // timestamp (6) without time zone
 	}
 
@@ -375,14 +375,14 @@ namespace DataModel
 	public partial class TaskQuestion
 	{
 		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtOpen         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtClosed       { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public string    stStatement    { get; set; } // character varying(2000)
 		[Column,     Nullable] public string    stAnswer       { get; set; } // character varying(2000)
 		[Column,     Nullable] public long?     fkTask         { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUserOpen     { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUserDirected { get; set; } // bigint
 		[Column,     Nullable] public bool?     bFinal         { get; set; } // boolean
-		[Column,     Nullable] public DateTime? dtOpen         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtClosed       { get; set; } // timestamp (6) without time zone
 	}
 
 	[Table(Schema="public", Name="TaskType")]

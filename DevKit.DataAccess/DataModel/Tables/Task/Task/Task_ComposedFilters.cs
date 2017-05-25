@@ -31,7 +31,7 @@ namespace DataModel
 	{
 		public List<Task> ComposedFilters(DevKitDB db, ref int count, TaskFilter filter)
 		{
-			var query = from e in db.Tasks select e;
+			var query = from e in db.Task select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
             {
@@ -83,7 +83,7 @@ namespace DataModel
 
             if (filter.kpa != null)
             {
-                var queryAux = from e in db.TaskTypes
+                var queryAux = from e in db.TaskType
                                 where e.bKPA == filter.kpa
                                 where filter.fkTaskType == null || e.id == filter.fkTaskType
                                 where filter.fkProject == null || e.fkProject == filter.fkProject
@@ -94,7 +94,7 @@ namespace DataModel
 
             if (filter.fkClient != null)
             {
-                var queryAux = from e in db.TaskClients
+                var queryAux = from e in db.TaskClient
                                 where filter.fkClient == e.fkClient
                                 select e.fkTask;
 
@@ -103,7 +103,7 @@ namespace DataModel
 
             if (filter.fkClientGroup != null)
             {
-                var queryAux = from e in db.TaskClientGroups
+                var queryAux = from e in db.TaskClientGroup
                                 where filter.fkClientGroup == e.fkClientGroup
                                 select e.fkTask;
 
@@ -113,12 +113,8 @@ namespace DataModel
 			count = query.Count();
 
 			query = query.OrderBy(y => y.nuPriority).ThenBy(y => y.fkSprint);
-
-			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-
-			results.ForEach(y => { y = y.LoadAssociations(db); });
-
-			return results;
+            
+			return Report(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
 		}
 	}
 }

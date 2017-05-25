@@ -7,9 +7,9 @@ namespace DataModel
 	{
 		public Client LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var mdlUser = db.User(this.fkUser);
+			var mdlUser = db.GetUser(this.fkUser);
 
 			sfkUser = mdlUser?.stLogin;
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
@@ -21,7 +21,7 @@ namespace DataModel
 
 		public string GetMaskedValue(DevKitDB db, string stPhone)
 		{
-			var pref = db.Setup().stPhoneMask;
+			var pref = db.GetSetup().stPhoneMask;
 			var mask = "(99) 9999999"; // default
 
 			if (pref != null)

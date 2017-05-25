@@ -7,7 +7,7 @@ namespace DataModel
 		{
 			var ret = "";
 
-			var oldEntity = db.Client(this.id);
+			var oldEntity = db.GetClient(this.id);
 
 			if (oldEntity.stName != this.stName)
 				ret += "Name: " + oldEntity.stName + " => " + this.stName + ";";

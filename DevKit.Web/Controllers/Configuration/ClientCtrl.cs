@@ -27,7 +27,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Client(id);
+				var model = db.GetClient(id);
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -66,7 +66,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Client(id);
+				var model = db.GetClient(id);
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

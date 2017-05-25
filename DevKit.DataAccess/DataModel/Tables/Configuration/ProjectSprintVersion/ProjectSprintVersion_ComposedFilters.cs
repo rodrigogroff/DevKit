@@ -15,7 +15,7 @@ namespace DataModel
 	{
 		public List<ProjectSprintVersion> ComposedFilters(DevKitDB db, ref int count, ProjectSprintVersionFilter filter)
 		{
-			var query = from e in db.ProjectSprintVersions select e;
+			var query = from e in db.ProjectSprintVersion select e;
 
 			if (filter.fkSprint != null)
 				query = from e in query where e.fkSprint == filter.fkSprint select e;

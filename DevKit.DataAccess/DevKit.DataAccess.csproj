@@ -35,8 +35,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="linq2db, Version=1.0.7.6, Culture=neutral, PublicKeyToken=f19f8aed7feff67e, processorArchitecture=MSIL">
-      <HintPath>..\packages\linq2db.1.7.6\lib\net45\linq2db.dll</HintPath>
+    <Reference Include="linq2db, Version=1.8.0.0, Culture=neutral, PublicKeyToken=f19f8aed7feff67e, processorArchitecture=MSIL">
+      <HintPath>..\packages\linq2db.1.8.0\lib\net45\linq2db.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -163,6 +163,7 @@
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Dependencies.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Progress.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Questions.cs" />
+    <Compile Include="DataModel\Tables\Task\Task\Task_Report.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_Create.cs" />
@@ -209,14 +210,17 @@
     <None Include="LinqToDB.Templates\LinqToDB.Oracle.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.PostgreSQL.Tools.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.PostgreSQL.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SapHana.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.SqlCe.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.SQLite.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.SqlServer.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.Sybase.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.Tools.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.ttinclude" />
+    <None Include="LinqToDB.Templates\NotifyDataErrorInfo.ttinclude" />
     <None Include="LinqToDB.Templates\NotifyPropertyChanged.ttinclude" />
     <None Include="LinqToDB.Templates\PluralizationService.ttinclude" />
+    <None Include="LinqToDB.Templates\README.md" />
     <None Include="LinqToDB.Templates\T4Model.ttinclude" />
     <None Include="LinqToDB.Templates\Validation.ttinclude" />
     <None Include="packages.config" />

@@ -29,7 +29,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.ProjectSprint(id);
+				var model = db.GetProjectSprint(id);
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));

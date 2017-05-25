@@ -59,7 +59,7 @@ namespace DataModel
 		{
 			var ent = JsonConvert.DeserializeObject<TaskQuestion>(anexedEntity.ToString());
 
-			var entDb = (from e in db.TaskQuestions
+			var entDb = (from e in db.TaskQuestion
 						 where e.id == ent.id
 						 select e).
 						 FirstOrDefault();

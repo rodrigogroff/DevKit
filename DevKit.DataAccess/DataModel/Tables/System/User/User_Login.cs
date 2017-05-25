@@ -6,7 +6,7 @@ namespace DataModel
 	{
 		public User Login(DevKitDB db, string login, string password)
 		{
-			var user = (from e in db.Users
+			var user = (from e in db.User
 						where e.stLogin.ToUpper() == login.ToUpper()
 						where e.stPassword.ToUpper() == password.ToUpper()
 						where e.bActive == true

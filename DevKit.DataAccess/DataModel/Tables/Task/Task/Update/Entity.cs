@@ -8,7 +8,7 @@ namespace DataModel
 	{
 		public bool Update_Entity(DevKitDB db, User user, ref string resp)
 		{				
-			var oldTask = (from ne in db.Tasks where ne.id == id select ne).FirstOrDefault();
+			var oldTask = (from ne in db.Task where ne.id == id select ne).FirstOrDefault();
 
 			if (oldTask.fkUserResponsible != fkUserResponsible) 
 			{
@@ -28,7 +28,7 @@ namespace DataModel
 					nuType = EnumAuditType.Task,
 					fkTarget = this.id
 				}.
-				Create(db, "New assigned: " + db.User(fkUserResponsible).stLogin, "");
+				Create(db, "New assigned: " + db.GetUser(fkUserResponsible).stLogin, "");
 
 				#endregion
 			}
@@ -66,7 +66,7 @@ namespace DataModel
 
 				foreach (var itemCheck in checkpoints)
 				{
-					var reg = (from e in db.TaskCheckPointMarks
+					var reg = (from e in db.TaskCheckPointMark
 								where e.fkCheckPoint == itemCheck.id
 								where e.fkTask == this.id
 								select e).
@@ -96,7 +96,7 @@ namespace DataModel
 
                 foreach (var itemCheck in customSteps)
                 {
-                    var reg = (from e in db.TaskCustomSteps
+                    var reg = (from e in db.TaskCustomStep
                                where e.id == itemCheck.id
                                select e).
                                FirstOrDefault();
@@ -123,7 +123,7 @@ namespace DataModel
 
             if (fkNewFlow != null && oldTask.fkTaskFlowCurrent != fkNewFlow)
 			{
-				var flowDestinyState = (from e in db.TaskFlows
+				var flowDestinyState = (from e in db.TaskFlow
 										where e.id == fkNewFlow
 										select e).
 										FirstOrDefault();
@@ -134,7 +134,7 @@ namespace DataModel
 				{
 					#region - code (check dependencies) -
 
-					var tmp_dependencies = (from e in db.TaskDependencies
+					var tmp_dependencies = (from e in db.TaskDependency
 										   	where e.fkMainTask == id
 											select e).
 											ToList();
@@ -143,7 +143,7 @@ namespace DataModel
 					{
 						foreach (var item in tmp_dependencies)
 						{
-							var subTask = db.Task(item.fkSubTask);
+							var subTask = db.GetTask(item.fkSubTask);
 
 							if (subTask.bComplete == false)
 							{
@@ -157,7 +157,7 @@ namespace DataModel
 
 					#region - code (check points) -
 
-					var lstChecks = (from e in db.TaskCheckPoints
+					var lstChecks = (from e in db.TaskCheckPoint
 										where e.fkCategory == this.fkTaskCategory
 										where e.bMandatory == true
 										select e).
@@ -165,7 +165,7 @@ namespace DataModel
 
 					foreach (var item in lstChecks)
 					{									
-						if ( !(from e in db.TaskCheckPointMarks
+						if ( !(from e in db.TaskCheckPointMark
 								where e.fkCheckPoint == item.id
 								where e.fkTask == this.id
 								select e).
@@ -206,7 +206,7 @@ namespace DataModel
 					nuType = EnumAuditType.Task,
 					fkTarget = this.id
 				}.
-				Create(db, "State changed -> " + db.TaskFlow(fkTaskFlowCurrent).stName, "");
+				Create(db, "State changed -> " + db.GetTaskFlow(fkTaskFlowCurrent).stName, "");
 
 				#endregion
 			}

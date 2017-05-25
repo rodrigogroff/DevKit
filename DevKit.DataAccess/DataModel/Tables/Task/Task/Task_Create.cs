@@ -9,7 +9,7 @@ namespace DataModel
 	{
 		bool CheckDuplicate(Task item, DevKitDB db)
 		{
-			var query = from e in db.Tasks select e;
+			var query = from e in db.Task select e;
 
 			if (item.stTitle != null)
 			{
@@ -31,14 +31,14 @@ namespace DataModel
 		
 		public bool Create(DevKitDB db, ref string resp)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 			var user = db.GetCurrentUser();
-			var category = db.TaskCategory(this.fkTaskCategory);
+			var category = db.GetTaskCategory(this.fkTaskCategory);
 
 			bComplete = false;
 			dtStart = DateTime.Now;
 			fkUserStart = user.id;
-			fkTaskFlowCurrent = (from e in db.TaskFlows
+			fkTaskFlowCurrent = (from e in db.TaskFlow
 								 where e.fkTaskType == this.fkTaskType
 								 where e.fkTaskCategory == this.fkTaskCategory
 								 select e).

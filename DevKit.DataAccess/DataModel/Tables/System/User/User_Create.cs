@@ -8,7 +8,7 @@ namespace DataModel
 	{
 		bool CheckDuplicate(User item, DevKitDB db)
 		{
-			var query = from e in db.Users select e;
+			var query = from e in db.User select e;
 
 			if (item.bActive != null)
 				query = from e in query where e.bActive == item.bActive select e;

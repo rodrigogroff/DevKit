@@ -29,7 +29,7 @@ namespace DataModel
 				nuType = EnumAuditType.Task,
 				fkTarget = this.id
 			}.
-			Create(db, "New time added: " + ent.nuHourValue.ToString() + ":" + ent.nuMinValue.ToString() + " >> " + db.User(ent.fkUser).stLogin, "");
+			Create(db, "New time added: " + ent.nuHourValue.ToString() + ":" + ent.nuMinValue.ToString() + " >> " + db.GetUser(ent.fkUser).stLogin, "");
 
 			accs = LoadAccs(db);
 			logs = LoadLogs(db);
@@ -41,7 +41,7 @@ namespace DataModel
 		{
 			var ent = JsonConvert.DeserializeObject<LogAccumulatorValue>(anexedEntity.ToString());
 
-			var entDb = (from e in db.TaskAccumulatorValues
+			var entDb = (from e in db.TaskAccumulatorValue
 							where e.id == ent.id
 							select e).
 							FirstOrDefault();
@@ -53,7 +53,7 @@ namespace DataModel
 				nuType = EnumAuditType.Task,
 				fkTarget = this.id
 			}.
-			Create(db, "Time removed: " + entDb.nuHourValue.ToString() + ":" + entDb.nuMinValue.ToString() + " >> " + db.User(entDb.fkUser).stLogin, "");
+			Create(db, "Time removed: " + entDb.nuHourValue.ToString() + ":" + entDb.nuMinValue.ToString() + " >> " + db.GetUser(entDb.fkUser).stLogin, "");
 
 			db.Delete(entDb);
 

@@ -7,7 +7,7 @@ namespace DataModel
 	{
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
-			if ((from e in db.Tasks where e.fkTaskType == id select e).Any())
+			if ((from e in db.Task where e.fkTaskType == id select e).Any())
 			{
 				resp = "This task type is being used in a task";
 				return false;

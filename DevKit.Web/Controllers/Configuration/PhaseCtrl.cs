@@ -28,7 +28,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.ProjectPhase(id);
+				var model = db.GetProjectPhase(id);
 
 				if (model != null)
 					return Ok(model);

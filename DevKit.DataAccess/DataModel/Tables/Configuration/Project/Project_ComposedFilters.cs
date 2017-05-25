@@ -31,7 +31,7 @@ namespace DataModel
 			var user = db.GetCurrentUser();
 			var lstUserProjects = db.GetCurrentUserProjects();
 
-			var query = from e in db.Projects select e;
+			var query = from e in db.Project select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
@@ -42,7 +42,7 @@ namespace DataModel
 			if (filter.fkUser != null)
 			{
 				query = from e in query
-						join eUser in db.ProjectUsers on e.id equals eUser.fkProject
+						join eUser in db.ProjectUser on e.id equals eUser.fkProject
 						where e.id == eUser.fkProject
 						where eUser.fkUser == filter.fkUser
 						select e;

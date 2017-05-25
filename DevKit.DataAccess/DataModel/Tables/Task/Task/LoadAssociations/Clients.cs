@@ -8,14 +8,14 @@ namespace DataModel
 	{
 		public List<TaskClient> LoadClients(DevKitDB db)
 		{
-			var ret = (from e in db.TaskClients
+			var ret = (from e in db.TaskClient
 					   where e.fkTask == id
 					   select e).
 					   OrderByDescending(t => t.id).
 					   ToList();
 
 			foreach (var item in ret)
-				item.sfkClient = db.Client(item.fkClient).stName;
+				item.sfkClient = db.GetClient(item.fkClient).stName;
 
 			return ret;
 		}

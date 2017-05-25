@@ -13,13 +13,13 @@ namespace DataModel
 				return false;
 			}
 
-			if ( (from e in db.ProjectUsers where e.fkUser == id select e).Count() > 0)
+			if ( (from e in db.ProjectUser where e.fkUser == id select e).Count() > 0)
 			{
 				resp = "this user is allocated in a project and cannot be removed";
 				return false;
 			}
 
-			if ((from e in db.Tasks where e.fkUserStart == id select e).Count() > 0)
+			if ((from e in db.Task where e.fkUserStart == id select e).Count() > 0)
 			{
 				resp = "this user is allocated in a task and cannot be removed";
 				return false;
@@ -32,10 +32,10 @@ namespace DataModel
 		{
 			var user = db.GetCurrentUser();
 
-			foreach (var item in (from e in db.UserPhones where e.fkUser == id select e))
+			foreach (var item in (from e in db.UserPhone where e.fkUser == id select e))
 				db.Delete(item);
 
-			foreach (var item in (from e in db.UserEmails where e.fkUser == id select e))
+			foreach (var item in (from e in db.UserEmail where e.fkUser == id select e))
 				db.Delete(item);
 
 			db.Delete(this);

@@ -57,15 +57,15 @@ namespace DataModel
 			{
 				dto.multiUser = true;
 
-				var lstUsers = (from e in db.Users
+				var lstUsers = (from e in db.User
 								where e.bActive == true
 								select e).
 								ToList();
 
 				var lstUserIds = (from e in lstUsers select e.id).ToList();
 
-				var lstHours = (from e in db.TaskAccumulatorValues
-								join eA in db.TaskTypeAccumulators on e.fkTaskAcc equals eA.id
+				var lstHours = (from e in db.TaskAccumulatorValue
+								join eA in db.TaskTypeAccumulator on e.fkTaskAcc equals eA.id
 								where eA.bEstimate != true
 								where lstUserIds.Contains((long)e.fkUser)
 								where e.dtLog > dtIni && e.dtLog < dtFim
@@ -119,8 +119,8 @@ namespace DataModel
 			}
 			else
 			{
-				var lstHours = (from e in db.TaskAccumulatorValues
-								join eA in db.TaskTypeAccumulators on e.fkTaskAcc equals eA.id
+				var lstHours = (from e in db.TaskAccumulatorValue
+								join eA in db.TaskTypeAccumulator on e.fkTaskAcc equals eA.id
 								where eA.bEstimate != true
 								where e.fkUser == filter.fkUser
 								where e.dtLog > dtIni && e.dtLog < dtFim
@@ -129,7 +129,7 @@ namespace DataModel
 
 				var idsTasks = lstHours.Select(y => y.fkTask).Distinct().ToList();
 
-				var lstTasks = (from e in db.Tasks
+				var lstTasks = (from e in db.Task
 								where idsTasks.Contains(e.id)
 								select e).
 							   ToList();

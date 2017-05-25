@@ -15,7 +15,7 @@ namespace DataModel
 	{
 		public List<Profile> ComposedFilters(DevKitDB db, ref int count, ProfileFilter filter)
 		{
-			var query = from e in db.Profiles select e;
+			var query = from e in db.Profile select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
@@ -26,7 +26,7 @@ namespace DataModel
 			if (filter.fkUser != null)
 			{
 				query = from e in query
-						join eUser in db.Users on e.id equals eUser.fkProfile
+						join eUser in db.User on e.id equals eUser.fkProfile
 						where eUser.id == filter.fkUser
 						where eUser.fkProfile == e.id
 						select e;

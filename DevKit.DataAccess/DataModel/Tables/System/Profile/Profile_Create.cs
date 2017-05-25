@@ -8,7 +8,7 @@ namespace DataModel
 	{
 		bool CheckDuplicate(Profile item, DevKitDB db)
 		{
-			var query = from e in db.Profiles select e;
+			var query = from e in db.Profile select e;
 
 			if (item.stName != null)
 			{

@@ -8,7 +8,7 @@ namespace DataModel
 		{
 			var ret = "";
 
-			var oldEntity = db.Profile(this.id);
+			var oldEntity = db.GetProfile(this.id);
 
 			if (oldEntity.stName != this.stName )
 			{

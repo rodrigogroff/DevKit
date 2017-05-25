@@ -28,7 +28,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.TaskTypeAccumulator(id);
+				var model = db.GetTaskTypeAccumulator(id);
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));

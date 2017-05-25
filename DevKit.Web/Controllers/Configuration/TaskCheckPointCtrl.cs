@@ -28,7 +28,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.TaskCheckPoint(id);
+				var model = db.GetTaskCheckPoint(id);
 
 				if (model != null)
 					return Ok(model);

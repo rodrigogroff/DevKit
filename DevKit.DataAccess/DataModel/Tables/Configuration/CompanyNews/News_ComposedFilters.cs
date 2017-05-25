@@ -45,7 +45,7 @@ namespace DataModel
 			if (filter.fkProject != null)
 			{
 				query = from e in query
-						join eUser in db.ProjectUsers on e.id equals eUser.fkProject
+						join eUser in db.ProjectUser on e.id equals eUser.fkProject
 						where e.id == eUser.fkProject
 						where eUser.fkUser == filter.fkProject
 						select e;

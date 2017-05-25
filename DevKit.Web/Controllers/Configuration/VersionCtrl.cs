@@ -28,7 +28,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.ProjectSprintVersion(id);
+				var model = db.GetProjectSprintVersion(id);
 
 				if (model != null)
 					return Ok(model);

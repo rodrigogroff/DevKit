@@ -8,9 +8,9 @@ namespace DataModel
 	{
 		public List<TaskCustomStep> LoadCustomSteps(DevKitDB db)
 		{
-            var setup = db.Setup();
+            var setup = db.GetSetup();
 
-            var ret = (from e in db.TaskCustomSteps
+            var ret = (from e in db.TaskCustomStep
 					   where e.fkTask == id
 					   select e).
 					   OrderByDescending(t => t.id).
@@ -21,7 +21,7 @@ namespace DataModel
                 if (item.bSelected == true)
                 {
                     item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
-                    item.sfkUser = db.User(item.fkUser).stLogin;
+                    item.sfkUser = db.GetUser(item.fkUser).stLogin;
                 }                
             }
 			

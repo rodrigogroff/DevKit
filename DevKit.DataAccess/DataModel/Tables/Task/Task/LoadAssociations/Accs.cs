@@ -8,10 +8,10 @@ namespace DataModel
 	{
 		public List<TaskTypeAccumulator> LoadAccs(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 			var lstAccTypes = new EnumAccumulatorType().lst;
 
-			var lstAccs = (from e in db.TaskTypeAccumulators
+			var lstAccs = (from e in db.TaskTypeAccumulator
 					   where e.fkTaskCategory == this.fkTaskCategory
 					   select e).
 					   ToList();
@@ -25,7 +25,7 @@ namespace DataModel
 
 				item.snuTotal = GetValueForType(db, item.sfkTaskAccType, id, item.id);
 
-				var logs = (from e in db.TaskAccumulatorValues
+				var logs = (from e in db.TaskAccumulatorValue
 							where e.fkTask == id
 							where e.fkTaskAcc == item.id
 							select e).
@@ -34,14 +34,14 @@ namespace DataModel
 
 				item.logs = new List<LogAccumulatorValue>();
 
-				foreach (var l in logs)
+				foreach (var log in logs)
 				{
 					item.logs.Add(new LogAccumulatorValue()
 					{
-						id = l.id,
-						sfkUser = db.User(l.fkUser).stLogin,
-						sdtLog = l.dtLog?.ToString(setup.stDateFormat),
-						sValue = GetValueForType(db, item.sfkTaskAccType, id, item.id, l.id)
+						id = log.id,
+						sfkUser = db.GetUser(log.fkUser).stLogin,
+						sdtLog = log.dtLog?.ToString(setup.stDateFormat),
+						sValue = GetValueForType(db, item.sfkTaskAccType, id, item.id, log.id)
 					});
 				}
 			}

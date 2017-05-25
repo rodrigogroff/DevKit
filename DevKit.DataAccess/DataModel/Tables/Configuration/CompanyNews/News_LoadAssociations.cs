@@ -5,9 +5,9 @@ namespace DataModel
 	{
 		public CompanyNews LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var mdlUser = db.User(this.fkUser);
+			var mdlUser = db.GetUser(this.fkUser);
 
 			if (mdlUser != null)
 				sfkUser = mdlUser.stLogin;
@@ -15,7 +15,7 @@ namespace DataModel
 			sdtLog = dtLog?.ToString(setup.stDateFormat);
 
 			if (fkProject != null)
-				sfkProject = db.Project(fkProject).stName;
+				sfkProject = db.GetProject(fkProject).stName;
 
 			stMessage = stMessage.Replace("\n", "<br>");
 			

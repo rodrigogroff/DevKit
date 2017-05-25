@@ -28,7 +28,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.News(id);
+				var model = db.GetNews(id);
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -67,7 +67,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.News(id);
+				var model = db.GetNews(id);
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

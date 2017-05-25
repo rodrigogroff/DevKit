@@ -82,8 +82,8 @@ namespace DataModel
 			var accTypeEnum = new EnumAccumulatorType();
 			var user = db.GetCurrentUser();
 
-			var dbUserprojects = ( from e in db.Projects
-									join pu in db.ProjectUsers on e.id equals pu.fkProject
+			var dbUserprojects = ( from e in db.Project
+									join pu in db.ProjectUser on e.id equals pu.fkProject
 									where pu.fkUser == user.id
 									where filter.fkProject == null || e.id == filter.fkProject
 									select e ).
@@ -104,7 +104,7 @@ namespace DataModel
 					project_id = project.id
 				};
 
-				var lstUsertasks = (	from e in db.Tasks
+				var lstUsertasks = (	from e in db.Task
 										where e.fkProject == project.id										
 										where filter.complete == null || e.bComplete == filter.complete
 										where filter.nuPriority == null || e.nuPriority == filter.nuPriority
@@ -120,7 +120,7 @@ namespace DataModel
 
 
                 var lstSprints = (from e in lstUsertasks
-                                  join sp in db.ProjectSprints on e.fkSprint equals sp.id
+                                  join sp in db.ProjectSprint on e.fkSprint equals sp.id
                                   select sp).Distinct().
                   OrderBy(y => y.stName).
                   ToList();
@@ -144,7 +144,7 @@ namespace DataModel
 					};
 
 					var lstTaskType = (from e in lstUsertasks
-									   join tt in db.TaskTypes on e.fkTaskType equals tt.id
+									   join tt in db.TaskType on e.fkTaskType equals tt.id
 									   select tt).Distinct().
 									   OrderBy(y => y.stName).
 									   ToList();
@@ -158,7 +158,7 @@ namespace DataModel
 						};
 
 						var lstCategories = (from e in lstUsertasks
-											 join cat in db.TaskCategories on e.fkTaskCategory equals cat.id
+											 join cat in db.TaskCategory on e.fkTaskCategory equals cat.id
 
 											 where e.fkTaskType == tasktype.id
 											 where e.fkSprint == sprint.id
@@ -176,7 +176,7 @@ namespace DataModel
 								category_id = category.id
 							};
 
-							var flows = (from e in db.TaskFlows
+							var flows = (from e in db.TaskFlow
 										 where e.fkTaskType == tasktype.id
 										 where e.fkTaskCategory == category.id
 										 select e).
@@ -213,7 +213,7 @@ namespace DataModel
 								ktc.flows.Add(ktf);
 							}
 
-							var accs = (from e in db.TaskTypeAccumulators
+							var accs = (from e in db.TaskTypeAccumulator
 										where e.fkTaskType == tasktype.id
 										where e.fkTaskCategory == category.id
 										select e).

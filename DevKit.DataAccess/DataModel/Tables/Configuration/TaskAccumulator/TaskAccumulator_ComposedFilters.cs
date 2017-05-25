@@ -16,7 +16,7 @@ namespace DataModel
 	{
 		public List<TaskTypeAccumulator> ComposedFilters(DevKitDB db, ref int count, TaskAccumulatorFilter filter)
 		{
-			var query = from e in db.TaskTypeAccumulators select e;
+			var query = from e in db.TaskTypeAccumulator select e;
 
 			if (filter.fkTaskCategory != null)
 				query = from e in query where e.fkTaskCategory == filter.fkTaskCategory select e;

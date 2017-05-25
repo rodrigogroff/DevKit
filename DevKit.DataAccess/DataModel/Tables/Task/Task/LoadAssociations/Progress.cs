@@ -8,18 +8,18 @@ namespace DataModel
 	{
 		public List<TaskProgress> LoadProgress(DevKitDB db)
 		{
-			var ret = (from e in db.TaskProgresses
+			var ret = (from e in db.TaskProgress
 					   where e.fkTask == id
 					   select e).
 					   OrderByDescending(t => t.dtLog).
 					   ToList();
 
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
 			foreach (var item in ret)
 			{
 				item.sdtLog = item.dtLog?.ToString(setup.stDateFormat);
-				item.sfkUserAssigned = db.User(item.fkUserAssigned).stLogin;
+				item.sfkUserAssigned = db.GetUser(item.fkUserAssigned).stLogin;
 			}
 
 			return ret;

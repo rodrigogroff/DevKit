@@ -18,7 +18,7 @@ namespace DataModel
 		{
 			var lstUserProjects = db.GetCurrentUserProjects();
 
-			var query = from e in db.ProjectSprints select e;
+			var query = from e in db.ProjectSprint select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;

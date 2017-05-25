@@ -5,10 +5,10 @@ namespace DataModel
 	{
 		public TaskQuestion LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			sfkUserOpen = db.User(this.fkUserOpen).stLogin;
-			stProtocol = db.Task(this.fkTask).stProtocol;
+			sfkUserOpen = db.GetUser(this.fkUserOpen).stLogin;
+			stProtocol = db.GetTask(this.fkTask).stProtocol;
 
 			return this;
 		}

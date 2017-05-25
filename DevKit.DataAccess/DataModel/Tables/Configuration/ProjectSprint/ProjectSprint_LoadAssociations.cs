@@ -8,10 +8,10 @@ namespace DataModel
 	{
 		public ProjectSprint LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			sfkProject = db.Project(fkProject)?.stName;
-			sfkPhase = db.ProjectPhase(fkPhase)?.stName;
+			sfkProject = db.GetProject(fkProject)?.stName;
+			sfkPhase = db.GetProjectPhase(fkPhase)?.stName;
 
 			versions = LoadVersions(db);
 			logs = LoadLogs(db);
@@ -21,7 +21,7 @@ namespace DataModel
 
 		List<ProjectSprintVersion> LoadVersions(DevKitDB db)
 		{
-			var lst = (from e in db.ProjectSprintVersions
+			var lst = (from e in db.ProjectSprintVersion
 						where e.fkSprint == id
 						select e).
 						OrderByDescending(t => t.id).
@@ -37,9 +37,9 @@ namespace DataModel
 
 		List<SprintLog> LoadLogs(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var lstLogs = (from e in db.AuditLogs
+			var lstLogs = (from e in db.AuditLog
 						   where e.nuType == EnumAuditType.Sprint
 						   where e.fkTarget == this.id
 						   select e).
@@ -47,7 +47,7 @@ namespace DataModel
 						   ToList();
 
 			var lstUsers = (from e in lstLogs
-							join eUser in db.Users on e.fkUser equals eUser.id
+							join eUser in db.User on e.fkUser equals eUser.id
 							select eUser).
 							ToList();
 

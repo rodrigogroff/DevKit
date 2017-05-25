@@ -8,12 +8,12 @@ namespace DataModel
 	{
 		public User LoadAssociations(DevKitDB db, bool simplifyed = false)
 		{
-			profile = db.Profile(fkProfile);
+			profile = db.GetProfile(fkProfile);
 
 			if (simplifyed)
 				return this;
 
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
 			sdtLastLogin = dtLastLogin?.ToString(setup.stDateFormat);
 			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
@@ -27,23 +27,23 @@ namespace DataModel
 		
 		List<UserPhone> LoadPhones(DevKitDB db)
 		{
-			return (from e in db.UserPhones where e.fkUser == id select e).
+			return (from e in db.UserPhone where e.fkUser == id select e).
 				OrderBy(t => t.stPhone).
 				ToList();
 		}
 
 		List<UserEmail> LoadEmails(DevKitDB db)
 		{
-			return (from e in db.UserEmails where e.fkUser == id select e).
+			return (from e in db.UserEmail where e.fkUser == id select e).
 				OrderByDescending(t => t.id).
 				ToList();
 		}
 
 		List<UserLog> LoadLogs(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var lstLogs = (from e in db.AuditLogs
+			var lstLogs = (from e in db.AuditLog
 						   where e.nuType == EnumAuditType.User
 						   where e.fkTarget == this.id
 						   select e).
@@ -51,7 +51,7 @@ namespace DataModel
 						   ToList();
 
 			var lstUsers = (from e in lstLogs
-							join eUser in db.Users on e.fkUser equals eUser.id
+							join eUser in db.User on e.fkUser equals eUser.id
 							select eUser).
 							ToList();
 

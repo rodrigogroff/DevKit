@@ -25,7 +25,7 @@ namespace DataModel
 		
 		public string GetMaskedValue(DevKitDB db, string stPhone)
 		{
-			var pref = db.Setup().stPhoneMask;
+			var pref = db.GetSetup().stPhoneMask;
 			var mask = "(99) 9999999"; // default
 
 			if (pref != null)

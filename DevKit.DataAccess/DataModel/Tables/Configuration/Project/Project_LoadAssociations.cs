@@ -8,9 +8,9 @@ namespace DataModel
 	{
 		public Project LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var mdlUser = db.User(this.fkUser);
+			var mdlUser = db.GetUser(this.fkUser);
 
 			stUser = mdlUser?.stLogin;
 			sdtCreation = dtCreation?.ToString(setup.stDateFormat);
@@ -25,15 +25,15 @@ namespace DataModel
 		
 		List<ProjectUser> LoadUsers(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var lst = (from e in db.ProjectUsers where e.fkProject == id select e).
+			var lst = (from e in db.ProjectUser where e.fkProject == id select e).
 				OrderBy(t => t.id).
 				ToList();
 
 			foreach (var item in lst)
 			{
-				item.stUser = db.User(item.fkUser).stLogin;
+				item.stUser = db.GetUser(item.fkUser).stLogin;
 				item.sdtJoin = item.dtJoin?.ToString(setup.stDateFormat);
 			}
 
@@ -42,14 +42,14 @@ namespace DataModel
 
 		List<ProjectPhase> LoadPhases(DevKitDB db)
 		{
-			return (from e in db.ProjectPhases where e.fkProject == id select e).
+			return (from e in db.ProjectPhase where e.fkProject == id select e).
 				OrderBy(t => t.id).
 				ToList();
 		}
 
 		List<ProjectSprint> LoadSprints(DevKitDB db)
 		{
-			var resp = (from e in db.ProjectSprints where e.fkProject == id select e).
+			var resp = (from e in db.ProjectSprint where e.fkProject == id select e).
 				OrderBy(t => t.id).
 				ToList();
 
@@ -61,9 +61,9 @@ namespace DataModel
 
 		List<ProjectLog> LoadLogs(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var lstLogs = (from e in db.AuditLogs
+			var lstLogs = (from e in db.AuditLog
 						   where e.nuType == EnumAuditType.Project
 						   where e.fkTarget == this.id
 						   select e).
@@ -71,7 +71,7 @@ namespace DataModel
 						   ToList();
 
 			var lstUsers = (from e in lstLogs
-							join eUser in db.Users on e.fkUser equals eUser.id
+							join eUser in db.User on e.fkUser equals eUser.id
 							select eUser).
 							ToList();
 

@@ -8,7 +8,7 @@ namespace DataModel
 	{
 		public TaskType LoadAssociations(DevKitDB db)
 		{
-			project = db.Project(fkProject);
+			project = db.GetProject(fkProject);
 
 			categories = LoadCategories(db);
 			logs = LoadLogs(db);
@@ -19,7 +19,7 @@ namespace DataModel
 
 		List<TaskCategory> LoadCategories(DevKitDB db)
 		{
-			var lst = (from e in db.TaskCategories where e.fkTaskType == id select e).
+			var lst = (from e in db.TaskCategory where e.fkTaskType == id select e).
 				OrderBy(t => t.stAbreviation).ThenBy ( y=> y.stName).
 				ToList();
 
@@ -28,9 +28,9 @@ namespace DataModel
 
 		List<TaskTypeLog> LoadLogs(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var lstLogs = (from e in db.AuditLogs
+			var lstLogs = (from e in db.AuditLog
 						   where e.nuType == EnumAuditType.TaskType
 						   where e.fkTarget == this.id
 						   select e).
@@ -38,7 +38,7 @@ namespace DataModel
 						   ToList();
 
 			var lstUsers = (from e in lstLogs
-							join eUser in db.Users on e.fkUser equals eUser.id
+							join eUser in db.User on e.fkUser equals eUser.id
 							select eUser).
 							ToList();
 
@@ -59,7 +59,7 @@ namespace DataModel
 
 		List<TaskCheckPoint> LoadCheckpoints(DevKitDB db)
 		{
-			return (from e in db.TaskCheckPoints
+			return (from e in db.TaskCheckPoint
 					where e.fkCategory == this.id
 					select e).
 					OrderByDescending(y => y.id).

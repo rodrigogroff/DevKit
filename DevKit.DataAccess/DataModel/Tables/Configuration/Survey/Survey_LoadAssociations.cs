@@ -8,9 +8,9 @@ namespace DataModel
 	{
 		public Survey LoadAssociations(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var mdlUser = db.User(this.fkUser);
+			var mdlUser = db.GetUser(this.fkUser);
 
 			if (mdlUser != null)
 				sfkUser = mdlUser.stLogin;
@@ -18,7 +18,7 @@ namespace DataModel
 			sdtLog = dtLog?.ToString(setup.stDateFormat);
 
 			if (fkProject != null)
-				sfkProject = db.Project(fkProject).stName;
+				sfkProject = db.GetProject(fkProject).stName;
 
 			options = LoadOptions(db);
 
@@ -27,7 +27,7 @@ namespace DataModel
 
 		List<SurveyOption> LoadOptions(DevKitDB db)
 		{
-			return (from e in db.SurveyOptions where e.fkSurvey == id select e).
+			return (from e in db.SurveyOption where e.fkSurvey == id select e).
 				OrderBy(t => t.nuOrder).
 				ToList();
 		}

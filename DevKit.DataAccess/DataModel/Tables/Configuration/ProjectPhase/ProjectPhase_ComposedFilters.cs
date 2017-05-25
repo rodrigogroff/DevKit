@@ -15,7 +15,7 @@ namespace DataModel
 	{
 		public List<ProjectPhase> ComposedFilters(DevKitDB db, ref int count, ProjectPhaseFilter filter)
 		{
-			var query = from e in db.ProjectPhases select e;
+			var query = from e in db.ProjectPhase select e;
 
 			if (filter.fkProject != null)
 				query = from e in query where e.fkProject == filter.fkProject select e;

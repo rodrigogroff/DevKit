@@ -7,7 +7,7 @@ namespace DataModel
 		{
 			var ret = "";
 
-			var oldEntity = db.Setup();
+			var oldEntity = db.GetSetup();
 
 			if (oldEntity.stPhoneMask != this.stPhoneMask)
 			{

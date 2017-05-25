@@ -20,7 +20,7 @@ namespace DataModel
 
                     if (accVal_id == 0)
                     {
-                        var _sum = (from e in db.TaskAccumulatorValues
+                        var _sum = (from e in db.TaskAccumulatorValue
                                     where accVal_id == 0 || e.id == accVal_id
                                     where task_id == 0 || e.fkTask == task_id
                                     where lstRange == null || lstRange.Contains((long)e.fkTask)
@@ -31,7 +31,7 @@ namespace DataModel
                     }
                     else
                     {
-                        var _sum = (from e in db.TaskAccumulatorValues
+                        var _sum = (from e in db.TaskAccumulatorValue
                                     where accVal_id == 0 || e.id == accVal_id
                                     where task_id == 0 || e.fkTask == task_id
                                     where e.fkTaskAcc == task_acc
@@ -52,7 +52,7 @@ namespace DataModel
 
 					if (accVal_id == 0)
 					{
-						hh = (from e in db.TaskAccumulatorValues
+						hh = (from e in db.TaskAccumulatorValue
 							  where task_id == 0 || e.fkTask == task_id
 							  where lstRange == null || lstRange.Contains((long)e.fkTask)
 							  where e.fkTaskAcc == task_acc
@@ -62,7 +62,7 @@ namespace DataModel
 					}						
 					else
 					{
-						hh = (from e in db.TaskAccumulatorValues
+						hh = (from e in db.TaskAccumulatorValue
 							  where e.id == accVal_id
 							  where task_id == 0 || e.fkTask == task_id
 							  where e.fkTaskAcc == task_acc
@@ -76,7 +76,7 @@ namespace DataModel
 
 					if (accVal_id == 0)
 					{
-						mm = (from e in db.TaskAccumulatorValues
+						mm = (from e in db.TaskAccumulatorValue
 							  where task_id == 0 || e.fkTask == task_id
 							  where lstRange == null || lstRange.Contains((long)e.fkTask)
 							  where e.fkTaskAcc == task_acc
@@ -87,7 +87,7 @@ namespace DataModel
 					}
 					else
 					{
-						mm = (from e in db.TaskAccumulatorValues
+						mm = (from e in db.TaskAccumulatorValue
 							  where e.id == accVal_id
 							  where task_id == 0 || e.fkTask == task_id
 							  where e.fkTaskAcc == task_acc

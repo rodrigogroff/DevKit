@@ -11,7 +11,7 @@ namespace DataModel
 		{
 			var ent = JsonConvert.DeserializeObject<TaskDependency>(anexedEntity.ToString());
 
-			var subTask = (from e in db.Tasks
+			var subTask = (from e in db.Task
 							where e.stProtocol == ent.stProtocol
 							select e).
 							FirstOrDefault();
@@ -49,7 +49,7 @@ namespace DataModel
 		{
 			var ent = JsonConvert.DeserializeObject<TaskDependency>(anexedEntity.ToString());
 
-			var entDb = (from e in db.TaskDependencies
+			var entDb = (from e in db.TaskDependency
 							where e.id == ent.id
 							select e).
 							FirstOrDefault();

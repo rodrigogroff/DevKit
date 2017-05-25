@@ -10,7 +10,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Setup();
+				var model = db.GetSetup();
 				
 				if (model != null)
 					return Ok(model.LoadAssociations(db));

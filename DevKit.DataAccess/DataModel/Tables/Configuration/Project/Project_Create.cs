@@ -12,7 +12,7 @@ namespace DataModel
 	{
 		bool CheckDuplicate(Project item, DevKitDB db)
 		{
-			var query = from e in db.Projects select e;
+			var query = from e in db.Project select e;
 
 			if (item.stName != null)
 			{
@@ -36,7 +36,7 @@ namespace DataModel
 				return false;
 			}
 
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 			
 			dtCreation = DateTime.Now;
 			fkUser = user.id;

@@ -7,7 +7,7 @@ namespace DataModel
 		{
 			var ret = "";
 
-			var oldEntity = db.TaskType(this.id);
+			var oldEntity = db.GetTaskType(this.id);
 
 			if (oldEntity.stName != this.stName)
 			{

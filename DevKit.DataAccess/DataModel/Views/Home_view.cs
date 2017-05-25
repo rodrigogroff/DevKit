@@ -25,7 +25,7 @@ namespace DataModel
 			dto.name = "Hi " + user.stLogin;
 						
 			{
-				dto.tasks = (from e in db.Tasks
+				dto.tasks = (from e in db.Task
 							 where e.fkUserResponsible == user.id
 							 where e.bComplete == false
 							 select e).
@@ -37,7 +37,7 @@ namespace DataModel
 			}
 
 			{
-				dto.questions = (from e in db.TaskQuestions
+				dto.questions = (from e in db.TaskQuestion
 								 where e.fkUserDirected == user.id
 								 where e.bFinal == false
 								 select e).
@@ -53,7 +53,7 @@ namespace DataModel
 						   where e.fkProject == null || projects.Contains(e.fkProject)
 						   select e;
 
-				var newsRead = (from e in db.UserNewsReads where e.fkUser == user.id select e.fkNews).ToList();
+				var newsRead = (from e in db.UserNewsRead where e.fkUser == user.id select e.fkNews).ToList();
 
 				if (newsRead.Count() > 0)
 					news = from e in news where !newsRead.Contains(e.id) select e;
@@ -65,19 +65,19 @@ namespace DataModel
 			}
 			
 			{
-				var surveys = from e in db.Surveys
+				var surveys = from e in db.Survey
 							  where e.fkProject == null || projects.Contains(e.fkProject)
 							  where e.bActive == true
 							  select e;
 
-				var surveysMark = (from e in db.SurveyUserOptions
+				var surveysMark = (from e in db.SurveyUserOption
 								   where e.fkUser == user.id
 								   select e).
 								   ToList();
 
 				dto.surveys = surveys.OrderByDescending(y => y.id).ToList();
 
-				var nuGlobalUsers = (from e in db.Users
+				var nuGlobalUsers = (from e in db.User
 									 where e.bActive == true
 									 select e).
 									 Count();
@@ -86,7 +86,7 @@ namespace DataModel
 				{
 					survey.LoadAssociations(db);
 
-					var nuSelUsers = (from e in db.SurveyUserOptions
+					var nuSelUsers = (from e in db.SurveyUserOption
 									  where e.fkSurvey == survey.id
 									  select e).
 									  Count();
@@ -97,7 +97,7 @@ namespace DataModel
 					}
 					else
 					{
-						var nuProjectUsers = (from e in db.ProjectUsers
+						var nuProjectUsers = (from e in db.ProjectUser
 											  where e.fkProject == survey.fkProject
 											  select e).
 											  Count();

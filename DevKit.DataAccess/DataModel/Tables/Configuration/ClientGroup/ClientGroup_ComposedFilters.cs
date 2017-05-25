@@ -16,7 +16,7 @@ namespace DataModel
 		{
 			var user = db.GetCurrentUser();
 			
-			var query = from e in db.ClientGroups select e;
+			var query = from e in db.ClientGroup select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;

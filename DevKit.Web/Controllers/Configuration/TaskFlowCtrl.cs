@@ -29,7 +29,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.TaskFlow(id);
+				var model = db.GetTaskFlow(id);
 
 				if (model != null)
 					return Ok(model);

@@ -13,7 +13,7 @@ namespace DataModel
 				return false;
 			}
 			
-			if ((from e in db.Users where e.fkProfile == this.id select e).Any())
+			if ((from e in db.User where e.fkProfile == this.id select e).Any())
 			{
 				resp = "Profile still associated with other users";
 				return false;

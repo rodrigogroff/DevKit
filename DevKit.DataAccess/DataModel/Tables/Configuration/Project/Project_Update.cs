@@ -42,7 +42,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.ProjectUsers
+							if ((from ne in db.ProjectUser
 								 where ne.fkUser == ent.fkUser && ne.fkProject == id
 								 select ne).Any())
 							{
@@ -61,7 +61,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "New user: " + db.User(ent.fkUser).stLogin + ";Role: " + ent.stRole, "");
+							Create(db, "New user: " + db.GetUser(ent.fkUser).stLogin + ";Role: " + ent.stRole, "");
 						}							
 						else
 						{
@@ -93,7 +93,7 @@ namespace DataModel
 							nuType = EnumAuditType.Project,
 							fkTarget = this.id
 						}.
-						Create(db, "User removed: " + db.User(ent.fkUser), "");
+						Create(db, "User removed: " + db.GetUser(ent.fkUser), "");
 
 						users = LoadUsers(db);
 						logs = LoadLogs(db);
@@ -106,7 +106,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{ 
-							if ((from ne in db.ProjectPhases
+							if ((from ne in db.ProjectPhase
 								 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkProject == id
 								 select ne).Any())
 							{
@@ -148,7 +148,7 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<ProjectPhase>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkPhase == ent.id select e).Any())
+						if ((from e in db.Task where e.fkPhase == ent.id select e).Any())
 						{
 							resp = "This phase is being used in a task";
 							return false;
@@ -175,7 +175,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.ProjectSprints
+							if ((from ne in db.ProjectSprint
 								 where ne.fkPhase == id
 								 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkProject == id
 								 select ne).Any())
@@ -226,7 +226,7 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<ProjectSprint>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkSprint == ent.id select e).Any())
+						if ((from e in db.Task where e.fkSprint == ent.id select e).Any())
 						{
 							resp = "This sprint is being used in a task";
 							return false;

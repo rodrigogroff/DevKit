@@ -8,7 +8,7 @@ namespace DataModel
 	{
 		bool CheckDuplicate(ProjectSprint item, DevKitDB db)
 		{
-			var query = from e in db.ProjectSprints select e;
+			var query = from e in db.ProjectSprint select e;
 
 			if (item.stName != null)
 			{
@@ -58,7 +58,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.ProjectSprintVersions
+							if ((from ne in db.ProjectSprintVersion
 								 where ne.stName == ent.stName && ne.fkSprint == id
 								 select ne).
 								 Any())
@@ -101,7 +101,7 @@ namespace DataModel
 					{
 						var versionDel = JsonConvert.DeserializeObject<ProjectSprintVersion>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkVersion == id select e).Any())
+						if ((from e in db.Task where e.fkVersion == id select e).Any())
 						{
 							resp = "This version is being used in a task";
 							return false;

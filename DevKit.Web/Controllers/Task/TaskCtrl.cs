@@ -41,7 +41,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Task(id);
+				var model = db.GetTask(id);
 
 				if (model != null)
 					return Ok(model.LoadAssociations(db));
@@ -80,7 +80,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Task(id);
+				var model = db.GetTask(id);
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

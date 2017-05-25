@@ -7,7 +7,7 @@ namespace DataModel
 		{
 			var ret = "";
 
-			var oldEntity = db.User(this.id);
+			var oldEntity = db.GetUser(this.id);
 			
 			if(oldEntity.stLogin != this.stLogin)
 				ret += "Login: " + oldEntity.stLogin + " => " + this.stLogin + "; ";
@@ -16,7 +16,7 @@ namespace DataModel
 				ret += "Active: " + oldEntity.bActive + " => " + this.bActive + "; ";
 
 			if (oldEntity.fkProfile != this.fkProfile)
-				ret += "Profile: " + db.Profile(oldEntity.fkProfile) + " => " + db.Profile(this.fkProfile) + "; ";
+				ret += "Profile: " + db.GetProfile(oldEntity.fkProfile) + " => " + db.GetProfile(this.fkProfile) + "; ";
 
 			return ret;
 		}

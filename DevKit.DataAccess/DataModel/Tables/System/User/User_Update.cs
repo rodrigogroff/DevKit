@@ -89,7 +89,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.UserPhones where ne.stPhone == ent.stPhone select ne).Any())
+							if ((from ne in db.UserPhone where ne.stPhone == ent.stPhone select ne).Any())
 							{
 								resp = "Phone duplicated!";
 								return false;
@@ -150,7 +150,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.UserEmails where ne.stEmail == ent.stEmail select ne).Any())
+							if ((from ne in db.UserEmail where ne.stEmail == ent.stEmail select ne).Any())
 							{
 								resp = "Email duplicated!";
 								return false;

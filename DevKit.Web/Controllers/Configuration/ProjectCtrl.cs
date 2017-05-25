@@ -28,7 +28,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Project(id);
+				var model = db.GetProject(id);
 
 				if (model != null)
 				{
@@ -72,7 +72,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.Project(id);
+				var model = db.GetProject(id);
 
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);

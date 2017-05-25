@@ -16,7 +16,7 @@ namespace DataModel
 	{
 		public List<TaskCategory> ComposedFilters(DevKitDB db, ref int count, TaskCategoryFilter filter)
 		{
-			var query = from e in db.TaskCategories select e;
+			var query = from e in db.TaskCategory select e;
 
 			if (filter.fkTaskType != null)
 				query = from e in query where e.fkTaskType == filter.fkTaskType select e;

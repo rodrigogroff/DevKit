@@ -8,9 +8,9 @@ namespace DataModel
 	{
 		List<TaskLog> LoadLogs(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var lstLogs = (from e in db.AuditLogs
+			var lstLogs = (from e in db.AuditLog
 						   where e.nuType == EnumAuditType.Task
 						   where e.fkTarget == this.id
 						   select e).
@@ -18,7 +18,7 @@ namespace DataModel
 						   ToList();
 
 			var lstUsers = (from e in lstLogs
-							join eUser in db.Users on e.fkUser equals eUser.id
+							join eUser in db.User on e.fkUser equals eUser.id
 							select eUser).
 							ToList();
 

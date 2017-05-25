@@ -8,7 +8,7 @@ namespace DataModel
 	{
 		bool CheckDuplicate(Client item, DevKitDB db)
 		{
-			var query = from e in db.Clients select e;
+			var query = from e in db.Client select e;
 
 			if (item.stName != null)
 			{
@@ -32,7 +32,7 @@ namespace DataModel
 				return false;
 			}
 
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 			
 			dtStart = DateTime.Now;
 			fkUser = user.id;

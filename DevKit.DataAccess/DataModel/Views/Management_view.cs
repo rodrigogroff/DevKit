@@ -104,15 +104,15 @@ namespace DataModel
 
 				var lstValidVersions = new List<long>();
 
-				foreach (var phase in (from e in db.ProjectPhases
+				foreach (var phase in (from e in db.ProjectPhase
 									   where e.fkProject == filter.fkProject
 									   select e).OrderBy(y => y.id).ToList())
 				{
-					foreach (var sprint in (from e in db.ProjectSprints
+					foreach (var sprint in (from e in db.ProjectSprint
 											where e.fkProject == filter.fkProject && e.fkPhase == phase.id
 											select e).OrderBy(y => y.id).ToList())
 					{
-						foreach (var version in (from e in db.ProjectSprintVersions
+						foreach (var version in (from e in db.ProjectSprintVersion
 												 where e.fkSprint == sprint.id
 												 select e).OrderBy(y => y.id).ToList())
 						{
@@ -132,7 +132,7 @@ namespace DataModel
 
 				// kpas and condensed task types
 
-				foreach (var type in (from e in db.TaskTypes
+				foreach (var type in (from e in db.TaskType
 									  where e.bManaged == true
 									  where e.fkProject == filter.fkProject
 									  select e).
@@ -142,7 +142,7 @@ namespace DataModel
 					{
 						#region - condensed - 
 
-						var lstValidTaks = (from e in db.Tasks
+						var lstValidTaks = (from e in db.Task
 											where e.fkTaskType == type.id
 											where lstValidVersions.Contains((long)e.fkVersion)
 											select e).
@@ -159,37 +159,37 @@ namespace DataModel
 								stName = type.stName,
 
 								open = (from e in lstValidTaks
-										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "OPEN"
 										select e).Count(),
 
 								estimating = (from e in lstValidTaks
-											  join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											  join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 											  where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "ESTIMATING"
 											  select e).Count(),
 
 								reopen = (from e in lstValidTaks
-										  join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										  join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										  where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "RE-OPEN"
 										  select e).Count(),
 
 								construction = (from e in lstValidTaks
-												join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+												join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 											    where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "CONSTRUCTION"
 											    select e).Count(),
 
 								peerreview = (from e in lstValidTaks
-											  join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											  join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 											  where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "PEER REVIEW"
 											  select e).Count(),
 
 								cancelled = (from e in lstValidTaks
-											 join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											 join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 											 where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "CANCELLED"
 											 select e).Count(),
 
 								done = (from e in lstValidTaks
-										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "DONE"
 										select e).Count()
 							};
@@ -223,32 +223,32 @@ namespace DataModel
 								stName = type.stName,
 
 								open = (from e in lstValidTaks
-										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "OPEN"
 										select e).Count(),
 
 								reopen = (from e in lstValidTaks
-										  join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										  join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										  where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "RE-OPEN"
 										  select e).Count(),
 
 								development = (from e in lstValidTaks
-											   join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											   join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 											   where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "DEVELOPMENT"
 											   select e).Count(),
 
 								testing = (from e in lstValidTaks
-										   join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										   join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 											where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "TESTING"
 											select e).Count(),
 
 								cancelled = (from e in lstValidTaks
-											 join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											 join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 											 where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "CANCELLED"
 											 select e).Count(),
 
 								done = (from e in lstValidTaks
-										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "DONE"
 										select e).Count()
 							};
@@ -275,32 +275,32 @@ namespace DataModel
 								stName = type.stName,
 
 								open = (from e in lstValidTaks
-										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "OPEN"
 										select e).Count(),
 
 								reopen = (from e in lstValidTaks
-										  join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										  join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										  where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "RE-OPEN"
 										  select e).Count(),
 
 								development = (from e in lstValidTaks
-											   join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											   join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 											   where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "DEVELOPMENT"
 											   select e).Count(),
 
 								testing = (from e in lstValidTaks
-										   join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										   join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										   where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "TESTING"
 										   select e).Count(),
 
 								cancelled = (from e in lstValidTaks
-											 join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+											 join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 											 where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "CANCELLED"
 											 select e).Count(),
 
 								done = (from e in lstValidTaks
-										join eF in db.TaskFlows on e.fkTaskFlowCurrent equals eF.id
+										join eF in db.TaskFlow on e.fkTaskFlowCurrent equals eF.id
 										where e.fkTaskFlowCurrent == eF.id && eF.stName.ToUpper() == "DONE"
 										where e.fkTaskType == type.id
 										where e.bComplete == false
@@ -331,7 +331,7 @@ namespace DataModel
 							stName = type.stName							
 						};
 
-						var lstCategs = (from e in db.TaskCategories
+						var lstCategs = (from e in db.TaskCategory
 										 where e.fkTaskType == type.id
 										 select e).
 										ToList();
@@ -345,7 +345,7 @@ namespace DataModel
 								stDescription = category.stDescription
 							};
 
-							var lstTasks = (from e in db.Tasks
+							var lstTasks = (from e in db.Task
 											where e.fkTaskCategory == category.id
 											select e).
 											ToList();
@@ -357,7 +357,7 @@ namespace DataModel
 								var last = lstTasks.LastOrDefault();
 
 								tc.id = last.id;
-								tc.sFlow = "State: " + db.TaskFlow(last.fkTaskFlowCurrent).stName;
+								tc.sFlow = "State: " + db.GetTaskFlow(last.fkTaskFlowCurrent).stName;
 							}
 							else
 							{
@@ -376,7 +376,7 @@ namespace DataModel
 
 				// versions detail
 
-				var lstValidBugCategs = (from e in db.TaskCategories
+				var lstValidBugCategs = (from e in db.TaskCategory
 										 where e.fkTaskType == fkTaskType_SoftwareBugs
 										 select e).
 										 ToList();
@@ -400,7 +400,7 @@ namespace DataModel
 
 				#endregion
 
-				var lstValidAccsFks = (from e in db.TaskTypeAccumulators
+				var lstValidAccsFks = (from e in db.TaskTypeAccumulator
 									   where e.fkTaskType == fkTaskType_SoftwareAnalysis ||
 											 e.fkTaskType == fkTaskType_SoftwareDevelopment ||
 											 e.fkTaskType == fkTaskType_SoftwareBugs
@@ -461,12 +461,12 @@ namespace DataModel
 				lstValidCodingAccsIds.Add(fkAcc_B_Homologation);
 				lstValidCodingAccsIds.Add(fkAcc_B_Production);
 
-				var lstValidAccEstValues = (from e in db.TaskAccumulatorValues
+				var lstValidAccEstValues = (from e in db.TaskAccumulatorValue
 											where lstValidEstimateAccsIds.Contains((long)e.fkTaskAcc)
 											select e).
 											ToList();
 
-				var lstValidAccValues = (from e in db.TaskAccumulatorValues
+				var lstValidAccValues = (from e in db.TaskAccumulatorValue
 										 where lstValidCodingAccsIds.Contains((long)e.fkTaskAcc)
 										 select e).
 										 ToList();
@@ -475,28 +475,28 @@ namespace DataModel
 
 				// all tasks version
 
-				var lstValidTasks = (from e in db.Tasks
+				var lstValidTasks = (from e in db.Task
 									 where lstValidVersions.Contains((long)e.fkVersion)
 									 select e).
 									 ToList();
 
 				// versions
 
-				var lstVersions = (from e in db.ProjectSprintVersions
+				var lstVersions = (from e in db.ProjectSprintVersion
 								   where lstValidVersions.Contains(e.id)
 								   select e).
 								   ToList();
 
 				// sprints
 								
-				var lstSprints = (from e in db.ProjectSprints
+				var lstSprints = (from e in db.ProjectSprint
 								  where e.fkProject == filter.fkProject
 								  select e).
 								  ToList();
 
 				// phases
 
-				var lstPhases = (from e in db.ProjectPhases
+				var lstPhases = (from e in db.ProjectPhase
 								 where e.fkProject == filter.fkProject
 								 select e).
 								 ToList();

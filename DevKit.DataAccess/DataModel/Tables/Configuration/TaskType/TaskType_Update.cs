@@ -43,7 +43,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.TaskCategories
+							if ((from ne in db.TaskCategory
 								 where ne.stName.ToUpper() == ent.stName.ToUpper() 
 								 where ne.fkTaskType == id
 								 select ne).Any())
@@ -139,7 +139,7 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<TaskCategory>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkTaskCategory == ent.id select e).Any())
+						if ((from e in db.Task where e.fkTaskCategory == ent.id select e).Any())
 						{
 							resp = "This category is being used in a task";
 							return false;
@@ -166,7 +166,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from e in db.TaskFlows
+							if ((from e in db.TaskFlow
 								 where e.fkTaskCategory == ent.fkTaskCategory
 								 where e.fkTaskType == ent.fkTaskType
 								 where e.stName.ToUpper() == ent.stName.ToUpper() 
@@ -209,7 +209,7 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<TaskFlow>(anexedEntity.ToString());
 
-						if ((from e in db.Tasks where e.fkTaskFlowCurrent == ent.id select e).Any())
+						if ((from e in db.Task where e.fkTaskFlowCurrent == ent.id select e).Any())
 						{
 							resp = "This flow is being used in a task";
 							return false;
@@ -235,7 +235,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from e in db.TaskTypeAccumulators
+							if ((from e in db.TaskTypeAccumulator
 								 where e.fkTaskFlow == ent.fkTaskFlow
 								 where e.fkTaskCategory == ent.fkTaskCategory
 								 where e.fkTaskType == ent.fkTaskType
@@ -299,7 +299,7 @@ namespace DataModel
 
 						if (ent.id == 0)
 						{
-							if ((from e in db.TaskCheckPoints
+							if ((from e in db.TaskCheckPoint
 								 where e.fkCategory == ent.fkCategory
 								 where e.stName.ToUpper() == ent.stName.ToUpper()
 								 select e).Any())

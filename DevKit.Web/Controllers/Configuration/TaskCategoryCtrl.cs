@@ -28,7 +28,7 @@ namespace DevKit.Web.Controllers
 		{
 			using (var db = new DevKitDB())
 			{
-				var model = db.TaskCategory(id);
+				var model = db.GetTaskCategory(id);
 
 				if (model != null)
 					return Ok(model);

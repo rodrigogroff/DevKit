@@ -8,16 +8,16 @@ namespace DataModel
 	{
 		List<TaskCheckPoint> LoadCheckpoints(DevKitDB db)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
-			var lst = (from e in db.TaskCheckPoints
+			var lst = (from e in db.TaskCheckPoint
 					   where e.fkCategory == this.fkTaskCategory
 					   select e).
 					   ToList();
 
 			foreach (var item in lst)
 			{
-				var mark = (from e in db.TaskCheckPointMarks
+				var mark = (from e in db.TaskCheckPointMark
 							where e.fkCheckPoint == item.id
 							where e.fkTask == this.id
 							select e).
@@ -27,7 +27,7 @@ namespace DataModel
 				{
 					item.bSelected = true;
 					item.sdtLog = mark.dtLog?.ToString(setup.stDateFormat);
-					item.sfkUser = db.User(mark.fkUser).stLogin;
+					item.sfkUser = db.GetUser(mark.fkUser).stLogin;
 				}
 				else
 					item.bSelected = false;

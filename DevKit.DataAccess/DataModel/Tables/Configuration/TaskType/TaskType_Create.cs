@@ -8,7 +8,7 @@ namespace DataModel
 	{
 		bool CheckDuplicate(TaskType item, DevKitDB db)
 		{
-			var query = from e in db.TaskTypes select e;
+			var query = from e in db.TaskType select e;
 
 			if (item.stName != null)
 			{

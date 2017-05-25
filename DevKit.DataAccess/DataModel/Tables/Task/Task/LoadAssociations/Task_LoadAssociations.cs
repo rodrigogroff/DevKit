@@ -5,20 +5,20 @@ namespace DataModel
 	{
 		public Task LoadAssociations(DevKitDB db, bool IsListing = false)
 		{
-			var setup = db.Setup();
+			var setup = db.GetSetup();
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
 			snuPriority = new EnumPriority().Get((long)nuPriority).stName;
-			sfkUserStart = db.User(fkUserStart)?.stLogin;
+			sfkUserStart = db.GetUser(fkUserStart)?.stLogin;
 
-			sfkTaskCategory = db.TaskCategory(fkTaskCategory)?.stName;
-			sfkTaskType = db.TaskType(fkTaskType)?.stName;
-			sfkProject = db.Project(fkProject)?.stName;
-			sfkPhase = db.ProjectPhase(fkPhase)?.stName;
-			sfkSprint = db.ProjectSprint(fkSprint)?.stName;
-			sfkTaskFlowCurrent = db.TaskFlow(fkTaskFlowCurrent)?.stName;
-			sfkVersion = db.ProjectSprintVersion(fkVersion)?.stName;
-			sfkUserResponsible = db.User(fkUserResponsible)?.stLogin;
+			sfkTaskCategory = db.GetTaskCategory(fkTaskCategory)?.stName;
+			sfkTaskType = db.GetTaskType(fkTaskType)?.stName;
+			sfkProject = db.GetProject(fkProject)?.stName;
+			sfkPhase = db.GetProjectPhase(fkPhase)?.stName;
+			sfkSprint = db.GetProjectSprint(fkSprint)?.stName;
+			sfkTaskFlowCurrent = db.GetTaskFlow(fkTaskFlowCurrent)?.stName;
+			sfkVersion = db.GetProjectSprintVersion(fkVersion)?.stName;
+			sfkUserResponsible = db.GetUser(fkUserResponsible)?.stLogin;
 
 			if (!IsListing)
 			{

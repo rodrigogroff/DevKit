@@ -7,7 +7,7 @@ namespace DataModel
 		{
 			var ret = "";
 
-			var oldEntity = db.Task(this.id);
+			var oldEntity = db.GetTask(this.id);
 
 			if (oldEntity.stDescription != this.stDescription)
 				ret += "Description: " + oldEntity.stDescription + " => " + this.stDescription + ";";

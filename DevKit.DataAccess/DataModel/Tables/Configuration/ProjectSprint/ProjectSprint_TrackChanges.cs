@@ -7,7 +7,7 @@ namespace DataModel
 		{
 			var ret = "";
 
-			var oldEntity = db.ProjectSprint(this.id);
+			var oldEntity = db.GetProjectSprint(this.id);
 
 			if (oldEntity.stName != this.stName)
 				ret += "Name: " + oldEntity.stName + " => " + this.stName + "; ";

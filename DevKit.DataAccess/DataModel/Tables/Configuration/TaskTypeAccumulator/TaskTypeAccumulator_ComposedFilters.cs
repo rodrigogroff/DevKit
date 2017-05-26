@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DataModel
 {
-	public class TaskAccumulatorFilter
+	public class TaskTypeAccumulatorFilter
 	{
 		public int skip, take;
 		public string busca;
@@ -14,7 +14,7 @@ namespace DataModel
 
 	public partial class TaskTypeAccumulator
 	{
-		public List<TaskTypeAccumulator> ComposedFilters(DevKitDB db, ref int count, TaskAccumulatorFilter filter)
+		public List<TaskTypeAccumulator> ComposedFilters(DevKitDB db, ref int count, TaskTypeAccumulatorFilter filter)
 		{
 			var query = from e in db.TaskTypeAccumulator select e;
 
@@ -28,11 +28,7 @@ namespace DataModel
 
 			query = query.OrderBy(y => y.stName);
 
-			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-
-			results.ForEach(y => { y = y.LoadAssociations(db); });
-
-			return results;
-		}
+            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+        }
 	}
 }

@@ -6,7 +6,7 @@ namespace DataModel
 {
 	public partial class Task
 	{
-		public List<Task> Report(DevKitDB db, List<Task> results, bool precached)
+		public List<Task> Loader(DevKitDB db, List<Task> results, bool precached)
         {
             if (precached)
             {

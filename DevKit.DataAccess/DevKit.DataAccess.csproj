@@ -79,6 +79,7 @@
     <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_Update.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_Loader.cs" />
     <Compile Include="DataModel\Tables\Configuration\Client\Client_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\Client\Client_Create.cs" />
     <Compile Include="DataModel\Tables\Configuration\Client\Client_Delete.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="DataModel\Tables\Configuration\Client\Client_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\Client\Client_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Configuration\Client\Client_Update.cs" />
+    <Compile Include="DataModel\Tables\Configuration\Client\Client_Loader.cs" />
+    <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_Loader.cs" />
     <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_Create.cs" />
     <Compile Include="DataModel\Tables\Configuration\CompanyNews\News_Delete.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_Update.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectSprint\ProjectSprint_Loader.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectUser\ProjectUser_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_Create.cs" />
@@ -106,15 +110,18 @@
     <Compile Include="DataModel\Tables\Configuration\Project\Project_Update.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_DTO.cs" />
+    <Compile Include="DataModel\Tables\Configuration\Project\Project_Loader.cs" />
+    <Compile Include="DataModel\Tables\Configuration\Survey\Survey_Loader.cs" />
     <Compile Include="DataModel\Tables\Configuration\Survey\Survey_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\Survey\Survey_Create.cs" />
     <Compile Include="DataModel\Tables\Configuration\Survey\Survey_Delete.cs" />
     <Compile Include="DataModel\Tables\Configuration\Survey\Survey_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\Survey\Survey_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\Survey\Survey_Update.cs" />
-    <Compile Include="DataModel\Tables\Configuration\TaskAccumulator\TaskAccumulator_ComposedFilters.cs" />
-    <Compile Include="DataModel\Tables\Configuration\TaskAccumulator\TaskAccumulator_LoadAssociations.cs" />
-    <Compile Include="DataModel\Tables\Configuration\TaskAccumulator\TaskAccumulator_DTO.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskTypeAccumulator\TaskTypeAccumulator_Loader.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskTypeAccumulator\TaskTypeAccumulator_ComposedFilters.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskTypeAccumulator\TaskTypeAccumulator_LoadAssociations.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskTypeAccumulator\TaskTypeAccumulator_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskCategory\TaskCategory_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskCheckPoint\TaskCheckPoint_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskFlow\TaskFlow_ComposedFilters.cs" />
@@ -124,6 +131,7 @@
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_TrackChanges.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_Loader.cs" />
     <Compile Include="DataModel\Tables\System\AuditLog\AuditLog_Create.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_Create.cs" />
@@ -131,10 +139,12 @@
     <Compile Include="DataModel\Tables\System\Profile\Profile_DTO.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_TrackChanges.cs" />
+    <Compile Include="DataModel\Tables\System\Profile\Profile_Loader.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_DTO.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_Extras.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_TrackChanges.cs" />
+    <Compile Include="DataModel\Tables\System\User\User_Loader.cs" />
     <Compile Include="DataModel\Tables\System\User\User_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Create.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Delete.cs" />
@@ -163,7 +173,7 @@
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Dependencies.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Progress.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Questions.cs" />
-    <Compile Include="DataModel\Tables\Task\Task\Task_Report.cs" />
+    <Compile Include="DataModel\Tables\Task\Task\Task_Loader.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_Create.cs" />

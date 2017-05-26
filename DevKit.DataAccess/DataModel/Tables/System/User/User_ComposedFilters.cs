@@ -49,11 +49,7 @@ namespace DataModel
 
 			query = query.OrderBy(y => y.stLogin);
 
-			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-
-			results.ForEach(y => { y = y.LoadAssociations(db); });
-
-			return results;
-		}
+            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+        }
 	}
 }

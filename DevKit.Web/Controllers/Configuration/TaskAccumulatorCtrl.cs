@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
 			{
 				var count = 0; var mdl = new TaskTypeAccumulator();
 
-				var results = mdl.ComposedFilters(db, ref count, new TaskAccumulatorFilter()
+				var results = mdl.ComposedFilters(db, ref count, new TaskTypeAccumulatorFilter()
 				{
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),

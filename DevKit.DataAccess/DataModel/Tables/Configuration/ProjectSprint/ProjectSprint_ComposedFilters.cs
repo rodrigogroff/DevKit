@@ -35,12 +35,8 @@ namespace DataModel
 			count = query.Count();
 
 			query = query.OrderBy(y => y.stName).ThenBy(y => y.fkProject).ThenBy(i => i.fkPhase);
-				
-			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
 
-			results.ForEach(y => { y = y.LoadAssociations(db); });
-
-			return results;
-		}
+            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+        }
 	}
 }

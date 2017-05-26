@@ -24,19 +24,16 @@ namespace DataModel
 			count = query.Count();
 
 			query = query.OrderBy(y => y.stName);
+            
+            new AuditLog
+            {
+                fkUser = user.id,
+                fkActionLog = EnumAuditAction.ClientListing,
+                nuType = EnumAuditType.Client
+            }.
+            Create(db, "", "count: " + count);
 
-			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-
-			results.ForEach(y => { y = y.LoadAssociations(db); });
-
-			new AuditLog {
-				fkUser = user.id,
-				fkActionLog = EnumAuditAction.ClientListing,
-				nuType = EnumAuditType.Client
-			}.
-			Create(db, "", "count: " + count);
-
-			return results;
-		}
+            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+        }
 	}
 }

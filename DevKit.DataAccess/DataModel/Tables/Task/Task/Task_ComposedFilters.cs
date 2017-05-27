@@ -107,14 +107,21 @@ namespace DataModel
                                 where filter.fkClientGroup == e.fkClientGroup
                                 select e.fkTask;
 
-                query = from e in query where queryAux.Contains(e.id) select e;
+                query = from e in query
+                        where queryAux.Contains(e.id)
+                        select e;
             }            
 
 			count = query.Count();
 
-			query = query.OrderBy(y => y.nuPriority).ThenBy(y => y.fkSprint);
+			query = query.OrderBy(y => y.nuPriority).
+                          ThenBy(y => y.fkSprint);
+
+            var results =  query.Skip(() => filter.skip).
+                                 Take(() => filter.take).
+                                 ToList();
             
-			return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+            return Loader(db, results, new loaderOptionsTask(setupTask.TaskListing));
 		}
 	}
 }

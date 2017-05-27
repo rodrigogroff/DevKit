@@ -3,38 +3,72 @@ namespace DataModel
 {
 	public partial class Task
 	{
-		public Task LoadAssociations(DevKitDB db, bool IsListing = false)
+		public Task LoadAssociations(DevKitDB db, loaderOptionsTask options )
 		{
 			var setup = db.GetSetup();
 
 			sdtStart = dtStart?.ToString(setup.stDateFormat);
 			snuPriority = new EnumPriority().Get((long)nuPriority).stName;
-			sfkUserStart = db.GetUser(fkUserStart)?.stLogin;
 
-			sfkTaskCategory = db.GetTaskCategory(fkTaskCategory)?.stName;
-			sfkTaskType = db.GetTaskType(fkTaskType)?.stName;
-			sfkProject = db.GetProject(fkProject)?.stName;
-			sfkPhase = db.GetProjectPhase(fkPhase)?.stName;
-			sfkSprint = db.GetProjectSprint(fkSprint)?.stName;
-			sfkTaskFlowCurrent = db.GetTaskFlow(fkTaskFlowCurrent)?.stName;
-			sfkVersion = db.GetProjectSprintVersion(fkVersion)?.stName;
-			sfkUserResponsible = db.GetUser(fkUserResponsible)?.stLogin;
+            if (options.bLoadUsers)
+			    sfkUserStart = db.GetUser(fkUserStart)?.stLogin;
 
-			if (!IsListing)
-			{
-				usrProgress = LoadProgress(db);
-				usrMessages = LoadMessages(db);
-				flows = LoadFlows(db);
-				accs = LoadAccs(db);				
-				dependencies = LoadDependencies(db);
-				checkpoints = LoadCheckpoints(db);
-				questions = LoadQuestions(db);
-				clients = LoadClients(db);
-				clientGroups = LoadClientGroups(db);
+            if (options.bLoadTaskCategory)
+                sfkTaskCategory = db.GetTaskCategory(fkTaskCategory)?.stName;
+
+            if (options.bLoadTaskType)
+                sfkTaskType = db.GetTaskType(fkTaskType)?.stName;
+
+            if (options.bLoadProject)
+                sfkProject = db.GetProject(fkProject)?.stName;
+
+            if (options.bLoadPhase)
+			    sfkPhase = db.GetProjectPhase(fkPhase)?.stName;
+
+            if (options.bLoadSprint)
+			    sfkSprint = db.GetProjectSprint(fkSprint)?.stName;
+
+            if (options.bLoadTaskFlow)
+			    sfkTaskFlowCurrent = db.GetTaskFlow(fkTaskFlowCurrent)?.stName;
+
+            if (options.bLoadVersion)
+			    sfkVersion = db.GetProjectSprintVersion(fkVersion)?.stName;
+
+            if (options.bLoadUsers)
+			    sfkUserResponsible = db.GetUser(fkUserResponsible)?.stLogin;
+            
+            if (options.bLoadProgress)
+	            usrProgress = LoadProgress(db);
+
+            if (options.bLoadMessages)
+	            usrMessages = LoadMessages(db);
+
+            if (options.bLoadFlows)
+                flows = LoadFlows(db);
+
+            if (options.bLoadAccs)
+	            accs = LoadAccs(db);				
+
+            if (options.bLoadDependencies)
+	            dependencies = LoadDependencies(db);
+
+            if (options.bLoadCheckpoints)
+	            checkpoints = LoadCheckpoints(db);
+
+            if (options.bLoadQuestions)
+	            questions = LoadQuestions(db);
+
+            if (options.bLoadClients)
+	            clients = LoadClients(db);
+
+            if (options.bLoadClientGroups)
+                clientGroups = LoadClientGroups(db);
+
+            if (options.bLoadCustomSteps)
                 customSteps = LoadCustomSteps(db);
 
-                logs = LoadLogs(db);
-			}
+            if (options.bLoadLogs)
+                logs = LoadLogs(db);			
 
 			return this;
 		}

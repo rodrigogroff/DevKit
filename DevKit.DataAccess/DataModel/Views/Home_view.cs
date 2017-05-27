@@ -31,9 +31,8 @@ namespace DataModel
 							 select e).
 							 OrderBy(y=>y.nuPriority).
 							 ToList();
-				
-				foreach (var item in dto.tasks)
-					item.LoadAssociations(db);
+                                
+                new Task().Loader(db, dto.tasks, new loaderOptionsTask(setupTask.HomeView));
 			}
 
 			{

@@ -43,8 +43,8 @@ namespace DevKit.Web.Controllers
 			{
 				var model = db.GetTask(id);
 
-				if (model != null)
-					return Ok(model.LoadAssociations(db));
+                if (model != null)
+					return Ok(model.LoadAssociations(db, new loaderOptionsTask(setupTask.TaskEdit)));
 
 				return StatusCode(HttpStatusCode.NotFound);
 			}

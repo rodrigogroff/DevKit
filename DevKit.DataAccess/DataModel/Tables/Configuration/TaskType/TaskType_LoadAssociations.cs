@@ -6,15 +6,21 @@ namespace DataModel
 {
 	public partial class TaskType
 	{
-		public TaskType LoadAssociations(DevKitDB db)
+		public TaskType LoadAssociations(DevKitDB db, loaderOptionsTaskType options)
 		{
-			project = db.GetProject(fkProject);
+            if (options.bLoadProject)
+			    project = db.GetProject(fkProject);
 
-			categories = LoadCategories(db);
-			logs = LoadLogs(db);
-			checkpoints = LoadCheckpoints(db);
+            if (options.bLoadCategories)
+			    categories = LoadCategories(db);
 
-			return this;
+            if (options.bLoadCheckPoints)
+			    checkpoints = LoadCheckpoints(db);
+
+            if (options.bLoadLogs)
+                logs = LoadLogs(db);
+
+            return this;
 		}
 
 		List<TaskCategory> LoadCategories(DevKitDB db)

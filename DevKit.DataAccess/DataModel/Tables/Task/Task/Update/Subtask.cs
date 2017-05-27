@@ -39,9 +39,6 @@ namespace DataModel
 			}.
 			Create(db, "New dependency added:" + ent.stProtocol, "");
 
-			dependencies = LoadDependencies(db);
-			logs = LoadLogs(db);
-
 			return true;
 		}
 
@@ -64,9 +61,6 @@ namespace DataModel
 			Create(db, "Dependency removed: " + entDb.stProtocol, "");
 
 			db.Delete(entDb);
-
-			dependencies = LoadDependencies(db);
-			logs = LoadLogs(db);
 
 			return true;
 		}

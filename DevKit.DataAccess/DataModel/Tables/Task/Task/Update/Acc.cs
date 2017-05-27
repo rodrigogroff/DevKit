@@ -31,9 +31,6 @@ namespace DataModel
 			}.
 			Create(db, "New time added: " + ent.nuHourValue.ToString() + ":" + ent.nuMinValue.ToString() + " >> " + db.GetUser(ent.fkUser).stLogin, "");
 
-			accs = LoadAccs(db);
-			logs = LoadLogs(db);
-
 			return true;
 		}
 
@@ -56,9 +53,6 @@ namespace DataModel
 			Create(db, "Time removed: " + entDb.nuHourValue.ToString() + ":" + entDb.nuMinValue.ToString() + " >> " + db.GetUser(entDb.fkUser).stLogin, "");
 
 			db.Delete(entDb);
-
-			accs = LoadAccs(db);
-			logs = LoadLogs(db);
 
 			return true;
 		}

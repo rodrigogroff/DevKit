@@ -42,7 +42,11 @@ namespace DataModel
 
 			query = query.OrderBy(y => y.stName);
 
-            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+            var results = query.Skip(filter.skip).
+                                Take(filter.take).
+                                ToList();
+
+            return Loader(db, results, new loaderOptionsTaskType(setupTaskType.TaskTypeListing));
         }
 	}
 }

@@ -12,9 +12,9 @@ namespace DataModel
 			var lstAccTypes = new EnumAccumulatorType().lst;
 
 			var lstAccs = (from e in db.TaskTypeAccumulator
-					   where e.fkTaskCategory == this.fkTaskCategory
-					   select e).
-					   ToList();
+					       where e.fkTaskCategory == this.fkTaskCategory
+					       select e).
+					       ToList();
 
 			foreach (var item in lstAccs)
 			{

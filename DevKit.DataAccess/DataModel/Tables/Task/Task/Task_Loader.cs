@@ -18,7 +18,6 @@ namespace DataModel
         public loaderOptionsTask(int choice)
         {
             setup = choice;
-
             switch (setup)
             {
                 case setupTask.HomeView: Setup_HomeView(); break;
@@ -49,12 +48,18 @@ namespace DataModel
 
         void Setup_HomeView()
         {
+            #region - code - 
+
             bLoadTaskCategory = true;
             bLoadTaskType = true;
+            
+            #endregion
         }
 
         void Setup_TaskListing()
         {
+            #region - code - 
+
             bLoadTaskCategory = true;
             bLoadTaskType = true;
             bLoadProject = true;
@@ -63,10 +68,14 @@ namespace DataModel
             bLoadTaskFlow = true;
             bLoadVersion = true;
             bLoadUsers = true;
+
+            #endregion
         }
 
         void Setup_TaskEdit()
         {
+            #region - code - 
+
             bLoadTaskCategory = true;
             bLoadTaskType = true;
             bLoadProject = true;
@@ -86,10 +95,12 @@ namespace DataModel
             bLoadClientGroups = true;
             bLoadCustomSteps = true;
             bLoadLogs = true;
+
+            #endregion
         }
     }
 
-	public partial class Task
+    public partial class Task
 	{
 		public List<Task> Loader(DevKitDB db, List<Task> results, loaderOptionsTask options )
         {

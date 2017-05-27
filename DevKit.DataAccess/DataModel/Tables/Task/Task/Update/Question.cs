@@ -48,10 +48,7 @@ namespace DataModel
 				}.
 				Create(db, "Edit question", "");
 			}
-
-			questions = LoadQuestions(db);
-			logs = LoadLogs(db);
-
+            
 			return true;
 		}
 
@@ -74,9 +71,6 @@ namespace DataModel
 			Create(db, "Question removed", "");
 
 			db.Delete(entDb);
-
-			questions = LoadQuestions(db);
-			logs = LoadLogs(db);
 
 			return true;
 		}

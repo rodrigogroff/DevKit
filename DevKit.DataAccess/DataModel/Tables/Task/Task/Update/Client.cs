@@ -13,8 +13,6 @@ namespace DataModel
 
 			db.Insert(ent);
 
-			clients = LoadClients(db);
-
 			return true;
 		}
 
@@ -23,8 +21,6 @@ namespace DataModel
 			var ent = JsonConvert.DeserializeObject<TaskClient>(anexedEntity.ToString());
 
 			db.Delete(ent);
-
-			clients = LoadClients(db);
 
 			return true;
 		}

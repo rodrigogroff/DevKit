@@ -5,31 +5,9 @@ using System;
 
 namespace DataModel
 {
-	public class TaskFilter
-	{
-		public int skip, take;
-		public string busca;
-
-		public bool? complete, kpa, expired;
-
-		public long? nuPriority,
-						fkProject,
-						fkClient,
-						fkClientGroup,
-						fkPhase,
-						fkSprint,
-						fkUserStart,
-						fkUserResponsible,
-						fkTaskType,
-						fkTaskFlowCurrent,
-						fkTaskCategory;
-
-		public List<long?> lstProjects = null;
-	}
-
 	public partial class Task
 	{
-		public List<Task> ComposedFilters(DevKitDB db, ref int count, TaskFilter filter)
+		public List<TaskListing> ComposedFilters(DevKitDB db, ref int count, TaskFilter filter)
 		{
 			var query = from e in db.Task select e;
 
@@ -117,11 +95,35 @@ namespace DataModel
 			query = query.OrderBy(y => y.nuPriority).
                           ThenBy(y => y.fkSprint);
 
-            var results =  query.Skip(() => filter.skip).
-                                 Take(() => filter.take).
-                                 ToList();
-            
-            return Loader(db, results, new loaderOptionsTask(setupTask.TaskListing));
+            var results = query.Skip(() => filter.skip).
+                                Take(() => filter.take).
+                                ToList();
+
+            results = Loader(db, results, new loaderOptionsTask(setupTask.TaskListing));
+
+            var resultsListing = new List<TaskListing>();
+
+            results.ForEach( item =>  {
+                    resultsListing.Add ( new TaskListing
+                    {
+                        sdtStart = item.sdtStart,
+                        sfkPhase = item.sfkPhase,
+                        sfkProject = item.sfkProject,
+                        sfkSprint = item.sfkSprint,
+                        sfkTaskCategory = item.sfkTaskCategory,
+                        sfkTaskFlowCurrent = item.sfkTaskFlowCurrent,
+                        sfkTaskType = item.sfkTaskType,
+                        sfkUserResponsible = item.sfkTaskType,
+                        sfkUserStart = item.sfkUserStart,
+                        sfkVersion = item.sfkVersion,
+                        snuPriority = item.snuPriority,
+                        stLocalization = item.stLocalization,
+                        stProtocol = item.stProtocol,
+                        stTitle = item.stTitle
+                    });
+                });
+
+            return resultsListing;
 		}
 	}
 }

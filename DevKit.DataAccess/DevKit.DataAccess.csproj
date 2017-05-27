@@ -132,6 +132,16 @@
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_LoadAssociations.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_Loader.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\Update\RemoveCC.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\Update\NewCC.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\Update\RemoveAcc.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\Update\NewAcc.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\Update\RemoveFlow.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\Update\NewFlow.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\Update\RemoveCategorie.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\Update\NewCategorie.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\Update\Entity.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_Update.cs" />
     <Compile Include="DataModel\Tables\System\AuditLog\AuditLog_Create.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_Create.cs" />
@@ -173,6 +183,7 @@
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Dependencies.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Progress.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Questions.cs" />
+    <Compile Include="DataModel\Tables\Task\Task\Task_Filter.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_Loader.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_ComposedFilters.cs" />
@@ -195,7 +206,6 @@
     <Compile Include="DataModel\Views\UserKanban_view.cs" />
     <Compile Include="DataModel\Enums\Priority_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectSprintVersion\ProjectSprintVersion_DTO.cs" />
-    <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_Update.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_Update.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_Delete.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_Update.cs" />

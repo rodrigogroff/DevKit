@@ -121,7 +121,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Task.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Task saved!', 'Success');
-						$scope.viewModel = data;
+						init();
 					},
 					function (response)
 					{
@@ -183,7 +183,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 				toastr.success('Accumulator value removed', 'Success');
-				$scope.viewModel.accs = data.accs;
+				init();
 			});
 		}
 	}
@@ -240,8 +240,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					$scope.newAcc = { fkTask: id };
 
 					toastr.success('Accumulator saved', 'Success');
-
-					$scope.viewModel.accs = data.accs;
+					init();
 
 				}, function (response) {
 					toastr.error(response.data.message, 'Error');
@@ -258,8 +257,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		Api.Task.update({ id: id }, $scope.viewModel, function (data)
 		{
 			toastr.success('Accumulator removed', 'Success');
-
-			$scope.viewModel.accs = data.accs;
+			init();
 
 		}, function (response) {
 			toastr.error(response.data.message, 'Error');
@@ -281,11 +279,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	        Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 	            toastr.success('Client removed', 'Success');
-
-	            $scope.viewModel.anexedEntity = {};
-
-	            $scope.viewModel.clients = data.clients;
-	            $scope.viewModel.logs = data.logs;
+	            init();
 	        });
 	    }
 	}
@@ -321,8 +315,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	            {
 	                $scope.newClient = {};
 	                toastr.success('Client added', 'Success');
-	                $scope.viewModel.clients = data.clients;
-	                $scope.viewModel.logs = data.logs;
+	                init();
 	            },
 				function (response) {
 				    toastr.error(response.data.message, 'Error');
@@ -346,11 +339,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	        Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 	            toastr.success('Client Group removed', 'Success');
-
-	            $scope.viewModel.anexedEntity = {};
-
-	            $scope.viewModel.clientGroups = data.clientGroups;
-	            $scope.viewModel.logs = data.logs;
+	            init();
 	        });
 	    }
 	}
@@ -384,8 +373,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	            Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 	                $scope.newClientGroup = {};
 	                toastr.success('Client group added', 'Success');
-	                $scope.viewModel.clientGroups = data.clientGroups;
-	                $scope.viewModel.logs = data.logs;
+	                init();
 	            },
 				function (response) {
 				    toastr.error(response.data.message, 'Error');
@@ -412,11 +400,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.Task.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Sub-task removed', 'Success');
-
-				$scope.viewModel.anexedEntity = {};
-
-				$scope.viewModel.dependencies = data.dependencies;
-				$scope.viewModel.logs = data.logs;
+				init();
 			});
 		}
 	}
@@ -454,8 +438,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					$scope.newSubtask = { };
 					toastr.success('Sub-task saved', 'Success');
-					$scope.viewModel.dependencies = data.dependencies;
-					$scope.viewModel.logs = data.logs;
+					init();
 				},
 				function (response) {
 					toastr.error(response.data.message, 'Error');
@@ -479,11 +462,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	        Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 	            toastr.success('Custom step removed', 'Success');
-
-	            $scope.viewModel.anexedEntity = {};
-
-	            $scope.viewModel.customSteps = data.customSteps;
-	            $scope.viewModel.logs = data.logs;
+	            init();
 	        });
 	    }
 	}
@@ -517,8 +496,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	            Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 	                $scope.newCustomStep = {};
 	                toastr.success('Custom step saved', 'Success');
-	                $scope.viewModel.customSteps = data.customSteps;
-	                $scope.viewModel.logs = data.logs;
+	                init();
 	            },
 				function (response) {
 				    toastr.error(response.data.message, 'Error');
@@ -535,7 +513,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	    Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 	        toastr.success('Custom step saved!', 'Success');
-	        $scope.viewModel = data;
+	        init();
 	    },
 		function (response) {
 		    toastr.error(response.data.message, 'Error');
@@ -554,7 +532,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	    Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 	        toastr.success('Check point saved!', 'Success');
-	        $scope.viewModel = data;
+	        init();
 	    },
 		function (response) {
 			toastr.error(response.data.message, 'Error');
@@ -579,8 +557,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.Task.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Question removed', 'Success');
-				$scope.viewModel.questions = data.questions;
-				$scope.viewModel.logs = data.logs;
+				init();
 			});
 		}
 	}
@@ -622,8 +599,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 					$scope.newQuestion = {};
 					toastr.success('Question saved', 'Success');
-					$scope.viewModel.questions = data.questions;
-					$scope.viewModel.logs = data.logs;
+					init();
 				},
 				function (response) {
 					toastr.error(response.data.message, 'Error');

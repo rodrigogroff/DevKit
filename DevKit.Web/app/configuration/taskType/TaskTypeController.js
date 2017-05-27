@@ -95,7 +95,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Task type saved!', 'Success');
-						$scope.viewModel.logs = data.logs;
+						init();
 					},
 					function (response)
 					{
@@ -157,8 +157,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Category removed', 'Success');
-				$scope.viewModel.categories = data.categories;
-				$scope.viewModel.logs = data.logs;
+				init();
 			});
 		}
 	}
@@ -195,13 +194,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
 				$scope.newCategorie = {};
-
-				toastr.success('Category saved', 'Success');
-				$scope.viewModel.categories = data.categories;
-				$scope.viewModel.logs = data.logs;
 				$scope.addCategorie = false;
-
-			}, function (response)
+				toastr.success('Category saved', 'Success');
+				init();
+			},
+            function (response)
 			{
 				toastr.error(response.data.message, 'Error');
 			});
@@ -255,7 +252,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Flow removed', 'Success');
-				$scope.viewModel.logs = data.logs;
+				init();
 				$scope.loadFlows();
 			});
 		}
@@ -295,7 +292,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newFlow = {};
 				$scope.newFlow.fkTaskCategory = tmp;
 
-				$scope.viewModel.logs = data.logs;
+				init();
 				$scope.loadFlows();
 
 				$scope.addFlow = false;
@@ -358,7 +355,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.viewModel.anexedEntity = lista[index];
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data) {
-				toastr.success('Accumulator removed', 'Success');
+			    toastr.success('Accumulator removed', 'Success');
+			    init();
 				$scope.loadAccs();
 			});
 		}
@@ -395,7 +393,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newAcc = {};
 				$scope.newAcc.fkTaskCategory = tmp;
 
-				$scope.viewModel.logs = data.logs;
+				init();
 				$scope.loadAccs();
 
 				$scope.addAcc = false;
@@ -484,17 +482,14 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.viewModel.updateCommand = "newCC";
 			$scope.viewModel.anexedEntity = $scope.newCC;
 
-			Api.TaskType.update({ id: id }, $scope.viewModel, function (data) {
+			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
+			{
 				toastr.success('Check Point saved', 'Success');
-
 				$scope.newCC = {};
 				$scope.newCC.fkCategory = tmp;
-
-				$scope.viewModel.checkpoints = data.checkpoints;
+				init();
 				$scope.loadCCs();
-
 				$scope.addCC = false;
-
 			},
 			function (response) {
 				toastr.error(response.data.message, 'Error');

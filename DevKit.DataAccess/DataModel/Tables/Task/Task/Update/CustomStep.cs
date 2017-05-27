@@ -14,9 +14,7 @@ namespace DataModel
             ent.bSelected = false;
             
             db.Insert(ent);
-
-			customSteps = LoadCustomSteps(db);
-
+            
 			return true;
 		}
 
@@ -25,9 +23,7 @@ namespace DataModel
 			var ent = JsonConvert.DeserializeObject<TaskCustomStep>(anexedEntity.ToString());
 
 			db.Delete(ent);
-
-            customSteps = LoadCustomSteps(db);
-
+            
             return true;
 		}
 	}

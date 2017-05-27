@@ -222,8 +222,6 @@ namespace DataModel
 
 			db.Update(this);
             
-            LoadAssociations(db, new loaderOptionsTask(setupTask.TaskEdit));
-
 			return true;
 		}
 	}

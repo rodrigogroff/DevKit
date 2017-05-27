@@ -81,7 +81,6 @@ namespace DevKit.Web.Controllers
 			using (var db = new DevKitDB())
 			{
 				var model = db.GetTask(id);
-
 				if (model == null)
 					return StatusCode(HttpStatusCode.NotFound);
 

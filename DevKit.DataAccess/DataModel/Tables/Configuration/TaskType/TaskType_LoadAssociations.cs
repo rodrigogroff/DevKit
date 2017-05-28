@@ -25,11 +25,10 @@ namespace DataModel
 
 		List<TaskCategory> LoadCategories(DevKitDB db)
 		{
-			var lst = (from e in db.TaskCategory where e.fkTaskType == id select e).
-				OrderBy(t => t.stAbreviation).ThenBy ( y=> y.stName).
-				ToList();
-
-			return lst;
+			return db.GetListTaskCategory(this.id).
+                      OrderBy(t => t.stAbreviation).
+                      ThenBy(y => y.stName).
+                      ToList();
 		}
 
 		List<TaskTypeLog> LoadLogs(DevKitDB db)

@@ -65,7 +65,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\DevKit_db.cs" />
+    <Compile Include="DataModel\DevKit\DevKit_CurrentUser.cs" />
+    <Compile Include="DataModel\DevKit\DevKit_GetList.cs" />
+    <Compile Include="DataModel\DevKit\DevKit_Get.cs" />
+    <Compile Include="DataModel\DevKit\DevKit_db.cs" />
     <Compile Include="DataModel\Enums\AccumulatorType_enum.cs" />
     <Compile Include="DataModel\Enums\AuditType_enum.cs" />
     <Compile Include="DataModel\Enums\AuditAction_enum.cs" />

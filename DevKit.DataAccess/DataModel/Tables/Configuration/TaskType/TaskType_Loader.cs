@@ -32,7 +32,8 @@ namespace DataModel
 
         void Setup_TaskTypeListing()
         {
-            bLoadProject = true;            
+            bLoadProject = true;
+            bLoadCategories = true;
         }
 
         void Setup_TaskTypeEdit()
@@ -48,6 +49,8 @@ namespace DataModel
 	{
 		public List<TaskType> Loader(DevKitDB db, List<TaskType> results, loaderOptionsTaskType options)
         {
+            var lstIdsTaskTypes = results.Select(y => y.id).ToList();
+
             if (options.bLoadProject)
             {
                 var lstIdsProject = results.Select(y => y.fkProject).Distinct().ToList();
@@ -58,6 +61,14 @@ namespace DataModel
                     foreach (var item in lst) db.Cache["Project" + item.id] = item;
                 }
             }            
+
+            if (options.bLoadCategories)
+            {                
+                db.Cache["ListTaskCategory"] = (from e in db.TaskCategory
+                                                where lstIdsTaskTypes.Contains((long)e.fkTaskType)
+                                                select e).
+                                                ToList();                
+            }
             
             results.ForEach(y => { y = y.LoadAssociations(db, options); });
 

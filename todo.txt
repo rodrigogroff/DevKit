@@ -3,12 +3,9 @@
 a fazer (groff)
 ------------------------------
 		
-	-implementar acumulador de dinheiro
-	-pensar prazos!
-	-pensar data nas listing / kanban
-	-sort by (combo) na listagem de tarefas
-
-	-gerar documentação em inglês	
+	-implementar acumulador de 'ammount'
+	-remover pesquisa na tela generica
+	-pensar data na task listing / kanban
 
 ------------------------------
 a fazer (ramiro)OK!

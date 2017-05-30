@@ -49,7 +49,7 @@ namespace DataModel
 
 			query = query.OrderBy(y => y.stLogin);
 
-            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList());
         }
 	}
 }

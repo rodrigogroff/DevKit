@@ -31,14 +31,19 @@ namespace DevKit.Web.Controllers
 				var model = db.GetProject(id);
 
 				if (model != null)
-				{
-					if (!db.GetCurrentUserProjects().Contains(id))
-						return StatusCode(HttpStatusCode.NotFound);
-					else
-						return Ok(model.LoadAssociations(db));
-				}
+                {
+                    var combo = Request.GetQueryStringValue("combo", false);
 
-				return StatusCode(HttpStatusCode.NotFound);
+                    if (combo)
+                        return Ok(model);
+
+                    if (!db.GetCurrentUserProjects().Contains(id))
+                        return StatusCode(HttpStatusCode.NotFound);
+                    else
+                        return Ok(model.LoadAssociations(db));
+                }
+
+                return StatusCode(HttpStatusCode.NotFound);
 			}
 		}
 

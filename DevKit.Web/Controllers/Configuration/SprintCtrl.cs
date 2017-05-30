@@ -31,10 +31,17 @@ namespace DevKit.Web.Controllers
 			{
 				var model = db.GetProjectSprint(id);
 
-				if (model != null)
-					return Ok(model.LoadAssociations(db));
+                if (model != null)
+                {
+                    var combo = Request.GetQueryStringValue("combo", false);
 
-				return StatusCode(HttpStatusCode.NotFound);
+                    if (combo)
+                        return Ok(model);
+
+                    return Ok(model.LoadAssociations(db));
+                }
+
+                return StatusCode(HttpStatusCode.NotFound);
 			}
 		}
 

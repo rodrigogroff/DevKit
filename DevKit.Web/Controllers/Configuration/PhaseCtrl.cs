@@ -30,10 +30,10 @@ namespace DevKit.Web.Controllers
 			{
 				var model = db.GetProjectPhase(id);
 
-				if (model != null)
-					return Ok(model);
+                if (model != null)
+                    return Ok(model);
 
-				return StatusCode(HttpStatusCode.NotFound);
+                return StatusCode(HttpStatusCode.NotFound);
 			}
 		}
 	}

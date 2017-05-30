@@ -30,10 +30,17 @@ namespace DevKit.Web.Controllers
 			{
 				var model = db.GetTaskType(id);
 
-				if (model != null)
-					return Ok(model.LoadAssociations(db, new loaderOptionsTaskType(setupTaskType.TaskTypeEdit)));
+                if (model != null)
+                {
+                    var combo = Request.GetQueryStringValue("combo", false);
 
-				return StatusCode(HttpStatusCode.NotFound);
+                    if (combo)
+                        return Ok(model);
+
+                    return Ok(model.LoadAssociations(db, new loaderOptionsTaskType(setupTaskType.TaskTypeEdit)));
+                }
+
+                return StatusCode(HttpStatusCode.NotFound);
 			}
 		}
 

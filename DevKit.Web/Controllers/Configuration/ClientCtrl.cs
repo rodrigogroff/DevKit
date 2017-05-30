@@ -30,7 +30,14 @@ namespace DevKit.Web.Controllers
 				var model = db.GetClient(id);
 
 				if (model != null)
-					return Ok(model.LoadAssociations(db));
+                {
+                    var combo = Request.GetQueryStringValue("combo", false);
+
+                    if (combo)
+                        return Ok(model);
+
+                    return Ok(model.LoadAssociations(db));
+                }
 
 				return StatusCode(HttpStatusCode.NotFound);
 			}

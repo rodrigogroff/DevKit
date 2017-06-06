@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using LinqToDB.Data;
 
 namespace DevKit.Core
 {
@@ -14,6 +15,8 @@ namespace DevKit.Core
     {
         public Startup(IHostingEnvironment env)
         {
+            DataConnection.DefaultSettings = new MySettings();
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

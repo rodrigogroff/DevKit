@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DataModel;
 using Microsoft.AspNetCore.Mvc;
-
-using DataModel;
 
 namespace DevKit.Core.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        // GET api/values
-
         public IActionResult Get()
         {
             using (var db = new DevKitDB())
@@ -21,25 +14,17 @@ namespace DevKit.Core.Controllers
 
                 var results = mdl.ComposedFilters(db, ref count, new ProjectFilter
                 {
-                    //skip = Request.QueryString["skip", 0),
-                    //take = Request.GetQueryStringValue("take", 15),
-                    //busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                    //fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
+                    skip = Request.GetQueryStringValue("skip", 0),
+                    take = Request.GetQueryStringValue("take", 15),
+                    busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                    fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
                 });
 
                 return Ok(new { count = count, results = results });
             }
+
+//            var x = User.Identity;
         }
-
-        /*
-    [HttpGet]
-    public IEnumerable<string> Get()
-    {
-        return new string[] { "value1", "value2" };
-    }
-
-*/
-
 
         // GET api/values/5
         [HttpGet("{id}")]

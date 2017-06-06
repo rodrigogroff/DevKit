@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevKit.Core.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class ProjectController : Controller
     {
         public IActionResult Get()
         {

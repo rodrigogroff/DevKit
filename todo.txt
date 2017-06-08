@@ -3,6 +3,8 @@
 a fazer (groff)
 ------------------------------
 		
+	-propagar mudanças feitas no crud de usuário
+
 	-implementar acumulador de 'ammount'
 	-remover pesquisa na tela generica
 	-pensar data na task listing / kanban

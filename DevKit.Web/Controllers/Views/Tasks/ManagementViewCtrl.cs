@@ -9,7 +9,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginInfo();
+            var login = GetLoginFromRequest();
 
             if (login == null)
                 return BadRequest();

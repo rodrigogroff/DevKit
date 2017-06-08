@@ -9,7 +9,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
-            if (!GetAuthorizationAndDatabase())
+            if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
             var model = db.GetSetup();
@@ -22,18 +22,13 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Put(long id, Setup mdl)
 		{
-            using (var db = new DevKitDB())
-			{
-                if (!db.ValidateUser(mdl.login.idUser))
-                    return BadRequest();
+            if (!AuthorizeAndStartDatabase(mdl.login))
+                return BadRequest();
 
-                var resp = "";
+            if (!mdl.Update(db, mdl.login.idUser, ref serviceResponse))
+					return BadRequest(serviceResponse);
 
-				if (!mdl.Update(db, mdl.login.idUser, ref resp))
-					return BadRequest(resp);
-
-				return Ok(mdl);
-			}
+			return Ok(mdl);			
 		}
 	}
 }

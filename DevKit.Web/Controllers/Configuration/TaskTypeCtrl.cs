@@ -9,7 +9,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!GetAuthorizationAndDatabase())
+            if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
             var count = 0; var mdl = new TaskType();
@@ -28,7 +28,7 @@ namespace DevKit.Web.Controllers
 		
 		public IHttpActionResult Get(long id)
 		{
-            if (!GetAuthorizationAndDatabase())
+            if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
             var model = db.GetTaskType(id);
@@ -48,50 +48,42 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Post(TaskType mdl)
 		{
-            using (var db = new DevKitDB())
-			{
-				var resp = "";
+            if (!AuthorizeAndStartDatabase(mdl.login))
+                return BadRequest();
 
-				if (!mdl.Create(db, mdl.login.idUser, ref resp))
-					return BadRequest(resp);
+            if (!mdl.Create(db, mdl.login.idUser, ref serviceResponse))
+				return BadRequest(serviceResponse);
 
-				return Ok(mdl);
-			}
+			return Ok(mdl);
 		}
 
 		public IHttpActionResult Put(long id, TaskType mdl)
 		{
-            using (var db = new DevKitDB())
-			{
-				var resp = "";
+            if (!AuthorizeAndStartDatabase(mdl.login))
+                return BadRequest();
 
-				if (!mdl.Update(db, mdl.login.idUser, ref resp))
-					return BadRequest(resp);
+            if (!mdl.Update(db, mdl.login.idUser, ref serviceResponse))
+				return BadRequest(serviceResponse);
 
-				return Ok(mdl);				
-			}
+			return Ok(mdl);			
 		}
 
 		public IHttpActionResult Delete(long id)
 		{
-            var login = GetLoginInfo();
+            if (!AuthorizeAndStartDatabase())
+                return BadRequest();
+            
+			var model = db.GetTaskType(id);
 
-            using (var db = new DevKitDB())
-			{
-				var model = db.GetTaskType(id);
+			if (model == null)
+				return StatusCode(HttpStatusCode.NotFound);
 
-				if (model == null)
-					return StatusCode(HttpStatusCode.NotFound);
-
-				var resp = "";
-
-				if (!model.CanDelete(db, ref resp))
-					return BadRequest(resp);
+			if (!model.CanDelete(db, ref serviceResponse))
+				return BadRequest(serviceResponse);
 				
-				model.Delete(db, login.idUser);
+			model.Delete(db, login.idUser);
 				
-				return Ok();
-			}
+			return Ok();			
 		}
 	}
 }

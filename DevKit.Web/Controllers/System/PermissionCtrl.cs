@@ -18,7 +18,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
-            if (!GetAuthorizationAndDatabase())
+            if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
             var usr = db.GetCurrentUser(login.idUser);

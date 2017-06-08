@@ -15,7 +15,26 @@ namespace DevKit.Web.Controllers
             if (strRequest != null)
                 return JsonConvert.DeserializeObject<LoginInfo>(strRequest);
 
-            return new LoginInfo { idUser = 0 };
+            return null;
+        }
+
+        public DevKitDB db;
+        public LoginInfo login;
+
+        [NonAction]
+        public bool GetAuthorizationAndDatabase()
+        {
+            var login = GetLoginInfo();
+
+            if (login == null)
+                return false;
+
+            db = new DevKitDB();
+            
+            if (!db.ValidateUser(login.idUser))
+                return false;
+
+            return true;
         }
     }
 }

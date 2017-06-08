@@ -10,9 +10,15 @@ namespace DevKit.Web.Controllers
 		{
             var login = GetLoginInfo();
 
+            if (login == null)
+                return BadRequest();
+
             using (var db = new DevKitDB())
 			{
-				var mdl = new HomeView();
+                if (!db.ValidateUser(login.idUser))
+                    return BadRequest();
+
+                var mdl = new HomeView();
 				
 				return Ok(mdl.ComposedFilters(db, login.idUser));
 			}

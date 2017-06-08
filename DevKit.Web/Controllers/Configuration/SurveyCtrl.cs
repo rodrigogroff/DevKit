@@ -9,43 +9,41 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
+            var count = 0; var mdl = new Survey();
+
+			var results = mdl.ComposedFilters(db, ref count, new SurveyFilter
 			{
-				var count = 0; var mdl = new Survey();
+				skip = Request.GetQueryStringValue("skip", 0),
+				take = Request.GetQueryStringValue("take", 15),
+				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkCurrentUser = login.idUser,
+                fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
+			});
 
-				var results = mdl.ComposedFilters(db, ref count, new SurveyFilter
-				{
-					skip = Request.GetQueryStringValue("skip", 0),
-					take = Request.GetQueryStringValue("take", 15),
-					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                    fkCurrentUser = login.idUser,
-                    fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
-				});
-
-				return Ok(new { count = count, results = results });
-			}
+			return Ok(new { count = count, results = results });			
 		}
 
 		public IHttpActionResult Get(long id)
 		{
-			using (var db = new DevKitDB())
-			{
-				var model = db.GetSurvey(id);
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-                if (model != null)
-                {
-                    var combo = Request.GetQueryStringValue("combo", false);
+            var model = db.GetSurvey(id);
 
-                    if (combo)
-                        return Ok(model);
+            if (model != null)
+            {
+                var combo = Request.GetQueryStringValue("combo", false);
 
-                    return Ok(model.LoadAssociations(db));
-                }
+                if (combo)
+                    return Ok(model);
 
-                return StatusCode(HttpStatusCode.NotFound);
-			}
+                return Ok(model.LoadAssociations(db));
+            }
+
+            return StatusCode(HttpStatusCode.NotFound);
 		}
 
 		public IHttpActionResult Post(Survey mdl)

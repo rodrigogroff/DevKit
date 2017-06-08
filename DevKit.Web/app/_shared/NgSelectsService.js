@@ -54,17 +54,25 @@ function (Api, $rootScope)
 
 			formatSelection: function (item)
 			{
+                if (item == undefined)
+                    return;
 				configuracao.itemSelecionado = item.source;
 				return item.text;
 			},
 
 			formatResult: function (item)
-			{
+            {
+                if (item == undefined)
+                    return '';
+
 				return item.text;
 			},
 
 			query: function (query)
-			{
+            {
+                if (query == undefined)
+                    return '';
+
 				var objFiltro = {};
 
 				var apenasAtivos = parametros.apenasAtivos != undefined ? parametros.apenasAtivos : true;

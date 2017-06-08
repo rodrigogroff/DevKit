@@ -9,39 +9,35 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
+            var count = 0; var mdl = new TaskFlow();
+
+			var results = mdl.ComposedFilters(db, ref count, new TaskFlowFilter()
 			{
-				var count = 0; var mdl = new TaskFlow();
+				skip = Request.GetQueryStringValue("skip", 0),
+				take = Request.GetQueryStringValue("take", 15),
+				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkCurrentUser = login.idUser,
+                fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
+				fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
+			});
 
-				var results = mdl.ComposedFilters(db, ref count, new TaskFlowFilter()
-				{
-					skip = Request.GetQueryStringValue("skip", 0),
-					take = Request.GetQueryStringValue("take", 15),
-					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                    fkCurrentUser = login.idUser,
-                    fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
-					fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
-				});
-
-				return Ok(new { count = count, results = results });
-			}
+			return Ok(new { count = count, results = results });			
 		}
 		
 		public IHttpActionResult Get(long id)
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
-			{
-				var model = db.GetTaskFlow(id);
+            var model = db.GetTaskFlow(id);
 
-				if (model != null)
-					return Ok(model);
+			if (model != null)
+				return Ok(model);
 
-				return StatusCode(HttpStatusCode.NotFound);
-			}
+			return StatusCode(HttpStatusCode.NotFound);
 		}
 	}
 }

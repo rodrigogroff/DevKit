@@ -7,9 +7,17 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            if (login == null)
+                return BadRequest();
+
+            using (var db = new DevKitDB())
 			{
-				var mdl = new UserKanbanView();
+                if (!db.ValidateUser(login.idUser))
+                    return BadRequest();
+
+                var mdl = new UserKanbanView();
 				
 				return Ok(mdl.ComposedFilters(db, new UserKanbanViewFilter()
 				{

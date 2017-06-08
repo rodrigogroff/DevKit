@@ -887,7 +887,7 @@
     <Compile Include="Controllers\Enums\MonthCtrl.cs" />
     <Compile Include="Controllers\Enums\VersionStateCtrl.cs" />
     <Compile Include="Controllers\Enums\ProjectTemplateCtrl.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Views\HomeViewCtrl.cs" />
     <Compile Include="Controllers\System\SetupCtrl.cs" />
     <Compile Include="Controllers\System\ProfileCtrl.cs" />

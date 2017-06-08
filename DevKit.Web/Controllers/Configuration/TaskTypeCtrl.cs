@@ -9,45 +9,41 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
+            var count = 0; var mdl = new TaskType();
+
+			var results = mdl.ComposedFilters(db, ref count, new TaskTypeFilter
 			{
-				var count = 0; var mdl = new TaskType();
+				skip = Request.GetQueryStringValue("skip", 0),
+				take = Request.GetQueryStringValue("take", 15),
+				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkCurrentUser = login.idUser,
+                fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
+			});
 
-				var results = mdl.ComposedFilters(db, ref count, new TaskTypeFilter
-				{
-					skip = Request.GetQueryStringValue("skip", 0),
-					take = Request.GetQueryStringValue("take", 15),
-					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                    fkCurrentUser = login.idUser,
-                    fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
-				});
-
-				return Ok(new { count = count, results = results });
-			}
+			return Ok(new { count = count, results = results });
 		}
 		
 		public IHttpActionResult Get(long id)
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
-			{
-				var model = db.GetTaskType(id);
+            var model = db.GetTaskType(id);
 
-                if (model != null)
-                {
-                    var combo = Request.GetQueryStringValue("combo", false);
+            if (model != null)
+            {
+                var combo = Request.GetQueryStringValue("combo", false);
 
-                    if (combo)
-                        return Ok(model);
+                if (combo)
+                    return Ok(model);
 
-                    return Ok(model.LoadAssociations(db, new loaderOptionsTaskType(setupTaskType.TaskTypeEdit)));
-                }
+                return Ok(model.LoadAssociations(db, new loaderOptionsTaskType(setupTaskType.TaskTypeEdit)));
+            }
 
-                return StatusCode(HttpStatusCode.NotFound);
-			}
+            return StatusCode(HttpStatusCode.NotFound);
 		}
 
 		public IHttpActionResult Post(TaskType mdl)

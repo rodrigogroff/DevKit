@@ -11,9 +11,15 @@ namespace DevKit.Web.Controllers
 		{
             var login = GetLoginInfo();
 
+            if (login == null)
+                return BadRequest();
+
             using (var db = new DevKitDB())
 			{
-				var mdl = new ManagementView();
+                if (!db.ValidateUser(login.idUser))
+                    return BadRequest();
+
+                var mdl = new ManagementView();
 				
 				return Ok(mdl.ComposedFilters(db, new ManagementViewFilter()
 				{

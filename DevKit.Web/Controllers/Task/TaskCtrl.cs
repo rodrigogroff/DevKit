@@ -11,9 +11,15 @@ namespace DevKit.Web.Controllers
 		{
             var login = GetLoginInfo();
 
+            if (login == null)
+                return BadRequest();
+
             using (var db = new DevKitDB())
 			{
-				var count = 0; var mdl = new Task();
+                if (!db.ValidateUser(login.idUser))
+                    return BadRequest();
+
+                var count = 0; var mdl = new Task();
 
 				var results = mdl.ComposedFilters(db, ref count, new TaskFilter()
 				{
@@ -43,9 +49,17 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            if (login == null)
+                return BadRequest();
+
+            using (var db = new DevKitDB())
 			{
-				var model = db.GetTask(id);
+                if (!db.ValidateUser(login.idUser))
+                    return BadRequest();
+
+                var model = db.GetTask(id);
 
                 if (model != null)
 					return Ok(model.LoadAssociations(db, new loaderOptionsTask(setupTask.TaskEdit)));

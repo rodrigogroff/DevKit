@@ -9,26 +9,25 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
-			{
-                // validate login!
-
-				var model = db.GetSetup();
+            var model = db.GetSetup();
 				
-				if (model != null)
-					return Ok(model.LoadAssociations(db));
+			if (model != null)
+				return Ok(model.LoadAssociations(db));
 
-				return StatusCode(HttpStatusCode.NotFound);
-			}
+			return StatusCode(HttpStatusCode.NotFound);			
 		}
 
 		public IHttpActionResult Put(long id, Setup mdl)
 		{
             using (var db = new DevKitDB())
 			{
-				var resp = "";
+                if (!db.ValidateUser(mdl.login.idUser))
+                    return BadRequest();
+
+                var resp = "";
 
 				if (!mdl.Update(db, mdl.login.idUser, ref resp))
 					return BadRequest(resp);

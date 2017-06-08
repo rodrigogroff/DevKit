@@ -7,16 +7,25 @@ namespace DataModel
 	{				
 		public User currentUser = null;
 
+        public bool ValidateUser (long fkUser)
+        {
+            if (currentUser == null)
+                GetCurrentUser(fkUser);
+
+            return currentUser != null;
+        }
+
 		public User GetCurrentUser(long fkUser)
 		{
 			if (currentUser == null)
 				currentUser = (from ne in User
 							   where ne.id == fkUser
-                               select ne).FirstOrDefault();
+                               select ne).
+                               FirstOrDefault();
 
 			return currentUser;
 		}
-
+        
 		public List<long?> GetCurrentUserProjects(long fkUser)
 		{
 			if (currentUser == null)

@@ -15,7 +15,10 @@ namespace DevKit.Web.Controllers
 
 			using (var db = new DevKitDB())
 			{
-				var task = new Task();
+                if (!db.ValidateUser(login.idUser))
+                    return BadRequest();
+
+                var task = new Task();
 				var usr = db.GetCurrentUser(login.idUser);
 
 				int count_project_tasks = 0, 

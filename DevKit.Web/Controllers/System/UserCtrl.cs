@@ -9,46 +9,44 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginInfo();
-            
-            using (var db = new DevKitDB())
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
+
+			var count = 0; var mdl = new User();
+
+			var results = mdl.ComposedFilters(db, ref count, new UserFilter()
 			{
-				var count = 0; var mdl = new User();
+				skip = Request.GetQueryStringValue("skip", 0),
+				take = Request.GetQueryStringValue("take", 15),
+				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkCurrentUser = login.idUser,
+				email = Request.GetQueryStringValue("email")?.ToUpper(),
+				phone = Request.GetQueryStringValue("phone")?.ToUpper(),
+				fkPerfil = Request.GetQueryStringValue<long?>("fkPerfil", null),
+				ativo = Request.GetQueryStringValue<bool?>("ativo", null),
+			});
 
-				var results = mdl.ComposedFilters(db, ref count, new UserFilter()
-				{
-					skip = Request.GetQueryStringValue("skip", 0),
-					take = Request.GetQueryStringValue("take", 15),
-					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                    fkCurrentUser = login.idUser,
-					email = Request.GetQueryStringValue("email")?.ToUpper(),
-					phone = Request.GetQueryStringValue("phone")?.ToUpper(),
-					fkPerfil = Request.GetQueryStringValue<long?>("fkPerfil", null),
-					ativo = Request.GetQueryStringValue<bool?>("ativo", null),
-				});
-
-				return Ok(new { count = count, results = results });
-			}
+			return Ok(new { count = count, results = results });			
 		}
 
 		public IHttpActionResult Get(long id)
 		{
-			using (var db = new DevKitDB())
-			{
-				var model = db.GetUser(id);
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-                if (model != null)
-                {
-                    var combo = Request.GetQueryStringValue("combo", false);
+            var model = db.GetUser(id);
 
-                    if (combo)
-                        return Ok(model);
+            if (model != null)
+            {
+                var combo = Request.GetQueryStringValue("combo", false);
 
-                    return Ok(model.LoadAssociations(db));
-                }
+                if (combo)
+                    return Ok(model);
 
-                return StatusCode(HttpStatusCode.NotFound);
-			}
+                return Ok(model.LoadAssociations(db));
+            }
+
+            return StatusCode(HttpStatusCode.NotFound);
 		}
 
 		public IHttpActionResult Post(User mdl)

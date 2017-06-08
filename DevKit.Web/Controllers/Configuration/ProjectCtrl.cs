@@ -9,48 +9,44 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
+            var count = 0; var mdl = new Project();
+
+			var results = mdl.ComposedFilters(db, ref count, new ProjectFilter
 			{
-				var count = 0; var mdl = new Project();
+				skip = Request.GetQueryStringValue("skip", 0),
+				take = Request.GetQueryStringValue("take", 15),
+                fkCurrentUser = login.idUser,
+				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+				fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
+			});
 
-				var results = mdl.ComposedFilters(db, ref count, new ProjectFilter
-				{
-					skip = Request.GetQueryStringValue("skip", 0),
-					take = Request.GetQueryStringValue("take", 15),
-                    fkCurrentUser = login.idUser,
-					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-					fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
-				});
-
-				return Ok(new { count = count, results = results });
-			}
+			return Ok(new { count = count, results = results });			
 		}
 
 		public IHttpActionResult Get(long id)
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
-			{
-				var model = db.GetProject(id);
+            var model = db.GetProject(id);
 
-				if (model != null)
-                {
-                    var combo = Request.GetQueryStringValue("combo", false);
+			if (model != null)
+            {
+                var combo = Request.GetQueryStringValue("combo", false);
 
-                    if (combo)
-                        return Ok(model);
+                if (combo)
+                    return Ok(model);
 
-                    if (!db.GetCurrentUserProjects(login.idUser).Contains(id))
-                        return StatusCode(HttpStatusCode.NotFound);
-                    else
-                        return Ok(model.LoadAssociations(db));
-                }
+                if (!db.GetCurrentUserProjects(login.idUser).Contains(id))
+                    return StatusCode(HttpStatusCode.NotFound);
+                else
+                    return Ok(model.LoadAssociations(db));
+            }
 
-                return StatusCode(HttpStatusCode.NotFound);
-			}
+            return StatusCode(HttpStatusCode.NotFound);
 		}
 
 		public IHttpActionResult Post(Project mdl)

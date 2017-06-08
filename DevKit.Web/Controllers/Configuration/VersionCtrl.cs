@@ -9,38 +9,34 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
+            var count = 0; var mdl = new ProjectSprintVersion();
+
+			var results = mdl.ComposedFilters(db, ref count, new ProjectSprintVersionFilter
 			{
-				var count = 0; var mdl = new ProjectSprintVersion();
+				skip = Request.GetQueryStringValue("skip", 0),
+				take = Request.GetQueryStringValue("take", 15),
+				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkCurrentUser = login.idUser,
+				fkSprint = Request.GetQueryStringValue<int?>("fkSprint", null),
+			});
 
-				var results = mdl.ComposedFilters(db, ref count, new ProjectSprintVersionFilter
-				{
-					skip = Request.GetQueryStringValue("skip", 0),
-					take = Request.GetQueryStringValue("take", 15),
-					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                    fkCurrentUser = login.idUser,
-					fkSprint = Request.GetQueryStringValue<int?>("fkSprint", null),
-				});
-
-				return Ok(new { count = count, results = results });
-			}
+			return Ok(new { count = count, results = results });
 		}
 
 		public IHttpActionResult Get(long id)
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
-			{
-				var model = db.GetProjectSprintVersion(id);
+            var model = db.GetProjectSprintVersion(id);
 
-				if (model != null)
-					return Ok(model);
+			if (model != null)
+				return Ok(model);
 
-				return StatusCode(HttpStatusCode.NotFound);
-			}
+			return StatusCode(HttpStatusCode.NotFound);
 		}
 	}
 }

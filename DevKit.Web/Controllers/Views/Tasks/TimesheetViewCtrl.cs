@@ -11,9 +11,15 @@ namespace DevKit.Web.Controllers
 		{
             var login = GetLoginInfo();
 
+            if (login == null)
+                return BadRequest();
+
             using (var db = new DevKitDB())
 			{
-				var filter = new TimesheetViewFilter()
+                if (!db.ValidateUser(login.idUser))
+                    return BadRequest();
+
+                var filter = new TimesheetViewFilter()
 				{                    
 					nuYear = Request.GetQueryStringValue<long?>("nuYear", null),
 					nuMonth = Request.GetQueryStringValue<long?>("nuMonth", null),

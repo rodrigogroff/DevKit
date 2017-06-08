@@ -9,42 +9,40 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginInfo();
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
+            var count = 0; var mdl = new ClientGroup();
+
+			var results = mdl.ComposedFilters(db, ref count, new ClientGroupFilter
 			{
-				var count = 0; var mdl = new ClientGroup();
+				skip = Request.GetQueryStringValue("skip", 0),
+				take = Request.GetQueryStringValue("take", 15),
+                fkCurrentUser = login.idUser,
+				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+			});
 
-				var results = mdl.ComposedFilters(db, ref count, new ClientGroupFilter
-				{
-					skip = Request.GetQueryStringValue("skip", 0),
-					take = Request.GetQueryStringValue("take", 15),
-                    fkCurrentUser = login.idUser,
-					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-				});
-
-				return Ok(new { count = count, results = results });
-			}
+			return Ok(new { count = count, results = results });			
 		}
 
 		public IHttpActionResult Get(long id)
 		{
-			using (var db = new DevKitDB())
-			{
-				var model = db.GetClientGroup(id);
+            if (!GetAuthorizationAndDatabase())
+                return BadRequest();
 
-                if (model != null)
-                {
-                    var combo = Request.GetQueryStringValue("combo", false);
+            var model = db.GetClientGroup(id);
 
-                    if (combo)
-                        return Ok(model);
+            if (model != null)
+            {
+                var combo = Request.GetQueryStringValue("combo", false);
 
-                    return Ok(model.LoadAssociations(db));
-                }
+                if (combo)
+                    return Ok(model);
 
-                return StatusCode(HttpStatusCode.NotFound);
-			}
+                return Ok(model.LoadAssociations(db));
+            }
+
+            return StatusCode(HttpStatusCode.NotFound);
 		}
 
 		public IHttpActionResult Post(ClientGroup mdl)

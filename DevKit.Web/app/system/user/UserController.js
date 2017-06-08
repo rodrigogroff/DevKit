@@ -110,17 +110,19 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.stLogin_fail = invalidCheck($scope.viewModel.stLogin);
 			$scope.fkProfile_fail = $scope.viewModel.fkProfile == undefined;
 	
-			if (!$scope.stLogin_fail && !$scope.fkProfile_fail)
-			{
+            if (!$scope.stLogin_fail &&
+                !$scope.fkProfile_fail)
+            {
+                $scope.viewModel.login = $rootScope.loginInfo;
+
 				if (id > 0)
                 {
-                    $scope.viewModel.login = $rootScope.loginInfo;
 					$scope.viewModel.updateCommand = "entity";
 
                     Api.User.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('User saved!', 'Success');
-						$scope.viewModel.logs = data.logs;
+                        init();
 					},
 					function (response)
 					{
@@ -129,8 +131,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				}
 				else
 				{
-                    $scope.viewModel.login = $rootScope.loginInfo;
-
                     Api.User.add($scope.viewModel, function (data)
 					{
 						toastr.success('User added!', 'Success');
@@ -169,7 +169,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-            Api.User.remove({ id: id, login: $rootScope.loginInfo }, {}, function (data)
+            Api.User.remove({ id: id, login: $rootScope.loginInfo }, function (data)
 			{
 				toastr.success('User removed!', 'Success');
 				$scope.list();

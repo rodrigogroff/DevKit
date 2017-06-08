@@ -13,7 +13,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api,
 
 	function CheckPermissions()
 	{
-		Api.Permission.get({ id: $scope.permID }, function (data)
+        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
 		{
 			$scope.permModel = data;
 
@@ -34,7 +34,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api,
 
 		$scope.loading = true;
 
-		Api.Setup.get({ id: 1 }, function (data)
+        Api.Setup.get({ id: 1, login: $rootScope.loginInfo }, function (data)
 		{
 			$scope.viewModel = data;
 			$scope.loading = false;
@@ -68,11 +68,13 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api,
 			if (!$scope.stPhoneMask_fail &&
 				!$scope.stDateFormat_fail &&
 				!$scope.stProtocolFormat_fail)
-			{
+            {
+                $scope.viewModel.login = $rootScope.loginInfo;
+
 				Api.Setup.update({ id: 1 }, $scope.viewModel, function (data)
 				{
 					toastr.success('Setup preferences saved!', 'Success');
-					$scope.viewModel.logs = data.logs;
+                    init();
 				},
 				function (response)
 				{

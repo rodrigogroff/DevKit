@@ -9,7 +9,8 @@ function ($http, $q)
     var _authentication = {
         isAuth: false,
         nameUser: null,
-        idUser: null
+        idUser: null,
+        session: null
     };
 
     var _login = function (loginData)
@@ -24,12 +25,14 @@ function ($http, $q)
                 JSON.stringify({
                     token: response.access_token,
                     nameUser: response.nameUser,
-                    idUser: response.idUser
+                    idUser: response.idUser,
+                    session: response.session
                 }));
 
             _authentication.isAuth = true;
             _authentication.nameUser = response.nameUser;
             _authentication.idUser = response.idUser;
+            _authentication.session = response.session;
 
             deferred.resolve(response);
 
@@ -48,6 +51,7 @@ function ($http, $q)
         _authentication.isAuth = false;
         _authentication.nameUser = null;
         _authentication.idProfile = null;
+        _authentication.session = null;
     };
 
     var _fillAuthData = function ()
@@ -58,6 +62,7 @@ function ($http, $q)
             _authentication.isAuth = true;
             _authentication.nameUser = authData.nameUser;
             _authentication.idUser = authData.idUser;
+            _authentication.session = authData.session;
         }
     }
 	

@@ -8,20 +8,11 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginFromRequest();
+            AuthorizeAndStartDatabase();
 
-            if (login == null)
-                return BadRequest();
-
-            using (var db = new DevKitDB())
-			{
-                if (!db.ValidateUser(login.idUser))
-                    return BadRequest();
-
-                var mdl = new HomeView();
+            var mdl = new HomeView();
 				
-				return Ok(mdl.ComposedFilters(db, login.idUser));
-			}
+			return Ok(mdl.ComposedFilters(db, login.idUser));			
 		}
 	}
 }

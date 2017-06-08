@@ -33,7 +33,8 @@ function ($scope, $rootScope, $location, AuthService, version)
     			$scope.loginOK = true;
                 
                 $rootScope.loginInfo = {
-                    idUser: response.idUser
+                    idUser: response.idUser,
+                    session: response.session
                 }
 
                 $rootScope.exibirMenu = true;

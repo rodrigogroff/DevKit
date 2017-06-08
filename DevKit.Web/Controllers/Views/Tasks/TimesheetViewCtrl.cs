@@ -9,27 +9,16 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginFromRequest();
+            AuthorizeAndStartDatabase();
 
-            if (login == null)
-                return BadRequest();
+			var mdl = new TimesheetView();
 
-            using (var db = new DevKitDB())
-			{
-                if (!db.ValidateUser(login.idUser))
-                    return BadRequest();
-
-                var filter = new TimesheetViewFilter()
-				{                    
-					nuYear = Request.GetQueryStringValue<long?>("nuYear", null),
-					nuMonth = Request.GetQueryStringValue<long?>("nuMonth", null),
-					fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
-				};
-
-				var mdl = new TimesheetView();
-
-				return Ok(mdl.ComposedFilters(db, filter));
-			}
+			return Ok(mdl.ComposedFilters(db, new TimesheetViewFilter()
+            {
+                nuYear = Request.GetQueryStringValue<long?>("nuYear", null),
+                nuMonth = Request.GetQueryStringValue<long?>("nuMonth", null),
+                fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
+            }));			
 		}
 	}
 }

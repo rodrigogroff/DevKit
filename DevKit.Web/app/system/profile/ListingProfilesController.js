@@ -17,7 +17,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.permID = 101;
 
 	function CheckPermissions() {
-		Api.Permission.get({ id: $scope.permID }, function (data) {
+        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data) {
 			$scope.permModel = data;
 
 			if (!$scope.permModel.listagem) {
@@ -48,7 +48,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	{
 		$scope.loading = true;
 
-		var opcoes = { skip: skip, take: take };
+        var opcoes = { skip: skip, take: take, login: $rootScope.loginInfo };
 
 		var filtro = ngHistoricoFiltro.filtro.filtroGerado;
 

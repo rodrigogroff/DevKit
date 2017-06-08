@@ -30,8 +30,9 @@ namespace DevKit.Web.Controllers
 
             db = new DevKitDB();
             
-            if (!db.ValidateUser(login.idUser))
+            if (!db.ValidateUser(login))
                 return false;
+
             return true;
         }
 
@@ -43,7 +44,7 @@ namespace DevKit.Web.Controllers
 
             db = new DevKitDB();
 
-            if (!db.ValidateUser(_login.idUser))
+            if (!db.ValidateUser(_login))
                 return false;
 
             login = _login;

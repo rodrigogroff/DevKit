@@ -14,7 +14,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	
 	function CheckPermissions()
 	{
-		Api.Permission.get({ id: $scope.permID }, function (data)
+        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
 		{
 			$scope.permModel = data;
 
@@ -41,7 +41,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			$scope.loading = true;
 
-			Api.News.get({ id: id }, function (data)
+            Api.News.get({ id: id, login: $rootScope.loginInfo }, function (data)
 			{
 				$scope.viewModel = data;
 				$scope.loading = false;
@@ -77,7 +77,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	
 			if (!$scope.stTitle_fail &&
 				!$scope.stMessage_fail)
-			{
+            {
+                $scope.viewModel.login = $rootScope.loginInfo;
+
 				if (id > 0)
 				{
 					$scope.viewModel.updateCommand = "entity";
@@ -117,7 +119,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			Api.News.remove({ id: id }, {}, function (data)
+            Api.News.remove({ id: id, login: $rootScope.loginInfo }, function (data)
 			{
 				toastr.success('News removed!', 'Success');
 				$scope.list();

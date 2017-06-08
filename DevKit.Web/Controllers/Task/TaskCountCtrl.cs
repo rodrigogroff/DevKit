@@ -8,37 +8,30 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var login = GetLoginFromRequest();
+            AuthorizeAndStartDatabase();
 
-            if (login == null)
-                return BadRequest();
+            var task = new Task();
 
-			using (var db = new DevKitDB())
+			var usr = db.GetCurrentUser(login.idUser);
+
+			int count_project_tasks = 0, 
+				count_user_tasks = 0;
+
+			task.ComposedFilters(db, ref count_project_tasks, new TaskFilter
 			{
-                if (!db.ValidateUser(login.idUser))
-                    return BadRequest();
+				complete = false,
+				kpa = false,
+				lstProjects = db.GetCurrentUserProjects(usr.id)
+			});
 
-                var task = new Task();
-				var usr = db.GetCurrentUser(login.idUser);
-
-				int count_project_tasks = 0, 
-					count_user_tasks = 0;
-
-				task.ComposedFilters(db, ref count_project_tasks, new TaskFilter
-				{
-					complete = false,
-					kpa = false,
-					lstProjects = db.GetCurrentUserProjects(usr.id)
-				});
-
-				task.ComposedFilters(db, ref count_user_tasks, new TaskFilter
-				{
-					fkUserResponsible = usr.id,
-				});
+			task.ComposedFilters(db, ref count_user_tasks, new TaskFilter
+			{
+				fkUserResponsible = usr.id,
+			});
 				
-				return Ok(new { count_project_tasks = count_project_tasks,
-								count_user_tasks = count_user_tasks });
-			}
+			return Ok(new { count_project_tasks = count_project_tasks,
+							count_user_tasks = count_user_tasks });
+			
 		}
 	}
 }

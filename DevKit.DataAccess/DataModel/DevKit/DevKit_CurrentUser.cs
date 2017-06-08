@@ -7,12 +7,18 @@ namespace DataModel
 	{				
 		public User currentUser = null;
 
-        public bool ValidateUser (long fkUser)
+        public bool ValidateUser (LoginInfo login)
         {
             if (currentUser == null)
-                GetCurrentUser(fkUser);
+                GetCurrentUser(login.idUser);
 
-            return currentUser != null;
+            if (currentUser == null)
+                return false;
+
+            if (currentUser.stCurrentSession != login.session)
+                return false;
+            
+            return true;
         }
 
 		public User GetCurrentUser(long fkUser)

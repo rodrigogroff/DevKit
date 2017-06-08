@@ -69,15 +69,17 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.changePass = function ()
 	{
 		$scope.stCurrentPasswordFail = invalidCheck($scope.changePassModel.stCurrentPassword);
-		$scope.stNewPasswordFail = invalidCheck($scope.changePassModel.stNewPassword);
-		$scope.stConfirmationFail = $scope.changePassModel.stNewPassword != $scope.changePassModel.stConfirmation || $scope.changePassModel.stNewPassword.length == 0
+        $scope.stNewPasswordFail = invalidCheck($scope.changePassModel.stNewPassword);
+
+        $scope.stConfirmationFail = $scope.changePassModel.stNewPassword != $scope.changePassModel.stConfirmation ||
+                                    $scope.changePassModel.stNewPassword.length == 0
 	
 		if (!$scope.stCurrentPasswordFail &&
 			!$scope.stCurrentPasswordFail &&
 			!$scope.stConfirmationFail)
 		{
-			$scope.viewModel.updateCommand = "changePassword";
-            $scope.viewModel.login = $rootScope.loginInfo;
+            $scope.viewModel.login = $rootScope.loginInfo;            
+            $scope.viewModel.updateCommand = "changePassword";
 			$scope.viewModel.anexedEntity = $scope.changePassModel;
 
             Api.User.update({ id: id }, $scope.viewModel, function (data)

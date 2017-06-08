@@ -19,7 +19,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function CheckPermissions()
 	{
-		Api.Permission.get({ id: $scope.permID }, function (data)
+        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
 		{
 			$scope.permModel = data;
 
@@ -47,8 +47,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		if (id > 0)
 		{
-			$scope.loading = true;
-			Api.Sprint.get({ id: id }, function (data)
+            $scope.loading = true;
+
+            Api.Sprint.get({ id: id, login: $rootScope.loginInfo }, function (data)
 			{
 				$scope.viewModel = data;
 				$scope.loading = false;
@@ -86,7 +87,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			if (!$scope.stName_fail &&
 				!$scope.fkProject_fail &&
 				!$scope.fkPhase_fail)
-			{
+            {
+                $scope.viewModel.login = $rootScope.loginInfo;
+
 				if (id > 0)
 				{
 					$scope.viewModel.updateCommand = "entity";
@@ -127,7 +130,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			Api.Sprint.remove({ id: id }, {}, function (data)
+            Api.Sprint.remove({ id: id, login: $rootScope.loginInfo }, {}, function (data)
 			{
 				toastr.success('Sprint removed!', 'Success');
 				$scope.list();
@@ -149,7 +152,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
-		{
+        {
+            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "removeVersion";
 			$scope.viewModel.anexedEntity = lista[index];
 
@@ -188,7 +192,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		if (!$scope.stVersion_fail && 
 			!$scope.fkVersionState_fail)
-		{
+        {
+            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "newVersion";
 			$scope.viewModel.anexedEntity = $scope.newVersion;
 

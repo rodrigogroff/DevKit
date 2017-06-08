@@ -16,7 +16,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	
 	function CheckPermissions()
 	{
-		Api.Permission.get({ id: $scope.permID }, function (data)
+        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
 		{
 			$scope.permModel = data;
 
@@ -41,7 +41,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			$scope.loading = true;
 
-			Api.ClientGroup.get({ id: id }, function (data)
+            Api.ClientGroup.get({ id: id, login: $rootScope.loginInfo }, function (data)
 			{
 				$scope.viewModel = data;
 				$scope.loading = false;
@@ -74,8 +74,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
 				
-			if (!$scope.stName_fail )
-			{
+			if (!$scope.stName_fail)
+            {
+                $scope.viewModel.login = $rootScope.loginInfo;
+
 				if (id > 0)
 				{
 					$scope.viewModel.updateCommand = "entity";
@@ -116,7 +118,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			Api.ClientGroup.remove({ id: id }, {}, function (data)
+            Api.ClientGroup.remove({ id: id, login: $rootScope.loginInfo }, function (data)
 			{
 				toastr.success('Client group removed!', 'Success');
 				$scope.list();
@@ -138,7 +140,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
-		{
+        {
+            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "removeClient";
 			$scope.viewModel.anexedEntity = $scope.viewModel.clients[index];
 
@@ -182,6 +185,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				$scope.addClient = false;
 
+                $scope.viewModel.login = $rootScope.loginInfo;
 				$scope.viewModel.updateCommand = "newClient";
 				$scope.viewModel.anexedEntity = $scope.newClient;
 

@@ -411,13 +411,14 @@ namespace DataModel
 	[Table(Schema="public", Name="User")]
 	public partial class User
 	{
-		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
-		[Column,     Nullable] public bool?     bActive     { get; set; } // boolean
-		[Column,     Nullable] public string    stLogin     { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stPassword  { get; set; } // character varying(30)
-		[Column,     Nullable] public long?     fkProfile   { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLastLogin { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtCreation  { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
+		[Column,     Nullable] public bool?     bActive          { get; set; } // boolean
+		[Column,     Nullable] public string    stLogin          { get; set; } // character varying(200)
+		[Column,     Nullable] public string    stPassword       { get; set; } // character varying(30)
+		[Column,     Nullable] public long?     fkProfile        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLastLogin      { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtCreation       { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stCurrentSession { get; set; } // character varying(20)
 	}
 
 	[Table(Schema="public", Name="UserEmail")]

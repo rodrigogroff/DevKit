@@ -18,6 +18,7 @@ ALTER TABLE public."User" ADD COLUMN if not exists "stPassword" character varyin
 ALTER TABLE public."User" ADD COLUMN if not exists "fkProfile" bigint;
 ALTER TABLE public."User" ADD COLUMN if not exists "dtLastLogin" timestamp without time zone;
 ALTER TABLE public."User" ADD COLUMN if not exists "dtCreation" timestamp without time zone;
+ALTER TABLE public."User" ADD COLUMN if not exists "stCurrentSession" character varying(20);
    
 CREATE TABLE IF NOT EXISTS public."UserEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."UserEmail" OWNER to postgres;

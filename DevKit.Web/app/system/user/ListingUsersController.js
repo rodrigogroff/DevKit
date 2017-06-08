@@ -1,6 +1,6 @@
 ﻿angular.module('app.controllers').controller('ListingUsersController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$rootScope', 
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $rootScope )
+['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 
+function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 {
 	$rootScope.exibirMenu = true;
 

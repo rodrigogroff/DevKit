@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using Newtonsoft.Json;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -7,11 +8,13 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            using (var db = new DevKitDB())
 			{
 				var mdl = new HomeView();
 				
-				return Ok(mdl.ComposedFilters(db));
+				return Ok(mdl.ComposedFilters(db, login.idUser));
 			}
 		}
 	}

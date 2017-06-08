@@ -4,11 +4,13 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-	public class UserFilter
-	{
-		public int skip, take;
-		public string busca, email, phone;
+	public class UserFilter : BaseFilter
+    {
+		public string email, 
+                      phone;
+
 		public bool? ativo;
+
 		public long? fkPerfil;
 	}
 

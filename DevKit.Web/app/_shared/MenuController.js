@@ -20,20 +20,20 @@ function ($scope, $rootScope, $location, AuthService, Api, version, $state)
 
 		if (!AuthService.authentication.isAuth)
 			$location.path('/login');
-		else
-			Api.TaskCount.listPage({}, function (data) {
-				$scope.projectTasks = data.count_project_tasks;
-				$scope.userTasks = data.count_user_tasks;
-			});
+		//else
+          //  Api.TaskCount.listPage({ login: $rootScope.loginInfo }, function (data) {
+			//	$scope.projectTasks = data.count_project_tasks;
+				//$scope.userTasks = data.count_user_tasks;
+			//});
 	}
 
 	$rootScope.$on("updateCounters", function ()
 	{
-		Api.TaskCount.listPage({}, function (data)
-		{
-			$scope.projectTasks = data.count_project_tasks;
-			$scope.userTasks = data.count_user_tasks;
-		});
+        //Api.TaskCount.listPage({ login: $rootScope.loginInfo }, function (data)
+		//{
+			//$scope.projectTasks = data.count_project_tasks;
+			//$scope.userTasks = data.count_user_tasks;
+		//});
 	});
 
 	$scope.goHome = function () {

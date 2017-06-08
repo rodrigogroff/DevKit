@@ -75,6 +75,8 @@
     <Compile Include="DataModel\Enums\Month_enum.cs" />
     <Compile Include="DataModel\Enums\VersionState_enum.cs" />
     <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
+    <Compile Include="DataModel\Tables\LoginInfo.cs" />
+    <Compile Include="DataModel\Tables\BaseFilter.cs" />
     <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_Create.cs" />
     <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_Delete.cs" />
@@ -186,7 +188,6 @@
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Dependencies.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Progress.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Questions.cs" />
-    <Compile Include="DataModel\Tables\Task\Task\Task_Filter.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_Loader.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_ComposedFilters.cs" />

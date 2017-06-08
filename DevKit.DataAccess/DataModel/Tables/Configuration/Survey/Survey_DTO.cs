@@ -4,7 +4,9 @@ namespace DataModel
 {
 	public partial class Survey
 	{
-		public bool bUserSelected;
+        public LoginInfo login;
+
+        public bool bUserSelected;
 		
 		public object anexedEntity;
 

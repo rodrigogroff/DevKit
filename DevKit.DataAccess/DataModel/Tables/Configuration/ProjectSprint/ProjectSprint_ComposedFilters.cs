@@ -4,19 +4,17 @@ using System.Linq;
 
 namespace DataModel
 {
-	public class ProjectSprintFilter
-	{
-		public int skip, take;
-		public string busca;
-
-		public long? fkProject, fkPhase;		
+	public class ProjectSprintFilter : BaseFilter
+    {
+		public long? fkProject,
+                     fkPhase;
 	}
 
 	public partial class ProjectSprint
 	{
 		public List<ProjectSprint> ComposedFilters(DevKitDB db, ref int count, ProjectSprintFilter filter)
 		{
-			var lstUserProjects = db.GetCurrentUserProjects();
+			var lstUserProjects = db.GetCurrentUserProjects(filter.fkCurrentUser);
 
 			var query = from e in db.ProjectSprint select e;
 

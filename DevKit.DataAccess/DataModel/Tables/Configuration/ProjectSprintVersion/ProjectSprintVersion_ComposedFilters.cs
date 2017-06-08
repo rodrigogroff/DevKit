@@ -4,10 +4,8 @@ using System.Linq;
 
 namespace DataModel
 {
-	public class ProjectSprintVersionFilter
-	{
-		public int skip, take;
-		public string busca;
+	public class ProjectSprintVersionFilter : BaseFilter
+    {
 		public int? fkSprint;		
 	}
 

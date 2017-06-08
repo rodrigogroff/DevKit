@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -78,5 +79,5 @@ public static class GlobalExtensions
 			return defaultValue;
 
 		return result;
-	}	
+	}
 }

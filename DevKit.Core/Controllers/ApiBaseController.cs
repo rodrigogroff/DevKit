@@ -1,14 +1,13 @@
 ﻿using DataModel;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Web.Http;
 
-namespace DevKit.Web.Controllers
+namespace DevKit.Core.Controllers
 {
-	[Authorize]
-	public class ApiControllerBase : ApiController
-	{
+    public class ApiBaseController : Controller
+    {
         [NonAction]
-		public LoginInfo GetLoginInfo()
+        public LoginInfo GetLoginInfo()
         {
             var strRequest = Request.GetQueryStringValue("login");
 

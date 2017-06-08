@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevKit.Core.Controllers
 {
     [Route("api/[controller]")]
-    public class ProjectController : Controller
+    public class ProjectController : ApiBaseController
     {
         public IActionResult Get()
         {
+            var login = GetLoginInfo();
+
             using (var db = new DevKitDB())
             {
                 var count = 0; var mdl = new Project();
@@ -17,13 +19,12 @@ namespace DevKit.Core.Controllers
                     skip = Request.GetQueryStringValue("skip", 0),
                     take = Request.GetQueryStringValue("take", 15),
                     busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                    fkCurrentUser = login.idUser,
                     fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
                 });
 
                 return Ok(new { count = count, results = results });
             }
-
-//            var x = User.Identity;
         }
 
         // GET api/values/5

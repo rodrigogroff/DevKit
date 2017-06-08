@@ -1,4 +1,5 @@
 ﻿using DataModel;
+
 using System.Net;
 using System.Web.Http;
 
@@ -8,7 +9,9 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            using (var db = new DevKitDB())
 			{
 				var count = 0; var mdl = new ProjectSprint();
 
@@ -17,7 +20,8 @@ namespace DevKit.Web.Controllers
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-					fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
+                    fkCurrentUser = login.idUser,
+                    fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 					fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
 				});
 
@@ -47,11 +51,11 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Put(long id, ProjectSprint mdl)
 		{
-			using (var db = new DevKitDB())
+            using (var db = new DevKitDB())
 			{
 				var resp = "";
 
-				if (!mdl.Update(db, ref resp))
+				if (!mdl.Update(db, mdl.login.idUser, ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);

@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-	public class ProfileFilter
+	public class ProfileFilter : BaseFilter
 	{
-		public int skip, take;				
-		public string busca, stPermission;
+		public string stPermission;
 		public long? fkUser;
 	}
 

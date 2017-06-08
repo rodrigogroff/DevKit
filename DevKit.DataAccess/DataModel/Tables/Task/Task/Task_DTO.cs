@@ -4,7 +4,9 @@ namespace DataModel
 {
 	public partial class Task
 	{
-		public object anexedEntity;
+        public LoginInfo login;
+
+        public object anexedEntity;
 
 		public string	sdtStart = "",
 						snuPriority = "",

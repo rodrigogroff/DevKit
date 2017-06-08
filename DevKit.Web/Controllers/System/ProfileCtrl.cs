@@ -1,4 +1,5 @@
 ﻿using DataModel;
+
 using System.Net;
 using System.Web.Http;
 
@@ -8,7 +9,9 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            using (var db = new DevKitDB())
 			{
 				var count = 0; var mdl = new Profile();
 
@@ -17,6 +20,7 @@ namespace DevKit.Web.Controllers
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                    fkCurrentUser = login.idUser,
 					stPermission = Request.GetQueryStringValue("stPermission")?.ToUpper(),
 					fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
 				});
@@ -47,11 +51,11 @@ namespace DevKit.Web.Controllers
 		
 		public IHttpActionResult Post(Profile mdl)
 		{
-			using (var db = new DevKitDB())
+            using (var db = new DevKitDB())
 			{
 				var resp = "";
 
-				if (!mdl.Create(db, ref resp))
+				if (!mdl.Create(db, mdl.login.idUser, ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);
@@ -60,11 +64,11 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Put(long id, Profile mdl)
 		{
-			using (var db = new DevKitDB())
+            using (var db = new DevKitDB())
 			{
 				var resp = "";
 
-				if (!mdl.Update(db, ref resp))
+				if (!mdl.Update(db, mdl.login.idUser, ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);
@@ -73,7 +77,9 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Delete(long id)
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            using (var db = new DevKitDB())
 			{
 				var model = db.GetProfile(id);
 				
@@ -85,7 +91,7 @@ namespace DevKit.Web.Controllers
 				if (!model.CanDelete(db, ref resp))
 					return BadRequest(resp);
 
-				model.Delete(db);
+				model.Delete(db, login.idUser);
 				
 				return Ok();
 			}

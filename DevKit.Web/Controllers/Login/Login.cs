@@ -33,8 +33,7 @@ namespace DevKit.Web
 					identity.AddClaim(new Claim(ClaimTypes.Role, usuario.profile.stName));
 					identity.AddClaim(new Claim(ClaimTypes.Sid, usuario.profile.id.ToString()));
 					identity.AddClaim(new Claim("IdUser", usuario.id.ToString()));
-					identity.AddClaim(new Claim("IdProfile", usuario.profile.id.ToString()));
-
+					
 					var ticket = new AuthenticationTicket(identity, null);
 					context.Validated(ticket);
 				}
@@ -51,10 +50,10 @@ namespace DevKit.Web
 		public override System.Threading.Tasks.Task TokenEndpoint(OAuthTokenEndpointContext context)
 		{
 			string nameUser = context.Identity.Claims.Where(x => x.Type == ClaimTypes.Name).Select(x => x.Value).FirstOrDefault();
-			string IdProfile = context.Identity.Claims.Where(x => x.Type == "IdProfile").Select(x => x.Value).FirstOrDefault();
+            string IdUser = context.Identity.Claims.Where(x => x.Type == "IdUser").Select(x => x.Value).FirstOrDefault();
 
-			context.AdditionalResponseParameters.Add("nameUser", nameUser);
-			context.AdditionalResponseParameters.Add("idProfile", Convert.ToInt32(IdProfile));
+            context.AdditionalResponseParameters.Add("nameUser", nameUser);
+            context.AdditionalResponseParameters.Add("idUser", IdUser);
 
 			return System.Threading.Tasks.Task.FromResult<object>(null);
 		}

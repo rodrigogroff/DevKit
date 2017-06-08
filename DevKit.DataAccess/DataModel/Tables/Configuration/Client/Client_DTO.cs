@@ -2,7 +2,9 @@
 {
 	public partial class Client
 	{
-		public object anexedEntity;
+        public LoginInfo login;
+
+        public object anexedEntity;
 
 		public string sfkUser = "",
 						sdtStart = "",

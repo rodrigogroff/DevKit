@@ -31,10 +31,15 @@ function ($scope, $rootScope, $location, AuthService, version)
     		AuthService.login($scope.loginData).then(function (response)
     		{
     			$scope.loginOK = true;
-    			$rootScope.exibirMenu = true;
-    			$rootScope.$broadcast('updateCounters');
+                
+                $rootScope.loginInfo = {
+                    idUser: response.idUser
+                }
 
-    			if ($scope.loginData.userName == $scope.loginData.password)
+                $rootScope.exibirMenu = true;
+                $rootScope.$broadcast('updateCounters');
+
+                if ($scope.loginData.userName == $scope.loginData.password)
     			{
     				$location.path('/system/userChangePass/');
     				toastr.error('Your password is no longer valid', 'Password');

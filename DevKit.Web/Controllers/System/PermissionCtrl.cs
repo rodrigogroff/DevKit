@@ -1,4 +1,5 @@
 ﻿using DataModel;
+
 using System.Net;
 using System.Web.Http;
 
@@ -19,24 +20,25 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+            
+            using (var db = new DevKitDB())
 			{
-				var usr = db.GetCurrentUser();
+				var usr = db.GetCurrentUser(login.idUser);
 				var perf = db.GetProfile(usr.fkProfile);
 
 				if (perf == null)
 					return StatusCode(HttpStatusCode.NotFound);
 
-				var tblPerm = new TabelaPermissao();
-
-				tblPerm.idUser = usr.id;
-				tblPerm.listagem = perf.stPermissions.Contains("|" + id + "1|");
-				tblPerm.visualizar = perf.stPermissions.Contains("|" + id + "2|");
-				tblPerm.edicao = perf.stPermissions.Contains("|" + id + "3|");
-				tblPerm.novo = perf.stPermissions.Contains("|" + id + "4|");
-				tblPerm.remover = perf.stPermissions.Contains("|" + id + "5|");
-
-				return Ok(tblPerm);								
+                return Ok(new TabelaPermissao()
+                {
+                    idUser = usr.id,
+                    listagem = perf.stPermissions.Contains("|" + id + "1|"),
+                    visualizar = perf.stPermissions.Contains("|" + id + "2|"),
+                    edicao = perf.stPermissions.Contains("|" + id + "3|"),
+                    novo = perf.stPermissions.Contains("|" + id + "4|"),
+                    remover = perf.stPermissions.Contains("|" + id + "5|")
+                });								
 			}
 		}
 	}

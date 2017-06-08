@@ -18,7 +18,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function CheckPermissions()
 	{
-		Api.Permission.get({ id: $scope.permID }, function (data)
+        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
 		{
 			$scope.permModel = data;
 
@@ -30,7 +30,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		},
 		function (response) { });
 
-		Api.Permission.get({ id: $scope.auditLogPerm }, function (data) {
+        Api.Permission.get({ id: $scope.auditLogPerm, login: $rootScope.loginInfo }, function (data)
+        {
 			$scope.auditLogView = $scope.permModel.visualizar;
 		},
 		function (response) { });
@@ -38,7 +39,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function loadSetup()
 	{
-		Api.Setup.get({ id: 1 }, function (data)
+        Api.Setup.get({ id: 1, login: $rootScope.loginInfo }, function (data)
 		{
 			$scope.setupModel = data;
 		});
@@ -56,7 +57,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (id > 0)
 		{
 			$scope.loading = true;
-			Api.User.get({ id: id }, function (data)
+            Api.User.get({ id: id, login: $rootScope.loginInfo }, function (data)
 			{
 				$scope.viewModel = data;
 				$scope.loading = false;
@@ -112,10 +113,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			if (!$scope.stLogin_fail && !$scope.fkProfile_fail)
 			{
 				if (id > 0)
-				{
+                {
+                    $scope.viewModel.login = $rootScope.loginInfo;
 					$scope.viewModel.updateCommand = "entity";
 
-					Api.User.update({ id: id }, $scope.viewModel, function (data)
+                    Api.User.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('User saved!', 'Success');
 						$scope.viewModel.logs = data.logs;
@@ -127,7 +129,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				}
 				else
 				{
-					Api.User.add($scope.viewModel, function (data)
+                    $scope.viewModel.login = $rootScope.loginInfo;
+
+                    Api.User.add($scope.viewModel, function (data)
 					{
 						toastr.success('User added!', 'Success');
 						$state.go('user', { id: data.id });
@@ -146,10 +150,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	}
 
 	$scope.resetPass = function ()
-	{
+    {
+        $scope.viewModel.login = $rootScope.loginInfo;
 		$scope.viewModel.updateCommand = "resetPassword";
 
-		Api.User.update({ id: id }, $scope.viewModel, function (data)
+        Api.User.update({ id: id }, $scope.viewModel, function (data)
 		{			
 			$scope.resetPassword = data.resetPassword;
 		},
@@ -164,7 +169,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			Api.User.remove({ id: id }, {}, function (data)
+            Api.User.remove({ id: id, login: $rootScope.loginInfo }, {}, function (data)
 			{
 				toastr.success('User removed!', 'Success');
 				$scope.list();
@@ -187,14 +192,14 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
-		{
+        {
+            $scope.viewModel.login = $rootScope.loginInfo;
 		    $scope.viewModel.updateCommand = "removePhone";
 		    $scope.viewModel.anexedEntity = $scope.viewModel.phones[index];
 
-		    Api.User.update({ id: id }, $scope.viewModel, function (data) {
+            Api.User.update({ id: id }, $scope.viewModel, function (data) {
 		        toastr.success('Phone removed', 'Success');
-		        $scope.viewModel.phones = data.phones;
-		        $scope.viewModel.logs = data.logs;
+                init();
 		    });
 		}
 	}
@@ -234,15 +239,15 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				$scope.addPhone = false;
 
+                $scope.viewModel.login = $rootScope.loginInfo;
 				$scope.viewModel.updateCommand = "newPhone";
 				$scope.viewModel.anexedEntity = $scope.newPhone;
 
-				Api.User.update({ id: id }, $scope.viewModel, function (data)
+                Api.User.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newPhone = {};
 					toastr.success('Phone saved', 'Success');					
-					$scope.viewModel.phones = data.phones;
-					$scope.viewModel.logs = data.logs;
+                    init();
 				},
 				function (response) {
 					toastr.error(response.data.message, 'Error');
@@ -262,15 +267,15 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
-		{
+        {
+            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "removeEmail";
 			$scope.viewModel.anexedEntity = $scope.viewModel.emails[index];
 
-			Api.User.update({ id: id }, $scope.viewModel, function (data)
+            Api.User.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Email removed', 'Success');
-				$scope.viewModel.emails = data.emails;
-				$scope.viewModel.logs = data.logs;
+                init();
 			});
 		}
 	}
@@ -307,15 +312,15 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				$scope.addEmail = false;
 
+                $scope.viewModel.login = $rootScope.loginInfo;
 				$scope.viewModel.updateCommand = "newEmail";
 				$scope.viewModel.anexedEntity = $scope.newEmail;
 
-				Api.User.update({ id: id }, $scope.viewModel, function (data)
-				{					
-					$scope.newEmail = {};
-					toastr.success('Email saved', 'Success');
-					$scope.viewModel.emails = data.emails;
-					$scope.viewModel.logs = data.logs;
+                Api.User.update({ id: id }, $scope.viewModel, function (data)
+                {
+                    $scope.newEmail = {};
+                    toastr.success('Email saved', 'Success');
+                    init();
 				},
 				function (response) {
 					toastr.error(response.data.message, 'Error');

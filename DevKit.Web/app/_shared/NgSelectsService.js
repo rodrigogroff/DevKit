@@ -1,4 +1,6 @@
-﻿angular.module('app.services').service('ngSelects', ['Api', function (Api)
+﻿angular.module('app.services').service('ngSelects',
+['Api', '$rootScope',
+function (Api, $rootScope)
 {
 	var obterConfiguracao = function (api, parametros)
 	{
@@ -38,7 +40,8 @@
 					var id = $(element).select2('val');
 
 					opcoesObter[campoId] = id;
-					opcoesObter.combo = true;
+                    opcoesObter.combo = true;
+                    opcoesObter.login = $rootScope.loginInfo;
 
 					if (parametros && parametros.opcoes)
 						angular.extend(opcoesObter, parametros.opcoes);
@@ -94,7 +97,9 @@
 				}
 
 				if (parametros && parametros.opcoes)
-					angular.extend(objFiltro, parametros.opcoes);
+                    angular.extend(objFiltro, parametros.opcoes);
+
+                objFiltro.login = $rootScope.loginInfo;
 
 				api.listPage(objFiltro, function (data)
 				{

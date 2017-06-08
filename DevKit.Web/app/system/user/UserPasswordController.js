@@ -19,7 +19,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function CheckPermissions()
 	{
-		Api.Permission.get({ id: $scope.permID }, function (data) {
+        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
+        {
 			$scope.permModel = data;
 			$scope.userId = data.idUser;
 
@@ -28,9 +29,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$state.go('home');
 			}
 			else
-			{
+            {
 				$scope.loading = true;
-				Api.User.get({ id: $scope.userId }, function (data) {
+                Api.User.get({ id: $scope.userId, login: $rootScope.loginInfo }, function (data)
+                {
 					$scope.viewModel = data;
 					$scope.loading = false;
 				},
@@ -66,8 +68,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.changePass = function ()
 	{
-		console.log($scope.changePassModel);
-
 		$scope.stCurrentPasswordFail = invalidCheck($scope.changePassModel.stCurrentPassword);
 		$scope.stNewPasswordFail = invalidCheck($scope.changePassModel.stNewPassword);
 		$scope.stConfirmationFail = $scope.changePassModel.stNewPassword != $scope.changePassModel.stConfirmation || $scope.changePassModel.stNewPassword.length == 0
@@ -77,10 +77,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			!$scope.stConfirmationFail)
 		{
 			$scope.viewModel.updateCommand = "changePassword";
-
+            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.anexedEntity = $scope.changePassModel;
 
-			Api.User.update({ id: id }, $scope.viewModel, function (data)
+            Api.User.update({ id: id }, $scope.viewModel, function (data)
 			{			
 				$scope.viewModel.anexedEntity = undefined;
 				toastr.success('Password changed!', 'Success');

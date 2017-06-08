@@ -1,4 +1,5 @@
 ﻿using DataModel;
+
 using System.Net;
 using System.Web.Http;
 
@@ -8,7 +9,9 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            using (var db = new DevKitDB())
 			{
 				var count = 0; var mdl = new TaskType();
 
@@ -17,7 +20,8 @@ namespace DevKit.Web.Controllers
 					skip = Request.GetQueryStringValue("skip", 0),
 					take = Request.GetQueryStringValue("take", 15),
 					busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-					fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
+                    fkCurrentUser = login.idUser,
+                    fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
 				});
 
 				return Ok(new { count = count, results = results });
@@ -26,7 +30,9 @@ namespace DevKit.Web.Controllers
 		
 		public IHttpActionResult Get(long id)
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            using (var db = new DevKitDB())
 			{
 				var model = db.GetTaskType(id);
 
@@ -46,11 +52,11 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Post(TaskType mdl)
 		{
-			using (var db = new DevKitDB())
+            using (var db = new DevKitDB())
 			{
 				var resp = "";
 
-				if (!mdl.Create(db, ref resp))
+				if (!mdl.Create(db, mdl.login.idUser, ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);
@@ -59,11 +65,11 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Put(long id, TaskType mdl)
 		{
-			using (var db = new DevKitDB())
+            using (var db = new DevKitDB())
 			{
 				var resp = "";
 
-				if (!mdl.Update(db, ref resp))
+				if (!mdl.Update(db, mdl.login.idUser, ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);				
@@ -72,7 +78,9 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Delete(long id)
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            using (var db = new DevKitDB())
 			{
 				var model = db.GetTaskType(id);
 
@@ -84,7 +92,7 @@ namespace DevKit.Web.Controllers
 				if (!model.CanDelete(db, ref resp))
 					return BadRequest(resp);
 				
-				model.Delete(db);
+				model.Delete(db, login.idUser);
 				
 				return Ok();
 			}

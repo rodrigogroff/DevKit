@@ -5,7 +5,28 @@ using System;
 
 namespace DataModel
 {
-	public partial class Task
+    public class TaskFilter : BaseFilter
+    {
+        public bool? complete,
+                     kpa,
+                     expired;
+
+        public long? nuPriority,
+                        fkProject,
+                        fkClient,
+                        fkClientGroup,
+                        fkPhase,
+                        fkSprint,
+                        fkUserStart,
+                        fkUserResponsible,
+                        fkTaskType,
+                        fkTaskFlowCurrent,
+                        fkTaskCategory;
+
+        public List<long?> lstProjects = null;
+    }
+
+    public partial class Task
 	{
 		public List<TaskListing> ComposedFilters(DevKitDB db, ref int count, TaskFilter filter)
 		{

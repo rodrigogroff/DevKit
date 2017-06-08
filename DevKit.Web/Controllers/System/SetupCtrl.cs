@@ -1,4 +1,5 @@
 ﻿using DataModel;
+
 using System.Net;
 using System.Web.Http;
 
@@ -8,8 +9,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
-			using (var db = new DevKitDB())
+            var login = GetLoginInfo();
+
+            using (var db = new DevKitDB())
 			{
+                // validate login!
+
 				var model = db.GetSetup();
 				
 				if (model != null)
@@ -21,11 +26,11 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Put(long id, Setup mdl)
 		{
-			using (var db = new DevKitDB())
+            using (var db = new DevKitDB())
 			{
 				var resp = "";
 
-				if (!mdl.Update(db, ref resp))
+				if (!mdl.Update(db, mdl.login.idUser, ref resp))
 					return BadRequest(resp);
 
 				return Ok(mdl);

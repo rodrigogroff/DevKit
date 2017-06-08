@@ -4,11 +4,8 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-	public class TaskCheckPointFilter
-	{
-		public int skip, take;
-		public string busca;
-
+	public class TaskCheckPointFilter : BaseFilter
+    {
 		public long? fkCategory;		
 	}
 

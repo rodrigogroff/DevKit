@@ -4,17 +4,16 @@ using System.Linq;
 
 namespace DataModel
 {
-	public class ClientGroupFilter
+	public class ClientGroupFilter : BaseFilter
 	{
-		public int skip, take;
-		public string busca;
+
 	}
 	
 	public partial class ClientGroup
 	{
 		public List<ClientGroup> ComposedFilters(DevKitDB db, ref int count, ClientGroupFilter filter)
 		{
-			var user = db.GetCurrentUser();
+			var user = db.GetCurrentUser(filter.fkCurrentUser);
 			
 			var query = from e in db.ClientGroup select e;
 

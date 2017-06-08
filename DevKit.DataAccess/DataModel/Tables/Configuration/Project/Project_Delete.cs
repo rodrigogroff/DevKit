@@ -16,9 +16,9 @@ namespace DataModel
 			return true;
 		}
 
-		public void Delete(DevKitDB db)
+		public void Delete(DevKitDB db, long fkCurrentUser)
 		{
-			var user = db.GetCurrentUser();
+			var user = db.GetCurrentUser(fkCurrentUser);
 
 			foreach (var item in (from e in db.ProjectSprint where e.fkProject == id select e))
 				db.Delete(item);

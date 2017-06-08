@@ -4,7 +4,9 @@ namespace DataModel
 {
 	public partial class TaskType
 	{
-		public object anexedEntity;
+        public LoginInfo login;
+
+        public object anexedEntity;
 
 		public string updateCommand = "";		
 

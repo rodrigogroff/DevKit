@@ -4,13 +4,10 @@ using System.Linq;
 
 namespace DataModel
 {
-	public class TaskFlowFilter
-	{
-		public int skip, take;
-		public string busca;
-
-		public long?	fkTaskType,
-						fkTaskCategory;
+	public class TaskFlowFilter : BaseFilter
+    {
+		public long? fkTaskType,
+					 fkTaskCategory;
 	}
 
 	public partial class TaskFlow

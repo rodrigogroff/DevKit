@@ -4,10 +4,8 @@ using System.Linq;
 
 namespace DataModel
 {
-	public class CompanyNewsFilter
-	{
-		public int skip, take;
-		public string busca;
+	public class CompanyNewsFilter : BaseFilter
+    {
 		public long? fkProject;
 
 		public string ExportString()
@@ -28,8 +26,8 @@ namespace DataModel
 	{
 		public List<CompanyNews> ComposedFilters(DevKitDB db, ref int count, CompanyNewsFilter filter)
 		{
-			var user = db.GetCurrentUser();
-			var lstUserProjects = db.GetCurrentUserProjects();
+			var user = db.GetCurrentUser(filter.fkCurrentUser);
+			var lstUserProjects = db.GetCurrentUserProjects(filter.fkCurrentUser);
 
 			var query = from e in db.CompanyNews select e;
 

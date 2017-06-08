@@ -4,19 +4,20 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-	public class TaskTypeFilter
-	{
-		public int skip, take;
-		public string busca;
+	public class TaskTypeFilter : BaseFilter
+    {
 		public long? fkProject;
-		public bool? managed, condensed, kpa;
+
+		public bool? managed,
+                     condensed, 
+                     kpa;
 	}
 
 	public partial class TaskType
 	{
 		public List<TaskType> ComposedFilters(DevKitDB db, ref int count, TaskTypeFilter filter)
 		{
-			var lstUserProjetcs = db.GetCurrentUserProjects();
+			var lstUserProjetcs = db.GetCurrentUserProjects(filter.fkCurrentUser);
 
 			var query = from e in db.TaskType select e;
 

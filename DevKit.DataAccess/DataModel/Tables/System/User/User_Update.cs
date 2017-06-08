@@ -6,9 +6,9 @@ namespace DataModel
 {
 	public partial class User
 	{
-		public bool Update(DevKitDB db, ref string resp)
+		public bool Update(DevKitDB db, long fkCurrentUser, ref string resp)
 		{
-			var user = db.GetCurrentUser();
+			var user = db.GetCurrentUser(fkCurrentUser);
 
 			if (CheckDuplicate(this, db))
 			{

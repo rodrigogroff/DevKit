@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using Newtonsoft.Json;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -7,10 +8,15 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            var login = GetLoginInfo();
+
+            if (login == null)
+                return BadRequest();
+
 			using (var db = new DevKitDB())
 			{
 				var task = new Task();
-				var usr = db.GetCurrentUser();
+				var usr = db.GetCurrentUser(login.idUser);
 
 				int count_project_tasks = 0, 
 					count_user_tasks = 0;

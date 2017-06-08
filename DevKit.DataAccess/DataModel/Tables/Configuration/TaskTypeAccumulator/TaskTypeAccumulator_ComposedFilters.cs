@@ -4,11 +4,8 @@ using System.Linq;
 
 namespace DataModel
 {
-	public class TaskTypeAccumulatorFilter
-	{
-		public int skip, take;
-		public string busca;
-
+	public class TaskTypeAccumulatorFilter : BaseFilter
+    {
 		public long? fkTaskCategory;		
 	}
 

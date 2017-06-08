@@ -1,6 +1,6 @@
 ﻿angular.module('app.controllers').controller('ListingUsersController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$rootScope', 
+function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $rootScope )
 {
 	$rootScope.exibirMenu = true;
 
@@ -18,7 +18,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.permID = 102;
 
 	function CheckPermissions() {
-		Api.Permission.get({ id: $scope.permID }, function (data) {
+        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data) {
 			$scope.permModel = data;
 
 			if (!$scope.permModel.listagem) {
@@ -49,7 +49,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	{
 		$scope.loading = true;
 
-		var opcoes = { active: 'true', skip: skip, take: take };
+        var opcoes = { active: 'true', skip: skip, take: take, login: $rootScope.loginInfo };
 
 		var filter = ngHistoricoFiltro.filtro.filtroGerado;
 

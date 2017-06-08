@@ -4,11 +4,9 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-	public class ProjectPhaseFilter
-	{
-		public int skip, take;
+	public class ProjectPhaseFilter : BaseFilter
+    {
 		public int? fkProject;
-		public string busca;
 	}
 	
 	public partial class ProjectPhase

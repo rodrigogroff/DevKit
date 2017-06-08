@@ -15,16 +15,17 @@ namespace DataModel
 
 	public class HomeView
 	{
-		public HomeDTO ComposedFilters(DevKitDB db)
+		public HomeDTO ComposedFilters(DevKitDB db, long fkCurrentUser)
 		{
-			var user = db.GetCurrentUser();
-			var projects = db.GetCurrentUserProjects();
+			var user = db.GetCurrentUser(fkCurrentUser);
+			var projects = db.GetCurrentUserProjects(fkCurrentUser);
 
-			var dto = new HomeDTO();
+            var dto = new HomeDTO()
+            {
+                name = "Hi " + user.stLogin
+            };
 
-			dto.name = "Hi " + user.stLogin;
-						
-			{
+            {
 				dto.tasks = (from e in db.Task
 							 where e.fkUserResponsible == user.id
 							 where e.bComplete == false

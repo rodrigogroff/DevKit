@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using System.Text;
 
 namespace DataModel
 {
@@ -27,24 +28,24 @@ namespace DataModel
 
         public string Export()
         {
-            var ret = "";
+            var ret = new StringBuilder();
 
-            ret +=  complete + "," + 
-                    kpa + "," + 
-                    expired + "," +
-                    nuPriority + "," + 
-                    fkProject + "," + 
-                    fkClient + "," + 
-                    fkClientGroup + "," + 
-                    fkPhase + "," + 
-                    fkSprint + "," + 
-                    fkUserStart + "," + 
-                    fkUserResponsible + "," + 
-                    fkTaskType + "," + 
-                    fkTaskFlowCurrent + "," + 
-                    fkTaskCategory;
+            ret.Append(complete);
+            ret.Append(kpa);
+            ret.Append(expired);
+            ret.Append(nuPriority);
+            ret.Append(fkProject);
+            ret.Append(fkClient);
+            ret.Append(fkClientGroup);
+            ret.Append(fkPhase);
+            ret.Append(fkSprint);
+            ret.Append(fkUserStart);
+            ret.Append(fkUserResponsible);
+            ret.Append(fkTaskType);
+            ret.Append(fkTaskFlowCurrent);
+            ret.Append(fkTaskCategory);
 
-            return ret;
+            return ret.ToString();
         }
     }
 

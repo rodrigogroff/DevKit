@@ -10,39 +10,43 @@ namespace DevKit.Web.Controllers
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
+            
+            var filter = new TaskFilter()
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                complete = Request.GetQueryStringValue<bool?>("complete", null),
+                kpa = Request.GetQueryStringValue<bool?>("kpa", null),
+                expired = Request.GetQueryStringValue<bool?>("expired", null),
+                nuPriority = Request.GetQueryStringValue<long?>("nuPriority", null),
+                fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
+                fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
+                fkSprint = Request.GetQueryStringValue<long?>("fkSprint", null),
+                fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
+                fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
+                fkTaskFlowCurrent = Request.GetQueryStringValue<long?>("fkTaskFlowCurrent", null),
+                fkUserStart = Request.GetQueryStringValue<long?>("fkUserStart", null),
+                fkUserResponsible = Request.GetQueryStringValue<long?>("fkUserResponsible", null),
+                fkClient = Request.GetQueryStringValue<long?>("fkClient", null),
+                fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
+            };
 
             var hshReport = SetupCacheReport(CachedObject.TaskReports);
-            var currentURI = GetRequestUri();
-
-            if (hshReport[currentURI] is TaskReport report)
+            var currentParameters = filter.Export();
+            if (hshReport[currentParameters] is TaskReport report)
                 return Ok(report);
 
             var count = 0; var mdl = new Task();
+            var results = mdl.ComposedFilters(db, ref count, filter );
 
-			var results = mdl.ComposedFilters(db, ref count, new TaskFilter()
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-				complete = Request.GetQueryStringValue<bool?>("complete", null),
-				kpa = Request.GetQueryStringValue<bool?>("kpa", null),
-				expired = Request.GetQueryStringValue<bool?>("expired", null),
-				nuPriority = Request.GetQueryStringValue<long?>("nuPriority", null),
-				fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
-				fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
-				fkSprint = Request.GetQueryStringValue<long?>("fkSprint", null),
-				fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),					
-				fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
-				fkTaskFlowCurrent = Request.GetQueryStringValue<long?>("fkTaskFlowCurrent", null),
-				fkUserStart = Request.GetQueryStringValue<long?>("fkUserStart", null),
-				fkUserResponsible = Request.GetQueryStringValue<long?>("fkUserResponsible", null),
-				fkClient = Request.GetQueryStringValue<long?>("fkClient", null),
-				fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
-			});
+            var ret = new TaskReport
+            {
+                count = count,
+                results = results
+            };
 
-            var ret = new TaskReport { count = count, results = results };
-
-            hshReport[currentURI] = ret;
+            hshReport[currentParameters] = ret;
 
             return Ok(ret);
 		}

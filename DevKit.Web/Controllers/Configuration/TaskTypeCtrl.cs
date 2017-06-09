@@ -52,8 +52,8 @@ namespace DevKit.Web.Controllers
 
             if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
-
-			return Ok();
+            
+            return Ok();
 		}
 
 		public IHttpActionResult Put(long id, TaskType mdl)
@@ -64,7 +64,9 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			return Ok();			
+            SetupCacheReport(CachedObject.TaskReports).Clear();
+
+            return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)

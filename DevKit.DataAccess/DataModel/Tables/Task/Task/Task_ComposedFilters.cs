@@ -24,6 +24,28 @@ namespace DataModel
                         fkTaskCategory;
 
         public List<long?> lstProjects = null;
+
+        public string Export()
+        {
+            var ret = "";
+
+            ret +=  complete + "," + 
+                    kpa + "," + 
+                    expired + "," +
+                    nuPriority + "," + 
+                    fkProject + "," + 
+                    fkClient + "," + 
+                    fkClientGroup + "," + 
+                    fkPhase + "," + 
+                    fkSprint + "," + 
+                    fkUserStart + "," + 
+                    fkUserResponsible + "," + 
+                    fkTaskType + "," + 
+                    fkTaskFlowCurrent + "," + 
+                    fkTaskCategory;
+
+            return ret;
+        }
     }
 
     public partial class Task

@@ -15,10 +15,10 @@ namespace DataModel
 
 	public class HomeView
 	{
-		public HomeDTO ComposedFilters(DevKitDB db, long fkCurrentUser)
+		public HomeDTO ComposedFilters(DevKitDB db)
 		{
-			var user = db.GetCurrentUser(fkCurrentUser);
-			var projects = db.GetCurrentUserProjects(fkCurrentUser);
+			var user = db.currentUser;
+			var projects = db.GetCurrentUserProjects();
 
             var dto = new HomeDTO()
             {

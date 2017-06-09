@@ -8,11 +8,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            AuthorizeAndStartDatabase();
+            if (!AuthorizeAndStartDatabase())
+                return BadRequest();
 
             var task = new Task();
 
-			var usr = db.GetCurrentUser(login.idUser);
+			var usr = db.currentUser;
 
 			int count_project_tasks = 0, 
 				count_user_tasks = 0;
@@ -21,7 +22,7 @@ namespace DevKit.Web.Controllers
 			{
 				complete = false,
 				kpa = false,
-				lstProjects = db.GetCurrentUserProjects(usr.id)
+				lstProjects = db.GetCurrentUserProjects()
 			});
 
 			task.ComposedFilters(db, ref count_user_tasks, new TaskFilter
@@ -30,8 +31,7 @@ namespace DevKit.Web.Controllers
 			});
 				
 			return Ok(new { count_project_tasks = count_project_tasks,
-							count_user_tasks = count_user_tasks });
-			
+							count_user_tasks = count_user_tasks });			
 		}
 	}
 }

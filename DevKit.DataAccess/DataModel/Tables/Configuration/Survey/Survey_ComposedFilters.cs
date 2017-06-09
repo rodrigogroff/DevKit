@@ -26,8 +26,8 @@ namespace DataModel
 	{
 		public List<Survey> ComposedFilters(DevKitDB db, ref int count, SurveyFilter filter)
 		{
-			var user = db.GetCurrentUser(filter.fkCurrentUser);
-			var lstUserProjects = db.GetCurrentUserProjects(filter.fkCurrentUser);
+			var user = db.currentUser;
+			var lstUserProjects = db.GetCurrentUserProjects();
 
 			var query = from e in db.Survey select e;
 

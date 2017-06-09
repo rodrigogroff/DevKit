@@ -82,7 +82,8 @@ namespace DataModel
 			var dto = new UserKanban_dto();
 			var task_helper = new Task();
 			var accTypeEnum = new EnumAccumulatorType();
-			var user = db.GetCurrentUser(filter.fkCurrentUser);
+
+			var user = db.currentUser;
 
 			var dbUserprojects = ( from e in db.Project
 									join pu in db.ProjectUser on e.id equals pu.fkProject

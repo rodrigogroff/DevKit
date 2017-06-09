@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Web;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -20,11 +21,11 @@ namespace DevKit.Web.Controllers
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
-
-            var usr = db.GetCurrentUser(login.idUser);
+            
+            var usr = db.currentUser;
 			var perf = db.GetProfile(usr.fkProfile);
 
-			if (perf == null)
+            if (perf == null)
 				return StatusCode(HttpStatusCode.NotFound);
 
             return Ok(new TabelaPermissao()

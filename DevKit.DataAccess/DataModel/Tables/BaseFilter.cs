@@ -9,7 +9,7 @@ namespace DataModel
     public class BaseFilter
     {
         public int skip, take;
-        public long fkCurrentUser;
+        
         public string busca;
     }
 }

@@ -14,12 +14,13 @@ namespace DevKit.Core.Controllers
             {
                 var count = 0; var mdl = new Project();
 
+                
+
                 var results = mdl.ComposedFilters(db, ref count, new ProjectFilter
                 {
                     skip = Request.GetQueryStringValue("skip", 0),
                     take = Request.GetQueryStringValue("take", 15),
                     busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                    fkCurrentUser = login.idUser,
                     fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
                 });
 

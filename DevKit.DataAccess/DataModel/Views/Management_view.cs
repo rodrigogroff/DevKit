@@ -6,7 +6,6 @@ namespace DataModel
 	public class ManagementViewFilter
 	{
 		public long? fkProject;
-        public long fkCurrentUser;
     }
 
 	public class ManagementDTO
@@ -87,7 +86,7 @@ namespace DataModel
 			var dto = new ManagementDTO();
 			var vs = new EnumVersionState();
 
-			var lstUserProjects = db.GetCurrentUserProjects(filter.fkCurrentUser);
+			var lstUserProjects = db.GetCurrentUserProjects();
 
 			if (filter.fkProject == null)
 			{

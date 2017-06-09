@@ -871,6 +871,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Base\MemCacheController.cs" />
     <Compile Include="Controllers\Configuration\ClientGroupCtrl.cs" />
     <Compile Include="Controllers\Configuration\ClientCtrl.cs" />
     <Compile Include="Controllers\Configuration\SurveyCtrl.cs" />
@@ -905,7 +906,7 @@
     <Compile Include="App_Start\IocConfig.cs" />
     <Compile Include="App_Start\ValidationActionFilter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ApiBaseController.cs" />
+    <Compile Include="Controllers\Base\ApiBaseController.cs" />
     <Compile Include="Controllers\System\UserCtrl.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

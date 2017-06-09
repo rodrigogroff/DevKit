@@ -17,7 +17,7 @@ namespace DataModel
 	{
 		public List<TaskType> ComposedFilters(DevKitDB db, ref int count, TaskTypeFilter filter)
 		{
-			var lstUserProjetcs = db.GetCurrentUserProjects(filter.fkCurrentUser);
+			var lstUserProjetcs = db.GetCurrentUserProjects();
 
 			var query = from e in db.TaskType select e;
 

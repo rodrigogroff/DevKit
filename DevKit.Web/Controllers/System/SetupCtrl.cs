@@ -25,10 +25,10 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
 
-            if (!mdl.Update(db, mdl.login.idUser, ref serviceResponse))
-					return BadRequest(serviceResponse);
+            if (!mdl.Update(db, ref serviceResponse))
+			    return BadRequest(serviceResponse);
 
-			return Ok(mdl);			
+			return Ok();			
 		}
 	}
 }

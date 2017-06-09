@@ -14,7 +14,7 @@ namespace DataModel
 	{
 		public List<ProjectSprint> ComposedFilters(DevKitDB db, ref int count, ProjectSprintFilter filter)
 		{
-			var lstUserProjects = db.GetCurrentUserProjects(filter.fkCurrentUser);
+			var lstUserProjects = db.GetCurrentUserProjects();
 
 			var query = from e in db.ProjectSprint select e;
 

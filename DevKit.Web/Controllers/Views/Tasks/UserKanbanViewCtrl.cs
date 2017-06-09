@@ -7,7 +7,8 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            AuthorizeAndStartDatabase();
+            if (!AuthorizeAndStartDatabase())
+                return BadRequest();
 
             var mdl = new UserKanbanView();
 				

@@ -1,10 +1,12 @@
 ﻿using DataModel;
+using DevKit.Web.Controllers;
 using LinqToDB;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Web;
 
 namespace DevKit.Web
 {
@@ -20,7 +22,7 @@ namespace DevKit.Web
 		{
 			using (var db = new DevKitDB())
 			{
-				var usuario = new User().Login(db,context.UserName, context.Password);
+				var usuario = new User().Login(db, context.UserName, context.Password);
 
 				if (usuario != null)
 				{
@@ -29,7 +31,16 @@ namespace DevKit.Web
 
                     db.Update(usuario);
 
-					var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                    #region - adjust/save cached user - 
+
+                    var cache = new MemCacheController();
+
+                    cache.myApplication = HttpContext.Current.Application;
+                    cache.BackupCache(CachedObject.User + usuario.id, usuario);
+
+                    #endregion
+
+                    var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
 					identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
 					identity.AddClaim(new Claim(ClaimTypes.Role, usuario.profile.stName));

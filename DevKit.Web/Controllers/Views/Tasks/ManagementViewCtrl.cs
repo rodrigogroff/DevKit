@@ -9,13 +9,13 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            AuthorizeAndStartDatabase();
+            if (!AuthorizeAndStartDatabase())
+                return BadRequest();
 
             var mdl = new ManagementView();
 				
 			return Ok(mdl.ComposedFilters(db, new ManagementViewFilter()
 			{
-                fkCurrentUser = login.idUser,
 				fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 			}));							
 		}

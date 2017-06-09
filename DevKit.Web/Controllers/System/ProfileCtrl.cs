@@ -19,7 +19,6 @@ namespace DevKit.Web.Controllers
 				skip = Request.GetQueryStringValue("skip", 0),
 				take = Request.GetQueryStringValue("take", 15),
 				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                fkCurrentUser = login.idUser,
 				stPermission = Request.GetQueryStringValue("stPermission")?.ToUpper(),
 				fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
 			});
@@ -52,10 +51,10 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
 
-            if (!mdl.Create(db, mdl.login.idUser, ref serviceResponse))
+            if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			return Ok(mdl);
+			return Ok();
 		}
 
 		public IHttpActionResult Put(long id, Profile mdl)
@@ -63,10 +62,10 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
 
-            if (!mdl.Update(db, mdl.login.idUser, ref serviceResponse))
+            if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			return Ok(mdl);			
+			return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)
@@ -82,7 +81,7 @@ namespace DevKit.Web.Controllers
 			if (!model.CanDelete(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			model.Delete(db, login.idUser);
+			model.Delete(db);
 				
 			return Ok();
 		}

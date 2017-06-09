@@ -26,8 +26,8 @@ namespace DataModel
 	{
 		public List<Project> ComposedFilters(DevKitDB db, ref int count, ProjectFilter filter)
 		{
-			var user = db.GetCurrentUser(filter.fkCurrentUser);
-			var lstUserProjects = db.GetCurrentUserProjects(filter.fkCurrentUser);
+			var user = db.currentUser;
+			var lstUserProjects = db.GetCurrentUserProjects();
 
 			var query = from e in db.Project select e;
 

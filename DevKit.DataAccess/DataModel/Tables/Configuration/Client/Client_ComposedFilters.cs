@@ -13,7 +13,7 @@ namespace DataModel
 	{
 		public List<Client> ComposedFilters(DevKitDB db, ref int count, ClientFilter filter)
 		{
-			var user = db.GetCurrentUser(filter.fkCurrentUser);
+			var user = db.currentUser;
 			
 			var query = from e in db.Client select e;
 

@@ -25,9 +25,9 @@ namespace DataModel
 			return query.Any();
 		}
 		
-		public bool Update(DevKitDB db, long fkCurrentUser, ref string resp)
+		public bool Update(DevKitDB db, ref string resp)
 		{
-			var user = db.GetCurrentUser(fkCurrentUser);
+			var user = db.currentUser;
 
 			if (CheckDuplicate(this, db))
 			{

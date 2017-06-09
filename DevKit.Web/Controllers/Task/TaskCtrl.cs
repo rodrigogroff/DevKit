@@ -11,6 +11,8 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
             
+            var mdl = new Task();
+
             var filter = new TaskFilter()
             {
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -32,12 +34,13 @@ namespace DevKit.Web.Controllers
                 fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
             };
 
+            var currentParameters = filter.Export();            
+
             var hshReport = SetupCacheReport(CachedObject.TaskReports);
-            var currentParameters = filter.Export();
+            
             if (hshReport[currentParameters] is TaskReport report)
                 return Ok(report);
 
-            var count = 0; var mdl = new Task();
             var results = mdl.ComposedFilters(db, ref count, filter );
 
             var ret = new TaskReport

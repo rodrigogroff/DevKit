@@ -3,7 +3,7 @@
 a fazer (groff)
 ------------------------------
 		
-	-propagar mudanças feitas no crud de usuário
+	https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state
 
 	-implementar acumulador de 'ammount'
 	-remover pesquisa na tela generica

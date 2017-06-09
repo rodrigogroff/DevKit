@@ -22,8 +22,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
         Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
         {
 			$scope.permModel = data;
-			$scope.userId = data.idUser;
-
+			
 			if (!$scope.permModel.listagem) {
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
@@ -31,7 +30,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			else
             {
 				$scope.loading = true;
-                Api.User.get({ id: $scope.userId, login: $rootScope.loginInfo }, function (data)
+                Api.User.get({ id: $rootScope.loginInfo.idUser, login: $rootScope.loginInfo }, function (data)
                 {
 					$scope.viewModel = data;
 					$scope.loading = false;

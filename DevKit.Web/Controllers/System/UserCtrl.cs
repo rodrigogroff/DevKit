@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-			var count = 0; var mdl = new User();
+			var mdl = new User();
 
 			var results = mdl.ComposedFilters(db, ref count, new UserFilter()
 			{

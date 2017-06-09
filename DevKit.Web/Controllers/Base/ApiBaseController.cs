@@ -10,7 +10,9 @@ namespace DevKit.Web.Controllers
 	{
         public DevKitDB db;
         public LoginInfo login;
-        
+
+        public int count = 0;
+
         public string serviceResponse = "";
                 
         [NonAction]

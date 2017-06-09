@@ -1,13 +1,10 @@
 ﻿using System.Net;
-using System.Web;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class TabelaPermissao
+	public class PermTable
 	{
-		public long idUser = 0;
-
 		public bool listagem = false,
 					visualizar = false,
 					edicao = false, 
@@ -28,9 +25,8 @@ namespace DevKit.Web.Controllers
             if (perf == null)
 				return StatusCode(HttpStatusCode.NotFound);
 
-            return Ok(new TabelaPermissao()
+            return Ok(new PermTable()
             {
-                idUser = usr.id,
                 listagem = perf.stPermissions.Contains("|" + id + "1|"),
                 visualizar = perf.stPermissions.Contains("|" + id + "2|"),
                 edicao = perf.stPermissions.Contains("|" + id + "3|"),

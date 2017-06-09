@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var count = 0; var mdl = new Client();
+            var mdl = new Client();
 
 			var results = mdl.ComposedFilters(db, ref count, new ClientFilter
 			{

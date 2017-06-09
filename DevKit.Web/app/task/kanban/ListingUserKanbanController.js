@@ -30,8 +30,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
 		{
 			$scope.permModel = data;
-			$scope.userId = data.idUser;
-
+			
 			if (!$scope.permModel.listagem) {
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');

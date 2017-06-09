@@ -1,5 +1,4 @@
 ﻿using DataModel;
-
 using System.Net;
 using System.Web.Http;
 
@@ -12,7 +11,7 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var count = 0; var mdl = new TaskCheckPoint();
+            var mdl = new TaskCheckPoint();
 
             var results = mdl.ComposedFilters(db, ref count, new TaskCheckPointFilter()
             {

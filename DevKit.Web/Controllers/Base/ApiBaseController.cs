@@ -66,5 +66,13 @@ namespace DevKit.Web.Controllers
 
             return null;
         }
+
+        [NonAction]
+        public string GetRequestUri()
+        {
+            var req = Request.RequestUri.ToString();
+
+            return req.Substring(req.IndexOf("?"));
+        }
     }
 }

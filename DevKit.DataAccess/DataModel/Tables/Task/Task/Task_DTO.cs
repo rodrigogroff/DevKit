@@ -55,4 +55,10 @@ namespace DataModel
                         sfkTaskType, 
                         sfkTaskCategory;
     }
+
+    public class TaskReport
+    {
+        public int count = 0;
+        public List<TaskListing> results = new List<TaskListing>();
+    }
 }

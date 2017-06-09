@@ -1,5 +1,4 @@
 ﻿using DataModel;
-using Newtonsoft.Json;
 using System.Net;
 using System.Web.Http;
 
@@ -11,6 +10,12 @@ namespace DevKit.Web.Controllers
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
+
+            var hshReport = SetupCacheReport(CachedObject.TaskReports);
+            var currentURI = GetRequestUri();
+
+            if (hshReport[currentURI] is TaskReport report)
+                return Ok(report);
 
             var count = 0; var mdl = new Task();
 
@@ -35,7 +40,11 @@ namespace DevKit.Web.Controllers
 				fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
 			});
 
-			return Ok(new { count = count, results = results });			
+            var ret = new TaskReport { count = count, results = results };
+
+            hshReport[currentURI] = ret;
+
+            return Ok(ret);
 		}
 
 		public IHttpActionResult Get(long id)
@@ -56,6 +65,8 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
 
+            SetupCacheReport(CachedObject.TaskReports).Clear();
+
             if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
@@ -66,6 +77,8 @@ namespace DevKit.Web.Controllers
 		{
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
+
+            SetupCacheReport(CachedObject.TaskReports).Clear();
 
             if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
@@ -87,8 +100,10 @@ namespace DevKit.Web.Controllers
 				return BadRequest(serviceResponse);
 
             model.Delete(db);
-								
-			return Ok();			
+
+            SetupCacheReport(CachedObject.TaskReports).Clear();
+            
+            return Ok();			
 		}
 	}
 }

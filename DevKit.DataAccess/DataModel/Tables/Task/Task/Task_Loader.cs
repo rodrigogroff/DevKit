@@ -4,28 +4,8 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-    public static class setupTask
-    {
-        public const int HomeView = 1,
-                         TaskEdit = 2,
-                         TaskListing = 3;
-    }
-
     public class loaderOptionsTask
     {
-        public int setup = 0;
-
-        public loaderOptionsTask(int choice)
-        {
-            setup = choice;
-            switch (setup)
-            {
-                case setupTask.HomeView: Setup_HomeView(); break;
-                case setupTask.TaskEdit: Setup_TaskEdit(); break;
-                case setupTask.TaskListing: Setup_TaskListing(); break;
-            }
-        }
-
         public bool bLoadTaskCategory = false,
                     bLoadTaskType = false,
                     bLoadProject = false,
@@ -45,59 +25,6 @@ namespace DataModel
                     bLoadClientGroups = false,
                     bLoadCustomSteps = false,
                     bLoadLogs = false;
-
-        void Setup_HomeView()
-        {
-            #region - code - 
-
-            bLoadTaskCategory = true;
-            bLoadTaskType = true;
-            
-            #endregion
-        }
-
-        void Setup_TaskListing()
-        {
-            #region - code - 
-
-            bLoadTaskCategory = true;
-            bLoadTaskType = true;
-            bLoadProject = true;
-            bLoadPhase = true;
-            bLoadSprint = true;
-            bLoadTaskFlow = true;
-            bLoadVersion = true;
-            bLoadUsers = true;
-
-            #endregion
-        }
-
-        void Setup_TaskEdit()
-        {
-            #region - code - 
-
-            bLoadTaskCategory = true;
-            bLoadTaskType = true;
-            bLoadProject = true;
-            bLoadPhase = true;
-            bLoadSprint = true;
-            bLoadTaskFlow = true;
-            bLoadVersion = true;
-            bLoadUsers = true;
-            bLoadProgress = true;
-            bLoadMessages = true;
-            bLoadFlows = true;
-            bLoadAccs = true;
-            bLoadDependencies = true;
-            bLoadCheckpoints = true;
-            bLoadQuestions = true;
-            bLoadClients = true;
-            bLoadClientGroups = true;
-            bLoadCustomSteps = true;
-            bLoadLogs = true;
-
-            #endregion
-        }
     }
 
     public partial class Task

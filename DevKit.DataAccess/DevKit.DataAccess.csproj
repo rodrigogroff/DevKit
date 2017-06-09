@@ -188,6 +188,7 @@
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Dependencies.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Progress.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Questions.cs" />
+    <Compile Include="DataModel\Tables\Task\Task\Task_Report.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_Loader.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_ComposedFilters.cs" />

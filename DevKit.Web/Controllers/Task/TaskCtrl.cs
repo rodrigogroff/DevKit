@@ -34,22 +34,24 @@ namespace DevKit.Web.Controllers
                 fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
             };
 
-            var currentParameters = filter.Export();            
-
             var hshReport = SetupCacheReport(CachedObject.TaskReports);
             
-            if (hshReport[currentParameters] is TaskReport report)
+            if (hshReport[filter.Parameters()] is TaskReport report)
                 return Ok(report);
-
-            var results = mdl.ComposedFilters(db, ref count, filter );
-
-            var ret = new TaskReport
+            
+            var ret = mdl.Report(db, ref count, filter, new loaderOptionsTask
             {
-                count = count,
-                results = results
-            };
+                bLoadTaskCategory = true,
+                bLoadTaskType = true,
+                bLoadProject = true,
+                bLoadPhase = true,
+                bLoadSprint = true,
+                bLoadTaskFlow = true,
+                bLoadVersion = true,
+                bLoadUsers = true,
+            });
 
-            hshReport[currentParameters] = ret;
+            hshReport[filter.Parameters()] = ret;
 
             return Ok(ret);
 		}
@@ -61,8 +63,31 @@ namespace DevKit.Web.Controllers
 
             var model = db.GetTask(id);
 
+            var options = new loaderOptionsTask
+            {
+                bLoadTaskCategory = true,
+                bLoadTaskType = true,
+                bLoadProject = true,
+                bLoadPhase = true,
+                bLoadSprint = true,
+                bLoadTaskFlow = true,
+                bLoadVersion = true,
+                bLoadUsers = true,
+                bLoadProgress = true,
+                bLoadMessages = true,
+                bLoadFlows = true,
+                bLoadAccs = true,
+                bLoadDependencies = true,
+                bLoadCheckpoints = true,
+                bLoadQuestions = true,
+                bLoadClients = true,
+                bLoadClientGroups = true,
+                bLoadCustomSteps = true,
+                bLoadLogs = true
+            };
+
             if (model != null)
-				return Ok(model.LoadAssociations(db, new loaderOptionsTask(setupTask.TaskEdit)));
+				return Ok(model.LoadAssociations(db, options));
 
 			return StatusCode(HttpStatusCode.NotFound);
 		}

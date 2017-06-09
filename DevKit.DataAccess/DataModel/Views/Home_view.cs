@@ -32,8 +32,14 @@ namespace DataModel
 							 select e).
 							 OrderBy(y=>y.nuPriority).
 							 ToList();
-                                
-                new Task().Loader(db, dto.tasks, new loaderOptionsTask(setupTask.HomeView));
+
+                var options = new loaderOptionsTask
+                {
+                    bLoadTaskCategory = true,
+                    bLoadTaskType = true
+                };
+
+                new Task().Loader(db, dto.tasks, options);
 			}
 
 			{

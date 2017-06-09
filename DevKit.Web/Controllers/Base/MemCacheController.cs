@@ -7,7 +7,10 @@ namespace DevKit.Web.Controllers
     public static class CachedObject
     {
         public const string User = "User";
+        public const string EnumMonth = "EnumMonth";
+
         public const string TaskReports = "TaskReports";
+        public const string EnumMonthReport = "EnumMonthReport";
     }
 
 	[Authorize]

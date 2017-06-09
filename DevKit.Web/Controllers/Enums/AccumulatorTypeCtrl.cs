@@ -11,7 +11,10 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get()
 		{
-			string busca = Request.GetQueryStringValue("busca")?.ToUpper();
+            if (!AuthorizeAndStartDatabase())
+                return BadRequest();
+
+            string busca = Request.GetQueryStringValue("busca")?.ToUpper();
 				
 			var query = (from e in _enum.lst select e);
 
@@ -23,7 +26,10 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-			var model = _enum.Get(id);
+            if (!AuthorizeAndStartDatabase())
+                return BadRequest();
+
+            var model = _enum.Get(id);
 
 			if (model != null)
 				return Ok(model);

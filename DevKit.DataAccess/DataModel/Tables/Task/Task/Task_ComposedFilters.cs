@@ -1,16 +1,14 @@
 ﻿using LinqToDB;
-using System.Linq;
-using System.Collections.Generic;
 using System;
 using System.Text;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace DataModel
 {
     public class TaskFilter : BaseFilter
     {
-        public bool? complete,
-                     kpa,
-                     expired;
+        public bool? complete, kpa, expired;
 
         public long? nuPriority,
                         fkProject,
@@ -26,10 +24,26 @@ namespace DataModel
 
         public List<long?> lstProjects = null;
 
-        public string Export()
+        public string Parameters()
         {
+            return Export();
+        }
+
+        string _exportResults = "";
+
+        string Export()
+        {
+            if (_exportResults != "")
+                return _exportResults;
+
             var ret = new StringBuilder();
 
+            // base
+            ret.Append(skip);
+            ret.Append(take);
+            ret.Append(busca);
+
+            // customs
             ret.Append(complete);
             ret.Append(kpa);
             ret.Append(expired);
@@ -45,13 +59,15 @@ namespace DataModel
             ret.Append(fkTaskFlowCurrent);
             ret.Append(fkTaskCategory);
 
-            return ret.ToString();
+            _exportResults = ret.ToString();
+
+            return _exportResults;
         }
     }
 
     public partial class Task
 	{
-		public List<TaskListing> ComposedFilters(DevKitDB db, ref int count, TaskFilter filter)
+		public List<TaskListing> ComposedFilters(DevKitDB db, ref int count, TaskFilter filter, loaderOptionsTask options )
 		{
 			var query = from e in db.Task select e;
 
@@ -142,8 +158,8 @@ namespace DataModel
             var results = query.Skip(() => filter.skip).
                                 Take(() => filter.take).
                                 ToList();
-
-            results = Loader(db, results, new loaderOptionsTask(setupTask.TaskListing));
+            
+            results = Loader(db, results, options );
 
             var resultsListing = new List<TaskListing>();
 

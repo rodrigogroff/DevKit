@@ -12,7 +12,6 @@ namespace DevKit.Web.Controllers
         public LoginInfo login;
 
         public int count = 0;
-
         public string serviceResponse = "";
                 
         [NonAction]
@@ -28,15 +27,25 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
+        public LoginInfo GetLoginFromRequest()
+        {
+            var strRequest = Request.GetQueryStringValue("login");
+
+            if (strRequest != null)
+                return JsonConvert.DeserializeObject<LoginInfo>(strRequest);
+
+            return null;
+        }
+
+        [NonAction]
         public bool AuthorizeAndStartDatabase(LoginInfo _login)
         {
             myApplication = HttpContext.Current.Application;
+            login = _login;
 
             if (_login == null)
                 return false;
 
-            login = _login;
-            
             return SetupDb();
         }
 
@@ -54,17 +63,6 @@ namespace DevKit.Web.Controllers
             BackupCache(db.currentUser);
 
             return true;
-        }
-
-        [NonAction]
-        public LoginInfo GetLoginFromRequest()
-        {
-            var strRequest = Request.GetQueryStringValue("login");
-
-            if (strRequest != null)
-                return JsonConvert.DeserializeObject<LoginInfo>(strRequest);
-
-            return null;
         }
     }
 }

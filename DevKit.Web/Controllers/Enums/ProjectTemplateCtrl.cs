@@ -42,7 +42,6 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var obj = RestoreCache(CacheObject.EnumProjectTemplate + id);
-
             if (obj != null)
                 return Ok(obj);
 

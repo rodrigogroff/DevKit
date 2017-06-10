@@ -61,6 +61,10 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
+            var obj = RestoreCache(CacheObject.Task + id);
+            if (obj != null)
+                return Ok(obj);
+
             var model = db.GetTask(id);
 
             var options = new loaderOptionsTask
@@ -86,10 +90,14 @@ namespace DevKit.Web.Controllers
                 bLoadLogs = true
             };
 
-            if (model != null)
-				return Ok(model.LoadAssociations(db, options));
+            if (model == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-			return StatusCode(HttpStatusCode.NotFound);
+            model.LoadAssociations(db, options);
+
+            BackupCache(model);
+
+            return Ok(model);		
 		}
 
 		public IHttpActionResult Post(Task mdl)
@@ -97,25 +105,27 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
 
-            SetupCacheReport(CacheObject.TaskReports).Clear();
-
             if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			return Ok();			
+            SetupCacheReport(CacheObject.TaskReports).Clear();
+            StoreCache(CacheObject.Task + mdl.id, mdl);
+            
+            return Ok();			
 		}
 
 		public IHttpActionResult Put(long id, Task mdl)
 		{
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
-
-            SetupCacheReport(CacheObject.TaskReports).Clear();
-
+            
             if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			return Ok();			
+            SetupCacheReport(CacheObject.TaskReports).Clear();
+            StoreCache(CacheObject.Task + mdl.id, mdl);
+
+            return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)

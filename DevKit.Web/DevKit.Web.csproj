@@ -871,8 +871,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Base\CacheObject.cs" />
-    <Compile Include="Controllers\Base\MemCacheController.cs" />
+    <Compile Include="Controllers\Base\Cache\CacheObject.cs" />
+    <Compile Include="Controllers\Base\Cache\MemCacheController.cs" />
     <Compile Include="Controllers\Configuration\ClientGroupCtrl.cs" />
     <Compile Include="Controllers\Configuration\ClientCtrl.cs" />
     <Compile Include="Controllers\Configuration\SurveyCtrl.cs" />

@@ -40,7 +40,6 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var obj = RestoreCache(CacheObject.EnumAccumulatorType + id);
-
             if (obj != null)
                 return Ok(obj);
 

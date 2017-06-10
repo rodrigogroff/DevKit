@@ -34,8 +34,7 @@ namespace DevKit.Web.Controllers
                 fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
             };
 
-            var hshReport = SetupCacheReport(CacheObject.TaskReports);
-            
+            var hshReport = SetupCacheReport(CacheObject.TaskReports);            
             if (hshReport[filter.Parameters()] is TaskReport report)
                 return Ok(report);
             

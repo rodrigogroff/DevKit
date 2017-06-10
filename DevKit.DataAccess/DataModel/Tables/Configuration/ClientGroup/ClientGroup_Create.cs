@@ -22,13 +22,13 @@ namespace DataModel
 			return query.Any();
 		}
 		
-		public bool Create(DevKitDB db, long fkCurrentUser, ref string resp)
+		public bool Create(DevKitDB db, ref string resp)
 		{
 			var user = db.currentUser;
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "Client name already taken";
+				resp = "Client group name already taken";
 				return false;
 			}
 

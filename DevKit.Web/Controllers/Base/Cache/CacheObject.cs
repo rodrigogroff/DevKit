@@ -19,9 +19,14 @@ namespace DevKit.Web.Controllers
 
         // tables
         public const string User = "User";
+        public const string Client = "Client";
+        public const string ClientGroup = "ClientGroup";
         public const string Task = "Task";
 
         // reports
+        public const string ClientReports = "ClientReports";
+        public const string ClientGroupReports = "ClientGroupReports";
         public const string TaskReports = "TaskReports";
+        
     }
 }

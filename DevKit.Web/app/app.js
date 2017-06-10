@@ -64,6 +64,8 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
  
 angular.module('app').config(function ($httpProvider) {
 
+    $httpProvider.defaults.useXDomain = true;
+
 	$httpProvider.interceptors.push('AuthInterceptorService');
 
 	if (!$httpProvider.defaults.headers.get) {

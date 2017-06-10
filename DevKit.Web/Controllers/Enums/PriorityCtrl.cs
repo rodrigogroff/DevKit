@@ -7,38 +7,53 @@ namespace DevKit.Web.Controllers
 {
 	public class PriorityController : ApiControllerBase
 	{
-		EnumPriority _enum = new EnumPriority();		
-
 		public IHttpActionResult Get()
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
             string busca = Request.GetQueryStringValue("busca")?.ToUpper();
-				
-			var query = (from e in _enum.lst select e);
+
+            var hshReport = SetupCacheReport(CacheObject.EnumPriorityReport);
+            if (hshReport[busca] is TaskReport report)
+                return Ok(report);
+
+            var _enum = new EnumPriority();
+
+            var query = (from e in _enum.lst select e);
 
 			if (busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
-				
-			return Ok(new
-			{
-				count = query.Count(),
-				results = query.ToList()
-			});
-		}
 
-		public IHttpActionResult Get(long id)
-		{
+            var ret = new
+            {
+                count = query.Count(),
+                results = query.ToList()
+            };
+
+            hshReport[busca] = ret;
+
+            return Ok(ret);
+        }
+
+        public IHttpActionResult Get(long id)
+        {
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
-            
-            var model = _enum.Get(id);
 
-			if (model != null)
-				return Ok(model);
+            var obj = RestoreCache(CacheObject.EnumPriority + id);
 
-			return StatusCode(HttpStatusCode.NotFound);			
-		}
-	}
+            if (obj != null)
+                return Ok(obj);
+
+            var model = new EnumPriority().Get(id);
+
+            if (model == null)
+                return StatusCode(HttpStatusCode.NotFound);
+
+            BackupCache(model);
+
+            return Ok(model);
+        }
+    }
 }

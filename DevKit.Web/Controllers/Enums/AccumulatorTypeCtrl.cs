@@ -7,34 +7,51 @@ namespace DevKit.Web.Controllers
 {
 	public class AccumulatorTypeController : ApiControllerBase
 	{
-		EnumAccumulatorType _enum = new EnumAccumulatorType();		
-
 		public IHttpActionResult Get()
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
             string busca = Request.GetQueryStringValue("busca")?.ToUpper();
-				
-			var query = (from e in _enum.lst select e);
+
+            var hshReport = SetupCacheReport(CacheObject.EnumAccumulatorTypeReport);
+            if (hshReport[busca] is TaskReport report)
+                return Ok(report);
+            
+            var query = (from e in new EnumAccumulatorType().lst select e);
 
 			if (busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 
-			return Ok(new { count = query.Count(), results = query.ToList() });
-		}
+            var ret = new
+            {
+                count = query.Count(),
+                results = query.ToList()
+            };
+
+            hshReport[busca] = ret;
+
+            return Ok(ret);
+        }
 
 		public IHttpActionResult Get(long id)
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = _enum.Get(id);
+            var obj = RestoreCache(CacheObject.EnumAccumulatorType + id);
 
-			if (model != null)
-				return Ok(model);
+            if (obj != null)
+                return Ok(obj);
 
-			return StatusCode(HttpStatusCode.NotFound);			
+            var model = new EnumAccumulatorType().Get(id);
+
+			if (model == null)
+                return StatusCode(HttpStatusCode.NotFound);
+                        
+            BackupCache(model);
+
+            return Ok(model);
 		}
 	}
 }

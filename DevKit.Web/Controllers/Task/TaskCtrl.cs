@@ -34,7 +34,7 @@ namespace DevKit.Web.Controllers
                 fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
             };
 
-            var hshReport = SetupCacheReport(CachedObject.TaskReports);
+            var hshReport = SetupCacheReport(CacheObject.TaskReports);
             
             if (hshReport[filter.Parameters()] is TaskReport report)
                 return Ok(report);
@@ -97,7 +97,7 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
 
-            SetupCacheReport(CachedObject.TaskReports).Clear();
+            SetupCacheReport(CacheObject.TaskReports).Clear();
 
             if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
@@ -110,7 +110,7 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
 
-            SetupCacheReport(CachedObject.TaskReports).Clear();
+            SetupCacheReport(CacheObject.TaskReports).Clear();
 
             if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
@@ -133,7 +133,7 @@ namespace DevKit.Web.Controllers
 
             model.Delete(db);
 
-            SetupCacheReport(CachedObject.TaskReports).Clear();
+            SetupCacheReport(CacheObject.TaskReports).Clear();
             
             return Ok();			
 		}

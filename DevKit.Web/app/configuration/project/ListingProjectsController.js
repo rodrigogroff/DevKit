@@ -1,6 +1,6 @@
 ﻿angular.module('app.controllers').controller('ListingProjectsController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$http',
+function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $http)
 {
 	$rootScope.exibirMenu = true;
 
@@ -37,14 +37,39 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		CheckPermissions();
 
 		if (ngHistoricoFiltro.filtro)
-			ngHistoricoFiltro.filtro.exibeFiltro = false;
+            ngHistoricoFiltro.filtro.exibeFiltro = false;
+
+       // loadAPICore(0, 15);
 	}
 	
 	$scope.search = function ()
-	{
+    {        
 		$scope.load(0, $scope.itensporpagina);
 		$scope.paginador.reiniciar();
 	}
+
+    //function loadAPICore(skip, take)
+    //{
+    //    $http({
+    //        method: "GET",
+    //        url: "http://localhost:52851/api/project",
+    //        params: { skip: skip, take: take, login: $rootScope.loginInfo },
+    //        withCredentials: true,
+    //        headers: {
+    //            'Content-Type': 'application/json',
+    //            'Access-Control-Allow-Origin': '*'
+    //        }
+
+    //    }).success(function (data) {
+
+    //        console.log(data);
+
+    //    }).error(function (data) {
+
+    //        console.log(data);
+
+    //    });;
+    //};
 
 	$scope.load = function (skip, take)
 	{

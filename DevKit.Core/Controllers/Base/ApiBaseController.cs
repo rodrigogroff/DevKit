@@ -1,24 +1,22 @@
 ﻿using DataModel;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Web;
-using System.Web.Http;
 
-namespace DevKit.Web.Controllers
+namespace DevKit.Core.Controllers
 {
-	[Authorize]
-	public class ApiControllerBase : MemCacheController
-	{
+    public class ApiBaseController : Controller
+    {
         public DevKitDB db;
         public LoginInfo login;
 
         public int count = 0;
 
         public string serviceResponse = "";
-                
+
         [NonAction]
         public bool AuthorizeAndStartDatabase()
         {
-            myApplication = HttpContext.Current.Application;
+            //myApplication = HttpContext.Current.Application;
             login = GetLoginFromRequest();
 
             if (login == null)
@@ -30,28 +28,32 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public bool AuthorizeAndStartDatabase(LoginInfo _login)
         {
-            myApplication = HttpContext.Current.Application;
+            //myApplication = HttpContext.Current.Application;
 
             if (_login == null)
                 return false;
 
             login = _login;
-            
+
             return SetupDb();
         }
 
         [NonAction]
         public bool SetupDb()
         {
+            //var myUserTag = CachedObject.User + login.idUser;
+
             db = new DevKitDB()
             {
-                currentUser = RestoreCache(CacheObject.User + login.idUser) as User
+              //  currentUser = RestoreCache(myUserTag) as User
             };
+
+            var setup = db.Setup.Find(1);
 
             if (!db.ValidateUser(login))
                 return false;
 
-            BackupCache(db.currentUser);
+        //    BackupCache(myUserTag, db.currentUser);
 
             return true;
         }

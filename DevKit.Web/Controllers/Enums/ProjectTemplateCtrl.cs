@@ -7,38 +7,53 @@ namespace DevKit.Web.Controllers
 {
 	public class ProjectTemplateController : ApiControllerBase
 	{
-		EnumProjectTemplate _enum = new EnumProjectTemplate();		
-
 		public IHttpActionResult Get()
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
-
+                        
             string busca = Request.GetQueryStringValue("busca")?.ToUpper();
-				
-			var query = (from e in _enum.lst select e);
+
+            var hshReport = SetupCacheReport(CacheObject.EnumPriorityReport);
+            if (hshReport[busca] is TaskReport report)
+                return Ok(report);
+
+            var _enum = new EnumProjectTemplate();
+
+            var query = (from e in _enum.lst select e);
 
 			if (busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
-				
-			return Ok(new
-			{
-				count = query.Count(),
-				results = query.ToList()
-			});
-		}
 
-		public IHttpActionResult Get(long id)
-		{
+            var ret = new
+            {
+                count = query.Count(),
+                results = query.ToList()
+            };
+
+            hshReport[busca] = ret;
+
+            return Ok(ret);
+        }
+
+        public IHttpActionResult Get(long id)
+        {
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = _enum.Get(id);
+            var obj = RestoreCache(CacheObject.EnumProjectTemplate + id);
 
-			if (model != null)
-				return Ok(model);
+            if (obj != null)
+                return Ok(obj);
 
-			return StatusCode(HttpStatusCode.NotFound);			
-		}
-	}
+            var model = new EnumProjectTemplate().Get(id);
+
+            if (model == null)
+                return StatusCode(HttpStatusCode.NotFound);
+
+            BackupCache(model);
+
+            return Ok(model);
+        }
+    }
 }

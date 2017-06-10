@@ -8,24 +8,20 @@ namespace DevKit.Core.Controllers
     {
         public IActionResult Get()
         {
-            var login = GetLoginInfo();
+            if (!AuthorizeAndStartDatabase())
+                return BadRequest();
 
-            using (var db = new DevKitDB())
+            var mdl = new Project();
+
+            var results = mdl.ComposedFilters(db, ref count, new ProjectFilter
             {
-                var count = 0; var mdl = new Project();
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
+            });
 
-                
-
-                var results = mdl.ComposedFilters(db, ref count, new ProjectFilter
-                {
-                    skip = Request.GetQueryStringValue("skip", 0),
-                    take = Request.GetQueryStringValue("take", 15),
-                    busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                    fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
-                });
-
-                return Ok(new { count = count, results = results });
-            }
+            return Ok(new { count = count, results = results });
         }
 
         // GET api/values/5

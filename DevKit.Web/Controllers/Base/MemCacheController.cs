@@ -4,22 +4,21 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-    public static class CachedObject
-    {
-        public const string User = "User";
-        public const string EnumMonth = "EnumMonth";
-
-        public const string TaskReports = "TaskReports";
-        public const string EnumMonthReport = "EnumMonthReport";
-    }
-
 	[Authorize]
 	public class MemCacheController : ApiController
 	{
         public HttpApplicationState myApplication;
 
+        public string currentCacheTag = "";
+
         [NonAction]
-        public void BackupCache(string tag, object obj)
+        public void BackupCache(object obj)
+        {
+            myApplication[currentCacheTag] = obj;
+        }
+
+        [NonAction]
+        public void StoreCache(string tag, object obj)
         {
             myApplication[tag] = obj;
         }
@@ -27,7 +26,9 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public object RestoreCache(string tag)
         {
-            return myApplication[tag] as object;
+            currentCacheTag = tag;
+
+            return myApplication[currentCacheTag] as object;
         }
 
         [NonAction]

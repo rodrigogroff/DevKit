@@ -14,14 +14,11 @@ namespace DevKit.Web.Controllers
 
             string busca = Request.GetQueryStringValue("busca")?.ToUpper();
 
-            var hshReport = SetupCacheReport(CachedObject.EnumMonthReport);
-
+            var hshReport = SetupCacheReport(CacheObject.EnumMonthReport);
             if (hshReport[busca] is TaskReport report)
                 return Ok(report);
 
-            var _enum = new EnumMonth();
-
-            var query = (from e in _enum.lst select e);
+            var query = (from e in new EnumMonth().lst select e);
 
 			if (busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
@@ -42,25 +39,19 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var cacheTag = CachedObject.EnumMonth + id;
-
-            var obj = RestoreCache(cacheTag);
+            var obj = RestoreCache(CacheObject.EnumMonth + id);
 
             if (obj != null)
                 return Ok(obj);
 
-            var _enum = new EnumMonth();
+            var model = new EnumMonth().Get(id);
 
-            var model = _enum.Get(id);
+			if (model == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-			if (model != null)
-            {
-                BackupCache(cacheTag, model);
+            BackupCache(model);
 
-                return Ok(model);
-            }				
-
-			return StatusCode(HttpStatusCode.NotFound);			
+            return Ok(model);
 		}
 	}
 }

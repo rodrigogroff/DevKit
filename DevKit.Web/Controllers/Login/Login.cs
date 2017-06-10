@@ -33,10 +33,12 @@ namespace DevKit.Web
 
                     #region - adjust/save cached user - 
 
-                    var cache = new MemCacheController();
+                    var cache = new MemCacheController()
+                    {
+                        myApplication = HttpContext.Current.Application
+                    };
 
-                    cache.myApplication = HttpContext.Current.Application;
-                    cache.BackupCache(CachedObject.User + usuario.id, usuario);
+                    cache.StoreCache(CacheObject.User + usuario.id, usuario);
 
                     #endregion
 

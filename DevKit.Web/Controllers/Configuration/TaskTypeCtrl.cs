@@ -63,7 +63,7 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-            SetupCacheReport(CachedObject.TaskReports).Clear();
+            SetupCacheReport(CacheObject.TaskReports).Clear();
 
             return Ok();			
 		}

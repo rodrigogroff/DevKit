@@ -42,7 +42,7 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var obj = RestoreCache(CacheObject.ClientGroup + id);
+            var obj = RestoreCache(CacheObject.ClientGroup, id);
             if (obj != null)
                 return Ok(obj);
 
@@ -68,8 +68,7 @@ namespace DevKit.Web.Controllers
             if (!mdl.Create(db, ref serviceResponse))
                 return BadRequest(serviceResponse);
 
-            SetupCacheReport(CacheObject.ClientGroupReports).Clear();
-            StoreCache(CacheObject.ClientGroup + mdl.id, mdl);
+            CleanCache(db, CacheObject.ClientGroup, null);
 
             return Ok();
         }
@@ -82,8 +81,7 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref serviceResponse))
                 return BadRequest(serviceResponse);
 
-            SetupCacheReport(CacheObject.ClientGroupReports).Clear();
-            StoreCache(CacheObject.ClientGroup + mdl.id, mdl);
+            CleanCache(db, CacheObject.ClientGroup, id);
 
             return Ok();
         }
@@ -103,7 +101,7 @@ namespace DevKit.Web.Controllers
 
             model.Delete(db);
 
-            SetupCacheReport(CacheObject.TaskReports).Clear();
+            CleanCache(db, CacheObject.ClientGroup, null);
 
             return Ok();
         }

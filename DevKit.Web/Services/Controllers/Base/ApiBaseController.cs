@@ -13,17 +13,25 @@ namespace DevKit.Web.Controllers
 
         public int count = 0;
         public string serviceResponse = "";
+
+        public bool IsPreCached = false;
                 
         [NonAction]
         public bool AuthorizeAndStartDatabase()
         {
             myApplication = HttpContext.Current.Application;
-            login = GetLoginFromRequest();
 
-            if (login == null)
-                return false;
+            if (!IsPreCached)
+            {
+                login = GetLoginFromRequest();
 
-            return SetupDb();
+                if (login == null)
+                    return false;
+
+                return SetupDb();
+            }
+
+            return true;
         }
 
         [NonAction]
@@ -43,10 +51,15 @@ namespace DevKit.Web.Controllers
             myApplication = HttpContext.Current.Application;
             login = _login;
 
-            if (_login == null)
-                return false;
+            if (!IsPreCached)
+            {
+                if (_login == null)
+                    return false;
 
-            return SetupDb();
+                return SetupDb();
+            }
+
+            return true;
         }
 
         [NonAction]
@@ -54,7 +67,7 @@ namespace DevKit.Web.Controllers
         {
             db = new DevKitDB()
             {
-                currentUser = RestoreCache(CacheObject.User + login.idUser) as User
+                currentUser = RestoreCache(CacheObject.User, login.idUser) as User
             };
 
             if (!db.ValidateUser(login))

@@ -1,4 +1,9 @@
 ﻿
+CREATE TABLE IF NOT EXISTS public."CacheControl" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."CacheControl" OWNER to postgres;
+ALTER TABLE public."CacheControl" ADD COLUMN if not exists "stEntity" character varying(99);
+ALTER TABLE public."CacheControl" ADD COLUMN if not exists "fkTarget" bigint;
+
 CREATE TABLE IF NOT EXISTS public."Setup" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Setup" OWNER to postgres;
 ALTER TABLE public."Setup" ADD COLUMN if not exists "stPhoneMask" character varying(99);

@@ -20,6 +20,7 @@ namespace DataModel
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
 		public ITable<AuditLog>               AuditLog               { get { return this.GetTable<AuditLog>(); } }
+		public ITable<CacheControl>           CacheControl           { get { return this.GetTable<CacheControl>(); } }
 		public ITable<Client>                 Client                 { get { return this.GetTable<Client>(); } }
 		public ITable<ClientGroup>            ClientGroup            { get { return this.GetTable<ClientGroup>(); } }
 		public ITable<ClientGroupAssociation> ClientGroupAssociation { get { return this.GetTable<ClientGroupAssociation>(); } }
@@ -80,6 +81,14 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkTarget    { get; set; } // bigint
 		[Column,     Nullable] public string    stLog       { get; set; } // character varying(999)
 		[Column,     Nullable] public string    stDetailLog { get; set; } // character varying(3999)
+	}
+
+	[Table(Schema="public", Name="CacheControl")]
+	public partial class CacheControl
+	{
+		[PrimaryKey, Identity] public long   id       { get; set; } // bigint
+		[Column,     Nullable] public string stEntity { get; set; } // character varying(99)
+		[Column,     Nullable] public long?  fkTarget { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Client")]
@@ -450,6 +459,12 @@ namespace DataModel
 	public static partial class TableExtensions
 	{
 		public static AuditLog Find(this ITable<AuditLog> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static CacheControl Find(this ITable<CacheControl> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

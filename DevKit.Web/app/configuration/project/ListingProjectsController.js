@@ -39,7 +39,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		if (ngHistoricoFiltro.filtro)
             ngHistoricoFiltro.filtro.exibeFiltro = false;
 
-       // loadAPICore(0, 15);
+      // loadAPICore(0, 15);
 	}
 	
 	$scope.search = function ()
@@ -48,28 +48,28 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		$scope.paginador.reiniciar();
 	}
 
-    //function loadAPICore(skip, take)
-    //{
-    //    $http({
-    //        method: "GET",
-    //        url: "http://localhost:52851/api/project",
-    //        params: { skip: skip, take: take, login: $rootScope.loginInfo },
-    //        withCredentials: true,
-    //        headers: {
-    //            'Content-Type': 'application/json',
-    //            'Access-Control-Allow-Origin': '*'
-    //        }
+    function loadAPICore(skip, take)
+    {
+        $http({
+            method: "GET",
+            url: "http://localhost:52851/api/project",
+            params: { skip: skip, take: take, login: $rootScope.loginInfo },
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
 
-    //    }).success(function (data) {
+        }).success(function (data) {
 
-    //        console.log(data);
+            console.log(data);
 
-    //    }).error(function (data) {
+        }).error(function (data) {
 
-    //        console.log(data);
+            console.log(data);
 
-    //    });;
-    //};
+        });;
+    };
 
 	$scope.load = function (skip, take)
 	{

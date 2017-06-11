@@ -38,7 +38,7 @@ namespace DevKit.Web
                         myApplication = HttpContext.Current.Application
                     };
 
-                    cache.StoreCache(CacheObject.User + usuario.id, usuario);
+                    cache.StoreCache(CacheObject.User, usuario.id, usuario);
 
                     #endregion
 

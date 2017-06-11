@@ -1,11 +1,11 @@
-﻿using DataModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Http;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
-	public class MonthController : ApiControllerBase
+	public class VersionStateController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
@@ -14,11 +14,13 @@ namespace DevKit.Web.Controllers
 
             string busca = Request.GetQueryStringValue("busca")?.ToUpper();
 
-            var hshReport = SetupCacheReport(CacheObject.EnumMonthReport);
+            var hshReport = SetupCacheReport(CacheObject.EnumVersionStateReport);
             if (hshReport[busca] is TaskReport report)
                 return Ok(report);
 
-            var query = (from e in new EnumMonth().lst select e);
+            var _enum = new EnumVersionState();
+
+            var query = (from e in _enum.lst select e);
 
 			if (busca != null)
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
@@ -32,25 +34,25 @@ namespace DevKit.Web.Controllers
             hshReport[busca] = ret;
 
             return Ok(ret);
-		}
+        }
 
-		public IHttpActionResult Get(long id)
-		{
+        public IHttpActionResult Get(long id)
+        {
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var obj = RestoreCache(CacheObject.EnumMonth + id);
+            var obj = RestoreCache(CacheObject.EnumVersionState, id);
             if (obj != null)
                 return Ok(obj);
 
-            var model = new EnumMonth().Get(id);
+            var model = new EnumVersionState().Get(id);
 
-			if (model == null)
+            if (model == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
             BackupCache(model);
 
             return Ok(model);
-		}
-	}
+        }
+    }
 }

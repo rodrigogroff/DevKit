@@ -11,7 +11,7 @@ namespace DevKit.Core
         public string ConnectionString { get; set; }
         public string Name { get; set; }
         public string ProviderName { get; set; }
-        public bool IsGlobal => false;
+        public bool IsGlobal => true;
     }
 
     public class MySettings : ILinqToDBSettings
@@ -33,6 +33,7 @@ namespace DevKit.Core
                     {
                         Name = "PostgreSQL",
                         ProviderName = "PostgreSQL",
+                        
                         ConnectionString = @"Server=localhost;Port=5432;Database=DevKit;User Id=postgres;Password=rodrigo;"
                     };
             }

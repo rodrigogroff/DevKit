@@ -1,24 +1,24 @@
-﻿using System.Linq;
+﻿using DataModel;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
-using DataModel;
 
 namespace DevKit.Web.Controllers
 {
-	public class VersionStateController : ApiControllerBase
+	public class ProjectTemplateController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
-
+                        
             string busca = Request.GetQueryStringValue("busca")?.ToUpper();
 
-            var hshReport = SetupCacheReport(CacheObject.EnumVersionStateReport);
+            var hshReport = SetupCacheReport(CacheObject.EnumPriorityReport);
             if (hshReport[busca] is TaskReport report)
                 return Ok(report);
 
-            var _enum = new EnumVersionState();
+            var _enum = new EnumProjectTemplate();
 
             var query = (from e in _enum.lst select e);
 
@@ -41,11 +41,11 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var obj = RestoreCache(CacheObject.EnumVersionState + id);
+            var obj = RestoreCache(CacheObject.EnumProjectTemplate, id);
             if (obj != null)
                 return Ok(obj);
 
-            var model = new EnumVersionState().Get(id);
+            var model = new EnumProjectTemplate().Get(id);
 
             if (model == null)
                 return StatusCode(HttpStatusCode.NotFound);

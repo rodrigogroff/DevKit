@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using DataModel;
+using LinqToDB;
+using System.Collections;
 using System.Web;
 using System.Web.Http;
 
@@ -17,14 +19,16 @@ namespace DevKit.Web.Controllers
             myApplication[currentCacheTag] = obj;
         }
 
+        // save id list from tag
+
         [NonAction]
-        public void StoreCache(string tag, object obj)
+        public void StoreCache(string tag, long? id, object obj)
         {
             myApplication[tag] = obj;
         }
 
         [NonAction]
-        public object RestoreCache(string tag)
+        public object RestoreCache(string tag, long id)
         {
             currentCacheTag = tag;
 
@@ -43,6 +47,28 @@ namespace DevKit.Web.Controllers
             }               
 
             return hsh;
+        }
+
+        [NonAction]
+        public void CleanCacheReport(string tag)
+        {
+            var hsh = myApplication[tag] as Hashtable;
+
+            if (hsh != null)
+            {
+                hsh.Clear();
+                myApplication[tag] = null;                
+            }           
+        }
+
+        [NonAction]
+        public void CleanCache(DevKitDB db, string tag, long? id)
+        {
+            db.Insert(new CacheControl
+            {
+                fkTarget = id,
+                stEntity = tag
+            });
         }
     }
 }

@@ -36,6 +36,8 @@ namespace DevKit.Core
                     .AllowCredentials());
             });
 
+            
+
             // Add framework services.
             services.AddMvc();
         }

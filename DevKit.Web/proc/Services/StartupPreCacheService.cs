@@ -66,18 +66,11 @@ namespace DevKit.Web.Services
                 }
 
                 // --------------------------
-                // tables
+                // reports
                 // --------------------------
 
+                // user
                 {
-                    var q = (from e in db.User select e);
-                    if (q.Count() < maxRowsToCache)
-                        foreach (var item in q.ToList())
-                        {
-                            item.LoadAssociations(db, false);
-                            cache.StoreCache(CacheObject.User, item.id, item);
-                        }
-
                     var hshReport = cache.SetupCacheReport(CacheObject.UserReports);
 
                     var mdl = new User();
@@ -91,6 +84,22 @@ namespace DevKit.Web.Services
                     hshReport[filter.Parameters()] = ret;
                 }
 
+                // --------------------------
+                // tables
+                // --------------------------
+
+                // user
+                {
+                    var q = (from e in db.User select e);
+                    if (q.Count() < maxRowsToCache)
+                        foreach (var item in q.ToList())
+                        {
+                            item.LoadAssociations(db, false);
+                            cache.StoreCache(CacheObject.User, item.id, item);
+                        }
+                }
+
+                // client
                 {
                     var q = (from e in db.Client select e);
                     if (q.Count() < maxRowsToCache)
@@ -101,6 +110,7 @@ namespace DevKit.Web.Services
                         }                            
                 }
 
+                // client groups
                 {
                     var q = (from e in db.ClientGroup select e);
                     if (q.Count() < maxRowsToCache)
@@ -111,28 +121,30 @@ namespace DevKit.Web.Services
                         }                            
                 }
 
+                // tasks
                 {
-                    var options = new loaderOptionsTask();
-
-                    options.bLoadTaskCategory = true;
-                    options.bLoadTaskType = true;
-                    options.bLoadProject = true;
-                    options.bLoadPhase = true;
-                    options.bLoadSprint = true;
-                    options.bLoadTaskFlow = true;
-                    options.bLoadVersion = true;
-                    options.bLoadUsers = true;
-                    options.bLoadProgress = true;
-                    options.bLoadMessages = true;
-                    options.bLoadFlows = true;
-                    options.bLoadAccs = true;
-                    options.bLoadDependencies = true;
-                    options.bLoadCheckpoints = true;
-                    options.bLoadQuestions = true;
-                    options.bLoadClients = true;
-                    options.bLoadClientGroups = true;
-                    options.bLoadCustomSteps = true;
-                    options.bLoadLogs = true; 
+                    var options = new loaderOptionsTask()
+                    {
+                        bLoadTaskCategory = true,
+                        bLoadTaskType = true,
+                        bLoadProject = true,
+                        bLoadPhase = true,
+                        bLoadSprint = true,
+                        bLoadTaskFlow = true,
+                        bLoadVersion = true,
+                        bLoadUsers = true,
+                        bLoadProgress = true,
+                        bLoadMessages = true,
+                        bLoadFlows = true,
+                        bLoadAccs = true,
+                        bLoadDependencies = true,
+                        bLoadCheckpoints = true,
+                        bLoadQuestions = true,
+                        bLoadClients = true,
+                        bLoadClientGroups = true,
+                        bLoadCustomSteps = true,
+                        bLoadLogs = true
+                    };
 
                     var q = (from e in db.Task select e);
                     if (q.Count() < maxRowsToCache)
@@ -140,8 +152,7 @@ namespace DevKit.Web.Services
                         {
                             item.LoadAssociations(db, options);
                             cache.StoreCache(CacheObject.Task, item.id, item);
-                        }
-                            
+                        }                            
                 }
             }
         }

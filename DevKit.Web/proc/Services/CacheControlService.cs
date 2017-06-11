@@ -2,17 +2,20 @@
 using DevKit.Web.Controllers;
 using System.Linq;
 using System.Threading;
+using System.Web;
 
-namespace DevKit.Web.Schedulers
+namespace DevKit.Web.Services
 {
-    public class CacheControl
+    public class CacheControlService
     {
         public CacheClean cleaner = new CacheClean();
 
         public long lastId = 0;
 
-        public void Run()
+        public void Run(HttpApplicationState _app)
         {
+            cleaner.myApplication = _app;
+
             while (true)
             {
                 using (var db = new DevKitDB())

@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app.controllers').controller('LoginController',
-['$scope', '$rootScope', '$location', 'AuthService', 'version',
-function ($scope, $rootScope, $location, AuthService, version)
+['$scope', '$rootScope', '$location', 'AuthService', 'version','Api',
+function ($scope, $rootScope, $location, AuthService, version, Api)
 {
 	$rootScope.exibirMenu = false;
 
@@ -36,6 +36,8 @@ function ($scope, $rootScope, $location, AuthService, version)
                     idUser: response.idUser,
                     session: response.session
                 }
+
+                Api.Startup.listPage({ }, function (data) { });
 
                 $rootScope.exibirMenu = true;
                 $rootScope.$broadcast('updateCounters');

@@ -24,6 +24,7 @@ namespace DevKit.Web.Controllers
         public const string Task = "Task";
 
         // reports
+        public const string UserReports = "UserReports";
         public const string ClientReports = "ClientReports";
         public const string ClientGroupReports = "ClientGroupReports";
         public const string TaskReports = "TaskReports";

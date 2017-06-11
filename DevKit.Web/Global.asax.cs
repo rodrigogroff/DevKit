@@ -24,6 +24,6 @@ namespace DevKit.Web
 				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional  },
 				namespaces: new[] { "DevKit.Web.Controllers" }
 			);
-		}
+        }
 	}
 }

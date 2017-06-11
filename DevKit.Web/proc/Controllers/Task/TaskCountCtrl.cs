@@ -1,5 +1,4 @@
 ﻿using DataModel;
-using Newtonsoft.Json;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers

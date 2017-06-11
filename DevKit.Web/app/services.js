@@ -66,7 +66,8 @@ angular.module('app.services', ['ngResource'])
 		ProjectTemplate: $resource('api/projectTemplate/:id', {}, opcoes),
 		Timesheet: $resource('api/timesheetView/:id', {}, opcoes),
 		News: $resource('api/news/:id', {}, opcoes),
-		Survey: $resource('api/survey/:id', {}, opcoes),
+        Survey: $resource('api/survey/:id', {}, opcoes),
+        Startup: $resource('api/startup/:id', {}, opcoes),
 		HomeView: $resource('api/homeView/:id', {}, opcoes)
 	};
 }]);

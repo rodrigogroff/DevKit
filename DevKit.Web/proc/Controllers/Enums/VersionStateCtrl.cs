@@ -5,24 +5,24 @@ using DataModel;
 
 namespace DevKit.Web.Controllers
 {
-	public class PriorityController : ApiControllerBase
+	public class VersionStateController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            string busca = Request.GetQueryStringValue("busca")?.ToUpper();
+            string busca = Request.GetQueryStringValue("busca", "")?.ToUpper();
 
-            var hshReport = SetupCacheReport(CacheObject.EnumPriorityReport);
+            var hshReport = SetupCacheReport(CacheObject.EnumVersionStateReport);
             if (hshReport[busca] is TaskReport report)
                 return Ok(report);
 
-            var _enum = new EnumPriority();
+            var _enum = new EnumVersionState();
 
             var query = (from e in _enum.lst select e);
 
-			if (busca != null)
+			if (busca != "")
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 
             var ret = new
@@ -41,11 +41,11 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var obj = RestoreCache(CacheObject.EnumPriority, id);
+            var obj = RestoreCache(CacheObject.EnumVersionState, id);
             if (obj != null)
                 return Ok(obj);
 
-            var model = new EnumPriority().Get(id);
+            var model = new EnumVersionState().Get(id);
 
             if (model == null)
                 return StatusCode(HttpStatusCode.NotFound);

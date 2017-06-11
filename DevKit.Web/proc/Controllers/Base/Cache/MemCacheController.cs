@@ -24,13 +24,13 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public void StoreCache(string tag, long? id, object obj)
         {
-            myApplication[tag] = obj;
+            myApplication[tag + id] = obj;
         }
 
         [NonAction]
         public object RestoreCache(string tag, long id)
         {
-            currentCacheTag = tag;
+            currentCacheTag = tag + id;
 
             return myApplication[currentCacheTag] as object;
         }

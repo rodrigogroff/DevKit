@@ -20,7 +20,13 @@ namespace DataModel
 		public List<UserLog> logs;
 	}
 
-	public class UserPasswordChange
+    public class UserReport
+    {
+        public int count = 0;
+        public List<User> results = new List<User>();
+    }
+
+    public class UserPasswordChange
 	{
 		public string stCurrentPassword,
 						stNewPassword;

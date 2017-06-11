@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DataModel
 {
@@ -10,9 +11,41 @@ namespace DataModel
                       phone;
 
 		public bool? ativo;
-
 		public long? fkPerfil;
-	}
+
+        public string Parameters()
+        {
+            return Export();
+        }
+
+        string _exportResults = "";
+
+        string Export()
+        {
+            if (_exportResults != "")
+                return _exportResults;
+
+            var ret = new StringBuilder();
+
+            // base
+            ret.Append(skip);
+            ret.Append(take);
+            ret.Append(busca);
+
+            ret.Append(email);
+            ret.Append(phone);
+
+            if (ativo != null)
+                ret.Append(ativo);
+
+            if (fkPerfil != null)
+                ret.Append(fkPerfil);
+
+            _exportResults = ret.ToString();
+
+            return _exportResults;
+        }
+    }
 
 	public partial class User
 	{

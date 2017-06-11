@@ -1,5 +1,6 @@
 ﻿using DataModel;
 using DevKit.Web.Controllers;
+using DevKit.Web.Services;
 using LinqToDB;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
@@ -31,17 +32,6 @@ namespace DevKit.Web
 
                     db.Update(usuario);
 
-                    #region - adjust/save cached user - 
-
-                    var cache = new MemCacheController()
-                    {
-                        myApplication = HttpContext.Current.Application
-                    };
-
-                    cache.StoreCache(CacheObject.User, usuario.id, usuario);
-
-                    #endregion
-
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
 					identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
@@ -51,8 +41,8 @@ namespace DevKit.Web
                     identity.AddClaim(new Claim("Session", usuario.stCurrentSession.ToString()));
 
                     var ticket = new AuthenticationTicket(identity, null);
-					context.Validated(ticket);
-				}
+					context.Validated(ticket);                    
+                }
 				else
 				{
 					context.SetError("invalid_grant", "Invalid login / password!");

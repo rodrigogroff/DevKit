@@ -6,14 +6,13 @@ namespace DevKit.Web.Controllers
     {
         public void Clean (string target, long? id)
         {
-            var app = HttpContext.Current.Application;
-
             switch (target)
             {
                 case CacheObject.User:
 
                     if (id != null)
                         StoreCache(CacheObject.User, id, null);
+                    CleanCacheReport(CacheObject.UserReports);
                     break;
 
                 case CacheObject.Client:

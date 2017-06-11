@@ -13,7 +13,7 @@ namespace DevKit.Web.Controllers
             if (myApp["start"] == null)
             {
                 System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApp); });
-           //     System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApp); });  
+                System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApp); });  
 
                 myApp["start"] = true;
             }           

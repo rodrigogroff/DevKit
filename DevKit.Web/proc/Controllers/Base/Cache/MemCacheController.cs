@@ -64,6 +64,9 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public void CleanCache(DevKitDB db, string tag, long? id)
         {
+            if (id != null)
+                StoreCache(tag, id, null);
+
             db.Insert(new CacheControl
             {
                 fkTarget = id,

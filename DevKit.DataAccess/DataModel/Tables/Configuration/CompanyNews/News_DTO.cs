@@ -13,4 +13,10 @@ namespace DataModel
 						sdtLog = "",
 						updateCommand = "";
 	}
+
+    public class CompanyNewsReport
+    {
+        public int count = 0;
+        public List<CompanyNews> results = new List<CompanyNews>();
+    }
 }

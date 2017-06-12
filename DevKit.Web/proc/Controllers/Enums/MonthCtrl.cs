@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            string busca = Request.GetQueryStringValue("busca", "")?.ToUpper();
+            string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
             var hshReport = SetupCacheReport(CacheObject.EnumMonthReport);
             if (hshReport[busca] is TaskReport report)
@@ -43,14 +43,14 @@ namespace DevKit.Web.Controllers
             if (obj != null)
                 return Ok(obj);
 
-            var model = new EnumMonth().Get(id);
+            var mdl = new EnumMonth().Get(id);
 
-			if (model == null)
+			if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            BackupCache(model);
+            BackupCache(mdl);
 
-            return Ok(model);
+            return Ok(mdl);
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using DataModel;
+using System.Net;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -18,21 +19,31 @@ namespace DevKit.Web.Controllers
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
-            
-            var usr = db.currentUser;
-			var perf = db.GetProfile(usr.fkProfile);
 
-            if (perf == null)
+            if (RestoreCache(CacheObject.Profile, (long)db.currentUser.fkProfile) is Profile obj)
+                return Ok(Parse(obj, id));
+
+            var mdl = db.GetProfile(db.currentUser.fkProfile);
+
+            if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
 
-            return Ok(new PermTable()
-            {
-                listagem = perf.stPermissions.Contains("|" + id + "1|"),
-                visualizar = perf.stPermissions.Contains("|" + id + "2|"),
-                edicao = perf.stPermissions.Contains("|" + id + "3|"),
-                novo = perf.stPermissions.Contains("|" + id + "4|"),
-                remover = perf.stPermissions.Contains("|" + id + "5|")
-            });			
+            BackupCache(mdl);
+
+            return Ok(Parse(mdl, id));
 		}
+
+        [NonAction]
+        public PermTable Parse(Profile mdl, long id)
+        {
+            return new PermTable()
+            {
+                listagem = mdl.stPermissions.Contains("|" + id + "1|"),
+                visualizar = mdl.stPermissions.Contains("|" + id + "2|"),
+                edicao = mdl.stPermissions.Contains("|" + id + "3|"),
+                novo = mdl.stPermissions.Contains("|" + id + "4|"),
+                remover = mdl.stPermissions.Contains("|" + id + "5|")
+            };
+        }
 	}
 }

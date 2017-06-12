@@ -39,25 +39,30 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
+            var combo = Request.GetQueryStringValue("combo", false);
+
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var obj = RestoreCache(CacheObject.Client, id);
+            var obj = RestoreCache(CacheObject.Client, id) as Client;
             if (obj != null)
-                return Ok(obj);
+                if (combo)
+                    return Ok(obj.ClearAssociations());
+                else
+                    return Ok(obj);
+                
+            var mdl = db.GetClient(id);
 
-            var model = db.GetClient(id);
-
-			if (model == null)
+			if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
-            
-            var combo = Request.GetQueryStringValue("combo", false);
+
+            mdl.LoadAssociations(db);
+            BackupCache(mdl);
+
             if (combo)
-                return Ok(model);
-
-            BackupCache(model);
-
-            return Ok(model.LoadAssociations(db));
+                return Ok(mdl.ClearAssociations());
+            else
+                return Ok(mdl);
 		}
 
 		public IHttpActionResult Post(Client mdl)
@@ -68,7 +73,10 @@ namespace DevKit.Web.Controllers
 			if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
+            mdl.LoadAssociations(db);
+
             CleanCache(db, CacheObject.Client, null);
+            StoreCache(CacheObject.Client, mdl.id, mdl);
 
             return Ok();			
 		}
@@ -81,7 +89,9 @@ namespace DevKit.Web.Controllers
 			if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-            CleanCache(db, CacheObject.Client, id);
+            mdl.LoadAssociations(db);
+
+            StoreCache(CacheObject.Client, mdl.id, mdl);
 
             return Ok();			
 		}

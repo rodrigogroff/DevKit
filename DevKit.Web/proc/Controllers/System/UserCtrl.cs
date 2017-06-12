@@ -1,5 +1,4 @@
 ﻿using DataModel;
-
 using System.Net;
 using System.Web.Http;
 
@@ -44,26 +43,32 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
 		{
+            var combo = Request.GetQueryStringValue("combo", false);
+
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var obj = RestoreCache(CacheObject.User, id);
+            var obj = RestoreCache(CacheObject.User, id) as User;
             if (obj != null)
-                return Ok(obj);
-
-            var model = db.GetUser(id);
-
-            if (model != null)
             {
-                var combo = Request.GetQueryStringValue("combo", false);
-
                 if (combo)
-                    return Ok(model);
-
-                return Ok(model.LoadAssociations(db));
+                    return Ok(obj.ClearAssociations());
+                else
+                    return Ok(obj);
             }
 
-            BackupCache(model);
+            var mdl = db.GetUser(id);
+
+            if (mdl != null)
+            {
+                mdl.LoadAssociations(db);
+                BackupCache(mdl);
+
+                if (combo)
+                    return Ok(mdl.ClearAssociations());
+                else
+                    return Ok(mdl);
+            }
 
             return StatusCode(HttpStatusCode.NotFound);
 		}
@@ -76,7 +81,10 @@ namespace DevKit.Web.Controllers
 			if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-            CleanCache(db, CacheObject.User, null);
+            mdl.LoadAssociations(db);
+
+            CleanCache(db, CacheObject.User, null);            
+            StoreCache(CacheObject.User, mdl.id, mdl);
 
             return Ok();			
 		}
@@ -89,7 +97,8 @@ namespace DevKit.Web.Controllers
 			if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-            CleanCache(db, CacheObject.User, id);
+            mdl.LoadAssociations(db);
+            StoreCache(CacheObject.User, mdl.id, mdl);
 
             return Ok();			
 		}

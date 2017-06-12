@@ -8,13 +8,14 @@ namespace DevKit.Web.Services
 {
     public class CacheControlService
     {
-        public CacheClean cleaner = new CacheClean();
-
-        public long lastId = 0;
-
         public void Run(HttpApplicationState _app)
         {
-            cleaner.myApplication = _app;
+            var cleaner = new CacheClean()
+            {
+                myApplication = _app
+            };
+
+            long lastId = 0;
 
             while (true)
             {
@@ -45,7 +46,6 @@ namespace DevKit.Web.Services
                         foreach (var item in lst)
                         {
                             cleaner.Clean(item.stEntity, item.fkTarget);
-
                             lastId = item.id;
                         }
                     }                    

@@ -15,7 +15,7 @@ namespace DataModel
 
 			if (user != null)
 			{
-				user.LoadAssociations(db, true);
+				user.LoadAssociations(db);
 
 				new AuditLog
 				{

@@ -18,7 +18,6 @@ namespace DevKit.Web.Controllers
         public bool AuthorizeAndStartDatabase()
         {
             myApplication = HttpContext.Current.Application;
-
             login = GetLoginFromRequest();
 
             if (login == null)
@@ -42,7 +41,6 @@ namespace DevKit.Web.Controllers
         public bool AuthorizeAndStartDatabase(LoginInfo _login)
         {
             login = _login;
-
             myApplication = HttpContext.Current.Application;
 
             if (_login == null)

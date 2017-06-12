@@ -13,39 +13,65 @@ namespace DevKit.Web.Controllers
 
             var mdl = new Profile();
 
-			var results = mdl.ComposedFilters(db, ref count, new ProfileFilter()
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-				stPermission = Request.GetQueryStringValue("stPermission")?.ToUpper(),
-				fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
-			});
+            var filter = new ProfileFilter()
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                stPermission = Request.GetQueryStringValue("stPermission")?.ToUpper(),
+                fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
+            };
 
-			return Ok(new { count = count, results = results });			
-		}
-		
-		public IHttpActionResult Get(long id)
+            var hshReport = SetupCacheReport(CacheObject.ProfileReports);
+            if (hshReport[filter.Parameters()] is ProfileReport report)
+                return Ok(report);
+
+            var results = mdl.ComposedFilters(db, ref count, filter);
+
+            var ret = new ProfileReport
+            {
+                count = count,
+                results = results
+            };
+
+            hshReport[filter.Parameters()] = ret;
+
+            return Ok(ret);
+        }
+
+        public IHttpActionResult Get(long id)
 		{
+            var combo = Request.GetQueryStringValue("combo", false);
+
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
+
+            var obj = RestoreCache(CacheObject.Profile, id) as Profile;
+            if (obj != null)
+            {
+                if (combo)
+                    return Ok(obj.ClearAssociations());
+                else
+                    return Ok(obj);
+            }
 
             var model = db.GetProfile(id);
 
             if (model != null)
             {
-                var combo = Request.GetQueryStringValue("combo", false);
+                model.LoadAssociations(db);
+                BackupCache(model);
 
                 if (combo)
+                    return Ok(model.ClearAssociations());
+                else
                     return Ok(model);
-
-                return Ok(model.LoadAssociations(db));
             }
 
-            return StatusCode(HttpStatusCode.NotFound);			
-		}
-		
-		public IHttpActionResult Post(Profile mdl)
+            return StatusCode(HttpStatusCode.NotFound);
+        }
+
+        public IHttpActionResult Post(Profile mdl)
 		{
             if (!AuthorizeAndStartDatabase(mdl.login))
                 return BadRequest();
@@ -53,7 +79,12 @@ namespace DevKit.Web.Controllers
             if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			return Ok();
+            mdl.LoadAssociations(db);
+
+            CleanCache(db, CacheObject.Profile, null);
+            StoreCache(CacheObject.Profile, mdl.id, mdl);
+
+            return Ok();
 		}
 
 		public IHttpActionResult Put(long id, Profile mdl)
@@ -64,7 +95,11 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			return Ok();			
+            mdl.LoadAssociations(db);
+
+            StoreCache(CacheObject.Profile, mdl.id, mdl);
+
+            return Ok();		
 		}
 
 		public IHttpActionResult Delete(long id)
@@ -72,15 +107,17 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetProfile(id);
+            var mdl = db.GetProfile(id);
 				
-			if (model == null)
+			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!model.CanDelete(db, ref serviceResponse))
+			if (!mdl.CanDelete(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			model.Delete(db);
+            CleanCache(db, CacheObject.Profile, null);
+
+            mdl.Delete(db);
 				
 			return Ok();
 		}

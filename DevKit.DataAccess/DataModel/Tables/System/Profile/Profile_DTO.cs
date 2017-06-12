@@ -12,7 +12,13 @@ namespace DataModel
 		public List<ProfileLog> logs;
 	}
 
-	public class ProfileLog
+    public class ProfileReport
+    {
+        public int count = 0;
+        public List<Profile> results = new List<Profile>();
+    }
+
+    public class ProfileLog
 	{
 		public string	sdtLog, 
 						stUser, 

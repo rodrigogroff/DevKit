@@ -39,25 +39,30 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
         {
+            var combo = Request.GetQueryStringValue("combo", false);
+
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var obj = RestoreCache(CacheObject.ClientGroup, id);
+            var obj = RestoreCache(CacheObject.ClientGroup, id) as ClientGroup;
             if (obj != null)
-                return Ok(obj);
+                if (combo)
+                    return Ok(obj.ClearAssociations());
+                else
+                    return Ok(obj);
 
-            var model = db.GetClientGroup(id);
+            var mdl = db.GetClientGroup(id);
 
-            if (model == null)
+            if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            var combo = Request.GetQueryStringValue("combo", false);
+            mdl.LoadAssociations(db);
+            BackupCache(mdl);
+
             if (combo)
-                return Ok(model);
-
-            BackupCache(model);
-
-            return Ok(model.LoadAssociations(db));
+                return Ok(mdl.ClearAssociations());
+            else
+                return Ok(mdl);
         }
 
         public IHttpActionResult Post(ClientGroup mdl)
@@ -68,7 +73,10 @@ namespace DevKit.Web.Controllers
             if (!mdl.Create(db, ref serviceResponse))
                 return BadRequest(serviceResponse);
 
+            mdl.LoadAssociations(db);
+
             CleanCache(db, CacheObject.ClientGroup, null);
+            StoreCache(CacheObject.ClientGroup, mdl.id, mdl);
 
             return Ok();
         }
@@ -81,7 +89,9 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref serviceResponse))
                 return BadRequest(serviceResponse);
 
-            CleanCache(db, CacheObject.ClientGroup, id);
+            mdl.LoadAssociations(db);
+
+            StoreCache(CacheObject.ClientGroup, mdl.id, mdl);
 
             return Ok();
         }
@@ -91,15 +101,15 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetClientGroup(id);
+            var mdl = db.GetClientGroup(id);
 
-            if (model == null)
+            if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            if (!model.CanDelete(db, ref serviceResponse))
+            if (!mdl.CanDelete(db, ref serviceResponse))
                 return BadRequest(serviceResponse);
 
-            model.Delete(db);
+            mdl.Delete(db);
 
             CleanCache(db, CacheObject.ClientGroup, null);
 

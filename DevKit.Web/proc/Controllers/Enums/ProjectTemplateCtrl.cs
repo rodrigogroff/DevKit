@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            string busca = Request.GetQueryStringValue("busca", "")?.ToUpper();
+            string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
             var hshReport = SetupCacheReport(CacheObject.EnumPriorityReport);
             if (hshReport[busca] is TaskReport report)

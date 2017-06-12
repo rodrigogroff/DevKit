@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DataModel
 {
@@ -8,7 +9,36 @@ namespace DataModel
 	{
 		public string stPermission;
 		public long? fkUser;
-	}
+
+        public string Parameters()
+        {
+            return Export();
+        }
+
+        string _exportResults = "";
+
+        string Export()
+        {
+            if (_exportResults != "")
+                return _exportResults;
+
+            var ret = new StringBuilder();
+
+            // base
+            ret.Append(skip);
+            ret.Append(take);
+            ret.Append(busca);
+
+            ret.Append(stPermission);
+
+            if (fkUser != null)
+                ret.Append(fkUser);
+
+            _exportResults = ret.ToString();
+
+            return _exportResults;
+        }
+    }
 
 	public partial class Profile
 	{

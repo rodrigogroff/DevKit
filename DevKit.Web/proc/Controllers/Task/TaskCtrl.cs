@@ -93,7 +93,6 @@ namespace DevKit.Web.Controllers
                 return StatusCode(HttpStatusCode.NotFound);
 
             model.LoadAssociations(db, options);
-
             BackupCache(model);
 
             return Ok(model);		
@@ -107,8 +106,9 @@ namespace DevKit.Web.Controllers
             if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-            CleanCache(db, CacheObject.Task, null );
-            
+            CleanCache(db, CacheObject.Task, null);
+            StoreCache(CacheObject.Task, mdl.id, mdl);
+
             return Ok();			
 		}
 
@@ -120,7 +120,7 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-            CleanCache(db, CacheObject.Task, id);
+            StoreCache(CacheObject.Task, mdl.id, mdl);
 
             return Ok();			
 		}

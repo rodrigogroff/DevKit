@@ -19,8 +19,6 @@ namespace DevKit.Web.Controllers
             myApplication[currentCacheTag] = obj;
         }
 
-        // save id list from tag
-
         [NonAction]
         public void StoreCache(string tag, long? id, object obj)
         {

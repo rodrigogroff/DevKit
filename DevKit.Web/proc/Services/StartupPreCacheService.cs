@@ -15,21 +15,19 @@ namespace DevKit.Web.Services
                 myApplication = _app
             };
 
-            var count = 0;
-            var maxRowsToCache = 1000;
+            int count = 0, 
+                maxRowsToCache = 1000;
 
             using (var db = new DevKitDB())
             {
-                // --------------------------
-                // enums
-                // --------------------------
+                #region - enums - 
 
                 foreach (var item in new EnumAccumulatorType().lst) cache.StoreCache(CacheObject.EnumAccumulatorType, item.id, item);
                 foreach (var item in new EnumMonth().lst) cache.StoreCache(CacheObject.EnumMonth, item.id, item);
                 foreach (var item in new EnumPriority().lst) cache.StoreCache(CacheObject.EnumPriority, item.id, item);
                 foreach (var item in new EnumProjectTemplate().lst) cache.StoreCache(CacheObject.EnumProjectTemplate, item.id, item);
                 foreach (var item in new EnumVersionState().lst) cache.StoreCache(CacheObject.EnumVersionState, item.id, item);
-
+                
                 {
                     var hshReport = cache.SetupCacheReport(CacheObject.EnumAccumulatorTypeReport);
                     var query = (from e in new EnumAccumulatorType().lst select e);
@@ -65,9 +63,9 @@ namespace DevKit.Web.Services
                     hshReport[""] = ret;
                 }
 
-                // --------------------------
-                // reports
-                // --------------------------
+                #endregion
+
+                #region - reports -
 
                 // user
                 {
@@ -84,9 +82,54 @@ namespace DevKit.Web.Services
                     hshReport[filter.Parameters()] = ret;
                 }
 
-                // --------------------------
-                // tables
-                // --------------------------
+                // profile
+                {
+                    var hshReport = cache.SetupCacheReport(CacheObject.ProfileReports);
+
+                    var mdl = new Profile();
+                    var filter = new ProfileFilter { skip = 0, take = 15 };
+                    var results = mdl.ComposedFilters(db, ref count, filter);
+                    var ret = new ProfileReport
+                    {
+                        count = count,
+                        results = results
+                    };
+                    hshReport[filter.Parameters()] = ret;
+                }
+
+                // client
+                {
+                    var hshReport = cache.SetupCacheReport(CacheObject.ClientReports);
+
+                    var mdl = new Client();
+                    var filter = new ClientFilter { skip = 0, take = 15 };
+                    var results = mdl.ComposedFilters(db, ref count, filter);
+                    var ret = new ClientReport
+                    {
+                        count = count,
+                        results = results
+                    };
+                    hshReport[filter.Parameters()] = ret;
+                }
+
+                // client groups
+                {
+                    var hshReport = cache.SetupCacheReport(CacheObject.ClientGroupReports);
+
+                    var mdl = new ClientGroup();
+                    var filter = new ClientGroupFilter { skip = 0, take = 15 };
+                    var results = mdl.ComposedFilters(db, ref count, filter);
+                    var ret = new ClientGroupReport
+                    {
+                        count = count,
+                        results = results
+                    };
+                    hshReport[filter.Parameters()] = ret;
+                }
+
+                #endregion
+
+                #region - tables - 
 
                 // user
                 {
@@ -94,8 +137,19 @@ namespace DevKit.Web.Services
                     if (q.Count() < maxRowsToCache)
                         foreach (var item in q.ToList())
                         {
-                            item.LoadAssociations(db, false);
+                            item.LoadAssociations(db);
                             cache.StoreCache(CacheObject.User, item.id, item);
+                        }
+                }
+
+                // profile
+                {
+                    var q = (from e in db.Profile select e);
+                    if (q.Count() < maxRowsToCache)
+                        foreach (var item in q.ToList())
+                        {
+                            item.LoadAssociations(db);
+                            cache.StoreCache(CacheObject.Profile, item.id, item);
                         }
                 }
 
@@ -123,7 +177,7 @@ namespace DevKit.Web.Services
 
                 // tasks
                 {
-                    var options = new loaderOptionsTask()
+                    var options = new loaderOptionsTask
                     {
                         bLoadTaskCategory = true,
                         bLoadTaskType = true,
@@ -154,6 +208,8 @@ namespace DevKit.Web.Services
                             cache.StoreCache(CacheObject.Task, item.id, item);
                         }                            
                 }
+
+                #endregion
             }
         }
     }

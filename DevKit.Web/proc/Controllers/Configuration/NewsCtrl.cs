@@ -13,35 +13,49 @@ namespace DevKit.Web.Controllers
 
             var mdl = new CompanyNews();
 
-			var results = mdl.ComposedFilters(db, ref count, new CompanyNewsFilter
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-				fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
-			});
+            var filter = new CompanyNewsFilter
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
+            };            
 
-			return Ok(new { count = count, results = results });			
-		}
+            var hshReport = SetupCacheReport(CacheObject.CompanyNewsReports);
+            if (hshReport[filter.Parameters()] is CompanyNewsReport report)
+                return Ok(report);
 
-		public IHttpActionResult Get(long id)
+            var results = mdl.ComposedFilters(db, ref count, filter);
+
+            var ret = new CompanyNewsReport
+            {
+                count = count,
+                results = results
+            };
+
+            hshReport[filter.Parameters()] = ret;
+
+            return Ok(ret);
+        }
+
+        public IHttpActionResult Get(long id)
 		{
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetNews(id);
+            var obj = RestoreCache(CacheObject.CompanyNews, id);
+            if (obj != null)
+                return Ok(obj);
 
-            if (model != null)
-            {
-                var combo = Request.GetQueryStringValue("combo", false);
+            var mdl = db.GetNews(id);
 
-                if (combo)
-                    return Ok(model);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-                return Ok(model.LoadAssociations(db));
-            }
+            mdl.LoadAssociations(db);
+            BackupCache(mdl);
 
-            return StatusCode(HttpStatusCode.NotFound);
+            return Ok(mdl);
 		}
 
 		public IHttpActionResult Post(CompanyNews mdl)
@@ -50,9 +64,14 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             if (!mdl.Create(db, ref serviceResponse))
-					return BadRequest(serviceResponse);
+			    return BadRequest(serviceResponse);
 
-			return Ok();			
+            mdl.LoadAssociations(db);
+
+            CleanCache(db, CacheObject.CompanyNews, null);
+            StoreCache(CacheObject.CompanyNews, mdl.id, mdl);
+
+            return Ok();			
 		}
 
 		public IHttpActionResult Put(long id, CompanyNews mdl)
@@ -63,7 +82,11 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			return Ok();			
+            mdl.LoadAssociations(db);
+
+            StoreCache(CacheObject.CompanyNews, mdl.id, mdl);
+
+            return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)
@@ -80,8 +103,10 @@ namespace DevKit.Web.Controllers
 				return BadRequest(serviceResponse);
 
             model.Delete(db);
-								
-			return Ok();
+
+            CleanCache(db, CacheObject.CompanyNews, null);
+
+            return Ok();
 		}
 	}
 }

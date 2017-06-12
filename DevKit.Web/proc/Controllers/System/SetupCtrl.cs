@@ -12,12 +12,19 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetSetup();
-				
-			if (model != null)
-				return Ok(model.LoadAssociations(db));
+            var obj = RestoreCache(CacheObject.Setup, id);
+            if (obj != null)
+                return Ok(obj);
 
-			return StatusCode(HttpStatusCode.NotFound);			
+            var mdl = db.GetSetup();
+				
+			if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
+
+            mdl.LoadAssociations(db);
+            BackupCache(mdl);
+
+            return Ok(mdl);			
 		}
 
 		public IHttpActionResult Put(long id, Setup mdl)
@@ -28,7 +35,11 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref serviceResponse))
 			    return BadRequest(serviceResponse);
 
-			return Ok();			
+            mdl.LoadAssociations(db);
+
+            StoreCache(CacheObject.Setup, id, mdl);
+
+            return Ok();			
 		}
 	}
 }

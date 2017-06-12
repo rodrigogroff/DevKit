@@ -19,7 +19,14 @@ namespace DataModel
 			return this;
 		}
 
-		List<Client> LoadClients(DevKitDB db)
+        public ClientGroup ClearAssociations()
+        {
+            clients = null;
+
+            return this;
+        }
+
+        List<Client> LoadClients(DevKitDB db)
 		{
 			return (from e in db.ClientGroupAssociation
 					 join eCli in db.Client on e.fkClient equals eCli.id

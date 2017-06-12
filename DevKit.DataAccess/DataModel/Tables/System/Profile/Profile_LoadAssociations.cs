@@ -17,6 +17,14 @@ namespace DataModel
 			return this;
 		}
 
+        public Profile ClearAssociations()
+        {
+            users = null;
+            logs = null;
+
+            return this;
+        }
+
 		List<User> LoadUsers(DevKitDB db)
 		{
 			return (from e in db.User where e.fkProfile == this.id select e).ToList();

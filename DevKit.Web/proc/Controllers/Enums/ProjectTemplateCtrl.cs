@@ -45,14 +45,14 @@ namespace DevKit.Web.Controllers
             if (obj != null)
                 return Ok(obj);
 
-            var model = new EnumProjectTemplate().Get(id);
+            var mdl = new EnumProjectTemplate().Get(id);
 
-            if (model == null)
+            if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            BackupCache(model);
+            BackupCache(mdl);
 
-            return Ok(model);
+            return Ok(mdl);
         }
     }
 }

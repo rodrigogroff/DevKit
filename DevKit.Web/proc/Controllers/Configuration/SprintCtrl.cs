@@ -30,16 +30,16 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetProjectSprint(id);
+            var mdl = db.GetProjectSprint(id);
 
-            if (model != null)
+            if (mdl != null)
             {
                 var combo = Request.GetQueryStringValue("combo", false);
 
                 if (combo)
-                    return Ok(model);
+                    return Ok(mdl);
 
-                return Ok(model.LoadAssociations(db));
+                return Ok(mdl.LoadAssociations(db));
             }
 
             return StatusCode(HttpStatusCode.NotFound);			

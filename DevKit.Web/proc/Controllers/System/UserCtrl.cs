@@ -108,15 +108,15 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetUser(id);
+            var mdl = db.GetUser(id);
 
-			if (model == null)
+			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!model.CanDelete(db, ref serviceResponse))
+			if (!mdl.CanDelete(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			model.Delete(db);
+			mdl.Delete(db);
 
             CleanCache(db, CacheObject.User, null);
 

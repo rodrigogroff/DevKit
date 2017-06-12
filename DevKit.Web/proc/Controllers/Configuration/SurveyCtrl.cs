@@ -29,16 +29,16 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetSurvey(id);
+            var mdl = db.GetSurvey(id);
 
-            if (model != null)
+            if (mdl != null)
             {
                 var combo = Request.GetQueryStringValue("combo", false);
 
                 if (combo)
-                    return Ok(model);
+                    return Ok(mdl);
 
-                return Ok(model.LoadAssociations(db));
+                return Ok(mdl.LoadAssociations(db));
             }
 
             return StatusCode(HttpStatusCode.NotFound);
@@ -71,15 +71,15 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetSurvey(id);
+            var mdl = db.GetSurvey(id);
 
-			if (model == null)
+			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!model.CanDelete(db, ref serviceResponse))
+			if (!mdl.CanDelete(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-			model.Delete(db);
+			mdl.Delete(db);
 								
 			return Ok();
 		}

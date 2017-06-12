@@ -30,10 +30,10 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetTaskFlow(id);
+            var mdl = db.GetTaskFlow(id);
 
-			if (model != null)
-				return Ok(model);
+			if (mdl != null)
+				return Ok(mdl);
 
 			return StatusCode(HttpStatusCode.NotFound);
 		}

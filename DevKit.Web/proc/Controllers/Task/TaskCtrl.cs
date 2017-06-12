@@ -64,7 +64,7 @@ namespace DevKit.Web.Controllers
             if (obj != null)
                 return Ok(obj);
 
-            var model = db.GetTask(id);
+            var mdl = db.GetTask(id);
 
             var options = new loaderOptionsTask
             {
@@ -89,13 +89,13 @@ namespace DevKit.Web.Controllers
                 bLoadLogs = true
             };
 
-            if (model == null)
+            if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            model.LoadAssociations(db, options);
-            BackupCache(model);
+            mdl.LoadAssociations(db, options);
+            BackupCache(mdl);
 
-            return Ok(model);		
+            return Ok(mdl);		
 		}
 
 		public IHttpActionResult Post(Task mdl)
@@ -130,15 +130,15 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetTask(id);
+            var mdl = db.GetTask(id);
 
-			if (model == null)
+			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!model.CanDelete(db, ref serviceResponse))
+			if (!mdl.CanDelete(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-            model.Delete(db);
+            mdl.Delete(db);
 
             CleanCache(db, CacheObject.Task, null);
 

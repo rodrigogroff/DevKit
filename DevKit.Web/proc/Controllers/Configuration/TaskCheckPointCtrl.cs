@@ -29,10 +29,10 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetTaskCheckPoint(id);
+            var mdl = db.GetTaskCheckPoint(id);
 
-			if (model != null)
-				return Ok(model);
+			if (mdl != null)
+				return Ok(mdl);
 
 			return StatusCode(HttpStatusCode.NotFound);
 		}

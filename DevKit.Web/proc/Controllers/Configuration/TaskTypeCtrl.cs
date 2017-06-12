@@ -29,16 +29,16 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var model = db.GetTaskType(id);
+            var mdl = db.GetTaskType(id);
 
-            if (model != null)
+            if (mdl != null)
             {
                 var combo = Request.GetQueryStringValue("combo", false);
 
                 if (combo)
-                    return Ok(model);
+                    return Ok(mdl);
 
-                return Ok(model.LoadAssociations(db, new loaderOptionsTaskType(setupTaskType.TaskTypeEdit)));
+                return Ok(mdl.LoadAssociations(db, new loaderOptionsTaskType(setupTaskType.TaskTypeEdit)));
             }
 
             return StatusCode(HttpStatusCode.NotFound);
@@ -73,15 +73,15 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
             
-			var model = db.GetTaskType(id);
+			var mdl = db.GetTaskType(id);
 
-			if (model == null)
+			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
 
-			if (!model.CanDelete(db, ref serviceResponse))
+			if (!mdl.CanDelete(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 				
-			model.Delete(db);
+			mdl.Delete(db);
 				
 			return Ok();			
 		}

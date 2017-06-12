@@ -55,17 +55,17 @@ namespace DevKit.Web.Controllers
                     return Ok(obj);
             }
 
-            var model = db.GetProfile(id);
+            var mdl = db.GetProfile(id);
 
-            if (model != null)
+            if (mdl != null)
             {
-                model.LoadAssociations(db);
-                BackupCache(model);
+                mdl.LoadAssociations(db);
+                BackupCache(mdl);
 
                 if (combo)
-                    return Ok(model.ClearAssociations());
+                    return Ok(mdl.ClearAssociations());
                 else
-                    return Ok(model);
+                    return Ok(mdl);
             }
 
             return StatusCode(HttpStatusCode.NotFound);

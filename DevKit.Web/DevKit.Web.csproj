@@ -266,6 +266,8 @@
     <Content Include="app\configuration\sprint\sprint.html" />
     <Content Include="app\configuration\sprint\SprintController.js" />
     <Content Include="app\configuration\sprint\_filterSprint.html" />
+    <Content Include="app\home\cache.html" />
+    <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
     <Content Include="app\system\profile\listingProfiles.html" />
     <Content Include="app\system\profile\ListingProfilesController.js" />
@@ -871,7 +873,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="proc\Controllers\Startup\StartupController.cs" />
+    <Compile Include="proc\Controllers\Cache\CacheCtrl.cs" />
     <Compile Include="proc\Services\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\CacheClean.cs" />
     <Compile Include="proc\Services\CacheObject.cs" />

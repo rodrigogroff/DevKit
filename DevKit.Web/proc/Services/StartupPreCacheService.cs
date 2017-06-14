@@ -8,7 +8,7 @@ namespace DevKit.Web.Services
 {
     public class StartupPreCacheService 
     {
-        public void Run(HttpApplicationState _app)
+        public void Run(HttpApplicationState _app, User currentUser )
         {
             var cache = new MemCacheController()
             {
@@ -20,6 +20,8 @@ namespace DevKit.Web.Services
 
             using (var db = new DevKitDB())
             {
+                db.currentUser = currentUser;
+
                 #region - enums - 
 
                 foreach (var item in new EnumAccumulatorType().lst) cache.StoreCache(CacheObject.EnumAccumulatorType, item.id, item);
@@ -103,7 +105,7 @@ namespace DevKit.Web.Services
 
                     var mdl = new Client();
                     var filter = new ClientFilter { skip = 0, take = 15 };
-                    var results = mdl.ComposedFilters(db, ref count, filter);
+                    var results = mdl.ComposedFilters(db, ref count, filter, false);
                     var ret = new ClientReport
                     {
                         count = count,
@@ -118,7 +120,7 @@ namespace DevKit.Web.Services
 
                     var mdl = new ClientGroup();
                     var filter = new ClientGroupFilter { skip = 0, take = 15 };
-                    var results = mdl.ComposedFilters(db, ref count, filter);
+                    var results = mdl.ComposedFilters(db, ref count, filter, false);
                     var ret = new ClientGroupReport
                     {
                         count = count,

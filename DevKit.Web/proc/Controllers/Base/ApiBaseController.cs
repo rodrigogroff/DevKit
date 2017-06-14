@@ -52,10 +52,7 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public bool SetupDb()
         {
-            db = new DevKitDB()
-            {
-                currentUser = RestoreCache(CacheObject.User, login.idUser) as User
-            };
+            db = new DevKitDB();
 
             if (!db.ValidateUser(login))
                 return false;

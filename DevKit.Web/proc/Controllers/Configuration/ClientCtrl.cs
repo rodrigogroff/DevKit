@@ -24,7 +24,7 @@ namespace DevKit.Web.Controllers
             if (hshReport[filter.Parameters()] is ClientReport report)
                 return Ok(report);
 
-            var results = mdl.ComposedFilters(db, ref count, filter);
+            var results = mdl.ComposedFilters(db, ref count, filter, true);
 
             var ret = new ClientReport
             {

@@ -34,7 +34,7 @@ namespace DataModel
 	
 	public partial class ClientGroup
 	{
-		public List<ClientGroup> ComposedFilters(DevKitDB db, ref int count, ClientGroupFilter filter)
+		public List<ClientGroup> ComposedFilters(DevKitDB db, ref int count, ClientGroupFilter filter, bool bSaveAuditLog)
 		{
 			var user = db.currentUser;
 			
@@ -47,13 +47,17 @@ namespace DataModel
 
 			query = query.OrderBy(y => y.stName);
             
-            new AuditLog {
-				fkUser = user.id,
-				fkActionLog = EnumAuditAction.ClientGroupListing,
-				nuType = EnumAuditType.ClientGroup
-			}.
-			Create(db, "", "count: " + count);
-
+            if (bSaveAuditLog)
+            {
+                new AuditLog
+                {
+                    fkUser = user.id,
+                    fkActionLog = EnumAuditAction.ClientGroupListing,
+                    nuType = EnumAuditType.ClientGroup
+                }.
+                Create(db, "", "count: " + count);
+            }
+                
             return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
         }
 	}

@@ -126,9 +126,10 @@ namespace DevKit.Web
 				"~/app/configuration/news/ListingNewsController.js",
 				"~/app/configuration/surveys/SurveyController.js",
 				"~/app/configuration/surveys/ListingSurveysController.js",
-				"~/app/home/HomeController.js"
+				"~/app/home/HomeController.js",
+                "~/app/home/CacheController.js"
 
-				));
+                ));
 
 			BundleTable.EnableOptimizations = false;
 		}

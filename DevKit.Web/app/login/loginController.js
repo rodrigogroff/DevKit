@@ -36,9 +36,7 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
                     idUser: response.idUser,
                     session: response.session
                 }
-
-                Api.Startup.listPage({ }, function (data) { });
-
+                
                 $rootScope.exibirMenu = true;
                 $rootScope.$broadcast('updateCounters');
 

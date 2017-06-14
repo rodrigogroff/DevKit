@@ -30,6 +30,10 @@ namespace DevKit.Web.Controllers
                 case CacheObject.CompanyNews:   if (id != null) StoreCache(CacheObject.CompanyNews, id, null);
                                                 CleanCacheReport(CacheObject.CompanyNewsReports);
                                                 break;
+
+                case CacheObject.TaskType:      if (id != null) StoreCache(CacheObject.TaskType, id, null);
+                                                CleanCacheReport(CacheObject.TaskTypeReports);
+                                                break;
             }
         }
     }

@@ -4,45 +4,12 @@ using System.Collections.Generic;
 
 namespace DataModel
 {
-    public static class setupTaskType
-    {
-        public const int TaskTypeEdit = 1,
-                         TaskTypeListing = 2;
-    }
-
     public class loaderOptionsTaskType
     {
-        public int setup = 0;
-
-        public loaderOptionsTaskType(int choice)
-        {
-            setup = choice;
-
-            switch (setup)
-            {
-                case setupTaskType.TaskTypeEdit: Setup_TaskTypeEdit(); break;
-                case setupTaskType.TaskTypeListing: Setup_TaskTypeListing(); break;
-            }
-        }
-
         public bool bLoadProject = false,
                     bLoadCategories = false,
                     bLoadCheckPoints = false,
                     bLoadLogs = false;
-
-        void Setup_TaskTypeListing()
-        {
-            bLoadProject = true;
-            bLoadCategories = true;
-        }
-
-        void Setup_TaskTypeEdit()
-        {
-            bLoadProject = true;
-            bLoadCategories = true;
-            bLoadCheckPoints = true;
-            bLoadLogs = true;
-        }
     }
 
     public partial class TaskType

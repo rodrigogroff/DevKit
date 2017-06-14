@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DataModel
 {
@@ -11,11 +12,47 @@ namespace DataModel
 		public bool? managed,
                      condensed, 
                      kpa;
-	}
+
+        public string Parameters()
+        {
+            return Export();
+        }
+
+        string _exportResults = "";
+
+        string Export()
+        {
+            if (_exportResults != "")
+                return _exportResults;
+
+            var ret = new StringBuilder();
+
+            // base
+            ret.Append(skip);
+            ret.Append(take);
+            ret.Append(busca);
+
+            if (fkProject != null)
+                ret.Append(fkProject);
+
+            if (managed != null)
+                ret.Append(managed);
+
+            if (condensed != null)
+                ret.Append(condensed);
+
+            if (kpa != null)
+                ret.Append(kpa);
+
+            _exportResults = ret.ToString();
+
+            return _exportResults;
+        }
+    }
 
 	public partial class TaskType
 	{
-		public List<TaskType> ComposedFilters(DevKitDB db, ref int count, TaskTypeFilter filter)
+		public List<TaskType> ComposedFilters(DevKitDB db, ref int count, TaskTypeFilter filter, loaderOptionsTaskType options)
 		{
 			var lstUserProjetcs = db.GetCurrentUserProjects();
 
@@ -47,7 +84,7 @@ namespace DataModel
                                 Take(filter.take).
                                 ToList();
 
-            return Loader(db, results, new loaderOptionsTaskType(setupTaskType.TaskTypeListing));
+            return Loader(db, results, options);
         }
 	}
 }

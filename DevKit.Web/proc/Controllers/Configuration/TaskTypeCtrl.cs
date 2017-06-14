@@ -13,36 +13,72 @@ namespace DevKit.Web.Controllers
 
             var mdl = new TaskType();
 
-			var results = mdl.ComposedFilters(db, ref count, new TaskTypeFilter
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+            var filter = new TaskTypeFilter
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
                 fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
-			});
+            };
 
-			return Ok(new { count = count, results = results });
-		}
-		
-		public IHttpActionResult Get(long id)
+            var hshReport = SetupCacheReport(CacheObject.ClientReports);
+            if (hshReport[filter.Parameters()] is TaskTypeReport report)
+                return Ok(report);
+
+            var options = new loaderOptionsTaskType
+            {
+                bLoadProject = true,
+                bLoadCategories = true
+            };
+
+            var results = mdl.ComposedFilters(db, ref count, filter, options);
+
+            var ret = new TaskTypeReport
+            {
+                count = count,
+                results = results
+            };
+
+            hshReport[filter.Parameters()] = ret;
+
+            return Ok(ret);
+        }
+
+        public IHttpActionResult Get(long id)
 		{
+            var combo = Request.GetQueryStringValue("combo", false);
+
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
+            var obj = RestoreCache(CacheObject.TaskType, id) as Client;
+            if (obj != null)
+                if (combo)
+                    return Ok(obj.ClearAssociations());
+                else
+                    return Ok(obj);
+
             var mdl = db.GetTaskType(id);
 
-            if (mdl != null)
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
+
+            var options = new loaderOptionsTaskType
             {
-                var combo = Request.GetQueryStringValue("combo", false);
+                bLoadProject = true,
+                bLoadCategories = true,
+                bLoadCheckPoints = true,
+                bLoadLogs = true
+            };            
 
-                if (combo)
-                    return Ok(mdl);
+            mdl.LoadAssociations(db, options);
+            BackupCache(mdl);
 
-                return Ok(mdl.LoadAssociations(db, new loaderOptionsTaskType(setupTaskType.TaskTypeEdit)));
-            }
-
-            return StatusCode(HttpStatusCode.NotFound);
-		}
+            if (combo)
+                return Ok(mdl.ClearAssociations());
+            else
+                return Ok(mdl);
+        }
 
 		public IHttpActionResult Post(TaskType mdl)
 		{
@@ -51,7 +87,20 @@ namespace DevKit.Web.Controllers
 
             if (!mdl.Create(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
-            
+
+            var options = new loaderOptionsTaskType
+            {
+                bLoadProject = true,
+                bLoadCategories = true,
+                bLoadCheckPoints = true,
+                bLoadLogs = true
+            };
+
+            mdl.LoadAssociations(db, options);
+
+            CleanCache(db, CacheObject.TaskType, null);
+            StoreCache(CacheObject.TaskType, mdl.id, mdl);
+
             return Ok();
 		}
 
@@ -63,10 +112,20 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
-            SetupCacheReport(CacheObject.TaskReports).Clear();
+            var options = new loaderOptionsTaskType
+            {
+                bLoadProject = true,
+                bLoadCategories = true,
+                bLoadCheckPoints = true,
+                bLoadLogs = true
+            };
 
-            return Ok();			
-		}
+            mdl.LoadAssociations(db, options);
+
+            StoreCache(CacheObject.TaskType, mdl.id, mdl);
+
+            return Ok();
+        }
 
 		public IHttpActionResult Delete(long id)
 		{
@@ -82,8 +141,10 @@ namespace DevKit.Web.Controllers
 				return BadRequest(serviceResponse);
 				
 			mdl.Delete(db);
-				
-			return Ok();			
+            
+            CleanCache(db, CacheObject.TaskType, null);
+
+            return Ok();			
 		}
 	}
 }

@@ -127,6 +127,28 @@ namespace DevKit.Web.Services
                     hshReport[filter.Parameters()] = ret;
                 }
 
+                // task type
+                {
+                    var hshReport = cache.SetupCacheReport(CacheObject.TaskTypeReports);
+
+                    var mdl = new TaskType();
+                    var filter = new TaskTypeFilter { skip = 0, take = 15 };
+
+                    var options = new loaderOptionsTaskType
+                    {
+                        bLoadProject = false,
+                        bLoadCategories = false
+                    };
+                    
+                    var results = mdl.ComposedFilters(db, ref count, filter, options);
+                    var ret = new TaskTypeReport
+                    {
+                        count = count,
+                        results = results
+                    };
+                    hshReport[filter.Parameters()] = ret;
+                }
+
                 #endregion
 
                 #region - tables - 
@@ -173,6 +195,26 @@ namespace DevKit.Web.Services
                             item.LoadAssociations(db);
                             cache.StoreCache(CacheObject.ClientGroup, item.id, item);
                         }                            
+                }
+
+                // task type
+                {
+                    var q = (from e in db.TaskType select e);
+
+                    var options = new loaderOptionsTaskType
+                    {
+                        bLoadProject = false,
+                        bLoadCategories = false,
+                        bLoadCheckPoints = false,
+                        bLoadLogs = false
+                    };
+
+                    if (q.Count() < maxRowsToCache)
+                        foreach (var item in q.ToList())
+                        {
+                            item.LoadAssociations(db, options);
+                            cache.StoreCache(CacheObject.TaskType, item.id, item);
+                        }
                 }
 
                 // tasks

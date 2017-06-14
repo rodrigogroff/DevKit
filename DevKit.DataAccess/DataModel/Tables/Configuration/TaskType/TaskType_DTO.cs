@@ -17,7 +17,13 @@ namespace DataModel
 		public List<TaskCheckPoint> checkpoints;
 	}
 
-	public class TaskTypeLog
+    public class TaskTypeReport
+    {
+        public int count = 0;
+        public List<TaskType> results = new List<TaskType>();
+    }
+
+    public class TaskTypeLog
 	{
 		public string sdtLog,
 						stUser,

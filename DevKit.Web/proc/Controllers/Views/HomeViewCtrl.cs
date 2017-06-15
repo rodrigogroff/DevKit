@@ -13,16 +13,18 @@ namespace DevKit.Web.Controllers
             if (!AuthorizeAndStartDatabase())
                 return BadRequest();
 
-            var myApp = HttpContext.Current.Application;
+            myApplication = HttpContext.Current.Application;
 
-            if (myApp["start"] == null)
+            if (myApplication["start"] == null)
             {
-                System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApp, db.currentUser); });
-                System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApp); });
+                myApplication["start"] = true;
 
-                myApp["start"] = true;
+                StartCache();
+
+                System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApplication, db.currentUser); });
+                System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
             }
-
+            
             var mdl = new HomeView();
 				
 			return Ok(mdl.ComposedFilters(db));			

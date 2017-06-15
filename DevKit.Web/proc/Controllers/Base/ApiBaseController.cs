@@ -56,9 +56,7 @@ namespace DevKit.Web.Controllers
 
             if (!db.ValidateUser(login))
                 return false;
-
-            BackupCache(db.currentUser);
-
+            
             return true;
         }
     }

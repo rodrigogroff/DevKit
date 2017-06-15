@@ -1,8 +1,12 @@
 ﻿<div class="webFormPostion" style="width:100%">
-
+    <br />
+    <button class="btn btn-default" ng-click="refresh()">Refresh</button>
+    <br />
+    {{ viewModel.length }} entries<br />
+    <br />
     <span data-ng-repeat="mdl in viewModel">
-        {{mdl.key}} <br />
+        {{mdl.key}} - {{mdl.hits}} - {{mdl.dt_last}}<br />
     </span>
-
-    
+    <br />
+    <br />    
 </div>

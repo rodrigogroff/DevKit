@@ -1,5 +1,6 @@
 ﻿using DataModel;
 using LinqToDB;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
@@ -7,6 +8,12 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
+    public class CacheHitRecord
+    {
+        public DateTime dt_last;
+        public int hits = 0;
+    }
+
 	[Authorize]
 	public class MemCacheController : ApiController
 	{
@@ -14,79 +21,40 @@ namespace DevKit.Web.Controllers
 
         public string currentCacheTag = "";
 
-        [NonAction]
-        public void BackupCache(object obj)
-        {
-            myApplication.Lock();
-
-            StoreTag(currentCacheTag);
-            myApplication[currentCacheTag] = obj;
-
-            myApplication.UnLock();
-        }
+        // ---------------
+        // initialization
+        // ---------------
 
         [NonAction]
-        public List<string> GetCacheTags()
+        public void StartCache()
         {
-            return myApplication["%lstTags"] as List<string>;
+            var lstTags = new List<string>();
+            var hshHits = new Hashtable();
+
+            myApplication["%lstTags"] = lstTags;
+            myApplication["%hshHits"] = hshHits;
         }
 
-        [NonAction]
-        public void StoreTag(string tag)
-        {
-            var lstTags = myApplication["%lstTags"] as List<string>;
-
-            if (lstTags == null)
-            {
-                lstTags = new List<string>();
-                myApplication["%lstTags"] = lstTags;
-            }
-
-            if (!lstTags.Contains(tag))
-                lstTags.Add(tag);
-        }
-
-        [NonAction]
-        public void RemoveTag(string tag)
-        {
-            var lstTags = myApplication["%lstTags"] as List<string>;
-
-            if (lstTags != null)
-                lstTags.Remove(tag);
-        }
-
-        [NonAction]
-        public void StoreCache(string tag, long? id, object obj)
-        {
-            myApplication.Lock();
-
-            tag = tag + id;
-
-            StoreTag(tag);
-            myApplication[tag] = obj;
-
-            myApplication.UnLock();
-        }
+        // ---------------
+        // retrieve first
+        // ---------------
 
         [NonAction]
         public object RestoreCache(string tag, long id)
         {
             currentCacheTag = tag + id;
 
-            myApplication.Lock();
-
             var ret = myApplication[currentCacheTag] as object;
 
-            myApplication.UnLock();
+            if (ret != null)
+                SaveHit(tag);
 
             return ret;
-        }
+        }               
 
         [NonAction]
         public Hashtable SetupCacheReport(string tag)
         {
-            myApplication.Lock();
-
             var hsh = myApplication[tag] as Hashtable;
 
             if (hsh == null)
@@ -97,27 +65,53 @@ namespace DevKit.Web.Controllers
                 myApplication[tag] = hsh;
             }
 
-            myApplication.UnLock();
+            SaveHit(tag);
 
             return hsh;
         }
 
+        // ---------------
+        // save results
+        // ---------------
+
+        [NonAction]
+        public void BackupCache(object obj)
+        {
+            StoreTag(currentCacheTag);
+            myApplication[currentCacheTag] = obj;
+        }
+
+        [NonAction]
+        public void StoreCache(string tag, long? id, object obj)
+        {
+            tag = tag + id;
+
+            if (obj != null)
+            {
+                StoreTag(tag);
+                myApplication[tag] = obj;
+            }                
+            else
+            {
+                RemoveTag(tag);
+                myApplication[tag] = null;
+            }
+        }
+        
+        // ---------------
+        // cleanup
+        // ---------------
+
         [NonAction]
         public void CleanCacheReport(string tag)
         {
-            myApplication.Lock();
-
-            var hsh = myApplication[tag] as Hashtable;
-
-            if (hsh != null)
+            if (myApplication[tag] is Hashtable hsh)
             {
                 hsh.Clear();
 
                 RemoveTag(tag);
-                myApplication[tag] = null;                
-            }
-
-            myApplication.UnLock();
+                myApplication[tag] = null;
+            }            
         }
 
         [NonAction]
@@ -131,6 +125,56 @@ namespace DevKit.Web.Controllers
                 fkTarget = id,
                 stEntity = tag
             });
+        }
+
+        // ---------------
+        // control
+        // ---------------
+
+        [NonAction]
+        public List<string> GetCacheTags()
+        {
+            return myApplication["%lstTags"] as List<string>;
+        }
+
+        [NonAction]
+        public Hashtable GetCacheHitRecord()
+        {
+            return myApplication["%hshHits"] as Hashtable;
+        }
+
+        [NonAction]
+        public void StoreTag(string tag)
+        {
+            var lstTags = myApplication["%lstTags"] as List<string>;
+
+            if (!lstTags.Contains(tag))
+                lstTags.Add(tag);
+        }
+
+        [NonAction]
+        public void RemoveTag(string tag)
+        {
+            (myApplication["%lstTags"] as List<string>).Remove(tag);
+            (myApplication["%hshHits"] as Hashtable)[tag] = null;
+        }
+
+        [NonAction]
+        public void SaveHit(string tag)
+        {
+            var hshHits = GetCacheHitRecord();
+
+            var obj = hshHits[tag] as CacheHitRecord;
+
+            if (obj == null)
+            {
+                hshHits[tag] = new CacheHitRecord { dt_last = DateTime.Now, hits = 1 };
+            }
+            else
+            {
+                obj.hits++;
+                obj.dt_last = DateTime.Now;
+            }
         }
     }
 }

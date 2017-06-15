@@ -13,6 +13,11 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		});
 	}
 
+    $scope.refresh = function ()
+    {
+        init();
+    }
+    
     init();
 
 }]);

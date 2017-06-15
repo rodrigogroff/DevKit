@@ -27,7 +27,11 @@ namespace DevKit.Web.Controllers
                 });
             }
 
-            return Ok(ret);
+            return Ok(new
+            {
+                count = ret.Count,
+                results = ret
+            });
         }
     }
 }

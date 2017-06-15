@@ -9,8 +9,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	{
         Api.Cache.listPage({ login: $rootScope.loginInfo }, function (data)
         {
-            $scope.viewModel = data;
-            console.log(data);
+            $scope.viewModel = data.results;
 		});
 	}
 

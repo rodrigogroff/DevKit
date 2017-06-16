@@ -15,7 +15,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	
 	function CheckPermissions()
 	{
-        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
+        Api.Permission.get({ id: $scope.permID }, function (data)
 		{
 			$scope.permModel = data;
 
@@ -36,7 +36,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		CheckPermissions();
 
-        Api.Setup.get({ id: 1, login: $rootScope.loginInfo }, function (data) {
+        Api.Setup.get({ id: 1 }, function (data) {
 			$scope.setupModel = data;
 		});
 
@@ -44,7 +44,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			$scope.loading = true;
 
-            Api.Client.get({ id: id, login: $rootScope.loginInfo }, function (data)
+            Api.Client.get({ id: id }, function (data)
 			{
 				$scope.viewModel = data;
 				$scope.loading = false;
@@ -94,8 +94,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				
 			if (!$scope.stName_fail && !$scope.stEmail_fail )
             {
-                $scope.viewModel.login = $rootScope.loginInfo;
-
 				if (id > 0)
 				{
 					$scope.viewModel.updateCommand = "entity";
@@ -136,7 +134,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-            Api.Client.remove({ id: id, login: $rootScope.loginInfo }, function (data)
+            Api.Client.remove({ id: id }, function (data)
 			{
 				toastr.success('Client removed!', 'Success');
 				$scope.list();

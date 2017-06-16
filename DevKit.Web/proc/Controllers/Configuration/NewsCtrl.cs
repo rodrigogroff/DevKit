@@ -8,11 +8,6 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var mdl = new CompanyNews();
-
             var filter = new CompanyNewsFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -21,9 +16,14 @@ namespace DevKit.Web.Controllers
                 fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
             };            
 
-            var hshReport = SetupCacheReport(CacheObject.CompanyNewsReports);
+            var hshReport = SetupCacheReport(CacheTags.CompanyNewsReports);
             if (hshReport[filter.Parameters()] is CompanyNewsReport report)
                 return Ok(report);
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var mdl = new CompanyNews();
 
             var results = mdl.ComposedFilters(db, ref count, filter);
 
@@ -40,12 +40,12 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var obj = RestoreCache(CacheObject.CompanyNews, id);
+            var obj = RestoreCache(CacheTags.CompanyNews, id);
             if (obj != null)
                 return Ok(obj);
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
 
             var mdl = db.GetNews(id);
 
@@ -60,38 +60,38 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Post(CompanyNews mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Create(db, ref serviceResponse))
-			    return BadRequest(serviceResponse);
+            if (!mdl.Create(db, ref apiResponse))
+			    return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            CleanCache(db, CacheObject.CompanyNews, null);
-            StoreCache(CacheObject.CompanyNews, mdl.id, mdl);
+            CleanCache(db, CacheTags.CompanyNews, null);
+            StoreCache(CacheTags.CompanyNews, mdl.id, mdl);
 
             return Ok();			
 		}
 
 		public IHttpActionResult Put(long id, CompanyNews mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+            if (!mdl.Update(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            StoreCache(CacheObject.CompanyNews, mdl.id, mdl);
+            StoreCache(CacheTags.CompanyNews, mdl.id, mdl);
 
             return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetNews(id);
@@ -99,12 +99,12 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!mdl.CanDelete(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.CanDelete(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             mdl.Delete(db);
 
-            CleanCache(db, CacheObject.CompanyNews, null);
+            CleanCache(db, CacheTags.CompanyNews, null);
 
             return Ok();
 		}

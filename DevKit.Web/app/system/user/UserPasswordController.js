@@ -19,7 +19,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function CheckPermissions()
 	{
-        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
+        Api.Permission.get({ id: $scope.permID }, function (data)
         {
 			$scope.permModel = data;
 			
@@ -30,7 +30,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			else
             {
 				$scope.loading = true;
-                Api.User.get({ id: $rootScope.loginInfo.idUser, login: $rootScope.loginInfo }, function (data)
+                Api.User.get({ id: $rootScope.loginInfo.idUser }, function (data)
                 {
 					$scope.viewModel = data;
 					$scope.loading = false;
@@ -77,7 +77,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			!$scope.stCurrentPasswordFail &&
 			!$scope.stConfirmationFail)
 		{
-            $scope.viewModel.login = $rootScope.loginInfo;            
             $scope.viewModel.updateCommand = "changePassword";
 			$scope.viewModel.anexedEntity = $scope.changePassModel;
 

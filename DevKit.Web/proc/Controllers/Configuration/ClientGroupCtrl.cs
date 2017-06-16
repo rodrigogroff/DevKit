@@ -8,11 +8,6 @@ namespace DevKit.Web.Controllers
     {
         public IHttpActionResult Get()
         {
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var mdl = new ClientGroup();
-
             var filter = new ClientGroupFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -20,11 +15,16 @@ namespace DevKit.Web.Controllers
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
             };
 
-            var hshReport = SetupCacheReport(CacheObject.ClientGroupReports);
+            var hshReport = SetupCacheReport(CacheTags.ClientGroupReports);
             if (hshReport[filter.Parameters()] is ClientGroupReport report)
                 return Ok(report);
 
-            var results = mdl.ComposedFilters(db, ref count, filter, true);
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var mdl = new ClientGroup();
+
+            var results = mdl.ComposedFilters(db, ref count, filter, bSaveAuditLog:true);
 
             var ret = new ClientGroupReport
             {
@@ -41,15 +41,14 @@ namespace DevKit.Web.Controllers
         {
             var combo = Request.GetQueryStringValue("combo", false);
 
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var obj = RestoreCache(CacheObject.ClientGroup, id) as ClientGroup;
-            if (obj != null)
+            if (RestoreCache(CacheTags.ClientGroup, id) is ClientGroup obj)
                 if (combo)
                     return Ok(obj.ClearAssociations());
                 else
                     return Ok(obj);
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
 
             var mdl = db.GetClientGroup(id);
 
@@ -67,38 +66,38 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Post(ClientGroup mdl)
         {
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Create(db, ref serviceResponse))
-                return BadRequest(serviceResponse);
+            if (!mdl.Create(db, ref apiResponse))
+                return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            CleanCache(db, CacheObject.ClientGroup, null);
-            StoreCache(CacheObject.ClientGroup, mdl.id, mdl);
+            CleanCache(db, CacheTags.ClientGroup, null);
+            StoreCache(CacheTags.ClientGroup, mdl.id, mdl);
 
             return Ok();
         }
 
         public IHttpActionResult Put(long id, ClientGroup mdl)
         {
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref serviceResponse))
-                return BadRequest(serviceResponse);
+            if (!mdl.Update(db, ref apiResponse))
+                return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            StoreCache(CacheObject.ClientGroup, mdl.id, mdl);
+            StoreCache(CacheTags.ClientGroup, mdl.id, mdl);
 
             return Ok();
         }
 
         public IHttpActionResult Delete(long id)
         {
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetClientGroup(id);
@@ -106,12 +105,12 @@ namespace DevKit.Web.Controllers
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            if (!mdl.CanDelete(db, ref serviceResponse))
-                return BadRequest(serviceResponse);
+            if (!mdl.CanDelete(db, ref apiResponse))
+                return BadRequest(apiResponse);
 
             mdl.Delete(db);
 
-            CleanCache(db, CacheObject.ClientGroup, null);
+            CleanCache(db, CacheTags.ClientGroup, null);
 
             return Ok();
         }

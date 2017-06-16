@@ -8,11 +8,6 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-			var mdl = new User();
-
             var filter = new UserFilter()
             {
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -24,9 +19,14 @@ namespace DevKit.Web.Controllers
                 ativo = Request.GetQueryStringValue<bool?>("ativo", null),
             };
 
-            var hshReport = SetupCacheReport(CacheObject.UserReports);
+            var hshReport = SetupCacheReport(CacheTags.UserReports);
             if (hshReport[filter.Parameters()] is UserReport report)
                 return Ok(report);
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var mdl = new User();
 
             var results = mdl.ComposedFilters(db, ref count, filter);
 
@@ -44,12 +44,8 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Get(long id)
 		{
             var combo = Request.GetQueryStringValue("combo", false);
-
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var obj = RestoreCache(CacheObject.User, id) as User;
-            if (obj != null)
+            
+            if (RestoreCache(CacheTags.User, id) is User obj)
             {
                 if (combo)
                     return Ok(obj.ClearAssociations());
@@ -57,11 +53,15 @@ namespace DevKit.Web.Controllers
                     return Ok(obj);
             }
 
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var mdl = db.GetUser(id);
 
             if (mdl != null)
             {
                 mdl.LoadAssociations(db);
+
                 BackupCache(mdl);
 
                 if (combo)
@@ -75,44 +75,44 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Post(User mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-			if (!mdl.Create(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.Create(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            CleanCache(db, CacheObject.User, null);            
-            StoreCache(CacheObject.User, mdl.id, mdl);
+            CleanCache(db, CacheTags.User, null);            
+            StoreCache(CacheTags.User, mdl.id, mdl);
 
             return Ok();			
 		}
 
 		public IHttpActionResult Put(long id, User mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
             
-			if (!mdl.Update(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.Update(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             if (mdl.resetPassword != "")
             {
-                StoreCache(CacheObject.User, mdl.id, null);
+                StoreCache(CacheTags.User, mdl.id, null);
                 mdl.ClearAssociations();
                 return Ok(mdl);
             }
 
             mdl.LoadAssociations(db);
-            StoreCache(CacheObject.User, mdl.id, mdl);
+            StoreCache(CacheTags.User, mdl.id, mdl);
 
             return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetUser(id);
@@ -120,12 +120,12 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!mdl.CanDelete(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.CanDelete(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
 			mdl.Delete(db);
 
-            CleanCache(db, CacheObject.User, null);
+            CleanCache(db, CacheTags.User, null);
 
             return Ok();
 		}

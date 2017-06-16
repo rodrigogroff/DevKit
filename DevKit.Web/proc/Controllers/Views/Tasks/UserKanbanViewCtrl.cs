@@ -7,12 +7,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = new UserKanbanView();
 				
-			return Ok(mdl.ComposedFilters(db, new UserKanbanViewFilter()
+			return Ok(mdl.ComposedFilters(db, new UserKanbanViewFilter
 			{
 				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
 				complete = Request.GetQueryStringValue<bool?>("complete", null),

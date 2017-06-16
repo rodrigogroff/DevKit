@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace DataModel
 {
@@ -7,30 +8,19 @@ namespace DataModel
 	{				
 		public User currentUser = null;
 
-        public bool ValidateUser (LoginInfo login)
+        public bool ValidateUser()
         {
             if (currentUser == null)
-                GetCurrentUser(login.idUser);
+                currentUser = (from ne in User
+                               where ne.stLogin.ToUpper() == Thread.CurrentPrincipal.Identity.Name.ToUpper()
+                               select ne).
+                               FirstOrDefault();
 
             if (currentUser == null)
-                return false;
-
-            if (currentUser.stCurrentSession != login.session)
                 return false;
             
             return true;
         }
-
-		User GetCurrentUser(long fkUser)
-		{
-			if (currentUser == null)
-				currentUser = (from ne in User
-							   where ne.id == fkUser
-                               select ne).
-                               FirstOrDefault();
-
-			return currentUser;
-		}
         
 		public List<long?> GetCurrentUserProjects()
 		{

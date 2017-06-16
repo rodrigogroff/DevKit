@@ -11,12 +11,10 @@ namespace DataModel
 						where e.stPassword.ToUpper() == password.ToUpper()
 						where e.bActive == true
 						select e).
-							FirstOrDefault();
+					    FirstOrDefault();
 
 			if (user != null)
 			{
-				user.LoadAssociations(db);
-
 				new AuditLog
 				{
 					fkUser = user.id,

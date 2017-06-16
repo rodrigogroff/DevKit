@@ -1,6 +1,4 @@
 ﻿using DataModel;
-using Newtonsoft.Json;
-using System.Net;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -9,12 +7,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = new ManagementView();
 				
-			return Ok(mdl.ComposedFilters(db, new ManagementViewFilter()
+			return Ok(mdl.ComposedFilters(db, new ManagementViewFilter
 			{
 				fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 			}));							

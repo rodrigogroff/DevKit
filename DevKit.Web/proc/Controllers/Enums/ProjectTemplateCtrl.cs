@@ -9,12 +9,9 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
             string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
-            var hshReport = SetupCacheReport(CacheObject.EnumPriorityReport);
+            var hshReport = SetupCacheReport(CacheTags.EnumPriorityReport);
             if (hshReport[busca] is TaskReport report)
                 return Ok(report);
 
@@ -38,10 +35,7 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
         {
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var obj = RestoreCache(CacheObject.EnumProjectTemplate, id);
+            var obj = RestoreCache(CacheTags.EnumProjectTemplate, id);
             if (obj != null)
                 return Ok(obj);
 

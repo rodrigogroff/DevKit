@@ -30,7 +30,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	$scope.permID = 106;
 
 	function CheckPermissions() {
-        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data) {
+        Api.Permission.get({ id: $scope.permID }, function (data) {
 			$scope.permModel = data;
 			if (!$scope.permModel.listagem) {
 				toastr.error('Access denied!', 'Permission');
@@ -69,7 +69,6 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 			skip: skip,
 			take: take,
             kpa: $scope.campos.kpa,
-            login: $rootScope.loginInfo,
 			complete: $scope.campos.complete
 		};
 

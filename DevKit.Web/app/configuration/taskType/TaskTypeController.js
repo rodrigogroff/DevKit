@@ -20,7 +20,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function CheckPermissions()
 	{
-        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
+        Api.Permission.get({ id: $scope.permID }, function (data)
 		{
 			$scope.permModel = data;
 
@@ -32,7 +32,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		},
 		function (response) { });
 
-        Api.Permission.get({ id: $scope.auditLogPerm, login: $rootScope.loginInfo }, function (data)
+        Api.Permission.get({ id: $scope.auditLogPerm }, function (data)
         {
 			$scope.auditLogView = $scope.permModel.visualizar;
 		},
@@ -50,7 +50,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (id > 0)
 		{
 			$scope.loading = true;
-            Api.TaskType.get({ id: id, login: $rootScope.loginInfo }, function (data)
+            Api.TaskType.get({ id: id }, function (data)
 			{
 				$scope.viewModel = data;
 				$scope.loading = false;
@@ -89,8 +89,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			if (!$scope.stName_fail && 
 				!$scope.fkProject_fail )
             {
-                $scope.viewModel.login = $rootScope.loginInfo;
-
 				if (id > 0)
 				{
 					$scope.viewModel.updateCommand = "entity";
@@ -131,7 +129,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-            Api.TaskType.remove({ id: id, login: $rootScope.loginInfo }, function (data)
+            Api.TaskType.remove({ id: id }, function (data)
 			{
 				toastr.success('Task Type removed!', 'Success');
 				$scope.list();
@@ -154,7 +152,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
         {
-            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "removeCategorie";
 			$scope.viewModel.anexedEntity = lista[index];
 
@@ -192,7 +189,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		if (!$scope.stCategorieName_fail)
         {
-            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "newCategorie";
 			$scope.viewModel.anexedEntity = $scope.newCategorie;
 
@@ -226,7 +222,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		var opcoes =
             {
-                login: $rootScope.loginInfo,
 				fkTaskCategory: $scope.newFlow.fkTaskCategory
 			};
 
@@ -252,8 +247,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
         {
-            $scope.viewModel.login = $rootScope.loginInfo;
-			$scope.viewModel.updateCommand = "removeFlow";
+            $scope.viewModel.updateCommand = "removeFlow";
 			$scope.viewModel.anexedEntity = lista[index];
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
@@ -289,7 +283,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			var tmp = $scope.newFlow.fkTaskCategory;
 
-            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "newFlow";
 			$scope.viewModel.anexedEntity = $scope.newFlow;
 
@@ -328,7 +321,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		var opcoes =
             {
-                login: $rootScope.loginInfo,
 				fkTaskCategory: $scope.newAcc.fkTaskCategory
 			};
 
@@ -361,7 +353,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
         else
         {
-            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "removeAcc";
 			$scope.viewModel.anexedEntity = lista[index];
 
@@ -394,7 +385,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			var tmp = $scope.newAcc.fkTaskCategory;
 
-            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "newAcc";
 			$scope.viewModel.anexedEntity = $scope.newAcc;
 
@@ -405,9 +395,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newAcc = {};
 				$scope.newAcc.fkTaskCategory = tmp;
 
-				init();
-				$scope.loadAccs();
+                init();
 
+				$scope.loadAccs();
 				$scope.addAcc = false;
 
 			},
@@ -434,14 +424,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		var opcoes =
             {
-                login: $rootScope.loginInfo,
 				fkCategory: $scope.newCC.fkCategory
 			};
 
 		$scope.checkpoints = [];
 
-		Api.TaskCheckPoint.listPage(opcoes, function (data)
-		{
+		Api.TaskCheckPoint.listPage(opcoes, function (data) {
 			$scope.checkpoints = data.results;
 		});
 	}
@@ -467,7 +455,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
         else
         {
-            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "removeCC";
 			$scope.viewModel.anexedEntity = lista[index];
 
@@ -494,7 +481,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			var tmp = $scope.newCC.fkCategory;
 
-            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "newCC";
 			$scope.viewModel.anexedEntity = $scope.newCC;
 

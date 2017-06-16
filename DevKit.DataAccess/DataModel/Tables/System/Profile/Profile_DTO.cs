@@ -4,8 +4,6 @@ namespace DataModel
 {
 	public partial class Profile
 	{
-        public LoginInfo login;
-
         public int qttyPermissions = 0;
 
 		public List<User> users;

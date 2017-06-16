@@ -8,11 +8,6 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var mdl = new TaskType();
-
             var filter = new TaskTypeFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -21,9 +16,14 @@ namespace DevKit.Web.Controllers
                 fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
             };
 
-            var hshReport = SetupCacheReport(CacheObject.ClientReports);
+            var hshReport = SetupCacheReport(CacheTags.ClientReports);
             if (hshReport[filter.Parameters()] is TaskTypeReport report)
                 return Ok(report);
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var mdl = new TaskType();
 
             var options = new loaderOptionsTaskType
             {
@@ -48,10 +48,10 @@ namespace DevKit.Web.Controllers
 		{
             var combo = Request.GetQueryStringValue("combo", false);
 
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var obj = RestoreCache(CacheObject.TaskType, id) as Client;
+            var obj = RestoreCache(CacheTags.TaskType, id) as Client;
             if (obj != null)
                 if (combo)
                     return Ok(obj.ClearAssociations());
@@ -82,11 +82,11 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Post(TaskType mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Create(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+            if (!mdl.Create(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             var options = new loaderOptionsTaskType
             {
@@ -98,19 +98,19 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db, options);
 
-            CleanCache(db, CacheObject.TaskType, null);
-            StoreCache(CacheObject.TaskType, mdl.id, mdl);
+            CleanCache(db, CacheTags.TaskType, null);
+            StoreCache(CacheTags.TaskType, mdl.id, mdl);
 
             return Ok();
 		}
 
 		public IHttpActionResult Put(long id, TaskType mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+            if (!mdl.Update(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             var options = new loaderOptionsTaskType
             {
@@ -122,14 +122,14 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db, options);
 
-            StoreCache(CacheObject.TaskType, mdl.id, mdl);
+            StoreCache(CacheTags.TaskType, mdl.id, mdl);
 
             return Ok();
         }
 
 		public IHttpActionResult Delete(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
             
 			var mdl = db.GetTaskType(id);
@@ -137,12 +137,12 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
 
-			if (!mdl.CanDelete(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.CanDelete(db, ref apiResponse))
+				return BadRequest(apiResponse);
 				
 			mdl.Delete(db);
             
-            CleanCache(db, CacheObject.TaskType, null);
+            CleanCache(db, CacheTags.TaskType, null);
 
             return Ok();			
 		}

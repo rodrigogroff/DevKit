@@ -17,11 +17,14 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.permModel = {};	
 	$scope.permID = 102;
 
-	function CheckPermissions() {
-        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data) {
+    function CheckPermissions()
+    {
+        Api.Permission.get({ id: $scope.permID }, function (data)
+        {
 			$scope.permModel = data;
 
-			if (!$scope.permModel.listagem) {
+            if (!$scope.permModel.listagem)
+            {
 				toastr.error('Access denied!', 'Permission');
 				$state.go('home');
 			}
@@ -49,7 +52,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	{
 		$scope.loading = true;
 
-        var opcoes = { active: 'true', skip: skip, take: take, login: $rootScope.loginInfo };
+        var opcoes = { active: 'true', skip: skip, take: take };
 
 		var filter = ngHistoricoFiltro.filtro.filtroGerado;
 

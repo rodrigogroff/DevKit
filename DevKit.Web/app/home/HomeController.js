@@ -19,7 +19,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	{
 		$scope.loading = true;
 
-        Api.HomeView.listPage({ login: $rootScope.loginInfo }, function (data)
+        Api.HomeView.listPage({ }, function (data)
 		{
 			$scope.viewModel = data;
 			$scope.loading = false;
@@ -36,8 +36,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 
 	$scope.markAsRead = function(mdl)
     {
-        mdl.login = $rootScope.loginInfo
-		mdl.updateCommand = 'maskAsRead';
+        mdl.updateCommand = 'maskAsRead';
 
 		Api.News.update({ id: mdl.id }, mdl, function (data)
 		{
@@ -57,7 +56,6 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 
 	$scope.confirmChoiceSurvey = function (mdl)
     {
-        mdl.login = $rootScope.loginInfo;
 		mdl.updateCommand = 'optionSelect';
 		mdl.anexedEntity = { id: $scope.currentOption };
 

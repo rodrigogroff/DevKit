@@ -20,7 +20,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	
 	function CheckPermissions()
 	{
-        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
+        Api.Permission.get({ id: $scope.permID }, function (data)
         {
 			$scope.permModel = data;
 
@@ -31,7 +31,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		},
 		function (response) { });
 
-        Api.Permission.get({ id: 110, login: $rootScope.loginInfo }, function (data) {
+        Api.Permission.get({ id: 110 }, function (data) {
 			
 			if ($scope.permModel.listagem) {
 				$scope.adminTimesheet = true;
@@ -69,7 +69,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		{
 			$scope.loading = true;
 
-            Api.Timesheet.listPage({ nuYear: $scope.nuYear, nuMonth: $scope.nuMonth, fkUser: $scope.userId, login: $rootScope.loginInfo }, function (data)
+            Api.Timesheet.listPage({ nuYear: $scope.nuYear, nuMonth: $scope.nuMonth, fkUser: $scope.userId }, function (data)
 			{
 				if (data.fail == true)
 				{

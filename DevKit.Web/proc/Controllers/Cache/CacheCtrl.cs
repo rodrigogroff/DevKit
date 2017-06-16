@@ -15,7 +15,7 @@ namespace DevKit.Web.Controllers
     {
         public IHttpActionResult Get()
         {
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var lst = GetCacheTags();

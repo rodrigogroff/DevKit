@@ -8,11 +8,6 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var mdl = new Profile();
-
             var filter = new ProfileFilter()
             {
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -22,9 +17,14 @@ namespace DevKit.Web.Controllers
                 fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
             };
 
-            var hshReport = SetupCacheReport(CacheObject.ProfileReports);
+            var hshReport = SetupCacheReport(CacheTags.ProfileReports);
             if (hshReport[filter.Parameters()] is ProfileReport report)
                 return Ok(report);
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var mdl = new Profile();
 
             var results = mdl.ComposedFilters(db, ref count, filter);
 
@@ -43,23 +43,21 @@ namespace DevKit.Web.Controllers
 		{
             var combo = Request.GetQueryStringValue("combo", false);
 
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var obj = RestoreCache(CacheObject.Profile, id) as Profile;
-            if (obj != null)
-            {
+            if (RestoreCache(CacheTags.Profile, id) is Profile obj)
                 if (combo)
                     return Ok(obj.ClearAssociations());
                 else
                     return Ok(obj);
-            }
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
 
             var mdl = db.GetProfile(id);
 
             if (mdl != null)
             {
                 mdl.LoadAssociations(db);
+
                 BackupCache(mdl);
 
                 if (combo)
@@ -73,38 +71,38 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Post(Profile mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Create(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+            if (!mdl.Create(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            CleanCache(db, CacheObject.Profile, null);
-            StoreCache(CacheObject.Profile, mdl.id, mdl);
+            CleanCache(db, CacheTags.Profile, null);
+            StoreCache(CacheTags.Profile, mdl.id, mdl);
 
             return Ok();
 		}
 
 		public IHttpActionResult Put(long id, Profile mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+            if (!mdl.Update(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            StoreCache(CacheObject.Profile, mdl.id, mdl);
+            StoreCache(CacheTags.Profile, mdl.id, mdl);
 
             return Ok();		
 		}
 
 		public IHttpActionResult Delete(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetProfile(id);
@@ -112,10 +110,10 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!mdl.CanDelete(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.CanDelete(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
-            CleanCache(db, CacheObject.Profile, null);
+            CleanCache(db, CacheTags.Profile, null);
 
             mdl.Delete(db);
 				

@@ -1,6 +1,4 @@
 ﻿using DataModel;
-using Newtonsoft.Json;
-using System.Net;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -9,12 +7,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
 			var mdl = new TimesheetView();
 
-			return Ok(mdl.ComposedFilters(db, new TimesheetViewFilter()
+			return Ok(mdl.ComposedFilters(db, new TimesheetViewFilter
             {
                 nuYear = Request.GetQueryStringValue<long?>("nuYear", null),
                 nuMonth = Request.GetQueryStringValue<long?>("nuMonth", null),

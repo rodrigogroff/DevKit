@@ -14,7 +14,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function CheckPermissions()
 	{
-        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
+        Api.Permission.get({ id: $scope.permID }, function (data)
 		{
 			$scope.permModel = data;
 			if (!$scope.permModel.visualizar) {
@@ -24,7 +24,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		},
 		function (response) { });
 		
-        Api.Permission.get({ id: $scope.auditLogPerm, login: $rootScope.loginInfo }, function (data)
+        Api.Permission.get({ id: $scope.auditLogPerm }, function (data)
 		{
 			$scope.auditLogView = $scope.permModel.visualizar;
 		},
@@ -94,7 +94,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			$scope.loading = true;
 
-            Api.Profile.get({ id: id, login: $rootScope.loginInfo }, function (data)
+            Api.Profile.get({ id: id }, function (data)
 			{
 				// setup
 				if (data.stPermissions.indexOf('|1001|') >= 0) data.tg1001 = true; else data.tg1001 = false;
@@ -299,8 +299,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				if (_mdl.tg2011 == true) perms += '|2011|';
 
 				$scope.viewModel.stPermissions = perms;
-                $scope.viewModel.login = $rootScope.loginInfo;
-
+                
 				if (id > 0)
                 {
 					Api.Profile.update({ id: id }, $scope.viewModel, function (data)
@@ -339,7 +338,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-            Api.Profile.remove({ id: id, login: $rootScope.loginInfo }, function (data)
+            Api.Profile.remove({ id: id }, function (data)
 			{
 				toastr.success('Profile removed!', 'Success');
 				$scope.list();

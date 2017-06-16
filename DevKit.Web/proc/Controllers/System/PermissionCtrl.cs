@@ -17,11 +17,11 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            if (RestoreCache(CacheObject.Profile, (long)db.currentUser.fkProfile) is Profile obj)
+            if (RestoreCache(CacheTags.Profile, (long)db.currentUser.fkProfile) is Profile obj)
                 return Ok(Parse(obj, id));
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
 
             var mdl = db.GetProfile(db.currentUser.fkProfile);
 

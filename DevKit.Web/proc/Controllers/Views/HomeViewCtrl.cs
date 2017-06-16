@@ -1,7 +1,4 @@
 ﻿using DataModel;
-using DevKit.Web.Services;
-
-using System.Web;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -10,20 +7,8 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-
-            myApplication = HttpContext.Current.Application;
-
-            if (myApplication["start"] == null)
-            {
-                myApplication["start"] = true;
-
-                StartCache();
-
-                System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApplication, db.currentUser); });
-                System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
-            }
             
             var mdl = new HomeView();
 				

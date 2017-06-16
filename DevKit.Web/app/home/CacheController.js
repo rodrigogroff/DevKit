@@ -7,7 +7,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 
 	function init()
 	{
-        Api.Cache.listPage({ login: $rootScope.loginInfo }, function (data)
+        Api.Cache.listPage({ }, function (data)
         {
             $scope.viewModel = data.results;
 		});

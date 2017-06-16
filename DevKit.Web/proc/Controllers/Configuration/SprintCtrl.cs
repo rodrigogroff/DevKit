@@ -8,7 +8,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = new ProjectSprint();
@@ -27,7 +27,7 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetProjectSprint(id);
@@ -47,11 +47,11 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Put(long id, ProjectSprint mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+            if (!mdl.Update(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
 			return Ok();			
 		}

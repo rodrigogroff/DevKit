@@ -9,15 +9,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
             string busca = Request.GetQueryStringValue("busca","").ToUpper();
 
-            var hshReport = SetupCacheReport(CacheObject.EnumAccumulatorTypeReport);
+            var hshReport = SetupCacheReport(CacheTags.EnumAccumulatorTypeReport);
             if (hshReport[busca] is TaskReport report)
                 return Ok(report);
-            
+
             var query = (from e in new EnumAccumulatorType().lst select e);
 
 			if (busca != "")
@@ -36,13 +33,10 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var obj = RestoreCache(CacheObject.EnumAccumulatorType, id);
+            var obj = RestoreCache(CacheTags.EnumAccumulatorType, id);
             if (obj != null)
                 return Ok(obj);
-
+            
             var mdl = new EnumAccumulatorType().Get(id);
 
 			if (mdl == null)

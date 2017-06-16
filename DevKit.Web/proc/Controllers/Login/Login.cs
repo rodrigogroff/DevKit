@@ -1,13 +1,10 @@
 ﻿using DataModel;
-using DevKit.Web.Controllers;
-using DevKit.Web.Services;
 using LinqToDB;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Linq;
 using System.Security.Claims;
-using System.Web;
 
 namespace DevKit.Web
 {
@@ -19,7 +16,20 @@ namespace DevKit.Web
 			await System.Threading.Tasks.Task.FromResult(0);
 		}
 
-		public override async System.Threading.Tasks.Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        public override System.Threading.Tasks.Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            string nameUser = context.Identity.Claims.Where(x => x.Type == ClaimTypes.Name).Select(x => x.Value).FirstOrDefault();
+            //string IdUser = context.Identity.Claims.Where(x => x.Type == "IdUser").Select(x => x.Value).FirstOrDefault();
+            //string Session = context.Identity.Claims.Where(x => x.Type == "Session").Select(x => x.Value).FirstOrDefault();
+
+            context.AdditionalResponseParameters.Add("nameUser", nameUser);
+            //context.AdditionalResponseParameters.Add("idUser", IdUser);
+            //context.AdditionalResponseParameters.Add("session", Session);
+
+            return System.Threading.Tasks.Task.FromResult<object>(null);
+        }
+
+        public override async System.Threading.Tasks.Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
 			using (var db = new DevKitDB())
 			{
@@ -35,10 +45,8 @@ namespace DevKit.Web
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
 					identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
-					identity.AddClaim(new Claim(ClaimTypes.Role, usuario.profile.stName));
-					identity.AddClaim(new Claim(ClaimTypes.Sid, usuario.profile.id.ToString()));
-					identity.AddClaim(new Claim("IdUser", usuario.id.ToString()));
-                    identity.AddClaim(new Claim("Session", usuario.stCurrentSession.ToString()));
+					//identity.AddClaim(new Claim("IdUser", usuario.id.ToString()));
+                    //identity.AddClaim(new Claim("Session", usuario.stCurrentSession.ToString()));
 
                     var ticket = new AuthenticationTicket(identity, null);
 					context.Validated(ticket);                    
@@ -51,19 +59,6 @@ namespace DevKit.Web
 
 				await System.Threading.Tasks.Task.FromResult(0);
 			}
-		}
-		
-		public override System.Threading.Tasks.Task TokenEndpoint(OAuthTokenEndpointContext context)
-		{
-			string nameUser = context.Identity.Claims.Where(x => x.Type == ClaimTypes.Name).Select(x => x.Value).FirstOrDefault();
-            string IdUser = context.Identity.Claims.Where(x => x.Type == "IdUser").Select(x => x.Value).FirstOrDefault();
-            string Session = context.Identity.Claims.Where(x => x.Type == "Session").Select(x => x.Value).FirstOrDefault();
-
-            context.AdditionalResponseParameters.Add("nameUser", nameUser);
-            context.AdditionalResponseParameters.Add("idUser", IdUser);
-            context.AdditionalResponseParameters.Add("session", Session);
-
-            return System.Threading.Tasks.Task.FromResult<object>(null);
 		}
 	}
 }

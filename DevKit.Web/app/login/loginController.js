@@ -32,11 +32,6 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     		{
     			$scope.loginOK = true;
                 
-                $rootScope.loginInfo = {
-                    idUser: response.idUser,
-                    session: response.session
-                }
-                
                 $rootScope.exibirMenu = true;
                 $rootScope.$broadcast('updateCounters');
 

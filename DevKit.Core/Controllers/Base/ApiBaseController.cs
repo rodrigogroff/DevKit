@@ -10,8 +10,7 @@ namespace DevKit.Core.Controllers
     public class ApiBaseController : Controller
     {
         public DevKitDB db;
-        public LoginInfo login;
-
+        
         public int count = 0;
 
         public string serviceResponse = "";
@@ -58,8 +57,8 @@ namespace DevKit.Core.Controllers
 
             var setup = db.Setup.Find(1);
 
-            if (!db.ValidateUser(login))
-                return false;
+       //     if (!db.ValidateUser(login))
+         //       return false;
 
         //    BackupCache(myUserTag, db.currentUser);
 

@@ -876,7 +876,7 @@
     <Compile Include="proc\Controllers\Cache\CacheCtrl.cs" />
     <Compile Include="proc\Services\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\CacheClean.cs" />
-    <Compile Include="proc\Services\CacheObject.cs" />
+    <Compile Include="proc\Services\CacheTags.cs" />
     <Compile Include="proc\Controllers\Base\Cache\MemCacheController.cs" />
     <Compile Include="proc\Controllers\Configuration\ClientGroupCtrl.cs" />
     <Compile Include="proc\Controllers\Configuration\ClientCtrl.cs" />

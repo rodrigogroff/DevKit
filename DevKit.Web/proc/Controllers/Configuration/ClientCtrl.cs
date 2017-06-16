@@ -8,11 +8,6 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var mdl = new Client();
-
             var filter = new ClientFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -20,11 +15,16 @@ namespace DevKit.Web.Controllers
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
             };
 
-            var hshReport = SetupCacheReport(CacheObject.ClientReports);
+            var hshReport = SetupCacheReport(CacheTags.ClientReports);
             if (hshReport[filter.Parameters()] is ClientReport report)
                 return Ok(report);
 
-            var results = mdl.ComposedFilters(db, ref count, filter, true);
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var mdl = new Client();
+
+            var results = mdl.ComposedFilters(db, ref count, filter, bSaveAudit:true);
 
             var ret = new ClientReport
             {
@@ -41,22 +41,22 @@ namespace DevKit.Web.Controllers
 		{
             var combo = Request.GetQueryStringValue("combo", false);
 
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var obj = RestoreCache(CacheObject.Client, id) as Client;
-            if (obj != null)
+            if (RestoreCache(CacheTags.Client, id) is Client obj)
                 if (combo)
                     return Ok(obj.ClearAssociations());
                 else
                     return Ok(obj);
-                
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var mdl = db.GetClient(id);
 
 			if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
             mdl.LoadAssociations(db);
+
             BackupCache(mdl);
 
             if (combo)
@@ -67,38 +67,38 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Post(Client mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-			if (!mdl.Create(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.Create(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            CleanCache(db, CacheObject.Client, null);
-            StoreCache(CacheObject.Client, mdl.id, mdl);
+            CleanCache(db, CacheTags.Client, null);
+            StoreCache(CacheTags.Client, mdl.id, mdl);
 
             return Ok();			
 		}
 
 		public IHttpActionResult Put(long id, Client mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
             
-			if (!mdl.Update(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.Update(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            StoreCache(CacheObject.Client, mdl.id, mdl);
+            StoreCache(CacheTags.Client, mdl.id, mdl);
 
             return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetClient(id);
@@ -106,12 +106,12 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!mdl.CanDelete(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.CanDelete(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
 			mdl.Delete(db);
 
-            CleanCache(db, CacheObject.Client, null);
+            CleanCache(db, CacheTags.Client, null);
 
             return Ok();
 		}

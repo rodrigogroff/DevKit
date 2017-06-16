@@ -1,6 +1,5 @@
 ﻿using DataModel;
-using Newtonsoft.Json;
-using System.Web;
+using DevKit.Web.Services;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -9,55 +8,26 @@ namespace DevKit.Web.Controllers
 	public class ApiControllerBase : MemCacheController
 	{
         public DevKitDB db;
-        public LoginInfo login;
-
+        
         public int count = 0;
-        public string serviceResponse = "";
+        public string apiResponse = "";
         
         [NonAction]
-        public bool AuthorizeAndStartDatabase()
-        {
-            myApplication = HttpContext.Current.Application;
-            login = GetLoginFromRequest();
-
-            if (login == null)
-                return false;
-
-            return SetupDb();
-        }
-
-        [NonAction]
-        public LoginInfo GetLoginFromRequest()
-        {
-            var strRequest = Request.GetQueryStringValue("login");
-
-            if (strRequest != null)
-                return JsonConvert.DeserializeObject<LoginInfo>(strRequest);
-
-            return null;
-        }
-
-        [NonAction]
-        public bool AuthorizeAndStartDatabase(LoginInfo _login)
-        {
-            login = _login;
-            myApplication = HttpContext.Current.Application;
-
-            if (_login == null)
-                return false;
-
-            return SetupDb();
-        }
-
-        [NonAction]
-        public bool SetupDb()
+        public bool StartDatabaseAndAuthorize()
         {
             db = new DevKitDB();
 
-            if (!db.ValidateUser(login))
-                return false;
-            
-            return true;
+            if (myApplication["start"] == null)
+            {
+                myApplication["start"] = true;
+
+                StartCache();
+
+                System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApplication, db.currentUser); });
+                System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
+            }
+
+            return db.ValidateUser();
         }
     }
 }

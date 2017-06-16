@@ -8,7 +8,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = new Project();
@@ -26,7 +26,7 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetProject(id);
@@ -49,29 +49,29 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Post(Project mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Create(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+            if (!mdl.Create(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
 			return Ok();
 		}
 
 		public IHttpActionResult Put(long id, Project mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref serviceResponse))
-					return BadRequest(serviceResponse);
+            if (!mdl.Update(db, ref apiResponse))
+					return BadRequest(apiResponse);
 
 			return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetProject(id);
@@ -79,8 +79,8 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!mdl.CanDelete(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.CanDelete(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
 			mdl.Delete(db);
 								

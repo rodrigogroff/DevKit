@@ -18,7 +18,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function CheckPermissions()
 	{
-        Api.Permission.get({ id: $scope.permID, login: $rootScope.loginInfo }, function (data)
+        Api.Permission.get({ id: $scope.permID }, function (data)
 		{
 			$scope.permModel = data;
 
@@ -30,7 +30,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		},
 		function (response) { });
 
-        Api.Permission.get({ id: $scope.auditLogPerm, login: $rootScope.loginInfo }, function (data)
+        Api.Permission.get({ id: $scope.auditLogPerm }, function (data)
         {
 			$scope.auditLogView = $scope.permModel.visualizar;
 		},
@@ -39,7 +39,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	function loadSetup()
 	{
-        Api.Setup.get({ id: 1, login: $rootScope.loginInfo }, function (data)
+        Api.Setup.get({ id: 1 }, function (data)
 		{
 			$scope.setupModel = data;
 		});
@@ -57,7 +57,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (id > 0)
 		{
 			$scope.loading = true;
-            Api.User.get({ id: id, login: $rootScope.loginInfo }, function (data)
+            Api.User.get({ id: id }, function (data)
 			{
 				$scope.viewModel = data;
 				$scope.loading = false;
@@ -113,8 +113,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
             if (!$scope.stLogin_fail &&
                 !$scope.fkProfile_fail)
             {
-                $scope.viewModel.login = $rootScope.loginInfo;
-
 				if (id > 0)
                 {
 					$scope.viewModel.updateCommand = "entity";
@@ -151,7 +149,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.resetPass = function ()
     {
-        $scope.viewModel.login = $rootScope.loginInfo;
 		$scope.viewModel.updateCommand = "resetPassword";
 
         Api.User.update({ id: id }, $scope.viewModel, function (data)
@@ -169,7 +166,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-            Api.User.remove({ id: id, login: $rootScope.loginInfo }, function (data)
+            Api.User.remove({ id: id }, function (data)
 			{
 				toastr.success('User removed!', 'Success');
 				$scope.list();
@@ -193,8 +190,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
         {
-            $scope.viewModel.login = $rootScope.loginInfo;
-		    $scope.viewModel.updateCommand = "removePhone";
+            $scope.viewModel.updateCommand = "removePhone";
 		    $scope.viewModel.anexedEntity = $scope.viewModel.phones[index];
 
             Api.User.update({ id: id }, $scope.viewModel, function (data) {
@@ -238,8 +234,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				!$scope.stDescription_fail)
 			{
 				$scope.addPhone = false;
-
-                $scope.viewModel.login = $rootScope.loginInfo;
+                
 				$scope.viewModel.updateCommand = "newPhone";
 				$scope.viewModel.anexedEntity = $scope.newPhone;
 
@@ -268,7 +263,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
         {
-            $scope.viewModel.login = $rootScope.loginInfo;
 			$scope.viewModel.updateCommand = "removeEmail";
 			$scope.viewModel.anexedEntity = $scope.viewModel.emails[index];
 
@@ -311,8 +305,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			if (!$scope.stEmail_fail)
 			{
 				$scope.addEmail = false;
-
-                $scope.viewModel.login = $rootScope.loginInfo;
+                
 				$scope.viewModel.updateCommand = "newEmail";
 				$scope.viewModel.anexedEntity = $scope.newEmail;
 

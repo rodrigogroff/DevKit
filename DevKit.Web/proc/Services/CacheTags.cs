@@ -1,7 +1,7 @@
 ﻿
 namespace DevKit.Web.Controllers
 {
-    public static class CacheObject
+    public static class CacheTags
     {
         // enums
 

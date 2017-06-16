@@ -41,8 +41,7 @@ function (Api, $rootScope)
 
 					opcoesObter[campoId] = id;
                     opcoesObter.combo = true;
-                    opcoesObter.login = $rootScope.loginInfo;
-
+                    
 					if (parametros && parametros.opcoes)
 						angular.extend(opcoesObter, parametros.opcoes);
 
@@ -106,9 +105,7 @@ function (Api, $rootScope)
 
 				if (parametros && parametros.opcoes)
                     angular.extend(objFiltro, parametros.opcoes);
-
-                objFiltro.login = $rootScope.loginInfo;
-
+                
 				api.listPage(objFiltro, function (data)
 				{
 					var lista = [];

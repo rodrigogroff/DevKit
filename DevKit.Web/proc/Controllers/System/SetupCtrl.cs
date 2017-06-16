@@ -9,12 +9,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-
-            var obj = RestoreCache(CacheObject.Setup, id);
+            var obj = RestoreCache(CacheTags.Setup, id);
             if (obj != null)
                 return Ok(obj);
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
 
             var mdl = db.GetSetup();
 				
@@ -22,6 +22,7 @@ namespace DevKit.Web.Controllers
                 return StatusCode(HttpStatusCode.NotFound);
 
             mdl.LoadAssociations(db);
+
             BackupCache(mdl);
 
             return Ok(mdl);			
@@ -29,15 +30,15 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Put(long id, Setup mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref serviceResponse))
-			    return BadRequest(serviceResponse);
+            if (!mdl.Update(db, ref apiResponse))
+			    return BadRequest(apiResponse);
 
             mdl.LoadAssociations(db);
 
-            StoreCache(CacheObject.Setup, id, mdl);
+            StoreCache(CacheTags.Setup, id, mdl);
 
             return Ok();			
 		}

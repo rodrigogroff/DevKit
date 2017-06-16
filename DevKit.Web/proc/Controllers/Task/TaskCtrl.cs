@@ -8,11 +8,6 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!AuthorizeAndStartDatabase())
-                return BadRequest();
-            
-            var mdl = new Task();
-
             var filter = new TaskFilter()
             {
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -34,10 +29,15 @@ namespace DevKit.Web.Controllers
                 fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
             };
 
-            var hshReport = SetupCacheReport(CacheObject.TaskReports);            
+            var hshReport = SetupCacheReport(CacheTags.TaskReports);            
             if (hshReport[filter.Parameters()] is TaskReport report)
                 return Ok(report);
-            
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var mdl = new Task();
+
             var ret = mdl.Report(db, ref count, filter, new loaderOptionsTask
             {
                 bLoadTaskCategory = true,
@@ -57,16 +57,18 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (RestoreCache(CacheTags.Task, id) != null)
+                return base.Ok(RestoreCache(CacheTags.Task, id));
+
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var obj = RestoreCache(CacheObject.Task, id);
-            if (obj != null)
-                return Ok(obj);
-
             var mdl = db.GetTask(id);
+            
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-            var options = new loaderOptionsTask
+            mdl.LoadAssociations(db, new loaderOptionsTask
             {
                 bLoadTaskCategory = true,
                 bLoadTaskType = true,
@@ -87,12 +89,8 @@ namespace DevKit.Web.Controllers
                 bLoadClientGroups = true,
                 bLoadCustomSteps = true,
                 bLoadLogs = true
-            };
+            });
 
-            if (mdl == null)
-                return StatusCode(HttpStatusCode.NotFound);
-
-            mdl.LoadAssociations(db, options);
             BackupCache(mdl);
 
             return Ok(mdl);		
@@ -100,34 +98,34 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Post(Task mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Create(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+            if (!mdl.Create(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
-            CleanCache(db, CacheObject.Task, null);
-            StoreCache(CacheObject.Task, mdl.id, mdl);
+            CleanCache(db, CacheTags.Task, null);
+            StoreCache(CacheTags.Task, mdl.id, mdl);
 
             return Ok();			
 		}
 
 		public IHttpActionResult Put(long id, Task mdl)
 		{
-            if (!AuthorizeAndStartDatabase(mdl.login))
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
             
-            if (!mdl.Update(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+            if (!mdl.Update(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
-            StoreCache(CacheObject.Task, mdl.id, mdl);
+            StoreCache(CacheTags.Task, mdl.id, mdl);
 
             return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)
 		{
-            if (!AuthorizeAndStartDatabase())
+            if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetTask(id);
@@ -135,12 +133,12 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!mdl.CanDelete(db, ref serviceResponse))
-				return BadRequest(serviceResponse);
+			if (!mdl.CanDelete(db, ref apiResponse))
+				return BadRequest(apiResponse);
 
             mdl.Delete(db);
 
-            CleanCache(db, CacheObject.Task, null);
+            CleanCache(db, CacheTags.Task, null);
 
             return Ok();			
 		}

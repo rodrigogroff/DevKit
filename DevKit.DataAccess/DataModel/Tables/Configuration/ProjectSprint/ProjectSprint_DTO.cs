@@ -4,8 +4,6 @@ namespace DataModel
 {
 	public partial class ProjectSprint
 	{
-        public LoginInfo login;
-
         public object anexedEntity;
 
 		public string sfkProject = "",

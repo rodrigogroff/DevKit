@@ -24,42 +24,42 @@ namespace DevKit.Web.Services
 
                 #region - enums - 
 
-                foreach (var item in new EnumAccumulatorType().lst) cache.StoreCache(CacheObject.EnumAccumulatorType, item.id, item);
-                foreach (var item in new EnumMonth().lst) cache.StoreCache(CacheObject.EnumMonth, item.id, item);
-                foreach (var item in new EnumPriority().lst) cache.StoreCache(CacheObject.EnumPriority, item.id, item);
-                foreach (var item in new EnumProjectTemplate().lst) cache.StoreCache(CacheObject.EnumProjectTemplate, item.id, item);
-                foreach (var item in new EnumVersionState().lst) cache.StoreCache(CacheObject.EnumVersionState, item.id, item);
+                foreach (var item in new EnumAccumulatorType().lst) cache.StoreCache(CacheTags.EnumAccumulatorType, item.id, item);
+                foreach (var item in new EnumMonth().lst) cache.StoreCache(CacheTags.EnumMonth, item.id, item);
+                foreach (var item in new EnumPriority().lst) cache.StoreCache(CacheTags.EnumPriority, item.id, item);
+                foreach (var item in new EnumProjectTemplate().lst) cache.StoreCache(CacheTags.EnumProjectTemplate, item.id, item);
+                foreach (var item in new EnumVersionState().lst) cache.StoreCache(CacheTags.EnumVersionState, item.id, item);
                 
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.EnumAccumulatorTypeReport);
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumAccumulatorTypeReport);
                     var query = (from e in new EnumAccumulatorType().lst select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
                 
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.EnumMonth);
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumMonth);
                     var query = (from e in new EnumMonth().lst select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.EnumPriority);
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumPriority);
                     var query = (from e in new EnumPriority().lst select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.EnumProjectTemplate);
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumProjectTemplate);
                     var query = (from e in new EnumProjectTemplate().lst select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.EnumVersionState);
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumVersionState);
                     var query = (from e in new EnumVersionState().lst select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
@@ -71,7 +71,7 @@ namespace DevKit.Web.Services
 
                 // user
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.UserReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.UserReports);
 
                     var mdl = new User();
                     var filter = new UserFilter { skip = 0, take = 15 };
@@ -86,7 +86,7 @@ namespace DevKit.Web.Services
 
                 // profile
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.ProfileReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.ProfileReports);
 
                     var mdl = new Profile();
                     var filter = new ProfileFilter { skip = 0, take = 15 };
@@ -101,7 +101,7 @@ namespace DevKit.Web.Services
 
                 // client
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.ClientReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.ClientReports);
 
                     var mdl = new Client();
                     var filter = new ClientFilter { skip = 0, take = 15 };
@@ -116,7 +116,7 @@ namespace DevKit.Web.Services
 
                 // client groups
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.ClientGroupReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.ClientGroupReports);
 
                     var mdl = new ClientGroup();
                     var filter = new ClientGroupFilter { skip = 0, take = 15 };
@@ -131,7 +131,7 @@ namespace DevKit.Web.Services
 
                 // task type
                 {
-                    var hshReport = cache.SetupCacheReport(CacheObject.TaskTypeReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.TaskTypeReports);
 
                     var mdl = new TaskType();
                     var filter = new TaskTypeFilter { skip = 0, take = 15 };
@@ -162,7 +162,7 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db);
-                            cache.StoreCache(CacheObject.User, item.id, item);
+                            cache.StoreCache(CacheTags.User, item.id, item);
                         }
                 }
 
@@ -173,7 +173,7 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db);
-                            cache.StoreCache(CacheObject.Profile, item.id, item);
+                            cache.StoreCache(CacheTags.Profile, item.id, item);
                         }
                 }
 
@@ -184,7 +184,7 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db);
-                            cache.StoreCache(CacheObject.Client, item.id, item);
+                            cache.StoreCache(CacheTags.Client, item.id, item);
                         }                            
                 }
 
@@ -195,7 +195,7 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db);
-                            cache.StoreCache(CacheObject.ClientGroup, item.id, item);
+                            cache.StoreCache(CacheTags.ClientGroup, item.id, item);
                         }                            
                 }
 
@@ -215,7 +215,7 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db, options);
-                            cache.StoreCache(CacheObject.TaskType, item.id, item);
+                            cache.StoreCache(CacheTags.TaskType, item.id, item);
                         }
                 }
 
@@ -249,7 +249,7 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db, options);
-                            cache.StoreCache(CacheObject.Task, item.id, item);
+                            cache.StoreCache(CacheTags.Task, item.id, item);
                         }                            
                 }
 

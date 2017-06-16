@@ -5,8 +5,6 @@ namespace DataModel
 {
 	public partial class Setup
 	{
-        public LoginInfo login;
-
         public List<SetupLog> logs;
 	}
 

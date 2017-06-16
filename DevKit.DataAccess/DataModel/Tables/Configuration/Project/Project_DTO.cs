@@ -4,8 +4,6 @@ namespace DataModel
 {
 	public partial class Project
 	{
-        public LoginInfo login;
-
         public object anexedEntity;
 
 		public string stUser = "",

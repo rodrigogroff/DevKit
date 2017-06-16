@@ -7,32 +7,32 @@ namespace DevKit.Web.Controllers
         {
             switch (target)
             {
-                case CacheObject.User:          if (id != null) StoreCache(CacheObject.User, id, null);
-                                                CleanCacheReport(CacheObject.UserReports);
+                case CacheTags.User:          if (id != null) StoreCache(CacheTags.User, id, null);
+                                                CleanCacheReport(CacheTags.UserReports);
                                                 break;
 
-                case CacheObject.Profile:       if (id != null) StoreCache(CacheObject.Profile, id, null);
-                                                CleanCacheReport(CacheObject.ProfileReports);
+                case CacheTags.Profile:       if (id != null) StoreCache(CacheTags.Profile, id, null);
+                                                CleanCacheReport(CacheTags.ProfileReports);
                                                 break;
 
-                case CacheObject.Client:        if (id != null) StoreCache(CacheObject.Client, id, null);
-                                                CleanCacheReport(CacheObject.ClientReports);
+                case CacheTags.Client:        if (id != null) StoreCache(CacheTags.Client, id, null);
+                                                CleanCacheReport(CacheTags.ClientReports);
                                                 break;
 
-                case CacheObject.ClientGroup:   if (id != null) StoreCache(CacheObject.ClientGroup, id, null);
-                                                CleanCacheReport(CacheObject.ClientGroupReports);
+                case CacheTags.ClientGroup:   if (id != null) StoreCache(CacheTags.ClientGroup, id, null);
+                                                CleanCacheReport(CacheTags.ClientGroupReports);
                                                 break;
 
-                case CacheObject.Task:          if (id != null) StoreCache(CacheObject.Task, id, null);
-                                                CleanCacheReport(CacheObject.TaskReports);
+                case CacheTags.Task:          if (id != null) StoreCache(CacheTags.Task, id, null);
+                                                CleanCacheReport(CacheTags.TaskReports);
                                                 break;
 
-                case CacheObject.CompanyNews:   if (id != null) StoreCache(CacheObject.CompanyNews, id, null);
-                                                CleanCacheReport(CacheObject.CompanyNewsReports);
+                case CacheTags.CompanyNews:   if (id != null) StoreCache(CacheTags.CompanyNews, id, null);
+                                                CleanCacheReport(CacheTags.CompanyNewsReports);
                                                 break;
 
-                case CacheObject.TaskType:      if (id != null) StoreCache(CacheObject.TaskType, id, null);
-                                                CleanCacheReport(CacheObject.TaskTypeReports);
+                case CacheTags.TaskType:      if (id != null) StoreCache(CacheTags.TaskType, id, null);
+                                                CleanCacheReport(CacheTags.TaskTypeReports);
                                                 break;
             }
         }

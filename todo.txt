@@ -2,7 +2,7 @@
 ------------------------------
 a fazer (groff)
 ------------------------------
-		
+	
 	https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state
 
 	-implementar acumulador de 'ammount'

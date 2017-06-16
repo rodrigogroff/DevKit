@@ -12,7 +12,7 @@ namespace DevKit.Core
         public Startup(IHostingEnvironment env)
         {
             DataConnection.DefaultSettings = new MySettings();
-
+            
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

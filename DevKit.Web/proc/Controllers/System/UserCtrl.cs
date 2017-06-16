@@ -97,6 +97,13 @@ namespace DevKit.Web.Controllers
 			if (!mdl.Update(db, ref serviceResponse))
 				return BadRequest(serviceResponse);
 
+            if (mdl.resetPassword != "")
+            {
+                StoreCache(CacheObject.User, mdl.id, null);
+                mdl.ClearAssociations();
+                return Ok(mdl);
+            }
+
             mdl.LoadAssociations(db);
             StoreCache(CacheObject.User, mdl.id, mdl);
 

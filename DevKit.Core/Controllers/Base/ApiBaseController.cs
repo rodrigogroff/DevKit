@@ -1,4 +1,7 @@
 ﻿using DataModel;
+using LinqToDB.Data;
+using Npgsql;
+using LinqToDB.DataProvider.PostgreSQL;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -17,10 +20,10 @@ namespace DevKit.Core.Controllers
         public bool AuthorizeAndStartDatabase()
         {
             //myApplication = HttpContext.Current.Application;
-            login = GetLoginFromRequest();
+       //     login = GetLoginFromRequest();
 
-            if (login == null)
-                return false;
+       //     if (login == null)
+        //        return false;
 
             return SetupDb();
         }
@@ -30,10 +33,10 @@ namespace DevKit.Core.Controllers
         {
             //myApplication = HttpContext.Current.Application;
 
-            if (_login == null)
-                return false;
+         //   if (_login == null)
+           //     return false;
 
-            login = _login;
+            //login = _login;
 
             return SetupDb();
         }
@@ -42,9 +45,14 @@ namespace DevKit.Core.Controllers
         public bool SetupDb()
         {
             //var myUserTag = CachedObject.User + login.idUser;
+      //      DataConnection.DefaultSettings = new MySettings();
+//            DataConnection.DefaultConfiguration = "MySettings";
+  //          DataConnection.AddConfiguration("MySettings", "Server=localhost;Port=5432;Database=DevKit;User Id=postgres;Password=rodrigo;",  )
+
+            
 
             db = new DevKitDB()
-            {
+            {                
               //  currentUser = RestoreCache(myUserTag) as User
             };
 

@@ -40,11 +40,17 @@ namespace DevKit.Web.Controllers
 
             return Ok(ret);
         }
-
+        
         public IHttpActionResult Get(long id)
 		{
+            if (id == 0)
+            {
+                StartDatabaseAndAuthorize();
+                return Ok(db.currentUser);
+            }                
+
             var combo = Request.GetQueryStringValue("combo", false);
-            
+
             if (RestoreCache(CacheTags.User, id) is User obj)
             {
                 if (combo)

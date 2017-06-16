@@ -3,7 +3,8 @@
 a fazer (groff)
 ------------------------------
 	
-	https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state
+	-updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
+	-currentUser -> estudar melhor uso de cache para currentUser
 
 	-implementar acumulador de 'ammount'
 	-remover pesquisa na tela generica

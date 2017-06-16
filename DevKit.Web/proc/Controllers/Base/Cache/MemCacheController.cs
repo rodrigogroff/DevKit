@@ -17,7 +17,23 @@ namespace DevKit.Web.Controllers
 	[Authorize]
 	public class MemCacheController : ApiController
 	{
-        public HttpApplicationState myApplication = HttpContext.Current.Application;
+        public HttpApplicationState _myApplication = null;
+
+        public HttpApplicationState myApplication
+        {
+            get
+            {
+                if (_myApplication == null)
+                    _myApplication = HttpContext.Current.Application;
+
+                return _myApplication;
+            }
+
+            set
+            {
+                ;
+            }
+        }
 
         public string currentCacheTag = "";
 
@@ -78,6 +94,8 @@ namespace DevKit.Web.Controllers
         public void BackupCache(object obj)
         {
             StoreTag(currentCacheTag);
+            SaveHit(currentCacheTag);
+
             myApplication[currentCacheTag] = obj;
         }
 
@@ -86,12 +104,15 @@ namespace DevKit.Web.Controllers
         {
             tag = tag + id;
 
+            myApplication[tag] = obj;
+
             if (obj != null)
+            {
                 StoreTag(tag);
+                SaveHit(tag);
+            }                
             else
                 RemoveTag(tag);
-            
-            myApplication[tag] = obj;
         }
         
         // ---------------

@@ -12,7 +12,7 @@ namespace DevKit.Web.Services
         {
             var cache = new MemCacheController()
             {
-                myApplication = _app
+                _myApplication = _app
             };
 
             int count = 0, 
@@ -151,6 +151,36 @@ namespace DevKit.Web.Services
                     hshReport[filter.Parameters()] = ret;
                 }
 
+                // tasks
+                {
+                    var hshReport = cache.SetupCacheReport(CacheTags.TaskReports);
+
+                    var mdl = new Task();
+                    var filter = new TaskFilter { skip = 0, take = 15, kpa = false, complete = false };
+
+                    var options = new loaderOptionsTask
+                    {
+                        bLoadTaskCategory = true,
+                        bLoadTaskType = true,
+                        bLoadProject = true,
+                        bLoadPhase = true,
+                        bLoadSprint = true,
+                        bLoadTaskFlow = true,
+                        bLoadVersion = true,
+                        bLoadUsers = true,
+                    };
+
+                    var results = mdl.ComposedFilters(db, ref count, filter, options);
+
+                    var ret = new TaskReport
+                    {
+                        count = count,
+                        results = results
+                    };
+
+                    hshReport[filter.Parameters()] = ret;
+                }
+
                 #endregion
 
                 #region - tables - 
@@ -173,7 +203,8 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db);
-                            cache.StoreCache(CacheTags.Profile, item.id, item);
+                            cache.currentCacheTag = CacheTags.Profile + item.id;
+                            cache.BackupCache(item);
                         }
                 }
 
@@ -184,7 +215,9 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db);
-                            cache.StoreCache(CacheTags.Client, item.id, item);
+
+                            cache.currentCacheTag = CacheTags.Client + item.id;
+                            cache.BackupCache(item);
                         }                            
                 }
 
@@ -195,7 +228,9 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db);
-                            cache.StoreCache(CacheTags.ClientGroup, item.id, item);
+
+                            cache.currentCacheTag = CacheTags.ClientGroup + item.id;
+                            cache.BackupCache(item);
                         }                            
                 }
 
@@ -215,7 +250,9 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db, options);
-                            cache.StoreCache(CacheTags.TaskType, item.id, item);
+
+                            cache.currentCacheTag = CacheTags.TaskType + item.id;
+                            cache.BackupCache(item);
                         }
                 }
 
@@ -249,7 +286,9 @@ namespace DevKit.Web.Services
                         foreach (var item in q.ToList())
                         {
                             item.LoadAssociations(db, options);
-                            cache.StoreCache(CacheTags.Task, item.id, item);
+
+                            cache.currentCacheTag = CacheTags.Task + item.id;
+                            cache.BackupCache(item);
                         }                            
                 }
 

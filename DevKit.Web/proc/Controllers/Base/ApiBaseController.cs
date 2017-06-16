@@ -17,7 +17,9 @@ namespace DevKit.Web.Controllers
         {
             db = new DevKitDB();
 
-            if (myApplication["start"] == null)
+            var resp = db.ValidateUser();
+
+            if (resp == true && myApplication["start"] == null)
             {
                 myApplication["start"] = true;
 
@@ -27,7 +29,7 @@ namespace DevKit.Web.Controllers
                 System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
             }
 
-            return db.ValidateUser();
+            return resp;
         }
     }
 }

@@ -6,9 +6,7 @@ namespace DevKit.Web.Controllers
 {
     public class CacheDTO
     {
-        public string key,
-                      hits,
-                      last;
+        public string key, hits, last;
     }
     
     public class CacheController : ApiControllerBase
@@ -17,28 +15,31 @@ namespace DevKit.Web.Controllers
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-
-            var lst = GetCacheTags();
+            
             var hsh = GetCacheHitRecord();
-
             var ret = new List<CacheDTO>();
 
-            foreach (var key in lst)
+            foreach (var key in GetCacheTags())
             {
                 if (hsh[key] is CacheHitRecord hr)
-                    ret.Add(new CacheDTO()
+                {
+                    if (hr.hits > 1)
                     {
-                        key = key,
-                        hits = hr.hits.ToString(),
-                        last = hr.dt_last.ToString()
-                    });
+                        ret.Add(new CacheDTO()
+                        {
+                            key = key,
+                            hits = hr.hits.ToString(),
+                            last = hr.dt_last.ToString()
+                        });
+                    }
+                }
             }
 
             var retOrdered = ret.OrderByDescending(y => y.hits);
 
             return Ok(new
             {
-                count = ret.Count,
+                count = myApplication.AllKeys.Count(),
                 results = retOrdered
             });
         }

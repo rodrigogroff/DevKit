@@ -30,7 +30,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			else
             {
 				$scope.loading = true;
-                Api.User.get({ id: $rootScope.loginInfo.idUser }, function (data)
+                Api.User.get({ id: 0 }, function (data)
                 {
 					$scope.viewModel = data;
 					$scope.loading = false;

@@ -26,11 +26,11 @@ namespace DevKit.Web.Controllers
 
             var mdl = new Profile();
 
-            var results = mdl.ComposedFilters(db, ref count, filter);
+            var results = mdl.ComposedFilters(db, ref reportCount, filter);
 
             var ret = new ProfileReport
             {
-                count = count,
+                count = reportCount,
                 results = results
             };
 

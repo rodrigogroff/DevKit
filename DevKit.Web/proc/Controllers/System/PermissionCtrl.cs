@@ -17,13 +17,29 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
+            // ------------------------------
+            // try for pure cache
+            // ------------------------------
+
+            var currentUser = RestoreCache(CacheTags.User + userLoggedName) as User;
+
+            if (currentUser != null)
+                if (RestoreCache(CacheTags.Profile, currentUser.fkProfile) is Profile objProfile)
+                    return Ok(Parse(objProfile, id));
+
+            // ------------------------------
+            // try for database
+            // ------------------------------
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (RestoreCache(CacheTags.Profile, (long)db.currentUser.fkProfile) is Profile obj)
+            var userProfile = db.currentUser.fkProfile;
+
+            if (RestoreCache(CacheTags.Profile, userProfile) is Profile obj)
                 return Ok(Parse(obj, id));
             
-            var mdl = db.GetProfile(db.currentUser.fkProfile);
+            var mdl = db.GetProfile(userProfile);
 
             if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);

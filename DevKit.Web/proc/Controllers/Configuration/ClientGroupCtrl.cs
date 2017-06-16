@@ -24,11 +24,11 @@ namespace DevKit.Web.Controllers
 
             var mdl = new ClientGroup();
 
-            var results = mdl.ComposedFilters(db, ref count, filter, bSaveAuditLog:true);
+            var results = mdl.ComposedFilters(db, ref reportCount, filter, bSaveAuditLog:true);
 
             var ret = new ClientGroupReport
             {
-                count = count,
+                count = reportCount,
                 results = results
             };
 

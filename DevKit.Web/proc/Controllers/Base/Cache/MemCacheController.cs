@@ -29,10 +29,7 @@ namespace DevKit.Web.Controllers
                 return _myApplication;
             }
 
-            set
-            {
-                ;
-            }
+            set { }
         }
 
         public string currentCacheTag = "";
@@ -56,7 +53,7 @@ namespace DevKit.Web.Controllers
         // ---------------
 
         [NonAction]
-        public object RestoreCache(string tag, long id)
+        public object RestoreCache(string tag, long? id)
         {
             currentCacheTag = tag + id;
 
@@ -66,7 +63,28 @@ namespace DevKit.Web.Controllers
                 SaveHit(tag);
 
             return ret;
-        }               
+        }
+
+        [NonAction]
+        public object RestoreCache(string tag)
+        {
+            currentCacheTag = tag;
+
+            var ret = myApplication[currentCacheTag] as object;
+
+            if (ret != null)
+                SaveHit(tag);
+
+            return ret;
+        }
+
+        [NonAction]
+        public object RestoreCacheNoHit(string tag)
+        {
+            currentCacheTag = tag;           
+
+            return myApplication[currentCacheTag] as object;
+        }
 
         [NonAction]
         public Hashtable SetupCacheReport(string tag)
@@ -96,6 +114,12 @@ namespace DevKit.Web.Controllers
             StoreTag(currentCacheTag);
             SaveHit(currentCacheTag);
 
+            myApplication[currentCacheTag] = obj;
+        }
+
+        [NonAction]
+        public void BackupCacheNoHit(object obj)
+        {
             myApplication[currentCacheTag] = obj;
         }
 

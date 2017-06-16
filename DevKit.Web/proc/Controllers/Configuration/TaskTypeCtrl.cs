@@ -31,11 +31,11 @@ namespace DevKit.Web.Controllers
                 bLoadCategories = true
             };
 
-            var results = mdl.ComposedFilters(db, ref count, filter, options);
+            var results = mdl.ComposedFilters(db, ref reportCount, filter, options);
 
             var ret = new TaskTypeReport
             {
-                count = count,
+                count = reportCount,
                 results = results
             };
 

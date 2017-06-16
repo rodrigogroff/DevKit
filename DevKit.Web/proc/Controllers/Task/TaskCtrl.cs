@@ -38,7 +38,7 @@ namespace DevKit.Web.Controllers
 
             var mdl = new Task();
 
-            var ret = mdl.Report(db, ref count, filter, new loaderOptionsTask
+            var ret = mdl.Report(db, ref reportCount, filter, new loaderOptionsTask
             {
                 bLoadTaskCategory = true,
                 bLoadTaskType = true,

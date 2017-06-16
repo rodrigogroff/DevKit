@@ -13,7 +13,7 @@ namespace DevKit.Web.Controllers
 
             var mdl = new ProjectSprint();
 
-			var results = mdl.ComposedFilters(db, ref count, new ProjectSprintFilter()
+			var results = mdl.ComposedFilters(db, ref reportCount, new ProjectSprintFilter()
 			{
 				skip = Request.GetQueryStringValue("skip", 0),
 				take = Request.GetQueryStringValue("take", 15),
@@ -22,7 +22,7 @@ namespace DevKit.Web.Controllers
 				fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
 			});
 
-			return Ok(new { count = count, results = results });			
+			return Ok(new { count = reportCount, results = results });			
 		}
 
 		public IHttpActionResult Get(long id)

@@ -13,7 +13,7 @@ namespace DevKit.Web.Controllers
 
             var mdl = new TaskCheckPoint();
 
-            var results = mdl.ComposedFilters(db, ref count, new TaskCheckPointFilter()
+            var results = mdl.ComposedFilters(db, ref reportCount, new TaskCheckPointFilter()
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
@@ -21,7 +21,7 @@ namespace DevKit.Web.Controllers
 				fkCategory = Request.GetQueryStringValue<long?>("fkCategory", null)
 			});
 
-			return Ok(new { count = count, results = results });			
+			return Ok(new { count = reportCount, results = results });			
 		}
 
 		public IHttpActionResult Get(long id)

@@ -1,6 +1,6 @@
 
 ------------------------------
-a fazer (groff)
+a fazer (prioridade)
 ------------------------------
 	
 	-updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
@@ -11,7 +11,7 @@ a fazer (groff)
 	-pensar data na task listing / kanban
 
 ------------------------------
-a fazer (ramiro)OK!
+a fazer (ajustes)
 ------------------------------
 
 	-na listagem de perfils, trazer cinco primeiros users em nova coluna 'users'
@@ -26,7 +26,7 @@ a fazer (ramiro)OK!
 	-selenium para diversos cruds
 
 ------------------------------
-a fazer (thiago)
+a fazer (estrutural)
 ------------------------------
 
 	-http://embed.plnkr.co/DgWeerIlDjFpZO6DCzDD/ para dinheiro em task.html

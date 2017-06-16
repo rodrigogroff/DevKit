@@ -13,7 +13,7 @@ namespace DevKit.Web.Controllers
 
             var mdl = new Survey();
 
-			var results = mdl.ComposedFilters(db, ref count, new SurveyFilter
+			var results = mdl.ComposedFilters(db, ref reportCount, new SurveyFilter
 			{
 				skip = Request.GetQueryStringValue("skip", 0),
 				take = Request.GetQueryStringValue("take", 15),
@@ -21,7 +21,7 @@ namespace DevKit.Web.Controllers
                 fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
 			});
 
-			return Ok(new { count = count, results = results });			
+			return Ok(new { count = reportCount, results = results });			
 		}
 
 		public IHttpActionResult Get(long id)

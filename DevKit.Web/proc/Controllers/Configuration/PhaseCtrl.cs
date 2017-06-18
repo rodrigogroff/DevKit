@@ -31,10 +31,10 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.GetProjectPhase(id);
 
-            if (mdl != null)
-                return Ok(mdl);
-
-            return StatusCode(HttpStatusCode.NotFound);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
+                       
+            return Ok(mdl);            
 		}
 	}
 }

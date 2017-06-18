@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
+using System;
 
 namespace DevKit.Web.Controllers
 {
     public class CacheDTO
     {
-        public string key, hits, last;
+        public string key;
+        public int hits;
+        public DateTime last;
     }
     
     public class CacheController : ApiControllerBase
@@ -15,21 +18,23 @@ namespace DevKit.Web.Controllers
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-            
+
+            var lstTags = GetCacheTags();
             var hsh = GetCacheHitRecord();
+
             var ret = new List<CacheDTO>();
 
-            foreach (var key in GetCacheTags())
+            foreach (var key in lstTags)
             {
                 if (hsh[key] is CacheHitRecord hr)
                 {
                     if (hr.hits > 1)
                     {
-                        ret.Add(new CacheDTO()
+                        ret.Add(new CacheDTO
                         {
                             key = key,
-                            hits = hr.hits.ToString(),
-                            last = hr.dt_last.ToString()
+                            hits = hr.hits,
+                            last = hr.dt_last
                         });
                     }
                 }
@@ -39,7 +44,7 @@ namespace DevKit.Web.Controllers
 
             return Ok(new
             {
-                count = myApplication.AllKeys.Count(),
+                count = lstTags.Count(),
                 results = retOrdered
             });
         }

@@ -31,10 +31,10 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.GetTaskCheckPoint(id);
 
-			if (mdl != null)
-				return Ok(mdl);
+			if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-			return StatusCode(HttpStatusCode.NotFound);
+            return Ok(mdl);			
 		}
 	}
 }

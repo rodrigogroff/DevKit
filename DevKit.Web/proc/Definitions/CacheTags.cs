@@ -19,7 +19,6 @@ namespace DevKit.Web.Controllers
         // tables
 
         public const string Setup = "Setup";
-
         public const string User = "User";
         public const string UserReports = "UserReports";
         public const string Client = "Client";

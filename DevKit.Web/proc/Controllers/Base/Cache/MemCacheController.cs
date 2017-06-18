@@ -17,22 +17,12 @@ namespace DevKit.Web.Controllers
 	[Authorize]
 	public class MemCacheController : ApiController
 	{
-        public HttpApplicationState _myApplication = null;
-
-        public HttpApplicationState myApplication
-        {
-            get
-            {
-                if (_myApplication == null)
-                    _myApplication = HttpContext.Current.Application;
-
-                return _myApplication;
-            }
-
-            set { }
-        }
+        public HttpApplicationState myApplication = null;
 
         public string currentCacheTag = "";
+
+        public bool IsSingleMachine = true,
+                    IsPrecacheEnabled = true;
 
         // ---------------
         // initialization
@@ -49,13 +39,16 @@ namespace DevKit.Web.Controllers
         }
 
         // ---------------
-        // retrieve first
+        // retrieve (first)
         // ---------------
 
         [NonAction]
         public object RestoreCache(string tag, long? id)
         {
             currentCacheTag = tag + id;
+
+            if (myApplication == null)
+                myApplication = HttpContext.Current.Application;
 
             var ret = myApplication[currentCacheTag] as object;
 
@@ -70,6 +63,9 @@ namespace DevKit.Web.Controllers
         {
             currentCacheTag = tag;
 
+            if (myApplication == null)
+                myApplication = HttpContext.Current.Application;
+
             var ret = myApplication[currentCacheTag] as object;
 
             if (ret != null)
@@ -81,7 +77,10 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public object RestoreCacheNoHit(string tag)
         {
-            currentCacheTag = tag;           
+            currentCacheTag = tag;
+
+            if (myApplication == null)
+                myApplication = HttpContext.Current.Application;
 
             return myApplication[currentCacheTag] as object;
         }
@@ -89,6 +88,9 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public Hashtable SetupCacheReport(string tag)
         {
+            if (myApplication == null)
+                myApplication = HttpContext.Current.Application;
+
             var hsh = myApplication[tag] as Hashtable;
 
             if (hsh == null)
@@ -158,14 +160,23 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public void CleanCache(DevKitDB db, string tag, long? id)
         {
-            if (id != null)
-                StoreCache(tag, id, null);
-
-            db.Insert(new CacheControl
+            var cc = new CacheClean
             {
-                fkTarget = id,
-                stEntity = tag
-            });
+                myApplication = this.myApplication
+            };
+
+            //clean local application 
+            cc.Clean(tag, id);
+            
+            if (!IsSingleMachine) 
+            {
+                // propagate cleanup
+                db.Insert(new CacheControl
+                {
+                    fkTarget = id,
+                    stEntity = tag
+                });
+            }
         }
 
         // ---------------

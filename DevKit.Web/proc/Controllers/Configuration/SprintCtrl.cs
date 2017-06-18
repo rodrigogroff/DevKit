@@ -32,17 +32,15 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.GetProjectSprint(id);
 
-            if (mdl != null)
-            {
-                var combo = Request.GetQueryStringValue("combo", false);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-                if (combo)
-                    return Ok(mdl);
+            var combo = Request.GetQueryStringValue("combo", false);
 
-                return Ok(mdl.LoadAssociations(db));
-            }
+            if (combo)
+                return Ok(mdl);
 
-            return StatusCode(HttpStatusCode.NotFound);			
+            return Ok(mdl.LoadAssociations(db));
 		}
 
 		public IHttpActionResult Put(long id, ProjectSprint mdl)

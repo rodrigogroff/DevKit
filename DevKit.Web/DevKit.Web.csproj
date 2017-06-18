@@ -874,9 +874,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="proc\Controllers\Cache\CacheCtrl.cs" />
-    <Compile Include="proc\Services\StartupPreCacheService.cs" />
-    <Compile Include="proc\Services\CacheClean.cs" />
-    <Compile Include="proc\Services\CacheTags.cs" />
+    <Compile Include="proc\Definitions\OperationTags.cs" />
+    <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
+    <Compile Include="proc\Services\Cache\CacheClean.cs" />
+    <Compile Include="proc\Definitions\CacheTags.cs" />
     <Compile Include="proc\Controllers\Base\Cache\MemCacheController.cs" />
     <Compile Include="proc\Controllers\Configuration\ClientGroupCtrl.cs" />
     <Compile Include="proc\Controllers\Configuration\ClientCtrl.cs" />
@@ -919,7 +920,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proc\Controllers\Login\Login.cs" />
-    <Compile Include="proc\Services\CacheControlService.cs" />
+    <Compile Include="proc\Services\Cache\CacheControlService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup />

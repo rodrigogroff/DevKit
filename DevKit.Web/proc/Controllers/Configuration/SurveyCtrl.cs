@@ -61,7 +61,7 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             if (!mdl.Update(db, ref apiResponse))
-					return BadRequest(apiResponse);
+				return BadRequest(apiResponse);
 
 			return Ok();
 		}

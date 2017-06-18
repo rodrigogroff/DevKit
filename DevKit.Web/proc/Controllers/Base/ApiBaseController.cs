@@ -12,7 +12,6 @@ namespace DevKit.Web.Controllers
         public DevKitDB db;
         
         public int reportCount = 0;
-
         public string apiResponse = "";
 
         public string userLoggedName
@@ -30,7 +29,7 @@ namespace DevKit.Web.Controllers
 
             var userCurrentName = userLoggedName;
 
-            db.currentUser = RestoreCache(CacheTags.User + userCurrentName) as User;
+            db.currentUser = RestoreCacheNoHit(CacheTags.User + userCurrentName) as User;
             
             if (db.currentUser == null)
             {
@@ -51,8 +50,11 @@ namespace DevKit.Web.Controllers
 
                 StartCache();
 
-                System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApplication, db.currentUser); });
-                System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
+                if (IsPrecacheEnabled)
+                    System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApplication, db.currentUser); });
+
+                if (!IsSingleMachine)
+                    System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
             }
 
             return true;

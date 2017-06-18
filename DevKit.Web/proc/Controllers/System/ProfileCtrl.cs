@@ -1,5 +1,6 @@
 ﻿using DataModel;
 using System.Net;
+using System.Web;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -42,31 +43,29 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Get(long id)
 		{
             var combo = Request.GetQueryStringValue("combo", false);
-
+            
             if (RestoreCache(CacheTags.Profile, id) is Profile obj)
                 if (combo)
                     return Ok(obj.ClearAssociations());
                 else
                     return Ok(obj);
-
+            
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetProfile(id);
 
-            if (mdl != null)
-            {
-                mdl.LoadAssociations(db);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
+            
+            mdl.LoadAssociations(db);
 
-                BackupCache(mdl);
+            BackupCache(mdl);
 
-                if (combo)
-                    return Ok(mdl.ClearAssociations());
-                else
-                    return Ok(mdl);
-            }
-
-            return StatusCode(HttpStatusCode.NotFound);
+            if (combo)
+                return Ok(mdl.ClearAssociations());
+            else
+                return Ok(mdl);
         }
 
         public IHttpActionResult Post(Profile mdl)

@@ -1,5 +1,6 @@
 ﻿using DataModel;
 using System.Net;
+using System.Web;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -43,7 +44,7 @@ namespace DevKit.Web.Controllers
         
         public IHttpActionResult Get(long id)
 		{
-            if (id == 0)
+            if (id == OperationTags.GET_CURRENT_USER)
             {
                 StartDatabaseAndAuthorize();
                 return Ok(db.currentUser);
@@ -64,19 +65,17 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.GetUser(id);
 
-            if (mdl != null)
-            {
-                mdl.LoadAssociations(db);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
+            
+            mdl.LoadAssociations(db);
 
-                BackupCache(mdl);
+            BackupCache(mdl);
 
-                if (combo)
-                    return Ok(mdl.ClearAssociations());
-                else
-                    return Ok(mdl);
-            }
-
-            return StatusCode(HttpStatusCode.NotFound);
+            if (combo)
+                return Ok(mdl.ClearAssociations());
+            else
+                return Ok(mdl);
 		}
 
 		public IHttpActionResult Post(User mdl)

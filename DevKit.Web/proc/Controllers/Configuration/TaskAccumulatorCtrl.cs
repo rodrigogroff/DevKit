@@ -31,17 +31,15 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.GetTaskTypeAccumulator(id);
 
-            if (mdl != null)
-            {
-                var combo = Request.GetQueryStringValue("combo", false);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
+            
+            var combo = Request.GetQueryStringValue("combo", false);
 
-                if (combo)
-                    return Ok(mdl);
+            if (combo)
+                return Ok(mdl);
 
-                return Ok(mdl.LoadAssociations(db));
-            }
-
-            return StatusCode(HttpStatusCode.NotFound);
+            return Ok(mdl.LoadAssociations(db));
 		}
 	}
 }

@@ -48,15 +48,15 @@ namespace DevKit.Web.Controllers
 		{
             var combo = Request.GetQueryStringValue("combo", false);
 
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
             var obj = RestoreCache(CacheTags.TaskType, id) as Client;
             if (obj != null)
                 if (combo)
                     return Ok(obj.ClearAssociations());
                 else
                     return Ok(obj);
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
 
             var mdl = db.GetTaskType(id);
 

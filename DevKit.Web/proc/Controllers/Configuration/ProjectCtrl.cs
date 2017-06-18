@@ -31,20 +31,18 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.GetProject(id);
 
-			if (mdl != null)
-            {
-                var combo = Request.GetQueryStringValue("combo", false);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-                if (combo)
-                    return Ok(mdl);
+            var combo = Request.GetQueryStringValue("combo", false);
 
-                if (!db.GetCurrentUserProjects().Contains(id))
-                    return StatusCode(HttpStatusCode.NotFound);
-                else
-                    return Ok(mdl.LoadAssociations(db));
-            }
+            if (combo)
+                return Ok(mdl);
 
-            return StatusCode(HttpStatusCode.NotFound);
+            if (!db.GetCurrentUserProjects().Contains(id))
+                return StatusCode(HttpStatusCode.NotFound);
+            else
+                return Ok(mdl.LoadAssociations(db));
 		}
 
 		public IHttpActionResult Post(Project mdl)
@@ -64,7 +62,7 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             if (!mdl.Update(db, ref apiResponse))
-					return BadRequest(apiResponse);
+                return BadRequest(apiResponse);
 
 			return Ok();			
 		}

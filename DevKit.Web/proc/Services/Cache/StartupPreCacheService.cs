@@ -12,7 +12,7 @@ namespace DevKit.Web.Services
         {
             var cache = new MemCacheController()
             {
-                _myApplication = _app
+                myApplication = _app
             };
 
             int count = 0, 
@@ -21,8 +21,6 @@ namespace DevKit.Web.Services
             using (var db = new DevKitDB())
             {
                 db.currentUser = currentUser;
-
-                #region - enums - 
 
                 foreach (var item in new EnumAccumulatorType().lst) cache.StoreCache(CacheTags.EnumAccumulatorType, item.id, item);
                 foreach (var item in new EnumMonth().lst) cache.StoreCache(CacheTags.EnumMonth, item.id, item);
@@ -64,11 +62,7 @@ namespace DevKit.Web.Services
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
-
-                #endregion
-
-                #region - reports -
-
+                
                 // user
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.UserReports);
@@ -180,11 +174,7 @@ namespace DevKit.Web.Services
 
                     hshReport[filter.Parameters()] = ret;
                 }
-
-                #endregion
-
-                #region - tables - 
-
+                
                 // user
                 {
                     var q = (from e in db.User select e);
@@ -291,8 +281,6 @@ namespace DevKit.Web.Services
                             cache.BackupCache(item);
                         }                            
                 }
-
-                #endregion
             }
         }
     }

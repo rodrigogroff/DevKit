@@ -8,7 +8,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var filter = new TaskFilter()
+            var filter = new TaskFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
@@ -29,8 +29,10 @@ namespace DevKit.Web.Controllers
                 fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
             };
 
+            var parameters = filter.Parameters();
+
             var hshReport = SetupCacheReport(CacheTags.TaskReports);            
-            if (hshReport[filter.Parameters()] is TaskReport report)
+            if (hshReport[parameters] is TaskReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
@@ -50,7 +52,7 @@ namespace DevKit.Web.Controllers
                 bLoadUsers = true,
             });
 
-            hshReport[filter.Parameters()] = ret;
+            hshReport[parameters] = ret;
 
             return Ok(ret);
 		}

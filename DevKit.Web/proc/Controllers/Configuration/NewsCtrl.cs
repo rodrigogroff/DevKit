@@ -14,10 +14,12 @@ namespace DevKit.Web.Controllers
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
                 fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
-            };            
+            };
+
+            var parameters = filter.Parameters();
 
             var hshReport = SetupCacheReport(CacheTags.CompanyNewsReports);
-            if (hshReport[filter.Parameters()] is CompanyNewsReport report)
+            if (hshReport[parameters] is CompanyNewsReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
@@ -33,7 +35,7 @@ namespace DevKit.Web.Controllers
                 results = results
             };
 
-            hshReport[filter.Parameters()] = ret;
+            hshReport[parameters] = ret;
 
             return Ok(ret);
         }
@@ -84,6 +86,7 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db);
 
+            CleanCache(db, CacheTags.CompanyNews, null);
             StoreCache(CacheTags.CompanyNews, mdl.id, mdl);
 
             return Ok();			

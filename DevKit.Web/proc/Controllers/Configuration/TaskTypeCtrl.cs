@@ -16,8 +16,10 @@ namespace DevKit.Web.Controllers
                 fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
             };
 
+            var parameters = filter.Parameters();
+
             var hshReport = SetupCacheReport(CacheTags.ClientReports);
-            if (hshReport[filter.Parameters()] is TaskTypeReport report)
+            if (hshReport[parameters] is TaskTypeReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
@@ -39,7 +41,7 @@ namespace DevKit.Web.Controllers
                 results = results
             };
 
-            hshReport[filter.Parameters()] = ret;
+            hshReport[parameters] = ret;
 
             return Ok(ret);
         }
@@ -122,6 +124,7 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db, options);
 
+            CleanCache(db, CacheTags.TaskType, null);
             StoreCache(CacheTags.TaskType, mdl.id, mdl);
 
             return Ok();

@@ -1,6 +1,5 @@
 ﻿using DataModel;
 using System.Net;
-using System.Web;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -9,7 +8,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var filter = new ProfileFilter()
+            var filter = new ProfileFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
@@ -18,8 +17,10 @@ namespace DevKit.Web.Controllers
                 fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
             };
 
+            var parameters = filter.Parameters();
+
             var hshReport = SetupCacheReport(CacheTags.ProfileReports);
-            if (hshReport[filter.Parameters()] is ProfileReport report)
+            if (hshReport[parameters] is ProfileReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
@@ -35,7 +36,7 @@ namespace DevKit.Web.Controllers
                 results = results
             };
 
-            hshReport[filter.Parameters()] = ret;
+            hshReport[parameters] = ret;
 
             return Ok(ret);
         }
@@ -94,6 +95,7 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db);
 
+            CleanCache(db, CacheTags.Profile, null);
             StoreCache(CacheTags.Profile, mdl.id, mdl);
 
             return Ok();		

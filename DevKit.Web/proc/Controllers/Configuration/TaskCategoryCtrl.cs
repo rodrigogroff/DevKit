@@ -13,7 +13,7 @@ namespace DevKit.Web.Controllers
 
             var mdl = new TaskCategory();
 
-			var results = mdl.ComposedFilters(db, ref reportCount, new TaskCategoryFilter()
+			var results = mdl.ComposedFilters(db, ref reportCount, new TaskCategoryFilter
 			{
 				skip = Request.GetQueryStringValue("skip", 0),
 				take = Request.GetQueryStringValue("take", 15),

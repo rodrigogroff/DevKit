@@ -13,7 +13,7 @@ namespace DevKit.Web.Controllers
 
             var mdl = new TaskFlow();
 
-			var results = mdl.ComposedFilters(db, ref reportCount, new TaskFlowFilter()
+			var results = mdl.ComposedFilters(db, ref reportCount, new TaskFlowFilter
 			{
 				skip = Request.GetQueryStringValue("skip", 0),
 				take = Request.GetQueryStringValue("take", 15),

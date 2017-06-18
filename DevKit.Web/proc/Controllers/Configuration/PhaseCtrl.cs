@@ -13,7 +13,7 @@ namespace DevKit.Web.Controllers
 
             var mdl = new ProjectPhase();
 
-			var results = mdl.ComposedFilters(db, ref reportCount, new ProjectPhaseFilter()
+			var results = mdl.ComposedFilters(db, ref reportCount, new ProjectPhaseFilter
 			{
 				skip = Request.GetQueryStringValue("skip", 0),
 				take = Request.GetQueryStringValue("take", 15),

@@ -77,12 +77,10 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public object RestoreCacheNoHit(string tag)
         {
-            currentCacheTag = tag;
-
             if (myApplication == null)
                 myApplication = HttpContext.Current.Application;
 
-            return myApplication[currentCacheTag] as object;
+            return myApplication[tag] as object;
         }
 
         [NonAction]
@@ -120,9 +118,9 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
-        public void BackupCacheNoHit(object obj)
+        public void BackupCacheNoHit(string tag, object obj)
         {
-            myApplication[currentCacheTag] = obj;
+            myApplication[tag] = obj;
         }
 
         [NonAction]
@@ -220,7 +218,7 @@ namespace DevKit.Web.Controllers
 
             if (obj == null)
             {
-                hshHits[tag] = new CacheHitRecord { dt_last = DateTime.Now, hits = 1 };
+                hshHits[tag] = new CacheHitRecord { dt_last = DateTime.Now, hits = 0 };
             }
             else
             {

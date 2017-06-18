@@ -28,8 +28,9 @@ namespace DevKit.Web.Controllers
             db = new DevKitDB();
 
             var userCurrentName = userLoggedName;
+            var tagName = CacheTags.User + userCurrentName;
 
-            db.currentUser = RestoreCacheNoHit(CacheTags.User + userCurrentName) as User;
+            db.currentUser = RestoreCacheNoHit(tagName) as User;
             
             if (db.currentUser == null)
             {
@@ -41,7 +42,7 @@ namespace DevKit.Web.Controllers
                 if (db.currentUser == null)
                     return false;
 
-                BackupCacheNoHit(db.currentUser);
+                BackupCacheNoHit(tagName, db.currentUser);
             }
 
             if (myApplication["start"] == null)

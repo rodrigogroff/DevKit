@@ -15,8 +15,10 @@ namespace DevKit.Web.Controllers
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
             };
 
+            var parameters = filter.Parameters();
+
             var hshReport = SetupCacheReport(CacheTags.ClientGroupReports);
-            if (hshReport[filter.Parameters()] is ClientGroupReport report)
+            if (hshReport[parameters] is ClientGroupReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
@@ -24,7 +26,10 @@ namespace DevKit.Web.Controllers
 
             var mdl = new ClientGroup();
 
-            var results = mdl.ComposedFilters(db, ref reportCount, filter, bSaveAuditLog:true);
+            var results = mdl.ComposedFilters ( db, 
+                                                ref reportCount, 
+                                                filter, 
+                                                bSaveAuditLog:true );
 
             var ret = new ClientGroupReport
             {
@@ -32,7 +37,7 @@ namespace DevKit.Web.Controllers
                 results = results
             };
 
-            hshReport[filter.Parameters()] = ret;
+            hshReport[parameters] = ret;
 
             return Ok(ret);
         }
@@ -90,6 +95,7 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db);
 
+            CleanCache(db, CacheTags.ClientGroup, null);
             StoreCache(CacheTags.ClientGroup, mdl.id, mdl);
 
             return Ok();

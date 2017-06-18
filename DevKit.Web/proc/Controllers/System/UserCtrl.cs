@@ -9,7 +9,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var filter = new UserFilter()
+            var filter = new UserFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
@@ -20,8 +20,10 @@ namespace DevKit.Web.Controllers
                 ativo = Request.GetQueryStringValue<bool?>("ativo", null),
             };
 
+            var parameters = filter.Parameters();
+
             var hshReport = SetupCacheReport(CacheTags.UserReports);
-            if (hshReport[filter.Parameters()] is UserReport report)
+            if (hshReport[parameters] is UserReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
@@ -37,7 +39,7 @@ namespace DevKit.Web.Controllers
                 results = results
             };
 
-            hshReport[filter.Parameters()] = ret;
+            hshReport[parameters] = ret;
 
             return Ok(ret);
         }
@@ -110,6 +112,8 @@ namespace DevKit.Web.Controllers
             }
 
             mdl.LoadAssociations(db);
+
+            CleanCache(db, CacheTags.User, null);
             StoreCache(CacheTags.User, mdl.id, mdl);
 
             return Ok();			

@@ -1,6 +1,13 @@
-﻿
+﻿using System;
+
 namespace DevKit.Web.Controllers
 {
+    public class CacheHitRecord
+    {
+        public DateTime dt_last;
+        public int hits = 0;
+    }
+
     public static class CacheTags
     {
         // enums

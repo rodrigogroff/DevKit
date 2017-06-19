@@ -8,12 +8,6 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-    public class CacheHitRecord
-    {
-        public DateTime dt_last;
-        public int hits = 0;
-    }
-
 	[Authorize]
 	public class MemCacheController : ApiController
 	{

@@ -873,7 +873,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="proc\Controllers\Cache\CacheCtrl.cs" />
+    <Compile Include="proc\Controllers\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\Cache\CacheClean.cs" />

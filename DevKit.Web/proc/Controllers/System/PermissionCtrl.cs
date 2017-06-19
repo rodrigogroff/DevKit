@@ -21,7 +21,7 @@ namespace DevKit.Web.Controllers
             // try for pure cache
             // ------------------------------
 
-            var currentUser = RestoreCache(CacheTags.User + userLoggedName) as User;
+            var currentUser = RestoreCacheNoHit(CacheTags.User + userLoggedName) as User;
 
             if (currentUser != null)
                 if (RestoreCache(CacheTags.Profile, currentUser.fkProfile) is Profile objProfile)

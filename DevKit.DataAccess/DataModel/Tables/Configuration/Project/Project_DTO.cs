@@ -16,7 +16,13 @@ namespace DataModel
 		public List<ProjectLog> logs;
 	}
 
-	public class ProjectLog
+    public class ProjectReport
+    {
+        public int count = 0;
+        public List<Project> results = new List<Project>();
+    }
+
+    public class ProjectLog
 	{
 		public string sdtLog,
 						stUser,

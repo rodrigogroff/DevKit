@@ -8,24 +8,43 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            var filter = new ProjectPhaseFilter
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkProject = Request.GetQueryStringValue<int?>("fkProject", null),
+            };
+
+            var parameters = filter.Parameters();
+
+            var hshReport = SetupCacheReport(CacheTags.ProjectPhaseReports);
+            if (hshReport[parameters] is ProjectPhaseReport report)
+                return Ok(report);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = new ProjectPhase();
 
-			var results = mdl.ComposedFilters(db, ref reportCount, new ProjectPhaseFilter
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-				fkProject = Request.GetQueryStringValue<int?>("fkProject", null),
-			});
+			var results = mdl.ComposedFilters ( db, ref reportCount, filter );
 
-			return Ok(new { count = reportCount, results = results });			
+            var ret = new ProjectPhaseReport
+            {
+                count = reportCount,
+                results = results
+            };
+
+            hshReport[parameters] = ret;
+
+            return Ok(ret);
 		}
 
 		public IHttpActionResult Get(long id)
 		{
+            if (RestoreCache(CacheTags.ProjectPhase, id) is ProjectPhase obj)
+                return Ok(obj);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
@@ -33,8 +52,10 @@ namespace DevKit.Web.Controllers
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
-                       
-            return Ok(mdl);            
-		}
+            
+            BackupCache(mdl);
+
+            return Ok(mdl);
+        }
 	}
 }

@@ -40,5 +40,9 @@ namespace DevKit.Web.Controllers
         public const string CompanyNewsReports = "CompanyNewsReports";
         public const string TaskType = "TaskType";
         public const string TaskTypeReports = "TaskTypeReports";
+        public const string Project = "Project";
+        public const string ProjectReports = "ProjectReports";
+        public const string ProjectPhase = "ProjectPhase";
+        public const string ProjectPhaseReports = "ProjectPhaseReports";
     }
 }

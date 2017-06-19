@@ -3,12 +3,9 @@
 a fazer (prioridade)
 ------------------------------
 	
-	-updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
-	-currentUser -> estudar melhor uso de cache para currentUser
-
-	-implementar acumulador de 'ammount'
-	-remover pesquisa na tela generica
-	-pensar data na task listing / kanban
+	- updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
+	- implementar acumulador de 'ammount'
+	- pensar data na task listing / kanban
 
 ------------------------------
 a fazer (ajustes)

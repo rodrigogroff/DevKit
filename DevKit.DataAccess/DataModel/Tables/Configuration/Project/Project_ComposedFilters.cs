@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace DataModel
 {
@@ -20,44 +21,82 @@ namespace DataModel
 
 			return ret;
 		}
-	}
-	
-	public partial class Project
-	{
-		public List<Project> ComposedFilters(DevKitDB db, ref int count, ProjectFilter filter)
-		{
-			var user = db.currentUser;
-			var lstUserProjects = db.GetCurrentUserProjects();
 
-			var query = from e in db.Project select e;
+        public string Parameters()
+        {
+            return Export();
+        }
+
+        string _exportResults = "";
+
+        string Export()
+        {
+            if (_exportResults != "")
+                return _exportResults;
+
+            var ret = new StringBuilder();
+
+            // base
+            ret.Append(skip);
+            ret.Append(take);
+            ret.Append(busca);
+
+            if (fkUser != null)
+                ret.Append(fkUser);
+
+            _exportResults = ret.ToString();
+
+            return _exportResults;
+        }
+    }
+
+    public partial class Project
+    {
+        public List<Project> ComposedFilters(DevKitDB db, ref int count, ProjectFilter filter)
+        {
+            var user = db.currentUser;
+            var lstUserProjects = db.GetCurrentUserProjects();
+
+            var query = from e in db.Project select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
-			if (lstUserProjects.Count() > 0)
-				query = from e in query where lstUserProjects.Contains(e.id) select e;
+            if (lstUserProjects.Count() > 0)
+                query = from e in query where lstUserProjects.Contains(e.id) select e;
 
-			if (filter.fkUser != null)
-			{
-				query = from e in query
-						join eUser in db.ProjectUser on e.id equals eUser.fkProject
-						where e.id == eUser.fkProject
-						where eUser.fkUser == filter.fkUser
-						select e;
-			}
+            if (filter.fkUser != null)
+            {
+                query = from e in query
+                        join eUser in db.ProjectUser on e.id equals eUser.fkProject
+                        where e.id == eUser.fkProject
+                        where eUser.fkUser == filter.fkUser
+                        select e;
+            }
 
-			count = query.Count();
+            count = query.Count();
 
-			query = query.OrderBy(y => y.stName);
-            
-			new AuditLog {
-				fkUser = user.id,
-				fkActionLog = EnumAuditAction.ProjectListing,
-				nuType = EnumAuditType.Project
-			}.
-			Create(db, filter.ExportString(), "count: " + count);
+            query = query.OrderBy(y => y.stName);
+
+            new AuditLog
+            {
+                fkUser = user.id,
+                fkActionLog = EnumAuditAction.ProjectListing,
+                nuType = EnumAuditType.Project
+            }.
+            Create(db, filter.ExportString(), "count: " + count);
 
             return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
         }
-	}
+
+        public Project ClearAssociations()
+        {
+            users = null;
+            phases = null;
+            sprints = null;
+            logs = null;
+
+            return this;
+        }
+    }
 }

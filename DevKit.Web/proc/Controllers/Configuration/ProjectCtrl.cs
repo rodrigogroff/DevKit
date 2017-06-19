@@ -8,24 +8,49 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            var filter = new ProjectFilter
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
+            };
+
+            var parameters = filter.Parameters();
+
+            var hshReport = SetupCacheReport(CacheTags.ProjectReports);
+            if (hshReport[parameters] is ProjectReport report)
+                return Ok(report);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = new Project();
 
-			var results = mdl.ComposedFilters(db, ref reportCount, new ProjectFilter
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-				fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
-			});
+            var results = mdl.ComposedFilters(db, ref reportCount, filter);
 
-			return Ok(new { count = reportCount, results = results });			
-		}
+            var ret = new ProjectReport
+            {
+                count = reportCount,
+                results = results
+            };
 
-		public IHttpActionResult Get(long id)
+            hshReport[parameters] = ret;
+
+            return Ok(ret);
+        }
+
+        public IHttpActionResult Get(long id)
 		{
+            var combo = Request.GetQueryStringValue("combo", false);
+
+            var obj = RestoreCache(CacheTags.Project, id) as Project;
+            if (obj != null)
+                if (combo)
+                    return Ok(obj.ClearAssociations());
+                else
+                    return Ok(obj);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
@@ -33,17 +58,16 @@ namespace DevKit.Web.Controllers
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
+            
+            mdl.LoadAssociations(db);
 
-            var combo = Request.GetQueryStringValue("combo", false);
+            BackupCache(mdl);
 
             if (combo)
-                return Ok(mdl);
-
-            if (!db.GetCurrentUserProjects().Contains(id))
-                return StatusCode(HttpStatusCode.NotFound);
+                return Ok(mdl.ClearAssociations());
             else
-                return Ok(mdl.LoadAssociations(db));
-		}
+                return Ok(mdl);
+        }
 
 		public IHttpActionResult Post(Project mdl)
 		{
@@ -53,7 +77,10 @@ namespace DevKit.Web.Controllers
             if (!mdl.Create(db, ref apiResponse))
 				return BadRequest(apiResponse);
 
-			return Ok();
+            CleanCache(db, CacheTags.ProjectReports, null);
+            StoreCache(CacheTags.Project, mdl.id, mdl);
+
+            return Ok();
 		}
 
 		public IHttpActionResult Put(long id, Project mdl)
@@ -64,7 +91,18 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref apiResponse))
                 return BadRequest(apiResponse);
 
-			return Ok();			
+            switch (mdl.updateCommand)
+            {
+                case "newPhase":
+                case "removePhase":
+                    CleanCache(db, CacheTags.ProjectPhaseReports, null);
+                    break;
+            }
+
+            CleanCache(db, CacheTags.ProjectReports, null);
+            StoreCache(CacheTags.Project, mdl.id, mdl);
+
+            return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)
@@ -81,8 +119,11 @@ namespace DevKit.Web.Controllers
 				return BadRequest(apiResponse);
 
 			mdl.Delete(db);
-								
-			return Ok();
+
+            CleanCache(db, CacheTags.ProjectReports, null);
+            CleanCache(db, CacheTags.ProjectPhaseReports, null);
+
+            return Ok();
 		}
 	}
 }

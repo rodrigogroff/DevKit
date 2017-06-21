@@ -95,7 +95,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.ClientGroup.add($scope.viewModel, function (data)
 					{
 						toastr.success('Client group added!', 'Success');
-						$state.go('clientgroup', { id: data.id });
+                        $state.go('clientgroups');
 					},
 					function (response)
 					{

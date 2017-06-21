@@ -132,7 +132,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
                     Api.User.add($scope.viewModel, function (data)
 					{
 						toastr.success('User added!', 'Success');
-						$state.go('user', { id: data.id });
+                        $state.go('users');
 					},
 					function (response)
 					{

@@ -108,7 +108,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.TaskType.add($scope.viewModel, function (data)
 					{
 						toastr.success('Task type added!', 'Success');
-						$state.go('taskType', { id: data.id });
+                        $state.go('taskTypes');
 					},
 					function (response)
 					{

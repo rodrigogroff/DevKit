@@ -106,7 +106,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Project.add($scope.viewModel, function (data)
 					{
 						toastr.success('Project added!', 'Success');
-						$state.go('project', { id: data.id });
+                        $state.go('projects');
 					},
 					function (response)
 					{

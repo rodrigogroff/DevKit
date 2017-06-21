@@ -34,6 +34,14 @@ namespace DevKit.Web.Controllers
                 case CacheTags.TaskType:        if (id != null) StoreCache(CacheTags.TaskType, id, null);
                                                 CleanCacheReport(CacheTags.TaskTypeReports);
                                                 break;
+
+                case CacheTags.Project:         if (id != null) StoreCache(CacheTags.Project, id, null);
+                                                CleanCacheReport(CacheTags.ProjectReports);
+                                                break;
+
+                case CacheTags.ProjectPhase:    if (id != null) StoreCache(CacheTags.ProjectPhase, id, null);
+                                                CleanCacheReport(CacheTags.ProjectPhaseReports);
+                                                break;
             }
         }
     }

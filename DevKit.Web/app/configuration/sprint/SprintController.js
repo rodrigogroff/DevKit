@@ -107,7 +107,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Sprint.add($scope.viewModel, function (data)
 					{
 						toastr.success('Sprint added!', 'Success');
-						$state.go('sprint', { id: data.id });
+                        $state.go('sprints');
 					},
 					function (response)
 					{

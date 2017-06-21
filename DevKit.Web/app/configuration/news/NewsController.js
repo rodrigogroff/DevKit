@@ -96,7 +96,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.News.add($scope.viewModel, function (data)
 					{
 						toastr.success('News added!', 'Success');
-						$state.go('news', { id: data.id });
+                        $state.go('newsListing');
 					},
 					function (response)
 					{

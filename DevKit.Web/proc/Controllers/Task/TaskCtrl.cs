@@ -109,7 +109,7 @@ namespace DevKit.Web.Controllers
             CleanCache(db, CacheTags.Task, null);
             StoreCache(CacheTags.Task, mdl.id, mdl);
 
-            return Ok();			
+            return Ok(mdl);			
 		}
 
 		public IHttpActionResult Put(long id, Task mdl)

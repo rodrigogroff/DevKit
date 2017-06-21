@@ -2,9 +2,10 @@
 ------------------------------
 a fazer (prioridade)
 ------------------------------
-	
+	 
 	- updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
 	- implementar acumulador de 'ammount'
+	- menu não estragar tela atual
 	- pensar data na task listing / kanban
 
 ------------------------------

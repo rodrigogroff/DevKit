@@ -77,7 +77,7 @@ namespace DevKit.Web.Controllers
             if (!mdl.Create(db, ref apiResponse))
 				return BadRequest(apiResponse);
 
-            CleanCache(db, CacheTags.ProjectReports, null);
+            CleanCache(db, CacheTags.Project, null);
             StoreCache(CacheTags.Project, mdl.id, mdl);
 
             return Ok();
@@ -95,11 +95,11 @@ namespace DevKit.Web.Controllers
             {
                 case "newPhase":
                 case "removePhase":
-                    CleanCache(db, CacheTags.ProjectPhaseReports, null);
+                    CleanCache(db, CacheTags.ProjectPhase, null);
                     break;
             }
 
-            CleanCache(db, CacheTags.ProjectReports, null);
+            CleanCache(db, CacheTags.Project, null);
             StoreCache(CacheTags.Project, mdl.id, mdl);
 
             return Ok();			
@@ -120,8 +120,8 @@ namespace DevKit.Web.Controllers
 
 			mdl.Delete(db);
 
-            CleanCache(db, CacheTags.ProjectReports, null);
-            CleanCache(db, CacheTags.ProjectPhaseReports, null);
+            CleanCache(db, CacheTags.Project, null);
+            CleanCache(db, CacheTags.ProjectPhase, null);
 
             return Ok();
 		}

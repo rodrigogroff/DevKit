@@ -100,7 +100,7 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db, options);
 
-            CleanCache(db, CacheTags.TaskTypeReports, null);
+            CleanCache(db, CacheTags.TaskType, null);
             StoreCache(CacheTags.TaskType, mdl.id, mdl);
 
             return Ok();

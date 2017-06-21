@@ -1,6 +1,5 @@
 ﻿using DataModel;
 using System.Net;
-using System.Web;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -90,7 +89,9 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db);
 
-            CleanCache(db, CacheTags.User, null);            
+            CleanCache(db, CacheTags.User, null);
+            CleanCache(db, CacheTags.Project, null);
+
             StoreCache(CacheTags.User, mdl.id, mdl);
 
             return Ok();			
@@ -114,6 +115,8 @@ namespace DevKit.Web.Controllers
             mdl.LoadAssociations(db);
 
             CleanCache(db, CacheTags.User, null);
+            CleanCache(db, CacheTags.Project, null);
+
             StoreCache(CacheTags.User, mdl.id, mdl);
 
             return Ok();			

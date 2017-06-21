@@ -317,7 +317,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Profile.add($scope.viewModel, function (data)
 					{
 						toastr.success('Profile added!', 'Success');
-						$state.go('profile', { id: data.id });
+                        $state.go('profiles'); $state.go('profiles');
 					},
 					function (response)
 					{

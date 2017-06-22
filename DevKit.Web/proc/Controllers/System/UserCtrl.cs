@@ -21,7 +21,7 @@ namespace DevKit.Web.Controllers
 
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.UserReports);
+            var hshReport = SetupCacheReport(CacheTags.UserReport);
             if (hshReport[parameters] is UserReport report)
                 return Ok(report);
 
@@ -84,8 +84,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-			if (!mdl.Create(db, ref apiResponse))
-				return BadRequest(apiResponse);
+			if (!mdl.Create(db, ref apiError))
+				return BadRequest(apiError);
 
             mdl.LoadAssociations(db);
 
@@ -102,8 +102,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
             
-			if (!mdl.Update(db, ref apiResponse))
-				return BadRequest(apiResponse);
+			if (!mdl.Update(db, ref apiError))
+				return BadRequest(apiError);
 
             if (mdl.resetPassword != "")
             {
@@ -132,8 +132,8 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!mdl.CanDelete(db, ref apiResponse))
-				return BadRequest(apiResponse);
+			if (!mdl.CanDelete(db, ref apiError))
+				return BadRequest(apiError);
 
 			mdl.Delete(db);
 

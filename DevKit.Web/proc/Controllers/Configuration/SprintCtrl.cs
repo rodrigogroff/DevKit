@@ -8,25 +8,50 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            var filter = new ProjectSprintFilter
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
+                fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
+            };
+
+            var parameters = filter.Parameters();
+
+            var hshReport = SetupCacheReport(CacheTags.ProjectSprintReport);
+            if (hshReport[parameters] is ProjectSprintReport report)
+                return Ok(report);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = new ProjectSprint();
 
-			var results = mdl.ComposedFilters(db, ref reportCount, new ProjectSprintFilter
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
-				fkPhase = Request.GetQueryStringValue<long?>("fkPhase", null),
-			});
+            var results = mdl.ComposedFilters(db, ref reportCount, filter);
 
-			return Ok(new { count = reportCount, results = results });			
-		}
+            var ret = new ProjectSprintReport
+            {
+                count = reportCount,
+                results = results
+            };
 
-		public IHttpActionResult Get(long id)
+            hshReport[parameters] = ret;
+
+            return Ok(ret);
+        }
+
+        public IHttpActionResult Get(long id)
 		{
+            var combo = Request.GetQueryStringValue("combo", false);
+
+            var obj = RestoreCache(CacheTags.ProjectSprint, id) as ProjectSprint;
+            if (obj != null)
+                if (combo)
+                    return Ok(obj.ClearAssociations());
+                else
+                    return Ok(obj);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
@@ -35,23 +60,28 @@ namespace DevKit.Web.Controllers
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            var combo = Request.GetQueryStringValue("combo", false);
+            mdl.LoadAssociations(db);
+
+            BackupCache(mdl);
 
             if (combo)
+                return Ok(mdl.ClearAssociations());
+            else
                 return Ok(mdl);
-
-            return Ok(mdl.LoadAssociations(db));
-		}
+        }
 
 		public IHttpActionResult Put(long id, ProjectSprint mdl)
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref apiResponse))
-				return BadRequest(apiResponse);
+            if (!mdl.Update(db, ref apiError))
+				return BadRequest(apiError);
 
-			return Ok();			
+            CleanCache(db, CacheTags.ProjectSprint, null);
+            StoreCache(CacheTags.ProjectSprint, mdl.id, mdl);
+
+            return Ok();			
 		}
 	}
 }

@@ -8,51 +8,69 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            var filter = new SurveyFilter
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
+            };
+
+            var parameters = filter.Parameters();
+
+            var hshReport = SetupCacheReport(CacheTags.SurveyReport);
+            if (hshReport[parameters] is SurveyReport report)
+                return Ok(report);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = new Survey();
 
-			var results = mdl.ComposedFilters(db, ref reportCount, new SurveyFilter
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
-			});
+            var results = mdl.ComposedFilters(db, ref reportCount, filter);
 
-			return Ok(new { count = reportCount, results = results });			
-		}
+            var ret = new SurveyReport
+            {
+                count = reportCount,
+                results = results
+            };
 
-		public IHttpActionResult Get(long id)
+            hshReport[parameters] = ret;
+
+            return Ok(ret);
+        }
+
+        public IHttpActionResult Get(long id)
 		{
+            if (RestoreCache(CacheTags.Survey, id) is Survey obj)
+                return Ok(obj);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetSurvey(id);
 
-            if (mdl != null)
-            {
-                var combo = Request.GetQueryStringValue("combo", false);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-                if (combo)
-                    return Ok(mdl);
+            mdl.LoadAssociations(db);
 
-                return Ok(mdl.LoadAssociations(db));
-            }
+            BackupCache(mdl);
 
-            return StatusCode(HttpStatusCode.NotFound);
-		}
+            return Ok(mdl);                        
+        }
 
 		public IHttpActionResult Post(Survey mdl)
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Create(db, ref apiResponse))
-			    return BadRequest(apiResponse);
+            if (!mdl.Create(db, ref apiError))
+			    return BadRequest(apiError);
 
-			return Ok();			
+            CleanCache(db, CacheTags.Survey, null);
+            
+            return Ok();			
 		}
 
 		public IHttpActionResult Put(long id, Survey mdl)
@@ -60,10 +78,13 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref apiResponse))
-				return BadRequest(apiResponse);
+            if (!mdl.Update(db, ref apiError))
+				return BadRequest(apiError);
+            
+            CleanCache(db, CacheTags.Survey, null);
+            StoreCache(CacheTags.Survey, mdl.id, mdl);
 
-			return Ok();
+            return Ok();
 		}
 
 		public IHttpActionResult Delete(long id)
@@ -73,15 +94,17 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.GetSurvey(id);
 
-			if (mdl == null)
-				return StatusCode(HttpStatusCode.NotFound);
-            
-			if (!mdl.CanDelete(db, ref apiResponse))
-				return BadRequest(apiResponse);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-			mdl.Delete(db);
-								
-			return Ok();
-		}
-	}
+            if (!mdl.CanDelete(db, ref apiError))
+                return BadRequest(apiError);
+
+            mdl.Delete(db);
+
+            CleanCache(db, CacheTags.Survey, null);
+            
+            return Ok();
+        }
+    }
 }

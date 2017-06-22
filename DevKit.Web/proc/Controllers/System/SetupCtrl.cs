@@ -33,8 +33,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref apiResponse))
-			    return BadRequest(apiResponse);
+            if (!mdl.Update(db, ref apiError))
+			    return BadRequest(apiError);
 
             mdl.LoadAssociations(db);
 

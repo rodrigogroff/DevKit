@@ -65,7 +65,7 @@ namespace DevKit.Web.Services
                 
                 // user
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.UserReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.UserReport);
 
                     var mdl = new User();
                     var filter = new UserFilter { skip = 0, take = 15 };
@@ -80,7 +80,7 @@ namespace DevKit.Web.Services
 
                 // profile
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.ProfileReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.ProfileReport);
 
                     var mdl = new Profile();
                     var filter = new ProfileFilter { skip = 0, take = 15 };
@@ -95,7 +95,7 @@ namespace DevKit.Web.Services
 
                 // client
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.ClientReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.ClientReport);
 
                     var mdl = new Client();
                     var filter = new ClientFilter { skip = 0, take = 15 };
@@ -110,7 +110,7 @@ namespace DevKit.Web.Services
 
                 // client groups
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.ClientGroupReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.ClientGroupReport);
 
                     var mdl = new ClientGroup();
                     var filter = new ClientGroupFilter { skip = 0, take = 15 };
@@ -125,7 +125,7 @@ namespace DevKit.Web.Services
 
                 // task type
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.TaskTypeReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.TaskTypeReport);
 
                     var mdl = new TaskType();
                     var filter = new TaskTypeFilter { skip = 0, take = 15 };
@@ -147,7 +147,7 @@ namespace DevKit.Web.Services
 
                 // tasks
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.TaskReports);
+                    var hshReport = cache.SetupCacheReport(CacheTags.TaskReport);
 
                     var mdl = new Task();
                     var filter = new TaskFilter { skip = 0, take = 15, kpa = false, complete = false };

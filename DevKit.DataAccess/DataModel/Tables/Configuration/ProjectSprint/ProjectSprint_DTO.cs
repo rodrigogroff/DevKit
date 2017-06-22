@@ -14,7 +14,13 @@ namespace DataModel
 		public List<SprintLog> logs;
 	}
 
-	public class SprintLog
+    public class ProjectSprintReport
+    {
+        public int count = 0;
+        public List<ProjectSprint> results = new List<ProjectSprint>();
+    }
+
+    public class SprintLog
 	{
 		public string sdtLog,
 						stUser,

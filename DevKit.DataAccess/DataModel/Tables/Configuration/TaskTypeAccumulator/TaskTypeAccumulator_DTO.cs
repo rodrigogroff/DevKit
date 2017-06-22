@@ -9,7 +9,13 @@ namespace DataModel
 		public List<LogAccumulatorValue> logs;
 	}
 
-	public class LogAccumulatorValue
+    public class TaskTypeAccumulatorReport
+    {
+        public int count = 0;
+        public List<TaskTypeAccumulator> results = new List<TaskTypeAccumulator>();
+    }
+
+    public class LogAccumulatorValue
 	{
 		public long id = 0;
 

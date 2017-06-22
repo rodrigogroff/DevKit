@@ -27,22 +27,28 @@ namespace DevKit.Web.Controllers
 
         public const string Setup = "Setup";
         public const string User = "User";
-        public const string UserReports = "UserReports";
+        public const string UserReport = "UserReport";
         public const string Client = "Client";
-        public const string ClientReports = "ClientReports";
+        public const string ClientReport = "ClientReport";
         public const string ClientGroup = "ClientGroup";
-        public const string ClientGroupReports = "ClientGroupReports";
+        public const string ClientGroupReport = "ClientGroupReport";
         public const string Task = "Task";
-        public const string TaskReports = "TaskReports";
+        public const string TaskReport = "TaskReport";
         public const string Profile = "Profile";
-        public const string ProfileReports = "ProfileReports";        
+        public const string ProfileReport = "ProfileReport";        
         public const string CompanyNews = "CompanyNews";
-        public const string CompanyNewsReports = "CompanyNewsReports";
+        public const string CompanyNewsReport = "CompanyNewsReport";
         public const string TaskType = "TaskType";
-        public const string TaskTypeReports = "TaskTypeReports";
+        public const string TaskTypeReport = "TaskTypeReport";
         public const string Project = "Project";
-        public const string ProjectReports = "ProjectReports";
+        public const string ProjectReport = "ProjectReport";
         public const string ProjectPhase = "ProjectPhase";
-        public const string ProjectPhaseReports = "ProjectPhaseReports";
+        public const string ProjectPhaseReport = "ProjectPhaseReport";
+        public const string ProjectSprint = "ProjectSprint";
+        public const string ProjectSprintReport = "ProjectSprintReport";
+        public const string Survey = "Survey";
+        public const string SurveyReport = "SurveyReport";
+        public const string TaskTypeAccumulator = "TaskTypeAccumulator";
+        public const string TaskTypeAccumulatorReport = "TaskTypeAccumulatorReport";
     }
 }

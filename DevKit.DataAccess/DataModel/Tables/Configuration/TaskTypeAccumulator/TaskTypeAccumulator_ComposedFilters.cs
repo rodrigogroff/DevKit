@@ -1,13 +1,41 @@
 ﻿using LinqToDB;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace DataModel
 {
 	public class TaskTypeAccumulatorFilter : BaseFilter
     {
-		public long? fkTaskCategory;		
-	}
+		public long? fkTaskCategory;
+
+        public string Parameters()
+        {
+            return Export();
+        }
+
+        string _exportResults = "";
+
+        string Export()
+        {
+            if (_exportResults != "")
+                return _exportResults;
+
+            var ret = new StringBuilder();
+
+            // base
+            ret.Append(skip);
+            ret.Append(take);
+            ret.Append(busca);
+
+            if (fkTaskCategory != null)
+                ret.Append(fkTaskCategory);
+
+            _exportResults = ret.ToString();
+
+            return _exportResults;
+        }
+    }
 
 	public partial class TaskTypeAccumulator
 	{

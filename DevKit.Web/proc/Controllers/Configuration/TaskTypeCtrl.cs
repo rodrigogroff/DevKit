@@ -18,7 +18,7 @@ namespace DevKit.Web.Controllers
 
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.ClientReports);
+            var hshReport = SetupCacheReport(CacheTags.ClientReport);
             if (hshReport[parameters] is TaskTypeReport report)
                 return Ok(report);
 
@@ -87,8 +87,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Create(db, ref apiResponse))
-				return BadRequest(apiResponse);
+            if (!mdl.Create(db, ref apiError))
+				return BadRequest(apiError);
 
             var options = new loaderOptionsTaskType
             {
@@ -111,8 +111,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref apiResponse))
-				return BadRequest(apiResponse);
+            if (!mdl.Update(db, ref apiError))
+				return BadRequest(apiError);
 
             var options = new loaderOptionsTaskType
             {
@@ -123,6 +123,28 @@ namespace DevKit.Web.Controllers
             };
 
             mdl.LoadAssociations(db, options);
+
+            
+            
+            switch (mdl.updateCommand)
+            {                
+                case "newCategorie": 
+                case "removeCategorie":
+                    break;
+
+                case "newFlow": 
+                case "removeFlow":
+                    break;
+
+                case "newAcc": 
+                case "removeAcc":
+                    CleanCache(db, CacheTags.TaskTypeAccumulator, null);
+                    break;
+
+                case "newCC": 
+                case "removeCC":
+                    break;
+            }
 
             CleanCache(db, CacheTags.TaskType, null);
             StoreCache(CacheTags.TaskType, mdl.id, mdl);
@@ -140,8 +162,8 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
 
-			if (!mdl.CanDelete(db, ref apiResponse))
-				return BadRequest(apiResponse);
+			if (!mdl.CanDelete(db, ref apiError))
+				return BadRequest(apiError);
 				
 			mdl.Delete(db);
             

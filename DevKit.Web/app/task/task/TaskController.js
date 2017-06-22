@@ -17,7 +17,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskType, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
 	$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.fkTaskType' } });
 	$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
-	$scope.selectTaskAcc = ngSelects.obterConfiguracao(Api.TaskAccumulator, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
+	$scope.selectTaskAcc = ngSelects.obterConfiguracao(Api.TaskTypeAccumulator, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
 
 	$scope.loading = false;
 
@@ -192,7 +192,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		if (newState !== oldState)
 		{
-            Api.TaskAccumulator.get({ id: $scope.newAcc.fkTaskAcc }, function (data) {
+            Api.TaskTypeAccumulator.get({ id: $scope.newAcc.fkTaskAcc }, function (data) {
 				$scope.fkTaskAccType = data.fkTaskAccType;
 			});
 		}

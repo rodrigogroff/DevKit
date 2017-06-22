@@ -326,7 +326,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 		$scope.accs = [];
 
-		Api.TaskAccumulator.listPage(opcoes, function (data) {
+		Api.TaskTypeAccumulator.listPage(opcoes, function (data) {
 			$scope.accs = data.results;
 		});
 	}

@@ -17,7 +17,13 @@ namespace DataModel
 		public List<SurveyOption> options;
 	}
 
-	public partial class SurveyOption
+    public class SurveyReport
+    {
+        public int count = 0;
+        public List<Survey> results = new List<Survey>();
+    }
+
+    public partial class SurveyOption
 	{
 		public bool bChecked;
 		public string sNuOptionPct;

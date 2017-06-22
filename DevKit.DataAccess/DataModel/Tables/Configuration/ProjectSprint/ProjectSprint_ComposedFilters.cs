@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace DataModel
 {
@@ -8,7 +9,37 @@ namespace DataModel
     {
 		public long? fkProject,
                      fkPhase;
-	}
+
+        public string Parameters()
+        {
+            return Export();
+        }
+
+        string _exportResults = "";
+
+        string Export()
+        {
+            if (_exportResults != "")
+                return _exportResults;
+
+            var ret = new StringBuilder();
+
+            // base
+            ret.Append(skip);
+            ret.Append(take);
+            ret.Append(busca);
+
+            if (fkProject != null)
+                ret.Append(fkProject);
+
+            if (fkPhase != null)
+                ret.Append(fkPhase);
+
+            _exportResults = ret.ToString();
+
+            return _exportResults;
+        }
+    }
 
 	public partial class ProjectSprint
 	{
@@ -36,5 +67,13 @@ namespace DataModel
 
             return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
         }
-	}
+
+        public ProjectSprint ClearAssociations()
+        {
+            versions = null;
+            logs = null;
+
+            return this;
+        }
+    }
 }

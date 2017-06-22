@@ -885,7 +885,7 @@
     <Compile Include="proc\Controllers\Configuration\NewsCtrl.cs" />
     <Compile Include="proc\Controllers\Configuration\TaskCheckPointCtrl.cs" />
     <Compile Include="proc\Controllers\Enums\AccumulatorTypeCtrl.cs" />
-    <Compile Include="proc\Controllers\Configuration\TaskAccumulatorCtrl.cs" />
+    <Compile Include="proc\Controllers\Configuration\TaskTypeAccumulatorCtrl.cs" />
     <Compile Include="proc\Controllers\Configuration\TaskCategoryCtrl.cs" />
     <Compile Include="proc\Controllers\Configuration\TaskFlowCtrl.cs" />
     <Compile Include="proc\Controllers\Configuration\VersionCtrl.cs" />

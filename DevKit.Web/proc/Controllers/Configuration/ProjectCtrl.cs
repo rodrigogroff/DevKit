@@ -18,7 +18,7 @@ namespace DevKit.Web.Controllers
 
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.ProjectReports);
+            var hshReport = SetupCacheReport(CacheTags.ProjectReport);
             if (hshReport[parameters] is ProjectReport report)
                 return Ok(report);
 
@@ -74,8 +74,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Create(db, ref apiResponse))
-				return BadRequest(apiResponse);
+            if (!mdl.Create(db, ref apiError))
+				return BadRequest(apiError);
 
             CleanCache(db, CacheTags.Project, null);
             StoreCache(CacheTags.Project, mdl.id, mdl);
@@ -88,14 +88,19 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref apiResponse))
-                return BadRequest(apiResponse);
+            if (!mdl.Update(db, ref apiError))
+                return BadRequest(apiError);
 
             switch (mdl.updateCommand)
             {
                 case "newPhase":
                 case "removePhase":
                     CleanCache(db, CacheTags.ProjectPhase, null);
+                    break;
+
+                case "newSprint":
+                case "removeSprint":
+                    CleanCache(db, CacheTags.ProjectSprint, null);
                     break;
             }
 
@@ -115,8 +120,8 @@ namespace DevKit.Web.Controllers
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
             
-			if (!mdl.CanDelete(db, ref apiResponse))
-				return BadRequest(apiResponse);
+			if (!mdl.CanDelete(db, ref apiError))
+				return BadRequest(apiError);
 
 			mdl.Delete(db);
 

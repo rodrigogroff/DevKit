@@ -4,32 +4,32 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class PhaseController : ApiControllerBase
+	public class TaskTypeAccumulatorController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
-            var filter = new ProjectPhaseFilter
+            var filter = new TaskTypeAccumulatorFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                fkProject = Request.GetQueryStringValue<int?>("fkProject", null),
+                fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null)
             };
 
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.ProjectPhaseReport);
-            if (hshReport[parameters] is ProjectPhaseReport report)
+            var hshReport = SetupCacheReport(CacheTags.SurveyReport);
+            if (hshReport[parameters] is SurveyReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new ProjectPhase();
+            var mdl = new TaskTypeAccumulator();
+            
+            var results = mdl.ComposedFilters(db, ref reportCount, filter);
 
-			var results = mdl.ComposedFilters ( db, ref reportCount, filter );
-
-            var ret = new ProjectPhaseReport
+            var ret = new TaskTypeAccumulatorReport
             {
                 count = reportCount,
                 results = results
@@ -38,23 +38,25 @@ namespace DevKit.Web.Controllers
             hshReport[parameters] = ret;
 
             return Ok(ret);
-		}
+        }
 
-		public IHttpActionResult Get(long id)
+        public IHttpActionResult Get(long id)
 		{
-            if (RestoreCache(CacheTags.ProjectPhase, id) is ProjectPhase obj)
+            if (RestoreCache(CacheTags.TaskTypeAccumulator, id) is TaskTypeAccumulator obj)
                 return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.GetProjectPhase(id);
+            var mdl = db.GetTaskTypeAccumulator(id);
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
-            
+
+            mdl.LoadAssociations(db);
+
             BackupCache(mdl);
-            
+
             return Ok(mdl);
         }
 	}

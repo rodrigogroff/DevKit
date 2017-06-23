@@ -44,13 +44,8 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
         {
-            var combo = Request.GetQueryStringValue("combo", false);
-
             if (RestoreCache(CacheTags.ClientGroup, id) is ClientGroup obj)
-                if (combo)
-                    return Ok(obj.ClearAssociations());
-                else
-                    return Ok(obj);
+                return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -61,12 +56,10 @@ namespace DevKit.Web.Controllers
                 return StatusCode(HttpStatusCode.NotFound);
 
             mdl.LoadAssociations(db);
+
             BackupCache(mdl);
 
-            if (combo)
-                return Ok(mdl.ClearAssociations());
-            else
-                return Ok(mdl);
+            return Ok(mdl);
         }
 
         public IHttpActionResult Post(ClientGroup mdl)

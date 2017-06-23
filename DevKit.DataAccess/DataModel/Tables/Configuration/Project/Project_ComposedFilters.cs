@@ -89,15 +89,5 @@ namespace DataModel
 
             return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
         }
-
-        public Project ClearAssociations()
-        {
-            users = null;
-            phases = null;
-            sprints = null;
-            logs = null;
-
-            return this;
-        }
     }
 }

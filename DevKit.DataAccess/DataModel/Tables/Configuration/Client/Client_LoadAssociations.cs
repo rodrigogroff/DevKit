@@ -18,12 +18,7 @@ namespace DataModel
 
 			return this;
 		}
-
-        public Client ClearAssociations()
-        {
-            return this;
-        }
-
+        
 		public string GetMaskedValue(DevKitDB db, string stPhone)
 		{
 			var pref = db.GetSetup().stPhoneMask;

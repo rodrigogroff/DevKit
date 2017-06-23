@@ -11,8 +11,6 @@ namespace DevKit.Web.Controllers
 		{
             var filter = new ProjectFilter
             {
-                skip = Request.GetQueryStringValue("skip", 0),
-                take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
                 fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
             };
@@ -28,24 +26,16 @@ namespace DevKit.Web.Controllers
 
             var mdl = new Project();
 
-            var results = mdl.ComposedFilters(db, ref reportCount, filter);
-
-            var resultsCombo = new List<BaseComboResponse>();
-
-            foreach (var item in results)
-            {
-                resultsCombo.Add(new BaseComboResponse
-                {
-                    id = item.id,
-                    stName = item.stName
-                });
-            }
+            var results = mdl.ComboFilters(db, filter);
 
             var ret = new ComboReport
             {
-                count = reportCount,
-                results = resultsCombo
+                count = results.Count,
+                results = new List<BaseComboResponse>()
             };
+
+            foreach (var item in results)
+                ret.results.Add(new BaseComboResponse { id = item.id, stName = item.stName });
 
             hshReport[parameters] = ret;
 
@@ -65,13 +55,15 @@ namespace DevKit.Web.Controllers
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            BackupCache(new BaseComboResponse
+            var ret = new BaseComboResponse
             {
                 id = mdl.id,
                 stName = mdl.stName
-            });
+            };
 
-            return Ok(mdl);
+            BackupCache(ret);
+
+            return Ok(ret);
         }
 	}
 }

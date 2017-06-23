@@ -31,6 +31,28 @@ namespace DevKit.Web.Controllers
         public const string ClientGroupCombo = "ClientCombo";
         public const string ProjectCombo = "ProjectCombo";
         public const string ProjectComboReport = "ProjectComboReport";
+        public const string UserCombo = "UserCombo";
+        public const string UserComboReport = "UserComboReport";
+        public const string ProjectPhaseCombo = "ProjectPhaseCombo";
+        public const string ProjectPhaseComboReport = "ProjectPhaseComboReport";
+        public const string VersionStateCombo = "VersionStateCombo";
+        public const string VersionStateComboReport = "VersionStateComboReport";
+        public const string AccTypeCombo = "AccTypeCombo";
+        public const string AccTypeComboReport = "AccTypeComboReport";
+        public const string TaskCategoryCombo = "TaskCategoryCombo";
+        public const string TaskCategoryComboReport = "TaskCategoryComboReport";
+        public const string TaskFlowCombo = "TaskFlowCombo";
+        public const string TaskFlowComboReport = "TaskFlowComboReport";
+        public const string ProfileCombo = "ProfileCombo";
+        public const string ProfileComboReport = "ProfileComboReport";
+        public const string PriorityCombo = "PriorityCombo";
+        public const string PriorityComboReport = "PriorityComboReport";
+        public const string ProjectSprintCombo = "ProjectSprintCombo";
+        public const string ProjectSprintComboReport = "ProjectSprintComboReport";
+        public const string TaskTypeCombo = "TaskTypeCombo";
+        public const string TaskTypeComboReport = "TaskTypeComboReport";
+        public const string VersionCombo = "VersionCombo";
+        public const string VersionComboReport = "VersionComboReport";
 
         // tables
 

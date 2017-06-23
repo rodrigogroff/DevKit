@@ -18,14 +18,7 @@ namespace DataModel
 
 			return this;
 		}
-
-        public ClientGroup ClearAssociations()
-        {
-            clients = null;
-
-            return this;
-        }
-
+        
         List<Client> LoadClients(DevKitDB db)
 		{
 			return (from e in db.ClientGroupAssociation

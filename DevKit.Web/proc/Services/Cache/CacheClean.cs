@@ -8,13 +8,23 @@ namespace DevKit.Web.Controllers
             switch (target)
             {
                 case CacheTags.User:
-                    if (id != null) StoreCache(CacheTags.User, id, null);
+                    if (id != null)
+                    {
+                        StoreCache(CacheTags.User, id, null);
+                        StoreCache(CacheTags.UserCombo, id, null);
+                    }
                     CleanCacheReport(CacheTags.UserReport);
+                    CleanCacheReport(CacheTags.UserComboReport);
                     break;
 
                 case CacheTags.Profile:
-                    if (id != null) StoreCache(CacheTags.Profile, id, null);
+                    if (id != null)
+                    {
+                        StoreCache(CacheTags.Profile, id, null);
+                        StoreCache(CacheTags.ProfileCombo, id, null);
+                    }
                     CleanCacheReport(CacheTags.ProfileReport);
+                    CleanCacheReport(CacheTags.ProfileComboReport);
                     break;
 
                 case CacheTags.Client:
@@ -48,23 +58,43 @@ namespace DevKit.Web.Controllers
                     break;
 
                 case CacheTags.TaskType:
-                    if (id != null) StoreCache(CacheTags.TaskType, id, null);
+                    if (id != null)
+                    {
+                        StoreCache(CacheTags.TaskType, id, null);
+                        StoreCache(CacheTags.TaskTypeCombo, id, null);
+                    }
                     CleanCacheReport(CacheTags.TaskTypeReport);
+                    CleanCacheReport(CacheTags.TaskTypeComboReport);
                     break;
 
                 case CacheTags.Project:
-                    if (id != null) StoreCache(CacheTags.Project, id, null);
+                    if (id != null)
+                    {
+                        StoreCache(CacheTags.Project, id, null);
+                        StoreCache(CacheTags.ProjectCombo, id, null);
+                    }
                     CleanCacheReport(CacheTags.ProjectReport);
+                    CleanCacheReport(CacheTags.ProjectComboReport);
                     break;
 
                 case CacheTags.ProjectPhase:
-                    if (id != null) StoreCache(CacheTags.ProjectPhase, id, null);
+                    if (id != null)
+                    {
+                        StoreCache(CacheTags.ProjectPhase, id, null);
+                        StoreCache(CacheTags.ProjectPhaseCombo, id, null);
+                    }
                     CleanCacheReport(CacheTags.ProjectPhaseReport);
+                    CleanCacheReport(CacheTags.ProjectPhaseComboReport);
                     break;
 
                 case CacheTags.ProjectSprint:
-                    if (id != null) StoreCache(CacheTags.ProjectSprint, id, null);
+                    if (id != null)
+                    {
+                        StoreCache(CacheTags.ProjectSprint, id, null);
+                        StoreCache(CacheTags.ProjectSprintCombo, id, null);
+                    }
                     CleanCacheReport(CacheTags.ProjectSprintReport);
+                    CleanCacheReport(CacheTags.ProjectSprintComboReport);
                     break;
 
                 case CacheTags.Survey:

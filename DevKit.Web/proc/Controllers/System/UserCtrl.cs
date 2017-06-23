@@ -51,16 +51,9 @@ namespace DevKit.Web.Controllers
                 return Ok(db.currentUser);
             }                
 
-            var combo = Request.GetQueryStringValue("combo", false);
-
             if (RestoreCache(CacheTags.User, id) is User obj)
-            {
-                if (combo)
-                    return Ok(obj.ClearAssociations());
-                else
-                    return Ok(obj);
-            }
-
+                return Ok(obj);
+            
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
@@ -73,10 +66,7 @@ namespace DevKit.Web.Controllers
 
             BackupCache(mdl);
 
-            if (combo)
-                return Ok(mdl.ClearAssociations());
-            else
-                return Ok(mdl);
+            return Ok(mdl);
 		}
 
 		public IHttpActionResult Post(User mdl)
@@ -105,13 +95,6 @@ namespace DevKit.Web.Controllers
 			if (!mdl.Update(db, ref apiError))
 				return BadRequest(apiError);
 
-            if (mdl.resetPassword != "")
-            {
-                StoreCache(CacheTags.User, mdl.id, null);
-                mdl.ClearAssociations();
-                return Ok(mdl);
-            }
-
             mdl.LoadAssociations(db);
 
             CleanCache(db, CacheTags.User, null);
@@ -119,7 +102,10 @@ namespace DevKit.Web.Controllers
 
             StoreCache(CacheTags.User, mdl.id, mdl);
 
-            return Ok();			
+            if (mdl.resetPassword != "")
+                return Ok(mdl);
+            else
+                return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)

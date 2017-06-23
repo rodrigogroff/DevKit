@@ -23,16 +23,6 @@ namespace DataModel
             return this;
 		}
 
-        public TaskType ClearAssociations()
-        {
-            project = null;
-            categories = null;
-            checkpoints = null;
-            logs = null;
-
-            return this;
-        }
-
         List<TaskCategory> LoadCategories(DevKitDB db)
 		{
 			return db.GetListTaskCategory(this.id).

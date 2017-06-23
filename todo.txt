@@ -2,7 +2,6 @@
 ------------------------------
 a fazer (prioridade)
 ------------------------------
-	 
 
 	- combos -> cache e api dedicada
 	- combos -> retornar estrutura de id, nome 

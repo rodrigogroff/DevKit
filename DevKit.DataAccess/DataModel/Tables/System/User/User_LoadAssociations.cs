@@ -21,17 +21,7 @@ namespace DataModel
 
 			return this;
 		}
-
-        public User ClearAssociations()
-        {
-            profile = null;
-            phones = null;
-            emails = null;
-            logs = null;
-
-            return this;
-        }
-		
+        
 		List<UserPhone> LoadPhones(DevKitDB db)
 		{
 			return (from e in db.UserPhone where e.fkUser == id select e).

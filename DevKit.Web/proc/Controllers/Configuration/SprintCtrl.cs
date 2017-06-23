@@ -43,14 +43,8 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
 		{
-            var combo = Request.GetQueryStringValue("combo", false);
-
-            var obj = RestoreCache(CacheTags.ProjectSprint, id) as ProjectSprint;
-            if (obj != null)
-                if (combo)
-                    return Ok(obj.ClearAssociations());
-                else
-                    return Ok(obj);
+            if (RestoreCache(CacheTags.ProjectSprint, id) is ProjectSprint obj)
+                return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -64,10 +58,7 @@ namespace DevKit.Web.Controllers
 
             BackupCache(mdl);
 
-            if (combo)
-                return Ok(mdl.ClearAssociations());
-            else
-                return Ok(mdl);
+            return Ok(mdl);
         }
 
 		public IHttpActionResult Put(long id, ProjectSprint mdl)

@@ -6,9 +6,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 {
 	$rootScope.exibirMenu = true;
 
-	$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, {});
-	$scope.selectVersionStates = ngSelects.obterConfiguracao(Api.VersionState, {});
-	$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
+	$scope.selectProjects = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
+	$scope.selectVersionStates = ngSelects.obterConfiguracao(Api.VersionStateCombo, {});
+	$scope.selectPhases = ngSelects.obterConfiguracao(Api.PhaseCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
 
 	$scope.loading = false;
 

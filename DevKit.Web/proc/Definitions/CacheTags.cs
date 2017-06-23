@@ -23,13 +23,22 @@ namespace DevKit.Web.Controllers
         public const string EnumVersionState = "EnumVersionState";
         public const string EnumVersionStateReport = "EnumVersionStateReport";
 
+        // combos
+
+        public const string ClientComboReport = "ClientComboReport";
+        public const string ClientCombo = "ClientCombo";
+        public const string ClientGroupComboReport = "ClientComboReport";
+        public const string ClientGroupCombo = "ClientCombo";
+        public const string ProjectCombo = "ProjectCombo";
+        public const string ProjectComboReport = "ProjectComboReport";
+
         // tables
 
         public const string Setup = "Setup";
         public const string User = "User";
         public const string UserReport = "UserReport";
         public const string Client = "Client";
-        public const string ClientReport = "ClientReport";
+        public const string ClientReport = "ClientReport";        
         public const string ClientGroup = "ClientGroup";
         public const string ClientGroupReport = "ClientGroupReport";
         public const string Task = "Task";
@@ -50,7 +59,6 @@ namespace DevKit.Web.Controllers
         public const string SurveyReport = "SurveyReport";
         public const string TaskTypeAccumulator = "TaskTypeAccumulator";
         public const string TaskTypeAccumulatorReport = "TaskTypeAccumulatorReport";
-
         public const string TaskCategory = "TaskCategory";
         public const string TaskCategoryReport = "TaskCategoryReport";
     }

@@ -35,7 +35,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	{
 		CheckPermissions();
 
-		$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, {});
+		$scope.selectProject = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
 		
 		if (id > 0)
 		{

@@ -44,13 +44,8 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-            var combo = Request.GetQueryStringValue("combo", false);
-
             if (RestoreCache(CacheTags.Client, id) is Client obj)
-                if (combo)
-                    return Ok(obj.ClearAssociations());
-                else
-                    return Ok(obj);
+                return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -64,10 +59,7 @@ namespace DevKit.Web.Controllers
 
             BackupCache(mdl);
 
-            if (combo)
-                return Ok(mdl.ClearAssociations());
-            else
-                return Ok(mdl);
+            return Ok(mdl);
 		}
 
 		public IHttpActionResult Post(Client mdl)

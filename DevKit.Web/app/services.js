@@ -39,7 +39,8 @@ angular.module('app.services', ['ngResource'])
 		'remove': { method: 'DELETE' }
 	};
 
-	return {		
+    return {
+
 		Setup: $resource('api/setup/:id', {}, opcoes),
 		User: $resource('api/user/:id', {}, opcoes),
 		Profile: $resource('api/profile/:id', {}, opcoes),
@@ -68,6 +69,22 @@ angular.module('app.services', ['ngResource'])
 		News: $resource('api/news/:id', {}, opcoes),
         Survey: $resource('api/survey/:id', {}, opcoes),
         Cache: $resource('api/cache/:id', {}, opcoes),
-		HomeView: $resource('api/homeView/:id', {}, opcoes)
+        HomeView: $resource('api/homeView/:id', {}, opcoes),
+
+        // combo
+        ClientCombo: $resource('api/clientcombo/:id', {}, opcoes),
+        ClientGroupCombo: $resource('api/clientgroupcombo/:id', {}, opcoes),
+        ProjectCombo: $resource('api/projectcombo/:id', {}, opcoes),
+        UserCombo: $resource('api/usercombo/:id', {}, opcoes),
+        PhaseCombo: $resource('api/phasecombo/:id', {}, opcoes),
+        VersionStateCombo: $resource('api/versionstatecombo/:id', {}, opcoes),
+        AccTypeCombo: $resource('api/accumulatortypecombo/:id', {}, opcoes),
+        TaskCategoryCombo: $resource('api/taskcategorycombo/:id', {}, opcoes),
+        TaskFlowCombo: $resource('api/taskflowcombo/:id', {}, opcoes),
+        ProfileCombo: $resource('api/profilecombo/:id', {}, opcoes),
+        PriorityCombo: $resource('api/prioritycombo/:id', {}, opcoes),
+        SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),
+        TaskTypeCombo: $resource('api/tasktypecombo/:id', {}, opcoes),
+        VersionCombo: $resource('api/versioncombo/:id', {}, opcoes)
 	};
 }]);

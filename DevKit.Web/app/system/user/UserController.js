@@ -6,7 +6,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 {
 	$rootScope.exibirMenu = true;
 
-	$scope.selectPerfis = ngSelects.obterConfiguracao(Api.Profile, {});
+	$scope.selectPerfis = ngSelects.obterConfiguracao(Api.ProfileCombo, {});
 
 	$scope.loading = false;
 

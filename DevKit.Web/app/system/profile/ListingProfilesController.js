@@ -8,7 +8,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 	$scope.campos = {
 		selects: {
-			user: ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' }),
+			user: ngSelects.obterConfiguracao(Api.UserCombo, { campoNome: 'stLogin' }),
 		}
 	};
 

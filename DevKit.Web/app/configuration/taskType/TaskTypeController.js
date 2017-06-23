@@ -6,10 +6,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 {
 	$rootScope.exibirMenu = true;
 
-	$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, {});
-	$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, {});
-	$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.id' } });
-	$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'newAcc.fkTaskCategory' } });
+	$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccTypeCombo, {});
+	$scope.selectProject = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
+	$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategoryCombo, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.id' } });
+	$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlowCombo, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'newAcc.fkTaskCategory' } });
 
 	$scope.loading = false;
 

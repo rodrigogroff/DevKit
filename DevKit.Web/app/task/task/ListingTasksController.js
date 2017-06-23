@@ -15,13 +15,13 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	  	kpa: 'false',
 	  	complete: 'false',
 		selects: {
-			user: ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' }),
-			priority: ngSelects.obterConfiguracao(Api.Priority, { }),
-			project: ngSelects.obterConfiguracao(Api.Project, { }),
-			phase: ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' } }),
-			sprint: ngSelects.obterConfiguracao(Api.Sprint, { scope: $scope, filtro: { campo: 'fkPhase', valor: 'campos.fkPhase' } }),
-			tasktype: ngSelects.obterConfiguracao(Api.TaskType, { scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' } }),
-			taskcategory: ngSelects.obterConfiguracao(Api.TaskCategory, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'campos.fkTaskType' } }),
+			user: ngSelects.obterConfiguracao(Api.UserCombo, { campoNome: 'stLogin' }),
+            priority: ngSelects.obterConfiguracao(Api.PriorityCombo, { }),
+            project: ngSelects.obterConfiguracao(Api.ProjectCombo, { }),
+            phase: ngSelects.obterConfiguracao(Api.PhaseCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' } }),
+            sprint: ngSelects.obterConfiguracao(Api.SprintCombo, { scope: $scope, filtro: { campo: 'fkPhase', valor: 'campos.fkPhase' } }),
+            tasktype: ngSelects.obterConfiguracao(Api.TaskTypeCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' } }),
+            taskcategory: ngSelects.obterConfiguracao(Api.TaskCategoryCombo, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'campos.fkTaskType' } }),
 		}
 	};
 	$scope.itensporpagina = 15;

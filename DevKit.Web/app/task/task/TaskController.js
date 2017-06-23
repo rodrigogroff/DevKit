@@ -6,18 +6,18 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 {
 	$rootScope.exibirMenu = true;
 
-	$scope.selectPriority = ngSelects.obterConfiguracao(Api.Priority, {});
-	$scope.selectProjects = ngSelects.obterConfiguracao(Api.Project, {});
-	$scope.selectClients = ngSelects.obterConfiguracao(Api.Client, {});
-	$scope.selectClientGroups = ngSelects.obterConfiguracao(Api.ClientGroup, {});
-	$scope.selectPhases = ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
-	$scope.selectSprints = ngSelects.obterConfiguracao(Api.Sprint, { scope: $scope, filtro: { campo: 'fkPhase', valor: 'viewModel.fkPhase' } });
-	$scope.selectVersions = ngSelects.obterConfiguracao(Api.Version, { scope: $scope, filtro: { campo: 'fkSprint', valor: 'viewModel.fkSprint' } });
-	$scope.selectUsers = ngSelects.obterConfiguracao(Api.User, { campoNome: 'stLogin' });
-	$scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskType, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
-	$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategory, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.fkTaskType' } });
-	$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlow, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
-	$scope.selectTaskAcc = ngSelects.obterConfiguracao(Api.TaskTypeAccumulator, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
+	$scope.selectPriority = ngSelects.obterConfiguracao(Api.PriorityCombo, {});
+    $scope.selectProjects = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
+    $scope.selectClients = ngSelects.obterConfiguracao(Api.ClientCombo, {});
+    $scope.selectClientGroups = ngSelects.obterConfiguracao(Api.ClientGroupCombo, {});
+    $scope.selectPhases = ngSelects.obterConfiguracao(Api.PhaseCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
+    $scope.selectSprints = ngSelects.obterConfiguracao(Api.SprintCombo, { scope: $scope, filtro: { campo: 'fkPhase', valor: 'viewModel.fkPhase' } });
+    $scope.selectVersions = ngSelects.obterConfiguracao(Api.VersionCombo, { scope: $scope, filtro: { campo: 'fkSprint', valor: 'viewModel.fkSprint' } });
+    $scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, { campoNome: 'stLogin' });
+    $scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskTypeCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
+    $scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategoryCombo, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.fkTaskType' } });
+    $scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlowCombo, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
+    $scope.selectTaskAcc = ngSelects.obterConfiguracao(Api.TaskTypeAccumulatorCombo, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
 
 	$scope.loading = false;
 

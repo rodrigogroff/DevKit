@@ -8,7 +8,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.loading = false;
 
-	$scope.selectClients = ngSelects.obterConfiguracao(Api.Client, {});
+	$scope.selectClients = ngSelects.obterConfiguracao(Api.ClientCombo, {});
 
 	$scope.viewModel = {};
 	$scope.permModel = {};	

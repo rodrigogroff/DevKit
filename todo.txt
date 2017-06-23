@@ -3,7 +3,9 @@
 a fazer (prioridade)
 ------------------------------
 	 
-	- combos -> cache dedicada
+
+	- combos -> cache e api dedicada
+	- combos -> retornar estrutura de id, nome 
 	- updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
 	- implementar acumulador de 'ammount'
 	- menu não estragar tela atual

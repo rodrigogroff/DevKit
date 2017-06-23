@@ -873,12 +873,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="proc\Combos\ClientComboCtrl.cs" />
+    <Compile Include="proc\Combos\ClientGroupComboCtrl.cs" />
+    <Compile Include="proc\Combos\ProjectComboCtrl.cs" />
     <Compile Include="proc\Controllers\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\Cache\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />
-    <Compile Include="proc\Controllers\Base\Cache\MemCacheController.cs" />
+    <Compile Include="proc\Infrastructure\Base\Cache\MemCacheController.cs" />
     <Compile Include="proc\Controllers\Configuration\ClientGroupCtrl.cs" />
     <Compile Include="proc\Controllers\Configuration\ClientCtrl.cs" />
     <Compile Include="proc\Controllers\Configuration\SurveyCtrl.cs" />
@@ -913,7 +916,7 @@
     <Compile Include="App_Start\IocConfig.cs" />
     <Compile Include="App_Start\ValidationActionFilter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="proc\Controllers\Base\ApiBaseController.cs" />
+    <Compile Include="proc\Infrastructure\Base\ApiBaseController.cs" />
     <Compile Include="proc\Controllers\System\UserCtrl.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

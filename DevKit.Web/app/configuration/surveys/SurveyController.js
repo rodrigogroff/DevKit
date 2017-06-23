@@ -6,7 +6,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 {
 	$rootScope.exibirMenu = true;
 
-	$scope.selectProject = ngSelects.obterConfiguracao(Api.Project, {});
+	$scope.selectProject = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
 
 	$scope.loading = false;
 

@@ -9,7 +9,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.campos = {
 		ativo: 'true',
 		selects: {
-			perfil: ngSelects.obterConfiguracao(Api.Profile, { }),
+			perfil: ngSelects.obterConfiguracao(Api.ProfileCombo, { }),
 		}
 	};
 	$scope.itensporpagina = 15;

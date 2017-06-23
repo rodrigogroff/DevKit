@@ -8,8 +8,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 	$scope.campos = {
 		selects: {
-			project: ngSelects.obterConfiguracao(Api.Project, { }),
-			phase: ngSelects.obterConfiguracao(Api.Phase, { scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' } }),
+			project: ngSelects.obterConfiguracao(Api.ProjectCombo, { }),
+			phase: ngSelects.obterConfiguracao(Api.PhaseCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' } }),
 		}
 	};
 

@@ -40,8 +40,7 @@ function (Api, $rootScope)
 					var id = $(element).select2('val');
 
 					opcoesObter[campoId] = id;
-                    opcoesObter.combo = true;
-                    
+                                        
 					if (parametros && parametros.opcoes)
 						angular.extend(opcoesObter, parametros.opcoes);
 

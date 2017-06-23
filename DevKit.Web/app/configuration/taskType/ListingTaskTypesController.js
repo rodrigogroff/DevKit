@@ -11,7 +11,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		condensed: '',
 		kpa: '',
 		selects: {
-			project: ngSelects.obterConfiguracao(Api.Project, { }),
+			project: ngSelects.obterConfiguracao(Api.ProjectCombo, { }),
 		}
 	};
 

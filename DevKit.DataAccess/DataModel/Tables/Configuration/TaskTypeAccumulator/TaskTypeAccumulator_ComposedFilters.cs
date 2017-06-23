@@ -24,12 +24,14 @@ namespace DataModel
             var ret = new StringBuilder();
 
             // base
-            ret.Append(skip);
-            ret.Append(take);
-            ret.Append(busca);
+            ret.Append(skip + ",");
+            ret.Append(take + ",");
+            ret.Append(busca + ",");
 
             if (fkTaskCategory != null)
                 ret.Append(fkTaskCategory);
+
+            ret.Append(",");
 
             _exportResults = ret.ToString();
 

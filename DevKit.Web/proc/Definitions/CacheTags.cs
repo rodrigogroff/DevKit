@@ -50,5 +50,8 @@ namespace DevKit.Web.Controllers
         public const string SurveyReport = "SurveyReport";
         public const string TaskTypeAccumulator = "TaskTypeAccumulator";
         public const string TaskTypeAccumulatorReport = "TaskTypeAccumulatorReport";
+
+        public const string TaskCategory = "TaskCategory";
+        public const string TaskCategoryReport = "TaskCategoryReport";
     }
 }

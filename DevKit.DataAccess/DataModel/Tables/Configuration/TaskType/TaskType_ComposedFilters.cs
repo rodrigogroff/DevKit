@@ -28,21 +28,25 @@ namespace DataModel
             var ret = new StringBuilder();
 
             // base
-            ret.Append(skip);
-            ret.Append(take);
-            ret.Append(busca);
+            ret.Append(skip + ",");
+            ret.Append(take + ",");
+            ret.Append(busca + ",");
 
             if (fkProject != null)
                 ret.Append(fkProject);
+            ret.Append(",");
 
             if (managed != null)
                 ret.Append(managed);
+            ret.Append(",");
 
             if (condensed != null)
                 ret.Append(condensed);
+            ret.Append(",");
 
             if (kpa != null)
                 ret.Append(kpa);
+            ret.Append(",");
 
             _exportResults = ret.ToString();
 

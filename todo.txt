@@ -3,6 +3,7 @@
 a fazer (prioridade)
 ------------------------------
 	 
+	- combos -> cache dedicada
 	- updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
 	- implementar acumulador de 'ammount'
 	- menu não estragar tela atual

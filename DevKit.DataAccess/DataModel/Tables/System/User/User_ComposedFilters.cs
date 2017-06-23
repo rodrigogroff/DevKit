@@ -28,18 +28,19 @@ namespace DataModel
             var ret = new StringBuilder();
 
             // base
-            ret.Append(skip);
-            ret.Append(take);
-            ret.Append(busca);
-
-            ret.Append(email);
-            ret.Append(phone);
+            ret.Append(skip + ",");
+            ret.Append(take + ",");
+            ret.Append(busca + ",");
+            ret.Append(email + ",");
+            ret.Append(phone + ",");
 
             if (ativo != null)
                 ret.Append(ativo);
+            ret.Append(",");
 
             if (fkPerfil != null)
                 ret.Append(fkPerfil);
+            ret.Append(",");
 
             _exportResults = ret.ToString();
 

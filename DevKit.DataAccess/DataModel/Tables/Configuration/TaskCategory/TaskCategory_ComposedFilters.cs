@@ -1,13 +1,42 @@
 ﻿using LinqToDB;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DataModel
 {
 	public class TaskCategoryFilter : BaseFilter
     {
-		public long? fkTaskType;		
-	}
+		public long? fkTaskType;
+
+        public string Parameters()
+        {
+            return Export();
+        }
+
+        string _exportResults = "";
+
+        string Export()
+        {
+            if (_exportResults != "")
+                return _exportResults;
+
+            var ret = new StringBuilder();
+
+            // base
+            ret.Append(skip + ",");
+            ret.Append(take + ",");
+            ret.Append(busca + ",");
+
+            if (fkTaskType != null)
+                ret.Append(fkTaskType);
+            ret.Append(",");
+
+            _exportResults = ret.ToString();
+
+            return _exportResults;
+        }
+    }
 
 	public partial class TaskCategory
 	{

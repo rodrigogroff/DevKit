@@ -25,15 +25,17 @@ namespace DataModel
             var ret = new StringBuilder();
 
             // base
-            ret.Append(skip);
-            ret.Append(take);
-            ret.Append(busca);
+            ret.Append(skip + ",");
+            ret.Append(take + ",");
+            ret.Append(busca + ",");
 
             if (fkProject != null)
                 ret.Append(fkProject);
+            ret.Append(",");
 
             if (fkPhase != null)
                 ret.Append(fkPhase);
+            ret.Append(",");
 
             _exportResults = ret.ToString();
 

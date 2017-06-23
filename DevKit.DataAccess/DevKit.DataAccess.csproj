@@ -76,6 +76,7 @@
     <Compile Include="DataModel\Enums\VersionState_enum.cs" />
     <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_DTO.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskCategory\TaskCategory_DTO.cs" />
     <Compile Include="DataModel\Tables\LoginInfo.cs" />
     <Compile Include="DataModel\Tables\BaseFilter.cs" />
     <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_ComposedFilters.cs" />

@@ -39,25 +39,66 @@ namespace DataModel
             var ret = new StringBuilder();
 
             // base
-            ret.Append(skip);
-            ret.Append(take);
-            ret.Append(busca);
+            ret.Append(skip + ",");
+            ret.Append(take + ",");
+            ret.Append(busca + ",");
 
             // customs
-            ret.Append(complete);
-            ret.Append(kpa);
-            ret.Append(expired);
-            ret.Append(nuPriority);
-            ret.Append(fkProject);
-            ret.Append(fkClient);
-            ret.Append(fkClientGroup);
-            ret.Append(fkPhase);
-            ret.Append(fkSprint);
-            ret.Append(fkUserStart);
-            ret.Append(fkUserResponsible);
-            ret.Append(fkTaskType);
-            ret.Append(fkTaskFlowCurrent);
-            ret.Append(fkTaskCategory);
+            if (complete != null)
+                ret.Append(complete);
+            ret.Append(",");
+
+            if (kpa != null)
+                ret.Append(kpa);
+            ret.Append(",");
+
+            if (expired != null)
+                ret.Append(expired);
+            ret.Append(",");
+
+            if (nuPriority != null)
+                ret.Append(nuPriority);
+            ret.Append(",");
+
+            if (fkProject != null)
+                ret.Append(fkProject);
+            ret.Append(",");
+
+            if (fkClient != null)
+                ret.Append(fkClient);
+            ret.Append(",");
+
+            if (fkClientGroup != null)
+                ret.Append(fkClientGroup);
+            ret.Append(",");
+
+            if (fkPhase != null)
+                ret.Append(fkPhase);
+            ret.Append(",");
+
+            if (fkSprint != null)
+                ret.Append(fkSprint);
+            ret.Append(",");
+
+            if (fkUserStart != null)
+                ret.Append(fkUserStart);
+            ret.Append(",");
+
+            if (fkUserResponsible != null)
+                ret.Append(fkUserResponsible);
+            ret.Append(",");
+
+            if (fkTaskType != null)
+                ret.Append(fkTaskType);
+            ret.Append(",");
+
+            if (fkTaskFlowCurrent != null)
+                ret.Append(fkTaskFlowCurrent);
+            ret.Append(",");
+
+            if (fkTaskCategory != null)
+                ret.Append(fkTaskCategory);
+            ret.Append(",");
 
             _exportResults = ret.ToString();
 

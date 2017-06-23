@@ -37,13 +37,14 @@ namespace DataModel
             var ret = new StringBuilder();
 
             // base
-            ret.Append(skip);
-            ret.Append(take);
-            ret.Append(busca);
+            ret.Append(skip + ",");
+            ret.Append(take + ",");
+            ret.Append(busca + ",");
 
             if (fkUser != null)
                 ret.Append(fkUser);
-
+            ret.Append(",");
+            
             _exportResults = ret.ToString();
 
             return _exportResults;

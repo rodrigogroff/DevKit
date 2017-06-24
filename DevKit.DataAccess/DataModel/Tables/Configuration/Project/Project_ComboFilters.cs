@@ -1,12 +1,11 @@
 ﻿using LinqToDB;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DataModel
 {
     public partial class Project
     {
-        public List<Project> ComboFilters(DevKitDB db, ProjectFilter filter)
+        public ComboReport ComboFilters(DevKitDB db, ProjectFilter filter)
         {
             var user = db.currentUser;
             var lstUserProjects = db.GetCurrentUserProjects();
@@ -28,7 +27,11 @@ namespace DataModel
                         select e;
             }
 
-            return query.ToList();
+            return new ComboReport
+            {
+                count = query.Count(),
+                results = (from e in query select new BaseComboResponse { id = e.id, stName = e.stName }).ToList()
+            };
         }
     }
 }

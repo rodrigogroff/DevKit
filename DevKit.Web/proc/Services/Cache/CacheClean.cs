@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
                     if (id != null)
                     {
                         StoreCache(CacheTags.User, id, null);
-                        StoreCache(CacheTags.UserCombo, id, null);
+                        StoreCache(CacheTags.UserCombo, id, null); // ok
                     }
                     CleanCacheReport(CacheTags.UserReport);
                     CleanCacheReport(CacheTags.UserComboReport);
@@ -21,7 +21,7 @@ namespace DevKit.Web.Controllers
                     if (id != null)
                     {
                         StoreCache(CacheTags.Profile, id, null);
-                        StoreCache(CacheTags.ProfileCombo, id, null);
+                        StoreCache(CacheTags.ProfileCombo, id, null); // ok
                     }
                     CleanCacheReport(CacheTags.ProfileReport);
                     CleanCacheReport(CacheTags.ProfileComboReport);
@@ -31,7 +31,7 @@ namespace DevKit.Web.Controllers
                     if (id != null)
                     {
                         StoreCache(CacheTags.Client, id, null);
-                        StoreCache(CacheTags.ClientCombo, id, null);
+                        StoreCache(CacheTags.ClientCombo, id, null); // ok
                     }
                     CleanCacheReport(CacheTags.ClientReport);
                     CleanCacheReport(CacheTags.ClientComboReport);
@@ -41,7 +41,7 @@ namespace DevKit.Web.Controllers
                     if (id != null)
                     {
                         StoreCache(CacheTags.ClientGroup, id, null);
-                        StoreCache(CacheTags.ClientGroupCombo, id, null);
+                        StoreCache(CacheTags.ClientGroupCombo, id, null); // ok
                     }
                     CleanCacheReport(CacheTags.ClientGroupReport);
                     CleanCacheReport(CacheTags.ClientGroupComboReport);
@@ -71,7 +71,7 @@ namespace DevKit.Web.Controllers
                     if (id != null)
                     {
                         StoreCache(CacheTags.Project, id, null);
-                        StoreCache(CacheTags.ProjectCombo, id, null);
+                        StoreCache(CacheTags.ProjectCombo, id, null); // ok
                     }
                     CleanCacheReport(CacheTags.ProjectReport);
                     CleanCacheReport(CacheTags.ProjectComboReport);

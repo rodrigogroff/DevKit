@@ -1,12 +1,11 @@
 ﻿using LinqToDB;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DataModel
 {
 	public partial class ClientGroup
 	{
-		public List<ClientGroup> ComboFilters(DevKitDB db, string searchItem)
+		public ComboReport ComboFilters(DevKitDB db, string searchItem)
 		{
 			var query = from e in db.ClientGroup select e;
 
@@ -15,7 +14,11 @@ namespace DataModel
                         where e.stName.ToUpper().Contains(searchItem)
                         select e;
 
-            return query.ToList();
+            return new ComboReport
+            {
+                count = query.Count(),
+                results = (from e in query select new BaseComboResponse { id = e.id, stName = e.stName }).ToList()
+            };
         }
 	}
 }

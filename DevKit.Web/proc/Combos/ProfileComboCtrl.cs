@@ -5,39 +5,41 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-    public class ClientComboController : ApiControllerBase
-    {
-        public IHttpActionResult Get()
-        {
-            var filter = new ClientFilter {
+	public class ProfileComboController : ApiControllerBase
+	{
+		public IHttpActionResult Get()
+		{
+            var filter = new ProfileFilter
+            {
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
             };
 
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.ClientComboReport);
+            var hshReport = SetupCacheReport(CacheTags.ProfileComboReport);
             if (hshReport[parameters] is ComboReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var ret = new Client().ComboFilters(db, filter.busca);
-                        
+            var ret = new Profile().ComboFilters(db, filter.busca);
+
             hshReport[parameters] = ret;
 
             return Ok(ret);
         }
 
         public IHttpActionResult Get(long id)
-        {
-            if (RestoreCache(CacheTags.ClientCombo, id) is BaseComboResponse obj)
+		{
+            if (RestoreCache(CacheTags.ProfileCombo, id) is BaseComboResponse obj)
                 return Ok(obj);
-                
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = (from e in db.Client where e.id == id
+            var mdl = (from e in db.Profile
+                       where e.id == id
                        select new BaseComboResponse
                        {
                            id = e.id,

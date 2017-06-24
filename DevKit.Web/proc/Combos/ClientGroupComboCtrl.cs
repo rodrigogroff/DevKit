@@ -1,5 +1,5 @@
 ﻿using DataModel;
-using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 
@@ -23,18 +23,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new ClientGroup();
-
-            var results = mdl.ComboFilters ( db, filter.busca );
-
-            var ret = new ComboReport
-            {
-                count = results.Count,
-                results = new List<BaseComboResponse>()
-            };
-
-            foreach (var item in results)
-                ret.results.Add(new BaseComboResponse { id = item.id, stName = item.stName });
+            var ret = new ClientGroup().ComboFilters ( db, filter.busca );
 
             hshReport[parameters] = ret;
 
@@ -49,20 +38,21 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.GetClientGroup(id);
+            var mdl = (from e in db.ClientGroup
+                       where e.id == id
+                       select new BaseComboResponse
+                       {
+                           id = e.id,
+                           stName = e.stName
+                       }).
+                       FirstOrDefault();
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            var ret = new BaseComboResponse
-            {
-                id = mdl.id,
-                stName = mdl.stName
-            };
+            BackupCache(mdl);
 
-            BackupCache(ret);
-
-            return Ok(ret);
+            return Ok(mdl);
         }
     }
 }

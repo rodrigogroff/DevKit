@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace DataModel
 {
-	public partial class Client
-	{
-		public ComboReport ComboFilters(DevKitDB db, string searchItem)
-		{
-			var query = from e in db.Client select e;
+    public partial class Profile
+    {
+        public ComboReport ComboFilters(DevKitDB db, string searchItem)
+        {
+            var query = from e in db.Profile select e;
 
             if (searchItem != "")
                 query = from e in query
@@ -18,7 +18,7 @@ namespace DataModel
             {
                 count = query.Count(),
                 results = (from e in query select new BaseComboResponse { id = e.id, stName = e.stName }).ToList()
-            };            
+            };
         }
-	}
+    }
 }

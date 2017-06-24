@@ -153,6 +153,7 @@
     <Compile Include="DataModel\Tables\Configuration\TaskType\Update\Entity.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_Update.cs" />
     <Compile Include="DataModel\Tables\System\AuditLog\AuditLog_Create.cs" />
+    <Compile Include="DataModel\Tables\System\Profile\Profile_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_Create.cs" />
     <Compile Include="DataModel\Tables\System\Profile\Profile_Delete.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="DataModel\Tables\System\Setup\Setup_DTO.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_Extras.cs" />
     <Compile Include="DataModel\Tables\System\Setup\Setup_TrackChanges.cs" />
+    <Compile Include="DataModel\Tables\System\User\User_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Loader.cs" />
     <Compile Include="DataModel\Tables\System\User\User_ComposedFilters.cs" />
     <Compile Include="DataModel\Tables\System\User\User_Create.cs" />

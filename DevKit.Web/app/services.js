@@ -79,12 +79,10 @@ angular.module('app.services', ['ngResource'])
         TaskTypeCombo: $resource('api/tasktypecombo/:id', {}, opcoes),
         UserCombo: $resource('api/usercombo/:id', {}, opcoes),
         PhaseCombo: $resource('api/phasecombo/:id', {}, opcoes),
-
-        VersionStateCombo: $resource('api/versionstatecombo/:id', {}, opcoes),
-        AccTypeCombo: $resource('api/accumulatortypecombo/:id', {}, opcoes),
+        
         TaskCategoryCombo: $resource('api/taskcategorycombo/:id', {}, opcoes),
         TaskFlowCombo: $resource('api/taskflowcombo/:id', {}, opcoes),        
-        PriorityCombo: $resource('api/prioritycombo/:id', {}, opcoes),
+        
         SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),        
         VersionCombo: $resource('api/versioncombo/:id', {}, opcoes)
 	};

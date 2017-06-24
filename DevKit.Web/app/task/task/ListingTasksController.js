@@ -15,8 +15,8 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	  	kpa: 'false',
 	  	complete: 'false',
 		selects: {
-			user: ngSelects.obterConfiguracao(Api.UserCombo, { campoNome: 'stLogin' }),
-            priority: ngSelects.obterConfiguracao(Api.PriorityCombo, { }),
+			user: ngSelects.obterConfiguracao(Api.UserCombo, { }),
+            priority: ngSelects.obterConfiguracao(Api.Priority, { }),
             project: ngSelects.obterConfiguracao(Api.ProjectCombo, { }),
             phase: ngSelects.obterConfiguracao(Api.PhaseCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'campos.fkProject' } }),
             sprint: ngSelects.obterConfiguracao(Api.SprintCombo, { scope: $scope, filtro: { campo: 'fkPhase', valor: 'campos.fkPhase' } }),

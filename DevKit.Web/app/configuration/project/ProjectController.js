@@ -6,7 +6,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 {
 	$rootScope.exibirMenu = true;
 
-	$scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, { campoNome: 'stLogin' });
+	$scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, { });
 	$scope.selectProjectTemplate = ngSelects.obterConfiguracao(Api.ProjectTemplate, {});
 	$scope.selectPhases = ngSelects.obterConfiguracao(Api.PhaseCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.id' } });
 

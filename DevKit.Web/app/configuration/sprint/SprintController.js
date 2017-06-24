@@ -7,7 +7,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$rootScope.exibirMenu = true;
 
 	$scope.selectProjects = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
-	$scope.selectVersionStates = ngSelects.obterConfiguracao(Api.VersionStateCombo, {});
+	$scope.selectVersionStates = ngSelects.obterConfiguracao(Api.VersionState, {});
 	$scope.selectPhases = ngSelects.obterConfiguracao(Api.PhaseCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
 
 	$scope.loading = false;

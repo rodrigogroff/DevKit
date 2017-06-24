@@ -6,7 +6,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 {
 	$rootScope.exibirMenu = true;
 
-	$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccTypeCombo, {});
+	$scope.selectAccType = ngSelects.obterConfiguracao(Api.AccType, {});
 	$scope.selectProject = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
 	$scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategoryCombo, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.id' } });
 	$scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlowCombo, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'newAcc.fkTaskCategory' } });

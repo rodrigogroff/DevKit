@@ -52,7 +52,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$scope.nuMonth = currentDate.getMonth() + 1;
 
 		$scope.selectMonths = ngSelects.obterConfiguracao(Api.Month, { });
-		$scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, { campoNome: 'stLogin' });
+		$scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, { });
 	}
 	
 	$scope.load = function()

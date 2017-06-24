@@ -71,20 +71,21 @@ angular.module('app.services', ['ngResource'])
         Cache: $resource('api/cache/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),
 
-        // combo
+        // combos
         ClientCombo: $resource('api/clientcombo/:id', {}, opcoes),
         ClientGroupCombo: $resource('api/clientgroupcombo/:id', {}, opcoes),
+        ProfileCombo: $resource('api/profilecombo/:id', {}, opcoes),
         ProjectCombo: $resource('api/projectcombo/:id', {}, opcoes),
+        TaskTypeCombo: $resource('api/tasktypecombo/:id', {}, opcoes),
         UserCombo: $resource('api/usercombo/:id', {}, opcoes),
         PhaseCombo: $resource('api/phasecombo/:id', {}, opcoes),
+
         VersionStateCombo: $resource('api/versionstatecombo/:id', {}, opcoes),
         AccTypeCombo: $resource('api/accumulatortypecombo/:id', {}, opcoes),
         TaskCategoryCombo: $resource('api/taskcategorycombo/:id', {}, opcoes),
-        TaskFlowCombo: $resource('api/taskflowcombo/:id', {}, opcoes),
-        ProfileCombo: $resource('api/profilecombo/:id', {}, opcoes),
+        TaskFlowCombo: $resource('api/taskflowcombo/:id', {}, opcoes),        
         PriorityCombo: $resource('api/prioritycombo/:id', {}, opcoes),
-        SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),
-        TaskTypeCombo: $resource('api/tasktypecombo/:id', {}, opcoes),
+        SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),        
         VersionCombo: $resource('api/versioncombo/:id', {}, opcoes)
 	};
 }]);

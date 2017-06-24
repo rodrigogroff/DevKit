@@ -77,6 +77,7 @@
     <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
     <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\Client\Client_ComboFilters.cs" />
+    <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskCategory\TaskCategory_DTO.cs" />

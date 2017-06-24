@@ -5,29 +5,29 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class ProjectComboController : ApiControllerBase
+	public class TaskTypeComboController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
-            var filter = new ProjectFilter
+            var filter = new TaskTypeFilter
             {
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                fkUser = Request.GetQueryStringValue<long?>("fkUser", null),
+                fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
             };
 
             var parameters = filter.busca;
 
-            if (filter.fkUser != null)
-                parameters += "," + filter.fkUser;
+            if (filter.fkProject != null)
+                parameters += "," + filter.fkProject;
 
-            var hshReport = SetupCacheReport(CacheTags.ProjectComboReport);
+            var hshReport = SetupCacheReport(CacheTags.TaskTypeComboReport);
             if (hshReport[parameters] is ComboReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var ret = new Project().ComboFilters(db, filter);
+            var ret = new TaskType().ComboFilters(db, filter.busca, filter.fkProject);
 
             hshReport[parameters] = ret;
 
@@ -36,20 +36,20 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
 		{
-            if (RestoreCache(CacheTags.ProjectCombo, id) is BaseComboResponse obj)
+            if (RestoreCache(CacheTags.TaskTypeCombo, id) is BaseComboResponse obj)
                 return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = (from e in db.Project
+            var mdl = (from e in db.TaskType
                        where e.id == id
                        select new BaseComboResponse
                        {
                            id = e.id,
                            stName = e.stName
                        }).
-                                   FirstOrDefault();
+                       FirstOrDefault();
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);

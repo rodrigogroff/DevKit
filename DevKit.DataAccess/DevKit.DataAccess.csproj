@@ -80,6 +80,7 @@
     <Compile Include="DataModel\Tables\Configuration\ProjectPhase\ProjectPhase_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\Project\Project_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskCategory\TaskCategory_DTO.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\LoginInfo.cs" />
     <Compile Include="DataModel\Tables\DTOs.cs" />
     <Compile Include="DataModel\Tables\Configuration\ClientGroup\ClientGroup_ComposedFilters.cs" />

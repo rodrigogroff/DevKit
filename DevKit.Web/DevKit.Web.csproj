@@ -875,6 +875,7 @@
   <ItemGroup>
     <Compile Include="proc\Combos\ClientComboCtrl.cs" />
     <Compile Include="proc\Combos\ClientGroupComboCtrl.cs" />
+    <Compile Include="proc\Combos\TaskTypeComboCtrl.cs" />
     <Compile Include="proc\Combos\ProfileComboCtrl.cs" />
     <Compile Include="proc\Combos\UserComboCtrl.cs" />
     <Compile Include="proc\Combos\ProjectComboCtrl.cs" />

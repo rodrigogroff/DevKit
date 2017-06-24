@@ -61,7 +61,7 @@ namespace DevKit.Web.Controllers
                     if (id != null)
                     {
                         StoreCache(CacheTags.TaskType, id, null);
-                        StoreCache(CacheTags.TaskTypeCombo, id, null);
+                        StoreCache(CacheTags.TaskTypeCombo, id, null); // ok
                     }
                     CleanCacheReport(CacheTags.TaskTypeReport);
                     CleanCacheReport(CacheTags.TaskTypeComboReport);

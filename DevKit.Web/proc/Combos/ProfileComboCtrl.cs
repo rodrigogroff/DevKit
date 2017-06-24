@@ -14,7 +14,7 @@ namespace DevKit.Web.Controllers
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
             };
 
-            var parameters = filter.Parameters();
+            var parameters = filter.busca;
 
             var hshReport = SetupCacheReport(CacheTags.ProfileComboReport);
             if (hshReport[parameters] is ComboReport report)

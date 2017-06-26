@@ -1,5 +1,4 @@
 ﻿using LinqToDB;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -53,7 +52,7 @@ namespace DataModel
 	
 	public partial class CompanyNews
 	{
-		public List<CompanyNews> ComposedFilters(DevKitDB db, ref int count, CompanyNewsFilter filter)
+		public CompanyNewsReport ComposedFilters(DevKitDB db, CompanyNewsFilter filter)
 		{
 			var user = db.currentUser;
 			var lstUserProjects = db.GetCurrentUserProjects();
@@ -78,11 +77,15 @@ namespace DataModel
 						select e;
 			}
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.id);
-
-            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+            
+            return new CompanyNewsReport
+            {
+                count = count,
+                results = Loader(db, (query.Skip(filter.skip).Take(filter.take)).ToList(), true)
+            };            
         }
 	}
 }

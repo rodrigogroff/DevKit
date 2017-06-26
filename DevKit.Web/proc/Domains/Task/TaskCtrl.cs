@@ -38,9 +38,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new Task();
-
-            var ret = mdl.Report(db, ref reportCount, filter, new loaderOptionsTask
+            var ret = new Task().ComposedFilters(db, filter, new loaderOptionsTask
             {
                 bLoadTaskCategory = true,
                 bLoadTaskType = true,

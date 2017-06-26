@@ -84,6 +84,8 @@
     <Compile Include="DataModel\Tables\Configuration\Project\Project_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskCategory\TaskCategory_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskCategory\TaskCategory_DTO.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskCheckPoint\TaskCheckPoint_DTO.cs" />
+    <Compile Include="DataModel\Tables\Configuration\TaskFlow\TaskFlow_DTO.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskFlow\TaskFlow_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\Configuration\TaskType\TaskType_ComboFilters.cs" />
     <Compile Include="DataModel\Tables\LoginInfo.cs" />
@@ -201,7 +203,6 @@
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Dependencies.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Progress.cs" />
     <Compile Include="DataModel\Tables\Task\Task\LoadAssociations\Questions.cs" />
-    <Compile Include="DataModel\Tables\Task\Task\Task_Report.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_Loader.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_TrackChanges.cs" />
     <Compile Include="DataModel\Tables\Task\Task\Task_ComposedFilters.cs" />

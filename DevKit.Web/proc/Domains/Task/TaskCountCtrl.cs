@@ -34,16 +34,18 @@ namespace DevKit.Web.Controllers
                 bLoadUsers = true,
             };
             
-            task.ComposedFilters(db, ref count_project_tasks, filter, options );
+            var r1 = task.ComposedFilters(db, filter, options );
+            count_project_tasks = r1.count;
 
             filter = new TaskFilter
             {
                 fkUserResponsible = db.currentUser.id,
             };
             
-            task.ComposedFilters(db, ref count_user_tasks, filter, options );
-				
-			return Ok(new { count_project_tasks = count_project_tasks,
+            var r2 = task.ComposedFilters(db, filter, options );
+            count_user_tasks = r2.count;
+
+            return Ok(new { count_project_tasks = count_project_tasks,
 							count_user_tasks = count_user_tasks });			
 		}
 	}

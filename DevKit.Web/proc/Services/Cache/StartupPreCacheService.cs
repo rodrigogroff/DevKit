@@ -66,68 +66,39 @@ namespace DevKit.Web.Services
                 // user
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.UserReport);
-
-                    var mdl = new User();
+                                        
                     var filter = new UserFilter { skip = 0, take = 15 };
-                    var results = mdl.ComposedFilters(db, ref count, filter);
-                    var ret = new UserReport
-                    {
-                        count = count,
-                        results = results
-                    };
-                    hshReport[filter.Parameters()] = ret;
+                    hshReport[filter.Parameters()] = new User().ComposedFilters(db, filter);
                 }
 
                 // profile
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.ProfileReport);
-
-                    var mdl = new Profile();
+                                        
                     var filter = new ProfileFilter { skip = 0, take = 15 };
-                    var results = mdl.ComposedFilters(db, ref count, filter);
-                    var ret = new ProfileReport
-                    {
-                        count = count,
-                        results = results
-                    };
-                    hshReport[filter.Parameters()] = ret;
+                    hshReport[filter.Parameters()] = new Profile().ComposedFilters(db, filter);
                 }
 
                 // client
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.ClientReport);
-
-                    var mdl = new Client();
-                    var filter = new ClientFilter { skip = 0, take = 15 };
-                    var results = mdl.ComposedFilters(db, ref count, filter, false);
-                    var ret = new ClientReport
-                    {
-                        count = count,
-                        results = results
-                    };
-                    hshReport[filter.Parameters()] = ret;
+                    
+                    var filter = new ClientFilter { skip = 0, take = 15 };                    
+                    hshReport[filter.Parameters()] = new Client().ComposedFilters(db, filter, false);
                 }
 
                 // client groups
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.ClientGroupReport);
 
-                    var mdl = new ClientGroup();
-                    var filter = new ClientGroupFilter { skip = 0, take = 15 };
-                    var results = mdl.ComposedFilters(db, ref count, filter, false);
-                    var ret = new ClientGroupReport
-                    {
-                        count = count,
-                        results = results
-                    };
-                    hshReport[filter.Parameters()] = ret;
+                    var filter = new ClientGroupFilter { skip = 0, take = 15 };                    
+                    hshReport[filter.Parameters()] = new ClientGroup().ComposedFilters(db, filter, false);
                 }
 
                 // task type
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.TaskTypeReport);
-
-                    var mdl = new TaskType();
+                    
                     var filter = new TaskTypeFilter { skip = 0, take = 15 };
 
                     var options = new loaderOptionsTaskType
@@ -136,20 +107,13 @@ namespace DevKit.Web.Services
                         bLoadCategories = false
                     };
                     
-                    var results = mdl.ComposedFilters(db, ref count, filter, options);
-                    var ret = new TaskTypeReport
-                    {
-                        count = count,
-                        results = results
-                    };
-                    hshReport[filter.Parameters()] = ret;
+                    hshReport[filter.Parameters()] = new TaskType().ComposedFilters(db, filter, options);
                 }
 
                 // tasks
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.TaskReport);
 
-                    var mdl = new Task();
                     var filter = new TaskFilter { skip = 0, take = 15, kpa = false, complete = false };
 
                     var options = new loaderOptionsTask
@@ -164,15 +128,7 @@ namespace DevKit.Web.Services
                         bLoadUsers = true,
                     };
 
-                    var results = mdl.ComposedFilters(db, ref count, filter, options);
-
-                    var ret = new TaskReport
-                    {
-                        count = count,
-                        results = results
-                    };
-
-                    hshReport[filter.Parameters()] = ret;
+                    hshReport[filter.Parameters()] = new Task().ComposedFilters(db, filter, options);
                 }
                 
                 // user

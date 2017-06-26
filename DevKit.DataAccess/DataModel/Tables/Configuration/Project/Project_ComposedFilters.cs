@@ -1,5 +1,4 @@
 ﻿using LinqToDB;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -53,7 +52,7 @@ namespace DataModel
 
     public partial class Project
     {
-        public List<Project> ComposedFilters(DevKitDB db, ref int count, ProjectFilter filter)
+        public ProjectReport ComposedFilters(DevKitDB db, ProjectFilter filter)
         {
             var user = db.currentUser;
             var lstUserProjects = db.GetCurrentUserProjects();
@@ -75,7 +74,7 @@ namespace DataModel
                         select e;
             }
 
-            count = query.Count();
+            var count = query.Count();
 
             query = query.OrderBy(y => y.stName);
 
@@ -86,8 +85,12 @@ namespace DataModel
                 nuType = EnumAuditType.Project
             }.
             Create(db, filter.ExportString(), "count: " + count);
-
-            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+            
+            return new ProjectReport
+            {
+                count = count,
+                results = Loader(db, (query.Skip(filter.skip).Take(filter.take)).ToList(), true)
+            };
         }
     }
 }

@@ -42,7 +42,15 @@ namespace DataModel
 			return ret;
 		}
 
-		public ClientGroup GetClientGroup(long? id)
+        public CompanyNews GetCompanyNews(long? id)
+        {
+            if (id == null) return null;
+            var tag = "CompanyNews" + id; var ret = Cache[tag] as CompanyNews;
+            if (ret == null) { ret = CompanyNews.Find((long)id); Cache[tag] = ret; }
+            return ret;
+        }
+
+        public ClientGroup GetClientGroup(long? id)
 		{
 			if (id == null) return null;
 			var tag = "ClientGroup" + id; var ret = Cache[tag] as ClientGroup;

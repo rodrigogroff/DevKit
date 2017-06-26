@@ -1,6 +1,5 @@
 ﻿using LinqToDB;
 using System.Linq;
-using System.Collections.Generic;
 using System.Text;
 
 namespace DataModel
@@ -56,7 +55,7 @@ namespace DataModel
 
 	public partial class TaskType
 	{
-		public List<TaskType> ComposedFilters(DevKitDB db, ref int count, TaskTypeFilter filter, loaderOptionsTaskType options)
+		public TaskTypeReport ComposedFilters(DevKitDB db, TaskTypeFilter filter, loaderOptionsTaskType options)
 		{
 			var lstUserProjetcs = db.GetCurrentUserProjects();
 
@@ -80,7 +79,7 @@ namespace DataModel
 			if (filter.kpa != null)
 				query = from e in query where e.bKPA == filter.kpa select e;
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.stName);
 
@@ -88,7 +87,11 @@ namespace DataModel
                                 Take(filter.take).
                                 ToList();
 
-            return Loader(db, results, options);
+            return new TaskTypeReport
+            {
+                count = count,
+                results = Loader(db, results, options)
+            };
         }
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using LinqToDB;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace DataModel
 {
@@ -8,11 +8,43 @@ namespace DataModel
     {
 		public long? fkTaskType,
 					 fkTaskCategory;
-	}
+
+        public string Parameters()
+        {
+            return Export();
+        }
+
+        string _exportResults = "";
+
+        string Export()
+        {
+            if (_exportResults != "")
+                return _exportResults;
+
+            var ret = new StringBuilder();
+
+            // base
+            ret.Append(skip + ",");
+            ret.Append(take + ",");
+            ret.Append(busca + ",");
+
+            if (fkTaskType != null)
+                ret.Append(fkTaskType + ",");
+            else
+                ret.Append(",");
+
+            if (fkTaskCategory != null)
+                ret.Append(fkTaskCategory + ",");
+            
+            _exportResults = ret.ToString();
+
+            return _exportResults;
+        }
+    }
 
 	public partial class TaskFlow
 	{
-		public List<TaskFlow> ComposedFilters(DevKitDB db, ref int count, TaskFlowFilter filter)
+		public TaskFlowReport ComposedFilters(DevKitDB db, TaskFlowFilter filter)
 		{
 			var query = from e in db.TaskFlow select e;
 
@@ -25,13 +57,15 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.nuOrder);
 
-			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-			
-			return results;
-		}
+            return new TaskFlowReport
+            {
+                count = count,
+                results = query.Skip(filter.skip).Take(filter.take).ToList()
+            };
+        }
 	}
 }

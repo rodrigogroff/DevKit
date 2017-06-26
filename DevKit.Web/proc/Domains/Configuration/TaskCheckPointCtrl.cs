@@ -8,33 +8,46 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
-            var mdl = new TaskCheckPoint();
-
-            var results = mdl.ComposedFilters(db, ref reportCount, new TaskCheckPointFilter
+            var filter = new TaskCheckPointFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-				fkCategory = Request.GetQueryStringValue<long?>("fkCategory", null)
-			});
+                fkCategory = Request.GetQueryStringValue<long?>("fkCategory", null)
+            };
 
-			return Ok(new { count = reportCount, results = results });			
-		}
+            var parameters = filter.Parameters();
 
-		public IHttpActionResult Get(long id)
+            var hshReport = SetupCacheReport(CacheTags.TaskCheckPointReport);
+            if (hshReport[parameters] is TaskCheckPointReport report)
+                return Ok(report);
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var ret = new TaskCheckPoint().ComposedFilters ( db, filter );
+            
+            hshReport[parameters] = ret;
+
+            return Ok(ret);
+        }
+
+        public IHttpActionResult Get(long id)
 		{
+            if (RestoreCache(CacheTags.TaskCheckPoint, id) is Client obj)
+                return Ok(obj);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetTaskCheckPoint(id);
 
-			if (mdl == null)
+            if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
+            
+            BackupCache(mdl);
 
-            return Ok(mdl);			
-		}
+            return Ok(mdl);
+        }
 	}
 }

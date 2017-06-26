@@ -45,7 +45,7 @@ namespace DataModel
 
 	public partial class ProjectSprint
 	{
-		public List<ProjectSprint> ComposedFilters(DevKitDB db, ref int count, ProjectSprintFilter filter)
+		public ProjectSprintReport ComposedFilters(DevKitDB db, ProjectSprintFilter filter)
 		{
 			var lstUserProjects = db.GetCurrentUserProjects();
 
@@ -63,11 +63,15 @@ namespace DataModel
 			if (filter.fkPhase != null)
 				query = from e in query where e.fkPhase == filter.fkPhase select e;
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.stName).ThenBy(y => y.fkProject).ThenBy(i => i.fkPhase);
 
-            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+            return new ProjectSprintReport
+            {
+                count = count,
+                results = Loader(db, (query.Skip(filter.skip).Take(filter.take)).ToList(), true)
+            };
         }
     }
 }

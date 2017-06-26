@@ -25,22 +25,12 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new TaskType();
-
-            var options = new loaderOptionsTaskType
+            var ret = new TaskType().ComposedFilters(db, filter, new loaderOptionsTaskType
             {
                 bLoadProject = true,
                 bLoadCategories = true
-            };
-
-            var results = mdl.ComposedFilters(db, ref reportCount, filter, options);
-
-            var ret = new TaskTypeReport
-            {
-                count = reportCount,
-                results = results
-            };
-
+            });
+            
             hshReport[parameters] = ret;
 
             return Ok(ret);
@@ -116,16 +106,16 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db, options);
 
-            
-            
             switch (mdl.updateCommand)
             {                
                 case "newCategorie": 
                 case "removeCategorie":
+                    CleanCache(db, CacheTags.TaskCategory, null);
                     break;
 
                 case "newFlow": 
                 case "removeFlow":
+                    CleanCache(db, CacheTags.TaskFlowCombo, null);
                     break;
 
                 case "newAcc": 
@@ -135,6 +125,7 @@ namespace DevKit.Web.Controllers
 
                 case "newCC": 
                 case "removeCC":
+                    CleanCache(db, CacheTags.TaskCheckPoint, null);
                     break;
             }
 

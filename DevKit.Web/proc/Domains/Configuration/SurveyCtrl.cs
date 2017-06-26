@@ -25,16 +25,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new Survey();
-
-            var results = mdl.ComposedFilters(db, ref reportCount, filter);
-
-            var ret = new SurveyReport
-            {
-                count = reportCount,
-                results = results
-            };
-
+            var ret = new Survey().ComposedFilters(db, filter);
+            
             hshReport[parameters] = ret;
 
             return Ok(ret);

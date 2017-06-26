@@ -71,11 +71,19 @@ namespace DevKit.Web.Controllers
         public const string ProjectPhaseReport = "ProjectPhaseReport";
         public const string ProjectSprint = "ProjectSprint";
         public const string ProjectSprintReport = "ProjectSprintReport";
+        public const string ProjectSprintVersion = "ProjectSprintVersion";
+        public const string ProjectSprintVersionReport = "ProjectSprintVersionReport";
         public const string Survey = "Survey";
         public const string SurveyReport = "SurveyReport";
         public const string TaskTypeAccumulator = "TaskTypeAccumulator";
         public const string TaskTypeAccumulatorReport = "TaskTypeAccumulatorReport";
         public const string TaskCategory = "TaskCategory";
         public const string TaskCategoryReport = "TaskCategoryReport";
+        public const string TaskCheckPoint = "TaskCheckPoint";
+        public const string TaskCheckPointReport = "TaskCheckPointReport";
+        public const string TaskFlow = "TaskFlow";
+        public const string TaskFlowReport = "TaskFlowReport";
+
+
     }
 }

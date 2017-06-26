@@ -52,6 +52,11 @@ namespace DevKit.Web.Controllers
                     CleanCacheReport(CacheTags.TaskReport);
                     break;
 
+                case CacheTags.TaskCheckPoint:
+                    if (id != null) StoreCache(CacheTags.TaskCheckPoint, id, null);
+                    CleanCacheReport(CacheTags.TaskCheckPointReport);
+                    break;
+
                 case CacheTags.CompanyNews:
                     if (id != null) StoreCache(CacheTags.CompanyNews, id, null);
                     CleanCacheReport(CacheTags.CompanyNewsReport);

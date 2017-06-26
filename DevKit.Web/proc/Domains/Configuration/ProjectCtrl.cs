@@ -25,16 +25,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new Project();
-
-            var results = mdl.ComposedFilters(db, ref reportCount, filter);
-
-            var ret = new ProjectReport
-            {
-                count = reportCount,
-                results = results
-            };
-
+            var ret = new Project().ComposedFilters(db, filter);
+            
             hshReport[parameters] = ret;
 
             return Ok(ret);

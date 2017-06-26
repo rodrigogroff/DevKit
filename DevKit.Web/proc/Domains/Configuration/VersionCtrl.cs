@@ -8,33 +8,46 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            var filter = new ProjectSprintVersionFilter
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkSprint = Request.GetQueryStringValue<int?>("fkSprint", null),
+            };
+
+            var parameters = filter.Parameters();
+
+            var hshReport = SetupCacheReport(CacheTags.ProjectSprintVersionReport);
+            if (hshReport[parameters] is ProjectSprintVersionReport report)
+                return Ok(report);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new ProjectSprintVersion();
+            var ret = new ProjectSprintVersion().ComposedFilters(db, filter);
 
-			var results = mdl.ComposedFilters(db, ref reportCount, new ProjectSprintVersionFilter
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-				fkSprint = Request.GetQueryStringValue<int?>("fkSprint", null),
-			});
+            hshReport[parameters] = ret;
 
-			return Ok(new { count = reportCount, results = results });
-		}
+            return Ok(ret);
+        }
 
-		public IHttpActionResult Get(long id)
+        public IHttpActionResult Get(long id)
 		{
+            if (RestoreCache(CacheTags.ProjectSprintVersion, id) is ProjectSprintVersion obj)
+                return Ok(obj);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetProjectSprintVersion(id);
 
-			if (mdl != null)
-				return Ok(mdl);
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
 
-			return StatusCode(HttpStatusCode.NotFound);
-		}
+            BackupCache(mdl);
+
+            return Ok(mdl);
+        }
 	}
 }

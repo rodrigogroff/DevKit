@@ -24,18 +24,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new ClientGroup();
-
-            var results = mdl.ComposedFilters ( db, 
-                                                ref reportCount, 
-                                                filter, 
-                                                bSaveAuditLog:true );
-
-            var ret = new ClientGroupReport
-            {
-                count = reportCount,
-                results = results
-            };
+            var ret = new ClientGroup().ComposedFilters(db, filter, bSaveAuditLog: true);
 
             hshReport[parameters] = ret;
 

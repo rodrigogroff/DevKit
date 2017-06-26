@@ -1,6 +1,5 @@
 ﻿using LinqToDB;
 using System.Linq;
-using System.Collections.Generic;
 using System.Text;
 
 namespace DataModel
@@ -50,7 +49,7 @@ namespace DataModel
 
 	public partial class User
 	{
-		public List<User> ComposedFilters(DevKitDB db, ref int count, UserFilter filter)
+		public UserReport ComposedFilters(DevKitDB db, UserFilter filter)
 		{
 			var query = from e in db.User select e;
 
@@ -81,11 +80,15 @@ namespace DataModel
 						select e;
 			}
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.stLogin);
 
-            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList());
+            return new UserReport
+            {
+                count = count,
+                results = Loader(db, (query.Skip(filter.skip).Take(filter.take)).ToList())
+            };
         }
 	}
 }

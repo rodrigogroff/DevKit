@@ -25,15 +25,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new CompanyNews();
-
-            var results = mdl.ComposedFilters(db, ref reportCount, filter);
-
-            var ret = new CompanyNewsReport
-            {
-                count = reportCount,
-                results = results
-            };
+            var ret = new CompanyNews().ComposedFilters(db, filter);
 
             hshReport[parameters] = ret;
 
@@ -42,23 +34,23 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
 		{
-            var obj = RestoreCache(CacheTags.CompanyNews, id);
-            if (obj != null)
+            if (RestoreCache(CacheTags.CompanyNews, id) is CompanyNews obj)
                 return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.GetNews(id);
+            var mdl = db.GetCompanyNews(id);
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
             mdl.LoadAssociations(db);
+
             BackupCache(mdl);
 
             return Ok(mdl);
-		}
+        }
 
 		public IHttpActionResult Post(CompanyNews mdl)
 		{

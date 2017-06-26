@@ -40,7 +40,7 @@ namespace DataModel
     
     public partial class ProjectPhase
 	{
-		public List<ProjectPhase> ComposedFilters(DevKitDB db, ref int count, ProjectPhaseFilter filter)
+		public ProjectPhaseReport ComposedFilters(DevKitDB db, ProjectPhaseFilter filter)
 		{
 			var query = from e in db.ProjectPhase select e;
 
@@ -50,13 +50,15 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.stName);
 
-			var results = (query.Skip(() => filter.skip).Take(() => filter.take)).ToList();
-			
-			return results;
+            return new ProjectPhaseReport
+            {
+                count = count,
+                results = (query.Skip(filter.skip).Take(filter.take)).ToList()
+            };
 		}
 	}
 }

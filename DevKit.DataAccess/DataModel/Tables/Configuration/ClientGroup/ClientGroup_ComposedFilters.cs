@@ -34,7 +34,7 @@ namespace DataModel
 	
 	public partial class ClientGroup
 	{
-		public List<ClientGroup> ComposedFilters(DevKitDB db, ref int count, ClientGroupFilter filter, bool bSaveAuditLog)
+		public ClientGroupReport ComposedFilters(DevKitDB db, ClientGroupFilter filter, bool bSaveAuditLog)
 		{
 			var user = db.currentUser;
 			
@@ -43,7 +43,7 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.stName);
             
@@ -57,8 +57,12 @@ namespace DataModel
                 }.
                 Create(db, "", "count: " + count);
             }
-                
-            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+
+            return new ClientGroupReport
+            {
+                count = count,
+                results = Loader(db, (query.Skip(filter.skip).Take(filter.take)).ToList(), true)
+            };
         }
 	}
 }

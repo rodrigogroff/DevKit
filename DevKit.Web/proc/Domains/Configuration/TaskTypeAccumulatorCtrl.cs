@@ -25,16 +25,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new TaskTypeAccumulator();
+            var ret = new TaskTypeAccumulator().ComposedFilters(db, filter);
             
-            var results = mdl.ComposedFilters(db, ref reportCount, filter);
-
-            var ret = new TaskTypeAccumulatorReport
-            {
-                count = reportCount,
-                results = results
-            };
-
             hshReport[parameters] = ret;
 
             return Ok(ret);

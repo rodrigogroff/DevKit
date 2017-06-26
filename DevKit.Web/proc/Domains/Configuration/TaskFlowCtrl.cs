@@ -8,34 +8,47 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            var filter = new TaskFlowFilter
+            {
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
+                fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
+            };
+
+            var parameters = filter.Parameters();
+
+            var hshReport = SetupCacheReport(CacheTags.TaskFlowReport);
+            if (hshReport[parameters] is TaskFlowReport report)
+                return Ok(report);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = new TaskFlow();
+            var ret = new TaskFlow().ComposedFilters(db, filter);
+            
+            hshReport[parameters] = ret;
 
-			var results = mdl.ComposedFilters(db, ref reportCount, new TaskFlowFilter
-			{
-				skip = Request.GetQueryStringValue("skip", 0),
-				take = Request.GetQueryStringValue("take", 15),
-				busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
-				fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
-			});
+            return Ok(ret);
+        }
 
-			return Ok(new { count = reportCount, results = results });			
-		}
-		
-		public IHttpActionResult Get(long id)
+        public IHttpActionResult Get(long id)
 		{
+            if (RestoreCache(CacheTags.TaskFlow, id) is TaskFlow obj)
+                return Ok(obj);
+
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
             var mdl = db.GetTaskFlow(id);
 
-			if (mdl == null)
+            if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            return Ok(mdl);			
-		}
+            BackupCache(mdl);
+
+            return Ok(mdl);
+        }
 	}
 }

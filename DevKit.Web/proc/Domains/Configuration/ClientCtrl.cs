@@ -23,20 +23,9 @@ namespace DevKit.Web.Controllers
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-
-            var mdl = new Client();
-
-            var results = mdl.ComposedFilters ( db, 
-                                                ref reportCount, 
-                                                filter, 
-                                                bSaveAudit:true );
             
-            var ret = new ClientReport
-            {
-                count = reportCount,
-                results = results
-            };
-
+            var ret = new Client().ComposedFilters(db, filter, bSaveAudit: true);
+             
             hshReport[parameters] = ret;
 
             return Ok(ret);
@@ -69,8 +58,6 @@ namespace DevKit.Web.Controllers
 
 			if (!mdl.Create(db, ref apiError))
 				return BadRequest(apiError);
-
-            mdl.LoadAssociations(db);
 
             CleanCache(db, CacheTags.Client, null);
             StoreCache(CacheTags.Client, mdl.id, mdl);

@@ -108,7 +108,7 @@ namespace DataModel
 
     public partial class Task
 	{
-		public List<TaskListing> ComposedFilters(DevKitDB db, ref int count, TaskFilter filter, loaderOptionsTask options )
+		public TaskReport ComposedFilters(DevKitDB db, TaskFilter filter, loaderOptionsTask options )
 		{
 			var query = from e in db.Task select e;
 
@@ -191,7 +191,7 @@ namespace DataModel
                         select e;
             }            
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.nuPriority).
                           ThenBy(y => y.fkSprint);
@@ -224,7 +224,11 @@ namespace DataModel
                     });
                 });
 
-            return resultsListing;
+            return new TaskReport
+            {
+                count = count,
+                results = resultsListing
+            };
 		}
 	}
 }

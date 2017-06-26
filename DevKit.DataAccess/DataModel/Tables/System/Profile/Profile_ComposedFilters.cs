@@ -42,7 +42,7 @@ namespace DataModel
 
 	public partial class Profile
 	{
-		public List<Profile> ComposedFilters(DevKitDB db, ref int count, ProfileFilter filter)
+		public ProfileReport ComposedFilters(DevKitDB db, ProfileFilter filter)
 		{
 			var query = from e in db.Profile select e;
 
@@ -61,11 +61,15 @@ namespace DataModel
 						select e;
 			}
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.stName);
-
-            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+                        
+            return new ProfileReport
+            {
+                count = count,
+                results = Loader(db, (query.Skip(filter.skip).Take(filter.take)).ToList(), true)
+            };
         }
 	}
 }

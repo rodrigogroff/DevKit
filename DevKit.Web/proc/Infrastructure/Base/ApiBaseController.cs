@@ -11,7 +11,6 @@ namespace DevKit.Web.Controllers
 	{
         public DevKitDB db;
         
-        public int reportCount = 0;
         public string apiError = "";
 
         public string userLoggedName

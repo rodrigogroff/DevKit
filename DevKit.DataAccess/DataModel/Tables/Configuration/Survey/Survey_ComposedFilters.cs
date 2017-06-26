@@ -53,7 +53,7 @@ namespace DataModel
 	
 	public partial class Survey
 	{
-		public List<Survey> ComposedFilters(DevKitDB db, ref int count, SurveyFilter filter)
+		public SurveyReport ComposedFilters(DevKitDB db, SurveyFilter filter)
 		{
 			var user = db.currentUser;
 			var lstUserProjects = db.GetCurrentUserProjects();
@@ -78,11 +78,15 @@ namespace DataModel
 						select e;
 			}
 
-			count = query.Count();
+			var count = query.Count();
 
 			query = query.OrderBy(y => y.id);
 
-            return Loader(db, (query.Skip(() => filter.skip).Take(() => filter.take)).ToList(), true);
+            return new SurveyReport
+            {
+                count = count,
+                results = Loader(db, (query.Skip(filter.skip).Take(filter.take)).ToList(), true)
+            };
         }
 	}
 }

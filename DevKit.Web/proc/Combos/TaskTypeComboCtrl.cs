@@ -27,7 +27,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var ret = new TaskType().ComboFilters(db, filter.busca, filter.fkProject);
+            var ret = new TaskType().ComboFilters(db, filter);
 
             hshReport[parameters] = ret;
 

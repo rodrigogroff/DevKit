@@ -5,17 +5,19 @@ namespace DataModel
 {
 	public partial class ProjectSprintVersion
 	{
-        public ComboReport ComboFilters(DevKitDB db, string searchItem, long? _fkSprint)
+        public ComboReport ComboFilters(DevKitDB db, ProjectSprintVersionFilter filter)
         {
             var query = from e in db.ProjectSprintVersion select e;
 
-            if (searchItem != "")
+            if (filter.busca != "")
                 query = from e in query
-                        where e.stName.ToUpper().Contains(searchItem)
+                        where e.stName.ToUpper().Contains(filter.busca)
                         select e;
 
-            if (_fkSprint != null)
-                query = from e in query where e.fkSprint == _fkSprint select e;
+            if (filter.fkSprint != null)
+                query = from e in query
+                        where e.fkSprint == filter.fkSprint
+                        select e;
 
             query = from e in query orderby e.stName select e;
 

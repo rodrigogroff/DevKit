@@ -15,8 +15,7 @@ namespace DevKit.Web.Services
                 myApplication = _app
             };
 
-            int count = 0, 
-                maxRowsToCache = 1000;
+            int maxRowsToCache = 1000;
 
             using (var db = new DevKitDB())
             {

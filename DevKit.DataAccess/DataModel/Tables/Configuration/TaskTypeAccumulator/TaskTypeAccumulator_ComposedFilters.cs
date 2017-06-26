@@ -13,13 +13,8 @@ namespace DataModel
             return Export();
         }
 
-        string _exportResults = "";
-
         string Export()
         {
-            if (_exportResults != "")
-                return _exportResults;
-
             var ret = new StringBuilder();
 
             // base
@@ -30,11 +25,7 @@ namespace DataModel
             if (fkTaskCategory != null)
                 ret.Append(fkTaskCategory);
 
-            ret.Append(",");
-
-            _exportResults = ret.ToString();
-
-            return _exportResults;
+            return ret.ToString();
         }
     }
 

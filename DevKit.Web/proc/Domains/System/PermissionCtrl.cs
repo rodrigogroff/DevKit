@@ -17,19 +17,9 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
-            // ------------------------------
-            // try for pure cache
-            // ------------------------------
-
-            var currentUser = RestoreCacheNoHit(CacheTags.User + userLoggedName) as User;
-
-            if (currentUser != null)
+            if (RestoreCacheNoHit(CacheTags.User + userLoggedName) is User currentUser)
                 if (RestoreCache(CacheTags.Profile, currentUser.fkProfile) is Profile objProfile)
                     return Ok(Parse(objProfile, id));
-
-            // ------------------------------
-            // try for database
-            // ------------------------------
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();

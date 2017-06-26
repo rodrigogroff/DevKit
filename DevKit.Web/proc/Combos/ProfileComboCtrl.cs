@@ -9,12 +9,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var filter = new ProfileFilter
-            {
-                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-            };
-
-            var parameters = filter.busca;
+            var parameters = Request.GetQueryStringValue("busca")?.ToUpper();
 
             var hshReport = SetupCacheReport(CacheTags.ProfileComboReport);
             if (hshReport[parameters] is ComboReport report)
@@ -23,7 +18,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var ret = new Profile().ComboFilters(db, filter.busca);
+            var ret = new Profile().ComboFilters(db, parameters);
 
             hshReport[parameters] = ret;
 

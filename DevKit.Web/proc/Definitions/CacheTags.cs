@@ -83,7 +83,5 @@ namespace DevKit.Web.Controllers
         public const string TaskCheckPointReport = "TaskCheckPointReport";
         public const string TaskFlow = "TaskFlow";
         public const string TaskFlowReport = "TaskFlowReport";
-
-
     }
 }

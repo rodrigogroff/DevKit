@@ -1,6 +1,5 @@
 ﻿using LinqToDB;
 using System.Linq;
-using System.Collections.Generic;
 using System.Text;
 
 namespace DataModel
@@ -14,13 +13,8 @@ namespace DataModel
             return Export();
         }
 
-        string _exportResults = "";
-
         string Export()
         {
-            if (_exportResults != "")
-                return _exportResults;
-
             var ret = new StringBuilder();
 
             // base
@@ -29,11 +23,9 @@ namespace DataModel
             ret.Append(busca + ",");
 
             if (fkCategory != null)
-                ret.Append(busca + ",");
+                ret.Append(busca);           
 
-            _exportResults = ret.ToString();
-
-            return _exportResults;
+            return ret.ToString();
         }
     }
 

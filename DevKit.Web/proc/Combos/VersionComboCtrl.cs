@@ -27,7 +27,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var ret = new ProjectSprintVersion().ComboFilters(db, filter.busca, filter.fkSprint);
+            var ret = new ProjectSprintVersion().ComboFilters(db, filter);
 
             hshReport[parameters] = ret;
 

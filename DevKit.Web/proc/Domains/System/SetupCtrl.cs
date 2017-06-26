@@ -1,5 +1,4 @@
 ﻿using DataModel;
-
 using System.Net;
 using System.Web.Http;
 
@@ -9,8 +8,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get(long id)
 		{
-            var obj = RestoreCache(CacheTags.Setup, id);
-            if (obj != null)
+            if (RestoreCache(CacheTags.Setup, id) is Setup obj)
                 return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())

@@ -38,7 +38,7 @@ namespace DevKit.Web
 				if (usuario != null)
 				{
 					usuario.dtLastLogin = DateTime.Now;
-                    usuario.stCurrentSession = usuario.GetRandomString(16);
+                 //   usuario.stCurrentSession = usuario.GetRandomString(16);
 
                     db.Update(usuario);
 

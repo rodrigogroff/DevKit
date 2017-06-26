@@ -16,14 +16,9 @@ namespace DataModel
         {
             return Export();
         }
-
-        string _exportResults = "";
-
+        
         string Export()
         {
-            if (_exportResults != "")
-                return _exportResults;
-
             var ret = new StringBuilder();
 
             // base
@@ -45,11 +40,8 @@ namespace DataModel
 
             if (kpa != null)
                 ret.Append(kpa);
-            ret.Append(",");
-
-            _exportResults = ret.ToString();
-
-            return _exportResults;
+            
+            return ret.ToString();
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -55,7 +56,7 @@ public static class GlobalExtensions
 			return defaultValue;
 		}
 	}
-	
+    
 	public static string GetQueryStringValue(this HttpRequestMessage @this, string key)
 	{
 		var items = @this.GetQueryNameValuePairs();

@@ -5,21 +5,19 @@ namespace DataModel
 {	
 	public partial class TaskCategory
 	{
-        public ComboReport ComboFilters(DevKitDB db, string searchItem, long? _fkTaskType)
+        public ComboReport ComboFilters(DevKitDB db, TaskCategoryFilter filter)
         {
             var query = from e in db.TaskCategory select e;
 
-            if (searchItem != "")
+            if (filter.busca != "")
                 query = from e in query
-                        where e.stName.ToUpper().Contains(searchItem)
+                        where e.stName.ToUpper().Contains(filter.busca)
                         select e;
 
-            if (_fkTaskType != null)
-            {
+            if (filter.fkTaskType != null)
                 query = from e in query
-                        where e.fkTaskType == _fkTaskType
+                        where e.fkTaskType == filter.fkTaskType
                         select e;
-            }
 
             query = from e in query orderby e.stName select e;
 

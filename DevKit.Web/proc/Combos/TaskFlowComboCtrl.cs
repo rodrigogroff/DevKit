@@ -33,7 +33,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var ret = new TaskFlow().ComboFilters(db, filter.busca, filter.fkTaskType, filter.fkTaskCategory);
+            var ret = new TaskFlow().ComboFilters(db, filter);
 
             hshReport[parameters] = ret;
 

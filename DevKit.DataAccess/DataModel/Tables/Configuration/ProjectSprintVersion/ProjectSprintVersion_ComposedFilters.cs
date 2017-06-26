@@ -6,7 +6,7 @@ namespace DataModel
 {
 	public class ProjectSprintVersionFilter : BaseFilter
     {
-		public int? fkSprint;		
+		public long? fkSprint;		
 	}
 
 	public partial class ProjectSprintVersion

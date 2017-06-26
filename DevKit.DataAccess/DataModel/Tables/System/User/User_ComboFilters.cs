@@ -14,7 +14,7 @@ namespace DataModel
                         where e.stLogin.ToUpper().Contains(searchItem)
                         select e;
 
-            query = from e in query orderby e.stName select e;
+            query = from e in query orderby e.stLogin select e;
 
             return new ComboReport
             {

@@ -80,7 +80,6 @@ angular.module('app.services', ['ngResource'])
         TaskCategoryCombo: $resource('api/taskcategorycombo/:id', {}, opcoes),
         TaskFlowCombo: $resource('api/taskflowcombo/:id', {}, opcoes),
         SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),        
-
         VersionCombo: $resource('api/versioncombo/:id', {}, opcoes)
 	};
 }]);

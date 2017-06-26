@@ -91,10 +91,10 @@ namespace DevKit.Web.Controllers
                     if (id != null)
                     {
                         StoreCache(CacheTags.ProjectSprint, id, null);
-                        StoreCache(CacheTags.ProjectSprintCombo, id, null);
+                        StoreCache(CacheTags.SprintCombo, id, null);
                     }
                     CleanCacheReport(CacheTags.ProjectSprintReport);
-                    CleanCacheReport(CacheTags.ProjectSprintComboReport);
+                    CleanCacheReport(CacheTags.SprintComboReport);
                     break;
 
                 case CacheTags.Survey:

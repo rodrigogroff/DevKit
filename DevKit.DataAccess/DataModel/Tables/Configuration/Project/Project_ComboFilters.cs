@@ -7,7 +7,6 @@ namespace DataModel
     {
         public ComboReport ComboFilters(DevKitDB db, ProjectFilter filter)
         {
-            var user = db.currentUser;
             var lstUserProjects = db.GetCurrentUserProjects();
 
             var query = from e in db.Project select e;
@@ -18,14 +17,7 @@ namespace DataModel
             if (lstUserProjects.Count() > 0)
                 query = from e in query where lstUserProjects.Contains(e.id) select e;
 
-            if (filter.fkUser != null)
-            {
-                query = from e in query
-                        join eUser in db.ProjectUser on e.id equals eUser.fkProject
-                        where e.id == eUser.fkProject
-                        where eUser.fkUser == filter.fkUser
-                        select e;
-            }
+            query = from e in query orderby e.stName select e;
 
             return new ComboReport
             {

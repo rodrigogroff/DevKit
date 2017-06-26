@@ -5,44 +5,50 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class TaskCategoryComboController : ApiControllerBase
+	public class TaskFlowComboController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
-            var filter = new TaskCategoryFilter
+            var filter = new TaskFlowFilter
             {
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null)
+                fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
+                fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
             };
 
             var parameters = filter.busca;
 
             if (filter.fkTaskType != null)
                 parameters += "," + filter.fkTaskType;
+            else
+                parameters += ",";
 
-            var hshReport = SetupCacheReport(CacheTags.TaskCategoryComboReport);
+            if (filter.fkTaskType != null)
+                parameters += "," + filter.fkTaskType;
+
+            var hshReport = SetupCacheReport(CacheTags.TaskFlowComboReport);
             if (hshReport[parameters] is ComboReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var ret = new TaskCategory().ComboFilters(db, filter.busca, filter.fkTaskType);
+            var ret = new TaskFlow().ComboFilters(db, filter.busca, filter.fkTaskType, filter.fkTaskCategory);
 
             hshReport[parameters] = ret;
 
-            return Ok(ret);
-        }
-
-        public IHttpActionResult Get(long id)
-        {
-            if (RestoreCache(CacheTags.TaskCategoryCombo, id) is BaseComboResponse obj)
+            return Ok(ret);            
+		}
+		
+		public IHttpActionResult Get(long id)
+		{
+            if (RestoreCache(CacheTags.TaskFlowCombo, id) is BaseComboResponse obj)
                 return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = (from e in db.TaskCategory
+            var mdl = (from e in db.TaskFlow
                        where e.id == id
                        select new BaseComboResponse
                        {
@@ -58,5 +64,5 @@ namespace DevKit.Web.Controllers
 
             return Ok(mdl);
         }
-    }
+	}
 }

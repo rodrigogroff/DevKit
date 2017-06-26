@@ -21,6 +21,8 @@ namespace DataModel
                         select e;
             }
 
+            query = from e in query orderby e.stName select e;
+
             return new ComboReport
             {
                 count = query.Count(),

@@ -14,6 +14,8 @@ namespace DataModel
                         where e.stLogin.ToUpper().Contains(searchItem)
                         select e;
 
+            query = from e in query orderby e.stName select e;
+
             return new ComboReport
             {
                 count = query.Count(),

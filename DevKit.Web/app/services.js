@@ -78,9 +78,9 @@ angular.module('app.services', ['ngResource'])
         UserCombo: $resource('api/usercombo/:id', {}, opcoes),
         PhaseCombo: $resource('api/phasecombo/:id', {}, opcoes),        
         TaskCategoryCombo: $resource('api/taskcategorycombo/:id', {}, opcoes),
-
         TaskFlowCombo: $resource('api/taskflowcombo/:id', {}, opcoes),
         SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),        
+
         VersionCombo: $resource('api/versioncombo/:id', {}, opcoes)
 	};
 }]);

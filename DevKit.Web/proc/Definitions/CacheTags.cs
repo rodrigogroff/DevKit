@@ -41,8 +41,8 @@ namespace DevKit.Web.Controllers
         public const string TaskFlowComboReport = "TaskFlowComboReport";
         public const string ProfileCombo = "ProfileCombo";
         public const string ProfileComboReport = "ProfileComboReport";
-        public const string ProjectSprintCombo = "ProjectSprintCombo";
-        public const string ProjectSprintComboReport = "ProjectSprintComboReport";
+        public const string SprintCombo = "SprintCombo";
+        public const string SprintComboReport = "SprintComboReport";
         public const string TaskTypeCombo = "TaskTypeCombo";
         public const string TaskTypeComboReport = "TaskTypeComboReport";
         public const string VersionCombo = "VersionCombo";

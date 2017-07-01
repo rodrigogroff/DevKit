@@ -145,7 +145,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.ClientGroup.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Client removed', 'Success');
-				$scope.viewModel.clients = data.clients;
+                init();
 			});
 		}
 	}
@@ -179,7 +179,17 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.fkClient_fail = $scope.newClient.fkClient == undefined;
 
 			if (!$scope.fkClient_fail)
-			{
+            {
+                for (var i = 0; i < $scope.viewModel.clients.length; i++)
+                {
+                    if ($scope.viewModel.clients[i].id == $scope.newClient.fkClient)
+                    {
+                        toastr.error('Client already added!', 'Validation');
+                        $scope.fkClient_fail = true;
+                        return;
+                    }
+                }               
+
 				$scope.addClient = false;
 
 				$scope.viewModel.updateCommand = "newClient";
@@ -188,9 +198,9 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				Api.ClientGroup.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newClient = {};
-					toastr.success('Client saved', 'Success');
+                    toastr.success('Client saved', 'Success');
 
-					$scope.viewModel.clients = data.clients;					
+                    init();		
 				},
 				function (response) {
 					toastr.error(response.data.message, 'Error');

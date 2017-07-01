@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace DataModel
 {
@@ -35,12 +36,16 @@ namespace DataModel
 				case "newClient":
 					{
 						var ent = JsonConvert.DeserializeObject<ClientGroupAssociation>(anexedEntity.ToString());
-						
-						ent.fkClientGroup = this.id;
 
-						db.Insert(ent);						
-
-						clients = LoadClients(db);
+                        if (!(from e in db.ClientGroupAssociation
+                             where e.fkClientGroup == this.id
+                             where e.fkClient == ent.id
+                             select e).Any())
+                        {
+                            ent.fkClientGroup = this.id;
+                            db.Insert(ent);                            
+                        }
+												
 						break;
 					}
 
@@ -50,7 +55,6 @@ namespace DataModel
 						
 						db.Delete(ent);
 
-						clients = LoadClients(db);
 						break;
 					}
 			}

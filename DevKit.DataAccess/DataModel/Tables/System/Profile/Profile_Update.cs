@@ -4,7 +4,7 @@ namespace DataModel
 {
 	public partial class Profile
 	{
-		public bool Update(DevKitDB db, ref string resp)
+		public bool Update(DevKitDB db, ref bool bNameChanged, ref string resp)
 		{
 			var user = db.currentUser;
 
@@ -20,7 +20,7 @@ namespace DataModel
 				nuType = EnumAuditType.Profile,
 				fkTarget = this.id				
 			}.
-			Create(db, TrackChanges(db), "");
+			Create(db, TrackChanges(db, ref bNameChanged), "");
 
 			db.Update(this);
 

@@ -76,7 +76,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			if (element.length == 0)
 				return true;
 
-			if (element.indexOf('@') > 1)
+			if (element.indexOf('@') < 1)
 				return true;
 		}
 

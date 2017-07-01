@@ -9,7 +9,7 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var parameters = Request.GetQueryStringValue("busca")?.ToUpper();
+            var parameters = Request.GetQueryStringValue("busca","").ToUpper();
 
             var hshReport = SetupCacheReport(CacheTags.UserComboReport);
             if (hshReport[parameters] is ComboReport report)

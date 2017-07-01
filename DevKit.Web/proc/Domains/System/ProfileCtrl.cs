@@ -74,12 +74,18 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref apiError))
-				return BadRequest(apiError);
+            bool bNameChanged = false;
 
+            if (!mdl.Update(db, ref bNameChanged, ref apiError))
+				return BadRequest(apiError);
+            
             mdl.LoadAssociations(db);
 
+            if (bNameChanged)
+                CleanCache(db, CacheTags.User, null);
+
             CleanCache(db, CacheTags.Profile, null);
+
             StoreCache(CacheTags.Profile, mdl.id, mdl);
 
             return Ok();		

@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
 		{
             var filter = new TaskCategoryFilter
             {
-                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                busca = Request.GetQueryStringValue("busca","").ToUpper(),
                 fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null)
             };
 
@@ -27,7 +27,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var ret = new TaskCategory().ComboFilters(db, filter.busca, filter.fkTaskType);
+            var ret = new TaskCategory().ComboFilters(db, filter);
 
             hshReport[parameters] = ret;
 

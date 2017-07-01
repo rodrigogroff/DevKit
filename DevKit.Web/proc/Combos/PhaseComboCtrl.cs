@@ -11,12 +11,12 @@ namespace DevKit.Web.Controllers
 		{
             var filter = new ProjectPhaseFilter
             {
-                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                busca = Request.GetQueryStringValue("busca","").ToUpper(),
                 fkProject = Request.GetQueryStringValue<int?>("fkProject", null),
             };
 
             var parameters = filter.busca;
-
+            
             if (filter.fkProject != null)
                 parameters += "," + filter.fkProject;
 

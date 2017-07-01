@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
 		{
             var filter = new TaskTypeFilter
             {
-                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                busca = Request.GetQueryStringValue("busca","").ToUpper(),
                 fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
             };
 

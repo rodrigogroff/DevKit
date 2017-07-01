@@ -55,6 +55,8 @@ namespace DataModel
 			}.
 			Create(db, "New user: " + stLogin, "");
 
+            
+
 			return true;
 		}
 	}

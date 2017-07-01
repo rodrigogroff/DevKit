@@ -72,6 +72,7 @@ namespace DevKit.Web.Controllers
             mdl.LoadAssociations(db);
 
             CleanCache(db, CacheTags.User, null);
+            CleanCache(db, CacheTags.Profile, null);
             CleanCache(db, CacheTags.Project, null);
 
             StoreCache(CacheTags.User, mdl.id, mdl);
@@ -83,14 +84,19 @@ namespace DevKit.Web.Controllers
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-            
-			if (!mdl.Update(db, ref apiError))
+
+            bool bProfileChanged = false;
+
+			if (!mdl.Update(db, ref apiError,ref bProfileChanged))
 				return BadRequest(apiError);
 
             mdl.LoadAssociations(db);
 
             CleanCache(db, CacheTags.User, null);
             CleanCache(db, CacheTags.Project, null);
+
+            if (bProfileChanged)
+                CleanCache(db, CacheTags.Profile, null);
 
             StoreCache(CacheTags.User, mdl.id, mdl);
 

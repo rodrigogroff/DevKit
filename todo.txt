@@ -3,6 +3,7 @@
 a fazer (prioridade)
 ------------------------------
 	
+	- testes!
 	- updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
 	- implementar acumulador de 'ammount'
 	- menu não estragar tela atual
@@ -20,8 +21,7 @@ a fazer (ajustes)
 	-na listagem de 'news', trazer o campo padrão 'Search' e a combo de projeto nos filtros
 	-na listagem de 'surveys', trazer o campo padrão 'Search' e a combo de projeto nos filtros	
 	-ao acrescentar um cliente em um grupo de clientes, criar campo dtJoin e mostrar na visualização do item
-
-	-selenium para diversos cruds
+	-na listagem de clientes, na pesquisa, acrescentar uma busca por nome e email de pessoa de contato	
 
 ------------------------------
 a fazer (estrutural)

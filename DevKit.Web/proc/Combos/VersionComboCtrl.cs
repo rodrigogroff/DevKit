@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
 		{
             var filter = new ProjectSprintVersionFilter
             {
-                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                busca = Request.GetQueryStringValue("busca","").ToUpper(),
                 fkSprint = Request.GetQueryStringValue<long?>("fkSprint", null),
             };
 

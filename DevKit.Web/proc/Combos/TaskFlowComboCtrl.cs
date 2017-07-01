@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
 		{
             var filter = new TaskFlowFilter
             {
-                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                busca = Request.GetQueryStringValue("busca","").ToUpper(),
                 fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
                 fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
             };

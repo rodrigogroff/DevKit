@@ -11,9 +11,9 @@ namespace DevKit.Web.Controllers
 		{
             var filter = new ProjectFilter
             {
-                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                busca = Request.GetQueryStringValue("busca","").ToUpper(),
             };
-
+                        
             var parameters = filter.busca + userLoggedName;
 
             var hshReport = SetupCacheReport(CacheTags.ProjectComboReport);

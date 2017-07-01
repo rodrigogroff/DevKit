@@ -29,32 +29,39 @@ namespace DataModel
 
 			bool foundMask = false;
 
-			foreach (var i in stPhone)
-				if (!Char.IsLetterOrDigit(i))
-				{
-					foundMask = true;
-					break;
-				}
+            if (stPhone != null)
+            {
+                foreach (var i in stPhone)
+                {
+                    if (!Char.IsLetterOrDigit(i))
+                    {
+                        foundMask = true;
+                        break;
+                    }
+                }
+                    
+                if (!foundMask)
+                {
+                    var result = ""; var index = 0; var maxlen = stPhone.Length;
 
-			if (!foundMask)
-			{
-				var result = ""; var index = 0; var maxlen = stPhone.Length;
+                    foreach (var i in mask)
+                    {
+                        if (Char.IsLetterOrDigit(i))
+                        {
+                            if (index < maxlen)
+                                result += stPhone[index++];
+                        }
+                        else
+                            result += i;
+                    }
 
-				foreach (var i in mask)
-				{
-					if (Char.IsLetterOrDigit(i))
-					{
-						if (index < maxlen)
-							result += stPhone[index++];
-					}
-					else
-						result += i;
-				}
+                    return result;
+                }
+                else
+                    return stPhone;
+            }
 
-				return result;
-			}
-			else
-				return stPhone;
-		}
+            return "";
+        }			
 	}
 }

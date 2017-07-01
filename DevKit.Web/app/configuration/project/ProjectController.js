@@ -94,7 +94,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Project.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Project saved!', 'Success');
-						$scope.viewModel.logs = data.logs;
+                        init();
 					},
 					function (response)
 					{
@@ -156,8 +156,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('User removed', 'Success');
-				$scope.viewModel.users = data.users;
-				$scope.viewModel.logs = data.logs;
+                init();
 			});
 		}
 	}
@@ -196,12 +195,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
 				$scope.newUser = {};
+                $scope.addUser = false;
 
 				toastr.success('User added', 'Success');
-				$scope.viewModel.users = data.users;
-				$scope.viewModel.logs = data.logs;
-
-				$scope.addUser = false;
+                init();				
 
 			}, function (response)
 			{
@@ -228,8 +225,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Phase removed', 'Success');
-				$scope.viewModel.phases = data.phases;
-				$scope.viewModel.logs = data.logs;
+                init();
 			});
 		}
 	}
@@ -269,12 +265,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newPhase = { bComplete: false };
 
 				toastr.success('Phase added', 'Success');
-				$scope.viewModel.phases = data.phases;
-				$scope.viewModel.logs = data.logs;
+                init();
 
-				$scope.addPhase = false;
-
-			}, function (response) {
+            }, function (response)
+            {
 				toastr.error(response.data.message, 'Error');
 			});
 		}
@@ -295,10 +289,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.viewModel.updateCommand = "removeSprint";
 			$scope.viewModel.anexedEntity = lista[index];
 
-			Api.Project.update({ id: id }, $scope.viewModel, function (data) {
+            Api.Project.update({ id: id }, $scope.viewModel, function (data)
+            {
 				toastr.success('Sprint removed', 'Success');
-				$scope.viewModel.sprints = data.sprints;
-				$scope.viewModel.logs = data.logs;
+                init();
 			});
 		}
 	}
@@ -341,12 +335,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{				
 				$scope.newSprint = {};
+                $scope.addSprint = false;
 
 				toastr.success('Sprint saved', 'Success');
-				$scope.viewModel.sprints = data.sprints;
-				$scope.viewModel.logs = data.logs;
 
-				$scope.addSprint = false;
+                init();			
 
 			}, function (response) {
 				toastr.error(response.data.message, 'Error');

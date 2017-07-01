@@ -30,9 +30,6 @@ namespace DataModel
 						Create(db, TrackChanges(db), "");
 
 						db.Update(this);
-
-						logs = LoadLogs(db);
-
 						break;
 					}
 
@@ -75,9 +72,6 @@ namespace DataModel
 							}.
 							Create(db, "Updated role: " + ent.stRole, "");
 						}							
-
-						users = LoadUsers(db);
-						logs = LoadLogs(db);
 						break;
 					}
 
@@ -95,8 +89,6 @@ namespace DataModel
 						}.
 						Create(db, "User removed: " + db.GetUser(ent.fkUser), "");
 
-						users = LoadUsers(db);
-						logs = LoadLogs(db);
 						break;
 					}
 
@@ -125,8 +117,6 @@ namespace DataModel
 								fkTarget = this.id
 							}.
 							Create(db, "Phase added: " + ent.stName, "");
-
-
 						}							
 						else
 						{
@@ -140,9 +130,6 @@ namespace DataModel
 							}.
 							Create(db, "Phase edited: " + ent.stName, "");
 						}
-							
-						phases = LoadPhases(db);
-						logs = LoadLogs(db);
 						break;
 					}
 
@@ -165,9 +152,6 @@ namespace DataModel
 							fkTarget = this.id
 						}.
 						Create(db, "Phase deleted: " + ent.stName, "");
-
-						phases = LoadPhases(db);
-						logs = LoadLogs(db);
 						break;
 					}
 
@@ -218,9 +202,6 @@ namespace DataModel
 							}.
 							Create(db, "", "");
 						}							
-
-						sprints = LoadSprints(db);
-						logs = LoadLogs(db);
 						break;
 					}
 
@@ -244,8 +225,6 @@ namespace DataModel
 						}.
 						Create(db, "Sprint deleted: " + ent.stName , "");
 
-						sprints = LoadSprints(db);
-						logs = LoadLogs(db);
 						break;
 					}
 			}

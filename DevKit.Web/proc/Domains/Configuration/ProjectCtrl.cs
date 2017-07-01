@@ -87,6 +87,8 @@ namespace DevKit.Web.Controllers
                     break;
             }
 
+            mdl.LoadAssociations(db);
+
             CleanCache(db, CacheTags.Project, null);
             StoreCache(CacheTags.Project, mdl.id, mdl);
 

@@ -30,7 +30,9 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     	{
     		AuthService.login($scope.loginData).then(function (response)
     		{
-    			$scope.loginOK = true;
+                $scope.loginOK = true;
+
+                Api.Startup.listPage({}, function (data) { });
                 
                 $rootScope.exibirMenu = true;
                 $rootScope.$broadcast('updateCounters');

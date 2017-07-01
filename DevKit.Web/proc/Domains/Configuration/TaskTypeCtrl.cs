@@ -18,7 +18,7 @@ namespace DevKit.Web.Controllers
 
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.ClientReport);
+            var hshReport = SetupCacheReport(CacheTags.TaskTypeReport);
             if (hshReport[parameters] is TaskTypeReport report)
                 return Ok(report);
 

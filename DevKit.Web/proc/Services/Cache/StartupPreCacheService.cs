@@ -102,7 +102,7 @@ namespace DevKit.Web.Services
 
                     var options = new loaderOptionsTaskType
                     {
-                        bLoadProject = false,
+                        bLoadProject = true,
                         bLoadCategories = false
                     };
                     

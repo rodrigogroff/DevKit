@@ -48,7 +48,7 @@ namespace DataModel
 						Create(db, TrackChanges(db), "");
 
 						db.Update(this);
-						logs = LoadLogs(db);
+						
 						break;
 					}
 
@@ -92,8 +92,6 @@ namespace DataModel
 							Create(db, "Updated version: " + ent.stName, "");
 						}
 						
-						versions = LoadVersions(db);
-						logs = LoadLogs(db);
 						break;
 					}
 
@@ -117,8 +115,6 @@ namespace DataModel
 						}.
 						Create(db, "Version deleted " + versionDel.stName, "");
 
-						versions = LoadVersions(db);
-						logs = LoadLogs(db);
 						break;
 					}
 			}

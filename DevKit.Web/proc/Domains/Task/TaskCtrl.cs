@@ -29,12 +29,17 @@ namespace DevKit.Web.Controllers
                 fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
             };
 
+
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.TaskReport);            
-            if (hshReport[parameters] is TaskReport report)
-                return Ok(report);
+            var hshReport = SetupCacheReport(CacheTags.TaskReport);
 
+            if (filter.expired != true)
+            {                
+                if (hshReport[parameters] is TaskReport report)
+                    return Ok(report);
+            }
+            
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
@@ -104,6 +109,29 @@ namespace DevKit.Web.Controllers
             if (!mdl.Create(db, ref apiError))
 				return BadRequest(apiError);
 
+            mdl.LoadAssociations(db, new loaderOptionsTask
+            {
+                bLoadTaskCategory = true,
+                bLoadTaskType = true,
+                bLoadProject = true,
+                bLoadPhase = true,
+                bLoadSprint = true,
+                bLoadTaskFlow = true,
+                bLoadVersion = true,
+                bLoadUsers = true,
+                bLoadProgress = true,
+                bLoadMessages = true,
+                bLoadFlows = true,
+                bLoadAccs = true,
+                bLoadDependencies = true,
+                bLoadCheckpoints = true,
+                bLoadQuestions = true,
+                bLoadClients = true,
+                bLoadClientGroups = true,
+                bLoadCustomSteps = true,
+                bLoadLogs = true
+            });
+
             CleanCache(db, CacheTags.Task, null);
             StoreCache(CacheTags.Task, mdl.id, mdl);
 
@@ -118,6 +146,30 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref apiError))
 				return BadRequest(apiError);
 
+            mdl.LoadAssociations(db, new loaderOptionsTask
+            {
+                bLoadTaskCategory = true,
+                bLoadTaskType = true,
+                bLoadProject = true,
+                bLoadPhase = true,
+                bLoadSprint = true,
+                bLoadTaskFlow = true,
+                bLoadVersion = true,
+                bLoadUsers = true,
+                bLoadProgress = true,
+                bLoadMessages = true,
+                bLoadFlows = true,
+                bLoadAccs = true,
+                bLoadDependencies = true,
+                bLoadCheckpoints = true,
+                bLoadQuestions = true,
+                bLoadClients = true,
+                bLoadClientGroups = true,
+                bLoadCustomSteps = true,
+                bLoadLogs = true
+            });
+
+            CleanCache(db, CacheTags.Task, null);
             StoreCache(CacheTags.Task, mdl.id, mdl);
 
             return Ok();			

@@ -7,7 +7,7 @@ namespace DataModel
 	{
         public ComboReport ComboFilters(DevKitDB db, TaskTypeFilter filter)
         {
-            var query = from e in db.TaskType where e.fkProject == fkProject select e;
+            var query = from e in db.TaskType select e;
 
             if (filter.busca != "")
                 query = from e in query

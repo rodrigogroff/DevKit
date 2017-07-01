@@ -61,7 +61,10 @@ namespace DevKit.Web.Controllers
             if (!mdl.Update(db, ref apiError))
 				return BadRequest(apiError);
 
+            mdl.LoadAssociations(db);
+                        
             CleanCache(db, CacheTags.ProjectSprint, null);
+            CleanCache(db, CacheTags.ProjectSprintVersion, null);
             StoreCache(CacheTags.ProjectSprint, mdl.id, mdl);
 
             return Ok();			

@@ -115,12 +115,8 @@ namespace DataModel
             }                           
             
             if (filter.expired != null)
-            {
                 if (filter.expired == true)
                     query = from e in query where e.dtExpired != null && DateTime.Now > e.dtExpired select e;
-                else
-                    query = from e in query where e.dtExpired != null && DateTime.Now < e.dtExpired select e;
-            }
 
             if (filter.nuPriority != null)
                 query = from e in query where e.nuPriority == filter.nuPriority select e;

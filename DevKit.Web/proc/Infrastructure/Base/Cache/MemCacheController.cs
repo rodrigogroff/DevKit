@@ -140,6 +140,9 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public void CleanCacheReport(string tag)
         {
+            if (myApplication == null)
+                myApplication = HttpContext.Current.Application;
+
             if (myApplication[tag] is Hashtable hsh)
             {
                 hsh.Clear();
@@ -152,6 +155,9 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public void CleanCache(DevKitDB db, string tag, long? id)
         {
+            if (myApplication == null)
+                myApplication = HttpContext.Current.Application;
+
             var cc = new CacheClean
             {
                 myApplication = this.myApplication

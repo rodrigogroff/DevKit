@@ -6,7 +6,6 @@ a fazer (prioridade)
 	- testes!
 	- updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
 	- implementar acumulador de 'ammount'
-	- menu não estragar tela atual
 	- pensar data na task listing / kanban
 
 ------------------------------
@@ -22,19 +21,21 @@ a fazer (ajustes)
 	-na listagem de 'surveys', trazer o campo padrão 'Search' e a combo de projeto nos filtros	
 	-ao acrescentar um cliente em um grupo de clientes, criar campo dtJoin e mostrar na visualização do item
 	-na listagem de clientes, na pesquisa, acrescentar uma busca por nome e email de pessoa de contato	
+	-na tela inicial (ao clicar no simbolo) e trazer as tarefas abertas, colocar um aviso em vermelho nas tarefas expiradas
 
 ------------------------------
 a fazer (estrutural)
 ------------------------------
 
-	-http://embed.plnkr.co/DgWeerIlDjFpZO6DCzDD/ para dinheiro em task.html
-	-modais de confirmação de exclusão (somente um prototipo em remover telefone de usuário)
-	-poder anexar documentos nas tarefas
-	-usar editor trix (anexando imagens) para noticias / descrição das tarefas
-	-ao re-digitar campo de pesquisa (na segunda vez!) e ao clicar no botão, nada acontece
-
+	-menu sem perder o conteudo da área de trabalho
+	-login não piscar a tela de trabalho
+	-modais de confirmação de exclusão (somente um prototipo em remover telefone de usuário, groff propagara no resto da app)
 	-filtros perdem os dropdowns!! 
 		( logar, listar users, abrir filtros, listar profiles, 
 			abrir filtros (falta combo de usuário) e 
 				na console aparece query funtion undefined )
+
+	-poder anexar documentos nas tarefas
+	-usar editor trix (anexando imagens) para noticias / descrição das tarefas
+	-http://embed.plnkr.co/DgWeerIlDjFpZO6DCzDD/ para salvar acumulador de dinheiro em task.html
 

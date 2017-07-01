@@ -13,7 +13,8 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 
 	$scope.campos = {
 	  	kpa: 'false',
-	  	complete: 'false',
+        complete: 'false',
+        expired: 'false',
 		selects: {
 			user: ngSelects.obterConfiguracao(Api.UserCombo, { }),
             priority: ngSelects.obterConfiguracao(Api.Priority, { }),

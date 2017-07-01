@@ -95,7 +95,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 					Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
 					{
 						toastr.success('Sprint saved!', 'Success');
-						$scope.viewModel.logs = data.logs;
+                        init();
 					},
 					function (response)
 					{
@@ -157,8 +157,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Version removed', 'Success');
-				$scope.viewModel.versions = data.versions;
-				$scope.viewModel.logs = data.logs;
+                init();
 			});
 		}
 	}
@@ -196,12 +195,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
 			{
 				$scope.newVersion = {};
+                $scope.addVersion = false;
 
 				toastr.success('Version saved', 'Success');
-				$scope.viewModel.versions = data.versions;
-				$scope.viewModel.logs = data.logs;
-
-				$scope.addVersion = false;
+                init();				
 			},
 			function (response)
 			{

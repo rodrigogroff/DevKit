@@ -91,6 +91,11 @@ namespace DataModel
             }
             else
             {
+                if (ent.nuExpiresMinutes != null || ent.nuExpiresHours != null || ent.nuExpiresDays != null)
+                    ent.bExpires = true;
+                else
+                    ent.bExpires = false;
+
                 db.Update(ent);
 
                 new AuditLog

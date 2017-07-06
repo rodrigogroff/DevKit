@@ -7,7 +7,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.loading = false;
 	$scope.campos = {
 		selects: {
-			projec: ngSelects.obterConfiguracao(Api.ProjectCombo, { }),
+			project: ngSelects.obterConfiguracao(Api.ProjectCombo, { }),
 		}
 	};
 	$scope.itensporpagina = 15;

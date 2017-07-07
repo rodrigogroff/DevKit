@@ -38,7 +38,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
     {
         mdl.updateCommand = 'maskAsRead';
 
-		Api.News.update({ id: mdl.id }, mdl, function (data)
+        Api.News.update({ id: mdl.id }, mdl, function (data)
 		{
 			init();
 		},

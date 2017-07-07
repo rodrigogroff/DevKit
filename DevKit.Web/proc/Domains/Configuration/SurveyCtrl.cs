@@ -72,7 +72,9 @@ namespace DevKit.Web.Controllers
 
             if (!mdl.Update(db, ref apiError))
 				return BadRequest(apiError);
-            
+
+            mdl.LoadAssociations(db);
+                        
             CleanCache(db, CacheTags.Survey, null);
             StoreCache(CacheTags.Survey, mdl.id, mdl);
 

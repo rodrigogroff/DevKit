@@ -20,8 +20,6 @@ namespace DataModel
 				case "entity":
 					{
 						db.Update(this);
-
-						options = LoadOptions(db);
 						break;
 					}
 
@@ -36,7 +34,6 @@ namespace DataModel
 						else
 							db.Update(ent);
 
-						options = LoadOptions(db);						
 						break;
 					}
 
@@ -45,8 +42,6 @@ namespace DataModel
 						var ent = JsonConvert.DeserializeObject<SurveyOption>(anexedEntity.ToString());
 
 						db.Delete(ent);
-
-						options = LoadOptions(db);
 						break;
 					}
 

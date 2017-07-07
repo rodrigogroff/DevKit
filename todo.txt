@@ -3,7 +3,6 @@
 a fazer (prioridade)
 ------------------------------
 	
-	- testes! (revisar survey)
 	- updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
 	- implementar acumulador de 'ammount'
 	- pensar data na task listing / kanban

@@ -143,8 +143,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.viewModel.anexedEntity = $scope.viewModel.options[index];
 
 			Api.Survey.update({ id: id }, $scope.viewModel, function (data) {
-				toastr.success('Phone removed', 'Success');
-				$scope.viewModel.options = data.options;
+                toastr.success('Option removed', 'Success');
+                init();
 			});
 		}
 	}
@@ -189,7 +189,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					$scope.newOption = {};
 					toastr.success('Option saved', 'Success');
-					$scope.viewModel.options = data.options;
+
+                    init();
 				},
 				function (response) {
 					toastr.error(response.data.message, 'Error');

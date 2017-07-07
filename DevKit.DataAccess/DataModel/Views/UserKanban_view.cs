@@ -234,7 +234,8 @@ namespace DataModel
 							ktt.categories.Add(ktc);
 						}
 
-						ks.tasktypes.Add(ktt);
+                        if (lstCategories.Count() > 0)
+						    ks.tasktypes.Add(ktt);
 					}
 					
 					kb_proj.sprints.Add(ks);

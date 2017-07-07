@@ -1,46 +1,217 @@
 ﻿<div class="webFormPostion" style="width:100%">
-	<table width="100%">
+	<table width="950px">
 		<tr>
-			<td width="300px" valign="top" ng-show="viewModel.tasks.length > 0 || viewModel.questions.length > 0">
+            <td width="220px" valign="top" ng-show="viewModel.surveys.length > 0 || viewModel.news.length > 0 " >
+                <div ng-show="viewModel.surveys.length > 0">
+                    <section class="widgetFormNews" style="width:450px;height:100%;">
+                        <legend class="legendTop">
+                            <table><tr height="12px"><td> </td></tr></table>
+                            <table style="color:white; width:100%">
+                                <tr>
+                                    <td width="20px"></td>
+                                    <td>
+                                        <span style="color:black">Company Active Surveys ({{viewModel.surveys.length}})</span>
+                                    </td>
+                                    <td width="20px"></td>
+                                </tr>
+                                <tr height="12px"></tr>
+                            </table>
+                        </legend>
+                        <div data-ng-repeat="mdl in viewModel.surveys" ng-show="viewModel.surveys.length > 0">
+                            <table width="100%">
+                                <tr>
+                                    <td width="20px"></td>
+                                    <td>
+                                        <table>
+                                            <tr height="32px">
+                                                <td width="10px"></td>
+                                                <td width="360px">
+                                                    <br />
+                                                    {{mdl.sdtLog}} by <b>{{mdl.sfkUser}}</b>&nbsp;<span ng-if="mdl.sfkProject.length > 0">for project <b>{{mdl.sfkProject}}</b></span><br />
+                                                    <b>{{mdl.stTitle}}</b><br />
+                                                    <br />
+                                                </td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <div class="bodyNews" width="100%">
+                                                        <table>
+                                                            <tr>
+                                                                <td width="10px"></td>
+                                                                <td><br /><p ng-bind-html="mdl.stMessage" /></td>
+                                                                <td width="10px"></td>
+                                                            </tr>
+                                                        </table>
+                                                        <br />
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <br />
+                                                    Survey status: {{mdl.sNuPct}}%<br />
+                                                    <br />
+                                                    <div ng-if="mdl.bUserSelected == true">
+                                                        <div ng-repeat="option in mdl.options" id="radio-{{option.id}}">
+                                                            <div ng-show="option.bChecked==true">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td width="50px">{{option.sNuOptionPct}}%</td>
+                                                                        <td>
+                                                                            <span class="btn-success">&nbsp;&nbsp;{{option.stOption}}&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;(your vote)
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                            <div ng-show="option.bChecked==false" style="color:grey">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td width="50px">{{option.sNuOptionPct}}%</td>
+                                                                        <td>{{option.stOption}}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="mdl.bUserSelected == false">
+                                                        <div ng-repeat="option in mdl.options" id="radio-{{option.id}}">
+                                                            <label>
+                                                                <input type="radio" name="option" ng-checked="surveySelectOption(option)">&nbsp;&nbsp;{{option.stOption}}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr height="32px">
+                                                <td></td>
+                                                <td>
+                                                    <br />
+                                                    <div ng-if="mdl.bUserSelected != true">
+                                                        <button class="btn btn-xs btn-primary" ng-click="confirmChoiceSurvey(mdl)">Confirm Choice</button>
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <div ng-show="viewModel.news.length > 0">
+                    <section class="widgetFormNews" style="width:450px; height:100%;">
+                        <legend class="legendTop">
+                            <table><tr height="12px"><td> </td></tr></table>
+                            <table style="color:white; width:100%">
+                                <tr>
+                                    <td width="20px"></td>
+                                    <td>
+                                        <span style="color:black">Company News ({{viewModel.news.length}})</span>
+                                    </td>
+                                    <td width="20px"></td>
+                                </tr>
+                                <tr height="12px"></tr>
+                            </table>
+                        </legend>
+                        <div data-ng-repeat="mdl in viewModel.news" ng-show="viewModel.news.length > 0">
+                            <table width="100%">
+                                <tr>
+                                    <td width="20px"></td>
+                                    <td>
+                                        <table>
+                                            <tr height="32px">
+                                                <td width="10px"></td>
+                                                <td width="360px">
+                                                    <br />
+                                                    {{mdl.sdtLog}} by <b>{{mdl.sfkUser}}</b>&nbsp;<span ng-if="mdl.sfkProject.length > 0">for project <b>{{mdl.sfkProject}}</b></span><br />
+                                                    <b>{{mdl.stTitle}}</b><br />
+                                                    <br />
+                                                </td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <div width="100%">
+                                                        <table>
+                                                            <tr>
+                                                                <td width="10px"></td>
+                                                                <td>
+                                                                    <br />
+                                                                    <p ng-bind-html="mdl.stMessage" />
+                                                                </td>
+                                                                <td width="10px"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr height="32px">
+                                                <td></td>
+                                                <td>
+                                                    <br />
+                                                    <button class="btn btn-xs btn-primary" ng-click="markAsRead(mdl)">Mark as Read</button>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                        </div>
+                    </section>
+                </div>
+            </td>
+            <td width="20px" ng-show="viewModel.surveys.length > 0 || viewModel.news.length > 0 "></td>
+            <td width="550px" valign="top" ng-show="viewModel.tasks.length > 0 || viewModel.questions.length > 0">
 				<div ng-show="viewModel.tasks.length > 0">
-					<section class="widgetForm" style="width:100%;height:100%">
-						<legend class="legendTop">
-							<table><tr height="12px"><td> </td></tr></table>
-							<table style="color:white; width:100%">
-								<tr>
-									<td width="20px"></td>
-									<td>
-										<span style="color:white">Open Tasks ({{viewModel.tasks.length}})</span>
-									</td>
-									<td width="20px"></td>
-								</tr>
-								<tr height="12px"></tr>
-							</table>
-						</legend>
-						<table width="100%">
-							<tr>
-								<td width="20px"></td>
-								<td>
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												<th>Protocol </th>
-												<th>Type / Category </th>
-												<th>Title / Localization </th>
-											</tr>
-										</thead>
-										<tr ng-click="showTask(mdl)" data-ng-repeat="mdl in viewModel.tasks">
-											<td>{{ mdl.stProtocol }}</td>
-											<td>{{ mdl.sfkTaskType }} <br /> {{mdl.sfkTaskCategory}}</td>
-											<td>Priority: <b>{{ mdl.snuPriority }}</b><br />{{ mdl.stTitle }}<br />{{ mdl.stLocalization }}</td>
-										</tr>
-									</table>
-								</td>
-								<td width="20px"></td>
-							</tr>
-							<tr height="12px"></tr>
-						</table>
-					</section>
+                    <section class="widgetForm" style="width:100%;height:100%">
+                        <legend class="legendTop">
+                            <table><tr height="12px"><td> </td></tr></table>
+                            <table style="color:white; width:100%">
+                                <tr>
+                                    <td width="20px"></td>
+                                    <td>
+                                        <span style="color:white">Open Tasks ({{viewModel.tasks.length}})</span>
+                                    </td>
+                                    <td width="20px"></td>
+                                </tr>
+                                <tr height="12px"></tr>
+                            </table>
+                        </legend>
+                        <table width="100%">
+                            <tr>
+                                <td width="20px"></td>
+                                <td>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Protocol </th>
+                                                <th>Type / Category </th>
+                                                <th>Title / Localization </th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-click="showTask(mdl)" data-ng-repeat="mdl in viewModel.tasks">
+                                            <td>{{ mdl.stProtocol }}</td>
+                                            <td>{{ mdl.sfkTaskType }} <br /> {{mdl.sfkTaskCategory}}</td>
+                                            <td>Priority: <b>{{ mdl.snuPriority }}</b><br />{{ mdl.stTitle }}<br />{{ mdl.stLocalization }}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                            <tr height="12px"></tr>
+                        </table>
+                    </section>
 					<br />
 				</div>
 				<div ng-show="viewModel.questions.length > 0">
@@ -83,177 +254,6 @@
 						</table>
 					</section>
 					<br />
-				</div>
-			</td>
-			<td width="20px"></td>
-			<td width="500px" valign="top">
-				<div ng-show="viewModel.surveys.length > 0">
-					<section class="widgetFormNews" style="width:450px;height:100%;">
-						<legend class="legendTop">
-							<table><tr height="12px"><td> </td></tr></table>
-							<table style="color:white; width:100%">
-								<tr>
-									<td width="20px"></td>
-									<td>
-										<span style="color:black">Company Active Surveys ({{viewModel.surveys.length}})</span>
-									</td>
-									<td width="20px"></td>
-								</tr>
-								<tr height="12px"></tr>
-							</table>
-						</legend>
-						<div data-ng-repeat="mdl in viewModel.surveys" ng-show="viewModel.surveys.length > 0">
-							<table width="100%">
-								<tr>
-									<td width="20px"></td>
-									<td>
-										<table>
-											<tr height="32px">
-												<td width="10px"></td>
-												<td width="360px">
-													<br />
-													{{mdl.sdtLog}} by <b>{{mdl.sfkUser}}</b>&nbsp;<span ng-if="mdl.sfkProject.length > 0">for project <b>{{mdl.sfkProject}}</b></span><br />
-													<b>{{mdl.stTitle}}</b><br />
-													<br />
-												</td>
-												<td width="20px"></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td>
-													<div class="bodyNews" width="100%">
-														<table>
-															<tr>
-																<td width="10px"></td>
-																<td><br /><p ng-bind-html="mdl.stMessage" /></td>
-																<td width="10px"></td>
-															</tr>
-														</table>
-														<br />
-													</div>
-												</td>
-												<td></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td>
-													<br />
-													Survey status: {{mdl.sNuPct}}%<br />
-													<br />
-													<div ng-if="mdl.bUserSelected == true">
-														<div ng-repeat="option in mdl.options" id="radio-{{option.id}}">
-															<div ng-show="option.bChecked==true">
-																<table>
-																	<tr>
-																		<td width="50px">{{option.sNuOptionPct}}%</td>
-																		<td>
-																			<span class="btn-success">&nbsp;&nbsp;{{option.stOption}}&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;(your vote)
-																		</td>
-																	</tr>
-																</table>
-															</div>
-															<div ng-show="option.bChecked==false" style="color:grey">
-																<table>
-																	<tr>
-																		<td width="50px">{{option.sNuOptionPct}}%</td>
-																		<td>{{option.stOption}}</td>
-																	</tr>
-																</table>
-															</div>
-														</div>
-													</div>
-													<div ng-if="mdl.bUserSelected == false">
-														<div ng-repeat="option in mdl.options" id="radio-{{option.id}}">
-															<label>
-																<input type="radio" name="option" ng-checked="surveySelectOption(option)">&nbsp;&nbsp;{{option.stOption}}
-															</label>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr height="32px">
-												<td></td>
-												<td>
-													<br />
-													<div ng-if="mdl.bUserSelected != true">
-														<button class="btn btn-xs btn-primary" ng-click="confirmChoiceSurvey(mdl)">Confirm Choice</button>
-													</div>
-													<br />
-													<br />
-												</td>
-												<td></td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</section>
-				</div>			
-				<div ng-show="viewModel.news.length > 0">
-					<section class="widgetFormNews" style="width:450px; height:100%;">
-					<legend class="legendTop">
-						<table><tr height="12px"><td> </td></tr></table>
-						<table style="color:white; width:100%">
-							<tr>
-								<td width="20px"></td>
-								<td>
-									<span style="color:black">Company News ({{viewModel.news.length}})</span>
-								</td>
-								<td width="20px"></td>
-							</tr>
-							<tr height="12px"></tr>
-						</table>
-					</legend>
-					<div data-ng-repeat="mdl in viewModel.news" ng-show="viewModel.news.length > 0">
-						<table width="100%">
-							<tr>
-								<td width="20px"></td>
-								<td>
-									<table>
-										<tr height="32px">
-											<td width="10px"></td>
-											<td width="360px">
-												<br />
-												{{mdl.sdtLog}} by <b>{{mdl.sfkUser}}</b>&nbsp;<span ng-if="mdl.sfkProject.length > 0">for project <b>{{mdl.sfkProject}}</b></span><br />
-												<b>{{mdl.stTitle}}</b><br />
-												<br />
-											</td>
-											<td width="20px"></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>
-												<div width="100%">
-													<table>
-														<tr>
-															<td width="10px"></td>
-															<td>
-																<br />
-																<p ng-bind-html="mdl.stMessage" />
-															</td>
-															<td width="10px"></td>
-														</tr>
-													</table>
-												</div>
-											</td>
-											<td></td>
-										</tr>
-										<tr height="32px">
-											<td></td>
-											<td>
-												<br />
-												<button class="btn btn-xs btn-primary" ng-click="markAsRead(mdl)">Mark as Read</button>
-											</td>
-											<td></td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-						<br />
-					</div>
-				</section>
 				</div>
 			</td>
 		</tr>

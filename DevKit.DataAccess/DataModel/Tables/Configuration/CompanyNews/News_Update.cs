@@ -8,18 +8,18 @@ namespace DataModel
 		public bool Update(DevKitDB db, ref string resp)
 		{
 			var user = db.currentUser;
-
-			if (CheckDuplicate(this, db))
-			{
-				resp = "News title already taken";
-				return false;
-			}
-
+            
 			switch (updateCommand)
 			{
 				case "entity":
 					{
-						db.Update(this);
+                        if (CheckDuplicate(this, db))
+                        {
+                            resp = "News title already taken";
+                            return false;
+                        }
+
+                        db.Update(this);
 						break;
 					}
 

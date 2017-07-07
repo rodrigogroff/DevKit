@@ -11,13 +11,14 @@ namespace DataModel
 			var query = from e in db.CompanyNews select e;
 
 			if (item.stTitle != null)
-			{
-				var _st = item.stTitle.ToUpper();
-				query = from e in query where e.stTitle.ToUpper().Contains(_st) select e;
-			}
+				query = from e in query
+                        where e.stTitle.ToUpper() == item.stTitle.ToUpper()
+                        select e;
 
 			if (item.id > 0)
-				query = from e in query where e.id != item.id select e;
+				query = from e in query
+                        where e.id != item.id
+                        select e;
 
 			return query.Any();
 		}

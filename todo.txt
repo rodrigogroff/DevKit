@@ -4,7 +4,7 @@ a fazer (prioridade)
 ------------------------------
 	
 	- rever management
-	- implementar cadastro de pessoas / contatos 
+	- implementar cadastro de pessoas / contatos  (usuários synch em pessoas)
 	- implementar agenda da pessoa / setor da empresa / locais de reunião	
 	- pensar datas!
 
@@ -27,15 +27,15 @@ a fazer (ajustes)
 a fazer (estrutural)
 ------------------------------
 
-	-menu sem perder o conteudo da área de trabalho
-	-login não piscar a tela de trabalho
-	-modais de confirmação de exclusão (somente um prototipo em remover telefone de usuário, groff propagara no resto da app)
-	-filtros perdem os dropdowns!! 
+	(1) -menu sem perder o conteudo da área de trabalho
+	(2) -login não piscar a tela de trabalho momentaneamente
+	(3) -modais de confirmação de exclusão (somente um prototipo em remover telefone de usuário, groff propagara no resto da app)
+	(4) -filtros perdem os dropdowns!! 
 		( logar, listar users, abrir filtros, listar profiles, 
 			abrir filtros (falta combo de usuário) e 
 				na console aparece query funtion undefined )
 
-	-poder anexar documentos nas tarefas
-	-usar editor trix (anexando imagens) para noticias / descrição das tarefas
-	-http://embed.plnkr.co/DgWeerIlDjFpZO6DCzDD/ para salvar acumulador de dinheiro em task.html
+	(5) -poder anexar documentos nas tarefas
+	(6) -usar editor trix (anexando imagens) para noticias / descrição das tarefas
+	(7) -http://embed.plnkr.co/DgWeerIlDjFpZO6DCzDD/ para salvar acumulador de dinheiro em task.html
 

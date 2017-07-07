@@ -269,6 +269,11 @@
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
+    <Content Include="app\people\person\listingPersons.html" />
+    <Content Include="app\people\person\ListingPersonsController.js" />
+    <Content Include="app\people\person\person.html" />
+    <Content Include="app\people\person\PersonController.js" />
+    <Content Include="app\people\person\_filterPerson.html" />
     <Content Include="app\system\profile\listingProfiles.html" />
     <Content Include="app\system\profile\ListingProfilesController.js" />
     <Content Include="app\system\profile\profile.html" />
@@ -886,6 +891,7 @@
     <Compile Include="proc\Combos\ProjectComboCtrl.cs" />
     <Compile Include="proc\Domains\Enums\ContactFormCtrl.cs" />
     <Compile Include="proc\Domains\Login\StartupCtrl.cs" />
+    <Compile Include="proc\Domains\People\PersonCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />

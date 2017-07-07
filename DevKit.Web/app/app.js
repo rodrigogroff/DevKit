@@ -58,7 +58,11 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('clientgroup-new', { url: '/configuration/clientgroup/new', templateUrl: 'app/configuration/clientgroup/clientGroup.html', controller: 'ClientGroupController' })
     .state('clientgroup', { url: '/configuration/clientgroup/:id', templateUrl: 'app/configuration/clientgroup/clientGroup.html', controller: 'ClientGroupController' })
 
-	.state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
+    .state('persons', { url: '/people/persons', templateUrl: 'app/people/person/listingPersons.html', controller: 'ListingPersonsController' })
+    .state('person-new', { url: '/people/person/new', templateUrl: 'app/people/person/person.html', controller: 'PersonController' })
+    .state('person', { url: '/people/person/:id', templateUrl: 'app/people/person/person.html', controller: 'PersonController' })
+        
+    .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);
 

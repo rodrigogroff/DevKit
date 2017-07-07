@@ -69,6 +69,7 @@ angular.module('app.services', ['ngResource'])
 		Timesheet: $resource('api/timesheetView/:id', {}, opcoes),
 		News: $resource('api/news/:id', {}, opcoes),
         Survey: $resource('api/survey/:id', {}, opcoes),
+        Person: $resource('api/person/:id', {}, opcoes),
         Cache: $resource('api/cache/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),
         ClientCombo: $resource('api/clientcombo/:id', {}, opcoes),

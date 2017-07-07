@@ -9,7 +9,13 @@ namespace DataModel
 		public string stName { get; set; }
 	}
 
-	public class EnumVersionState
+    public class VersionStateReport
+    {
+        public int count;
+        public List<VersionState> results;
+    }
+
+    public class EnumVersionState
 	{
 		public List<VersionState> lst = new List<VersionState>();
 

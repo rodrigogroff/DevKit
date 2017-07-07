@@ -884,6 +884,7 @@
     <Compile Include="proc\Combos\ProfileComboCtrl.cs" />
     <Compile Include="proc\Combos\UserComboCtrl.cs" />
     <Compile Include="proc\Combos\ProjectComboCtrl.cs" />
+    <Compile Include="proc\Domains\Enums\ContactFormCtrl.cs" />
     <Compile Include="proc\Domains\Login\StartupCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />

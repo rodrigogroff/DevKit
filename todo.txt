@@ -3,9 +3,10 @@
 a fazer (prioridade)
 ------------------------------
 	
-	- updates -> trazer a listagem afetada qdo forem listas dentro da viewModel
-	- implementar acumulador de 'ammount'
-	- pensar data na task listing / kanban
+	- rever management
+	- implementar cadastro de pessoas / contatos 
+	- implementar agenda da pessoa / setor da empresa / locais de reunião	
+	- pensar datas!
 
 ------------------------------
 a fazer (ajustes)

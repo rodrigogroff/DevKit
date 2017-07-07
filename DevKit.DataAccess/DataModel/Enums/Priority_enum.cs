@@ -9,7 +9,13 @@ namespace DataModel
 		public string stName { get; set; }
 	}
 
-	public class EnumPriority
+    public class PriorityReport
+    {
+        public int count;
+        public List<Priority> results;
+    }
+
+    public class EnumPriority
 	{
 		public List<Priority> lst = new List<Priority>();
 

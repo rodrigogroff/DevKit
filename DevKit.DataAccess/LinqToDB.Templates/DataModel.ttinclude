@@ -32,7 +32,7 @@ string   DefaultConfiguration     = null;
 bool     GenerateAssociations     = false;
 bool     GenerateBackReferences   = true;
 bool     ReplaceSimilarTables     = true;
-bool     IncludeDefaultSchema     = true;
+bool     IncludeDefaultSchema     = false;
 
 Class    DataContextObject;
 

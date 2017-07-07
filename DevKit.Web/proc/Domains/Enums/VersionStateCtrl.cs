@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
             string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
             var hshReport = SetupCacheReport(CacheTags.EnumVersionStateReport);
-            if (hshReport[busca] is TaskReport report)
+            if (hshReport[busca] is VersionStateReport report)
                 return Ok(report);
 
             var _enum = new EnumVersionState();
@@ -22,7 +22,7 @@ namespace DevKit.Web.Controllers
 			if (busca != "")
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 
-            var ret = new
+            var ret = new VersionStateReport
             {
                 count = query.Count(),
                 results = query.ToList()

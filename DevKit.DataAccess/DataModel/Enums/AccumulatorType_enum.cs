@@ -9,7 +9,13 @@ namespace DataModel
 		public string stName { get; set; }
 	}
 
-	public class EnumAccumulatorType
+    public class AccumulatorTypeReport
+    {
+        public int count;
+        public List<AccumulatorType> results;
+    }
+
+    public class EnumAccumulatorType
 	{
 		public List<AccumulatorType> lst = new List<AccumulatorType>();
 

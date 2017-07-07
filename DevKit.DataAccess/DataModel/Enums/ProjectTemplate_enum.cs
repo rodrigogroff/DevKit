@@ -9,7 +9,13 @@ namespace DataModel
 		public string stName { get; set; }
 	}
 
-	public class EnumProjectTemplate
+    public class ProjectTemplateReport
+    {
+        public int count;
+        public List<ProjectTemplate> results;
+    }
+
+    public class EnumProjectTemplate
 	{
 		public List<ProjectTemplate> lst = new List<ProjectTemplate>();
 

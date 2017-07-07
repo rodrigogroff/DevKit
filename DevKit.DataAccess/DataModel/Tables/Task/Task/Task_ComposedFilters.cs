@@ -202,7 +202,7 @@ namespace DataModel
                         sfkTaskCategory = item.sfkTaskCategory,
                         sfkTaskFlowCurrent = item.sfkTaskFlowCurrent,
                         sfkTaskType = item.sfkTaskType,
-                        sfkUserResponsible = item.sfkTaskType,
+                        sfkUserResponsible = item.sfkUserResponsible,
                         sfkUserStart = item.sfkUserStart,
                         sfkVersion = item.sfkVersion,
                         snuPriority = item.snuPriority,

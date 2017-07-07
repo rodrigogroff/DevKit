@@ -21,12 +21,17 @@ namespace DevKit.Web.Services
             {
                 db.currentUser = currentUser;
 
+                // ----------------------------------------------------------------------------------------------------
+
                 foreach (var item in new EnumAccumulatorType().lst) cache.StoreCache(CacheTags.EnumAccumulatorType, item.id, item);
                 foreach (var item in new EnumMonth().lst) cache.StoreCache(CacheTags.EnumMonth, item.id, item);
+                foreach (var item in new EnumContactForm().lst) cache.StoreCache(CacheTags.EnumContactForm, item.id, item);
                 foreach (var item in new EnumPriority().lst) cache.StoreCache(CacheTags.EnumPriority, item.id, item);
                 foreach (var item in new EnumProjectTemplate().lst) cache.StoreCache(CacheTags.EnumProjectTemplate, item.id, item);
                 foreach (var item in new EnumVersionState().lst) cache.StoreCache(CacheTags.EnumVersionState, item.id, item);
-                
+
+                // ----------------------------------------------------------------------------------------------------
+
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.EnumAccumulatorTypeReport);
                     var query = (from e in new EnumAccumulatorType().lst select e);
@@ -35,32 +40,41 @@ namespace DevKit.Web.Services
                 }
                 
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.EnumMonth);
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumMonthReport);
                     var query = (from e in new EnumMonth().lst select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.EnumPriority);
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumContactFormReport);
+                    var query = (from e in new EnumContactForm().lst select e);
+                    var ret = new { count = query.Count(), results = query.ToList() };
+                    hshReport[""] = ret;
+                }
+
+                {
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumPriorityReport);
                     var query = (from e in new EnumPriority().lst select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.EnumProjectTemplate);
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumProjectTemplateReport);
                     var query = (from e in new EnumProjectTemplate().lst select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
-                    var hshReport = cache.SetupCacheReport(CacheTags.EnumVersionState);
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumVersionStateReport);
                     var query = (from e in new EnumVersionState().lst select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
+
+                // ----------------------------------------------------------------------------------------------------
                 
                 // user
                 {

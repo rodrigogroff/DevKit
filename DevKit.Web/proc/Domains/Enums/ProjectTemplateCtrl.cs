@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
             string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
             var hshReport = SetupCacheReport(CacheTags.EnumPriorityReport);
-            if (hshReport[busca] is TaskReport report)
+            if (hshReport[busca] is ProjectTemplateReport report)
                 return Ok(report);
 
             var _enum = new EnumProjectTemplate();
@@ -22,7 +22,7 @@ namespace DevKit.Web.Controllers
 			if (busca != "")
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 
-            var ret = new
+            var ret = new ProjectTemplateReport
             {
                 count = query.Count(),
                 results = query.ToList()

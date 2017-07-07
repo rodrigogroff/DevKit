@@ -25,6 +25,13 @@ namespace DataModel
 		public ITable<ClientGroup>            ClientGroup            { get { return this.GetTable<ClientGroup>(); } }
 		public ITable<ClientGroupAssociation> ClientGroupAssociation { get { return this.GetTable<ClientGroupAssociation>(); } }
 		public ITable<CompanyNews>            CompanyNews            { get { return this.GetTable<CompanyNews>(); } }
+		public ITable<PeopleCategory>         PeopleCategory         { get { return this.GetTable<PeopleCategory>(); } }
+		public ITable<Person>                 Person                 { get { return this.GetTable<Person>(); } }
+		public ITable<PersonCategory>         PersonCategory         { get { return this.GetTable<PersonCategory>(); } }
+		public ITable<PersonContact>          PersonContact          { get { return this.GetTable<PersonContact>(); } }
+		public ITable<PersonEmail>            PersonEmail            { get { return this.GetTable<PersonEmail>(); } }
+		public ITable<PersonMessage>          PersonMessage          { get { return this.GetTable<PersonMessage>(); } }
+		public ITable<PersonPhone>            PersonPhone            { get { return this.GetTable<PersonPhone>(); } }
 		public ITable<Profile>                Profile                { get { return this.GetTable<Profile>(); } }
 		public ITable<Project>                Project                { get { return this.GetTable<Project>(); } }
 		public ITable<ProjectPhase>           ProjectPhase           { get { return this.GetTable<ProjectPhase>(); } }
@@ -70,7 +77,7 @@ namespace DataModel
 		partial void InitDataContext();
 	}
 
-	[Table(Schema="public", Name="AuditLog")]
+	[Table("AuditLog")]
 	public partial class AuditLog
 	{
 		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
@@ -83,7 +90,7 @@ namespace DataModel
 		[Column,     Nullable] public string    stDetailLog { get; set; } // character varying(3999)
 	}
 
-	[Table(Schema="public", Name="CacheControl")]
+	[Table("CacheControl")]
 	public partial class CacheControl
 	{
 		[PrimaryKey, Identity] public long   id       { get; set; } // bigint
@@ -91,7 +98,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkTarget { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="Client")]
+	[Table("Client")]
 	public partial class Client
 	{
 		[PrimaryKey, Identity] public long      id              { get; set; } // bigint
@@ -104,7 +111,7 @@ namespace DataModel
 		[Column,     Nullable] public string    stInfo          { get; set; } // character varying(2000)
 	}
 
-	[Table(Schema="public", Name="ClientGroup")]
+	[Table("ClientGroup")]
 	public partial class ClientGroup
 	{
 		[PrimaryKey, Identity] public long      id      { get; set; } // bigint
@@ -113,7 +120,7 @@ namespace DataModel
 		[Column,     Nullable] public string    stName  { get; set; } // character varying(200)
 	}
 
-	[Table(Schema="public", Name="ClientGroupAssociation")]
+	[Table("ClientGroupAssociation")]
 	public partial class ClientGroupAssociation
 	{
 		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
@@ -121,7 +128,7 @@ namespace DataModel
 		[Column,     Nullable] public long? fkClientGroup { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="CompanyNews")]
+	[Table("CompanyNews")]
 	public partial class CompanyNews
 	{
 		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
@@ -133,7 +140,80 @@ namespace DataModel
 		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
 	}
 
-	[Table(Schema="public", Name="Profile")]
+	[Table("PeopleCategory")]
+	public partial class PeopleCategory
+	{
+		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
+		[Column,     Nullable] public string stName { get; set; } // character varying(150)
+	}
+
+	[Table("Person")]
+	public partial class Person
+	{
+		[PrimaryKey, Identity] public long      id                 { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtStart            { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastContact      { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUserAdd          { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserLastUpdate   { get; set; } // bigint
+		[Column,     Nullable] public string    stName             { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stAlias            { get; set; } // character varying(150)
+		[Column,     Nullable] public long?     nuMonthAnniversary { get; set; } // bigint
+		[Column,     Nullable] public long?     nuDayAnniversary   { get; set; } // bigint
+	}
+
+	[Table("PersonCategory")]
+	public partial class PersonCategory
+	{
+		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPeopleCategory { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser           { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog            { get; set; } // timestamp (6) without time zone
+	}
+
+	[Table("PersonContact")]
+	public partial class PersonContact
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkContactForm { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(1500)
+	}
+
+	[Table("PersonEmail")]
+	public partial class PersonEmail
+	{
+		[PrimaryKey, Identity] public long      id       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser   { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog    { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stEmail  { get; set; } // character varying(250)
+	}
+
+	[Table("PersonMessage")]
+	public partial class PersonMessage
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserTo  { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stMessage { get; set; } // character varying(1500)
+	}
+
+	[Table("PersonPhone")]
+	public partial class PersonPhone
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
+	}
+
+	[Table("Profile")]
 	public partial class Profile
 	{
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
@@ -141,7 +221,7 @@ namespace DataModel
 		[Column,     Nullable] public string stPermissions { get; set; } // character varying(9999)
 	}
 
-	[Table(Schema="public", Name="Project")]
+	[Table("Project")]
 	public partial class Project
 	{
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
@@ -151,7 +231,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtCreation        { get; set; } // timestamp (6) without time zone
 	}
 
-	[Table(Schema="public", Name="ProjectPhase")]
+	[Table("ProjectPhase")]
 	public partial class ProjectPhase
 	{
 		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
@@ -159,7 +239,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkProject { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="ProjectSprint")]
+	[Table("ProjectSprint")]
 	public partial class ProjectSprint
 	{
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
@@ -169,7 +249,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkPhase       { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="ProjectSprintVersion")]
+	[Table("ProjectSprintVersion")]
 	public partial class ProjectSprintVersion
 	{
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
@@ -178,7 +258,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkVersionState { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="ProjectUser")]
+	[Table("ProjectUser")]
 	public partial class ProjectUser
 	{
 		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
@@ -188,7 +268,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtJoin    { get; set; } // timestamp (6) without time zone
 	}
 
-	[Table(Schema="public", Name="Setup")]
+	[Table("Setup")]
 	public partial class Setup
 	{
 		[PrimaryKey, Identity] public long   id               { get; set; } // bigint
@@ -197,7 +277,7 @@ namespace DataModel
 		[Column,     Nullable] public string stProtocolFormat { get; set; } // character varying(20)
 	}
 
-	[Table(Schema="public", Name="Survey")]
+	[Table("Survey")]
 	public partial class Survey
 	{
 		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
@@ -209,7 +289,7 @@ namespace DataModel
 		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
 	}
 
-	[Table(Schema="public", Name="SurveyOption")]
+	[Table("SurveyOption")]
 	public partial class SurveyOption
 	{
 		[PrimaryKey, Identity] public long   id       { get; set; } // bigint
@@ -218,7 +298,7 @@ namespace DataModel
 		[Column,     Nullable] public string stOption { get; set; } // character varying(200)
 	}
 
-	[Table(Schema="public", Name="SurveyUserOption")]
+	[Table("SurveyUserOption")]
 	public partial class SurveyUserOption
 	{
 		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
@@ -228,7 +308,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
 	}
 
-	[Table(Schema="public", Name="Task")]
+	[Table("Task")]
 	public partial class Task
 	{
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
@@ -253,7 +333,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtExpired         { get; set; } // timestamp (6) without time zone
 	}
 
-	[Table(Schema="public", Name="TaskAccumulatorValue")]
+	[Table("TaskAccumulatorValue")]
 	public partial class TaskAccumulatorValue
 	{
 		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
@@ -266,7 +346,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkUser      { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="TaskCategory")]
+	[Table("TaskCategory")]
 	public partial class TaskCategory
 	{
 		[PrimaryKey, Identity] public long   id               { get; set; } // bigint
@@ -280,7 +360,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  nuExpiresMinutes { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="TaskCheckPoint")]
+	[Table("TaskCheckPoint")]
 	public partial class TaskCheckPoint
 	{
 		[PrimaryKey, Identity] public long   id         { get; set; } // bigint
@@ -289,7 +369,7 @@ namespace DataModel
 		[Column,     Nullable] public bool?  bMandatory { get; set; } // boolean
 	}
 
-	[Table(Schema="public", Name="TaskCheckPointMark")]
+	[Table("TaskCheckPointMark")]
 	public partial class TaskCheckPointMark
 	{
 		[PrimaryKey, Identity] public long      id           { get; set; } // bigint
@@ -299,7 +379,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog        { get; set; } // timestamp (6) without time zone
 	}
 
-	[Table(Schema="public", Name="TaskClient")]
+	[Table("TaskClient")]
 	public partial class TaskClient
 	{
 		[PrimaryKey, Identity] public long  id       { get; set; } // bigint
@@ -307,7 +387,7 @@ namespace DataModel
 		[Column,     Nullable] public long? fkClient { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="TaskClientGroup")]
+	[Table("TaskClientGroup")]
 	public partial class TaskClientGroup
 	{
 		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
@@ -315,7 +395,7 @@ namespace DataModel
 		[Column,     Nullable] public long? fkClientGroup { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="TaskCustomStep")]
+	[Table("TaskCustomStep")]
 	public partial class TaskCustomStep
 	{
 		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
@@ -326,7 +406,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
 	}
 
-	[Table(Schema="public", Name="TaskDependency")]
+	[Table("TaskDependency")]
 	public partial class TaskDependency
 	{
 		[PrimaryKey, Identity] public long      id         { get; set; } // bigint
@@ -336,7 +416,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkSubTask  { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="TaskFlow")]
+	[Table("TaskFlow")]
 	public partial class TaskFlow
 	{
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
@@ -348,7 +428,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="TaskFlowChange")]
+	[Table("TaskFlowChange")]
 	public partial class TaskFlowChange
 	{
 		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
@@ -360,7 +440,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkNewFlowState { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="TaskMessage")]
+	[Table("TaskMessage")]
 	public partial class TaskMessage
 	{
 		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
@@ -371,7 +451,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkCurrentFlow { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="TaskProgress")]
+	[Table("TaskProgress")]
 	public partial class TaskProgress
 	{
 		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
@@ -380,7 +460,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
 	}
 
-	[Table(Schema="public", Name="TaskQuestion")]
+	[Table("TaskQuestion")]
 	public partial class TaskQuestion
 	{
 		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
@@ -394,7 +474,7 @@ namespace DataModel
 		[Column,     Nullable] public bool?     bFinal         { get; set; } // boolean
 	}
 
-	[Table(Schema="public", Name="TaskType")]
+	[Table("TaskType")]
 	public partial class TaskType
 	{
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
@@ -405,7 +485,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkProject      { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="TaskTypeAccumulator")]
+	[Table("TaskTypeAccumulator")]
 	public partial class TaskTypeAccumulator
 	{
 		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
@@ -417,7 +497,7 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="User")]
+	[Table("User")]
 	public partial class User
 	{
 		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
@@ -428,9 +508,10 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLastLogin      { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtCreation       { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public string    stCurrentSession { get; set; } // character varying(20)
+		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="UserEmail")]
+	[Table("UserEmail")]
 	public partial class UserEmail
 	{
 		[PrimaryKey, Identity] public long   id      { get; set; } // bigint
@@ -438,7 +519,7 @@ namespace DataModel
 		[Column,     Nullable] public string stEmail { get; set; } // character varying(250)
 	}
 
-	[Table(Schema="public", Name="UserNewsRead")]
+	[Table("UserNewsRead")]
 	public partial class UserNewsRead
 	{
 		[PrimaryKey, Identity] public long      id     { get; set; } // bigint
@@ -447,7 +528,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkUser { get; set; } // bigint
 	}
 
-	[Table(Schema="public", Name="UserPhone")]
+	[Table("UserPhone")]
 	public partial class UserPhone
 	{
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
@@ -489,6 +570,48 @@ namespace DataModel
 		}
 
 		public static CompanyNews Find(this ITable<CompanyNews> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static PeopleCategory Find(this ITable<PeopleCategory> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Person Find(this ITable<Person> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static PersonCategory Find(this ITable<PersonCategory> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static PersonContact Find(this ITable<PersonContact> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static PersonEmail Find(this ITable<PersonEmail> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static PersonMessage Find(this ITable<PersonMessage> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static PersonPhone Find(this ITable<PersonPhone> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

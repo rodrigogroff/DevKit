@@ -21,6 +21,7 @@ ALTER TABLE public."User" ADD COLUMN if not exists "bActive" boolean;
 ALTER TABLE public."User" ADD COLUMN if not exists "stLogin" character varying(200);
 ALTER TABLE public."User" ADD COLUMN if not exists "stPassword" character varying(30);
 ALTER TABLE public."User" ADD COLUMN if not exists "fkProfile" bigint;
+ALTER TABLE public."User" ADD COLUMN if not exists "fkPerson" bigint;
 ALTER TABLE public."User" ADD COLUMN if not exists "dtLastLogin" timestamp without time zone;
 ALTER TABLE public."User" ADD COLUMN if not exists "dtCreation" timestamp without time zone;
 ALTER TABLE public."User" ADD COLUMN if not exists "stCurrentSession" character varying(20);
@@ -276,3 +277,55 @@ ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "bSelected" boolean
 ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "stName" character varying(150);
 ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+
+CREATE TABLE IF NOT EXISTS public."Person" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."Person" OWNER to postgres;
+ALTER TABLE public."Person" ADD COLUMN if not exists "dtStart" timestamp without time zone;
+ALTER TABLE public."Person" ADD COLUMN if not exists "dtLastContact" timestamp without time zone;
+ALTER TABLE public."Person" ADD COLUMN if not exists "fkUserAdd" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "fkUserLastUpdate" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "stName" character varying(150);
+ALTER TABLE public."Person" ADD COLUMN if not exists "stAlias" character varying(150);
+ALTER TABLE public."Person" ADD COLUMN if not exists "nuMonthAnniversary" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "nuDayAnniversary" bigint;
+
+CREATE TABLE IF NOT EXISTS public."PersonEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."PersonEmail" OWNER to postgres;
+ALTER TABLE public."PersonEmail" ADD COLUMN if not exists "fkPerson" bigint;
+ALTER TABLE public."PersonEmail" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."PersonEmail" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."PersonEmail" ADD COLUMN if not exists "stEmail" character varying(250);
+
+CREATE TABLE IF NOT EXISTS public."PersonPhone" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."PersonPhone" OWNER to postgres;
+ALTER TABLE public."PersonPhone" ADD COLUMN if not exists "fkPerson" bigint;
+ALTER TABLE public."PersonPhone" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."PersonPhone" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."PersonPhone" ADD COLUMN if not exists "stPhone" character varying(50);
+ALTER TABLE public."PersonPhone" ADD COLUMN if not exists "stDescription" character varying(50);
+
+CREATE TABLE IF NOT EXISTS public."PersonContact" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."PersonContact" OWNER to postgres;
+ALTER TABLE public."PersonContact" ADD COLUMN if not exists "fkPerson" bigint;
+ALTER TABLE public."PersonContact" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."PersonContact" ADD COLUMN if not exists "fkContactForm" bigint;
+ALTER TABLE public."PersonContact" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."PersonContact" ADD COLUMN if not exists "stMessage" character varying(1500);
+
+CREATE TABLE IF NOT EXISTS public."PersonMessage" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."PersonMessage" OWNER to postgres;
+ALTER TABLE public."PersonMessage" ADD COLUMN if not exists "fkPerson" bigint;
+ALTER TABLE public."PersonMessage" ADD COLUMN if not exists "fkUserTo" bigint;
+ALTER TABLE public."PersonMessage" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."PersonMessage" ADD COLUMN if not exists "stMessage" character varying(1500);
+
+CREATE TABLE IF NOT EXISTS public."PeopleCategory" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."PeopleCategory" OWNER to postgres;
+ALTER TABLE public."PeopleCategory" ADD COLUMN if not exists "stName" character varying(150);
+
+CREATE TABLE IF NOT EXISTS public."PersonCategory" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."PersonCategory" OWNER to postgres;
+ALTER TABLE public."PersonCategory" ADD COLUMN if not exists "fkPerson" bigint;
+ALTER TABLE public."PersonCategory" ADD COLUMN if not exists "fkPeopleCategory" bigint;
+ALTER TABLE public."PersonCategory" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."PersonCategory" ADD COLUMN if not exists "dtLog" timestamp without time zone;

@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
             string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
             var hshReport = SetupCacheReport(CacheTags.EnumMonthReport);
-            if (hshReport[busca] is TaskReport report)
+            if (hshReport[busca] is MonthReport report)
                 return Ok(report);
             
             var query = (from e in new EnumMonth().lst select e);
@@ -20,7 +20,7 @@ namespace DevKit.Web.Controllers
 			if (busca != "")
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 
-            var ret = new
+            var ret = new MonthReport
             {
                 count = query.Count(),
                 results = query.ToList()

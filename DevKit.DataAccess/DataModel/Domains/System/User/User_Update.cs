@@ -75,8 +75,6 @@ namespace DataModel
 						Create(db, TrackChanges(db, ref bProfileChanged), "");
 
 						db.Update(this);
-
-						logs = LoadLogs(db);
 						break;
 					}
 									
@@ -117,9 +115,6 @@ namespace DataModel
 
 							db.Update(ent);
 						}							
-
-						phones = LoadPhones(db);
-						logs = LoadLogs(db);
 						break;
 					}
 
@@ -137,8 +132,6 @@ namespace DataModel
 						}.
 						Create(db, "Phone removed: " + ent.stPhone, "");
 
-						phones = LoadPhones(db);
-						logs = LoadLogs(db);
 						break;
 					}
 
@@ -178,9 +171,6 @@ namespace DataModel
 
 							db.Update(ent);
 						}
-							
-						emails = LoadEmails(db);
-						logs = LoadLogs(db);
 						break;
 					}
 
@@ -197,9 +187,6 @@ namespace DataModel
 							fkTarget = this.id
 						}.
 						Create(db, "Email removed: " + ent.stEmail, "");
-
-						emails = LoadEmails(db);
-						logs = LoadLogs(db);
 						break;
 					}
 			}

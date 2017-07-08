@@ -18,7 +18,15 @@ namespace DataModel
 			return ret;
 		}
 
-		public Profile GetProfile(long? id)
+        public Person GetPerson(long? id)
+        {
+            if (id == null) return null;
+            var tag = "Person" + id; var ret = Cache[tag] as Person;
+            if (ret == null) { ret = Person.Find((long)id); Cache[tag] = ret; }
+            return ret;
+        }
+
+        public Profile GetProfile(long? id)
 		{
 			if (id == null) return null;
 			var tag = "Profile" + id; var ret = Cache[tag] as Profile;

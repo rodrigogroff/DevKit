@@ -3,6 +3,7 @@
 a fazer (prioridade)
 ------------------------------
 	
+	- country, state, city
 	- rever management
 	- implementar cadastro de pessoas / contatos  (usuários synch em pessoas)
 	- implementar agenda da pessoa / setor da empresa / locais de reunião	

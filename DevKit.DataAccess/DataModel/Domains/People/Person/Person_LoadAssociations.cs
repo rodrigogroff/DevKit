@@ -10,9 +10,17 @@ namespace DataModel
 		{
 			var setup = db.GetSetup();
 
-            //sdtLastLogin = dtLastLogin?.ToString(setup.stDateFormat);
-	        
-			phones = LoadPhones(db);
+            sdtLastUpdate = dtLastUpdate?.ToString(setup.stDateFormat);
+            sdtLastContact = dtLastContact?.ToString(setup.stDateFormat);
+            sdtStart = dtStart?.ToString(setup.stDateFormat);
+
+            if (fkUserLastContact != null)
+                sfkUserLastContact = db.GetUser(fkUserLastContact).stLogin;
+
+            if (fkUserLastUpdate != null)
+                sfkUserLastUpdate = db.GetUser(fkUserLastUpdate).stLogin;
+
+            phones = LoadPhones(db);
 			emails = LoadEmails(db);
 		
 			return this;

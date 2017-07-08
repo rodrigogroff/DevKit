@@ -43,16 +43,22 @@
 										<th width="150px">Name</th>
 										<th width="150px">Phones</th>
 										<th width="220px">Emails</th>
-                                        <th width="120px">Added</th>
-										<th width="120px">Last Contact</th>
+                                        <th width="120px">Date Added</th>
+										<th width="120px">Last Update</th>
+                                        <th width="120px">User</th>
+                                        <th width="120px">Last Contact</th>                                        
+                                        <th width="120px">User</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.stName }}</td>
 									<td><div data-ng-repeat="m in mdl.phones">{{ m.stPhone }}</div></td>
 									<td><div data-ng-repeat="m in mdl.emails">{{ m.stEmail }}</div></td>
-                                    <td>{{ mdl.sdtAdded }}</td>
-									<td>{{ mdl.sdtLastContact }}</td>
+                                    <td>{{ mdl.sdtStart }}</td>
+									<td>{{ mdl.sdtLastUpdate }}</td>
+                                    <td>{{ mdl.sfkUserLastUpdate }}</td>
+                                    <td>{{ mdl.sdtLastUpdate }}</td>
+                                    <td>{{ mdl.sfkUserLastContact }}</td>
 								</tr>
 							</table>
 						</div>

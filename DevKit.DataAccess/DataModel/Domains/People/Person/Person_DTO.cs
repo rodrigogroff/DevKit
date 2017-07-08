@@ -6,9 +6,12 @@ namespace DataModel
 	{
         public object anexedEntity;
 
-		public string sdtLastLogin = "",
-						sdtCreation = "",
-						updateCommand = "";
+		public string sdtLastContact = "",
+                      sdtLastUpdate = "",
+                      sfkUserLastContact = "",
+                      sfkUserLastUpdate = "",
+                      sdtStart = "",
+					  updateCommand = "";
 
 		public List<PersonPhone> phones;
 		public List<PersonEmail> emails;

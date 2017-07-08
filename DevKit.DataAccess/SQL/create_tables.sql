@@ -281,9 +281,11 @@ ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "dtLog" timestamp w
 CREATE TABLE IF NOT EXISTS public."Person" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Person" OWNER to postgres;
 ALTER TABLE public."Person" ADD COLUMN if not exists "dtStart" timestamp without time zone;
+ALTER TABLE public."Person" ADD COLUMN if not exists "dtLastUpdate" timestamp without time zone;
 ALTER TABLE public."Person" ADD COLUMN if not exists "dtLastContact" timestamp without time zone;
 ALTER TABLE public."Person" ADD COLUMN if not exists "fkUserAdd" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "fkUserLastUpdate" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "fkUserLastContact" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "stName" character varying(150);
 ALTER TABLE public."Person" ADD COLUMN if not exists "stAlias" character varying(150);
 ALTER TABLE public."Person" ADD COLUMN if not exists "nuMonthAnniversary" bigint;

@@ -8,27 +8,25 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var filter = new UserFilter
+            var filter = new PersonFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
                 email = Request.GetQueryStringValue("email")?.ToUpper(),
                 phone = Request.GetQueryStringValue("phone")?.ToUpper(),
-                fkPerfil = Request.GetQueryStringValue<long?>("fkPerfil", null),
-                ativo = Request.GetQueryStringValue<bool?>("ativo", null),
             };
 
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.UserReport);
-            if (hshReport[parameters] is UserReport report)
+            var hshReport = SetupCacheReport(CacheTags.PersonReport);
+            if (hshReport[parameters] is PersonReport report)
                 return Ok(report);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var ret = new User().ComposedFilters(db, filter);
+            var ret = new Person().ComposedFilters(db, filter);
             
             hshReport[parameters] = ret;
 
@@ -37,19 +35,13 @@ namespace DevKit.Web.Controllers
         
         public IHttpActionResult Get(long id)
 		{
-            if (id == OperationTags.GET_CURRENT_USER)
-            {
-                StartDatabaseAndAuthorize();
-                return Ok(db.currentUser);
-            }                
-
-            if (RestoreCache(CacheTags.User, id) is User obj)
+            if (RestoreCache(CacheTags.Person, id) is Person obj)
                 return Ok(obj);
             
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.GetUser(id);
+            var mdl = db.GetPerson(id);
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
@@ -61,7 +53,7 @@ namespace DevKit.Web.Controllers
             return Ok(mdl);
 		}
 
-		public IHttpActionResult Post(User mdl)
+		public IHttpActionResult Post(Person mdl)
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -71,39 +63,26 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db);
 
-            CleanCache(db, CacheTags.User, null);
-            CleanCache(db, CacheTags.Profile, null);
-            CleanCache(db, CacheTags.Project, null);
-
-            StoreCache(CacheTags.User, mdl.id, mdl);
+            CleanCache(db, CacheTags.Person, null);
+            StoreCache(CacheTags.Person, mdl.id, mdl);
 
             return Ok();			
 		}
 
-		public IHttpActionResult Put(long id, User mdl)
+		public IHttpActionResult Put(long id, Person mdl)
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            bool bProfileChanged = false;
-
-			if (!mdl.Update(db, ref apiError,ref bProfileChanged))
+			if (!mdl.Update(db, ref apiError))
 				return BadRequest(apiError);
 
             mdl.LoadAssociations(db);
+                        
+            CleanCache(db, CacheTags.Person, null);
+            StoreCache(CacheTags.Person, mdl.id, mdl);
 
-            CleanCache(db, CacheTags.User, null);
-            CleanCache(db, CacheTags.Project, null);
-
-            if (bProfileChanged)
-                CleanCache(db, CacheTags.Profile, null);
-
-            StoreCache(CacheTags.User, mdl.id, mdl);
-
-            if (mdl.resetPassword != "")
-                return Ok(mdl);
-            else
-                return Ok();			
+            return Ok();			
 		}
 
 		public IHttpActionResult Delete(long id)
@@ -121,7 +100,7 @@ namespace DevKit.Web.Controllers
 
 			mdl.Delete(db);
 
-            CleanCache(db, CacheTags.User, null);
+            CleanCache(db, CacheTags.Person, null);
 
             return Ok();
 		}

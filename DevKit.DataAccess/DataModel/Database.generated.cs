@@ -159,6 +159,8 @@ namespace DataModel
 		[Column,     Nullable] public string    stAlias            { get; set; } // character varying(150)
 		[Column,     Nullable] public long?     nuMonthAnniversary { get; set; } // bigint
 		[Column,     Nullable] public long?     nuDayAnniversary   { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLastUpdate       { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUserLastContact  { get; set; } // bigint
 	}
 
 	[Table("PersonCategory")]

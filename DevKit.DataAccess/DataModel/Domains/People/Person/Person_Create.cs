@@ -35,6 +35,9 @@ namespace DataModel
 				return false;
 			}
 
+            this.dtStart = DateTime.Now;
+            this.fkUserAdd = user.id;
+
             id = Convert.ToInt64(db.InsertWithIdentity(this));
             		
 			return true;

@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 
 namespace DataModel
@@ -15,12 +16,12 @@ namespace DataModel
 				resp = "Name already taken";
 				return false;
 			}
-
+            
 			switch (updateCommand)
 			{
 				case "entity":
 					{
-						db.Update(this);
+						
 						break;
 					}
 									
@@ -88,7 +89,12 @@ namespace DataModel
 					}
 			}
 
-			return true;
+            this.dtLastUpdate = DateTime.Now;
+            this.fkUserLastUpdate = user.id;
+
+            db.Update(this);
+
+            return true;
 		}
 	}
 }

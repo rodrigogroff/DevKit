@@ -1,12 +1,10 @@
 ﻿'use strict';
 
-angular.module('app.controllers').controller('UserController',
+angular.module('app.controllers').controller('PersonController',
 ['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects', 
 function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
-	$scope.selectProfiles = ngSelects.obterConfiguracao(Api.ProfileCombo, {});
 
 	$scope.loading = false;
 
@@ -57,7 +55,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		if (id > 0)
 		{
 			$scope.loading = true;
-            Api.User.get({ id: id }, function (data)
+            Api.Person.get({ id: id }, function (data)
 			{
 				$scope.viewModel = data;
 				$scope.loading = false;
@@ -101,25 +99,21 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.save = function ()
 	{
-		$scope.resetPassword = undefined;
-
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-			$scope.stLogin_fail = invalidCheck($scope.viewModel.stLogin);
-			$scope.fkProfile_fail = $scope.viewModel.fkProfile == undefined;
+			$scope.stName_fail = invalidCheck($scope.viewModel.stName);			
 	
-            if (!$scope.stLogin_fail &&
-                !$scope.fkProfile_fail)
+            if (!$scope.stName_fail)
             {
 				if (id > 0)
                 {
 					$scope.viewModel.updateCommand = "entity";
 
-                    Api.User.update({ id: id }, $scope.viewModel, function (data)
+                    Api.Person.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('User saved!', 'Success');
+						toastr.success('Person saved!', 'Success');
                         init();
 					},
 					function (response)
@@ -129,10 +123,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				}
 				else
 				{
-                    Api.User.add($scope.viewModel, function (data)
+                    Api.Person.add($scope.viewModel, function (data)
 					{
-						toastr.success('User added!', 'Success');
-                        $state.go('users');
+                        toastr.success('Person added!', 'Success');
+                        $state.go('persons');
 					},
 					function (response)
 					{
@@ -144,20 +138,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	};
 
 	$scope.list = function () {
-		$state.go('users');
-	}
-
-	$scope.resetPass = function ()
-    {
-		$scope.viewModel.updateCommand = "resetPassword";
-
-        Api.User.update({ id: id }, $scope.viewModel, function (data)
-		{			
-			$scope.resetPassword = data.resetPassword;
-		},
-		function (response) {
-			toastr.error(response.data.message, 'Error');
-		});
+		$state.go('persons');
 	}
 
 	$scope.remove = function ()
@@ -166,7 +147,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			toastr.error('Access denied!', 'Permission');
 		else
 		{
-            Api.User.remove({ id: id }, function (data)
+            Api.Person.remove({ id: id }, function (data)
 			{
 				toastr.success('User removed!', 'Success');
 				$scope.list();
@@ -193,7 +174,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
             $scope.viewModel.updateCommand = "removePhone";
 		    $scope.viewModel.anexedEntity = $scope.viewModel.phones[index];
 
-            Api.User.update({ id: id }, $scope.viewModel, function (data) {
+            Api.Person.update({ id: id }, $scope.viewModel, function (data) {
 		        toastr.success('Phone removed', 'Success');
                 init();
 		    });
@@ -238,7 +219,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.viewModel.updateCommand = "newPhone";
 				$scope.viewModel.anexedEntity = $scope.newPhone;
 
-                Api.User.update({ id: id }, $scope.viewModel, function (data)
+                Api.Person.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newPhone = {};
 					toastr.success('Phone saved', 'Success');					
@@ -266,7 +247,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			$scope.viewModel.updateCommand = "removeEmail";
 			$scope.viewModel.anexedEntity = $scope.viewModel.emails[index];
 
-            Api.User.update({ id: id }, $scope.viewModel, function (data)
+            Api.Person.update({ id: id }, $scope.viewModel, function (data)
 			{
 				toastr.success('Email removed', 'Success');
                 init();
@@ -309,7 +290,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.viewModel.updateCommand = "newEmail";
 				$scope.viewModel.anexedEntity = $scope.newEmail;
 
-                Api.User.update({ id: id }, $scope.viewModel, function (data)
+                Api.Person.update({ id: id }, $scope.viewModel, function (data)
                 {
                     $scope.newEmail = {};
                     toastr.success('Email saved', 'Success');

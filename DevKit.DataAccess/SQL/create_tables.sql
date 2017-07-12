@@ -290,6 +290,8 @@ ALTER TABLE public."Person" ADD COLUMN if not exists "stName" character varying(
 ALTER TABLE public."Person" ADD COLUMN if not exists "stAlias" character varying(150);
 ALTER TABLE public."Person" ADD COLUMN if not exists "nuMonthAnniversary" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "nuDayAnniversary" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "nuYearBirth" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "bDeceased" boolean;
 
 CREATE TABLE IF NOT EXISTS public."PersonEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."PersonEmail" OWNER to postgres;

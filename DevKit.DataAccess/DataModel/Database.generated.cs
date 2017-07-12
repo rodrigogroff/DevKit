@@ -161,6 +161,8 @@ namespace DataModel
 		[Column,     Nullable] public long?     nuDayAnniversary   { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLastUpdate       { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkUserLastContact  { get; set; } // bigint
+		[Column,     Nullable] public long?     nuYearBirth        { get; set; } // bigint
+		[Column,     Nullable] public bool?     bDeceased          { get; set; } // boolean
 	}
 
 	[Table("PersonCategory")]

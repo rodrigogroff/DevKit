@@ -20,6 +20,9 @@ namespace DataModel
             if (fkUserLastUpdate != null)
                 sfkUserLastUpdate = db.GetUser(fkUserLastUpdate).stLogin;
 
+            if (fkUserAdd != null)
+                sfkUserAdd = db.GetUser(fkUserAdd).stLogin;
+
             phones = LoadPhones(db);
 			emails = LoadEmails(db);
 		

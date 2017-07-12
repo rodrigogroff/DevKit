@@ -43,9 +43,8 @@ namespace DataModel
 							db.Insert(ent);
 						}
 						else
-						{
 							db.Update(ent);
-						}							
+
 						break;
 					}
 
@@ -54,6 +53,7 @@ namespace DataModel
 						var ent = JsonConvert.DeserializeObject<PersonPhone>(anexedEntity.ToString());
 
 						db.Delete(ent);
+
 						break;
 					}
 
@@ -74,10 +74,9 @@ namespace DataModel
 							db.Insert(ent);
 						}
 						else
-						{
 							db.Update(ent);
-						}
-						break;
+
+                        break;
 					}
 
 				case "removeEmail":
@@ -85,12 +84,13 @@ namespace DataModel
 						var ent = JsonConvert.DeserializeObject<PersonEmail>(anexedEntity.ToString());
 
 						db.Delete(ent); 
+
 						break;
 					}
 			}
 
-            this.dtLastUpdate = DateTime.Now;
-            this.fkUserLastUpdate = user.id;
+            dtLastUpdate = DateTime.Now;
+            fkUserLastUpdate = user.id;
 
             db.Update(this);
 

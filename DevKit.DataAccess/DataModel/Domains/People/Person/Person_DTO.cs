@@ -10,6 +10,7 @@ namespace DataModel
                       sdtLastUpdate = "",
                       sfkUserLastContact = "",
                       sfkUserLastUpdate = "",
+                      sfkUserAdd = "",
                       sdtStart = "",
 					  updateCommand = "";
 

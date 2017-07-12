@@ -90,7 +90,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.GetUser(id);
+            var mdl = db.GetPerson(id);
 
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);

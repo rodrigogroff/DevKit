@@ -40,7 +40,7 @@
                             <table class="table table-hover"  style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th width="150px">Name</th>
+                                        <th width="150px">Name / Alias</th>
                                         <th width="120px">Phones</th>
                                         <th width="150px">Emails</th>
                                         <th width="120px">Date Added</th>
@@ -51,7 +51,7 @@
                                     </tr>
                                 </thead>
                                 <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                    <td>{{ mdl.stName }}</td>
+                                    <td>{{ mdl.stName }} <i>'{{ mdl.stAlias }}'</i></td>
                                     <td><div data-ng-repeat="m in mdl.phones">{{ m.stPhone }}</div></td>
                                     <td><div data-ng-repeat="m in mdl.emails">{{ m.stEmail }}</div></td>
                                     <td>{{ mdl.sdtStart }}</td>

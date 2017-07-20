@@ -45,12 +45,16 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
+    
+
 	init();
 
 	function init()
 	{
 		CheckPermissions();
-		loadSetup();
+        loadSetup();
+
+        $scope.selectMonths = ngSelects.obterConfiguracao(Api.Month, {});
 
 		if (id > 0)
 		{

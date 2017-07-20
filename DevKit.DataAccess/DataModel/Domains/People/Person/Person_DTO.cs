@@ -10,7 +10,9 @@ namespace DataModel
                       sdtLastUpdate = "",
                       sfkUserLastContact = "",
                       sfkUserLastUpdate = "",
+                      sfkUserAdd = "",
                       sdtStart = "",
+                      snuAge = "",
 					  updateCommand = "";
 
 		public List<PersonPhone> phones;

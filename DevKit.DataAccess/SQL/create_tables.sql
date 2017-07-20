@@ -288,8 +288,8 @@ ALTER TABLE public."Person" ADD COLUMN if not exists "fkUserLastUpdate" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "fkUserLastContact" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "stName" character varying(150);
 ALTER TABLE public."Person" ADD COLUMN if not exists "stAlias" character varying(150);
-ALTER TABLE public."Person" ADD COLUMN if not exists "nuMonthAnniversary" bigint;
-ALTER TABLE public."Person" ADD COLUMN if not exists "nuDayAnniversary" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "nuMonthAniversary" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "nuDayAniversary" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "nuYearBirth" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "bDeceased" boolean;
 

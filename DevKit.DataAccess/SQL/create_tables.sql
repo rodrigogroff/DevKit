@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS public."User" ( id bigserial NOT NULL, PRIMARY KEY (i
 ALTER TABLE public."User" OWNER to postgres;
 ALTER TABLE public."User" ADD COLUMN if not exists "bActive" boolean;
 ALTER TABLE public."User" ADD COLUMN if not exists "stLogin" character varying(200);
+ALTER TABLE public."User" ADD COLUMN if not exists "stName" character varying(200);
 ALTER TABLE public."User" ADD COLUMN if not exists "stPassword" character varying(30);
 ALTER TABLE public."User" ADD COLUMN if not exists "fkProfile" bigint;
 ALTER TABLE public."User" ADD COLUMN if not exists "fkPerson" bigint;

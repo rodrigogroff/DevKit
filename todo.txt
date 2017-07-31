@@ -4,25 +4,25 @@ a fazer (prioridade)
 ------------------------------
 	
 	- country, state, city
-	- rever management
-	- implementar cadastro de pessoas / contatos  (usuários synch em pessoas)
+	- rever management, usando genérico
+	- implementar cadastro de pessoas / contatos (usuários synch em pessoas)
 	- implementar agenda da pessoa / setor da empresa / locais de reunião	
-	- pensar datas!
+	- pensar datas e prazos
 
 ------------------------------
 a fazer (ajustes)
 ------------------------------
 
-	-na listagem de perfils, trazer cinco primeiros users em nova coluna 'users'
-	-na listagem de projetos, trazer em coluna 'tasks' o count geral de todas as tarefas do projeto
-	-na listagem de projetos, trazer em coluna 'versions' o count geral de todas as versões de todos os sprints do projeto
-	-na listagem de 'task type', procurar nas categorias por um texto qualquer (novo filtro 'Category' por texto)
-	-na listagem de 'task type', trazer o count de tarefas 'TASKS' pela task type em nova coluna
-	-na listagem de 'news', trazer o campo padrão 'Search' e a combo de projeto nos filtros
-	-na listagem de 'surveys', trazer o campo padrão 'Search' e a combo de projeto nos filtros	
-	-ao acrescentar um cliente em um grupo de clientes, criar campo dtJoin e mostrar na visualização do item
-	-na listagem de clientes, na pesquisa, acrescentar uma busca por nome e email de pessoa de contato	
-	-na tela inicial (ao clicar no simbolo) e trazer as tarefas abertas, colocar um aviso em vermelho nas tarefas expiradas
+(1)		-na listagem de perfils, trazer cinco primeiros users em nova coluna 'users'
+(2)		-na listagem de projetos, trazer em coluna 'tasks' o count geral de todas as tarefas do projeto
+(3)		-na listagem de projetos, trazer em coluna 'versions' o count geral de todas as versões de todos os sprints do projeto
+(4)		-na listagem de 'task type', procurar nas categorias por um texto qualquer (novo filtro 'Category' por texto)
+(5)		-na listagem de 'task type', trazer o count de tarefas 'TASKS' pela task type em nova coluna
+(6)		-na listagem de 'news', trazer o campo padrão 'Search' e a combo de projeto nos filtros
+(7)		-na listagem de 'surveys', trazer o campo padrão 'Search' e a combo de projeto nos filtros	
+(8)		-ao acrescentar um cliente em um grupo de clientes, criar campo dtJoin e mostrar na visualização do item
+(9)		-na listagem de clientes, na pesquisa, acrescentar uma busca por nome e email de pessoa de contato	
+(10) 	-na tela inicial (ao clicar no simbolo) e trazer as tarefas abertas, colocar um aviso em vermelho nas tarefas expiradas
 
 ------------------------------
 a fazer (estrutural)

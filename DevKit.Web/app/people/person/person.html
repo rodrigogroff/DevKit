@@ -22,10 +22,10 @@
 							<thead>
 								<tr>
 									<th width="20px"></th>
-									<th width="90px"></th>
+									<th width="140px"></th>
 									<th width="20px"></th>
-                                    <th width="400px" style="text-align:left"></th>
-                                    <th width="20px"></th>
+									<th width="480px"></th>
+									<th width="20px"></th>
 								</tr>
 							</thead>
 							<tr height="22px"></tr>
@@ -48,8 +48,7 @@
                                 <td>
                                     Alias
                                 </td>
-                                <td>
-                                    
+                                <td>                                   
                                 </td>
                                 <td>
                                     <input type="text" class="form-control input-transparent" maxlength="100"
@@ -57,6 +56,8 @@
                                 </td>
                                 <td></td>
                             </tr>
+                            
+                            <tr height="12px"></tr>
 
                             <tr height="40px">
                                 <td></td>
@@ -64,28 +65,25 @@
                                     Aniversary
                                 </td>
                                 <td>
-                                    
+                                    <button class="btn btn-xs btn-danger" ng-show="dayBirth_fail">!</button>
                                 </td>
                                 <td>
                                     <table>
                                         <tr>
-                                            <td width="60px">Day</td>
-                                            <td width="99px">
-                                                <input type="number" class="form-control input-transparent" maxlength="2"
-                                                       ng-disabled="!permModel.edicao" ng-model="viewModel.nuDayAnniversary">
+                                            <td width="80px">Day</td>
+                                            <td width="110px">
+                                                <input type="number" class="form-control input-transparent" maxlength="2" min="1" max="31"
+                                                       ng-disabled="!permModel.edicao" ng-model="viewModel.nuDayAniversary">
                                             </td>
-
                                             <td width="20px"></td>
-                                            <td width="60px">Month</td>
-                                            <td width="99px">
-                                                <input type="number" class="form-control input-transparent" maxlength="2"
-                                                       ng-disabled="!permModel.edicao" ng-model="viewModel.nuMonthAnniversary">
+                                            <td width="80px">Month</td>
+                                            <td width="110px">
+                                                <input type="hidden" style="width:100%" ui-select2="selectMonths" ng-model="viewModel.nuMonthAniversary" />
                                             </td>
-
                                             <td width="20px"></td>
-                                            <td width="60px">Year</td>
-                                            <td width="99px">
-                                                <input type="number" class="form-control input-transparent" maxlength="2"
+                                            <td width="80px">Year</td>
+                                            <td width="110px">
+                                                <input type="number" class="form-control input-transparent" maxlength="2" min="1920"
                                                        ng-disabled="!permModel.edicao" ng-model="viewModel.nuYearBirth">
                                             </td>
                                         </tr>
@@ -94,42 +92,63 @@
                                 <td></td>
                             </tr>
 
-                            <tr height="40px" ng-if="viewModel.sfkUserLastUpdate != undefined">
+                            <tr height="40px" ng-if="viewModel.snuAge != ''">
                                 <td></td>
                                 <td>
-                                    Date Added
+                                    Age
                                 </td>
-                                <td></td>
                                 <td>
-                                    <b>{{ viewModel.sdtStart }}</b>, {{ viewModel.sfkUserAdd }}
+                                    
+                                </td>
+                                <td>
+                                    <b>{{ viewModel.snuAge }}</b> years old
                                 </td>
                                 <td></td>
                             </tr>
 
-                            <tr height="40px" ng-if="viewModel.sfkUserLastUpdate != undefined">
+                                                        
+                            <tr height="40px" ng-if="viewModel.id > 0">
+                                <td></td>
+                                <td>
+                                    Date Added
+                                </td>
+                                <td >                                    
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="140px">
+                                                <b>{{ viewModel.sdtStart }}</b>
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="70px">User</td>
+                                            <td width="90px">
+                                                <b>{{ viewModel.sfkUserAdd }}</b>
+                                            </td>
+                                        </tr>
+                                    </table>                                   
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="40px" ng-if="viewModel.id != undefined">
                                 <td></td>
                                 <td>
                                     Last update
                                 </td>
                                 <td></td>
                                 <td>
-                                    <b>{{ viewModel.sdtLastUpdate }}</b>, {{ viewModel.sfkUserLastUpdate }}
-                                </td>
-                                <td></td>
-                            </tr>
-
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    Deceased?
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input name="ativo" type="checkbox" ng-model="viewModel.bDeceased" ng-disabled="!permModel.edicao"> Yes
-                                    <!--<div class="checkbox">
-                                        <label>                                            
-                                        </label>
-                                    </div>-->
+                                    <table>
+                                        <tr>
+                                            <td width="140px">
+                                                <b>{{ viewModel.sdtLastUpdate }}</b>
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="70px">User</td>
+                                            <td width="90px">
+                                                <b>{{ viewModel.sfkUserLastUpdate }}</b>
+                                            </td>
+                                        </tr>
+                                    </table>                   
                                 </td>
                                 <td></td>
                             </tr>
@@ -287,6 +306,41 @@
 											</tr>
 										</table>
 									</div>
+								</td>
+								<td width="20px"></td>
+							</tr>
+						</table>
+					</div>
+				</tab>
+				<tab heading="Audit Log" ng-if="viewModel.id != undefined && auditLogView == true">
+					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+						<table width="100%">
+							<tr height="12px"></tr>
+							<tr>
+								<td width="20px"></td>
+								<td width="400px">
+									<legend style="color:white">Audit Log Track</legend>
+									<br />
+									<table>
+										<tr>
+											<td>
+												<table class="table table-hover" ng-if="viewModel.logs.length > 0">
+													<thead>
+														<tr>
+															<th width="130px">Date</th>
+															<th width="110px">User</th>
+															<th width="380px">Details</th>
+														</tr>
+													</thead>
+													<tr data-ng-repeat="mdl in viewModel.logs">
+														<td>{{ mdl.sdtLog }}</td>
+														<td>{{ mdl.stUser }}</td>
+														<td>{{ mdl.stDetails }}</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
 								</td>
 								<td width="20px"></td>
 							</tr>

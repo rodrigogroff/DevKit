@@ -150,19 +150,19 @@ namespace DataModel
 	[Table("Person")]
 	public partial class Person
 	{
-		[PrimaryKey, Identity] public long      id                 { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtStart            { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastContact      { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUserAdd          { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserLastUpdate   { get; set; } // bigint
-		[Column,     Nullable] public string    stName             { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stAlias            { get; set; } // character varying(150)
-		[Column,     Nullable] public long?     nuMonthAnniversary { get; set; } // bigint
-		[Column,     Nullable] public long?     nuDayAnniversary   { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLastUpdate       { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUserLastContact  { get; set; } // bigint
-		[Column,     Nullable] public long?     nuYearBirth        { get; set; } // bigint
-		[Column,     Nullable] public bool?     bDeceased          { get; set; } // boolean
+		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUserAdd         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserLastUpdate  { get; set; } // bigint
+		[Column,     Nullable] public string    stName            { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stAlias           { get; set; } // character varying(150)
+		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
+		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
+		[Column,     Nullable] public bool?     bDeceased         { get; set; } // boolean
+		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
+		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
 	}
 
 	[Table("PersonCategory")]

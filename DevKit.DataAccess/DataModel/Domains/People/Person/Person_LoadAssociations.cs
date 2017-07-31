@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace DataModel
 {
@@ -14,14 +15,17 @@ namespace DataModel
             sdtLastContact = dtLastContact?.ToString(setup.stDateFormat);
             sdtStart = dtStart?.ToString(setup.stDateFormat);
 
+            if (fkUserAdd != null)
+                sfkUserAdd = db.GetUser(fkUserAdd).stLogin;
+
             if (fkUserLastContact != null)
                 sfkUserLastContact = db.GetUser(fkUserLastContact).stLogin;
 
             if (fkUserLastUpdate != null)
                 sfkUserLastUpdate = db.GetUser(fkUserLastUpdate).stLogin;
 
-            if (fkUserAdd != null)
-                sfkUserAdd = db.GetUser(fkUserAdd).stLogin;
+            if (nuYearBirth != null)
+                snuAge = (DateTime.Now.Year - nuYearBirth).ToString();
 
             phones = LoadPhones(db);
 			emails = LoadEmails(db);

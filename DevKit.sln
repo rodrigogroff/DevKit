@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevKit.DataAccess", "DevKit.DataAccess\DevKit.DataAccess.csproj", "{12E2CE82-0027-4152-ABDF-FCEBE99AE4F7}"
 EndProject
@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		management.txt = management.txt
 		todo.txt = todo.txt
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevKit.Core", "DevKit.Core\DevKit.Core.csproj", "{A7AC4A7B-E79A-4D63-A9D2-1454FF4514B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +39,6 @@ Global
 		{3F37EF80-E4CA-4BF7-8B21-07849230404C}.Stress|Any CPU.Build.0 = Stress|Any CPU
 		{3F37EF80-E4CA-4BF7-8B21-07849230404C}.Validation|Any CPU.ActiveCfg = Validation|Any CPU
 		{3F37EF80-E4CA-4BF7-8B21-07849230404C}.Validation|Any CPU.Build.0 = Validation|Any CPU
-		{A7AC4A7B-E79A-4D63-A9D2-1454FF4514B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7AC4A7B-E79A-4D63-A9D2-1454FF4514B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7AC4A7B-E79A-4D63-A9D2-1454FF4514B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7AC4A7B-E79A-4D63-A9D2-1454FF4514B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7AC4A7B-E79A-4D63-A9D2-1454FF4514B6}.Stress|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7AC4A7B-E79A-4D63-A9D2-1454FF4514B6}.Stress|Any CPU.Build.0 = Debug|Any CPU
-		{A7AC4A7B-E79A-4D63-A9D2-1454FF4514B6}.Validation|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7AC4A7B-E79A-4D63-A9D2-1454FF4514B6}.Validation|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

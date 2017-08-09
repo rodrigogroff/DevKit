@@ -18,7 +18,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			$scope.permModel = data;
 			if (!$scope.permModel.visualizar) {
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Accesso negado!', 'Permissão');
 				$state.go('home');
 			}
 		},
@@ -226,7 +226,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
@@ -304,7 +304,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
                 {
 					Api.Profile.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Profile saved!', 'Success');
+						toastr.success('Perfil salvo!', 'Sucesso');
 						$scope.viewModel.logs = data.logs;
 					},
 					function (response)
@@ -316,7 +316,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					Api.Profile.add($scope.viewModel, function (data)
 					{
-						toastr.success('Profile added!', 'Success');
+						toastr.success('Perfil adicionado!', 'Suceso');
                         $state.go('profiles'); $state.go('profiles');
 					},
 					function (response)
@@ -335,12 +335,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.remove = function ()
 	{
 		if (!$scope.permModel.remover)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
 		{
             Api.Profile.remove({ id: id }, function (data)
 			{
-				toastr.success('Profile removed!', 'Success');
+				toastr.success('Perfil removido!', 'Sucesso');
 				$scope.list();
 			},
 			function (response)

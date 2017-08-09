@@ -2,24 +2,24 @@
 	<table>
 		<tr height="36px">
 			<td width="20px"></td>
-			<td width="120px"><b>Status</b></td>
+			<td width="120px"><b>Situação</b></td>
 			<td width="250px">
 				<table>
 					<tr>
 						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.ativo" /></td>
-						<td> Active</td>
+						<td> Ativo</td>
 						<td width="20px"></td>
 						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.ativo" /></td>
-						<td> Blocked</td>
+						<td> Bloqueado</td>
 						<td width="20px"></td>
 						<td width="20px"><input type="radio" value="" ng-model="filtro.campos.ativo" /></td>
-						<td> All</td>
+						<td> Tudo</td>
 						<td width="20px"></td>
 					</tr>
 				</table>
 			</td>
 		    <td width="60px"></td>
-			<td width="120px">Profile</td>
+			<td width="120px">Perfil</td>
 			<td width="250px">
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.perfil" ng-model="filtro.campos.fkPerfil" />
 			</td>
@@ -41,7 +41,7 @@
 				<input type="text" focus="true" class="form-control input-transparent" ng-model="filtro.campos.email" />
 			</td>
 			<td></td>
-			<td><b>Phone</b></td>
+			<td><b>Telefone</b></td>
 			<td>
 				<input type="text" focus="true" class="form-control input-transparent" ng-model="filtro.campos.phone" />
 			</td>

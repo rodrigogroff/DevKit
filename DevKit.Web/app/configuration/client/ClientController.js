@@ -21,7 +21,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			if (!$scope.permModel.visualizar)
 			{
-				toastr.error('Access denied!', 'Permission');
+				toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}
 		},
@@ -86,7 +86,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
@@ -100,7 +100,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
                     Api.Client.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Client saved!', 'Success');
+						toastr.success('Cliente salvo!', 'Success');
 						$scope.viewModel.logs = data.logs;
 					},
 					function (response)
@@ -112,7 +112,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
                     Api.Client.add($scope.viewModel, function (data)
 					{
-						toastr.success('Client added!', 'Success');
+						toastr.success('Cliente salvo!', 'Success');
                         $state.go('clients');
 					},
 					function (response)
@@ -131,12 +131,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.remove = function ()
 	{
 		if (!$scope.permModel.remover)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
             Api.Client.remove({ id: id }, function (data)
 			{
-				toastr.success('Client removed!', 'Success');
+				toastr.success('Client removido!', 'Sucesso');
 				$scope.list();
 			},
 			function (response) {

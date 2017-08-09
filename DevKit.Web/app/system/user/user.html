@@ -6,8 +6,8 @@
 				<tr>
 					<td width="20px"></td>
 					<td>
-						<span ng-show="viewModel.id == undefined">New </span> System \ User \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stLogin}}&nbsp;</span></b>
-						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button>
+						<span ng-show="viewModel.id == undefined">Novo </span> Sistema \ Usuário \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stLogin}}&nbsp;</span></b>
+						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>
 					</td>
 					<td width="20px"></td>
 				</tr>
@@ -16,7 +16,7 @@
 		</legend>
 		<div class="divWebForm">
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
-				<tab heading="User">
+				<tab heading="Usuário">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -32,7 +32,7 @@
 							<tr height="40px">
 								<td></td>
 								<td>
-									User Login
+									Login
 								</td>
 								<td width="20px">
 									<button class="btn btn-xs btn-danger" ng-show="stLogin_fail">!</button>
@@ -46,7 +46,7 @@
 							<tr height="40px">
 								<td></td>
 								<td>
-									Profile
+									Perfil
 								</td>
 								<td width="20px">
 									<button class="btn btn-xs btn-danger" ng-show="fkProfile_fail">!</button>
@@ -59,7 +59,7 @@
 							<tr height="40px">
 								<td></td>
 								<td>
-									Active
+									Ativo
 								</td>
 								<td></td>
 								<td>
@@ -70,7 +70,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Phones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined">
+				<tab heading="Telefones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
@@ -78,12 +78,12 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:white">
-										Phone list
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewPhone()"><i class="fa fa-plus"> </i>  Add new </button>
+										Lista de telefone
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewPhone()"><i class="fa fa-plus"> </i>  Adicionar </button>
 									</legend>
 									<div ng-show="viewModel.phones.length == 0 && addPhone == false">
 										<br />
-										<div class="btn btn-info btn-lg">No records found.</div>
+										<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 									</div>
 									<div ng-if="addPhone == true">
 										<table>
@@ -92,7 +92,7 @@
 													<table>
 														<tr height="42px">
 															<td width="120px">
-																New Phone
+																Novo telefone
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="stPhone_fail">!</button>
@@ -104,7 +104,7 @@
 														</tr>
 														<tr height="42px">
 															<td>
-																Description
+																Descrição
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="stDescription_fail">!</button>
@@ -118,7 +118,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-default" ng-click="cancelPhone()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewPhone()">Save </button>
+										<button class="btn btn-default" ng-click="cancelPhone()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewPhone()">Salvar </button>
 										<br />
 										<br />
 									</div>
@@ -163,12 +163,12 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:white">
-										Email list
-										<button class="btn btn-info btn-xs pull-right" ng-if="addEmail == false" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Add new </button>
+										Lista de emails
+										<button class="btn btn-info btn-xs pull-right" ng-if="addEmail == false" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Adicionar </button>
 									</legend>
 									<div ng-show="viewModel.emails.length == 0 && addEmail == false">
 										<br />
-										<div class="btn btn-info btn-lg">No records found.</div>
+										<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 									</div>
 									<div ng-if="addEmail == true">
 										<table>
@@ -177,7 +177,7 @@
 													<table>
 														<tr height="42px">
 															<td width="120px">
-																New Email
+																Novo Email
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="stEmail_fail">!</button>
@@ -191,7 +191,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-default" ng-click="cancelEmail()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewEmail()">Save </button>
+										<button class="btn btn-default" ng-click="cancelEmail()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewEmail()">Salvar </button>
 										<br />
 										<br />
 									</div>
@@ -226,7 +226,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Actions" ng-if="viewModel.id != undefined">
+				<tab heading="Ações" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
@@ -234,11 +234,11 @@
 								<td width="20px"></td>
 								<td width="400px">									
 									<br>
-									<button class="btn btn-primary" ng-click="resetPass()">Reset Password</button>
+									<button class="btn btn-primary" ng-click="resetPass()">Limpar senha</button>
 									<br>
 									<div ng-if="resetPassword.length > 0">
 										<br />
-										Your new password is <b>{{resetPassword}}</b>
+										Sua nova senha é <b>{{resetPassword}}</b>
 									</div>
 								</td>
 								<td width="20px"></td>
@@ -246,14 +246,14 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Audit Log" ng-if="viewModel.id != undefined && auditLogView == true">
+				<tab heading="Auditoria" ng-if="viewModel.id != undefined && auditLogView == true">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
 							<tr>
 								<td width="20px"></td>
 								<td width="400px">
-									<legend style="color:white">Audit Log Track</legend>
+									<legend style="color:white">Trilha de auditoria</legend>
 									<br />
 									<table>
 										<tr>
@@ -261,9 +261,9 @@
 												<table class="table table-hover" ng-if="viewModel.logs.length > 0">
 													<thead>
 														<tr>
-															<th width="130px">Date</th>
-															<th width="110px">User</th>
-															<th width="380px">Details</th>
+															<th width="130px">Data</th>
+															<th width="110px">Usuário</th>
+															<th width="380px">Detalhes</th>
 														</tr>
 													</thead>
 													<tr data-ng-repeat="mdl in viewModel.logs">
@@ -286,9 +286,9 @@
 			<br />
 			<table>
 				<tr>
-					<td><button class="btn btn-default" ng-click="list()">Cancel</button></td>
+					<td><button class="btn btn-default" ng-click="list()">Cancelar</button></td>
 					<td width="34px"></td>
-					<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
+					<td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
 				</tr>
 			</table>
 			<br />

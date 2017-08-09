@@ -22,7 +22,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			if (!$scope.permModel.visualizar)
 			{
-				toastr.error('Access denied!', 'Permission');
+				toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}
 		},
@@ -69,7 +69,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
@@ -82,7 +82,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 					Api.ClientGroup.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Client group saved!', 'Success');
+						toastr.success('Grupo de clientes salvo!', 'Sucesso');
 						$scope.viewModel.logs = data.logs;
 					},
 					function (response)
@@ -94,7 +94,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					Api.ClientGroup.add($scope.viewModel, function (data)
 					{
-						toastr.success('Client group added!', 'Success');
+						toastr.success('Grupo de clientes adicionado!', 'Sucesso');
                         $state.go('clientgroups');
 					},
 					function (response)
@@ -113,12 +113,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.remove = function ()
 	{
 		if (!$scope.permModel.remover)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
             Api.ClientGroup.remove({ id: id }, function (data)
 			{
-				toastr.success('Client group removed!', 'Success');
+				toastr.success('Grupo de clientes removido!', 'Sucesso');
 				$scope.list();
 			},
 			function (response) {
@@ -136,7 +136,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.removeClient = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
         {
 			$scope.viewModel.updateCommand = "removeClient";
@@ -144,7 +144,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.ClientGroup.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Client removed', 'Success');
+				toastr.success('Cliente removido', 'Sucesso');
                 init();
 			});
 		}
@@ -153,7 +153,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.addNewClient = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$scope.addClient = !$scope.addClient;
 	}
@@ -173,7 +173,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.saveNewClient = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{			
 			$scope.fkClient_fail = $scope.newClient.fkClient == undefined;
@@ -184,7 +184,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
                 {
                     if ($scope.viewModel.clients[i].id == $scope.newClient.fkClient)
                     {
-                        toastr.error('Client already added!', 'Validation');
+                        toastr.error('Cliente já adicionado', 'Validação');
                         $scope.fkClient_fail = true;
                         return;
                     }
@@ -198,7 +198,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				Api.ClientGroup.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newClient = {};
-                    toastr.success('Client saved', 'Success');
+                    toastr.success('Cliente salvo', 'Sucesso');
 
                     init();		
 				},

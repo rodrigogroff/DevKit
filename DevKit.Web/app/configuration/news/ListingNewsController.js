@@ -23,7 +23,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 			if (!$scope.permModel.listagem)
 			{
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}				
 		},
@@ -69,7 +69,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.show = function (mdl)
 	{
 		if (!$scope.permModel.visualizar) 
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$state.go('news', { id: mdl.id });
 	}
@@ -77,7 +77,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.new = function ()
 	{
 		if (!$scope.permModel.novo)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$state.go('news-new');
 	}

@@ -24,7 +24,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			if (!$scope.permModel.visualizar)
 			{
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Accesso negado!', 'Permissão');
 				$state.go('home');
 			}
 		},
@@ -104,7 +104,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		$scope.resetPassword = undefined;
 
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
 		{
 			$scope.stLogin_fail = invalidCheck($scope.viewModel.stLogin);
@@ -119,7 +119,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
                     Api.User.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('User saved!', 'Success');
+						toastr.success('Usuário salvo!', 'Sucesso');
                         init();
 					},
 					function (response)
@@ -131,7 +131,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
                     Api.User.add($scope.viewModel, function (data)
 					{
-						toastr.success('User added!', 'Success');
+						toastr.success('Usuário adicionado!', 'Sucesso');
                         $state.go('users');
 					},
 					function (response)
@@ -163,12 +163,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.remove = function ()
 	{
 		if (!$scope.permModel.remover)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
 		{
             Api.User.remove({ id: id }, function (data)
 			{
-				toastr.success('User removed!', 'Success');
+				toastr.success('Usuário removido!', 'Sucesso');
 				$scope.list();
 			},
 			function (response)
@@ -187,7 +187,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.removePhone = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
         {
             $scope.viewModel.updateCommand = "removePhone";
@@ -203,7 +203,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.addNewPhone = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
 			$scope.addPhone = !$scope.addPhone;
 	}
@@ -224,7 +224,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.saveNewPhone = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
 		{
 			$scope.stPhone_fail = invalidCheck($scope.newPhone.stPhone);
@@ -241,7 +241,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
                 Api.User.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newPhone = {};
-					toastr.success('Phone saved', 'Success');					
+					toastr.success('Telefone salvo', 'Sucesso');					
                     init();
 				},
 				function (response) {
@@ -260,7 +260,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.removeEmail = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
         {
 			$scope.viewModel.updateCommand = "removeEmail";
@@ -268,7 +268,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
             Api.User.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Email removed', 'Success');
+				toastr.success('Email removido', 'Sucesso');
                 init();
 			});
 		}
@@ -277,7 +277,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.addNewEmail = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
 			$scope.addEmail = !$scope.addEmail;
 	}
@@ -297,7 +297,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.saveNewEmail = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
 		{
 			$scope.stEmail_fail = invalidEmail($scope.newEmail.stEmail) ;
@@ -312,7 +312,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
                 Api.User.update({ id: id }, $scope.viewModel, function (data)
                 {
                     $scope.newEmail = {};
-                    toastr.success('Email saved', 'Success');
+                    toastr.success('Email salvo', 'Sucesso');
                     init();
 				},
 				function (response) {

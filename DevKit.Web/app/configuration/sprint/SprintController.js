@@ -25,7 +25,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			if (!$scope.permModel.visualizar)
 			{
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}
 		},
@@ -77,7 +77,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
@@ -94,7 +94,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 					Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Sprint saved!', 'Success');
+						toastr.success('Sprint salvo!', 'Success');
                         init();
 					},
 					function (response)
@@ -106,7 +106,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					Api.Sprint.add($scope.viewModel, function (data)
 					{
-						toastr.success('Sprint added!', 'Success');
+						toastr.success('Sprint adicionado!', 'Success');
                         $state.go('sprints');
 					},
 					function (response)
@@ -125,12 +125,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.remove = function ()
 	{
 		if (!$scope.permModel.remover)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
             Api.Sprint.remove({ id: id, login: $rootScope.loginInfo }, {}, function (data)
 			{
-				toastr.success('Sprint removed!', 'Success');
+				toastr.success('Sprint removido!', 'Success');
 				$scope.list();
 			},
 			function (response) {
@@ -148,7 +148,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.removeVersion = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
         {
 			$scope.viewModel.updateCommand = "removeVersion";
@@ -156,15 +156,16 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Version removed', 'Success');
+				toastr.success('Versão removida', 'Success');
                 init();
 			});
 		}
 	}
 
-	$scope.addNewVersion = function () {
+    $scope.addNewVersion = function ()
+    {
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$scope.addVersion = !$scope.addVersion;
 	}
@@ -197,7 +198,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				$scope.newVersion = {};
                 $scope.addVersion = false;
 
-				toastr.success('Version saved', 'Success');
+				toastr.success('Versão salva', 'Sucesso');
                 init();				
 			},
 			function (response)

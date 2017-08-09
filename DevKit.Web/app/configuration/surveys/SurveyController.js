@@ -22,7 +22,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			if (!$scope.permModel.visualizar)
 			{
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}
 		},
@@ -69,7 +69,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
 			$scope.stTitle_fail = invalidCheck($scope.viewModel.stTitle);
@@ -84,7 +84,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 					Api.Survey.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Survey saved!', 'Success');
+						toastr.success('Pesquisa salva!', 'Sucesso');
 					},
 					function (response)
 					{
@@ -95,7 +95,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					Api.Survey.add($scope.viewModel, function (data)
 					{
-						toastr.success('Survey added!', 'Success');
+                        toastr.success('Pesquisa adicionada!', 'Sucesso');
+
                         $state.go('surveysListing');
 					},
 					function (response)
@@ -114,12 +115,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.remove = function ()
 	{
 		if (!$scope.permModel.remover)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
             Api.Survey.remove({ id: id }, function (data)
 			{
-				toastr.success('Survey removed!', 'Success');
+				toastr.success('Pesquisa removida!', 'Sucesso');
 				$scope.list();
 			},
 			function (response) {
@@ -136,14 +137,14 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.removeOption = function (index, lista) {
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
         else
         {
 			$scope.viewModel.updateCommand = "removeOption";
 			$scope.viewModel.anexedEntity = $scope.viewModel.options[index];
 
 			Api.Survey.update({ id: id }, $scope.viewModel, function (data) {
-                toastr.success('Option removed', 'Success');
+                toastr.success('Opção removida', 'Sucesso');
                 init();
 			});
 		}
@@ -151,7 +152,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.addNewOption = function () {
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$scope.addOption = !$scope.addOption;
 	}
@@ -171,7 +172,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.saveNewOption = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
 			$scope.stOrder_fail = invalidCheck($scope.newOption.nuOrder);
@@ -188,7 +189,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				Api.Survey.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newOption = {};
-					toastr.success('Option saved', 'Success');
+					toastr.success('Opção salva', 'Sucesso');
 
                     init();
 				},

@@ -6,8 +6,8 @@
 				<tr>
 					<td width="20px"></td>
 					<td>
-						<span ng-show="viewModel.id == undefined">New </span> Configuration \ Survey \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stTitle}}&nbsp;</span></b>
-						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button>
+						<span ng-show="viewModel.id == undefined">Novo </span> Configuração \ Pesquisa \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stTitle}}&nbsp;</span></b>
+						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>
 					</td>
 					<td width="20px"></td>
 				</tr>
@@ -30,7 +30,7 @@
 							<tr height="12px"></tr>
 							<tr height="40px">
 								<td></td>
-								<td>Survey Title</td>
+								<td>Título da pesquisa</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="stTitle_fail">!</button>
 								</td>
@@ -41,7 +41,7 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="top">Message</td>
+								<td valign="top">Mensagem</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="stMessage_fail">!</button>
 								</td>
@@ -52,7 +52,7 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td>Project</td>
+								<td>Projeto</td>
 								<td>
 									
 								</td>
@@ -63,7 +63,7 @@
 							<tr height="40px">
 								<td></td>
 								<td>
-									Active
+									Ativo
 								</td>
 								<td></td>
 								<td>
@@ -74,7 +74,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Options [{{viewModel.options.length}}]" ng-if="viewModel.id != undefined">
+				<tab heading="Opções [{{viewModel.options.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
@@ -82,12 +82,12 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:white">
-										Options list
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewOption()"><i class="fa fa-plus"> </i>  Add new </button>
+										Lista de opções
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewOption()"><i class="fa fa-plus"> </i>  Adicionar </button>
 									</legend>
 									<div ng-show="viewModel.options.length == 0 && addOption == false">
 										<br />
-										<div class="btn btn-info btn-lg">No records found.</div>
+										<div class="btn btn-info btn-lg">Nenuhm registro encontrado.</div>
 									</div>
 									<div ng-if="addOption == true">
 										<table>
@@ -96,7 +96,7 @@
 													<table>														
 														<tr height="42px">
 															<td>
-																Order
+																Ordem
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="stOrder_fail">!</button>
@@ -107,7 +107,7 @@
 														</tr>
 														<tr height="42px">
 															<td width="120px">
-																New option
+																Nova opção 
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="stOption_fail">!</button>
@@ -121,7 +121,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-default" ng-click="cancelOption()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewOption()">Save </button>
+										<button class="btn btn-default" ng-click="cancelOption()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewOption()">Salvar </button>
 										<br />
 										<br />
 									</div>
@@ -130,8 +130,8 @@
 										<table class="table table-hover" style="width:100%">
 											<thead>
 												<tr>
-													<th>Order</th>
-													<th>Option</th>
+													<th>Ordem</th>
+													<th>Opção</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -163,9 +163,9 @@
 			<br />
 			<table>
 				<tr>
-					<td><button class="btn btn-default" ng-click="list()">Cancel</button> </td>
+					<td><button class="btn btn-default" ng-click="list()">Cancelar</button> </td>
 					<td width="34px"></td>
-					<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
+					<td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
 				</tr>
 			</table>
 			<br />

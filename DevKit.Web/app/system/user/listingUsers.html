@@ -5,9 +5,9 @@
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td><b>Users </b> listing <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td>Listagem de <b>Usuários </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
 					<td width="80px"></td>
-					<td><input type="submit" class="btn btn-success pull-right" value="New" ng-click="new()"></td>
+					<td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
 					<td width="20px"></td>
 				</tr>
 				<tr height="12px"></tr>
@@ -29,7 +29,7 @@
 						<div ng-show="list.length == 0">
 							<br />
 							<br />
-							<div class="btn btn-info btn-lg">No records found.</div>
+							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 							<br />
 							<br />
 						</div>
@@ -40,16 +40,16 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th width="90px">Status</th>
+										<th width="90px">Situação</th>
 										<th width="150px">Login</th>
-										<th width="150px">Profile</th>
-										<th width="150px">Phones</th>
+										<th width="150px">Perfil</th>
+										<th width="150px">Telefones</th>
 										<th width="220px">Emails</th>
-										<th width="120px">Last Login</th>
+										<th width="120px">Último Login</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-									<td>{{ mdl.bActive ? 'Active' : 'Blocked' }}</td>
+									<td>{{ mdl.bActive ? 'Ativo' : 'Bloqueado' }}</td>
 									<td>{{ mdl.stLogin }}</td>
 									<td>{{ mdl.profile.stName }}</td>
 									<td><div data-ng-repeat="m in mdl.phones">{{ m.stPhone }}</div></td>

@@ -6,8 +6,8 @@
 				<tr>
 					<td width="20px"></td>
 					<td>
-						<span ng-show="viewModel.id == undefined">New </span> Configuration \ News \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stTitle}}&nbsp;</span></b>
-						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button>
+						<span ng-show="viewModel.id == undefined">Nova </span> Configuração \ Notícia \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stTitle}}&nbsp;</span></b>
+						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>
 					</td>
 					<td width="20px"></td>
 				</tr>
@@ -16,7 +16,7 @@
 		</legend>
 		<div class="divWebForm">
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
-				<tab heading="Company News">
+				<tab heading="Notícia">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -30,7 +30,7 @@
 							<tr height="12px"></tr>
 							<tr height="40px">
 								<td></td>
-								<td>News Title</td>
+								<td>Título da notícia</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="stTitle_fail">!</button>
 								</td>
@@ -41,7 +41,7 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td valign="top">Message</td>
+								<td valign="top">Mensagem</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="stMessage_fail">!</button>
 								</td>
@@ -64,7 +64,7 @@
 							<tr height="40px">
 								<td></td>
 								<td>
-									Project
+									Projeto
 								</td>
 								<td></td>
 								<td>
@@ -74,7 +74,7 @@
 							<tr height="40px">
 								<td></td>
 								<td>
-									Active
+									Ativo
 								</td>
 								<td></td>
 								<td>
@@ -90,9 +90,9 @@
 			<br />
 			<table>
 				<tr>
-					<td><button class="btn btn-default" ng-click="list()">Cancel</button> </td>
+					<td><button class="btn btn-default" ng-click="list()">Cancelar</button> </td>
 					<td width="34px"></td>
-					<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
+					<td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
 				</tr>
 			</table>
 			<br />

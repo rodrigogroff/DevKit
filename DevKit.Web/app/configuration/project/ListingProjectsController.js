@@ -23,7 +23,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 			if (!$scope.permModel.listagem)
 			{
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}				
 		},
@@ -38,8 +38,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 		if (ngHistoricoFiltro.filtro)
             ngHistoricoFiltro.filtro.exibeFiltro = false;
-
-      // loadAPICore(0, 15);
 	}
 	
 	$scope.search = function ()
@@ -47,30 +45,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		$scope.load(0, $scope.itensporpagina);
 		$scope.paginador.reiniciar();
 	}
-
-    function loadAPICore(skip, take)
-    {
-        $http({
-            method: "GET",
-            url: "http://localhost:52851/api/project",
-            params: { skip: skip, take: take, login: $rootScope.loginInfo },
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-
-        }).success(function (data) {
-
-            console.log(data);
-
-        }).error(function (data) {
-
-            console.log(data);
-
-        });;
-    };
-
+    
 	$scope.load = function (skip, take)
 	{
 		$scope.loading = true;
@@ -94,7 +69,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.show = function (mdl)
 	{
 		if (!$scope.permModel.visualizar) 
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$state.go('project', { id: mdl.id });
 	}
@@ -102,7 +77,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.new = function ()
 	{
 		if (!$scope.permModel.novo)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$state.go('project-new');
 	}

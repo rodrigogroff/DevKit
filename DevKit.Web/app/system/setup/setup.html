@@ -6,7 +6,7 @@
 				<tr>
 					<td width="20px"></td>
 					<td>
-						System \ Setup <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
+						Sistema \ Configuração <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
 					</td>
 					<td width="20px"></td>
 				</tr>
@@ -15,10 +15,10 @@
 		</legend>
 		<div class="divWebForm">
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
-				<tab heading="System">
+				<tab heading="Sistema">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<div style="padding-left:20px; padding-top:20px">
-							<legend style="color:white">Preferences</legend>
+							<legend style="color:white">Preferências</legend>
 							<table>
 								<thead>
 									<tr>
@@ -31,7 +31,7 @@
 								<tr height="20px"></tr>
 								<tr height="40px">
 									<td></td>
-									<td>Phone Mask</td>
+									<td>Mascara telefone</td>
 									<td>
 										<button class="btn btn-xs btn-danger" ng-show="stPhoneMask_fail">!</button>
 									</td>
@@ -42,7 +42,7 @@
 								</tr>
 								<tr height="40px">
 									<td></td>
-									<td>Date Format</td>
+									<td>Formato de data</td>
 									<td>
 										<button class="btn btn-xs btn-danger" ng-show="stDateFormat_fail">!</button>
 									</td>
@@ -53,7 +53,7 @@
 								</tr>
 								<tr height="40px">
 									<td></td>
-									<td>Protocol Format</td>
+									<td>Protocolo</td>
 									<td>
 										<button class="btn btn-xs btn-danger" ng-show="stProtocolFormat_fail">!</button>
 									</td>
@@ -67,14 +67,14 @@
 						</div>
 					</div>
 				</tab>
-				<tab heading="Audit Log" ng-if="viewModel.logs.length > 0">
+				<tab heading="Auditoria" ng-if="viewModel.logs.length > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
 							<tr>
 								<td width="20px"></td>
 								<td width="400px">
-									<legend style="color:white">Audit Log Track</legend>
+									<legend style="color:white">Trilha auditoria</legend>
 									<br />
 									<table>
 										<tr>
@@ -82,9 +82,9 @@
 												<table class="table table-hover" ng-if="viewModel.logs.length > 0">
 													<thead>
 														<tr>
-															<th width="130px">Date</th>
-															<th width="110px">User</th>
-															<th width="380px">Details</th>
+															<th width="130px">Data</th>
+															<th width="110px">Usuário</th>
+															<th width="380px">Detalhes</th>
 														</tr>
 													</thead>
 													<tr data-ng-repeat="mdl in viewModel.logs">

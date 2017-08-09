@@ -5,9 +5,9 @@
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td><b>Profiles </b> listing <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td>Listagem de <b>Perfils </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
 					<td width="80px"></td>
-					<td><input type="submit" class="btn btn-success pull-right" value="New" ng-click="new()"></td>
+					<td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
 					<td width="20px"></td>
 				</tr>
 				<tr height="12px"></tr>
@@ -28,7 +28,7 @@
 						<div ng-show="list.length == 0">
 							<br />
 							<br />
-							<div class="btn btn-info btn-lg">No records found.</div>
+							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 							<br />
 							<br />
 						</div>
@@ -39,9 +39,9 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th width="250px">Profile</th>
-										<th width="120px">Users</th>
-										<th width="120px">Permissions</th>
+										<th width="250px">Perfil</th>
+										<th width="120px">Usuários</th>
+										<th width="120px">Permissões</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">

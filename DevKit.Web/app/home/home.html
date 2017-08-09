@@ -10,7 +10,7 @@
                                 <tr>
                                     <td width="20px"></td>
                                     <td>
-                                        <span style="color:black">Company Active Surveys ({{viewModel.surveys.length}})</span>
+                                        <span style="color:black">Pesquisas ativas ({{viewModel.surveys.length}})</span>
                                     </td>
                                     <td width="20px"></td>
                                 </tr>
@@ -27,8 +27,7 @@
                                                 <td width="10px"></td>
                                                 <td width="360px">
                                                     <br />
-                                                    {{mdl.sdtLog}} by <b>{{mdl.sfkUser}}</b>&nbsp;<span ng-if="mdl.sfkProject.length > 0">for project <b>{{mdl.sfkProject}}</b></span><br />
-                                                    <b><h4>{{mdl.stTitle}}</h4></b>
+                                                    {{mdl.sdtLog}} por <b>{{mdl.sfkUser}}</b>&nbsp;<span ng-if="mdl.sfkProject.length > 0"> para projeto <b>{{mdl.sfkProject}}</b></span><br />                                                    <b><h4>{{mdl.stTitle}}</h4></b>
                                                 </td>
                                                 <td width="20px"></td>
                                             </tr>
@@ -52,7 +51,7 @@
                                                 <td></td>
                                                 <td>
                                                     <br />
-                                                    Survey status: {{mdl.sNuPct}}%<br />
+                                                    Situação da pesquida: {{mdl.sNuPct}}%<br />
                                                     <br />
                                                     <div ng-if="mdl.bUserSelected == true">
                                                         <div ng-repeat="option in mdl.options" id="radio-{{option.id}}">
@@ -61,7 +60,7 @@
                                                                     <tr>
                                                                         <td width="50px">{{option.sNuOptionPct}}%</td>
                                                                         <td>
-                                                                            <span class="btn-success">&nbsp;&nbsp;{{option.stOption}}&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;(your vote)
+                                                                            <span class="btn-success">&nbsp;&nbsp;{{option.stOption}}&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;(seu voto)
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -90,7 +89,7 @@
                                                 <td>
                                                     <br />
                                                     <div ng-if="mdl.bUserSelected != true">
-                                                        <button class="btn btn-xs btn-primary" ng-click="confirmChoiceSurvey(mdl)">Confirm Choice</button>
+                                                        <button class="btn btn-xs btn-primary" ng-click="confirmChoiceSurvey(mdl)">Confirmar</button>
                                                     </div>
                                                     <br />
                                                     <br />
@@ -112,7 +111,7 @@
                                 <tr>
                                     <td width="20px"></td>
                                     <td>
-                                        <span style="color:black">Company News ({{viewModel.news.length}})</span>
+                                        <span style="color:black">Notícias ({{viewModel.news.length}})</span>
                                     </td>
                                     <td width="20px"></td>
                                 </tr>
@@ -129,7 +128,7 @@
                                                 <td width="10px"></td>
                                                 <td width="360px">
                                                     <br />
-                                                    {{mdl.sdtLog}} by <b>{{mdl.sfkUser}}</b>&nbsp;<span ng-if="mdl.sfkProject.length > 0">for project <b>{{mdl.sfkProject}}</b></span><br />
+                                                    {{mdl.sdtLog}} por <b>{{mdl.sfkUser}}</b>&nbsp;<span ng-if="mdl.sfkProject.length > 0"> para projeto <b>{{mdl.sfkProject}}</b></span><br />
                                                     <b>{{mdl.stTitle}}</b><br />
                                                     <br />
                                                 </td>
@@ -157,7 +156,7 @@
                                                 <td></td>
                                                 <td>
                                                     <br />
-                                                    <button class="btn btn-xs btn-primary" ng-click="markAsRead(mdl)">Mark as Read</button>
+                                                    <button class="btn btn-xs btn-primary" ng-click="markAsRead(mdl)">Marcar como lido</button>
                                                 </td>
                                                 <td></td>
                                             </tr>
@@ -180,7 +179,7 @@
                                 <tr>
                                     <td width="20px"></td>
                                     <td>
-                                        <span style="color:white">Open Tasks ({{viewModel.tasks.length}})</span>
+                                        <span style="color:white">Tarefas abertas ({{viewModel.tasks.length}})</span>
                                     </td>
                                     <td width="20px"></td>
                                 </tr>
@@ -194,15 +193,15 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Protocol </th>
-                                                <th>Type / Category </th>
-                                                <th>Title / Localization </th>
+                                                <th>Protocolo </th>
+                                                <th>Tipo / Categoria </th>
+                                                <th>Título / Localização </th>
                                             </tr>
                                         </thead>
                                         <tr ng-click="showTask(mdl)" data-ng-repeat="mdl in viewModel.tasks">
                                             <td>{{ mdl.stProtocol }}</td>
                                             <td>{{ mdl.sfkTaskType }} <br /> {{mdl.sfkTaskCategory}}</td>
-                                            <td>Priority: <b>{{ mdl.snuPriority }}</b><br />{{ mdl.stTitle }}<br />{{ mdl.stLocalization }}</td>
+                                            <td>Prioridade: <b>{{ mdl.snuPriority }}</b><br />{{ mdl.stTitle }}<br />{{ mdl.stLocalization }}</td>
                                         </tr>
                                     </table>
                                 </td>
@@ -221,7 +220,7 @@
 								<tr>
 									<td width="20px"></td>
 									<td>
-										<span style="color:white">Open Questions ({{viewModel.questions.length}})</span>
+										<span style="color:white">Questões abertas ({{viewModel.questions.length}})</span>
 									</td>
 									<td width="20px"></td>
 								</tr>
@@ -235,9 +234,9 @@
 									<table class="table table-hover">
 										<thead>
 											<tr>
-												<th width="90px">Protocol </th>
-												<th width="120px">User</th>
-												<th>Question</th>
+												<th width="90px">Protocolo </th>
+												<th width="120px">Usuário</th>
+												<th>Questão</th>
 											</tr>
 										</thead>
 										<tr ng-click="showQuestion(mdl)" data-ng-repeat="mdl in viewModel.questions">

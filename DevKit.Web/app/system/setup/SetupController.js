@@ -19,7 +19,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api,
 
 			if (!$scope.permModel.visualizar)
 			{
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Accesso negado!', 'Permissão');
 				$state.go('home', {});
 			}
 
@@ -58,7 +58,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api,
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Accesso negado!', 'Permissão');
 		else
 		{
 			$scope.stPhoneMask_fail = invalidCheck($scope.viewModel.stPhoneMask);
@@ -71,7 +71,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api,
             {
 				Api.Setup.update({ id: 1 }, $scope.viewModel, function (data)
 				{
-					toastr.success('Setup preferences saved!', 'Success');
+					toastr.success('Configurações salvas!', 'Sucesso');
                     init();
 				},
 				function (response)

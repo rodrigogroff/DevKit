@@ -51,7 +51,7 @@
                                                 <td></td>
                                                 <td>
                                                     <br />
-                                                    Situação da pesquida: {{mdl.sNuPct}}%<br />
+                                                    Situação da pesquisa: {{mdl.sNuPct}}%<br />
                                                     <br />
                                                     <div ng-if="mdl.bUserSelected == true">
                                                         <div ng-repeat="option in mdl.options" id="radio-{{option.id}}">
@@ -199,9 +199,9 @@
                                             </tr>
                                         </thead>
                                         <tr ng-click="showTask(mdl)" data-ng-repeat="mdl in viewModel.tasks">
-                                            <td>{{ mdl.stProtocol }}</td>
+                                            <td>{{ mdl.stProtocol }}<br />Prioridade: <b>{{ mdl.snuPriority }}</b></td>
                                             <td>{{ mdl.sfkTaskType }} <br /> {{mdl.sfkTaskCategory}}</td>
-                                            <td>Prioridade: <b>{{ mdl.snuPriority }}</b><br />{{ mdl.stTitle }}<br />{{ mdl.stLocalization }}</td>
+                                            <td>{{ mdl.stTitle }}<br />{{ mdl.stLocalization }}</td>
                                         </tr>
                                     </table>
                                 </td>

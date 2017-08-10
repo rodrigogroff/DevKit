@@ -6,7 +6,9 @@
 				<tr>
 					<td width="20px"></td>
 					<td>
-						<span ng-show="viewModel.id == undefined">Nova </span> Tarefas \ Tarefa <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
+						<span ng-show="viewModel.id == undefined">Nova </span> Tarefa 
+                            <i class="fa fa-spinner fa-spin" ng-show="loading"></i> 
+                            <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stProtocol}}&nbsp;</span></b>
 						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>
 					</td>
 					<td width="20px"></td>
@@ -16,7 +18,7 @@
 		</legend>
 		<div class="divWebForm">
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">				
-				<tab heading="Information">
+				<tab heading="Tarefa">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -49,7 +51,7 @@
 								<td></td>
 								<td valign="middle">
 									<span class="btn btn-primary">
-										<b>{{viewModel.bComplete == true ? 'CLOSED' : 'OPEN'}}</b>
+										<b>{{viewModel.bComplete == true ? 'FECHADA' : 'ABERTA'}}</b>
 									</span>
 								</td>
 								<td></td>
@@ -119,7 +121,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Project">
+				<tab heading="Projeto">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>

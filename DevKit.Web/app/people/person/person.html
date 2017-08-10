@@ -6,8 +6,8 @@
 				<tr>
 					<td width="20px"></td>
 					<td>
-						<span ng-show="viewModel.id == undefined">New </span> People \ Person \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stName}}&nbsp;</span></b>
-						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button>
+						<span ng-show="viewModel.id == undefined">Novo </span> Cadastros \ Pessoas \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stName}}&nbsp;</span></b>
+						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>
 					</td>
 					<td width="20px"></td>
 				</tr>
@@ -16,7 +16,7 @@
 		</legend>
 		<div class="divWebForm">
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
-				<tab heading="Person">
+				<tab heading="Pessoa">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -32,7 +32,7 @@
 							<tr height="40px">
 								<td></td>
 								<td>
-									Person Name
+									Nome
 								</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
@@ -46,7 +46,7 @@
                             <tr height="40px">
                                 <td></td>
                                 <td>
-                                    Alias
+                                    Apelido
                                 </td>
                                 <td>                                   
                                 </td>
@@ -62,7 +62,7 @@
                             <tr height="40px">
                                 <td></td>
                                 <td>
-                                    Aniversary
+                                    Aniversário
                                 </td>
                                 <td>
                                     <button class="btn btn-xs btn-danger" ng-show="dayBirth_fail">!</button>
@@ -70,18 +70,18 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <td width="80px">Day</td>
+                                            <td width="80px">Dia</td>
                                             <td width="110px">
                                                 <input type="number" class="form-control input-transparent" maxlength="2" min="1" max="31"
                                                        ng-disabled="!permModel.edicao" ng-model="viewModel.nuDayAniversary">
                                             </td>
                                             <td width="20px"></td>
-                                            <td width="80px">Month</td>
+                                            <td width="80px">Mês</td>
                                             <td width="110px">
                                                 <input type="hidden" style="width:100%" ui-select2="selectMonths" ng-model="viewModel.nuMonthAniversary" />
                                             </td>
                                             <td width="20px"></td>
-                                            <td width="80px">Year</td>
+                                            <td width="80px">Ano</td>
                                             <td width="110px">
                                                 <input type="number" class="form-control input-transparent" maxlength="2" min="1920"
                                                        ng-disabled="!permModel.edicao" ng-model="viewModel.nuYearBirth">
@@ -95,7 +95,7 @@
                             <tr height="40px" ng-if="viewModel.snuAge != ''">
                                 <td></td>
                                 <td>
-                                    Age
+                                    Idade
                                 </td>
                                 <td>
                                     
@@ -110,7 +110,7 @@
                             <tr height="40px" ng-if="viewModel.id > 0">
                                 <td></td>
                                 <td>
-                                    Date Added
+                                    Data Criação
                                 </td>
                                 <td >                                    
                                 </td>
@@ -121,7 +121,7 @@
                                                 <b>{{ viewModel.sdtStart }}</b>
                                             </td>
                                             <td width="15px"></td>
-                                            <td width="70px">User</td>
+                                            <td width="70px">Usuário</td>
                                             <td width="90px">
                                                 <b>{{ viewModel.sfkUserAdd }}</b>
                                             </td>
@@ -133,7 +133,7 @@
                             <tr height="40px" ng-if="viewModel.id != undefined">
                                 <td></td>
                                 <td>
-                                    Last update
+                                    Data Atualização
                                 </td>
                                 <td></td>
                                 <td>
@@ -143,7 +143,7 @@
                                                 <b>{{ viewModel.sdtLastUpdate }}</b>
                                             </td>
                                             <td width="15px"></td>
-                                            <td width="70px">User</td>
+                                            <td width="70px">Usuário</td>
                                             <td width="90px">
                                                 <b>{{ viewModel.sfkUserLastUpdate }}</b>
                                             </td>
@@ -156,7 +156,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Phones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined">
+				<tab heading="Telefones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
@@ -164,12 +164,12 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:white">
-										Phone list
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewPhone()"><i class="fa fa-plus"> </i>  Add new </button>
+										Lista de telefones
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewPhone()"><i class="fa fa-plus"> </i> Adicionar </button>
 									</legend>
 									<div ng-show="viewModel.phones.length == 0 && addPhone == false">
 										<br />
-										<div class="btn btn-info btn-lg">No records found.</div>
+										<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 									</div>
 									<div ng-if="addPhone == true">
 										<table>
@@ -178,7 +178,7 @@
 													<table>
 														<tr height="42px">
 															<td width="120px">
-																New Phone
+																Novo telephone
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="stPhone_fail">!</button>
@@ -190,7 +190,7 @@
 														</tr>
 														<tr height="42px">
 															<td>
-																Description
+																Descrição
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="stDescription_fail">!</button>
@@ -204,7 +204,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-default" ng-click="cancelPhone()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewPhone()">Save </button>
+										<button class="btn btn-default" ng-click="cancelPhone()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewPhone()">Salvar </button>
 										<br />
 										<br />
 									</div>
@@ -249,12 +249,12 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:white">
-										Email list
-										<button class="btn btn-info btn-xs pull-right" ng-if="addEmail == false" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Add new </button>
+										Lista de emails
+										<button class="btn btn-info btn-xs pull-right" ng-if="addEmail == false" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Adicionar </button>
 									</legend>
 									<div ng-show="viewModel.emails.length == 0 && addEmail == false">
 										<br />
-										<div class="btn btn-info btn-lg">No records found.</div>
+										<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 									</div>
 									<div ng-if="addEmail == true">
 										<table>
@@ -263,7 +263,7 @@
 													<table>
 														<tr height="42px">
 															<td width="120px">
-																New Email
+																Novo email
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="stEmail_fail">!</button>
@@ -277,7 +277,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-default" ng-click="cancelEmail()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewEmail()">Save </button>
+										<button class="btn btn-default" ng-click="cancelEmail()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewEmail()">Salvar </button>
 										<br />
 										<br />
 									</div>
@@ -312,14 +312,14 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Audit Log" ng-if="viewModel.id != undefined && auditLogView == true">
+				<tab heading="Auditoria" ng-if="viewModel.id != undefined && auditLogView == true">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
 							<tr>
 								<td width="20px"></td>
 								<td width="400px">
-									<legend style="color:white">Audit Log Track</legend>
+									<legend style="color:white">Trilha de auditoria</legend>
 									<br />
 									<table>
 										<tr>
@@ -327,9 +327,9 @@
 												<table class="table table-hover" ng-if="viewModel.logs.length > 0">
 													<thead>
 														<tr>
-															<th width="130px">Date</th>
-															<th width="110px">User</th>
-															<th width="380px">Details</th>
+															<th width="130px">Data</th>
+															<th width="110px">Usuário</th>
+															<th width="380px">Detalhes</th>
 														</tr>
 													</thead>
 													<tr data-ng-repeat="mdl in viewModel.logs">
@@ -352,9 +352,9 @@
 			<br />
 			<table>
 				<tr>
-					<td><button class="btn btn-default" ng-click="list()">Cancel</button></td>
+					<td><button class="btn btn-default" ng-click="list()">Cancelar</button></td>
 					<td width="34px"></td>
-					<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
+					<td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
 				</tr>
 			</table>
 			<br />

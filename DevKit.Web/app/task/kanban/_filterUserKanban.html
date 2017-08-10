@@ -2,12 +2,12 @@
 	<table>
 		<tr height="36px">
 			<td width="25px"></td>
-			<td width="110px"><b>Title</b></td>
+			<td width="110px"><b>Título</b></td>
 			<td width="220px">
 				<input type="text" focus="true" class="form-control input-transparent" ng-model="filtro.campos.busca" />
 			</td>
 			<td width="60px"></td>
-			<td width="110px"><b>Priority</b></td>
+			<td width="110px"><b>Prioridade</b></td>
 			<td width="220px">
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.priority" ng-model="filtro.campos.nuPriority" />
 			</td>
@@ -15,12 +15,12 @@
 		</tr>
 		<tr height="36px">
 			<td></td>
-			<td><b>Project</b></td>
+			<td><b>Projeto</b></td>
 			<td>
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.project" ng-model="filtro.campos.fkProject" />
 			</td>
 			<td></td>
-			<td><b>Phase</b></td>
+			<td><b>Fase</b></td>
 			<td>
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.phase" ng-model="filtro.campos.fkPhase" />
 			</td>
@@ -39,12 +39,12 @@
 		</tr>
 		<tr height="36px">
 			<td></td>
-			<td><b>Assigned To</b></td>
+			<td><b>Responsável</b></td>
 			<td>
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.user" ng-model="filtro.campos.fkUserAssigned" />
 			</td>
 			<td></td>
-			<td><b>Opened By</b></td>
+			<td><b>Aberto por</b></td>
 			<td>
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.user" ng-model="filtro.campos.fkUserStart" />
 			</td>
@@ -52,12 +52,12 @@
 		</tr>
 		<tr height="36px">
 			<td></td>
-			<td><b>Task Type</b></td>
+			<td><b>Tipo de tarefa</b></td>
 			<td>
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.tasktype" ng-model="filtro.campos.fkTaskType" />
 			</td>
 			<td></td>
-			<td><b>Task Category</b></td>
+			<td><b>Categoria</b></td>
 			<td>
 				<input type="hidden" style="width:100%" ui-select2="filtro.campos.selects.taskcategory" ng-model="filtro.campos.fkTaskCategory" />
 			</td>
@@ -84,15 +84,15 @@
 		</tr>
 		<tr height="36px">
 			<td></td>
-			<td><b>Expired?</b></td>
+			<td><b>Expirou?</b></td>
 			<td>
 				<table>
 					<tr>
 						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.expired" /></td>
-						<td> No</td>
+						<td> Não</td>
 						<td width="20px"></td>
 						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.expired" /></td>
-						<td> Yes</td>
+						<td> Sim</td>
 					</tr>
 				</table>
 			</td>
@@ -103,15 +103,15 @@
 		</tr>
 		<tr height="36px">
 			<td></td>
-			<td><b>State</b></td>
+			<td><b>Situação</b></td>
 			<td>
 				<table>
 					<tr>
 						<td width="20px"><input type="radio" value="false" ng-model="filtro.campos.complete" /></td>
-						<td> Open</td>
+						<td> Aberta</td>
 						<td width="20px"></td>
 						<td width="20px"><input type="radio" value="true" ng-model="filtro.campos.complete" /></td>
-						<td> Closed</td>
+						<td> Fechada</td>
 					</tr>
 				</table>
 			</td>

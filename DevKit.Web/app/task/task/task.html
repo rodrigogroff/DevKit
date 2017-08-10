@@ -6,8 +6,8 @@
 				<tr>
 					<td width="20px"></td>
 					<td>
-						<span ng-show="viewModel.id == undefined">New </span> Task \ Task detail <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
-						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remove</button>
+						<span ng-show="viewModel.id == undefined">Nova </span> Tarefas \ Tarefa <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
+						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>
 					</td>
 					<td width="20px"></td>
 				</tr>
@@ -36,7 +36,7 @@
 							<tr height="24px" ng-show="viewModel.id > 0">
 								<td></td>
 								<td valign="middle">
-									<b>Protocol</b>
+									<b>Protocolo</b>
 								</td>
 								<td></td>
 								<td>
@@ -44,7 +44,7 @@
 								</td>
 								<td></td>
 								<td valign="middle">
-									<b>State</b>
+									<b>Situação</b>
 								</td>
 								<td></td>
 								<td valign="middle">
@@ -57,7 +57,7 @@
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
 								<td valign="middle">
-									<b>Start Date</b>
+									<b>Data Inicio</b>
 								</td>
 								<td></td>
 								<td valign="middle">
@@ -65,7 +65,7 @@
 								</td>
 								<td></td>
 								<td valign="middle">
-									<b>Opened by</b>
+									<b>Aberto por</b>
 								</td>
 								<td></td>
 								<td valign="middle">
@@ -76,7 +76,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Title</b>
+									<b>Título</b>
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="stTitle_fail">!</button>
@@ -90,7 +90,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Localization</b>
+									<b>Localização</b>
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="stLocalization_fail">!</button>
@@ -104,7 +104,7 @@
 							<tr height="262px">
 								<td></td>
 								<td valign="middle">
-									<b>Description</b>
+									<b>Descrição</b>
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="stDescription_fail">!</button>
@@ -139,7 +139,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Project</b>
+									<b>Projeto</b>
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkProject_fail">!</button>
@@ -149,7 +149,7 @@
 								</td>
 								<td></td>
 								<td valign="middle">
-									<b>Phase</b>									
+									<b>Fase</b>									
 								</td>
 								<td width="20px" valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkPhase_fail">!</button>
@@ -172,7 +172,7 @@
 								</td>
 								<td></td>
 								<td valign="middle">
-									<b>Version</b>
+									<b>Versão</b>
 								</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="fkVersion_fail">!</button>
@@ -185,7 +185,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Task Type</b>
+									<b>Tipo tarefa</b>
 								</td>
 								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkTaskType_fail">!</button>
@@ -201,7 +201,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Task Category</b>
+									<b>Categoria</b>
 								</td>
 								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkTaskCategory_fail">!</button>
@@ -217,7 +217,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Priority</b>
+									<b>Prioridade</b>
 								</td>
 								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="nuPriority_fail">!</button>
@@ -233,7 +233,7 @@
 						</table>
 					</div>
 				</tab>				
-				<tab heading="Assignment">
+				<tab heading="Responsável">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);padding-left:10px">
 						<table>
 							<thead>
@@ -253,7 +253,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Assigned To</b>
+									<b>Responsável</b>
 								</td>
 								<td valign="middle">
 									<button class="btn btn-xs btn-danger" ng-show="fkUserResponsible_fail">!</button>
@@ -290,7 +290,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Work Flow" ng-show="viewModel.id > 0">
+				<tab heading="Fluxo trabalho" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -310,7 +310,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Current State</b>
+									<b>Fluxo atual</b>
 								</td>
 								<td></td>
 								<td valign="middle">
@@ -325,7 +325,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle"> 
-									<b>New State</b>
+									<b>Novo estado</b>
 								</td>
 								<td></td>
 								<td valign="middle">
@@ -340,7 +340,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Message</b>
+									<b>Mensagem</b>
 								</td>
 								<td></td>
 								<td colspan="5" valign="middle">
@@ -357,14 +357,14 @@
 										<table class="table table-hover">
 											<thead>
 												<tr>
-													<th width="140px">Date \ User</th>
-													<th width="140px">State Change</th>
-													<th width="220px">Message</th>
+													<th width="140px">Data \ Usuário</th>
+													<th width="140px">Troca de fluxo</th>
+													<th width="220px">Mensagem</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="m in viewModel.flows">
 												<td>{{ m.sdtLog }}<br><b>{{ m.sfkUser }}</b></td>
-												<td>From: {{ m.sfkOldFlowState }} <br />To: {{ m.sfkNewFlowState }}</td>
+												<td>De: {{ m.sfkOldFlowState }} <br />Para: {{ m.sfkNewFlowState }}</td>
 												<td>{{ m.stMessage }}</td>
 											</tr>
 										</table>
@@ -375,7 +375,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="User Messages" ng-show="viewModel.id > 0">
+				<tab heading="Mensagens" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table>
 							<thead>
@@ -390,7 +390,7 @@
 							<tr height="40px">
 								<td></td>
 								<td valign="middle">
-									<b>Your message</b>									
+									<b>Sua mensagem</b>									
 								</td>
 								<td valign="middle">
 									<textarea rows="2" type="text" class="form-control input-transparent" maxlength="999"
@@ -409,10 +409,10 @@
 										<table class="table table-hover">
 											<thead>
 												<tr>
-													<th width="90px">Date</th>
-													<th width="110px">User</th>
-													<th width="110px">Flow</th>
-													<th >Message</th>
+													<th width="90px">Data</th>
+													<th width="110px">Usuário</th>
+													<th width="110px">Fluxo</th>
+													<th >Mensagem</th>
 												</tr>
 											</thead>
 											<tr data-ng-repeat="m in viewModel.usrMessages">
@@ -430,7 +430,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Accumulators" ng-show="viewModel.id > 0">
+				<tab heading="Acumuladores" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
@@ -438,8 +438,8 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:white">
-										Accumulators for task
-										<button class="btn btn-info btn-xs pull-right" ng-if="addAcc == false" ng-click="addNewAcc()"><i class="fa fa-plus"> </i> Add value </button>
+										Acumuladores para a tarefa
+										<button class="btn btn-info btn-xs pull-right" ng-if="addAcc == false" ng-click="addNewAcc()"><i class="fa fa-plus"> </i> Adicionar </button>
 									</legend>
 									<div ng-if="addAcc == true">
 										<table>
@@ -448,7 +448,7 @@
 													<table>
 														<tr height="42px">
 															<td width="120px">
-																<b>Accumulator</b>																
+																<b>Acumulador</b>																
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_fkTaskAcc_fail">!</button>
@@ -459,7 +459,7 @@
 														</tr>
 														<tr height="42px" ng-show="fkTaskAccType == 1">
 															<td width="120px">
-																<b>Money to be added</b>																
+																<b>Dinheiro a somar</b>																
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_val_fail">!</button>
@@ -470,7 +470,7 @@
 														</tr>
 														<tr height="42px" ng-show="fkTaskAccType == 2">
 															<td width="120px">
-																<b>Hours to be added</b>																
+																<b>Horas a somar</b>																
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_val_fail">!</button>
@@ -479,7 +479,7 @@
 																<table>
 																	<tr>
 																		<td width="50px">
-																			Hours
+																			Horas
 																		</td>
 																		<td width="80px">
 																			<input type="number" class="form-control input-transparent" maxlength="2"
@@ -487,7 +487,7 @@
 																		</td>
 																		<td width="10px"></td>
 																		<td width="50px">
-																			Mins
+																			Minutos
 																		<td width="80px">
 																			<input type="number" class="form-control input-transparent" maxlength="2"
 																				   ng-disabled="!permModel.edicao" ng-model="newAcc.nuMinValue">
@@ -501,7 +501,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-default" ng-click="cancelAcc()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewAcc()">Save </button>
+										<button class="btn btn-default" ng-click="cancelAcc()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewAcc()">Salvar </button>
 										<br />
 										<br />
 									</div>
@@ -510,8 +510,8 @@
 										<table class="table table-hover" style="width:100%">
 											<thead>
 												<tr>
-													<th>Accumulator</th>
-													<th width="60px">Type</th>
+													<th>Acumulador</th>
+													<th width="60px">Tipo</th>
 													<th width="60px">Total</th>
 													<th>Log</th>
 												</tr>
@@ -539,7 +539,7 @@
 						</table>
 					</div>
 				</tab>
-                <tab heading="Clients ({{viewModel.clients.length}})" ng-show="viewModel.id > 0">
+                <tab heading="Clientes ({{viewModel.clients.length}})" ng-show="viewModel.id > 0">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
                             <tr height="12px"></tr>
@@ -547,8 +547,8 @@
                                 <td width="20px"></td>
                                 <td>
                                     <legend style="color:white">
-                                        Clients for task
-                                        <button class="btn btn-info btn-xs pull-right" ng-if="addClient == false" ng-click="addNewClient()"><i class="fa fa-plus"> </i> Add Client </button>
+                                        Clients nesta tarefa
+                                        <button class="btn btn-info btn-xs pull-right" ng-if="addClient == false" ng-click="addNewClient()"><i class="fa fa-plus"> </i> Adicionar </button>
                                     </legend>
                                     <div ng-if="addClient == true">
                                         <table>
@@ -557,7 +557,7 @@
                                                     <table>
                                                         <tr height="42px">
                                                             <td width="120px">
-                                                                <b>Client</b>
+                                                                <b>Cliente</b>
                                                             </td>
                                                             <td width="20px">
                                                                 <button class="btn btn-xs btn-danger" ng-show="newClient_fail">!</button>
@@ -571,7 +571,7 @@
                                             </tr>
                                         </table>
                                         <br />
-                                        <button class="btn btn-default" ng-click="cancelClient()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewClient()">Save </button>
+                                        <button class="btn btn-default" ng-click="cancelClient()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewClient()">Salvar </button>
                                         <br />
                                         <br />
                                     </div>
@@ -580,7 +580,7 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>Client</th>
+                                                    <th>Cliente</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -602,7 +602,7 @@
                         </table>
                     </div>
                 </tab>
-                <tab heading="Client Groups ({{viewModel.clientGroups.length}})" ng-show="viewModel.id > 0">
+                <tab heading="Grupos ({{viewModel.clientGroups.length}})" ng-show="viewModel.id > 0">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
                             <tr height="12px"></tr>
@@ -610,8 +610,8 @@
                                 <td width="20px"></td>
                                 <td>
                                     <legend style="color:white">
-                                        Client Groups for task
-                                        <button class="btn btn-info btn-xs pull-right" ng-if="addClientGroup == false" ng-click="addNewClientGroup()"><i class="fa fa-plus"> </i> Add Client Group </button>
+                                        Grupos associados a esta tarefa
+                                        <button class="btn btn-info btn-xs pull-right" ng-if="addClientGroup == false" ng-click="addNewClientGroup()"><i class="fa fa-plus"> </i> Adicionar </button>
                                     </legend>
                                     <div ng-if="addClientGroup == true">
                                         <table>
@@ -620,7 +620,7 @@
                                                     <table>
                                                         <tr height="42px">
                                                             <td width="120px">
-                                                                <b>Client Group</b>
+                                                                <b>Grupo</b>
                                                             </td>
                                                             <td width="20px">
                                                                 <button class="btn btn-xs btn-danger" ng-show="newClientGroup_fail">!</button>
@@ -634,7 +634,7 @@
                                             </tr>
                                         </table>
                                         <br />
-                                        <button class="btn btn-default" ng-click="cancelClientGroup()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewClientGroup()">Save </button>
+                                        <button class="btn btn-default" ng-click="cancelClientGroup()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewClientGroup()">Salvar </button>
                                         <br />
                                         <br />
                                     </div>
@@ -643,7 +643,7 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>Client</th>
+                                                    <th>Grupo</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -665,7 +665,7 @@
                         </table>
                     </div>
                 </tab>
-                <tab heading="Custom Steps ({{viewModel.customSteps.length}})" ng-show="viewModel.id > 0">
+                <tab heading="Passos ({{viewModel.customSteps.length}})" ng-show="viewModel.id > 0">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
                             <tr height="12px"></tr>
@@ -673,8 +673,8 @@
                                 <td width="20px"></td>
                                 <td>
                                     <legend style="color:white">
-                                        Task Custom Steps
-                                        <button class="btn btn-info btn-xs pull-right" ng-if="addCustomStep == false" ng-click="addNewCustomStep()"><i class="fa fa-plus"> </i> Add Custom Step </button>
+                                        Passos customizados da tarefa
+                                        <button class="btn btn-info btn-xs pull-right" ng-if="addCustomStep == false" ng-click="addNewCustomStep()"><i class="fa fa-plus"> </i> Adicionar </button>
                                     </legend>
                                     <div ng-if="addCustomStep == true">
                                         <table>
@@ -683,7 +683,7 @@
                                                     <table>
                                                         <tr height="42px">
                                                             <td width="120px">
-                                                                <b>Custom Step</b>
+                                                                <b>Passo</b>
                                                             </td>
                                                             <td width="20px">
                                                                 <button class="btn btn-xs btn-danger" ng-show="newCustomStep_fail">!</button>
@@ -697,7 +697,7 @@
                                             </tr>
                                         </table>
                                         <br />
-                                        <button class="btn btn-default" ng-click="cancelCustomStep()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewCustomStep()">Save </button>
+                                        <button class="btn btn-default" ng-click="cancelCustomStep()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewCustomStep()">Salvar </button>
                                         <br />
                                         <br />
                                     </div>
@@ -705,9 +705,9 @@
                                     <table class="table table-hover" style="width:100%" ng-if="viewModel.customSteps.length > 0 ">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>State</th>
-                                                <th>Confirmed by</th>
+                                                <th>Nome</th>
+                                                <th>Situação</th>
+                                                <th>Confirmado por</th>
                                             </tr>
                                         </thead>
                                         <tr ng-click="selectCustomStep(mdl)" data-ng-repeat="mdl in viewModel.customSteps">
@@ -730,21 +730,21 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:white">
-										Category Check Points
+										Check Points da Categoria
 									</legend>
 									<br />
 									<table class="table table-hover" style="width:100%">
 										<thead>
 											<tr>
-												<th>Name</th>
-												<th>Mandatory</th>
-												<th>State</th>
-												<th>Confirmed by</th>
+												<th>Nome</th>
+												<th>Mandatório</th>
+												<th>Situação</th>
+												<th>Confirmado por</th>
 											</tr>
 										</thead>
 										<tr ng-click="selectCheckpoint(mdl)" data-ng-repeat="mdl in viewModel.checkpoints">
 											<td>{{ mdl.stName }}</td>
-											<td>{{ mdl.bMandatory == true ? 'YES' : '' }}</td>
+											<td>{{ mdl.bMandatory == true ? 'SIM' : '' }}</td>
 											<td>{{ mdl.bSelected == true ? 'OK' : '' }}</td>
 											<td>{{ mdl.sfkUser }} {{ mdl.sdtLog }}</td>
 										</tr>											
@@ -755,7 +755,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Questions ({{viewModel.questions.length}})" ng-show="viewModel.id > 0">
+				<tab heading="Questões ({{viewModel.questions.length}})" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
@@ -763,8 +763,8 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:white">
-										Questions
-										<button class="btn btn-info btn-xs pull-right" ng-if="addQuestion == false" ng-if="addQuestion == false" ng-click="addNewQuestion()"><i class="fa fa-plus"> </i> Add question </button>
+										Questões
+										<button class="btn btn-info btn-xs pull-right" ng-if="addQuestion == false" ng-if="addQuestion == false" ng-click="addNewQuestion()"><i class="fa fa-plus"> </i> Adicionar </button>
 									</legend>
 									<div ng-if="addQuestion == true">
 										<table>
@@ -773,7 +773,7 @@
 													<table>
 														<tr height="42px">
 															<td width="120px">
-																<b>Statement</b>
+																<b>Pergunta</b>
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newQuestion_Statement_fail">!</button>
@@ -784,7 +784,7 @@
 														</tr>
 														<tr height="42px">
 															<td>
-																<b>Directed to</b>
+																<b>Digirida para</b>
 															</td>
 															<td>
 																<button class="btn btn-xs btn-danger" ng-show="newQuestion_user_fail">!</button>
@@ -795,7 +795,7 @@
 														</tr>
 														<tr height="42px">
 															<td>
-																<b>Answer</b>
+																<b>Resposta</b>
 															</td>
 															<td>
 																<button class="btn btn-xs btn-danger" ng-show="newQuestion_Answer_fail">!</button>
@@ -806,7 +806,7 @@
 														</tr>
 														<tr height="42px">
 															<td>
-																<b>Final</b>
+																<b>Encerrada?</b>
 															</td>
 															<td></td>
 															<td>
@@ -818,7 +818,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-default" ng-click="cancelQuestion()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewQuestion()">Save </button>
+										<button class="btn btn-default" ng-click="cancelQuestion()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewQuestion()">Salvar </button>
 										<br />
 										<br />
 									</div>
@@ -827,9 +827,9 @@
 										<table class="table table-hover" style="width:100%">
 											<thead>
 												<tr>
-													<th>From</th>
-													<th>To</th>
-													<th>Question / Answer</th>
+													<th>De</th>
+													<th>Para</th>
+													<th>Questão / Resposta</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -867,7 +867,7 @@
 						</table>
 					</div>
 				</tab>
-				<tab heading="Dependencies ({{viewModel.dependencies.length}})" ng-show="viewModel.id > 0">
+				<tab heading="Dependências ({{viewModel.dependencies.length}})" ng-show="viewModel.id > 0">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
 						<table width="100%">
 							<tr height="12px"></tr>
@@ -875,8 +875,8 @@
 								<td width="20px"></td>
 								<td>
 									<legend style="color:white">
-										Sub-Tasks dependencies
-										<button class="btn btn-info btn-xs pull-right" ng-if="addSubtask == false" ng-click="addNewSubtask()"><i class="fa fa-plus"> </i> Add sub-task </button>
+										Sub-tarefas 
+										<button class="btn btn-info btn-xs pull-right" ng-if="addSubtask == false" ng-click="addNewSubtask()"><i class="fa fa-plus"> </i> Adicionar </button>
 									</legend>
 									<div ng-if="addSubtask == true">
 										<table>
@@ -885,7 +885,7 @@
 													<table>
 														<tr height="42px">
 															<td width="120px">
-																<b>Protocol</b>																
+																<b>Protocolo</b>
 															</td>
 															<td width="20px">
 																<button class="btn btn-xs btn-danger" ng-show="newSubtask_fail">!</button>
@@ -899,7 +899,7 @@
 											</tr>
 										</table>
 										<br />
-										<button class="btn btn-default" ng-click="cancelSubtask()">Cancel </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewSubtask()">Save </button>
+										<button class="btn btn-default" ng-click="cancelSubtask()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewSubtask()">Salvar </button>
 										<br />
 										<br />
 									</div>
@@ -908,9 +908,9 @@
 										<table class="table table-hover" style="width:100%">
 											<thead>
 												<tr>
-													<th>Date / User</th>
-													<th>Protocol</th>
-													<th>State / Title / Localization</th>
+													<th>Data / Usuário</th>
+													<th>Protocolo</th>
+													<th>Situação / Título / Localização</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -939,9 +939,9 @@
 			<br />
 			<table>
 				<tr>
-					<td><button class="btn btn-default" ng-click="list()">Cancel</button> </td>
+					<td><button class="btn btn-default" ng-click="list()">Cancelar</button> </td>
 					<td width="34px"></td>
-					<td><button class="btn btn-primary" ng-click="save()">Save</button></td>
+					<td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
 				</tr>
 			</table>
 			<br />

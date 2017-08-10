@@ -5,9 +5,9 @@
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td><b>Tasks </b> listing <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td>Listagem de <b>Tarefas </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
 					<td width="80px"></td>
-					<td><input type="submit" class="btn btn-success pull-right" value="New" ng-click="new()"></td>
+					<td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
 					<td width="20px"></td>
 				</tr>
 				<tr height="12px"></tr>
@@ -29,7 +29,7 @@
 						<div ng-show="list.length == 0">
 							<br />
 							<br />
-							<div class="btn btn-info btn-lg">No records found.</div>
+							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 							<br />
 							<br />
 						</div>
@@ -40,12 +40,12 @@
 							<table class="table table-hover" ng-if="availWidth < 1400">
 								<thead>
 									<tr>
-										<th width="90px">Date </th>
-										<th width="140px">Priority <br /> Informed By</th>
-										<th width="140px">Type <br /> Category</th>
-										<th width="180px">Title <br /> Localization</th>
-										<th width="140px">Assigned To</th>
-										<th width="180px">Project <br /> SPRINT</th>
+										<th width="90px">Data </th>
+										<th width="140px">Prioridade <br /> Aberto por</th>
+										<th width="140px">Tipo <br /> Categoria</th>
+										<th width="180px">Título <br /> Localização</th>
+										<th width="140px">Responsável</th>
+										<th width="180px">Projeto <br /> Sprint</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
@@ -60,16 +60,16 @@
 							<table class="table table-hover" ng-if="availWidth > 1400" style="width:100%">
 								<thead>
 									<tr>
-										<th width="100px">Protocol / Date</th>
-                                        <th width="220px">Title / Localization</th>
-                                        <th width="90px">Project / PHASE</th>
-                                        <th width="110px">Sprint / VERSION</th>
-										<th width="60px">Priority</th>
-										<th width="80px">State</th>
-										<th width="90px">Informed By</th>
-										<th width="90px">Assigned To</th>
-										<th width="120px">Type</th>
-										<th width="150px">Category</th>										
+										<th width="100px">Protocolo / Data</th>
+                                        <th width="220px">Título / Localização</th>
+                                        <th width="90px">Projeto / Fase</th>
+                                        <th width="110px">Sprint / Versão</th>
+										<th width="60px">Prioridade</th>
+										<th width="80px">Situação</th>
+										<th width="90px">Aberto por</th>
+										<th width="90px">Responsável</th>
+										<th width="120px">Tipo</th>
+										<th width="150px">Categoria</th>										
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">

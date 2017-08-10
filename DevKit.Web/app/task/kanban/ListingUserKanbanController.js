@@ -32,7 +32,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 			$scope.permModel = data;
 			
 			if (!$scope.permModel.listagem) {
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}
 		},

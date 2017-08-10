@@ -18,7 +18,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
         Api.Permission.get({ id: $scope.permID }, function (data) {
 			$scope.permModel = data;
 			if (!$scope.permModel.listagem) {
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}			
 		},

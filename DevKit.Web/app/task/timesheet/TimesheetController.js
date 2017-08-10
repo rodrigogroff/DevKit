@@ -25,7 +25,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 			$scope.permModel = data;
 
 			if (!$scope.permModel.listagem) {
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}			
 		},
@@ -63,7 +63,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		if ($scope.nuYear == '' ||
 			$scope.nuMonth == undefined )
 		{
-			$scope.stMessage = 'Please inform all date fields';
+			$scope.stMessage = 'Informe todos os campos de data';
 		}
 		else
 		{

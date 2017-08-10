@@ -26,7 +26,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			if (!$scope.permModel.visualizar)
 			{
-				toastr.error('Access denied!', 'Permission');
+                toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}
 		},
@@ -80,7 +80,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.save = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
@@ -95,7 +95,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 					Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Task type saved!', 'Success');
+						toastr.success('Tipo de tarefa salvo!', 'Success');
 						init();
 					},
 					function (response)
@@ -107,7 +107,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 				{
 					Api.TaskType.add($scope.viewModel, function (data)
 					{
-						toastr.success('Task type added!', 'Success');
+						toastr.success('Tipo de tarefa adicionado!', 'Success');
                         $state.go('taskTypes');
 					},
 					function (response)
@@ -126,12 +126,12 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.remove = function ()
 	{
 		if (!$scope.permModel.remover)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
             Api.TaskType.remove({ id: id }, function (data)
 			{
-				toastr.success('Task Type removed!', 'Success');
+				toastr.success('Tipo de tarefa removido!', 'Success');
 				$scope.list();
 			},
 			function (response) {
@@ -149,7 +149,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.removeCategorie = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
         {
 			$scope.viewModel.updateCommand = "removeCategorie";
@@ -157,7 +157,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Category removed', 'Success');
+				toastr.success('Categoria removida', 'Success');
 				init();
 			});
 		}
@@ -166,7 +166,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.addNewCategorie = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$scope.addCategorie = !$scope.addCategorie;
 	}
@@ -196,7 +196,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			{
 				$scope.newCategorie = {};
 				$scope.addCategorie = false;
-				toastr.success('Category saved', 'Success');
+				toastr.success('Categoria salva', 'Success');
 				init();
 			},
             function (response)
@@ -244,7 +244,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.removeFlow = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
         {
             $scope.viewModel.updateCommand = "removeFlow";
@@ -252,7 +252,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Flow removed', 'Success');
+				toastr.success('Fluxo removido', 'Success');
 				init();
 				$scope.loadFlows();
 			});
@@ -262,7 +262,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.addNewFlow = function ()
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$scope.addFlow = !$scope.addFlow;
 	}
@@ -288,7 +288,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Flow saved', 'Success');
+				toastr.success('Fluxo salvo', 'Success');
 
 				$scope.newFlow = {};
 				$scope.newFlow.fkTaskCategory = tmp;
@@ -350,14 +350,14 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.removeAcc = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
         else
         {
 			$scope.viewModel.updateCommand = "removeAcc";
 			$scope.viewModel.anexedEntity = lista[index];
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data) {
-			    toastr.success('Accumulator removed', 'Success');
+			    toastr.success('Acumulador removido', 'Success');
 			    init();
 				$scope.loadAccs();
 			});
@@ -366,7 +366,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.addNewAcc = function () {
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$scope.addAcc = !$scope.addAcc;
 	}
@@ -390,7 +390,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Accumulator saved', 'Success');
+				toastr.success('Acumulador salvo', 'Success');
 
 				$scope.newAcc = {};
 				$scope.newAcc.fkTaskCategory = tmp;
@@ -452,14 +452,14 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	$scope.removeCC = function (index, lista)
 	{
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
         else
         {
 			$scope.viewModel.updateCommand = "removeCC";
 			$scope.viewModel.anexedEntity = lista[index];
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data) {
-				toastr.success('Check Point removed', 'Success');
+				toastr.success('Check point removido', 'Success');
 				$scope.loadCCs();
 			});
 		}
@@ -467,7 +467,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 	$scope.addNewCC = function () {
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-			toastr.error('Access denied!', 'Permission');
+            toastr.error('Acesso negado!', 'Permissão');
 		else
 			$scope.addCC = !$scope.addCC;
 	}
@@ -486,7 +486,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Check Point saved', 'Success');
+				toastr.success('Check point salvo', 'Success');
 				$scope.newCC = {};
 				$scope.newCC.fkCategory = tmp;
 				init();

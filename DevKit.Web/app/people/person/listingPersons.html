@@ -5,9 +5,9 @@
             <table style="color:white; width:100%">
                 <tr>
                     <td width="20px"></td>
-                    <td><b>Persons </b> listing <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td>Listagem <b>Pessoas </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
                     <td width="80px"></td>
-                    <td><input type="submit" class="btn btn-success pull-right" value="New" ng-click="new()"></td>
+                    <td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
                     <td width="20px"></td>
                 </tr>
                 <tr height="12px"></tr>
@@ -29,7 +29,7 @@
                         <div ng-show="list.length == 0">
                             <br />
                             <br />
-                            <div class="btn btn-info btn-lg">No records found.</div>
+                            <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
                             <br />
                             <br />
                         </div>
@@ -37,17 +37,17 @@
                             <br />
                             <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
                             <br />
-                            <table class="table table-hover"  style="width:100%">
+                            <table class="table table-hover" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th width="150px">Name / Alias</th>
-                                        <th width="120px">Phones</th>
+                                        <th width="150px">Nome / Apelido</th>
+                                        <th width="120px">Telefones</th>
                                         <th width="150px">Emails</th>
-                                        <th width="120px">Date Added</th>
-                                        <th width="110px">Last Update</th>
-                                        <th width="90px">User</th>
-                                        <th width="110px">Last Contact</th>
-                                        <th width="90px">User</th>
+                                        <th width="120px">Criação</th>
+                                        <th width="110px">Atualização</th>
+                                        <th width="90px">Usuário</th>
+                                        <th width="110px">Último contato</th>
+                                        <th width="90px">Usuário</th>
                                     </tr>
                                 </thead>
                                 <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">

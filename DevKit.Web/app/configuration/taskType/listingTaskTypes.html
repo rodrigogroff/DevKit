@@ -5,9 +5,9 @@
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td><b>Task Type </b> listing <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td>Listagem de <b>Tipos de tarefa</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
 					<td width="80px"></td>
-					<td><input type="submit" class="btn btn-success pull-right" value="New" ng-click="new()"></td>
+					<td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
 					<td width="20px"></td>
 				</tr>
 				<tr height="12px"></tr>
@@ -29,7 +29,7 @@
 						<div ng-show="list.length == 0">
 							<br />
 							<br />
-							<div class="btn btn-info btn-lg">No records found.</div>
+							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 							<br />
 							<br />
 						</div>
@@ -40,18 +40,18 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th>Project</th>
-										<th>Type</th>
-										<th>Managed</th>
-										<th>Condensed</th>
-										<th>Categories</th>
+										<th>Projeto</th>
+										<th>Tipo</th>
+										<th>Gerenciado</th>
+										<th>Condensado</th>
+										<th>Categorias</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
 									<td>{{ mdl.project.stName }}</td>
 									<td>{{ mdl.stName }}</td>
-									<td>{{ mdl.bManaged ? 'Yes' : 'No' }}</td>
-									<td>{{ mdl.bCondensedView ? 'Yes' : 'No' }}</td>
+									<td>{{ mdl.bManaged ? 'Sim' : 'Não' }}</td>
+									<td>{{ mdl.bCondensedView ? 'Sim' : 'Não' }}</td>
 									<td><div data-ng-repeat="m in mdl.categories">{{ m.stName }}</div></td>
 								</tr>
 							</table>

@@ -295,10 +295,10 @@ th {
   }
 }
 
-@font-face {
+/*@font-face {
   font-family: 'Glyphicons Halflings';
   src: url("fonts/bootstrap/glyphicons-halflings-regular.eot");
-}
+}*/
 
 .glyphicon {
   position: relative;

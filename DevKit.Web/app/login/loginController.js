@@ -32,7 +32,7 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     		{
                 $scope.loginOK = true;
 
-                Api.Startup.listPage({}, function (data) { });
+                //Api.Startup.listPage({}, function (data) { });
                 
                 $rootScope.exibirMenu = true;
                 $rootScope.$broadcast('updateCounters');

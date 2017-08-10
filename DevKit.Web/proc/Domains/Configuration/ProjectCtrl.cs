@@ -60,6 +60,8 @@ namespace DevKit.Web.Controllers
             if (!mdl.Create(db, ref apiError))
 				return BadRequest(apiError);
 
+            mdl.LoadAssociations(db);
+
             CleanCache(db, CacheTags.Project, null);
             StoreCache(CacheTags.Project, mdl.id, mdl);
 

@@ -27,9 +27,11 @@ namespace DataModel
 		{
 			var setup = db.GetSetup();
 
-			var lst = (from e in db.ProjectUser where e.fkProject == id select e).
-				OrderBy(t => t.id).
-				ToList();
+			var lst = (from e in db.ProjectUser
+                       where e.fkProject == id
+                       select e).
+				       OrderBy(t => t.id).
+				       ToList();
 
 			foreach (var item in lst)
 			{

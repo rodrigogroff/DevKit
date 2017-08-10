@@ -42,7 +42,7 @@ angular.module('app.services', ['ngResource'])
     return {
 
         Setup: $resource('api/setup/:id', {}, opcoes),
-        Startup: $resource('api/startup/:id', {}, opcoes),
+        //Startup: $resource('api/startup/:id', {}, opcoes),
 		User: $resource('api/user/:id', {}, opcoes),
 		Profile: $resource('api/profile/:id', {}, opcoes),
 		Permission: $resource('api/permission/:id', {}, opcoes),

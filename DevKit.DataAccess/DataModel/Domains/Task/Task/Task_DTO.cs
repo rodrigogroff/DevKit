@@ -38,7 +38,8 @@ namespace DataModel
     
     public class TaskListing
     {
-        public string   stProtocol, 
+        public string   id,
+                        stProtocol, 
                         sdtStart,
                         stTitle, 
                         stLocalization, 

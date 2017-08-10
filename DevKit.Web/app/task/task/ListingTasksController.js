@@ -91,7 +91,8 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	}
 
 	$scope.show = function (mdl)
-	{
+    {
+        console.log(mdl);
 		if (!$scope.permModel.visualizar) 
             toastr.error('Acesso negado!', 'Permissão');
 		else

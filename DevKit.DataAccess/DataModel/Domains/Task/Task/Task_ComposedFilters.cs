@@ -195,6 +195,7 @@ namespace DataModel
             results.ForEach( item =>  {
                     resultsListing.Add ( new TaskListing
                     {
+                        id = item.id.ToString(),
                         sdtStart = item.sdtStart,
                         sfkPhase = item.sfkPhase,
                         sfkProject = item.sfkProject,

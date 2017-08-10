@@ -28,7 +28,7 @@ namespace DataModel
 					nuType = EnumAuditType.Task,
 					fkTarget = this.id
 				}.
-				Create(db, "New assigned: " + db.GetUser(fkUserResponsible).stLogin, "");
+				Create(db, "Novo responsável: " + db.GetUser(fkUserResponsible).stLogin, "");
 
 				#endregion
 			}
@@ -55,7 +55,7 @@ namespace DataModel
 					nuType = EnumAuditType.Task,
 					fkTarget = this.id
 				}.
-				Create(db, "New message", "");
+				Create(db, "Nova mensagem", "");
 
 				#endregion
 			}
@@ -147,7 +147,7 @@ namespace DataModel
 
 							if (subTask.bComplete == false)
 							{
-								resp = "Sub-Task " + subTask.stProtocol + " is still open!";
+								resp = "Sub-tarefa " + subTask.stProtocol + " ainda aberta!";
 								return false;
 							}
 						}
@@ -171,7 +171,7 @@ namespace DataModel
 								select e).
 								Any())
 						{
-							resp = "Check Point mandatory: " + item.stName;
+							resp = "Check Point mandatória: " + item.stName;
 							return false;
 						}
 					}
@@ -206,7 +206,7 @@ namespace DataModel
 					nuType = EnumAuditType.Task,
 					fkTarget = this.id
 				}.
-				Create(db, "State changed -> " + db.GetTaskFlow(fkTaskFlowCurrent).stName, "");
+				Create(db, "Mudança de fluxo -> " + db.GetTaskFlow(fkTaskFlowCurrent).stName, "");
 
 				#endregion
 			}

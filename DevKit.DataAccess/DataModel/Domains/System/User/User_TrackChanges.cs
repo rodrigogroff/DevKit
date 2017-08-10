@@ -7,17 +7,17 @@ namespace DataModel
 		{
 			var ret = "";
 
-			var oldEntity = db.GetUser(this.id);
+			var oldEntity = db.GetUser(id);
 			
-			if(oldEntity.stLogin != this.stLogin)
-				ret += "Login: " + oldEntity.stLogin + " => " + this.stLogin + "; ";
+			if(oldEntity.stLogin != stLogin)
+				ret += "Login: " + oldEntity.stLogin + " => " + stLogin + "; ";
 
-			if (oldEntity.bActive != this.bActive)
-				ret += "Active: " + oldEntity.bActive + " => " + this.bActive + "; ";
+			if (oldEntity.bActive != bActive)
+				ret += "Ativo: " + oldEntity.bActive + " => " + bActive + "; ";
 
-            if (oldEntity.fkProfile != this.fkProfile)
+            if (oldEntity.fkProfile != fkProfile)
             {
-                ret += "Profile: " + db.GetProfile(oldEntity.fkProfile) + " => " + db.GetProfile(this.fkProfile) + "; ";
+                ret += "Perfil: " + db.GetProfile(oldEntity.fkProfile) + " => " + db.GetProfile(fkProfile) + "; ";
                 bProfileChanged = true;
             }
 

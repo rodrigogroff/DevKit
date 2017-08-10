@@ -31,13 +31,13 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "Login already taken";
+				resp = "Login já utilizado";
 				return false;
 			}
 
 			if (stLogin.Contains(" "))
 			{
-				resp = "Invalid Login";
+				resp = "Login inválido";
 				return false;
 			}
 
@@ -53,9 +53,7 @@ namespace DataModel
 				nuType = EnumAuditType.User,
 				fkTarget = this.id
 			}.
-			Create(db, "New user: " + stLogin, "");
-
-            
+			Create(db, "Novo usuário: " + stLogin, "");            
 
 			return true;
 		}

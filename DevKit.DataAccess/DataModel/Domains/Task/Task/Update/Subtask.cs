@@ -18,7 +18,7 @@ namespace DataModel
 
 			if (subTask == null)
 			{
-				resp = "Protocol not found";
+				resp = "Protocolo não encontrado";
 				return false;
 			}
 
@@ -37,7 +37,7 @@ namespace DataModel
 				nuType = EnumAuditType.Task,
 				fkTarget = this.id
 			}.
-			Create(db, "New dependency added:" + ent.stProtocol, "");
+			Create(db, "Nova dependência:" + ent.stProtocol, "");
 
 			return true;
 		}
@@ -58,7 +58,7 @@ namespace DataModel
 				nuType = EnumAuditType.Task,
 				fkTarget = this.id
 			}.
-			Create(db, "Dependency removed: " + entDb.stProtocol, "");
+			Create(db, "Dependência removida: " + entDb.stProtocol, "");
 
 			db.Delete(entDb);
 

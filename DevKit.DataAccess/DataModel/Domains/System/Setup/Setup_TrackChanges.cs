@@ -11,17 +11,17 @@ namespace DataModel
 
 			if (oldEntity.stPhoneMask != this.stPhoneMask)
 			{
-				ret += "PhoneMask: " + oldEntity.stPhoneMask + " => " + this.stPhoneMask;
+				ret += "Mascara de telefone: " + oldEntity.stPhoneMask + " => " + this.stPhoneMask;
 			}
 
 			if (oldEntity.stDateFormat != this.stDateFormat)
 			{
-				ret += "DateFormat: " + oldEntity.stDateFormat + " => " + this.stDateFormat;
+				ret += "Formato de data: " + oldEntity.stDateFormat + " => " + this.stDateFormat;
 			}
 
 			if (oldEntity.stProtocolFormat != this.stProtocolFormat)
 			{
-				ret += "ProtocolFormat: " + oldEntity.stProtocolFormat + " => " + this.stProtocolFormat;
+				ret += "Protocol: " + oldEntity.stProtocolFormat + " => " + this.stProtocolFormat;
 			}
 			
 			return ret;

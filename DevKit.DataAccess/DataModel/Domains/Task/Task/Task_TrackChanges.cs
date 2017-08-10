@@ -10,13 +10,13 @@ namespace DataModel
 			var oldEntity = db.GetTask(this.id);
 
 			if (oldEntity.stDescription != this.stDescription)
-				ret += "Description: " + oldEntity.stDescription + " => " + this.stDescription + ";";
+				ret += "Descrição: " + oldEntity.stDescription + " => " + this.stDescription + ";";
 
 			if (oldEntity.stLocalization != this.stLocalization)
-				ret += "Localization: " + oldEntity.stLocalization + " => " + this.stLocalization + ";";
+				ret += "Localização: " + oldEntity.stLocalization + " => " + this.stLocalization + ";";
 
 			if (oldEntity.stTitle != this.stTitle)
-				ret += "Title: " + oldEntity.stTitle + " => " + this.stTitle + ";";
+				ret += "Título: " + oldEntity.stTitle + " => " + this.stTitle + ";";
 
 			return ret;
 		}

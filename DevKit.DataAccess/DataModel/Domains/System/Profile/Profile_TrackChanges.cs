@@ -12,7 +12,7 @@ namespace DataModel
 
 			if (oldEntity.stName != this.stName )
 			{
-                ret += "Name: " + oldEntity.stName + " => " + this.stName + "; ";
+                ret += "Nome: " + oldEntity.stName + " => " + this.stName + "; ";
                 bNameChanged = true;
             }
 			
@@ -28,12 +28,12 @@ namespace DataModel
 			foreach (var perm in oldPerms)
 				if (perm != "")
 					if (hshNewPerms[perm] == null)
-						ret += "Permission removed: " + perm.Substring(0,3) + "; ";
+						ret += "Permissão removida: " + perm.Substring(0,3) + "; ";
 
 			foreach (var perm in newPerms)
 				if (perm != "")
 					if (hshOldPerms[perm] == null)
-						ret += "Permission added: " + perm.Substring(0, 3) + "; ";
+						ret += "Permissão adicionada: " + perm.Substring(0, 3) + "; ";
 
 			return ret;
 		}

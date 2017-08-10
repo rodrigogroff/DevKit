@@ -18,7 +18,7 @@ namespace DataModel
                      where e.stName.ToUpper() == ent.stName.ToUpper()
                      select e).Any())
                 {
-                    resp = "Check Point already added to task type!";
+                    resp = "Check Point já usado";
                     return false;
                 }
 
@@ -31,7 +31,7 @@ namespace DataModel
                     nuType = EnumAuditType.TaskType,
                     fkTarget = this.id
                 }.
-                Create(db, "New category check point: " + ent.stName, "");
+                Create(db, "Nova categoria: " + ent.stName, "");
             }
             else
             {
@@ -44,7 +44,7 @@ namespace DataModel
                     nuType = EnumAuditType.TaskType,
                     fkTarget = this.id
                 }.
-                Create(db, "Edit accumulator: " + ent.stName, "");
+                Create(db, "Edição de acumulador: " + ent.stName, "");
             }
 
             return true;

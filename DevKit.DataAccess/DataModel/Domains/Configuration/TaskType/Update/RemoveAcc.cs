@@ -1,7 +1,5 @@
 ﻿using LinqToDB;
 using Newtonsoft.Json;
-using System;
-using System.Linq;
 
 namespace DataModel
 {
@@ -20,7 +18,7 @@ namespace DataModel
                 nuType = EnumAuditType.TaskType,
                 fkTarget = this.id
             }.
-            Create(db, "Accumulator deleted: " + ent.stName, "");
+            Create(db, "Acumulador removido: " + ent.stName, "");
 
             return true;
         }

@@ -9,13 +9,13 @@ namespace DataModel
 		{
 			if (stName.ToUpper() == "ADMINISTRATOR")
 			{
-				resp = "Administrator profile cannot be deleted";
+				resp = "Perfil de Administrador não pode ser removido";
 				return false;
 			}
 			
 			if ((from e in db.User where e.fkProfile == this.id select e).Any())
 			{
-				resp = "Profile still associated with other users";
+				resp = "Perfil ainda associado com outros usuários";
 				return false;
 			}
 

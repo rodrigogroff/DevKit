@@ -1,7 +1,4 @@
 ﻿using LinqToDB;
-using Newtonsoft.Json;
-using System;
-using System.Linq;
 
 namespace DataModel
 {
@@ -16,7 +13,7 @@ namespace DataModel
                 nuType = EnumAuditType.TaskType,
                 fkTarget = this.id
             }.
-                        Create(db, TrackChanges(db), "");
+            Create(db, TrackChanges(db), "");
 
             db.Update(this);
 

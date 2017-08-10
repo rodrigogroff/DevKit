@@ -40,7 +40,7 @@ namespace DataModel
 				nuType = EnumAuditType.Profile,
 				fkTarget = this.id
 			}.
-			Create(db, "New profile: " + this.stName, "");
+			Create(db, "Novo perfil: " + this.stName, "");
 
 			return true;
 		}

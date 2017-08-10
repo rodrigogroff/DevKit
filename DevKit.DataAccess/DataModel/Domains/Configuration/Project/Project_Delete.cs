@@ -9,7 +9,7 @@ namespace DataModel
 		{
 			if ((from e in db.Task where e.fkProject == id select e).Any())
 			{
-				resp = "This project is being used in a task";
+				resp = "Este projeto está sendo usado em tarefas.";
 				return false;
 			}
 

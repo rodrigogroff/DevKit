@@ -27,7 +27,7 @@ namespace DataModel
 					nuType = EnumAuditType.Task,
 					fkTarget = this.id
 				}.
-				Create(db, "New question added", "");
+				Create(db, "Nova questão adicionada", "");
 			}
 			else
 			{
@@ -46,7 +46,7 @@ namespace DataModel
 					nuType = EnumAuditType.Task,
 					fkTarget = this.id
 				}.
-				Create(db, "Edit question", "");
+				Create(db, "Questão editada", "");
 			}
             
 			return true;
@@ -68,7 +68,7 @@ namespace DataModel
 				nuType = EnumAuditType.Task,
 				fkTarget = this.id
 			}.
-			Create(db, "Question removed", "");
+			Create(db, "Questão removida", "");
 
 			db.Delete(entDb);
 

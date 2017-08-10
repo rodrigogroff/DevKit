@@ -13,12 +13,6 @@ namespace DataModel
 			{
 				case "entity":
 					{
-                        if (CheckDuplicate(this, db))
-                        {
-                            resp = "News title already taken";
-                            return false;
-                        }
-
                         db.Update(this);
 						break;
 					}

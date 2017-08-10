@@ -10,7 +10,7 @@ namespace DataModel
 			var oldEntity = db.GetProject(this.id);
 
 			if (oldEntity.stName != this.stName)
-				ret += "Name: " + oldEntity.stName + " => " + this.stName + ";";
+				ret += "Nome: " + oldEntity.stName + " => " + this.stName + ";";
 
 			return ret;
 		}

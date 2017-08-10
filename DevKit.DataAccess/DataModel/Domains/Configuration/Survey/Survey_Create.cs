@@ -28,7 +28,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "News title already taken";
+				resp = "Título de pesquisa já utilizado previamente";
 				return false;
 			}
 
@@ -36,16 +36,6 @@ namespace DataModel
 			dtLog = DateTime.Now;
 
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
-			
-			/*
-			new AuditLog {
-				fkUser = user.id,
-				fkActionLog = EnumAuditAction.ProjectCreation,
-				nuType = EnumAuditType.Project,
-				fkTarget = this.id
-			}.
-			Create(db, "type: " + strType, "");
-			*/
 
 			return true;
 		}

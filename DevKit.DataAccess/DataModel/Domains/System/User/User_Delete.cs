@@ -9,19 +9,19 @@ namespace DataModel
 		{
 			if (stLogin.ToUpper() == "DBA")
 			{
-				resp = "DBA user cannot be removed";
+				resp = "Usuário DBA não pode ser removido";
 				return false;
 			}
 
 			if ( (from e in db.ProjectUser where e.fkUser == id select e).Count() > 0)
 			{
-				resp = "this user is allocated in a project and cannot be removed";
+				resp = "Este usuário está alocado em um projeto e não pode ser removido";
 				return false;
 			}
 
 			if ((from e in db.Task where e.fkUserStart == id select e).Count() > 0)
 			{
-				resp = "this user is allocated in a task and cannot be removed";
+				resp = "Este usuário está alocado em tarefas e não pode ser removido";
 				return false;
 			}
 

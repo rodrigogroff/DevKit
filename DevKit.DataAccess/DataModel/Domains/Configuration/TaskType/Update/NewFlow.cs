@@ -19,7 +19,7 @@ namespace DataModel
                      where e.stName.ToUpper() == ent.stName.ToUpper()
                      select e).Any())
                 {
-                    resp = "Flow already added to task type!";
+                    resp = "Fluxo já adicionado ao tipo de tarefa";
                     return false;
                 }
 
@@ -34,7 +34,7 @@ namespace DataModel
                     nuType = EnumAuditType.TaskType,
                     fkTarget = this.id
                 }.
-                Create(db, "New flow: " + ent.stName, "");
+                Create(db, "Novo fluxo: " + ent.stName, "");
             }
             else
             {
@@ -47,7 +47,7 @@ namespace DataModel
                     nuType = EnumAuditType.TaskType,
                     fkTarget = this.id
                 }.
-                Create(db, "Edit flow: " + ent.stName, "");
+                Create(db, "Edição de fluxo: " + ent.stName, "");
             }
 
             return true;

@@ -31,7 +31,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "Project name already taken";
+				resp = "Nome de ´sprint já utilizado";
 				return false;
 			}
 
@@ -63,7 +63,7 @@ namespace DataModel
 								 select ne).
 								 Any())
 							{
-								resp = "Version already added to project!";
+								resp = "Versão já adicionada ao projeto";
 								return false;
 							}
 
@@ -77,7 +77,7 @@ namespace DataModel
 								nuType = EnumAuditType.Sprint,
 								fkTarget = this.id
 							}.
-							Create(db, "Added version: " + ent.stName, "");
+							Create(db, "Nova versão: " + ent.stName, "");
 						}
 						else
 						{
@@ -89,7 +89,7 @@ namespace DataModel
 								nuType = EnumAuditType.Sprint,
 								fkTarget = this.id
 							}.
-							Create(db, "Updated version: " + ent.stName, "");
+							Create(db, "Versão atualizada: " + ent.stName, "");
 						}
 						
 						break;
@@ -101,7 +101,7 @@ namespace DataModel
 
 						if ((from e in db.Task where e.fkVersion == id select e).Any())
 						{
-							resp = "This version is being used in a task";
+							resp = "Esta versão é usada em uma tarefa";
 							return false;
 						}
 
@@ -113,7 +113,7 @@ namespace DataModel
 							nuType = EnumAuditType.Sprint,
 							fkTarget = this.id
 						}.
-						Create(db, "Version deleted " + versionDel.stName, "");
+						Create(db, "Versão removida " + versionDel.stName, "");
 
 						break;
 					}

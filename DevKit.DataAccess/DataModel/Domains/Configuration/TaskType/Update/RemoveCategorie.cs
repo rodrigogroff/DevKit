@@ -13,7 +13,7 @@ namespace DataModel
 
             if ((from e in db.Task where e.fkTaskCategory == ent.id select e).Any())
             {
-                resp = "This category is being used in a task";
+                resp = "Esta categoria já está sendo usado em uma tarefa";
                 return false;
             }
 
@@ -26,7 +26,7 @@ namespace DataModel
                 nuType = EnumAuditType.TaskType,
                 fkTarget = this.id
             }.
-            Create(db, "Category deleted: " + ent.stName, "");
+            Create(db, "Category removida: " + ent.stName, "");
 
             return true;
         }

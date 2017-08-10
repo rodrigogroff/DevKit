@@ -18,7 +18,7 @@ namespace DataModel
                 nuType = EnumAuditType.TaskType,
                 fkTarget = this.id
             }.
-            Create(db, "Checkpoint deleted: " + ent.stName, "");
+            Create(db, "Check-point removido: " + ent.stName, "");
 
             return true;
         }

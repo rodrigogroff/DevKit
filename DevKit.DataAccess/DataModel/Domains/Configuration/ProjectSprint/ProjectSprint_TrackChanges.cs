@@ -10,10 +10,10 @@ namespace DataModel
 			var oldEntity = db.GetProjectSprint(this.id);
 
 			if (oldEntity.stName != this.stName)
-				ret += "Name: " + oldEntity.stName + " => " + this.stName + "; ";
+				ret += "Nome: " + oldEntity.stName + " => " + this.stName + "; ";
 
 			if (oldEntity.stDescription != this.stDescription)
-				ret += "Description: " + oldEntity.stDescription + " => " + this.stDescription + "; ";
+				ret += "Descrição: " + oldEntity.stDescription + " => " + this.stDescription + "; ";
 
 			return ret;
 		}

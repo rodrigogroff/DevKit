@@ -1,5 +1,4 @@
 ﻿using LinqToDB;
-using System.Linq;
 
 namespace DataModel
 {
@@ -7,14 +6,6 @@ namespace DataModel
 	{		
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
-			/*
-			if ((from e in db.Tasks where e.fkProject == id select e).Any())
-			{
-				resp = "This project is being used in a task";
-				return false;
-			}
-			*/
-
 			return true;
 		}
 
@@ -23,15 +14,6 @@ namespace DataModel
 			var user = db.currentUser;
 
 			db.Delete(this);
-
-			/*
-			new AuditLog {
-				fkUser = user.id,
-				fkActionLog = EnumAuditAction.ProjectDelete,
-				nuType = EnumAuditType.Project
-			}.
-			Create(db, "", "");
-			*/
 		}
 	}
 }

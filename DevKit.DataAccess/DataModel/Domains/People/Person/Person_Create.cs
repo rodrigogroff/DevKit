@@ -23,20 +23,14 @@ namespace DataModel
 		{
 			var user = db.currentUser;
 
-			if (CheckDuplicate(this, db))
-			{
-				resp = "Name already taken";
-				return false;
-			}
-
 			if (stName == "")
 			{
-				resp = "Invalid Name";
+				resp = "Nome inválido";
 				return false;
 			}
 
-            this.dtStart = DateTime.Now;
-            this.fkUserAdd = user.id;
+            dtStart = DateTime.Now;
+            fkUserAdd = user.id;
 
             id = Convert.ToInt64(db.InsertWithIdentity(this));
             		

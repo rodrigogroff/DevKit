@@ -22,7 +22,7 @@ namespace DataModel
 
             var dto = new HomeDTO()
             {
-                name = "Hi " + user.stLogin
+                name = "Olá " + user.stLogin
             };
 
             {

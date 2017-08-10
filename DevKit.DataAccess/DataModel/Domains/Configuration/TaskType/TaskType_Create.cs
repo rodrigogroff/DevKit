@@ -28,7 +28,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "Project name already taken";
+				resp = "Tipo de tarefa já criado";
 				return false;
 			}
 			

@@ -11,23 +11,23 @@ namespace DataModel
 
 			if (oldEntity.stName != this.stName)
 			{
-				ret += "Name: " + oldEntity.stName + " => " + this.stName + "; ";
+				ret += "Nome: " + oldEntity.stName + " => " + this.stName + "; ";
 			}
 
 			if (oldEntity.bManaged != this.bManaged)
 			{
 				if (oldEntity.bManaged != null)
-					ret += "Managed: " + oldEntity.bManaged + " => " + this.bManaged + "; ";
+					ret += "Gerenciado: " + oldEntity.bManaged + " => " + this.bManaged + "; ";
 				else
-					ret += "Managed: (null) => " + this.bManaged + "; ";
+					ret += "Gerenciado: (null) => " + this.bManaged + "; ";
 			}
 
 			if (oldEntity.bCondensedView != this.bCondensedView)
 			{
 				if (oldEntity.bCondensedView != null)
-					ret += "Condensed: " + oldEntity.bCondensedView + " => " + this.bCondensedView + "; ";
+					ret += "Condensado: " + oldEntity.bCondensedView + " => " + this.bCondensedView + "; ";
 				else
-					ret += "Condensed: (null) => " + this.bCondensedView + "; ";
+					ret += "Condensado: (null) => " + this.bCondensedView + "; ";
 			}
 
 			if (oldEntity.bKPA != this.bKPA)

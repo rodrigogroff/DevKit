@@ -7,12 +7,11 @@ namespace DataModel
 	{		
 		public bool CanDelete(DevKitDB db, ref string resp)
 		{
-			/*
-			if ((from e in db where e.fkProject == id select e).Any())
+			if ((from e in db.TaskClientGroup where e.fkClientGroup == id select e).Any())
 			{
-				resp = "This project is being used in a task";
+				resp = "Este grupo é usado em alguma tarefa";
 				return false;
-			}*/
+			}
 
 			return true;
 		}
@@ -26,7 +25,7 @@ namespace DataModel
 				fkActionLog = EnumAuditAction.ClientGroupDelete,
 				nuType = EnumAuditType.ClientGroup
 			}.
-			Create(db, "Name: " + this.stName, "");
+			Create(db, "Nome: " + this.stName, "");
 
 			db.Delete(this);
 		}

@@ -12,7 +12,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "Login already taken";
+				resp = "Login já utilizado";
 				return false;
 			}
 
@@ -24,7 +24,7 @@ namespace DataModel
 
 						if (ent.stCurrentPassword.ToUpper() != this.stPassword.ToUpper() )
 						{
-							resp = "Current password does not match!";
+							resp = "Password atual não confere!";
 							return false;
 						}
 
@@ -39,7 +39,7 @@ namespace DataModel
 							nuType = EnumAuditType.User,
 							fkTarget = this.id
 						}.
-						Create(db, "Password changed by user", "");
+						Create(db, "Password atualizada", "");
 
 						break;
 					}
@@ -59,7 +59,7 @@ namespace DataModel
 							nuType = EnumAuditType.User,
 							fkTarget = this.id
 						}.
-						Create(db, "A new password was generated [" + this.stPassword + "]", "");
+						Create(db, "Nova senha gerada [" + this.stPassword + "]", "");
 
 						break;
 					}
@@ -89,7 +89,7 @@ namespace DataModel
 						{
 							if ((from ne in db.UserPhone where ne.stPhone == ent.stPhone select ne).Any())
 							{
-								resp = "Phone duplicated!";
+								resp = "Telefone duplicado!";
 								return false;
 							}
 
@@ -101,7 +101,7 @@ namespace DataModel
 								nuType = EnumAuditType.User,
 								fkTarget = this.id
 							}.
-							Create(db, "New phone: " + ent.stPhone, "");
+							Create(db, "Novo telefone: " + ent.stPhone, "");
 						}
 						else
 						{
@@ -111,7 +111,7 @@ namespace DataModel
 								nuType = EnumAuditType.User,
 								fkTarget = this.id
 							}.
-							Create(db, "Edit phone: " + ent.stPhone, "");
+							Create(db, "Telefone editado: " + ent.stPhone, "");
 
 							db.Update(ent);
 						}							
@@ -130,7 +130,7 @@ namespace DataModel
 							nuType = EnumAuditType.User,
 							fkTarget = this.id
 						}.
-						Create(db, "Phone removed: " + ent.stPhone, "");
+						Create(db, "Telefone removido: " + ent.stPhone, "");
 
 						break;
 					}
@@ -145,7 +145,7 @@ namespace DataModel
 						{
 							if ((from ne in db.UserEmail where ne.stEmail == ent.stEmail select ne).Any())
 							{
-								resp = "Email duplicated!";
+								resp = "Email duplicado!";
 								return false;
 							}
 
@@ -157,7 +157,7 @@ namespace DataModel
 								nuType = EnumAuditType.User,
 								fkTarget = this.id
 							}.
-							Create(db, "Email created: " + ent.stEmail, "");
+							Create(db, "Email criado: " + ent.stEmail, "");
 						}
 						else
 						{
@@ -167,7 +167,7 @@ namespace DataModel
 								nuType = EnumAuditType.User,
 								fkTarget = this.id
 							}.
-							Create(db, "Email edited: " + ent.stEmail, "");
+							Create(db, "Email editado: " + ent.stEmail, "");
 
 							db.Update(ent);
 						}
@@ -186,7 +186,7 @@ namespace DataModel
 							nuType = EnumAuditType.User,
 							fkTarget = this.id
 						}.
-						Create(db, "Email removed: " + ent.stEmail, "");
+						Create(db, "Email removido: " + ent.stEmail, "");
 						break;
 					}
 			}

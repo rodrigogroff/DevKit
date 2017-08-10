@@ -31,6 +31,5 @@ namespace DataModel
 
 			return ret;
 		}
-
 	}
 }

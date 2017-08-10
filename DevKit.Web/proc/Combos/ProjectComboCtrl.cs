@@ -45,7 +45,7 @@ namespace DevKit.Web.Controllers
                            id = e.id,
                            stName = e.stName
                        }).
-                                   FirstOrDefault();
+                       FirstOrDefault();
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);

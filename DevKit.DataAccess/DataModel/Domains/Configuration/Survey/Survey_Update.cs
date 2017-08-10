@@ -9,12 +9,6 @@ namespace DataModel
 		{
 			var user = db.currentUser;
 
-			if (CheckDuplicate(this, db))
-			{
-				resp = "Survey title already taken";
-				return false;
-			}
-
 			switch (updateCommand)
 			{
 				case "entity":

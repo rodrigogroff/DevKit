@@ -9,7 +9,7 @@ namespace DataModel
 		{
 			if ((from e in db.Task where e.fkTaskType == id select e).Any())
 			{
-				resp = "This task type is being used in a task";
+				resp = "Este tipo de tarefa já está sendo utilizado em uma tarefa";
 				return false;
 			}
 

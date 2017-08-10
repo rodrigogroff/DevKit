@@ -13,7 +13,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "Project name already taken";
+				resp = "Nome de projeto já usado";
 				return false;
 			}
 
@@ -43,7 +43,7 @@ namespace DataModel
 								 where ne.fkUser == ent.fkUser && ne.fkProject == id
 								 select ne).Any())
 							{
-								resp = "User already added to project!";
+								resp = "User já acrescentado no projeto";
 								return false;
 							}
 						
@@ -58,7 +58,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "New user: " + db.GetUser(ent.fkUser).stLogin + ";Role: " + ent.stRole, "");
+							Create(db, "Novo usuario: " + db.GetUser(ent.fkUser).stLogin + ";Papel: " + ent.stRole, "");
 						}							
 						else
 						{
@@ -70,7 +70,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "Updated role: " + ent.stRole, "");
+							Create(db, "Papel atualizado: " + ent.stRole, "");
 						}							
 						break;
 					}
@@ -87,7 +87,7 @@ namespace DataModel
 							nuType = EnumAuditType.Project,
 							fkTarget = this.id
 						}.
-						Create(db, "User removed: " + db.GetUser(ent.fkUser), "");
+						Create(db, "Usuário removido: " + db.GetUser(ent.fkUser), "");
 
 						break;
 					}
@@ -102,7 +102,7 @@ namespace DataModel
 								 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkProject == id
 								 select ne).Any())
 							{
-								resp = "Phase already added to project!";
+								resp = "Fase já acrescentada no projeto!";
 								return false;
 							}
 							
@@ -116,7 +116,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "Phase added: " + ent.stName, "");
+							Create(db, "Fase nova: " + ent.stName, "");
 						}							
 						else
 						{
@@ -128,7 +128,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "Phase edited: " + ent.stName, "");
+							Create(db, "Fase atualizada: " + ent.stName, "");
 						}
 						break;
 					}
@@ -139,7 +139,7 @@ namespace DataModel
 
 						if ((from e in db.Task where e.fkPhase == ent.id select e).Any())
 						{
-							resp = "This phase is being used in a task";
+							resp = "Esta fase está sendo usada em uma tarefa";
 							return false;
 						}
 
@@ -151,7 +151,7 @@ namespace DataModel
 							nuType = EnumAuditType.Project,
 							fkTarget = this.id
 						}.
-						Create(db, "Phase deleted: " + ent.stName, "");
+						Create(db, "Fase removida: " + ent.stName, "");
 						break;
 					}
 
@@ -166,7 +166,7 @@ namespace DataModel
 								 where ne.stName.ToUpper() == ent.stName.ToUpper() && ne.fkProject == id
 								 select ne).Any())
 							{
-								resp = "Sprint already added to project!";
+								resp = "Sprint já adicionado no projeto!";
 								return false;
 							}
 
@@ -180,7 +180,7 @@ namespace DataModel
 								nuType = EnumAuditType.Project,
 								fkTarget = this.id
 							}.
-							Create(db, "New sprint: " + ent.stName, "");
+							Create(db, "Novo sprint: " + ent.stName, "");
 
 							new AuditLog {
 								fkUser = user.id,
@@ -211,7 +211,7 @@ namespace DataModel
 
 						if ((from e in db.Task where e.fkSprint == ent.id select e).Any())
 						{
-							resp = "This sprint is being used in a task";
+							resp = "Este sprint já está sendo usando em uma tarefa";
 							return false;
 						}
 
@@ -223,7 +223,7 @@ namespace DataModel
 							nuType = EnumAuditType.Project,
 							fkTarget = this.id
 						}.
-						Create(db, "Sprint deleted: " + ent.stName , "");
+						Create(db, "Sprint removido: " + ent.stName , "");
 
 						break;
 					}

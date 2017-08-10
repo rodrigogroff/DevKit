@@ -13,7 +13,7 @@ namespace DataModel
 
             if ((from e in db.Task where e.fkTaskFlowCurrent == ent.id select e).Any())
             {
-                resp = "This flow is being used in a task";
+                resp = "Este fluxo está sendo utilizado em tarefa";
                 return false;
             }
 
@@ -26,7 +26,7 @@ namespace DataModel
                 nuType = EnumAuditType.TaskType,
                 fkTarget = this.id
             }.
-            Create(db, "Flow delete: " + ent.stName, "");
+            Create(db, "Fluxo removido: " + ent.stName, "");
 
             return true;
         }

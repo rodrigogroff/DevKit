@@ -10,7 +10,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "Client name already taken";
+				resp = "Nome do cliente já em uso";
 				return false;
 			}
 

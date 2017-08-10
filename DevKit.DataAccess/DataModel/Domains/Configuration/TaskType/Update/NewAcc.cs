@@ -1,6 +1,5 @@
 ﻿using LinqToDB;
 using Newtonsoft.Json;
-using System;
 using System.Linq;
 
 namespace DataModel
@@ -20,7 +19,7 @@ namespace DataModel
                      where e.stName.ToUpper() == ent.stName.ToUpper()
                      select e).Any())
                 {
-                    resp = "Accumulator already added to task type!";
+                    resp = "Acumulador já acrescentado ao tipo de tarefa";
                     return false;
                 }
 
@@ -35,7 +34,7 @@ namespace DataModel
                     nuType = EnumAuditType.TaskType,
                     fkTarget = this.id
                 }.
-                Create(db, "New accumulator: " + ent.stName, "");
+                Create(db, "Novo accmulador: " + ent.stName, "");
             }
             else
             {
@@ -48,7 +47,7 @@ namespace DataModel
                     nuType = EnumAuditType.TaskType,
                     fkTarget = this.id
                 }.
-                Create(db, "Edit accumulator: " + ent.stName, "");
+                Create(db, "Acumulator atualizado: " + ent.stName, "");
             }
 
             return true;

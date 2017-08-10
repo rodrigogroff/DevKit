@@ -29,7 +29,7 @@ namespace DataModel
 				nuType = EnumAuditType.Task,
 				fkTarget = this.id
 			}.
-			Create(db, "New time added: " + ent.nuHourValue.ToString() + ":" + ent.nuMinValue.ToString() + " >> " + db.GetUser(ent.fkUser).stLogin, "");
+			Create(db, "Novas horas: " + ent.nuHourValue.ToString() + ":" + ent.nuMinValue.ToString() + " >> " + db.GetUser(ent.fkUser).stLogin, "");
 
 			return true;
 		}
@@ -50,7 +50,7 @@ namespace DataModel
 				nuType = EnumAuditType.Task,
 				fkTarget = this.id
 			}.
-			Create(db, "Time removed: " + entDb.nuHourValue.ToString() + ":" + entDb.nuMinValue.ToString() + " >> " + db.GetUser(entDb.fkUser).stLogin, "");
+			Create(db, "Horas removido: " + entDb.nuHourValue.ToString() + ":" + entDb.nuMinValue.ToString() + " >> " + db.GetUser(entDb.fkUser).stLogin, "");
 
 			db.Delete(entDb);
 

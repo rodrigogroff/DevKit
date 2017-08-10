@@ -28,7 +28,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "Client name already taken";
+				resp = "Nome do cliente já usado";
 				return false;
 			}
 
@@ -45,7 +45,7 @@ namespace DataModel
 				nuType = EnumAuditType.Client,
 				fkTarget = this.id
 			}.
-			Create(db, "name: " + stName, "");
+			Create(db, "nome: " + stName, "");
 
 			return true;
 		}

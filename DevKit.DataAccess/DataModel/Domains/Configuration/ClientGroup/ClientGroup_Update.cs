@@ -12,7 +12,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "Client group name already taken";
+				resp = "Nome do grupo já usado";
 				return false;
 			}
 

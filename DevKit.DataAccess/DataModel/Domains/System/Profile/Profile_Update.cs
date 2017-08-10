@@ -10,7 +10,7 @@ namespace DataModel
 
 			if (CheckDuplicate(this, db))
 			{
-				resp = "The name '" + stName + "' is already taken";
+				resp = "O nome do perfil de usuário já existe";
 				return false;
 			}
 

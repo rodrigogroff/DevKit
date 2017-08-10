@@ -11,12 +11,6 @@ namespace DataModel
 		{
 			var user = db.currentUser;
 
-			if (CheckDuplicate(this, db))
-			{
-				resp = "Name already taken";
-				return false;
-			}
-            
 			switch (updateCommand)
 			{
 				case "entity":
@@ -36,7 +30,7 @@ namespace DataModel
 						{
 							if ((from ne in db.PersonPhone where ne.stPhone == ent.stPhone select ne).Any())
 							{
-								resp = "Phone duplicated!";
+								resp = "Telefone já utilizado!";
 								return false;
 							}
 
@@ -67,7 +61,7 @@ namespace DataModel
 						{
 							if ((from ne in db.PersonEmail where ne.stEmail == ent.stEmail select ne).Any())
 							{
-								resp = "Email duplicated!";
+								resp = "Email já utilizado!";
 								return false;
 							}
 

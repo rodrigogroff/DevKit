@@ -6,13 +6,12 @@ namespace DataModel
 	public partial class Client
 	{		
 		public bool CanDelete(DevKitDB db, ref string resp)
-		{
-			/*
-			if ((from e in db where e.fkProject == id select e).Any())
+		{			
+			if ((from e in db.Task where e.fkProject == id select e).Any())
 			{
-				resp = "This project is being used in a task";
+				resp = "Este projeto está sendo usado em tarefas";
 				return false;
-			}*/
+			}
 
 			return true;
 		}
@@ -26,7 +25,7 @@ namespace DataModel
 				fkActionLog = EnumAuditAction.ClientDelete,
 				nuType = EnumAuditType.Client
 			}.
-			Create(db, "Name: " + this.stName, "");
+			Create(db, "Nome: " + this.stName, "");
 
 			db.Delete(this);
 		}

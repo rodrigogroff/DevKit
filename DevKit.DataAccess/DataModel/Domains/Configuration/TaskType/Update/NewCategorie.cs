@@ -20,7 +20,7 @@ namespace DataModel
                      where ne.fkTaskType == id
                      select ne).Any())
                 {
-                    resp = "Category already added to task type!";
+                    resp = "Category já acrescentada ao tipo de tarefa";
                     return false;
                 }
 
@@ -87,7 +87,7 @@ namespace DataModel
                     nuType = EnumAuditType.TaskType,
                     fkTarget = this.id
                 }.
-                Create(db, "New category: " + ent.stName, "");
+                Create(db, "Nova categoria: " + ent.stName, "");
             }
             else
             {
@@ -105,7 +105,7 @@ namespace DataModel
                     nuType = EnumAuditType.TaskType,
                     fkTarget = this.id
                 }.
-                Create(db, "Edit category: " + ent.stName, "");
+                Create(db, "Edição de categoria: " + ent.stName, "");
             }
 
             return true;

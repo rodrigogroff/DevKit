@@ -27,26 +27,10 @@ namespace DataModel
 		{
 			var user = db.currentUser;
 
-			if (CheckDuplicate(this, db))
-			{
-				resp = "News title already taken";
-				return false;
-			}
-
 			fkUser = user.id;
 			dtLog = DateTime.Now;
 
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
-			
-			/*
-			new AuditLog {
-				fkUser = user.id,
-				fkActionLog = EnumAuditAction.ProjectCreation,
-				nuType = EnumAuditType.Project,
-				fkTarget = this.id
-			}.
-			Create(db, "type: " + strType, "");
-			*/
 
 			return true;
 		}

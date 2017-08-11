@@ -3,9 +3,9 @@
 a fazer (prioridade)
 ------------------------------
 	
+	- contatos da pessoa
 	- country, state, city
 	- rever management, usando genérico
-	- implementar cadastro de pessoas / contatos (usuários synch em pessoas)
 	- implementar agenda da pessoa / setor da empresa / locais de reunião	
 	- pensar datas e prazos
 

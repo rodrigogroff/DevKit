@@ -152,17 +152,18 @@ namespace DataModel
 	{
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkUserAdd         { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUserLastUpdate  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
 		[Column,     Nullable] public string    stName            { get; set; } // character varying(150)
 		[Column,     Nullable] public string    stAlias           { get; set; } // character varying(150)
-		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
-		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
-		[Column,     Nullable] public bool?     bDeceased         { get; set; } // boolean
 		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
 		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
+		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
+		[Column,     Nullable] public bool?     bDeceased         { get; set; } // boolean
+		[Column,     Nullable] public string    stCPF             { get; set; } // character varying(20)
 	}
 
 	[Table("PersonCategory")]
@@ -507,12 +508,13 @@ namespace DataModel
 		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
 		[Column,     Nullable] public bool?     bActive          { get; set; } // boolean
 		[Column,     Nullable] public string    stLogin          { get; set; } // character varying(200)
+		[Column,     Nullable] public string    stName           { get; set; } // character varying(200)
 		[Column,     Nullable] public string    stPassword       { get; set; } // character varying(30)
 		[Column,     Nullable] public long?     fkProfile        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLastLogin      { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtCreation       { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public string    stCurrentSession { get; set; } // character varying(20)
-		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
 	}
 
 	[Table("UserEmail")]

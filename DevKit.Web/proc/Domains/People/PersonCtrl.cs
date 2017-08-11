@@ -14,6 +14,7 @@ namespace DevKit.Web.Controllers
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
                 email = Request.GetQueryStringValue("email")?.ToUpper(),
+                cpf = Request.GetQueryStringValue("cpf"),
                 phone = Request.GetQueryStringValue("phone")?.ToUpper(),
             };
 

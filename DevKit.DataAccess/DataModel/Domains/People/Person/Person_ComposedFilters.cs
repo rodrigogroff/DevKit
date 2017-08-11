@@ -6,7 +6,8 @@ namespace DataModel
 {
 	public class PersonFilter : BaseFilter
     {
-		public string email, 
+		public string email,
+                      cpf,
                       phone;
         
         public string Parameters()
@@ -23,6 +24,7 @@ namespace DataModel
             ret.Append(take + ",");
             ret.Append(busca + ",");
             ret.Append(email + ",");
+            ret.Append(cpf + ",");
             ret.Append(phone + ",");
 
             return ret.ToString();
@@ -36,9 +38,14 @@ namespace DataModel
 			var query = from e in db.Person select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
-                query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;
+                query = from e in query
+                        where e.stName.ToUpper().Contains(filter.busca) || e.stCPF.Equals(filter.busca)
+                        select e;
 
-			if (filter.email != null)
+            if (!string.IsNullOrEmpty(filter.cpf))
+                query = from e in query where e.stCPF.Equals(filter.cpf) select e;
+
+            if (filter.email != null)
 			{
 				query = from e in query
 						join eMail in db.PersonEmail on e.id equals eMail.fkUser

@@ -15,7 +15,9 @@ namespace DevKit.Web.Controllers
         public const string EnumAccumulatorType = "EnumAccumulatorType";
         public const string EnumAccumulatorTypeReport = "EnumAccumulatorTypeReport";
         public const string EnumMonth = "EnumMonth";
+        public const string EnumDayMonth = "EnumDayMonth";
         public const string EnumContactForm = "EnumContactForm";
+        public const string EnumDayMonthReport = "EnumMonthReport";
         public const string EnumMonthReport = "EnumMonthReport";
         public const string EnumContactFormReport = "EnumContactFormReport";
         public const string EnumPriority = "EnumPriority";

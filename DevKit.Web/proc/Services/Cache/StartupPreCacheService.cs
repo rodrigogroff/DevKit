@@ -24,6 +24,7 @@ namespace DevKit.Web.Services
                 // ----------------------------------------------------------------------------------------------------
 
                 foreach (var item in new EnumAccumulatorType().lst) cache.StoreCache(CacheTags.EnumAccumulatorType, item.id, item);
+                foreach (var item in new EnumDayMonth().lst) cache.StoreCache(CacheTags.EnumDayMonth, item.id, item);
                 foreach (var item in new EnumMonth().lst) cache.StoreCache(CacheTags.EnumMonth, item.id, item);
                 foreach (var item in new EnumContactForm().lst) cache.StoreCache(CacheTags.EnumContactForm, item.id, item);
                 foreach (var item in new EnumPriority().lst) cache.StoreCache(CacheTags.EnumPriority, item.id, item);
@@ -38,7 +39,14 @@ namespace DevKit.Web.Services
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
-                
+
+                {
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumDayMonthReport);
+                    var query = (from e in new EnumDayMonth().lst select e);
+                    var ret = new { count = query.Count(), results = query.ToList() };
+                    hshReport[""] = ret;
+                }
+
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.EnumMonthReport);
                     var query = (from e in new EnumMonth().lst select e);

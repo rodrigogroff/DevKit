@@ -51,7 +51,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$scope.nuYear = currentDate.getFullYear();
 		$scope.nuMonth = currentDate.getMonth() + 1;
 
-		$scope.selectMonths = ngSelects.obterConfiguracao(Api.Month, { });
+        $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, { });
 		$scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, { });
 	}
 	

@@ -7,8 +7,11 @@
 				<input type="text" focus="true" class="form-control input-transparent" ng-model="filtro.campos.busca" />
 			</td>
 			<td width="60px"></td>
-			<td width="110px"></td>
-			<td width="220px"></td>
+			<td width="110px"><b>CPF</b></td>
+			<td width="220px">
+                <input type="text" class="form-control input-transparent" name="cnpj" id="cpf" ng-model="filtro.campos.cpf"
+                       maxlength="14" ui-mask="999.999.999-99" ui-mask-placeholder ui-mask-placeholder-char="_">
+            </td>
             <td width="25px"></td>
 		</tr>
 		<tr height="36px">

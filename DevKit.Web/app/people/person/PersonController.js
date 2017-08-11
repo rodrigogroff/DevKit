@@ -52,7 +52,8 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		CheckPermissions();
         loadSetup();
 
-        $scope.selectMonths = ngSelects.obterConfiguracao(Api.Month, {});
+        $scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
+        $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
 
 		if (id > 0)
         {
@@ -73,7 +74,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		}
 		else
 		{
-			$scope.viewModel = { bActive: true };
+            $scope.viewModel = { bActive: true, nuYearBirth: 1980 };
 		}
 	}
 

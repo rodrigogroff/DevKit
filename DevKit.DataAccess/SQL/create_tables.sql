@@ -293,6 +293,7 @@ ALTER TABLE public."Person" ADD COLUMN if not exists "nuMonthAniversary" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "nuDayAniversary" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "nuYearBirth" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "bDeceased" boolean;
+ALTER TABLE public."Person" ADD COLUMN if not exists "stCPF" character varying(20);
 
 CREATE TABLE IF NOT EXISTS public."PersonEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."PersonEmail" OWNER to postgres;

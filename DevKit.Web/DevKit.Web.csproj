@@ -890,6 +890,7 @@
     <Compile Include="proc\Combos\UserComboCtrl.cs" />
     <Compile Include="proc\Combos\ProjectComboCtrl.cs" />
     <Compile Include="proc\Domains\Enums\ContactFormCtrl.cs" />
+    <Compile Include="proc\Domains\Enums\DayMonthCtrl.cs" />
     <Compile Include="proc\Domains\Login\StartupCtrl.cs" />
     <Compile Include="proc\Domains\People\PersonCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />

@@ -40,16 +40,16 @@
 							<table class="table table-hover" ng-if="availWidth < 1400">
 								<thead>
 									<tr>
-										<th width="90px">Data </th>
-										<th width="140px">Prioridade <br /> Aberto por</th>
-										<th width="140px">Tipo <br /> Categoria</th>
-										<th width="180px">Título <br /> Localização</th>
+										<th width="120px">Protocolo /<br /> Data </th>
+										<th width="140px">Prioridade /<br /> Aberto por</th>
+										<th width="140px">Tipo /<br /> Categoria</th>
+										<th width="180px">Título /<br /> Localização</th>
 										<th width="140px">Responsável</th>
-										<th width="180px">Projeto <br /> Sprint</th>
+										<th width="180px">Projeto /<br /> Sprint</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-									<td>{{ mdl.sdtStart }}</td>
+									<td><b>{{ mdl.stProtocol }}</b><br />{{ mdl.sdtStart }}</td>
 									<td><b>{{mdl.sfkTaskFlowCurrent}}</b><br />{{ mdl.snuPriority }}<br />{{ mdl.sfkUserStart }}</td>
 									<td>{{ mdl.sfkTaskType }}<br />{{ mdl.sfkTaskCategory }}</td>
 									<td>{{ mdl.stTitle }}<br /><i>{{ mdl.stLocalization }}</i></td>

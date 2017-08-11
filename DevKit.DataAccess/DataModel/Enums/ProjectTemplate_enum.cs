@@ -25,7 +25,7 @@ namespace DataModel
 
 		public EnumProjectTemplate()
 		{
-			lst.Add(new ProjectTemplate() { id = Custom, stName = "Custom" });
+			lst.Add(new ProjectTemplate() { id = Custom, stName = "Customizado" });
 			lst.Add(new ProjectTemplate() { id = CMMI2, stName = "CMMI-2" });
 			lst.Add(new ProjectTemplate() { id = SoftwareMaintenance, stName = "Software Maintenance" });
 		}

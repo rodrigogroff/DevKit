@@ -27,11 +27,11 @@ namespace DataModel
 
 		public EnumVersionState()
 		{
-			lst.Add(new VersionState() { id = 1, stName = "Analysis" });
-			lst.Add(new VersionState() { id = 2, stName = "Development" });
-			lst.Add(new VersionState() { id = 3, stName = "Homologation" });
-			lst.Add(new VersionState() { id = 4, stName = "Production" });
-			lst.Add(new VersionState() { id = 5, stName = "Closed" });
+			lst.Add(new VersionState() { id = Analysis, stName = "Análise" });
+			lst.Add(new VersionState() { id = Development, stName = "Desenvolvimento" });
+			lst.Add(new VersionState() { id = Homologation, stName = "Homologação" });
+			lst.Add(new VersionState() { id = Production, stName = "Produção" });
+			lst.Add(new VersionState() { id = Closed, stName = "Encerrada" });
 		}
 
 		public VersionState Get(long _id)

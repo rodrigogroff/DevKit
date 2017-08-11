@@ -25,9 +25,9 @@ namespace DataModel
         
         public EnumAccumulatorType()
 		{
-			lst.Add(new AccumulatorType() { id = 1, stName = "Money" });
-			lst.Add(new AccumulatorType() { id = 2, stName = "Hours" });
-            lst.Add(new AccumulatorType() { id = 3, stName = "Quantity" });
+			lst.Add(new AccumulatorType() { id = 1, stName = "Dinheiro" });
+			lst.Add(new AccumulatorType() { id = 2, stName = "Hora" });
+            lst.Add(new AccumulatorType() { id = 3, stName = "Quantitdade" });
         }
 
 		public AccumulatorType Get(long? _id)

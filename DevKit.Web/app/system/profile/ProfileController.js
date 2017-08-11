@@ -91,11 +91,14 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		CheckPermissions();
 
 		if (id > 0)
-		{
-			$scope.loading = true;
+        {
+            if ($scope.loaded == undefined)
+                $scope.loading = true;
 
             Api.Profile.get({ id: id }, function (data)
-			{
+            {
+                $scope.loaded = true;
+
 				// setup
 				if (data.stPermissions.indexOf('|1001|') >= 0) data.tg1001 = true; else data.tg1001 = false;
 				if (data.stPermissions.indexOf('|1002|') >= 0) data.tg1002 = true; else data.tg1002 = false;

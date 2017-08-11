@@ -703,7 +703,6 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="scripts\angular-spinner.min.js.map" />
-    <Content Include="openICS.psd" />
     <Content Include="css\bootstrap.css.map" />
     <Content Include="css\bootstrap-select.css.map" />
     <Content Include="css\toastr.css.map" />

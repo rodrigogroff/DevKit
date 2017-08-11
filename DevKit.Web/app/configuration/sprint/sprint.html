@@ -35,7 +35,7 @@
 									<button class="btn btn-xs btn-danger" ng-show="fkProject_fail">!</button>
 								</td>
 								<td>
-									<input type="hidden" style="width:100%" ui-select2="selectProjects" ng-disabled="viewModel.id > 0" ng-model="viewModel.fkProject" />
+									<input type="hidden" style="width:100%" ui-select2="selectProjects" data-placeholder="(Selecione)" ng-disabled="viewModel.id > 0" ng-model="viewModel.fkProject" />
 								</td>
 							</tr>
 							<tr height="42px">
@@ -45,7 +45,7 @@
 									<button class="btn btn-xs btn-danger" ng-show="fkPhase_fail">!</button>
 								</td>
 								<td>
-									<input type="hidden" style="width:100%" ui-select2="selectPhases" ng-disabled="viewModel.id > 0" ng-model="viewModel.fkPhase" />
+									<input type="hidden" style="width:100%" ui-select2="selectPhases" data-placeholder="(Selecione)" ng-disabled="viewModel.id > 0" ng-model="viewModel.fkPhase" />
 								</td>
 							</tr>
 							<tr height="40px">
@@ -94,7 +94,7 @@
 																<button class="btn btn-xs btn-danger" ng-show="fkVersionState_fail">!</button>
 															</td>
 															<td>
-																<input type="hidden" style="width:100%" ui-select2="selectVersionStates" ng-model="newVersion.fkVersionState" />
+																<input type="hidden" style="width:100%" ui-select2="selectVersionStates" data-placeholder="(Selecione)" ng-model="newVersion.fkVersionState" />
 															</td>
 														</tr>
 													</table>

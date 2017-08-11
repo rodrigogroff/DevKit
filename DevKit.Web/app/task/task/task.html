@@ -225,7 +225,7 @@
 									<button class="btn btn-xs btn-danger" ng-show="nuPriority_fail">!</button>
 								</td>
 								<td valign="middle">
-									<input type="hidden" style="width:100%" ui-select2="selectPriority" ng-model="viewModel.nuPriority" />
+									<input type="hidden" style="width:100%" ui-select2="selectPriority" data-placeholder="(Selecione)" ng-model="viewModel.nuPriority" />
 								</td>
 								<td></td>
 								<td></td>
@@ -261,7 +261,7 @@
 									<button class="btn btn-xs btn-danger" ng-show="fkUserResponsible_fail">!</button>
 								</td>
 								<td valign="middle">
-									<input type="hidden" style="width:100%" ui-select2="selectUsers" ng-model="viewModel.fkUserResponsible" />
+									<input type="hidden" style="width:100%" ui-select2="selectUsers" data-placeholder="(Selecione)" ng-model="viewModel.fkUserResponsible" />
 								</td>
 								<td></td>
 								<td></td>
@@ -331,7 +331,7 @@
 								</td>
 								<td></td>
 								<td valign="middle">
-									<input type="hidden" style="width:100%" ui-select2="selectTaskFlow" ng-model="viewModel.fkNewFlow" />
+									<input type="hidden" style="width:100%" ui-select2="selectTaskFlow" data-placeholder="(Selecione)" ng-model="viewModel.fkNewFlow" />
 								</td>
 								<td></td>
 								<td></td>
@@ -456,7 +456,7 @@
 																<button class="btn btn-xs btn-danger" ng-show="newAcc_fkTaskAcc_fail">!</button>
 															</td>
 															<td width="250px">
-																<input type="hidden" style="width:100%" ui-select2="selectTaskAcc" ng-model="newAcc.fkTaskAcc" />
+																<input type="hidden" style="width:100%" ui-select2="selectTaskAcc" data-placeholder="(Selecione)" ng-model="newAcc.fkTaskAcc" />
 															</td>
 														</tr>
 														<tr height="42px" ng-show="fkTaskAccType == 1">
@@ -565,7 +565,7 @@
                                                                 <button class="btn btn-xs btn-danger" ng-show="newClient_fail">!</button>
                                                             </td>
                                                             <td width="250px">
-                                                                <input type="hidden" style="width:100%" ui-select2="selectClients" ng-model="newClient.fkClient" />
+                                                                <input type="hidden" style="width:100%" ui-select2="selectClients" data-placeholder="(Selecione)" ng-model="newClient.fkClient" />
                                                             </td>
                                                         </tr>                                                        
                                                     </table>
@@ -628,7 +628,7 @@
                                                                 <button class="btn btn-xs btn-danger" ng-show="newClientGroup_fail">!</button>
                                                             </td>
                                                             <td width="250px">
-                                                                <input type="hidden" style="width:100%" ui-select2="selectClientGroups" ng-model="newClientGroup.fkClientGroup" />
+                                                                <input type="hidden" style="width:100%" ui-select2="selectClientGroups" data-placeholder="(Selecione)" ng-model="newClientGroup.fkClientGroup" />
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -792,7 +792,7 @@
 																<button class="btn btn-xs btn-danger" ng-show="newQuestion_user_fail">!</button>
 															</td>
 															<td>
-																<input type="hidden" style="width:100%" ui-select2="selectUsers" ng-model="newQuestion.fkUserDirected" />
+																<input type="hidden" style="width:100%" ui-select2="selectUsers" data-placeholder="(Selecione)" ng-model="newQuestion.fkUserDirected" />
 															</td>
 														</tr>
 														<tr height="42px">

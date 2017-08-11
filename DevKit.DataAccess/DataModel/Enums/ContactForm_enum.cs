@@ -25,9 +25,9 @@ namespace DataModel
 
         public EnumContactForm()
         {
-            lst.Add(new ContactForm() { id = Phone, stName = "Phone" });
+            lst.Add(new ContactForm() { id = Phone, stName = "Telefone" });
             lst.Add(new ContactForm() { id = Email, stName = "Email" });
-            lst.Add(new ContactForm() { id = Visit, stName = "Visit" });
+            lst.Add(new ContactForm() { id = Visit, stName = "Visita" });
         }
 
         public ContactForm Get(long _id)

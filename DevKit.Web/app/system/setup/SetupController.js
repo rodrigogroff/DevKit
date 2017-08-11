@@ -32,12 +32,14 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api,
 	{
 		CheckPermissions();
 
-		$scope.loading = true;
+        if ($scope.loaded == undefined)
+		    $scope.loading = true;
 
         Api.Setup.get({ id: 1 }, function (data)
 		{
 			$scope.viewModel = data;
-			$scope.loading = false;
+            $scope.loading = false;
+            $scope.loaded = true;
 		},
 		function (response)
 		{

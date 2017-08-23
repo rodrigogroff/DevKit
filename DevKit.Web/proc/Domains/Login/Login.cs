@@ -51,7 +51,7 @@ namespace DevKit.Web
                 }
 				else
 				{
-					context.SetError("invalid_grant", "Invalid login / password!");
+					context.SetError("invalid_grant", "Senha ou terminal inválido");
 					return;
 				}
 

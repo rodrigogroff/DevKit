@@ -72,17 +72,5 @@ angular.module('app.services', ['ngResource'])
         Cache: $resource('api/cache/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),
         MonthCombo: $resource('api/month/:id', {}, opcoes),
-        DayMonthCombo: $resource('api/daymonth/:id', {}, opcoes),		
-        ClientCombo: $resource('api/clientcombo/:id', {}, opcoes),
-        ClientGroupCombo: $resource('api/clientgroupcombo/:id', {}, opcoes),
-        ProfileCombo: $resource('api/profilecombo/:id', {}, opcoes),
-        ProjectCombo: $resource('api/projectcombo/:id', {}, opcoes),
-        TaskTypeCombo: $resource('api/tasktypecombo/:id', {}, opcoes),
-        UserCombo: $resource('api/usercombo/:id', {}, opcoes),
-        PhaseCombo: $resource('api/phasecombo/:id', {}, opcoes),        
-        TaskCategoryCombo: $resource('api/taskcategorycombo/:id', {}, opcoes),
-        TaskFlowCombo: $resource('api/taskflowcombo/:id', {}, opcoes),
-        SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),        
-        VersionCombo: $resource('api/versioncombo/:id', {}, opcoes)
 	};
 }]);

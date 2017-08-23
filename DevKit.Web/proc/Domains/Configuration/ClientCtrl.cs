@@ -6,6 +6,7 @@ namespace DevKit.Web.Controllers
 {
 	public class ClientController : ApiControllerBase
 	{
+        /*
 		public IHttpActionResult Get()
 		{
             var filter = new ClientFilter
@@ -100,5 +101,6 @@ namespace DevKit.Web.Controllers
 
             return Ok();
 		}
+        */
 	}
 }

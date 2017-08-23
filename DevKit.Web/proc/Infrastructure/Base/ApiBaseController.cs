@@ -27,7 +27,7 @@ namespace DevKit.Web.Controllers
             db = new DevKitDB();
 
             var userCurrentName = userLoggedName;
-            var tagName = CacheTags.User + userCurrentName;
+            var tagName = CacheTags.Lojista + userCurrentName;
 
             db.currentUser = RestoreCacheNoHit(tagName) as User;
             

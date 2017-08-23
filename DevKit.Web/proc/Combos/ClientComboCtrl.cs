@@ -7,6 +7,7 @@ namespace DevKit.Web.Controllers
 {
     public class ClientComboController : ApiControllerBase
     {
+        /*
         public IHttpActionResult Get()
         {
             var parameters = Request.GetQueryStringValue("busca","").ToUpper();
@@ -48,5 +49,6 @@ namespace DevKit.Web.Controllers
 
             return Ok(mdl);
         }
+        */
     }
 }

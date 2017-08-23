@@ -32,10 +32,10 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     		{
                 $scope.loginOK = true;
 
-                //Api.Startup.listPage({}, function (data) { });
+                
                 
                 $rootScope.exibirMenu = true;
-                $rootScope.$broadcast('updateCounters');
+              
 
                 if ($scope.loginData.userName == $scope.loginData.password)
     			{

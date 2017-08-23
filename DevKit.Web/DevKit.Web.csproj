@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -236,54 +237,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
-    <Content Include="app\configuration\clientGroup\clientGroup.html" />
-    <Content Include="app\configuration\clientGroup\ClientGroupController.js" />
-    <Content Include="app\configuration\clientGroup\listingClientGroups.html" />
-    <Content Include="app\configuration\clientGroup\ListingClientGroupsController.js" />
-    <Content Include="app\configuration\clientGroup\_filterClientGroup.html" />
-    <Content Include="app\configuration\news\listingNews.html" />
-    <Content Include="app\configuration\news\ListingNewsController.js" />
-    <Content Include="app\configuration\news\news.html" />
-    <Content Include="app\configuration\news\NewsController.js" />
-    <Content Include="app\configuration\news\_filterNews.html" />
-    <Content Include="app\configuration\client\listingClients.html" />
-    <Content Include="app\configuration\client\ListingClientsController.js" />
-    <Content Include="app\configuration\client\client.html" />
-    <Content Include="app\configuration\client\ClientController.js" />
-    <Content Include="app\configuration\client\_filterClient.html" />
-    <Content Include="app\configuration\surveys\listingSurveys.html" />
-    <Content Include="app\configuration\surveys\ListingSurveysController.js" />
-    <Content Include="app\configuration\surveys\survey.html" />
-    <Content Include="app\configuration\surveys\SurveyController.js" />
-    <Content Include="app\configuration\surveys\_filterSurveys.html" />
-    <Content Include="app\configuration\taskType\listingTaskTypes.html" />
-    <Content Include="app\configuration\taskType\ListingTaskTypesController.js" />
-    <Content Include="app\configuration\taskType\taskType.html" />
-    <Content Include="app\configuration\taskType\TaskTypeController.js" />
-    <Content Include="app\configuration\taskType\_filterTaskType.html" />
-    <Content Include="app\configuration\sprint\listingSprints.html" />
-    <Content Include="app\configuration\sprint\ListingSprintsController.js" />
-    <Content Include="app\configuration\sprint\sprint.html" />
-    <Content Include="app\configuration\sprint\SprintController.js" />
-    <Content Include="app\configuration\sprint\_filterSprint.html" />
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
-    <Content Include="app\people\person\listingPersons.html" />
-    <Content Include="app\people\person\ListingPersonsController.js" />
-    <Content Include="app\people\person\person.html" />
-    <Content Include="app\people\person\PersonController.js" />
-    <Content Include="app\people\person\_filterPerson.html" />
     <Content Include="app\system\profile\listingProfiles.html" />
     <Content Include="app\system\profile\ListingProfilesController.js" />
     <Content Include="app\system\profile\profile.html" />
     <Content Include="app\system\profile\ProfileController.js" />
     <Content Include="app\system\profile\_filterProfile.html" />
-    <Content Include="app\configuration\project\listingProjects.html" />
-    <Content Include="app\configuration\project\ListingProjectsController.js" />
-    <Content Include="app\configuration\project\project.html" />
-    <Content Include="app\configuration\project\ProjectController.js" />
-    <Content Include="app\configuration\project\_filterProject.html" />
     <Content Include="app\system\setup\setup.html" />
     <Content Include="app\system\setup\SetupController.js" />
     <Content Include="app\system\user\UserPasswordController.js" />
@@ -293,18 +254,6 @@
     <Content Include="app\system\user\listingUsers.html" />
     <Content Include="app\system\user\ListingUsersController.js" />
     <Content Include="app\system\user\_filterUser.html" />
-    <Content Include="app\task\kanban\listingUserKanban.html" />
-    <Content Include="app\task\kanban\ListingUserKanbanController.js" />
-    <Content Include="app\task\kanban\_filterUserKanban.html" />
-    <Content Include="app\task\management\management.html" />
-    <Content Include="app\task\management\ManagementController.js" />
-    <Content Include="app\task\task\listingTasks.html" />
-    <Content Include="app\task\task\ListingTasksController.js" />
-    <Content Include="app\task\task\task.html" />
-    <Content Include="app\task\task\TaskController.js" />
-    <Content Include="app\task\task\_filterTask.html" />
-    <Content Include="app\task\timesheet\timesheet.html" />
-    <Content Include="app\task\timesheet\TimesheetController.js" />
     <Content Include="app\_shared\filtro\diretivaNgFiltro.js" />
     <Content Include="app\_shared\filtro\templateNgFiltro.html" />
     <Content Include="app\_shared\paginacao\diretivaNgPaginacao.js" />
@@ -879,54 +828,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="proc\Combos\ClientComboCtrl.cs" />
-    <Compile Include="proc\Combos\ClientGroupComboCtrl.cs" />
-    <Compile Include="proc\Combos\PhaseComboCtrl.cs" />
-    <Compile Include="proc\Combos\VersionComboCtrl.cs" />
-    <Compile Include="proc\Combos\SprintComboCtrl.cs" />
-    <Compile Include="proc\Combos\TaskCategoryComboCtrl.cs" />
-    <Compile Include="proc\Combos\TaskFlowComboCtrl.cs" />
-    <Compile Include="proc\Combos\TaskTypeComboCtrl.cs" />
-    <Compile Include="proc\Combos\ProfileComboCtrl.cs" />
-    <Compile Include="proc\Combos\UserComboCtrl.cs" />
-    <Compile Include="proc\Combos\ProjectComboCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\ContactFormCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\DayMonthCtrl.cs" />
-    <Compile Include="proc\Domains\Login\StartupCtrl.cs" />
-    <Compile Include="proc\Domains\People\PersonCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\Cache\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />
     <Compile Include="proc\Infrastructure\Base\Cache\MemCacheController.cs" />
-    <Compile Include="proc\Domains\Configuration\ClientGroupCtrl.cs" />
     <Compile Include="proc\Domains\Configuration\ClientCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\SurveyCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\NewsCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskCheckPointCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\AccumulatorTypeCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskTypeAccumulatorCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskCategoryCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskFlowCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\VersionCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\PhaseCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskTypeCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\SprintCtrl.cs" />
     <Compile Include="proc\Domains\Enums\MonthCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\VersionStateCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\ProjectTemplateCtrl.cs" />
     <Compile Include="proc\Domains\Home\HomeController.cs" />
-    <Compile Include="proc\Domains\Reports\HomeViewCtrl.cs" />
-    <Compile Include="proc\Domains\System\SetupCtrl.cs" />
-    <Compile Include="proc\Domains\System\ProfileCtrl.cs" />
-    <Compile Include="proc\Domains\System\PermissionCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\ProjectCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\PriorityCtrl.cs" />
-    <Compile Include="proc\Domains\Reports\Tasks\TimesheetViewCtrl.cs" />
-    <Compile Include="proc\Domains\Task\TaskCountCtrl.cs" />
-    <Compile Include="proc\Domains\Reports\Tasks\ManagementViewCtrl.cs" />
-    <Compile Include="proc\Domains\Reports\Tasks\UserKanbanViewCtrl.cs" />
-    <Compile Include="proc\Domains\Task\TaskCtrl.cs" />
     <Compile Include="proc\Infrastructure\GlobalExtensions.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -934,7 +844,6 @@
     <Compile Include="App_Start\ValidationActionFilter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="proc\Infrastructure\Base\ApiBaseController.cs" />
-    <Compile Include="proc\Domains\System\UserCtrl.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

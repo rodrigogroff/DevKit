@@ -9,7 +9,7 @@
 	<base href="/">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title ng-bind="title">DevKit</title>
+	<title ng-bind="title">Venda On Line - ConveyNET</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
 	<meta name="description">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,36 +19,19 @@
 </head>
 <body class="background">
 	<div class="header" ng-show="exibirMenu" ng-controller="MenuController">
-		<div class="logo" style="padding-top:-4px; padding-left:-60px">
+		<div class="logo" style="padding-top:-4px; padding-left:-80px">
 			<a ng-click="goHome()">
 				<img src='../../images/logo.png' height="112px" />
 			</a>
 		</div>
 		<header class="page-header">
-			<div class="navbar" style="height:38px; padding-left:175px;padding-top:-4px;">
+			<div class="navbar" style="height:38px; padding-left:215px;padding-top:2px;">
 				<table width="100%">
 					<tr>
 						<td width="200px">
-							<span style="color:black">Bem-vindo, <b>{{authentication.nameUser}}</b> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<span style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
 						</td>
-						@*<td width="130px">
-                            <button class="btn btn-primary btn-xs" title="Tasks associated to you" ng-click="tasksClick()">{{userTasks}}</button> Minhas tarefas
-                        </td>
-                        <td width="20px"></td>
-                        <td width="250px">
-                        <table>
-                            <tr>
-                                <td>
-                                    <input type="text" width="150px" class="form-control input-transparent" ng-model="searchParam" />
-                                </td>
-                                <td width="20px"></td>
-                                <td>
-                                    <button class="btn btn-primary" ng-click="searchSystem()">Search</button>
-                                </td>
-                            </tr>
-                        </table>
-                        </td>
-                        <td width="20px"></td>*@
+						
 						<td align="right" valign="top">
 							<span style="color:white">Sair</span> &nbsp;&nbsp;<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
 						<td>
@@ -61,44 +44,21 @@
 				<ul id="side-nav" class="side-nav" style="color:black">
 					<li class="panel">
 						<a class="accordion-toggle " data-toggle="collapse"
-						   data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Sistema</span></a>
+						   data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Associado</span></a>
 						<ul id="forms-collapseSystem" class="panel-collapse collapse">
-							<li><a ui-sref="userChangePass"><span>Trocar senha</span></a></li>
-							<li><a ui-sref="setup"><span>Configuração</span></a></li>
-							<li><a ui-sref="users"><span>Usuários</span></a></li>
-							<li><a ui-sref="profiles"><span>Perfis</span></a></li>
+							<li><a ui-sref="userChangePass"><span>Verificar cartão</span></a></li>
                         </ul>
 					</li>
 					<li class="panel">
 						<a class="accordion-toggle " data-toggle="collapse"
-						   data-parent="#side-nav" href="#forms-collapseSetup"><span class="name">Configuração</span></a>
+						   data-parent="#side-nav" href="#forms-collapseSetup"><span class="name">Vendas</span></a>
 						<ul id="forms-collapseSetup" class="panel-collapse collapse">
-							<li><a ui-sref="clients"><span>Clientes</span></a></li>
-							<li><a ui-sref="clientgroups"><span>Grupos</span></a></li>
-							<li><a ui-sref="projects"><span>Projetos</span></a></li>
-							<li><a ui-sref="taskTypes"><span>Tipos Tarefa</span></a></li>
-							<li><a ui-sref="newsListing"><span>Notícias</span></a></li>
-							<li><a ui-sref="surveysListing"><span>Pesquisas</span></a></li>
+							<li><a ui-sref="clients"><span>Efetuar Venda</span></a></li>
+							<li><a ui-sref="clientgroups"><span>Cancelamento</span></a></li>
+                            <li><a ui-sref="clientgroups"><span>Transações</span></a></li>
+                            <li><a ui-sref="clientgroups"><span>Comprovantes</span></a></li>
 						</ul>
 					</li>
-					<li class="panel">
-						<a class="accordion-toggle " data-toggle="collapse"
-						   data-parent="#side-nav" href="#forms-collapseTask"><span class="name">Tarefas</span></a>
-						<ul id="forms-collapseTask" class="panel-collapse collapse">
-							<li><a ui-sref="task-new"><span>Nova</span></a></li>
-							<li><a ui-sref="tasks"><span>Listagem</span></a></li>
-							<li><a ui-sref="userKanban"><span>Kanban</span></a></li>
-							<li><a ui-sref="management"><span>Gerência</span></a></li>
-							<li><a ui-sref="timesheet"><span>Timesheet</span></a></li>
-						</ul>
-					</li>
-                    <li class="panel">
-                        <a class="accordion-toggle " data-toggle="collapse"
-                           data-parent="#side-nav" href="#forms-collapsePeople"><span class="name">Pessoas</span></a>
-                        <ul id="forms-collapsePeople" class="panel-collapse collapse">
-                            <li><a ui-sref="persons"><span>Listagem</span></a></li>
-                        </ul>
-                    </li>
 				</ul>
 				<ul><li>&nbsp;</li></ul>
 				<ul><li>&nbsp;</li></ul>

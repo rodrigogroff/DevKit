@@ -27,7 +27,7 @@ namespace DevKit.Web.Controllers
         // tables
         // ------------------------
 
-        public const string Lojista = "Lojista";
+        public const string T_Loja = "T_Loja";
 
         //public const string User = "User";
     }

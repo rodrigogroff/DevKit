@@ -9,7 +9,7 @@ namespace DevKit.Web.Controllers
 	[Authorize]
 	public class ApiControllerBase : MemCacheController
 	{
-        public DevKitDB db;
+        public AutorizadorCNDB db;
         
         public string apiError = "";
 
@@ -24,17 +24,17 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public bool StartDatabaseAndAuthorize()
         {
-            db = new DevKitDB();
+            db = new AutorizadorCNDB();
 
             var userCurrentName = userLoggedName;
-            var tagName = CacheTags.Lojista + userCurrentName;
+            var tagName = CacheTags.T_Loja + userCurrentName;
 
-            db.currentUser = RestoreCacheNoHit(tagName) as User;
+            db.currentUser = RestoreCacheNoHit(tagName) as T_Loja;
             
             if (db.currentUser == null)
             {
-                db.currentUser = (from ne in db.User
-                                  where ne.stLogin.ToUpper() == userCurrentName
+                db.currentUser = (from ne in db.T_Loja
+                                  where ne.st_loja.ToUpper() == userCurrentName
                                   select ne).
                                   FirstOrDefault();
 

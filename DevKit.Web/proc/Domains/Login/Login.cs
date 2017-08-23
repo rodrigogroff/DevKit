@@ -31,24 +31,22 @@ namespace DevKit.Web
 
         public override async System.Threading.Tasks.Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
-			using (var db = new DevKitDB())
+			using (var db = new AutorizadorCNDB())
 			{
-				var usuario = new User().Login(db, context.UserName, context.Password);
+                var lojista = (from e in db.T_Loja
+                               where e.st_loja == context.UserName
+                               where e.st_senha.ToUpper() == context.Password.ToUpper()
+                               select e).
+                               FirstOrDefault();
 
-				if (usuario != null)
+                if (lojista != null)
 				{
-					usuario.dtLastLogin = DateTime.Now;
-                 //   usuario.stCurrentSession = usuario.GetRandomString(16);
-
-                    db.Update(usuario);
-
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
-					identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
-					//identity.AddClaim(new Claim("IdUser", usuario.id.ToString()));
-                    //identity.AddClaim(new Claim("Session", usuario.stCurrentSession.ToString()));
+					identity.AddClaim(new Claim(ClaimTypes.Name, lojista.st_loja));
 
                     var ticket = new AuthenticationTicket(identity, null);
+
 					context.Validated(ticket);                    
                 }
 				else

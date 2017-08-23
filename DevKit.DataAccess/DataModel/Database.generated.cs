@@ -5,802 +5,1300 @@
 // </auto-generated>
 //---------------------------------------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 using LinqToDB;
+using LinqToDB.Common;
+using LinqToDB.Data;
+using LinqToDB.DataProvider.SqlServer;
+using LinqToDB.Extensions;
 using LinqToDB.Mapping;
 
 namespace DataModel
 {
 	/// <summary>
-	/// Database       : DevKit
-	/// Data Source    : localhost
-	/// Server Version : 9.6.1
+	/// Database       : AutorizadorCN
+	/// Data Source    : .\SQLEXPRESS
+	/// Server Version : 11.00.3000
 	/// </summary>
-	public partial class DevKitDB : LinqToDB.Data.DataConnection
+	public partial class AutorizadorCNDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<AuditLog>               AuditLog               { get { return this.GetTable<AuditLog>(); } }
-		public ITable<CacheControl>           CacheControl           { get { return this.GetTable<CacheControl>(); } }
-		public ITable<Client>                 Client                 { get { return this.GetTable<Client>(); } }
-		public ITable<ClientGroup>            ClientGroup            { get { return this.GetTable<ClientGroup>(); } }
-		public ITable<ClientGroupAssociation> ClientGroupAssociation { get { return this.GetTable<ClientGroupAssociation>(); } }
-		public ITable<CompanyNews>            CompanyNews            { get { return this.GetTable<CompanyNews>(); } }
-		public ITable<PeopleCategory>         PeopleCategory         { get { return this.GetTable<PeopleCategory>(); } }
-		public ITable<Person>                 Person                 { get { return this.GetTable<Person>(); } }
-		public ITable<PersonCategory>         PersonCategory         { get { return this.GetTable<PersonCategory>(); } }
-		public ITable<PersonContact>          PersonContact          { get { return this.GetTable<PersonContact>(); } }
-		public ITable<PersonEmail>            PersonEmail            { get { return this.GetTable<PersonEmail>(); } }
-		public ITable<PersonMessage>          PersonMessage          { get { return this.GetTable<PersonMessage>(); } }
-		public ITable<PersonPhone>            PersonPhone            { get { return this.GetTable<PersonPhone>(); } }
-		public ITable<Profile>                Profile                { get { return this.GetTable<Profile>(); } }
-		public ITable<Project>                Project                { get { return this.GetTable<Project>(); } }
-		public ITable<ProjectPhase>           ProjectPhase           { get { return this.GetTable<ProjectPhase>(); } }
-		public ITable<ProjectSprint>          ProjectSprint          { get { return this.GetTable<ProjectSprint>(); } }
-		public ITable<ProjectSprintVersion>   ProjectSprintVersion   { get { return this.GetTable<ProjectSprintVersion>(); } }
-		public ITable<ProjectUser>            ProjectUser            { get { return this.GetTable<ProjectUser>(); } }
-		public ITable<Setup>                  Setup                  { get { return this.GetTable<Setup>(); } }
-		public ITable<Survey>                 Survey                 { get { return this.GetTable<Survey>(); } }
-		public ITable<SurveyOption>           SurveyOption           { get { return this.GetTable<SurveyOption>(); } }
-		public ITable<SurveyUserOption>       SurveyUserOption       { get { return this.GetTable<SurveyUserOption>(); } }
-		public ITable<Task>                   Task                   { get { return this.GetTable<Task>(); } }
-		public ITable<TaskAccumulatorValue>   TaskAccumulatorValue   { get { return this.GetTable<TaskAccumulatorValue>(); } }
-		public ITable<TaskCategory>           TaskCategory           { get { return this.GetTable<TaskCategory>(); } }
-		public ITable<TaskCheckPoint>         TaskCheckPoint         { get { return this.GetTable<TaskCheckPoint>(); } }
-		public ITable<TaskCheckPointMark>     TaskCheckPointMark     { get { return this.GetTable<TaskCheckPointMark>(); } }
-		public ITable<TaskClient>             TaskClient             { get { return this.GetTable<TaskClient>(); } }
-		public ITable<TaskClientGroup>        TaskClientGroup        { get { return this.GetTable<TaskClientGroup>(); } }
-		public ITable<TaskCustomStep>         TaskCustomStep         { get { return this.GetTable<TaskCustomStep>(); } }
-		public ITable<TaskDependency>         TaskDependency         { get { return this.GetTable<TaskDependency>(); } }
-		public ITable<TaskFlow>               TaskFlow               { get { return this.GetTable<TaskFlow>(); } }
-		public ITable<TaskFlowChange>         TaskFlowChange         { get { return this.GetTable<TaskFlowChange>(); } }
-		public ITable<TaskMessage>            TaskMessage            { get { return this.GetTable<TaskMessage>(); } }
-		public ITable<TaskProgress>           TaskProgress           { get { return this.GetTable<TaskProgress>(); } }
-		public ITable<TaskQuestion>           TaskQuestion           { get { return this.GetTable<TaskQuestion>(); } }
-		public ITable<TaskType>               TaskType               { get { return this.GetTable<TaskType>(); } }
-		public ITable<TaskTypeAccumulator>    TaskTypeAccumulator    { get { return this.GetTable<TaskTypeAccumulator>(); } }
-		public ITable<User>                   User                   { get { return this.GetTable<User>(); } }
-		public ITable<UserEmail>              UserEmail              { get { return this.GetTable<UserEmail>(); } }
-		public ITable<UserNewsRead>           UserNewsRead           { get { return this.GetTable<UserNewsRead>(); } }
-		public ITable<UserPhone>              UserPhone              { get { return this.GetTable<UserPhone>(); } }
+		public ITable<_bkp_t_cartao_14_06_2017>       _bkp_t_cartao_14_06_2017       { get { return this.GetTable<_bkp_t_cartao_14_06_2017>(); } }
+		public ITable<I_Batch>                        I_Batch                        { get { return this.GetTable<I_Batch>(); } }
+		public ITable<i_patch>                        i_patch                        { get { return this.GetTable<i_patch>(); } }
+		public ITable<I_Scheduler>                    I_Scheduler                    { get { return this.GetTable<I_Scheduler>(); } }
+		public ITable<LINK_Agendum>                   LINK_Agenda                    { get { return this.GetTable<LINK_Agendum>(); } }
+		public ITable<LINK_Edu_FundoEmpresa>          LINK_Edu_FundoEmpresa          { get { return this.GetTable<LINK_Edu_FundoEmpresa>(); } }
+		public ITable<LINK_LojaEmpresa>               LINK_LojaEmpresa               { get { return this.GetTable<LINK_LojaEmpresa>(); } }
+		public ITable<LINK_PFAtivacao>                LINK_PFAtivacao                { get { return this.GetTable<LINK_PFAtivacao>(); } }
+		public ITable<LINK_ProprietarioCartao>        LINK_ProprietarioCartao        { get { return this.GetTable<LINK_ProprietarioCartao>(); } }
+		public ITable<LINK_RepasseParcela>            LINK_RepasseParcela            { get { return this.GetTable<LINK_RepasseParcela>(); } }
+		public ITable<LINK_UsuarioTerminal>           LINK_UsuarioTerminal           { get { return this.GetTable<LINK_UsuarioTerminal>(); } }
+		public ITable<LOG_Audit>                      LOG_Audit                      { get { return this.GetTable<LOG_Audit>(); } }
+		public ITable<LOG_Chamado>                    LOG_Chamado                    { get { return this.GetTable<LOG_Chamado>(); } }
+		public ITable<LOG_Edu_RendimentoEmpresa>      LOG_Edu_RendimentoEmpresa      { get { return this.GetTable<LOG_Edu_RendimentoEmpresa>(); } }
+		public ITable<LOG_Fechamento>                 LOG_Fechamento                 { get { return this.GetTable<LOG_Fechamento>(); } }
+		public ITable<LOG_GiftRange>                  LOG_GiftRanges                 { get { return this.GetTable<LOG_GiftRange>(); } }
+		public ITable<LOG_NS_FAT>                     LOG_NS_FAT                     { get { return this.GetTable<LOG_NS_FAT>(); } }
+		public ITable<LOG_NSA>                        LOG_NSA                        { get { return this.GetTable<LOG_NSA>(); } }
+		public ITable<LOG_NSU>                        LOG_NSU                        { get { return this.GetTable<LOG_NSU>(); } }
+		public ITable<LOG_Transaco>                   LOG_Transacoes                 { get { return this.GetTable<LOG_Transaco>(); } }
+		public ITable<LOG_VendaCartaoGift>            LOG_VendaCartaoGift            { get { return this.GetTable<LOG_VendaCartaoGift>(); } }
+		public ITable<LOG_VendaProdutoGift>           LOG_VendaProdutoGift           { get { return this.GetTable<LOG_VendaProdutoGift>(); } }
+		public ITable<T_BoletoEdu>                    T_BoletoEdu                    { get { return this.GetTable<T_BoletoEdu>(); } }
+		public ITable<T_Cartao>                       T_Cartao                       { get { return this.GetTable<T_Cartao>(); } }
+		public ITable<T_Chamado>                      T_Chamado                      { get { return this.GetTable<T_Chamado>(); } }
+		public ITable<T_ChequesGift>                  T_ChequesGift                  { get { return this.GetTable<T_ChequesGift>(); } }
+		public ITable<T_Dependente>                   T_Dependente                   { get { return this.GetTable<T_Dependente>(); } }
+		public ITable<T_Edu_AplicacaoVirtual>         T_Edu_AplicacaoVirtual         { get { return this.GetTable<T_Edu_AplicacaoVirtual>(); } }
+		public ITable<T_Edu_EmpresaVirtual>           T_Edu_EmpresaVirtual           { get { return this.GetTable<T_Edu_EmpresaVirtual>(); } }
+		public ITable<T_Edu_FundoEmpresa>             T_Edu_FundoEmpresa             { get { return this.GetTable<T_Edu_FundoEmpresa>(); } }
+		public ITable<T_Empresa>                      T_Empresa                      { get { return this.GetTable<T_Empresa>(); } }
+		public ITable<T_EmpresaAfiliada>              T_EmpresaAfiliada              { get { return this.GetTable<T_EmpresaAfiliada>(); } }
+		public ITable<T_ExtraGift>                    T_ExtraGift                    { get { return this.GetTable<T_ExtraGift>(); } }
+		public ITable<T_Faturamento>                  T_Faturamento                  { get { return this.GetTable<T_Faturamento>(); } }
+		public ITable<T_FaturamentoDetalhe>           T_FaturamentoDetalhes          { get { return this.GetTable<T_FaturamentoDetalhe>(); } }
+		public ITable<T_InfoAdicionai>                T_InfoAdicionais               { get { return this.GetTable<T_InfoAdicionai>(); } }
+		public ITable<T_Loja>                         T_Loja                         { get { return this.GetTable<T_Loja>(); } }
+		public ITable<T_MensagemEdu>                  T_MensagemEdu                  { get { return this.GetTable<T_MensagemEdu>(); } }
+		public ITable<T_Parcela>                      T_Parcelas                     { get { return this.GetTable<T_Parcela>(); } }
+		public ITable<T_PayFone>                      T_PayFone                      { get { return this.GetTable<T_PayFone>(); } }
+		public ITable<T_PendPayFone>                  T_PendPayFone                  { get { return this.GetTable<T_PendPayFone>(); } }
+		public ITable<T_Proprietario>                 T_Proprietario                 { get { return this.GetTable<T_Proprietario>(); } }
+		public ITable<T_Quiosque>                     T_Quiosque                     { get { return this.GetTable<T_Quiosque>(); } }
+		public ITable<T_RepasseLoja>                  T_RepasseLoja                  { get { return this.GetTable<T_RepasseLoja>(); } }
+		public ITable<T_RetCobranca>                  T_RetCobranca                  { get { return this.GetTable<T_RetCobranca>(); } }
+		public ITable<T_Terminal>                     T_Terminal                     { get { return this.GetTable<T_Terminal>(); } }
+		public ITable<T_Usuario>                      T_Usuario                      { get { return this.GetTable<T_Usuario>(); } }
+		public ITable<T_WebBlock>                     T_WebBlock                     { get { return this.GetTable<T_WebBlock>(); } }
+		public ITable<view_t_parcelas>                view_t_parcelas                { get { return this.GetTable<view_t_parcelas>(); } }
+		public ITable<view_transacao_bi_sem_parcelas> view_transacao_bi_sem_parcelas { get { return this.GetTable<view_transacao_bi_sem_parcelas>(); } }
+		public ITable<view_transacao_completa>        view_transacao_completa        { get { return this.GetTable<view_transacao_completa>(); } }
+		public ITable<view_transacao_completa_antiga> view_transacao_completa_antiga { get { return this.GetTable<view_transacao_completa_antiga>(); } }
 
-		public DevKitDB()
+		public AutorizadorCNDB()
 		{
 			InitDataContext();
 		}
 
-		public DevKitDB(string configuration)
+		public AutorizadorCNDB(string configuration)
 			: base(configuration)
 		{
 			InitDataContext();
 		}
 
 		partial void InitDataContext();
+
+		#region FreeTextTable
+
+		public class FreeTextKey<T>
+		{
+			public T   Key;
+			public int Rank;
+		}
+
+		private static MethodInfo _freeTextTableMethod1 = typeof(AutorizadorCNDB).GetMethod("FreeTextTable", new Type[] { typeof(string), typeof(string) });
+
+		[FreeTextTableExpression]
+		public ITable<FreeTextKey<TKey>> FreeTextTable<TTable,TKey>(string field, string text)
+		{
+			return this.GetTable<FreeTextKey<TKey>>(
+				this,
+				_freeTextTableMethod1,
+				field,
+				text);
+		}
+
+		private static MethodInfo _freeTextTableMethod2 = 
+			typeof(AutorizadorCNDB).GetMethods()
+				.Where(m => m.Name == "FreeTextTable" &&  m.IsGenericMethod && m.GetParameters().Length == 2)
+				.Where(m => m.GetParameters()[0].ParameterType.IsGenericTypeEx() && m.GetParameters()[0].ParameterType.GetGenericTypeDefinition() == typeof(Expression<>))
+				.Where(m => m.GetParameters()[1].ParameterType == typeof(string))
+				.Single();
+
+		[FreeTextTableExpression]
+		public ITable<FreeTextKey<TKey>> FreeTextTable<TTable,TKey>(Expression<Func<TTable,string>> fieldSelector, string text)
+		{
+			return this.GetTable<FreeTextKey<TKey>>(
+				this,
+				_freeTextTableMethod2,
+				fieldSelector,
+				text);
+		}
+
+		#endregion
 	}
 
-	[Table("AuditLog")]
-	public partial class AuditLog
+	[Table(Schema="dbo", Name="_bkp_t_cartao_14_06_2017")]
+	public partial class _bkp_t_cartao_14_06_2017
 	{
-		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog       { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkActionLog { get; set; } // bigint
-		[Column,     Nullable] public long?     nuType      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTarget    { get; set; } // bigint
-		[Column,     Nullable] public string    stLog       { get; set; } // character varying(999)
-		[Column,     Nullable] public string    stDetailLog { get; set; } // character varying(3999)
+		[Identity          ] public decimal   i_unique             { get; set; } // numeric(15, 0)
+		[Column,   Nullable] public string    st_empresa           { get; set; } // varchar(6)
+		[Column,   Nullable] public string    st_matricula         { get; set; } // varchar(6)
+		[Column,   Nullable] public string    st_titularidade      { get; set; } // varchar(2)
+		[Column,   Nullable] public string    st_senha             { get; set; } // varchar(16)
+		[Column,   Nullable] public char?     tg_tipoCartao        { get; set; } // varchar(1)
+		[Column,   Nullable] public string    st_venctoCartao      { get; set; } // varchar(4)
+		[Column,   Nullable] public char?     tg_status            { get; set; } // varchar(1)
+		[Column,   Nullable] public DateTime? dt_utlPagto          { get; set; } // datetime
+		[Column,   Nullable] public int?      nu_senhaErrada       { get; set; } // int
+		[Column,   Nullable] public DateTime? dt_inclusao          { get; set; } // datetime
+		[Column,   Nullable] public DateTime? dt_bloqueio          { get; set; } // datetime
+		[Column,   Nullable] public char?     tg_motivoBloqueio    { get; set; } // varchar(1)
+		[Column,   Nullable] public string    st_banco             { get; set; } // varchar(4)
+		[Column,   Nullable] public string    st_agencia           { get; set; } // varchar(4)
+		[Column,   Nullable] public string    st_conta             { get; set; } // varchar(10)
+		[Column,   Nullable] public string    st_matriculaExtra    { get; set; } // varchar(10)
+		[Column,   Nullable] public string    st_celCartao         { get; set; } // varchar(13)
+		[Column,   Nullable] public int?      fk_dadosProprietario { get; set; } // int
+		[Column,   Nullable] public int?      fk_infoAdicionais    { get; set; } // int
+		[Column,   Nullable] public int?      nu_viaCartao         { get; set; } // int
+		[Column,   Nullable] public int?      vr_limiteTotal       { get; set; } // int
+		[Column,   Nullable] public int?      vr_limiteMensal      { get; set; } // int
+		[Column,   Nullable] public int?      vr_limiteRotativo    { get; set; } // int
+		[Column,   Nullable] public int?      vr_extraCota         { get; set; } // int
+		[Column,   Nullable] public int?      vr_educacional       { get; set; } // int
+		[Column,   Nullable] public int?      vr_disp_educacional  { get; set; } // int
+		[Column,   Nullable] public int?      vr_edu_diario        { get; set; } // int
+		[Column,   Nullable] public string    st_aluno             { get; set; } // varchar(40)
+		[Column,   Nullable] public int?      tg_emitido           { get; set; } // int
+		[Column,   Nullable] public int?      vr_edu_disp_virtual  { get; set; } // int
+		[Column,   Nullable] public int?      nu_rankVirtual       { get; set; } // int
+		[Column,   Nullable] public int?      vr_edu_total_ranking { get; set; } // int
+		[Column,   Nullable] public int?      nu_webSenhaErrada    { get; set; } // int
+		[Column,   Nullable] public int?      tg_semanaCompleta    { get; set; } // int
+		[Column,   Nullable] public int?      tg_excluido          { get; set; } // int
 	}
 
-	[Table("CacheControl")]
-	public partial class CacheControl
+	[Table(Schema="dbo", Name="I_Batch")]
+	public partial class I_Batch
 	{
-		[PrimaryKey, Identity] public long   id       { get; set; } // bigint
-		[Column,     Nullable] public string stEntity { get; set; } // character varying(99)
-		[Column,     Nullable] public long?  fkTarget { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique      { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string    st_archive    { get; set; } // varchar(999)
+		[Column,     Nullable] public DateTime? dt_start      { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_proc_start { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_proc_end   { get; set; } // datetime
+		[Column,     Nullable] public char?     tg_processed  { get; set; } // varchar(1)
+		[Column,     Nullable] public char?     tg_running    { get; set; } // varchar(1)
 	}
 
-	[Table("Client")]
-	public partial class Client
+	[Table(Schema="dbo", Name="i_patch")]
+	public partial class i_patch
 	{
-		[PrimaryKey, Identity] public long      id              { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtStart         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser          { get; set; } // bigint
-		[Column,     Nullable] public string    stName          { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stContactEmail  { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stContactPhone  { get; set; } // character varying(20)
-		[Column,     Nullable] public string    stContactPerson { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stInfo          { get; set; } // character varying(2000)
+		[PrimaryKey, Identity] public int   i_unique { get; set; } // int
+		[Column,     Nullable] public char? st_done  { get; set; } // varchar(1)
 	}
 
-	[Table("ClientGroup")]
-	public partial class ClientGroup
+	[Table(Schema="dbo", Name="I_Scheduler")]
+	public partial class I_Scheduler
 	{
-		[PrimaryKey, Identity] public long      id      { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtStart { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser  { get; set; } // bigint
-		[Column,     Nullable] public string    stName  { get; set; } // character varying(200)
+		[PrimaryKey, Identity] public decimal   i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string    st_job          { get; set; } // varchar(400)
+		[Column,     Nullable] public char?     tg_type         { get; set; } // varchar(1)
+		[Column,     Nullable] public DateTime? dt_specific     { get; set; } // datetime
+		[Column,     Nullable] public string    st_daily_hhmm   { get; set; } // varchar(4)
+		[Column,     Nullable] public int?      st_weekly_dow   { get; set; } // int
+		[Column,     Nullable] public string    st_weekly_hhmm  { get; set; } // varchar(4)
+		[Column,     Nullable] public int?      nu_monthly_day  { get; set; } // int
+		[Column,     Nullable] public string    st_monthly_hhmm { get; set; } // varchar(4)
+		[Column,     Nullable] public DateTime? dt_last         { get; set; } // datetime
+		[Column,     Nullable] public char?     tg_status       { get; set; } // varchar(1)
+		[Column,     Nullable] public DateTime? dt_prev         { get; set; } // datetime
 	}
 
-	[Table("ClientGroupAssociation")]
-	public partial class ClientGroupAssociation
+	[Table(Schema="dbo", Name="LINK_Agenda")]
+	public partial class LINK_Agendum
 	{
-		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
-		[Column,     Nullable] public long? fkClient      { get; set; } // bigint
-		[Column,     Nullable] public long? fkClientGroup { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_schedule     { get; set; } // int
+		[Column,     Nullable] public int?    fk_empresa      { get; set; } // int
+		[Column,     Nullable] public int?    en_atividade    { get; set; } // int
+		[Column,     Nullable] public string  st_emp_afiliada { get; set; } // varchar(20)
 	}
 
-	[Table("CompanyNews")]
-	public partial class CompanyNews
+	[Table(Schema="dbo", Name="LINK_Edu_FundoEmpresa")]
+	public partial class LINK_Edu_FundoEmpresa
 	{
-		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public string    stTitle   { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stMessage { get; set; } // character varying(2000)
-		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
-		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
+		[PrimaryKey, Identity] public decimal i_unique   { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_cartao  { get; set; } // int
+		[Column,     Nullable] public int?    fk_empresa { get; set; } // int
+		[Column,     Nullable] public int?    vr_fundo   { get; set; } // int
 	}
 
-	[Table("PeopleCategory")]
-	public partial class PeopleCategory
+	[Table(Schema="dbo", Name="LINK_LojaEmpresa")]
+	public partial class LINK_LojaEmpresa
 	{
-		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
-		[Column,     Nullable] public string stName { get; set; } // character varying(150)
+		[PrimaryKey, Identity] public decimal i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_loja         { get; set; } // int
+		[Column,     Nullable] public int?    fk_empresa      { get; set; } // int
+		[Column,     Nullable] public int?    tx_admin        { get; set; } // int
+		[Column,     Nullable] public int?    nu_dias_repasse { get; set; } // int
+		[Column,     Nullable] public string  st_ag           { get; set; } // varchar(10)
+		[Column,     Nullable] public string  st_conta        { get; set; } // varchar(15)
+		[Column,     Nullable] public string  st_banco        { get; set; } // varchar(15)
 	}
 
-	[Table("Person")]
-	public partial class Person
+	[Table(Schema="dbo", Name="LINK_PFAtivacao")]
+	public partial class LINK_PFAtivacao
 	{
-		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUserAdd         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserLastUpdate  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
-		[Column,     Nullable] public string    stName            { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stAlias           { get; set; } // character varying(150)
-		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
-		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
-		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
-		[Column,     Nullable] public bool?     bDeceased         { get; set; } // boolean
-		[Column,     Nullable] public string    stCPF             { get; set; } // character varying(20)
+		[PrimaryKey, Identity] public decimal   i_unique    { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_payfone  { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_ativacao { get; set; } // datetime
+		[Column,     Nullable] public string    st_ativacao { get; set; } // varchar(50)
+		[Column,     Nullable] public char?     tg_status   { get; set; } // varchar(1)
 	}
 
-	[Table("PersonCategory")]
-	public partial class PersonCategory
+	[Table(Schema="dbo", Name="LINK_ProprietarioCartao")]
+	public partial class LINK_ProprietarioCartao
 	{
-		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPeopleCategory { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser           { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog            { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public decimal i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_cartao       { get; set; } // int
+		[Column,     Nullable] public int?    fk_proprietario { get; set; } // int
 	}
 
-	[Table("PersonContact")]
-	public partial class PersonContact
+	[Table(Schema="dbo", Name="LINK_RepasseParcela")]
+	public partial class LINK_RepasseParcela
 	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkContactForm { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(1500)
+		[PrimaryKey, Identity] public decimal i_unique       { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_repasseLoja { get; set; } // int
+		[Column,     Nullable] public int?    fk_parcela     { get; set; } // int
 	}
 
-	[Table("PersonEmail")]
-	public partial class PersonEmail
+	[Table(Schema="dbo", Name="LINK_UsuarioTerminal")]
+	public partial class LINK_UsuarioTerminal
 	{
-		[PrimaryKey, Identity] public long      id       { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser   { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog    { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stEmail  { get; set; } // character varying(250)
+		[PrimaryKey, Identity] public decimal i_unique { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_user  { get; set; } // int
+		[Column,     Nullable] public int?    fk_term  { get; set; } // int
 	}
 
-	[Table("PersonMessage")]
-	public partial class PersonMessage
+	[Table(Schema="dbo", Name="LOG_Audit")]
+	public partial class LOG_Audit
 	{
-		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserTo  { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stMessage { get; set; } // character varying(1500)
+		[PrimaryKey, Identity] public decimal   i_unique      { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_usuario    { get; set; } // int
+		[Column,     Nullable] public int?      tg_operacao   { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_operacao   { get; set; } // datetime
+		[Column,     Nullable] public string    st_observacao { get; set; } // varchar(150)
+		[Column,     Nullable] public int?      fk_generic    { get; set; } // int
 	}
 
-	[Table("PersonPhone")]
-	public partial class PersonPhone
+	[Table(Schema="dbo", Name="LOG_Chamado")]
+	public partial class LOG_Chamado
 	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
-		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
+		[PrimaryKey, Identity] public decimal   i_unique    { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_chamado  { get; set; } // int
+		[Column,     Nullable] public int?      fk_operador { get; set; } // int
+		[Column,     Nullable] public string    st_solucao  { get; set; } // varchar(900)
+		[Column,     Nullable] public DateTime? dt_solucao  { get; set; } // datetime
 	}
 
-	[Table("Profile")]
-	public partial class Profile
+	[Table(Schema="dbo", Name="LOG_Edu_RendimentoEmpresa")]
+	public partial class LOG_Edu_RendimentoEmpresa
 	{
-		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
-		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
-		[Column,     Nullable] public string stPermissions { get; set; } // character varying(9999)
+		[PrimaryKey, Identity] public decimal   i_unique          { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_empresaVirtual { get; set; } // int
+		[Column,     Nullable] public int?      vr_pct            { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_rend           { get; set; } // datetime
+		[Column,     Nullable] public char?     tg_neg            { get; set; } // varchar(1)
 	}
 
-	[Table("Project")]
-	public partial class Project
+	[Table(Schema="dbo", Name="LOG_Fechamento")]
+	public partial class LOG_Fechamento
 	{
-		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser            { get; set; } // bigint
-		[Column,     Nullable] public string    stName            { get; set; } // character varying(99)
-		[Column,     Nullable] public long?     fkProjectTemplate { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtCreation        { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public decimal   i_unique      { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string    st_mes        { get; set; } // varchar(2)
+		[Column,     Nullable] public string    st_ano        { get; set; } // varchar(4)
+		[Column,     Nullable] public int?      vr_valor      { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_fechamento { get; set; } // datetime
+		[Column,     Nullable] public int?      fk_empresa    { get; set; } // int
+		[Column,     Nullable] public int?      fk_loja       { get; set; } // int
+		[Column,     Nullable] public int?      fk_cartao     { get; set; } // int
+		[Column,     Nullable] public int?      fk_parcela    { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_compra     { get; set; } // datetime
+		[Column,     Nullable] public int?      nu_parcela    { get; set; } // int
+		[Column,     Nullable] public string    st_cartao     { get; set; } // varchar(14)
+		[Column,     Nullable] public string    st_afiliada   { get; set; } // varchar(20)
 	}
 
-	[Table("ProjectPhase")]
-	public partial class ProjectPhase
+	[Table(Schema="dbo", Name="LOG_GiftRanges")]
+	public partial class LOG_GiftRange
 	{
-		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
-		[Column,     Nullable] public string stName    { get; set; } // character varying(99)
-		[Column,     Nullable] public long?  fkProject { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique      { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_empresa    { get; set; } // int
+		[Column,     Nullable] public int?      nu_inicio     { get; set; } // int
+		[Column,     Nullable] public int?      nu_fim        { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_requisicao { get; set; } // datetime
 	}
 
-	[Table("ProjectSprint")]
-	public partial class ProjectSprint
+	[Table(Schema="dbo", Name="LOG_NS_FAT")]
+	public partial class LOG_NS_FAT
 	{
-		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
-		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
-		[Column,     Nullable] public string stDescription { get; set; } // character varying(1000)
-		[Column,     Nullable] public long?  fkProject     { get; set; } // bigint
-		[Column,     Nullable] public long?  fkPhase       { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public DateTime? dt_log   { get; set; } // datetime
 	}
 
-	[Table("ProjectSprintVersion")]
-	public partial class ProjectSprintVersion
+	[Table(Schema="dbo", Name="LOG_NSA")]
+	public partial class LOG_NSA
 	{
-		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
-		[Column,     Nullable] public string stName         { get; set; } // character varying(20)
-		[Column,     Nullable] public long?  fkSprint       { get; set; } // bigint
-		[Column,     Nullable] public long?  fkVersionState { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public DateTime? dt_log   { get; set; } // datetime
 	}
 
-	[Table("ProjectUser")]
-	public partial class ProjectUser
+	[Table(Schema="dbo", Name="LOG_NSU")]
+	public partial class LOG_NSU
 	{
-		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
-		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
-		[Column,     Nullable] public string    stRole    { get; set; } // character varying(99)
-		[Column,     Nullable] public DateTime? dtJoin    { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public decimal   i_unique { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public DateTime? dt_log   { get; set; } // datetime
 	}
 
-	[Table("Setup")]
-	public partial class Setup
+	[Table(Schema="dbo", Name="LOG_Transacoes")]
+	public partial class LOG_Transaco
 	{
-		[PrimaryKey, Identity] public long   id               { get; set; } // bigint
-		[Column,     Nullable] public string stPhoneMask      { get; set; } // character varying(99)
-		[Column,     Nullable] public string stDateFormat     { get; set; } // character varying(99)
-		[Column,     Nullable] public string stProtocolFormat { get; set; } // character varying(20)
+		[PrimaryKey, Identity] public decimal   i_unique          { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_terminal       { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_transacao      { get; set; } // datetime
+		[Column,     Nullable] public int?      nu_nsu            { get; set; } // int
+		[Column,     Nullable] public int?      fk_empresa        { get; set; } // int
+		[Column,     Nullable] public int?      fk_cartao         { get; set; } // int
+		[Column,     Nullable] public int?      vr_total          { get; set; } // int
+		[Column,     Nullable] public int?      nu_parcelas       { get; set; } // int
+		[Column,     Nullable] public int?      nu_cod_erro       { get; set; } // int
+		[Column,     Nullable] public char?     tg_confirmada     { get; set; } // varchar(1)
+		[Column,     Nullable] public int?      nu_nsuOrig        { get; set; } // int
+		[Column,     Nullable] public string    en_operacao       { get; set; } // varchar(10)
+		[Column,     Nullable] public string    st_msg_transacao  { get; set; } // varchar(50)
+		[Column,     Nullable] public char?     tg_contabil       { get; set; } // varchar(1)
+		[Column,     Nullable] public int?      fk_loja           { get; set; } // int
+		[Column,     Nullable] public int?      vr_saldo_disp     { get; set; } // int
+		[Column,     Nullable] public int?      vr_saldo_disp_tot { get; set; } // int
+		[Column,     Nullable] public string    st_doc            { get; set; } // varchar(20)
 	}
 
-	[Table("Survey")]
-	public partial class Survey
+	[Table(Schema="dbo", Name="LOG_VendaCartaoGift")]
+	public partial class LOG_VendaCartaoGift
 	{
-		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public string    stTitle   { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stMessage { get; set; } // character varying(2000)
-		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
-		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
+		[PrimaryKey, Identity] public decimal   i_unique       { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_vendedor    { get; set; } // int
+		[Column,     Nullable] public int?      fk_empresa     { get; set; } // int
+		[Column,     Nullable] public int?      fk_cartao      { get; set; } // int
+		[Column,     Nullable] public int?      tg_tipoPag     { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_compra      { get; set; } // datetime
+		[Column,     Nullable] public int?      tg_tipoCartao  { get; set; } // int
+		[Column,     Nullable] public string    st_cheque      { get; set; } // varchar(80)
+		[Column,     Nullable] public int?      nu_nsuCartao   { get; set; } // int
+		[Column,     Nullable] public int?      vr_carga       { get; set; } // int
+		[Column,     Nullable] public int?      tg_adesao      { get; set; } // int
+		[Column,     Nullable] public string    st_codImpresso { get; set; } // varchar(90)
 	}
 
-	[Table("SurveyOption")]
-	public partial class SurveyOption
+	[Table(Schema="dbo", Name="LOG_VendaProdutoGift")]
+	public partial class LOG_VendaProdutoGift
 	{
-		[PrimaryKey, Identity] public long   id       { get; set; } // bigint
-		[Column,     Nullable] public long?  fkSurvey { get; set; } // bigint
-		[Column,     Nullable] public int?   nuOrder  { get; set; } // integer
-		[Column,     Nullable] public string stOption { get; set; } // character varying(200)
+		[PrimaryKey, Identity] public decimal i_unique       { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_vendaCartao { get; set; } // int
+		[Column,     Nullable] public string  st_produto     { get; set; } // varchar(90)
+		[Column,     Nullable] public int?    vr_valor       { get; set; } // int
 	}
 
-	[Table("SurveyUserOption")]
-	public partial class SurveyUserOption
+	[Table(Schema="dbo", Name="T_BoletoEdu")]
+	public partial class T_BoletoEdu
 	{
-		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
-		[Column,     Nullable] public long?     fkSurvey       { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkSurveyOption { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public decimal   i_unique       { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public DateTime? dt_emissao     { get; set; } // datetime
+		[Column,     Nullable] public int?      vr_imediato    { get; set; } // int
+		[Column,     Nullable] public int?      vr_educacional { get; set; } // int
+		[Column,     Nullable] public int?      fk_cartao      { get; set; } // int
 	}
 
-	[Table("Task")]
-	public partial class Task
+	[Table(Schema="dbo", Name="T_Cartao")]
+	public partial class T_Cartao
 	{
-		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
-		[Column,     Nullable] public bool?     bComplete         { get; set; } // boolean
-		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastEdit        { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stProtocol        { get; set; } // character varying(20)
-		[Column,     Nullable] public string    stTitle           { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stLocalization    { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stDescription     { get; set; } // character varying(4000)
-		[Column,     Nullable] public long?     nuPriority        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkProject         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPhase           { get; set; } // bigint
-		[Column,     Nullable] public long?     fkSprint          { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserStart       { get; set; } // bigint
-		[Column,     Nullable] public long?     fkVersion         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTaskType        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTaskCategory    { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTaskFlowCurrent { get; set; } // bigint
-		[Column,     Nullable] public long?     fkReleaseVersion  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserResponsible { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtExpired         { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public decimal   i_unique             { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string    st_empresa           { get; set; } // varchar(6)
+		[Column,     Nullable] public string    st_matricula         { get; set; } // varchar(6)
+		[Column,     Nullable] public string    st_titularidade      { get; set; } // varchar(2)
+		[Column,     Nullable] public string    st_senha             { get; set; } // varchar(16)
+		[Column,     Nullable] public char?     tg_tipoCartao        { get; set; } // varchar(1)
+		[Column,     Nullable] public string    st_venctoCartao      { get; set; } // varchar(4)
+		[Column,     Nullable] public char?     tg_status            { get; set; } // varchar(1)
+		[Column,     Nullable] public DateTime? dt_utlPagto          { get; set; } // datetime
+		[Column,     Nullable] public int?      nu_senhaErrada       { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_inclusao          { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_bloqueio          { get; set; } // datetime
+		[Column,     Nullable] public char?     tg_motivoBloqueio    { get; set; } // varchar(1)
+		[Column,     Nullable] public string    st_banco             { get; set; } // varchar(4)
+		[Column,     Nullable] public string    st_agencia           { get; set; } // varchar(4)
+		[Column,     Nullable] public string    st_conta             { get; set; } // varchar(10)
+		[Column,     Nullable] public string    st_matriculaExtra    { get; set; } // varchar(10)
+		[Column,     Nullable] public string    st_celCartao         { get; set; } // varchar(13)
+		[Column,     Nullable] public int?      fk_dadosProprietario { get; set; } // int
+		[Column,     Nullable] public int?      fk_infoAdicionais    { get; set; } // int
+		[Column,     Nullable] public int?      nu_viaCartao         { get; set; } // int
+		[Column,     Nullable] public int?      vr_limiteTotal       { get; set; } // int
+		[Column,     Nullable] public int?      vr_limiteMensal      { get; set; } // int
+		[Column,     Nullable] public int?      vr_limiteRotativo    { get; set; } // int
+		[Column,     Nullable] public int?      vr_extraCota         { get; set; } // int
+		[Column,     Nullable] public int?      vr_educacional       { get; set; } // int
+		[Column,     Nullable] public int?      vr_disp_educacional  { get; set; } // int
+		[Column,     Nullable] public int?      vr_edu_diario        { get; set; } // int
+		[Column,     Nullable] public string    st_aluno             { get; set; } // varchar(40)
+		[Column,     Nullable] public int?      tg_emitido           { get; set; } // int
+		[Column,     Nullable] public int?      vr_edu_disp_virtual  { get; set; } // int
+		[Column,     Nullable] public int?      nu_rankVirtual       { get; set; } // int
+		[Column,     Nullable] public int?      vr_edu_total_ranking { get; set; } // int
+		[Column,     Nullable] public int?      nu_webSenhaErrada    { get; set; } // int
+		[Column,     Nullable] public int?      tg_semanaCompleta    { get; set; } // int
+		[Column,     Nullable] public int?      tg_excluido          { get; set; } // int
 	}
 
-	[Table("TaskAccumulatorValue")]
-	public partial class TaskAccumulatorValue
+	[Table(Schema="dbo", Name="T_Chamado")]
+	public partial class T_Chamado
 	{
-		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog       { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     nuValue     { get; set; } // bigint
-		[Column,     Nullable] public long?     nuHourValue { get; set; } // bigint
-		[Column,     Nullable] public long?     nuMinValue  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTask      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTaskAcc   { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser      { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_loja         { get; set; } // int
+		[Column,     Nullable] public int?      tg_fechado      { get; set; } // int
+		[Column,     Nullable] public int?      fk_operador     { get; set; } // int
+		[Column,     Nullable] public int?      nu_prioridade   { get; set; } // int
+		[Column,     Nullable] public int?      nu_categoria    { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_abertura     { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_fechamento   { get; set; } // datetime
+		[Column,     Nullable] public string    st_motivo       { get; set; } // varchar(900)
+		[Column,     Nullable] public int?      tg_tecnico      { get; set; } // int
+		[Column,     Nullable] public int?      fk_oper_criador { get; set; } // int
 	}
 
-	[Table("TaskCategory")]
-	public partial class TaskCategory
+	[Table(Schema="dbo", Name="T_ChequesGift")]
+	public partial class T_ChequesGift
 	{
-		[PrimaryKey, Identity] public long   id               { get; set; } // bigint
-		[Column,     Nullable] public string stName           { get; set; } // character varying(200)
-		[Column,     Nullable] public string stAbreviation    { get; set; } // character varying(10)
-		[Column,     Nullable] public string stDescription    { get; set; } // character varying(500)
-		[Column,     Nullable] public long?  fkTaskType       { get; set; } // bigint
-		[Column,     Nullable] public bool?  bExpires         { get; set; } // boolean
-		[Column,     Nullable] public long?  nuExpiresDays    { get; set; } // bigint
-		[Column,     Nullable] public long?  nuExpiresHours   { get; set; } // bigint
-		[Column,     Nullable] public long?  nuExpiresMinutes { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique         { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string    st_identificador { get; set; } // varchar(40)
+		[Column,     Nullable] public int?      fk_cartao        { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_efetiva       { get; set; } // datetime
+		[Column,     Nullable] public int?      tg_compensado    { get; set; } // int
+		[Column,     Nullable] public int?      vr_valor         { get; set; } // int
 	}
 
-	[Table("TaskCheckPoint")]
-	public partial class TaskCheckPoint
+	[Table(Schema="dbo", Name="T_Dependente")]
+	public partial class T_Dependente
 	{
-		[PrimaryKey, Identity] public long   id         { get; set; } // bigint
-		[Column,     Nullable] public string stName     { get; set; } // character varying(50)
-		[Column,     Nullable] public long?  fkCategory { get; set; } // bigint
-		[Column,     Nullable] public bool?  bMandatory { get; set; } // boolean
+		[PrimaryKey, Identity] public decimal i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    nu_titularidade { get; set; } // int
+		[Column,     Nullable] public string  st_nome         { get; set; } // varchar(40)
+		[Column,     Nullable] public int?    fk_proprietario { get; set; } // int
 	}
 
-	[Table("TaskCheckPointMark")]
-	public partial class TaskCheckPointMark
+	[Table(Schema="dbo", Name="T_Edu_AplicacaoVirtual")]
+	public partial class T_Edu_AplicacaoVirtual
 	{
-		[PrimaryKey, Identity] public long      id           { get; set; } // bigint
-		[Column,     Nullable] public long?     fkCheckPoint { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTask       { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser       { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog        { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public decimal   i_unique          { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_cartao         { get; set; } // int
+		[Column,     Nullable] public int?      fk_empresaVirtual { get; set; } // int
+		[Column,     Nullable] public int?      vr_aplicado       { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_aplic          { get; set; } // datetime
+		[Column,     Nullable] public char?     tg_neg            { get; set; } // varchar(1)
+		[Column,     Nullable] public int?      vr_fundo_hora     { get; set; } // int
+		[Column,     Nullable] public int?      vr_preco_fundo    { get; set; } // int
 	}
 
-	[Table("TaskClient")]
-	public partial class TaskClient
+	[Table(Schema="dbo", Name="T_Edu_EmpresaVirtual")]
+	public partial class T_Edu_EmpresaVirtual
 	{
-		[PrimaryKey, Identity] public long  id       { get; set; } // bigint
-		[Column,     Nullable] public long? fkTask   { get; set; } // bigint
-		[Column,     Nullable] public long? fkClient { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal i_unique     { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string  st_nome      { get; set; } // varchar(99)
+		[Column,     Nullable] public string  st_codigo    { get; set; } // varchar(20)
+		[Column,     Nullable] public int?    vr_valorAcao { get; set; } // int
 	}
 
-	[Table("TaskClientGroup")]
-	public partial class TaskClientGroup
+	[Table(Schema="dbo", Name="T_Edu_FundoEmpresa")]
+	public partial class T_Edu_FundoEmpresa
 	{
-		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
-		[Column,     Nullable] public long? fkTask        { get; set; } // bigint
-		[Column,     Nullable] public long? fkClientGroup { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique          { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_cartao         { get; set; } // int
+		[Column,     Nullable] public int?      fk_empresaVirtual { get; set; } // int
+		[Column,     Nullable] public int?      vr_fundo          { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_efetivo        { get; set; } // datetime
 	}
 
-	[Table("TaskCustomStep")]
-	public partial class TaskCustomStep
+	[Table(Schema="dbo", Name="T_Empresa")]
+	public partial class T_Empresa
 	{
-		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTask    { get; set; } // bigint
-		[Column,     Nullable] public bool?     bSelected { get; set; } // boolean
-		[Column,     Nullable] public string    stName    { get; set; } // character varying(150)
-		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public decimal i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string  st_empresa      { get; set; } // varchar(6)
+		[Column,     Nullable] public string  nu_CNPJ         { get; set; } // varchar(14)
+		[Column,     Nullable] public string  st_fantasia     { get; set; } // varchar(99)
+		[Column,     Nullable] public string  st_social       { get; set; } // varchar(99)
+		[Column,     Nullable] public string  st_endereco     { get; set; } // varchar(99)
+		[Column,     Nullable] public string  st_cidade       { get; set; } // varchar(99)
+		[Column,     Nullable] public string  st_estado       { get; set; } // varchar(2)
+		[Column,     Nullable] public string  nu_CEP          { get; set; } // varchar(14)
+		[Column,     Nullable] public string  nu_telefone     { get; set; } // varchar(20)
+		[Column,     Nullable] public int?    nu_cartoes      { get; set; } // int
+		[Column,     Nullable] public int?    nu_parcelas     { get; set; } // int
+		[Column,     Nullable] public char?   tg_blocked      { get; set; } // varchar(1)
+		[Column,     Nullable] public int?    fk_admin        { get; set; } // int
+		[Column,     Nullable] public string  nu_contaDeb     { get; set; } // varchar(20)
+		[Column,     Nullable] public int?    vr_mensalidade  { get; set; } // int
+		[Column,     Nullable] public int?    nu_pctValor     { get; set; } // int
+		[Column,     Nullable] public int?    vr_transacao    { get; set; } // int
+		[Column,     Nullable] public int?    vr_minimo       { get; set; } // int
+		[Column,     Nullable] public int?    nu_franquia     { get; set; } // int
+		[Column,     Nullable] public int?    nu_periodoFat   { get; set; } // int
+		[Column,     Nullable] public int?    nu_diaVenc      { get; set; } // int
+		[Column,     Nullable] public char?   tg_tipoCobranca { get; set; } // varchar(1)
+		[Column,     Nullable] public int?    nu_bancoFat     { get; set; } // int
+		[Column,     Nullable] public int?    vr_cartaoAtivo  { get; set; } // int
+		[Column,     Nullable] public int?    tg_isentoFat    { get; set; } // int
+		[Column,     Nullable] public string  st_obs          { get; set; } // varchar(400)
+		[Column,     Nullable] public int?    tg_bloq         { get; set; } // int
 	}
 
-	[Table("TaskDependency")]
-	public partial class TaskDependency
+	[Table(Schema="dbo", Name="T_EmpresaAfiliada")]
+	public partial class T_EmpresaAfiliada
 	{
-		[PrimaryKey, Identity] public long      id         { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog      { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser     { get; set; } // bigint
-		[Column,     Nullable] public long?     fkMainTask { get; set; } // bigint
-		[Column,     Nullable] public long?     fkSubTask  { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal i_unique   { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string  st_nome    { get; set; } // varchar(20)
+		[Column,     Nullable] public int?    fk_empresa { get; set; } // int
 	}
 
-	[Table("TaskFlow")]
-	public partial class TaskFlow
+	[Table(Schema="dbo", Name="T_ExtraGift")]
+	public partial class T_ExtraGift
 	{
-		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
-		[Column,     Nullable] public bool?  bForceComplete { get; set; } // boolean
-		[Column,     Nullable] public bool?  bForceOpen     { get; set; } // boolean
-		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
-		[Column,     Nullable] public long?  nuOrder        { get; set; } // bigint
-		[Column,     Nullable] public long?  fkTaskType     { get; set; } // bigint
-		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal i_unique   { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string  st_nome    { get; set; } // varchar(40)
+		[Column,     Nullable] public int?    vr_valor   { get; set; } // int
+		[Column,     Nullable] public int?    fk_empresa { get; set; } // int
 	}
 
-	[Table("TaskFlowChange")]
-	public partial class TaskFlowChange
+	[Table(Schema="dbo", Name="T_Faturamento")]
+	public partial class T_Faturamento
 	{
-		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
-		[Column,     Nullable] public string    stMessage      { get; set; } // character varying(300)
-		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkTask         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkOldFlowState { get; set; } // bigint
-		[Column,     Nullable] public long?     fkNewFlowState { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique      { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_empresa    { get; set; } // int
+		[Column,     Nullable] public int?      fk_loja       { get; set; } // int
+		[Column,     Nullable] public int?      vr_cobranca   { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_vencimento { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_baixa      { get; set; } // datetime
+		[Column,     Nullable] public char?     tg_situacao   { get; set; } // varchar(1)
+		[Column,     Nullable] public int?      tg_retBanco   { get; set; } // int
 	}
 
-	[Table("TaskMessage")]
-	public partial class TaskMessage
+	[Table(Schema="dbo", Name="T_FaturamentoDetalhes")]
+	public partial class T_FaturamentoDetalhe
 	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(999)
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkTask        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkCurrentFlow { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal i_unique      { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_fatura     { get; set; } // int
+		[Column,     Nullable] public int?    tg_tipoFat    { get; set; } // int
+		[Column,     Nullable] public int?    nu_quantidade { get; set; } // int
+		[Column,     Nullable] public int?    vr_cobranca   { get; set; } // int
+		[Column,     Nullable] public char?   tg_desconto   { get; set; } // varchar(1)
+		[Column,     Nullable] public string  st_extras     { get; set; } // varchar(100)
+		[Column,     Nullable] public int?    fk_empresa    { get; set; } // int
+		[Column,     Nullable] public int?    fk_loja       { get; set; } // int
 	}
 
-	[Table("TaskProgress")]
-	public partial class TaskProgress
+	[Table(Schema="dbo", Name="T_InfoAdicionais")]
+	public partial class T_InfoAdicionai
 	{
-		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
-		[Column,     Nullable] public long?     fkTask         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserAssigned { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog          { get; set; } // timestamp (6) without time zone
+		[PrimaryKey, Identity] public decimal   i_unique              { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string    st_codigo             { get; set; } // varchar(6)
+		[Column,     Nullable] public string    st_empresaAfiliada    { get; set; } // varchar(30)
+		[Column,     Nullable] public string    st_presenteado        { get; set; } // varchar(50)
+		[Column,     Nullable] public string    st_recado             { get; set; } // varchar(80)
+		[Column,     Nullable] public DateTime? dt_edu_nasc           { get; set; } // datetime
+		[Column,     Nullable] public char?     st_edu_sexo           { get; set; } // varchar(1)
+		[Column,     Nullable] public char?     st_edu_grau           { get; set; } // varchar(1)
+		[Column,     Nullable] public string    st_edu_serie_semestre { get; set; } // varchar(2)
+		[Column,     Nullable] public string    st_edu_turma          { get; set; } // varchar(10)
+		[Column,     Nullable] public string    st_edu_curso          { get; set; } // varchar(30)
+		[Column,     Nullable] public DateTime? dt_edu_atualizacao    { get; set; } // datetime
+		[Column,     Nullable] public string    st_empresa            { get; set; } // varchar(6)
+		[Column,     Nullable] public string    st_matricula          { get; set; } // varchar(6)
 	}
 
-	[Table("TaskQuestion")]
-	public partial class TaskQuestion
+	[Table(Schema="dbo", Name="T_Loja")]
+	public partial class T_Loja
 	{
-		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtOpen         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtClosed       { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stStatement    { get; set; } // character varying(2000)
-		[Column,     Nullable] public string    stAnswer       { get; set; } // character varying(2000)
-		[Column,     Nullable] public long?     fkTask         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserOpen     { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserDirected { get; set; } // bigint
-		[Column,     Nullable] public bool?     bFinal         { get; set; } // boolean
+		[PrimaryKey, Identity] public decimal i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string  nu_CNPJ         { get; set; } // varchar(14)
+		[Column,     Nullable] public string  st_nome         { get; set; } // varchar(99)
+		[Column,     Nullable] public string  st_social       { get; set; } // varchar(99)
+		[Column,     Nullable] public string  st_endereco     { get; set; } // varchar(199)
+		[Column,     Nullable] public string  st_enderecoInst { get; set; } // varchar(199)
+		[Column,     Nullable] public string  nu_inscEst      { get; set; } // varchar(20)
+		[Column,     Nullable] public string  st_cidade       { get; set; } // varchar(99)
+		[Column,     Nullable] public string  st_estado       { get; set; } // varchar(2)
+		[Column,     Nullable] public string  nu_CEP          { get; set; } // varchar(18)
+		[Column,     Nullable] public string  nu_telefone     { get; set; } // varchar(20)
+		[Column,     Nullable] public string  nu_fax          { get; set; } // varchar(20)
+		[Column,     Nullable] public string  st_contato      { get; set; } // varchar(40)
+		[Column,     Nullable] public int?    vr_mensalidade  { get; set; } // int
+		[Column,     Nullable] public string  nu_contaDeb     { get; set; } // varchar(20)
+		[Column,     Nullable] public string  st_obs          { get; set; } // varchar(900)
+		[Column,     Nullable] public string  st_loja         { get; set; } // varchar(40)
+		[Column,     Nullable] public char?   tg_blocked      { get; set; } // varchar(1)
+		[Column,     Nullable] public int?    nu_pctValor     { get; set; } // int
+		[Column,     Nullable] public int?    vr_transacao    { get; set; } // int
+		[Column,     Nullable] public int?    vr_minimo       { get; set; } // int
+		[Column,     Nullable] public int?    nu_franquia     { get; set; } // int
+		[Column,     Nullable] public int?    nu_periodoFat   { get; set; } // int
+		[Column,     Nullable] public int?    nu_diavenc      { get; set; } // int
+		[Column,     Nullable] public char?   tg_tipoCobranca { get; set; } // varchar(1)
+		[Column,     Nullable] public int?    nu_bancoFat     { get; set; } // int
+		[Column,     Nullable] public int?    tg_isentoFat    { get; set; } // int
+		[Column,     Nullable] public string  st_senha        { get; set; } // varchar(16)
+		[Column,     Nullable] public int?    tg_cancel       { get; set; } // int
 	}
 
-	[Table("TaskType")]
-	public partial class TaskType
+	[Table(Schema="dbo", Name="T_MensagemEdu")]
+	public partial class T_MensagemEdu
 	{
-		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
-		[Column,     Nullable] public bool?  bManaged       { get; set; } // boolean
-		[Column,     Nullable] public bool?  bCondensedView { get; set; } // boolean
-		[Column,     Nullable] public bool?  bKPA           { get; set; } // boolean
-		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
-		[Column,     Nullable] public long?  fkProject      { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique   { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string    st_mens    { get; set; } // varchar(900)
+		[Column,     Nullable] public int?      fk_empresa { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_ini     { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_fim     { get; set; } // datetime
 	}
 
-	[Table("TaskTypeAccumulator")]
-	public partial class TaskTypeAccumulator
+	[Table(Schema="dbo", Name="T_Parcelas")]
+	public partial class T_Parcela
 	{
-		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
-		[Column,     Nullable] public bool?  bEstimate      { get; set; } // boolean
-		[Column,     Nullable] public string stName         { get; set; } // character varying(30)
-		[Column,     Nullable] public long?  fkTaskType     { get; set; } // bigint
-		[Column,     Nullable] public long?  fkTaskAccType  { get; set; } // bigint
-		[Column,     Nullable] public long?  fkTaskFlow     { get; set; } // bigint
-		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique          { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      nu_nsu            { get; set; } // int
+		[Column,     Nullable] public int?      fk_empresa        { get; set; } // int
+		[Column,     Nullable] public int?      fk_cartao         { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_inclusao       { get; set; } // datetime
+		[Column,     Nullable] public int?      nu_parcela        { get; set; } // int
+		[Column,     Nullable] public int?      vr_valor          { get; set; } // int
+		[Column,     Nullable] public int?      nu_indice         { get; set; } // int
+		[Column,     Nullable] public char?     tg_pago           { get; set; } // varchar(1)
+		[Column,     Nullable] public int?      fk_loja           { get; set; } // int
+		[Column,     Nullable] public int?      nu_tot_parcelas   { get; set; } // int
+		[Column,     Nullable] public int?      fk_terminal       { get; set; } // int
+		[Column,     Nullable] public int?      fk_log_transacoes { get; set; } // int
 	}
 
-	[Table("User")]
-	public partial class User
+	[Table(Schema="dbo", Name="T_PayFone")]
+	public partial class T_PayFone
 	{
-		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
-		[Column,     Nullable] public bool?     bActive          { get; set; } // boolean
-		[Column,     Nullable] public string    stLogin          { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stName           { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stPassword       { get; set; } // character varying(30)
-		[Column,     Nullable] public long?     fkProfile        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLastLogin      { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtCreation       { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stCurrentSession { get; set; } // character varying(20)
+		[PrimaryKey, Identity] public decimal i_unique       { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string  st_telefone    { get; set; } // varchar(10)
+		[Column,     Nullable] public char?   tg_tipoCelular { get; set; } // varchar(1)
+		[Column,     Nullable] public int?    fk_cartao      { get; set; } // int
+		[Column,     Nullable] public int?    fk_terminal    { get; set; } // int
 	}
 
-	[Table("UserEmail")]
-	public partial class UserEmail
+	[Table(Schema="dbo", Name="T_PendPayFone")]
+	public partial class T_PendPayFone
 	{
-		[PrimaryKey, Identity] public long   id      { get; set; } // bigint
-		[Column,     Nullable] public long?  fkUser  { get; set; } // bigint
-		[Column,     Nullable] public string stEmail { get; set; } // character varying(250)
+		[PrimaryKey, Identity] public decimal   i_unique    { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_cartao   { get; set; } // int
+		[Column,     Nullable] public int?      fk_terminal { get; set; } // int
+		[Column,     Nullable] public int?      nu_nsu      { get; set; } // int
+		[Column,     Nullable] public int?      vr_valor    { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_inclusao { get; set; } // datetime
+		[Column,     Nullable] public char?     en_situacao { get; set; } // varchar(1)
+		[Column,     Nullable] public int?      fk_empresa  { get; set; } // int
+		[Column,     Nullable] public int?      fk_loja     { get; set; } // int
 	}
 
-	[Table("UserNewsRead")]
-	public partial class UserNewsRead
+	[Table(Schema="dbo", Name="T_Proprietario")]
+	public partial class T_Proprietario
 	{
-		[PrimaryKey, Identity] public long      id     { get; set; } // bigint
-		[Column,     Nullable] public long?     fkNews { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog  { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser { get; set; } // bigint
+		[PrimaryKey, Identity] public decimal   i_unique       { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string    st_cpf         { get; set; } // varchar(20)
+		[Column,     Nullable] public string    st_nome        { get; set; } // varchar(99)
+		[Column,     Nullable] public string    st_endereco    { get; set; } // varchar(900)
+		[Column,     Nullable] public string    st_numero      { get; set; } // varchar(29)
+		[Column,     Nullable] public string    st_complemento { get; set; } // varchar(29)
+		[Column,     Nullable] public string    st_bairro      { get; set; } // varchar(99)
+		[Column,     Nullable] public string    st_cidade      { get; set; } // varchar(99)
+		[Column,     Nullable] public string    st_UF          { get; set; } // varchar(2)
+		[Column,     Nullable] public string    st_cep         { get; set; } // varchar(20)
+		[Column,     Nullable] public string    st_ddd         { get; set; } // varchar(3)
+		[Column,     Nullable] public string    st_telefone    { get; set; } // varchar(20)
+		[Column,     Nullable] public DateTime? dt_nasc        { get; set; } // datetime
+		[Column,     Nullable] public string    st_email       { get; set; } // varchar(199)
+		[Column,     Nullable] public int?      vr_renda       { get; set; } // int
+		[Column,     Nullable] public string    st_senhaEdu    { get; set; } // varchar(16)
 	}
 
-	[Table("UserPhone")]
-	public partial class UserPhone
+	[Table(Schema="dbo", Name="T_Quiosque")]
+	public partial class T_Quiosque
 	{
-		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
-		[Column,     Nullable] public long?  fkUser        { get; set; } // bigint
-		[Column,     Nullable] public string stPhone       { get; set; } // character varying(50)
-		[Column,     Nullable] public string stDescription { get; set; } // character varying(50)
+		[PrimaryKey, Identity] public decimal i_unique   { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_empresa { get; set; } // int
+		[Column,     Nullable] public string  st_nome    { get; set; } // varchar(40)
+	}
+
+	[Table(Schema="dbo", Name="T_RepasseLoja")]
+	public partial class T_RepasseLoja
+	{
+		[PrimaryKey, Identity] public decimal   i_unique   { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_loja    { get; set; } // int
+		[Column,     Nullable] public int?      tg_opcao   { get; set; } // int
+		[Column,     Nullable] public int?      vr_valor   { get; set; } // int
+		[Column,     Nullable] public string    st_ident   { get; set; } // varchar(90)
+		[Column,     Nullable] public DateTime? dt_efetiva { get; set; } // datetime
+	}
+
+	[Table(Schema="dbo", Name="T_RetCobranca")]
+	public partial class T_RetCobranca
+	{
+		[PrimaryKey, Identity] public decimal i_unique    { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    nu_codBanco { get; set; } // int
+		[Column,     Nullable] public int?    nu_cod      { get; set; } // int
+		[Column,     Nullable] public char?   tg_tipoCob  { get; set; } // varchar(1)
+		[Column,     Nullable] public string  st_codMsg   { get; set; } // varchar(99)
+	}
+
+	[Table(Schema="dbo", Name="T_Terminal")]
+	public partial class T_Terminal
+	{
+		[PrimaryKey, Identity] public decimal i_unique       { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string  nu_terminal    { get; set; } // varchar(12)
+		[Column,     Nullable] public int?    fk_loja        { get; set; } // int
+		[Column,     Nullable] public string  st_localizacao { get; set; } // varchar(250)
+	}
+
+	[Table(Schema="dbo", Name="T_Usuario")]
+	public partial class T_Usuario
+	{
+		[PrimaryKey, Identity] public decimal   i_unique       { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public char?     tg_nivel       { get; set; } // varchar(1)
+		[Column,     Nullable] public char?     tg_logoff      { get; set; } // varchar(1)
+		[Column,     Nullable] public DateTime? dt_trocaSenha  { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_ultUso      { get; set; } // datetime
+		[Column,     Nullable] public int?      nu_senhaErrada { get; set; } // int
+		[Column,     Nullable] public char?     tg_trocaSenha  { get; set; } // varchar(1)
+		[Column,     Nullable] public string    st_senha_1     { get; set; } // varchar(64)
+		[Column,     Nullable] public string    st_senha_2     { get; set; } // varchar(64)
+		[Column,     Nullable] public string    st_senha_3     { get; set; } // varchar(64)
+		[Column,     Nullable] public string    st_senha_4     { get; set; } // varchar(64)
+		[Column,     Nullable] public string    st_senha_5     { get; set; } // varchar(64)
+		[Column,     Nullable] public string    st_empresa     { get; set; } // varchar(6)
+		[Column,     Nullable] public string    st_senha       { get; set; } // varchar(64)
+		[Column,     Nullable] public char?     tg_bloqueio    { get; set; } // varchar(1)
+		[Column,     Nullable] public string    st_nome        { get; set; } // varchar(20)
+		[Column,     Nullable] public int?      fk_quiosque    { get; set; } // int
+		[Column,     Nullable] public int?      tg_aviso       { get; set; } // int
+	}
+
+	[Table(Schema="dbo", Name="T_WebBlock")]
+	public partial class T_WebBlock
+	{
+		[PrimaryKey, Identity] public decimal   i_unique  { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public string    st_ip     { get; set; } // varchar(99)
+		[Column,     Nullable] public int?      fk_cartao { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_expire { get; set; } // datetime
+	}
+
+	[Table(Schema="dbo", Name="view_t_parcelas", IsView=true)]
+	public partial class view_t_parcelas
+	{
+		[Column,    Nullable] public DateTime? dt_transacao      { get; set; } // datetime
+		[Column,    Nullable] public DateTime? mes_vencimento    { get; set; } // datetime
+		[Column, NotNull    ] public decimal   i_unique          { get; set; } // numeric(15, 0)
+		[Column,    Nullable] public int?      nu_nsu            { get; set; } // int
+		[Column,    Nullable] public int?      fk_empresa        { get; set; } // int
+		[Column,    Nullable] public int?      fk_cartao         { get; set; } // int
+		[Column,    Nullable] public DateTime? dt_inclusao       { get; set; } // datetime
+		[Column,    Nullable] public int?      nu_parcela        { get; set; } // int
+		[Column,    Nullable] public int?      vr_valor          { get; set; } // int
+		[Column,    Nullable] public int?      nu_indice         { get; set; } // int
+		[Column,    Nullable] public char?     tg_pago           { get; set; } // varchar(1)
+		[Column,    Nullable] public int?      fk_loja           { get; set; } // int
+		[Column,    Nullable] public int?      nu_tot_parcelas   { get; set; } // int
+		[Column,    Nullable] public int?      fk_terminal       { get; set; } // int
+		[Column,    Nullable] public int?      fk_log_transacoes { get; set; } // int
+	}
+
+	[Table(Schema="dbo", Name="view_transacao_bi_sem_parcelas", IsView=true)]
+	public partial class view_transacao_bi_sem_parcelas
+	{
+		[Column,    Nullable] public string    dia_transacao            { get; set; } // nvarchar(4000)
+		[Column,    Nullable] public string    mes_transacao            { get; set; } // nvarchar(4000)
+		[Column,    Nullable] public string    ano_transacao            { get; set; } // nvarchar(4000)
+		[Column,    Nullable] public int?      tempo                    { get; set; } // int
+		[Column,    Nullable] public DateTime? dt_transacao             { get; set; } // datetime
+		[Column,    Nullable] public string    data_cancelamento        { get; set; } // nvarchar(4000)
+		[Column,    Nullable] public string    st_empresa               { get; set; } // varchar(6)
+		[Column,    Nullable] public string    st_matricula             { get; set; } // varchar(6)
+		[Column,    Nullable] public string    nsu                      { get; set; } // nvarchar(4000)
+		[Column,    Nullable] public string    nsu_2                    { get; set; } // nvarchar(4000)
+		[Column,    Nullable] public string    data                     { get; set; } // nvarchar(4000)
+		[Column,    Nullable] public decimal?  vr_total                 { get; set; } // money
+		[Column,    Nullable] public int?      nu_parcelas              { get; set; } // int
+		[Column,    Nullable] public string    descricao                { get; set; } // varchar(10)
+		[Column,    Nullable] public string    st_nome                  { get; set; } // varchar(99)
+		[Column,    Nullable] public string    st_social                { get; set; } // varchar(99)
+		[Column,    Nullable] public string    st_endereco              { get; set; } // varchar(199)
+		[Column,    Nullable] public string    st_cidade                { get; set; } // varchar(99)
+		[Column,    Nullable] public string    st_estado                { get; set; } // varchar(2)
+		[Column,    Nullable] public string    nu_telefone              { get; set; } // varchar(20)
+		[Column,    Nullable] public string    nu_CNPJ                  { get; set; } // varchar(14)
+		[Column,    Nullable] public string    st_loja                  { get; set; } // varchar(40)
+		[Column,    Nullable] public string    cartao                   { get; set; } // varchar(12)
+		[Column,    Nullable] public string    nu_terminal              { get; set; } // varchar(12)
+		[Column,    Nullable] public string    cliente_mail             { get; set; } // varchar(199)
+		[Column,    Nullable] public string    cliente_ddd              { get; set; } // varchar(3)
+		[Column,    Nullable] public string    cliente_fone             { get; set; } // varchar(20)
+		[Column,    Nullable] public decimal?  vr_saldo_disp            { get; set; } // money
+		[Column,    Nullable] public decimal?  vr_saldo_disp_tot        { get; set; } // money
+		[Column,    Nullable] public double?   limite_mensal_cadastrado { get; set; } // float
+		[Column,    Nullable] public double?   limite_total_cadastrado  { get; set; } // float
+		[Column,    Nullable] public string    Entidade_cnpj            { get; set; } // varchar(14)
+		[Column,    Nullable] public string    entidade_fantasia        { get; set; } // varchar(99)
+		[Column,    Nullable] public string    entidade_razao_social    { get; set; } // varchar(99)
+		[Column,    Nullable] public string    entidade_cidade          { get; set; } // varchar(99)
+		[Column,    Nullable] public string    idade_estado             { get; set; } // varchar(2)
+		[Column,    Nullable] public string    proprietario_cpf         { get; set; } // varchar(20)
+		[Column, NotNull    ] public decimal   log_transacao_i_unique   { get; set; } // numeric(15, 0)
+		[Column,    Nullable] public string    ano_mes_loja             { get; set; } // nvarchar(4000)
+		[Column, NotNull    ] public decimal   cod_loja                 { get; set; } // numeric(15, 0)
+		[Column,    Nullable] public decimal?  loja_mensalidade         { get; set; } // money
+		[Column,    Nullable] public decimal?  loja_pctvalor            { get; set; } // money
+		[Column,    Nullable] public decimal?  loja_vrtransacao         { get; set; } // money
+		[Column,    Nullable] public int?      loja_nufranquia          { get; set; } // int
+		[Column,    Nullable] public int?      tg_isentoFat             { get; set; } // int
+		[Column,    Nullable] public decimal?  entidade_vr_cartao_ativo { get; set; } // money
+	}
+
+	[Table(Schema="dbo", Name="view_transacao_completa", IsView=true)]
+	public partial class view_transacao_completa
+	{
+		[Column, Nullable] public int?      tempo                    { get; set; } // int
+		[Column, Nullable] public DateTime? dt_transacao             { get; set; } // datetime
+		[Column, Nullable] public string    data_cancelamento        { get; set; } // nvarchar(4000)
+		[Column, Nullable] public int?      nu_indice                { get; set; } // int
+		[Column, Nullable] public decimal?  valor_parcela            { get; set; } // numeric(24, 6)
+		[Column, Nullable] public string    st_empresa               { get; set; } // varchar(6)
+		[Column, Nullable] public string    st_matricula             { get; set; } // varchar(6)
+		[Column, Nullable] public string    nsu                      { get; set; } // nvarchar(4000)
+		[Column, Nullable] public string    nsu_2                    { get; set; } // nvarchar(4000)
+		[Column, Nullable] public string    data                     { get; set; } // nvarchar(4000)
+		[Column, Nullable] public decimal?  vr_total                 { get; set; } // money
+		[Column, Nullable] public int?      nu_parcelas              { get; set; } // int
+		[Column, Nullable] public string    descricao                { get; set; } // varchar(10)
+		[Column, Nullable] public string    st_nome                  { get; set; } // varchar(99)
+		[Column, Nullable] public string    st_social                { get; set; } // varchar(99)
+		[Column, Nullable] public string    st_endereco              { get; set; } // varchar(199)
+		[Column, Nullable] public string    st_cidade                { get; set; } // varchar(99)
+		[Column, Nullable] public string    st_estado                { get; set; } // varchar(2)
+		[Column, Nullable] public string    nu_telefone              { get; set; } // varchar(20)
+		[Column, Nullable] public string    nu_CNPJ                  { get; set; } // varchar(14)
+		[Column, Nullable] public string    st_loja                  { get; set; } // varchar(40)
+		[Column, Nullable] public string    cartao                   { get; set; } // varchar(12)
+		[Column, Nullable] public string    nu_terminal              { get; set; } // varchar(12)
+		[Column, Nullable] public string    cliente_mail             { get; set; } // varchar(199)
+		[Column, Nullable] public string    cliente_ddd              { get; set; } // varchar(3)
+		[Column, Nullable] public string    cliente_fone             { get; set; } // varchar(20)
+		[Column, Nullable] public decimal?  vr_saldo_disp            { get; set; } // money
+		[Column, Nullable] public decimal?  vr_saldo_disp_tot        { get; set; } // money
+		[Column, Nullable] public DateTime? mes_vencimento           { get; set; } // datetime
+		[Column, Nullable] public double?   limite_mensal_cadastrado { get; set; } // float
+		[Column, Nullable] public double?   limite_total_cadastrado  { get; set; } // float
+		[Column, Nullable] public double?   cota_extra               { get; set; } // float
+		[Column, Nullable] public string    nome_empresa             { get; set; } // varchar(99)
+		[Column, Nullable] public double?   valor_cartao_ativo       { get; set; } // float
+		[Column, Nullable] public string    st_cpf                   { get; set; } // varchar(20)
+	}
+
+	[Table(Schema="dbo", Name="view_transacao_completa_antiga", IsView=true)]
+	public partial class view_transacao_completa_antiga
+	{
+		[Column, Nullable] public int?      tempo                    { get; set; } // int
+		[Column, Nullable] public DateTime? dt_transacao             { get; set; } // datetime
+		[Column, Nullable] public string    data_cancelamento        { get; set; } // nvarchar(4000)
+		[Column, Nullable] public int?      nu_indice                { get; set; } // int
+		[Column, Nullable] public decimal?  valor_parcela            { get; set; } // numeric(24, 6)
+		[Column, Nullable] public string    st_empresa               { get; set; } // varchar(6)
+		[Column, Nullable] public string    st_matricula             { get; set; } // varchar(6)
+		[Column, Nullable] public string    nsu                      { get; set; } // nvarchar(4000)
+		[Column, Nullable] public string    nsu_2                    { get; set; } // nvarchar(4000)
+		[Column, Nullable] public string    data                     { get; set; } // nvarchar(4000)
+		[Column, Nullable] public decimal?  vr_total                 { get; set; } // money
+		[Column, Nullable] public int?      nu_parcelas              { get; set; } // int
+		[Column, Nullable] public string    descricao                { get; set; } // varchar(10)
+		[Column, Nullable] public string    st_nome                  { get; set; } // varchar(99)
+		[Column, Nullable] public string    st_social                { get; set; } // varchar(99)
+		[Column, Nullable] public string    st_endereco              { get; set; } // varchar(199)
+		[Column, Nullable] public string    st_cidade                { get; set; } // varchar(99)
+		[Column, Nullable] public string    st_estado                { get; set; } // varchar(2)
+		[Column, Nullable] public string    nu_telefone              { get; set; } // varchar(20)
+		[Column, Nullable] public string    nu_CNPJ                  { get; set; } // varchar(14)
+		[Column, Nullable] public string    st_loja                  { get; set; } // varchar(40)
+		[Column, Nullable] public string    cartao                   { get; set; } // varchar(12)
+		[Column, Nullable] public string    nu_terminal              { get; set; } // varchar(12)
+		[Column, Nullable] public string    cliente_mail             { get; set; } // varchar(199)
+		[Column, Nullable] public string    cliente_ddd              { get; set; } // varchar(3)
+		[Column, Nullable] public string    cliente_fone             { get; set; } // varchar(20)
+		[Column, Nullable] public decimal?  vr_saldo_disp            { get; set; } // money
+		[Column, Nullable] public decimal?  vr_saldo_disp_tot        { get; set; } // money
+		[Column, Nullable] public DateTime? mes_vencimento           { get; set; } // datetime
+		[Column, Nullable] public double?   limite_mensal_cadastrado { get; set; } // float
+		[Column, Nullable] public double?   limite_total_cadastrado  { get; set; } // float
+		[Column, Nullable] public double?   cota_extra               { get; set; } // float
+		[Column, Nullable] public string    nome_empresa             { get; set; } // varchar(99)
+		[Column, Nullable] public double?   valor_cartao_ativo       { get; set; } // float
+		[Column, Nullable] public string    st_cpf                   { get; set; } // varchar(20)
+	}
+
+	public static partial class AutorizadorCNDBStoredProcedures
+	{
+		#region sp_creatediagram
+
+		public static int sp_creatediagram(this DataConnection dataConnection, string @diagramname, int? @owner_id, int? @version, byte[] @definition)
+		{
+			return dataConnection.ExecuteProc("[dbo].[sp_creatediagram]",
+				new DataParameter("@diagramname", @diagramname, DataType.NVarChar),
+				new DataParameter("@owner_id",    @owner_id,    DataType.Int32),
+				new DataParameter("@version",     @version,     DataType.Int32),
+				new DataParameter("@definition",  @definition,  DataType.VarBinary));
+		}
+
+		#endregion
+
+		#region sp_dropdiagram
+
+		public static int sp_dropdiagram(this DataConnection dataConnection, string @diagramname, int? @owner_id)
+		{
+			return dataConnection.ExecuteProc("[dbo].[sp_dropdiagram]",
+				new DataParameter("@diagramname", @diagramname, DataType.NVarChar),
+				new DataParameter("@owner_id",    @owner_id,    DataType.Int32));
+		}
+
+		#endregion
+
+		#region sp_helpdiagrams
+
+		public static IEnumerable<sp_helpdiagramsResult> sp_helpdiagrams(this DataConnection dataConnection, string @diagramname, int? @owner_id)
+		{
+			return dataConnection.QueryProc<sp_helpdiagramsResult>("[dbo].[sp_helpdiagrams]",
+				new DataParameter("@diagramname", @diagramname, DataType.NVarChar),
+				new DataParameter("@owner_id",    @owner_id,    DataType.Int32));
+		}
+
+		public partial class sp_helpdiagramsResult
+		{
+			public string Database { get; set; }
+			public string Name     { get; set; }
+			public int    ID       { get; set; }
+			public string Owner    { get; set; }
+			public int    OwnerID  { get; set; }
+		}
+
+		#endregion
+
+		#region sp_upgraddiagrams
+
+		public static int sp_upgraddiagrams(this DataConnection dataConnection)
+		{
+			return dataConnection.ExecuteProc("[dbo].[sp_upgraddiagrams]");
+		}
+
+		#endregion
+	}
+
+	public static partial class SqlFunctions
+	{
+		#region fn_diagramobjects
+
+		[Sql.Function(Name="dbo.fn_diagramobjects", ServerSideOnly=true)]
+		public static int? fn_diagramobjects()
+		{
+			throw new InvalidOperationException();
+		}
+
+		#endregion
 	}
 
 	public static partial class TableExtensions
 	{
-		public static AuditLog Find(this ITable<AuditLog> table, long id)
+		public static I_Batch Find(this ITable<I_Batch> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static CacheControl Find(this ITable<CacheControl> table, long id)
+		public static i_patch Find(this ITable<i_patch> table, int i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static Client Find(this ITable<Client> table, long id)
+		public static I_Scheduler Find(this ITable<I_Scheduler> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static ClientGroup Find(this ITable<ClientGroup> table, long id)
+		public static LINK_Agendum Find(this ITable<LINK_Agendum> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static ClientGroupAssociation Find(this ITable<ClientGroupAssociation> table, long id)
+		public static LINK_Edu_FundoEmpresa Find(this ITable<LINK_Edu_FundoEmpresa> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static CompanyNews Find(this ITable<CompanyNews> table, long id)
+		public static LINK_LojaEmpresa Find(this ITable<LINK_LojaEmpresa> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static PeopleCategory Find(this ITable<PeopleCategory> table, long id)
+		public static LINK_PFAtivacao Find(this ITable<LINK_PFAtivacao> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static Person Find(this ITable<Person> table, long id)
+		public static LINK_ProprietarioCartao Find(this ITable<LINK_ProprietarioCartao> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static PersonCategory Find(this ITable<PersonCategory> table, long id)
+		public static LINK_RepasseParcela Find(this ITable<LINK_RepasseParcela> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static PersonContact Find(this ITable<PersonContact> table, long id)
+		public static LINK_UsuarioTerminal Find(this ITable<LINK_UsuarioTerminal> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static PersonEmail Find(this ITable<PersonEmail> table, long id)
+		public static LOG_Audit Find(this ITable<LOG_Audit> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static PersonMessage Find(this ITable<PersonMessage> table, long id)
+		public static LOG_Chamado Find(this ITable<LOG_Chamado> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static PersonPhone Find(this ITable<PersonPhone> table, long id)
+		public static LOG_Edu_RendimentoEmpresa Find(this ITable<LOG_Edu_RendimentoEmpresa> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static Profile Find(this ITable<Profile> table, long id)
+		public static LOG_Fechamento Find(this ITable<LOG_Fechamento> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static Project Find(this ITable<Project> table, long id)
+		public static LOG_GiftRange Find(this ITable<LOG_GiftRange> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static ProjectPhase Find(this ITable<ProjectPhase> table, long id)
+		public static LOG_NS_FAT Find(this ITable<LOG_NS_FAT> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static ProjectSprint Find(this ITable<ProjectSprint> table, long id)
+		public static LOG_NSA Find(this ITable<LOG_NSA> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static ProjectSprintVersion Find(this ITable<ProjectSprintVersion> table, long id)
+		public static LOG_NSU Find(this ITable<LOG_NSU> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static ProjectUser Find(this ITable<ProjectUser> table, long id)
+		public static LOG_Transaco Find(this ITable<LOG_Transaco> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static Setup Find(this ITable<Setup> table, long id)
+		public static LOG_VendaCartaoGift Find(this ITable<LOG_VendaCartaoGift> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static Survey Find(this ITable<Survey> table, long id)
+		public static LOG_VendaProdutoGift Find(this ITable<LOG_VendaProdutoGift> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static SurveyOption Find(this ITable<SurveyOption> table, long id)
+		public static T_BoletoEdu Find(this ITable<T_BoletoEdu> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static SurveyUserOption Find(this ITable<SurveyUserOption> table, long id)
+		public static T_Cartao Find(this ITable<T_Cartao> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static Task Find(this ITable<Task> table, long id)
+		public static T_Chamado Find(this ITable<T_Chamado> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskAccumulatorValue Find(this ITable<TaskAccumulatorValue> table, long id)
+		public static T_ChequesGift Find(this ITable<T_ChequesGift> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskCategory Find(this ITable<TaskCategory> table, long id)
+		public static T_Dependente Find(this ITable<T_Dependente> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskCheckPoint Find(this ITable<TaskCheckPoint> table, long id)
+		public static T_Edu_AplicacaoVirtual Find(this ITable<T_Edu_AplicacaoVirtual> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskCheckPointMark Find(this ITable<TaskCheckPointMark> table, long id)
+		public static T_Edu_EmpresaVirtual Find(this ITable<T_Edu_EmpresaVirtual> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskClient Find(this ITable<TaskClient> table, long id)
+		public static T_Edu_FundoEmpresa Find(this ITable<T_Edu_FundoEmpresa> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskClientGroup Find(this ITable<TaskClientGroup> table, long id)
+		public static T_Empresa Find(this ITable<T_Empresa> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskCustomStep Find(this ITable<TaskCustomStep> table, long id)
+		public static T_EmpresaAfiliada Find(this ITable<T_EmpresaAfiliada> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskDependency Find(this ITable<TaskDependency> table, long id)
+		public static T_ExtraGift Find(this ITable<T_ExtraGift> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskFlow Find(this ITable<TaskFlow> table, long id)
+		public static T_Faturamento Find(this ITable<T_Faturamento> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskFlowChange Find(this ITable<TaskFlowChange> table, long id)
+		public static T_FaturamentoDetalhe Find(this ITable<T_FaturamentoDetalhe> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskMessage Find(this ITable<TaskMessage> table, long id)
+		public static T_InfoAdicionai Find(this ITable<T_InfoAdicionai> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskProgress Find(this ITable<TaskProgress> table, long id)
+		public static T_Loja Find(this ITable<T_Loja> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskQuestion Find(this ITable<TaskQuestion> table, long id)
+		public static T_MensagemEdu Find(this ITable<T_MensagemEdu> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskType Find(this ITable<TaskType> table, long id)
+		public static T_Parcela Find(this ITable<T_Parcela> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static TaskTypeAccumulator Find(this ITable<TaskTypeAccumulator> table, long id)
+		public static T_PayFone Find(this ITable<T_PayFone> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static User Find(this ITable<User> table, long id)
+		public static T_PendPayFone Find(this ITable<T_PendPayFone> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static UserEmail Find(this ITable<UserEmail> table, long id)
+		public static T_Proprietario Find(this ITable<T_Proprietario> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static UserNewsRead Find(this ITable<UserNewsRead> table, long id)
+		public static T_Quiosque Find(this ITable<T_Quiosque> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
 		}
 
-		public static UserPhone Find(this ITable<UserPhone> table, long id)
+		public static T_RepasseLoja Find(this ITable<T_RepasseLoja> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
-				t.id == id);
+				t.i_unique == i_unique);
+		}
+
+		public static T_RetCobranca Find(this ITable<T_RetCobranca> table, decimal i_unique)
+		{
+			return table.FirstOrDefault(t =>
+				t.i_unique == i_unique);
+		}
+
+		public static T_Terminal Find(this ITable<T_Terminal> table, decimal i_unique)
+		{
+			return table.FirstOrDefault(t =>
+				t.i_unique == i_unique);
+		}
+
+		public static T_Usuario Find(this ITable<T_Usuario> table, decimal i_unique)
+		{
+			return table.FirstOrDefault(t =>
+				t.i_unique == i_unique);
+		}
+
+		public static T_WebBlock Find(this ITable<T_WebBlock> table, decimal i_unique)
+		{
+			return table.FirstOrDefault(t =>
+				t.i_unique == i_unique);
 		}
 	}
 }

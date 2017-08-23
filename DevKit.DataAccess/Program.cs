@@ -8,10 +8,10 @@ namespace GetStarted
 	{
 		static void Main(string[] args)
 		{
-			using (var db = new DevKitDB())
+			/*using (var db = new DevKitDB())
 			{
 				
-			}
+			}*/
 		}
 	}
 }

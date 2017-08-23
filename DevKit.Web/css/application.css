@@ -22248,7 +22248,7 @@ a.text-gray-lighter:focus {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   position: absolute;
-  left: 45px;
+  left: 15px;
   top: 17px;
   z-index: 1;
 }
@@ -22274,7 +22274,7 @@ a.text-gray-lighter:focus {
 /**********************************/
 .sidebar {
   position: absolute;
-  width: 160px;
+  width: 210px;
   padding: 6px 0;
   top: 0;
   color: #ffffff;

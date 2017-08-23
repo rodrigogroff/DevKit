@@ -54,9 +54,8 @@
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="linq2db, Version=1.8.0.0, Culture=neutral, PublicKeyToken=f19f8aed7feff67e, processorArchitecture=MSIL">
-      <HintPath>..\packages\linq2db.1.8.0\lib\net45\linq2db.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="linq2db, Version=1.8.3.0, Culture=neutral, PublicKeyToken=f19f8aed7feff67e, processorArchitecture=MSIL">
+      <HintPath>..\packages\linq2db.1.8.3\lib\net45\linq2db.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -365,7 +364,7 @@
     <Content Include="img\play-pause.svg" />
     <Content Include="img\video-play.png" />
     <Content Include="img\video-play.svg" />
-    <Content Include="LinqToDB.Templates\CopyMe.PostgreSQL.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.SqlServer.tt.txt" />
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-animate.min.js" />
     <Content Include="scripts\angular-cookies.js" />
@@ -680,7 +679,8 @@
     <Content Include="LinqToDB.Templates\EditableObject.ttinclude" />
     <Content Include="LinqToDB.Templates\DataModel.ttinclude" />
     <Content Include="LinqToDB.Templates\DataAnnotations.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.PostgreSQL.Tools.ttinclude" />
+    <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.Tools.ttinclude" />
+    <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.Tools.ttinclude" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="scripts\jquery-2.1.0.js" />

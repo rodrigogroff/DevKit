@@ -7,10 +7,10 @@ namespace DevKit.Web.Controllers
         {
             switch (target)
             {
-                case CacheTags.Lojista:
+                case CacheTags.T_Loja:
                     if (id != null)
                     {
-                        StoreCache(CacheTags.Lojista, id, null);
+                        StoreCache(CacheTags.T_Loja, id, null);
                         
                     }
                     //CleanCacheReport(CacheTags.UserReport);

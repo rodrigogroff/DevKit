@@ -35,9 +35,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="linq2db, Version=1.8.0.0, Culture=neutral, PublicKeyToken=f19f8aed7feff67e, processorArchitecture=MSIL">
-      <HintPath>..\packages\linq2db.1.8.0\lib\net45\linq2db.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="linq2db, Version=1.8.3.0, Culture=neutral, PublicKeyToken=f19f8aed7feff67e, processorArchitecture=MSIL">
+      <HintPath>..\packages\linq2db.1.8.3\lib\net45\linq2db.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -65,51 +64,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\DevKit\DevKit_CurrentUser.cs" />
-    <Compile Include="DataModel\DevKit\DevKit_GetList.cs" />
-    <Compile Include="DataModel\DevKit\DevKit_Get.cs" />
-    <Compile Include="DataModel\DevKit\DevKit_db.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_Create.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_Delete.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_DTO.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_Extras.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_Loader.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\People\Person\Person_Update.cs" />
-    <Compile Include="DataModel\Enums\AccumulatorType_enum.cs" />
-    <Compile Include="DataModel\Enums\AuditType_enum.cs" />
-    <Compile Include="DataModel\Enums\AuditAction_enum.cs" />
-    <Compile Include="DataModel\Enums\ContactForm_enum.cs" />
-    <Compile Include="DataModel\Enums\DayMonth_enum.cs" />
+    <Compile Include="DataModel\AutorizadorDB\AutorizadorDB_CurrentUser.cs" />
+    <Compile Include="DataModel\AutorizadorDB\AutorizadorDB_db.cs" />
     <Compile Include="DataModel\Enums\Month_enum.cs" />
-    <Compile Include="DataModel\Enums\VersionState_enum.cs" />
-    <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ClientGroup\ClientGroup_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Client\Client_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectPhase\ProjectPhase_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectPhase\ProjectPhase_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprintVersion\ProjectSprintVersion_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprint\ProjectSprint_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Project\Project_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskCategory\TaskCategory_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskCategory\TaskCategory_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskCheckPoint\TaskCheckPoint_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskFlow\TaskFlow_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskFlow\TaskFlow_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\TaskType_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\LoginInfo.cs" />
     <Compile Include="DataModel\Domains\DTOs.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ClientGroup\ClientGroup_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ClientGroup\ClientGroup_Create.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ClientGroup\ClientGroup_Delete.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ClientGroup\ClientGroup_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ClientGroup\ClientGroup_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ClientGroup\ClientGroup_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ClientGroup\ClientGroup_Update.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ClientGroup\ClientGroup_Loader.cs" />
     <Compile Include="DataModel\Domains\Configuration\Client\Client_ComposedFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Client\Client_Create.cs" />
     <Compile Include="DataModel\Domains\Configuration\Client\Client_Delete.cs" />
@@ -118,133 +78,6 @@
     <Compile Include="DataModel\Domains\Configuration\Client\Client_TrackChanges.cs" />
     <Compile Include="DataModel\Domains\Configuration\Client\Client_Update.cs" />
     <Compile Include="DataModel\Domains\Configuration\Client\Client_Loader.cs" />
-    <Compile Include="DataModel\Domains\Configuration\CompanyNews\News_Loader.cs" />
-    <Compile Include="DataModel\Domains\Configuration\CompanyNews\News_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\CompanyNews\News_Create.cs" />
-    <Compile Include="DataModel\Domains\Configuration\CompanyNews\News_Delete.cs" />
-    <Compile Include="DataModel\Domains\Configuration\CompanyNews\News_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\CompanyNews\News_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Configuration\CompanyNews\News_Update.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectPhase\ProjectPhase_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprintVersion\ProjectSprintVersion_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprint\ProjectSprint_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprint\ProjectSprint_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprint\ProjectSprint_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprint\ProjectSprint_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprint\ProjectSprint_Update.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprint\ProjectSprint_Loader.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectUser\ProjectUser_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Project\Project_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Project\Project_Create.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Project\Project_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Project\Project_Update.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Project\Project_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Project\Project_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Project\Project_Loader.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Survey\Survey_Loader.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Survey\Survey_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Survey\Survey_Create.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Survey\Survey_Delete.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Survey\Survey_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Survey\Survey_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Survey\Survey_Update.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskTypeAccumulator\TaskTypeAccumulator_Loader.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskTypeAccumulator\TaskTypeAccumulator_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskTypeAccumulator\TaskTypeAccumulator_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskTypeAccumulator\TaskTypeAccumulator_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskCategory\TaskCategory_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskCheckPoint\TaskCheckPoint_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskFlow\TaskFlow_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\TaskType_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\TaskType_Create.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\TaskType_Delete.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\TaskType_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\TaskType_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\TaskType_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\TaskType_Loader.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\Update\RemoveCC.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\Update\NewCC.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\Update\RemoveAcc.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\Update\NewAcc.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\Update\RemoveFlow.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\Update\NewFlow.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\Update\RemoveCategorie.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\Update\NewCategorie.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\Update\Entity.cs" />
-    <Compile Include="DataModel\Domains\Configuration\TaskType\TaskType_Update.cs" />
-    <Compile Include="DataModel\Domains\System\AuditLog\AuditLog_Create.cs" />
-    <Compile Include="DataModel\Domains\System\Profile\Profile_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\System\Profile\Profile_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\System\Profile\Profile_Create.cs" />
-    <Compile Include="DataModel\Domains\System\Profile\Profile_Delete.cs" />
-    <Compile Include="DataModel\Domains\System\Profile\Profile_DTO.cs" />
-    <Compile Include="DataModel\Domains\System\Profile\Profile_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\System\Profile\Profile_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\System\Profile\Profile_Loader.cs" />
-    <Compile Include="DataModel\Domains\System\Setup\Setup_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\System\Setup\Setup_DTO.cs" />
-    <Compile Include="DataModel\Domains\System\Setup\Setup_Extras.cs" />
-    <Compile Include="DataModel\Domains\System\Setup\Setup_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_ComboFilters.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_Loader.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_Create.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_Delete.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_DTO.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_Login.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_Update.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskAccumulatorValue\TaskAccumulatorValue_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskCheckPoint\TaskCheckPoint_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskClientGroup\TaskClientGroup_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskClient\TaskClient_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskCustomStep\TaskCustomStep_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskDependency\TaskDependency_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskLog\TaskLog_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskQuestion\TaskQuestion_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskTypeAccumulator\TaskTypeAccumulator_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\CustomSteps.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\ClientGroups.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Clients.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Logs.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Checkpoints.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Accs.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Flows.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Messages.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Dependencies.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Progress.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Questions.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Task_Loader.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Task_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Task_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Task_Create.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Task_Delete.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Task_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Task_Extras.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\LoadAssociations\Task_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskQuestion\TaskQuestion_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Update\CustomStep.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Update\ClientGroup.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Update\Client.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Update\Question.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Update\Subtask.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Update\Acc.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Update\Entity.cs" />
-    <Compile Include="DataModel\Views\Home_view.cs" />
-    <Compile Include="DataModel\Views\Timesheet_view.cs" />
-    <Compile Include="DataModel\Views\Management_view.cs" />
-    <Compile Include="DataModel\Views\UserKanban_view.cs" />
-    <Compile Include="DataModel\Enums\Priority_enum.cs" />
-    <Compile Include="DataModel\Domains\Configuration\ProjectSprintVersion\ProjectSprintVersion_DTO.cs" />
-    <Compile Include="DataModel\Domains\System\Profile\Profile_Update.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Project\Project_Delete.cs" />
-    <Compile Include="DataModel\Domains\System\Setup\Setup_Update.cs" />
-    <Compile Include="DataModel\Domains\System\User\User_Extras.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskFlowChange\TaskFlowChange_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskMessage\TaskMessage_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\TaskProgress\TaskProcess_DTO.cs" />
-    <Compile Include="DataModel\Domains\Task\Task\Update\Task_Update.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -259,11 +92,12 @@
     <None Include="LinqToDB.Templates\LinqToDB.Informix.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.MySql.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.Oracle.ttinclude" />
-    <None Include="LinqToDB.Templates\LinqToDB.PostgreSQL.Tools.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.PostgreSQL.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.SapHana.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.SqlCe.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.SQLite.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SqlServer.Tools.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.SqlServer.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.Sybase.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.Tools.ttinclude" />
@@ -276,11 +110,7 @@
     <None Include="LinqToDB.Templates\Validation.ttinclude" />
     <None Include="packages.config" />
     <None Include="README.md" />
-    <Content Include="LinqToDB.Templates\CopyMe.PostgreSQL.tt.txt" />
-    <Content Include="SQL\devkit.sql" />
-    <Content Include="SQL\reset.sql" />
-    <Content Include="SQL\start.sql" />
-    <Content Include="SQL\create_tables.sql" />
+    <Content Include="LinqToDB.Templates\CopyMe.SqlServer.tt.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataModel\Database.tt">

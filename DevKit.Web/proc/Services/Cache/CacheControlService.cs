@@ -19,7 +19,8 @@ namespace DevKit.Web.Services
 
             while (true)
             {
-                using (var db = new DevKitDB())
+                /*
+                using (var db = new AutorizadorCNDB())
                 {
                     if (lastId == 0)
                     {
@@ -52,6 +53,7 @@ namespace DevKit.Web.Services
                 }
 
                 Thread.Sleep(1000);
+                */
             }
         }
     }

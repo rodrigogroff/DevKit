@@ -1,4 +1,5 @@
-﻿using LinqToDB;
+﻿/*
+using LinqToDB;
 using System;
 using System.Linq;
 
@@ -51,3 +52,4 @@ namespace DataModel
 		}
 	}
 }
+*/

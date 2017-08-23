@@ -1,4 +1,4 @@
-﻿
+﻿/*
 namespace DataModel
 {
 	public partial class Client
@@ -16,3 +16,4 @@ namespace DataModel
 		}
 	}
 }
+*/

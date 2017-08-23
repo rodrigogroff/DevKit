@@ -1,10 +1,12 @@
-﻿using LinqToDB;
+﻿/*
+using LinqToDB;
 using System.Linq;
 
 namespace DataModel
 {
 	public partial class Client
 	{
+        
 		public ComboReport ComboFilters(DevKitDB db, string searchItem)
 		{
 			var query = from e in db.Client select e;
@@ -22,5 +24,7 @@ namespace DataModel
                 results = (from e in query select new BaseComboResponse { id = e.id, stName = e.stName }).ToList()
             };            
         }
+
 	}
 }
+        */

@@ -153,7 +153,7 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
-        public void CleanCache(DevKitDB db, string tag, long? id)
+        public void CleanCache(AutorizadorCNDB db, string tag, long? id)
         {
             if (myApplication == null)
                 myApplication = HttpContext.Current.Application;
@@ -169,11 +169,11 @@ namespace DevKit.Web.Controllers
             if (!IsSingleMachine) 
             {
                 // propagate cleanup
-                db.Insert(new CacheControl
+             /*   db.Insert(new CacheControl
                 {
                     fkTarget = id,
                     stEntity = tag
-                });
+                });*/
             }
         }
 

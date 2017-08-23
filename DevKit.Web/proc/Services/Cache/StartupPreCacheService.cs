@@ -8,7 +8,7 @@ namespace DevKit.Web.Services
 {
     public class StartupPreCacheService 
     {
-        public void Run(HttpApplicationState _app, User currentUser )
+        public void Run(HttpApplicationState _app, T_Loja currentUser )
         {
             var cache = new MemCacheController()
             {
@@ -17,7 +17,7 @@ namespace DevKit.Web.Services
 
             int maxRowsToCache = 1000;
 
-            using (var db = new DevKitDB())
+            using (var db = new AutorizadorCNDB())
             {
                 db.currentUser = currentUser;
 

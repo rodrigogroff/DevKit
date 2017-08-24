@@ -5,63 +5,85 @@
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td>Listagem de <b>Usuários </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td><i class="fa fa-spinner fa-spin" ng-show="loading"></i> Verificar cartão de <b>associado </b> </td>
 					<td width="80px"></td>
-					<td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
+					<td></td>
 					<td width="20px"></td>
 				</tr>
 				<tr height="12px"></tr>
 			</table>
 		</legend>
 		<div class="divWebForm">
-			<table width="100%">
-				<tr>
-					<td width="15px"></td>
-					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/user/_filterUser.html"
-						funcao-pesquisar="search"></ng-filtro>
-					</td>
-				</tr>
-			</table>
-			<table width="100%">
-				<tr>
-					<td valign="top">
-						<div ng-show="list.length == 0">
-							<br />
-							<br />
-							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
-							<br />
-							<br />
-						</div>
-						<div ng-show="list.length > 0">
-							<br />
-							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
-							<br />
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th width="90px">Situação</th>
-										<th width="150px">Login</th>
-										<th width="150px">Perfil</th>
-										<th width="150px">Telefones</th>
-										<th width="220px">Emails</th>
-										<th width="120px">Último Login</th>
-									</tr>
-								</thead>
-								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-									<td>{{ mdl.bActive ? 'Ativo' : 'Bloqueado' }}</td>
-									<td>{{ mdl.stLogin }}</td>
-									<td>{{ mdl.profile.stName }}</td>
-									<td><div data-ng-repeat="m in mdl.phones">{{ m.stPhone }}</div></td>
-									<td><div data-ng-repeat="m in mdl.emails">{{ m.stEmail }}</div></td>
-									<td>{{ mdl.sdtLastLogin }}</td>
-								</tr>
-							</table>
-						</div>
-						<br />
-					</td>
-				</tr>
-			</table>
-		</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="20px"></th>
+                        <th width="140px"></th>
+                        <th width="20px"></th>
+                        <th width="300px"></th>
+                        <th width="20px"></th>
+                    </tr>
+                </thead>
+                <tr height="12px"></tr>
+                <tr height="40px">
+                    <td></td>
+                    <td>
+                        Empresa
+                    </td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="stEmpresa_fail">!</button>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="6"
+                               ng-disabled="!permModel.edicao" ng-model="viewModel.stEmpresa">
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="40px">
+                    <td></td>
+                    <td>
+                        Matrícula
+                    </td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</button>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="6"
+                               ng-disabled="!permModel.edicao" ng-model="viewModel.stMatricula">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr height="40px">
+                    <td></td>
+                    <td>
+                        Acesso
+                    </td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</button>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="4"
+                               ng-disabled="!permModel.edicao" ng-model="viewModel.stAcesso">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr height="40px">
+                    <td></td>
+                    <td>
+                        Vencimento
+                    </td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</button>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="4"
+                               ng-disabled="!permModel.edicao" ng-model="viewModel.stVencimento">
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
 	</section>
 </div>

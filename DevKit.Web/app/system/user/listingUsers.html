@@ -15,75 +15,72 @@
 		</legend>
 		<div class="divWebForm">
             <table>
-                <thead>
-                    <tr>
-                        <th width="20px"></th>
-                        <th width="140px"></th>
-                        <th width="20px"></th>
-                        <th width="300px"></th>
-                        <th width="20px"></th>
-                    </tr>
-                </thead>
-                <tr height="12px"></tr>
                 <tr height="40px">
-                    <td></td>
-                    <td>
-                        Empresa
+                    
+                    <td width="60px">
+                        <b>Cartão</b>
                     </td>
+                    <td width="10px"></td>
                     <td width="20px">
                         <button class="btn btn-xs btn-danger" ng-show="stEmpresa_fail">!</button>
                     </td>
-                    <td>
-                        <input type="text" class="form-control input-transparent" maxlength="6"
-                               ng-disabled="!permModel.edicao" ng-model="viewModel.stEmpresa">
-                    </td>
-                    <td></td>
-                </tr>
-                <tr height="40px">
-                    <td></td>
-                    <td>
-                        Matrícula
-                    </td>
+                    <td width="90px">
+                        <input type="text" numeric-only maxlength="6" class="form-control input-transparent" ng-model="viewModel.stEmpresa">
+                    </td>                 
+                    <td width="10px"></td>
                     <td width="20px">
                         <button class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</button>
                     </td>
-                    <td>
-                        <input type="text" class="form-control input-transparent" maxlength="6"
-                               ng-disabled="!permModel.edicao" ng-model="viewModel.stMatricula">
+                    <td width="90px">
+                        <input type="text" numeric-only maxlength="6" class="form-control input-transparent" ng-model="viewModel.stMatricula">
                     </td>
-                    <td></td>
-                </tr>
-
-                <tr height="40px">
-                    <td></td>
-                    <td>
-                        Acesso
-                    </td>
+                    <td width="10px"></td>
                     <td width="20px">
                         <button class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</button>
                     </td>
-                    <td>
-                        <input type="text" class="form-control input-transparent" maxlength="4"
-                               ng-disabled="!permModel.edicao" ng-model="viewModel.stAcesso">
-                    </td>
-                    <td></td>
-                </tr>
-
-                <tr height="40px">
-                    <td></td>
-                    <td>
-                        Vencimento
-                    </td>
+                    <td width="60px">
+                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.stAcesso">
+                    </td>                 
+                    <td width="10px"></td>
                     <td width="20px">
                         <button class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</button>
                     </td>
-                    <td>
-                        <input type="text" class="form-control input-transparent" maxlength="4"
-                               ng-disabled="!permModel.edicao" ng-model="viewModel.stVencimento">
+                    <td width="60px">
+                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.stVencimento">
                     </td>
-                    <td></td>
+                    <td width="40px"></td>
+                    <td width="60px">
+                        <button class="btn btn-primary" ng-click="conferir()">Conferir</button>
+                    </td>
                 </tr>
+                <tr height="24px"></tr>
             </table>
+
+            <div class="btn btn-warning btn-lg" ng-if="viewModel.data.error != '' && viewModel.data.error != undefined">
+                {{viewModel.data.error}}
+            </div>
+
+            <div ng-if="viewModel.data.error == undefined">
+
+                <div class="btn btn-warning btn-lg" ng-if="viewModel.data.tg_status == 1">
+                    Cartão bloqueado!
+                </div>
+
+                <table class="table table-hover" ng-if="viewModel.data.tg_status == 0">
+                    <thead>
+                        <tr>
+                            <th width="250px">Item</th>
+                            <th width="120px"> </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>Limite mensal</td>
+                        <td>{{ viewModel.data.vr_limiteMensal }}</td>
+                    </tr>
+                </table>
+
+            </div>
+                        
         </div>
 	</section>
 </div>

@@ -828,15 +828,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="proc\Combos\ClientComboCtrl.cs" />
+    <Compile Include="proc\Domains\Associado\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\Cache\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />
     <Compile Include="proc\Infrastructure\Base\Cache\MemCacheController.cs" />
-    <Compile Include="proc\Domains\Configuration\ClientCtrl.cs" />
     <Compile Include="proc\Domains\Enums\MonthCtrl.cs" />
-    <Compile Include="proc\Domains\Home\HomeController.cs" />
+    <Compile Include="proc\Infrastructure\HomeController.cs" />
     <Compile Include="proc\Infrastructure\GlobalExtensions.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

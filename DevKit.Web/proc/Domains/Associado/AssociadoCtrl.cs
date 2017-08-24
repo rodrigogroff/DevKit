@@ -1,37 +1,50 @@
 ﻿using DataModel;
+using LinqToDB;
+using System.Linq;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class ClientController : ApiControllerBase
+	public class AssociadoController : ApiControllerBase
 	{
-        /*
 		public IHttpActionResult Get()
 		{
-            var filter = new ClientFilter
-            {
-                skip = Request.GetQueryStringValue("skip", 0),
-                take = Request.GetQueryStringValue("take", 15),
-                busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-            };
+            var empresa = Request.GetQueryStringValue("empresa");
+            var matricula = Request.GetQueryStringValue("matricula");
+            var vencimento = Request.GetQueryStringValue("vencimento");
 
-            var parameters = filter.Parameters();
-
-            var hshReport = SetupCacheReport(CacheTags.ClientReport);
-            if (hshReport[parameters] is ClientReport report)
-                return Ok(report);
+            if (empresa.Length < 6) empresa = empresa.PadLeft(6, '0');
+            if (matricula.Length < 6) matricula = matricula.PadLeft(6, '0');
+            
+            var acesso = Request.GetQueryStringValue("acesso");
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-            
-            var ret = new Client().ComposedFilters(db, filter, bSaveAudit: true);
-             
-            hshReport[parameters] = ret;
 
-            return Ok(ret);
+            var associado = (from e in db.T_Cartao
+                             where e.st_empresa == empresa 
+                             where e.st_matricula == matricula
+                             where e.st_venctoCartao == vencimento
+                             //where e.vr_limiteMensal
+                             select e).
+                             FirstOrDefault();
+
+            if (associado == null)
+                return BadRequest();
+
+            return Ok(new
+            {
+                count = 0,
+                results = new List<T_Cartao>
+                {
+                    associado
+                }
+            });
         }
 
+        /*
 		public IHttpActionResult Get(long id)
 		{
             if (RestoreCache(CacheTags.Client, id) is Client obj)

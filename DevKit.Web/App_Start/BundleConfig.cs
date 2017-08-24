@@ -35,6 +35,7 @@ namespace DevKit.Web
                  "~/scripts/jquery-2.1.0.min.js",
     "~/scripts/jquery.mousewheel.js",
     "~/scripts/jquery-ui-1.10.4.min.js",
+    //"~/scripts/angular.js",
     "~/scripts/angular.min.js",
     "~/scripts/angular-resource.min.js",
     "~/scripts/i18n/angular-locale_pt-br.js",
@@ -102,6 +103,7 @@ namespace DevKit.Web
 				"~/app/_shared/NgSelectsService.js",
 				"~/app/app.js",
 				"~/app/home/HomeController.js",
+                "~/app/system/user/ListingUsersController.js",
                 "~/app/home/CacheController.js"
 
                 ));

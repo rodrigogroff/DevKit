@@ -38,9 +38,15 @@ namespace DevKit.Web
                                where e.st_senha.ToUpper() == context.Password.ToUpper()
                                select e).
                                FirstOrDefault();
-
+                
                 if (lojista != null)
 				{
+                    if (lojista.tg_blocked == '1')
+                    {
+                        context.SetError("invalid_grant", "Terminal BLOQUEADO pela administradora");
+                        return;
+                    }
+
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
 					identity.AddClaim(new Claim(ClaimTypes.Name, lojista.st_loja));

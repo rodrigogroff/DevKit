@@ -6,17 +6,17 @@ using SyCrafEngine;
 
 namespace DevKit.Web.Controllers
 {
-	public class AssociadoController : ApiControllerBase
-	{
-		public IHttpActionResult Get()
-		{
+    public class AssociadoController : ApiControllerBase
+    {
+        public IHttpActionResult Get()
+        {
             var empresa = Request.GetQueryStringValue("empresa");
             var matricula = Request.GetQueryStringValue("matricula");
             var vencimento = Request.GetQueryStringValue("vencimento");
 
             if (empresa.Length < 6) empresa = empresa.PadLeft(6, '0');
             if (matricula.Length < 6) matricula = matricula.PadLeft(6, '0');
-            
+
             var acesso = Request.GetQueryStringValue("acesso");
 
             if (!StartDatabaseAndAuthorize())
@@ -25,7 +25,7 @@ namespace DevKit.Web.Controllers
             // busca associado
 
             var associado = (from e in db.T_Cartao
-                             where e.st_empresa == empresa 
+                             where e.st_empresa == empresa
                              where e.st_matricula == matricula
                              where e.st_venctoCartao == vencimento
                              select e).
@@ -41,11 +41,11 @@ namespace DevKit.Web.Controllers
                                      select e).
                                      FirstOrDefault();
 
-            var codAcessoCalc = new CodigoAcesso().Obter ( empresa,
-                                                           matricula, 
-                                                           associado.st_titularidade, 
-                                                           associado.nu_viaCartao.ToString(), 
-                                                           dadosProprietario.st_cpf );
+            var codAcessoCalc = new CodigoAcesso().Obter(empresa,
+                                                           matricula,
+                                                           associado.st_titularidade,
+                                                           associado.nu_viaCartao.ToString(),
+                                                           dadosProprietario.st_cpf);
 
             // verificação de código de acesso
 
@@ -79,7 +79,7 @@ namespace DevKit.Web.Controllers
 
                 if (!found)
                     return BadRequest();
-            }               
+            }
 
             long dispMensal = 0,
                  dispTotal = 0;
@@ -176,5 +176,5 @@ namespace DevKit.Web.Controllers
             return Ok();
 		}
         */
-	}
+    }
 }

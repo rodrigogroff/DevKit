@@ -31,19 +31,19 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     		AuthService.login($scope.loginData).then(function (response)
     		{
                 $scope.loginOK = true;
+                $rootScope.exibirMenu = true;              
 
-                
-                
-                $rootScope.exibirMenu = true;
-              
+                Api.Lojista.listPage({
+                    terminal: $scope.loginData.userName,
+                    senha: $scope.loginData.password,
+                },
+                function (data)
+                {
+                    $rootScope.lojistaLogado = data.results[0].nome;
+                    $rootScope.lojistaEnd = data.results[0].endereco;
+                });
 
-                if ($scope.loginData.userName == $scope.loginData.password)
-    			{
-    				$location.path('/system/userChangePass/');
-    				toastr.error('Your password is no longer valid', 'Password');
-    			}
-    			else
-    				$location.path('/');    				
+    		    $location.path('/');    				
     		},
 			function (err)
 			{

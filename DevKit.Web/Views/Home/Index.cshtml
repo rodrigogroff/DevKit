@@ -25,14 +25,25 @@
 			</a>
 		</div>
 		<header class="page-header">
-			<div class="navbar" style="height:38px; padding-left:215px;padding-top:-22px;">
-				<table width="100%">
+			<div class="navbar" style="height:38px; padding-left:215px;">
+				<table width="100%" >
 					<tr>
-						<td width="200px">
-							<span style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
-						</td>
-						
-						<td align="right" valign="top">
+						<td width="900px">
+                            <table>
+                                <tr>
+                                    <td >
+                                        <span style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
+                                    </td>
+                                    <td width="20px"></td>
+                                    <td style="padding-top:12px">
+                                        <b>{{lojistaLogado}}</b><br />
+                                        {{lojistaEnd}}
+                                    </td>
+                                </tr>
+                            </table>
+						</td>						
+						<td align="right">
+                            <br />
 							<span style="color:white">Sair</span> &nbsp;&nbsp;<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
 						<td>
 					</tr>

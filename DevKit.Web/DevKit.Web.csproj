@@ -830,10 +830,12 @@
     <Compile Include="proc\Combos\ClientComboCtrl.cs" />
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
-    <Compile Include="proc\Domains\Associado\AssociadoCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\LojistaCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Serialization\Associado.cs" />
+    <Compile Include="proc\Serialization\Lojista.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\Cache\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />

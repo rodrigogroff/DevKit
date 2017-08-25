@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app.controllers').controller('LoginController',
-['$scope', '$rootScope', '$location', 'AuthService', 'version','Api',
-function ($scope, $rootScope, $location, AuthService, version, Api)
+['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version','Api',
+function ($scope, $rootScope, $location, $state, AuthService, version, Api)
 {
 	$rootScope.exibirMenu = false;
 
@@ -43,7 +43,7 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
                     $rootScope.lojistaEnd = data.results[0].endereco;
                 });
 
-    		    $location.path('/');    				
+                $state.go('venda', {});
     		},
 			function (err)
 			{

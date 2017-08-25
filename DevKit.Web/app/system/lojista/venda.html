@@ -1,0 +1,193 @@
+﻿<div class="webFormPostion">
+	<section class="widgetForm" style="width:975px">
+		<legend class="legendTop">
+			<table><tr height="12px"><td> </td></tr></table>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td><i class="fa fa-spinner fa-spin" ng-show="loading"></i> Venda <b>online </b> </td>
+					<td width="80px"></td>
+					<td></td>
+					<td width="20px"></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+		<div class="divWebForm">
+            <table >
+                <tr height="40px">                    
+                    <td width="60px">
+                        <b>Cartão</b>
+                    </td>
+                    <td width="10px"></td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="stEmpresa_fail">!</button>
+                    </td>
+                    <td width="90px">
+                        <input type="text" numeric-only maxlength="6" class="form-control input-transparent" ng-model="viewModel.stEmpresa">
+                    </td>                 
+                    <td width="10px"></td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</button>
+                    </td>
+                    <td width="90px">
+                        <input type="text" numeric-only maxlength="6" class="form-control input-transparent" ng-model="viewModel.stMatricula">
+                    </td>
+                    <td width="10px"></td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</button>
+                    </td>
+                    <td width="60px">
+                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.stAcesso">
+                    </td>                 
+                    <td width="10px"></td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</button>
+                    </td>
+                    <td width="60px">
+                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.stVencimento">
+                    </td>
+                    <td width="40px"></td>
+                    <td width="160px">
+                        <button class="btn btn-primary" ng-click="conferir()">Validar</button>
+                    </td>
+                </tr>
+                <tr height="24px"></tr>
+            </table>
+
+            <div class="btn btn-warning btn-lg" ng-if="viewModel.data.error != '' && viewModel.data.error != undefined">
+                {{viewModel.data.error}}
+            </div>
+
+            <div ng-if="viewModel.data.error == undefined" style="width:500px">
+                <div class="btn btn-warning btn-lg" ng-if="viewModel.data.bloqueado == true">
+                    Atenção: cartão situação BLOQUEADO. Entre em contato com sua entidade.
+                </div>
+                <table class="table table-hover" ng-if="viewModel.data.bloqueado == false">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>Nome associado</td>
+                        <td>{{ viewModel.data.nome }}</td>
+                    </tr>
+                    <tr>
+                        <td>Disponível mensal</td>
+                        <td>{{ viewModel.data.dispMensal }}</td>
+                    </tr>
+                    <tr>
+                        <td>Disponível total</td>
+                        <td>{{ viewModel.data.dispTotal }}</td>
+                    </tr>
+                </table>
+                <br />
+                <table > <!--ng-if="viewModel.data.bloqueado == false"-->
+                    <tr>
+                        <td width="70px">
+                            <b>Valor</b>
+                        </td>
+                        <td width="20px">
+                            <button class="btn btn-xs btn-danger" ng-show="valor_fail">!</button>
+                        </td>
+                        <td width="90px">
+                            <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.valor" >
+                        </td>
+                        <td width="30px"> </td>
+                        <td width="60px">
+                            <b>Parcelas</b>
+                        </td>
+                        <td width="10px"></td>
+                        <td width="20px">
+                            <button class="btn btn-xs btn-danger" ng-show="parcelas_fail">!</button>
+                        </td>
+                        <td width="90px">
+                            <input type="text" numeric-only maxlength="2" class="form-control input-transparent" ng-model="viewModel.parcelas">
+                        </td>
+                        <td width="30px"></td>
+                        <td width="20px">
+                            <button class="btn btn-primary" ng-click="parcelar()">Simulação</button>
+                        </td>
+                    </tr>
+                    
+                    <tr height="22px"></tr>
+
+                    <tr height="32px" ng-if="simulacao">
+                        <td>Parcela 1</td><td></td>
+                        <td>
+                            <input type="text" price-only class="form-control input-transparent" ng-model="p1">
+                        </td>
+                        <td></td>
+                        <td>Parcela 2
+                        </td>
+                        <td></td><td></td>
+                        <td>
+                            <input type="text" price-only class="form-control input-transparent" ng-model="p2">
+                        </td>
+                        <td></td><td></td>
+                    </tr>
+
+                    <tr height="32px" ng-if="simulacao">
+                        <td>Parcela 3</td>
+                        <td></td>
+                        <td>
+                            <input type="text" price-only class="form-control input-transparent" ng-model="p3">
+                        </td>
+                        <td></td>
+                        <td>
+                            Parcela 4
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <input type="text" price-only class="form-control input-transparent" ng-model="p4">
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr height="32px" ng-if="simulacao">
+                        <td>Parcela 5</td>
+                        <td></td>
+                        <td>
+                            <input type="text" price-only class="form-control input-transparent" ng-model="p5">
+                        </td>
+                        <td></td>
+                        <td>
+                            Parcela 6
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <input type="text" price-only class="form-control input-transparent" ng-model="p6">
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr height="32px" ng-if="simulacao">
+                        <td>Parcela 7</td>
+                        <td></td>
+                        <td>
+                            <input type="text" price-only class="form-control input-transparent" ng-model="p7">
+                        </td>
+                        <td></td>
+                        <td>
+                            Parcela 8
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <input type="text" price-only class="form-control input-transparent" ng-model="p8">
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                </table>
+            </div>                        
+        </div>
+	</section>
+</div>

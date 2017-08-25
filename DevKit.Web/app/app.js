@@ -11,9 +11,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('cache', { url: '/cache', templateUrl: 'app/home/cache.html', controller: 'CacheController', data: {} })
         
     .state('associado', { url: '/system/associado', templateUrl: 'app/system/associado/listingAssociados.html', controller: 'ListingAssociadosController' })
-    //.state('user-new', { url: '/system/user/new', templateUrl: 'app/system/user/user.html', controller: 'UserController' })
-    //.state('user', { url: '/system/user/:id', templateUrl: 'app/system/user/user.html', controller: 'UserController' })
-	//.state('userChangePass', { url: '/system/userChangePass/:id', templateUrl: 'app/system/user/userPassword.html', controller: 'UserPasswordController' })
+    .state('venda', { url: '/system/lojista', templateUrl: 'app/system/lojista/venda.html', controller: 'VendaController' })
         
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 

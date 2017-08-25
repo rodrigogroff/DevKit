@@ -32,7 +32,9 @@ namespace DevKit.Web.Controllers
                     new Lojista
                     {
                        nome = lojista.st_nome,
-                       endereco = lojista.st_endereco.Replace ("{$SE3}","")
+                       endereco = lojista.st_endereco.Replace ("{$SE3}","") + " / " +
+                                  lojista.st_cidade + " " + 
+                                  lojista.st_estado
                     }
                 }
             });

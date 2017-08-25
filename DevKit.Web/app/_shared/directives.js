@@ -8,102 +8,6 @@ angular.module('app.directives', [])
 	};
 }])
 
-    /*
-    .directive('maskMoney', function($timeout, $locale) {
-        return {
-            restrict: 'A',
-            require: 'ngModel',
-            scope: {
-                model: '=ngModel',
-                mmOptions: '=?',
-                prefix: '@',
-                suffix: '@',
-                affixesStay: '=',
-                thousands: '@',
-                decimal: '@',
-                precision: '=',
-                allowZero: '=',
-                allowNegative: '='
-            },
-            link: function(scope, el, attr, ctrl) {
-
-                scope.$watch(checkOptions, init, true);
-
-                scope.$watch(attr.ngModel, eventHandler, true);
-                //el.on('keyup', eventHandler); //change to $watch or $observe
-
-                function checkOptions() {
-                    return scope.mmOptions;
-                }
-
-                function checkModel() {
-                    return scope.model;
-                }
-
-                //this parser will unformat the string for the model behid the scenes
-                function parser() {
-                    return $(el).maskMoney('unmasked')[0];
-                }
-                
-                ctrl.$parsers.push(parser);
-                
-                ctrl.$formatters.push(function(value){
-                    $timeout(function(){
-                        init();
-                    });
-                    return parseFloat(value).toFixed(2);
-                });
-
-                function eventHandler() {
-                    $timeout(function() {
-                        scope.$apply(function() {
-                            ctrl.$setViewValue($(el).val());
-                        });
-                    });
-                }
-
-                function init(options) {
-                    $timeout(function() {
-                        elOptions = {
-                            prefix: scope.prefix || '',
-                            suffix: scope.suffix || '',
-                            affixesStay: scope.affixesStay,
-                            //thousands: scope.thousands || $locale.NUMBER_FORMATS.GROUP_SEP,
-                            //decimal: scope.decimal || $locale.NUMBER_FORMATS.DECIMAL_SEP,
-                            thousands: scope.thousands || '.',
-                            decimal: scope.decimal || ',',
-                            precision: scope.precision,
-                            allowZero: scope.allowZero,
-                            allowNegative: scope.allowNegative
-                        };
-
-                        if (!scope.mmOptions) {
-                            scope.mmOptions = {};
-                        }
-
-                        for (var elOption in elOptions) {
-                            if (elOptions[elOption]) {
-                                scope.mmOptions[elOption] = elOptions[elOption];
-                            }
-                        }
-
-                        $(el).maskMoney(scope.mmOptions);
-                        $(el).maskMoney('mask');
-                        eventHandler();
-
-                    }, 0);
-
-                    $timeout(function() {
-                        scope.$apply(function() {
-                            ctrl.$setViewValue($(el).val());
-                        });
-                    });
-
-                }
-            }
-        };
-    })
-    */
 .directive("contenteditable", function () {
 	return {
 		restrict: "A",
@@ -123,7 +27,26 @@ angular.module('app.directives', [])
 			});
 		}]
 	};
-    })
+})
+
+.directive('priceOnly', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, modelCtrl) {
+
+            modelCtrl.$parsers.push(function (inputValue) {
+                var transformedInput = inputValue ? inputValue.replace(/[^\d,-]/g, '') : null;
+
+                if (transformedInput != inputValue) {
+                    modelCtrl.$setViewValue(transformedInput);
+                    modelCtrl.$render();
+                }
+
+                return transformedInput;
+            });
+        }
+    };
+})       
 
 .directive('numericOnly', function () {
     return {
@@ -142,7 +65,7 @@ angular.module('app.directives', [])
             });
         }
     };
-})
+})       
 
 .directive('checkboxAll', function () {
 	return function (scope, iElement, iAttrs) {
@@ -252,4 +175,4 @@ angular.module('app.directives', [])
 			});
 		}
 	};
-});
+})

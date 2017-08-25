@@ -13959,14 +13959,13 @@ textarea + .help-block,
 }
 
 .btn {
-  color: #ffffff;
   text-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
 .btn:hover, .btn:focus {
-  color: #ffffff;
+  
   -webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.08);
   box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.08);
 }

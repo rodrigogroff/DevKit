@@ -1,4 +1,4 @@
-﻿angular.module('app.controllers').controller('ListingUsersController',
+﻿angular.module('app.controllers').controller('ListingAssociadosController',
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 {

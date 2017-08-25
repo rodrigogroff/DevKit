@@ -47,6 +47,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="ClientEngine, Version=1.0.3239.19952, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\ClientEngine.dll</HintPath>
+    </Reference>
     <Reference Include="ClosedXML, Version=0.86.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.86.0\lib\net40\ClosedXML.dll</HintPath>
       <Private>True</Private>
@@ -246,13 +250,8 @@
     <Content Include="app\system\profile\_filterProfile.html" />
     <Content Include="app\system\setup\setup.html" />
     <Content Include="app\system\setup\SetupController.js" />
-    <Content Include="app\system\user\UserPasswordController.js" />
-    <Content Include="app\system\user\userPassword.html" />
-    <Content Include="app\system\user\user.html" />
-    <Content Include="app\system\user\UserController.js" />
-    <Content Include="app\system\user\listingUsers.html" />
-    <Content Include="app\system\user\ListingUsersController.js" />
-    <Content Include="app\system\user\_filterUser.html" />
+    <Content Include="app\system\associado\listingAssociados.html" />
+    <Content Include="app\system\associado\ListingAssociadosController.js" />
     <Content Include="app\_shared\filtro\diretivaNgFiltro.js" />
     <Content Include="app\_shared\filtro\templateNgFiltro.html" />
     <Content Include="app\_shared\paginacao\diretivaNgPaginacao.js" />
@@ -278,6 +277,7 @@
     <Content Include="app\_shared\services.spec.js" />
     <Content Include="app\home\home.html" />
     <Content Include="app\_shared\NgSelectsService.js" />
+    <Content Include="ClientEngine.dll" />
     <Content Include="css\angular-motion.min.css" />
     <Content Include="css\angular-ui-tree.min.css" />
     <Content Include="css\angular.treeview.css" />
@@ -828,9 +828,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="proc\Combos\ClientComboCtrl.cs" />
+    <Compile Include="proc\Definitions\CodigoAcesso.cs" />
+    <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Associado\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
+    <Compile Include="proc\Serialization\Associado.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\Cache\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />
@@ -847,6 +850,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="proc\Services\SaldoDisponivel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proc\Domains\Login\Login.cs" />
     <Compile Include="proc\Services\Cache\CacheControlService.cs" />

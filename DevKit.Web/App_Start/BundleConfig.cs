@@ -103,7 +103,7 @@ namespace DevKit.Web
 				"~/app/_shared/NgSelectsService.js",
 				"~/app/app.js",
 				"~/app/home/HomeController.js",
-                "~/app/system/user/ListingUsersController.js",
+                "~/app/system/associado/ListingAssociadosController.js",
                 "~/app/home/CacheController.js"
 
                 ));

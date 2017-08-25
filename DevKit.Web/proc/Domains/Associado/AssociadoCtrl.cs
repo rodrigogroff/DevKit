@@ -1,9 +1,8 @@
-﻿using DataModel;
-using LinqToDB;
+﻿using LinqToDB;
 using System.Linq;
 using System.Collections.Generic;
-using System.Net;
 using System.Web.Http;
+using SyCrafEngine;
 
 namespace DevKit.Web.Controllers
 {
@@ -23,23 +22,85 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            // busca associado
+
             var associado = (from e in db.T_Cartao
                              where e.st_empresa == empresa 
                              where e.st_matricula == matricula
                              where e.st_venctoCartao == vencimento
-                             //where e.vr_limiteMensal
                              select e).
                              FirstOrDefault();
 
             if (associado == null)
                 return BadRequest();
 
+            // busca dados proprietario
+
+            var dadosProprietario = (from e in db.T_Proprietario
+                                     where e.i_unique == associado.fk_dadosProprietario
+                                     select e).
+                                     FirstOrDefault();
+
+            var codAcessoCalc = new CodigoAcesso().Obter ( empresa,
+                                                           matricula, 
+                                                           associado.st_titularidade, 
+                                                           associado.nu_viaCartao.ToString(), 
+                                                           dadosProprietario.st_cpf );
+
+            // verificação de código de acesso
+
+            if (acesso != codAcessoCalc)
+            {
+                // pode ser dependente
+
+                var lstCartoesDependentes = (from e in db.T_Cartao
+                                             where e.st_empresa == empresa
+                                             where e.st_matricula == matricula
+                                             where e.i_unique != associado.i_unique
+                                             select e).
+                                             ToList();
+
+                var found = false;
+
+                foreach (var cartDep in lstCartoesDependentes)
+                {
+                    codAcessoCalc = new CodigoAcesso().Obter(empresa,
+                                                           matricula,
+                                                           cartDep.st_titularidade,
+                                                           associado.nu_viaCartao.ToString(),
+                                                           dadosProprietario.st_cpf);
+
+                    if (acesso == codAcessoCalc)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                    return BadRequest();
+            }               
+
+            long dispMensal = 0,
+                 dispTotal = 0;
+
+            new SaldoDisponivel().
+                Obter(db, associado, ref dispMensal, ref dispTotal);
+
+            var mon = new money();
+
             return Ok(new
             {
                 count = 0,
-                results = new List<T_Cartao>
+                results = new List<Associado>
                 {
-                    associado
+                    new Associado
+                    {
+                        nome = dadosProprietario.st_nome,
+                        dispMensal = mon.setMoneyFormat (dispMensal),
+                        dispTotal = mon.setMoneyFormat (dispTotal),
+                        bloqueado = associado.tg_status == '1' ? true : false,
+                    }
                 }
             });
         }

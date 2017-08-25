@@ -14,9 +14,8 @@
 			</table>
 		</legend>
 		<div class="divWebForm">
-            <table>
-                <tr height="40px">
-                    
+            <table >
+                <tr height="40px">                    
                     <td width="60px">
                         <b>Cartão</b>
                     </td>
@@ -49,8 +48,8 @@
                         <input type="text" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.stVencimento">
                     </td>
                     <td width="40px"></td>
-                    <td width="60px">
-                        <button class="btn btn-primary" ng-click="conferir()">Conferir</button>
+                    <td width="160px">
+                        <button class="btn btn-primary" ng-click="conferir()">Consulta saldo</button>
                     </td>
                 </tr>
                 <tr height="24px"></tr>
@@ -60,27 +59,31 @@
                 {{viewModel.data.error}}
             </div>
 
-            <div ng-if="viewModel.data.error == undefined">
-
-                <div class="btn btn-warning btn-lg" ng-if="viewModel.data.tg_status == 1">
-                    Cartão bloqueado!
+            <div ng-if="viewModel.data.error == undefined" style="width:500px">
+                <div class="btn btn-warning btn-lg" ng-if="viewModel.data.bloqueado == true">
+                    Atenção: cartão situação BLOQUEADO. Entre em contato com sua entidade.
                 </div>
-
-                <table class="table table-hover" ng-if="viewModel.data.tg_status == 0">
+                <table class="table table-hover" ng-if="viewModel.data.bloqueado == false">
                     <thead>
                         <tr>
-                            <th width="250px">Item</th>
-                            <th width="120px"> </th>
+                            <th>Item</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tr>
-                        <td>Limite mensal</td>
-                        <td>{{ viewModel.data.vr_limiteMensal }}</td>
+                        <td>Nome associado</td>
+                        <td>{{ viewModel.data.nome }}</td>
+                    </tr>
+                    <tr>
+                        <td>Disponível mensal</td>
+                        <td>{{ viewModel.data.dispMensal }}</td>
+                    </tr>
+                    <tr>
+                        <td>Disponível total</td>
+                        <td>{{ viewModel.data.dispTotal }}</td>
                     </tr>
                 </table>
-
-            </div>
-                        
+            </div>                        
         </div>
 	</section>
 </div>

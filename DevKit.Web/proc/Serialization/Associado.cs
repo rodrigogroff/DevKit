@@ -3,9 +3,11 @@ namespace DevKit.Web.Controllers
 {
     public class Associado
     {
-        public string nome = "",
+        public string id = "",
+                      nome = "",
                       dispMensal = "",
-                      dispTotal = "";
+                      dispTotal = "",
+                      maxParcelasEmpresa = "";
 
         public bool bloqueado = false;
     }

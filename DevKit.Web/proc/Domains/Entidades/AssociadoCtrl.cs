@@ -34,6 +34,11 @@ namespace DevKit.Web.Controllers
             if (associado == null)
                 return BadRequest();
 
+            var tEmpresa = (from e in db.T_Empresa
+                            where e.st_empresa == associado.st_empresa
+                            select e).
+                            FirstOrDefault();
+
             // busca dados proprietario
 
             var dadosProprietario = (from e in db.T_Proprietario
@@ -96,9 +101,11 @@ namespace DevKit.Web.Controllers
                 {
                     new Associado
                     {
+                        id = associado.i_unique.ToString(),
                         nome = dadosProprietario.st_nome,
-                        dispMensal = mon.setMoneyFormat (dispMensal),
-                        dispTotal = mon.setMoneyFormat (dispTotal),
+                        dispMensal = mon.setMoneyFormat ((long)associado.vr_limiteMensal - dispMensal),
+                        dispTotal = mon.setMoneyFormat ((long)associado.vr_limiteTotal - dispTotal),
+                        maxParcelasEmpresa = tEmpresa.nu_parcelas.ToString(),
                         bloqueado = associado.tg_status == '1' ? true : false,
                     }
                 }

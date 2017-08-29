@@ -90,7 +90,10 @@ namespace DevKit.Web.Controllers
             long iUltimaParc = iParcIdeal;
 
             if (iParcIdeal * parcelas < iValor)
-                iUltimaParc += iValor - (iParcIdeal * parcelas); 
+                iUltimaParc += iValor - (iParcIdeal * parcelas);
+
+            if (iParcIdeal > associado.vr_limiteMensal + associado.vr_extraCota)
+                return BadRequest("Excedeu limite mensal");
 
             var mon = new money();
             var lst = new List<SimulacaoParcela>();
@@ -100,7 +103,9 @@ namespace DevKit.Web.Controllers
                            where e.st_matricula == associado.st_matricula
                            select (int) e.i_unique).
                            ToList();
-            
+
+            long vrSum = 0;
+
             for (int t=0; t < parcelas; ++t)
             {
                 var maxParcAtual = (from e in db.T_Parcelas
@@ -112,18 +117,25 @@ namespace DevKit.Web.Controllers
                 string vr = "0,00";
 
                 if (lstParametrosZerados[t] != true)
+                {
+                    vrSum += iParcIdeal;
                     vr = mon.setMoneyFormat(iParcIdeal);
-
+                }
+                
                 lst.Add(new SimulacaoParcela
                 {
                     valor = vr,
-                    valorMax = "máx " + mon.setMoneyFormat((int)associado.vr_limiteMensal - (int)maxParcAtual),
+                    valorMax = "máx " + mon.setMoneyFormat((int)associado.vr_limiteMensal + (int)associado.vr_extraCota - (int)maxParcAtual),
                 });
             }
 
-            if (iUltimaParc != iParcIdeal)
+            if (vrSum != iValor)
             {
-                lst[parcelas - 1].valor = mon.setMoneyFormat(iUltimaParc);
+                long vrUltParc = Convert.ToInt64(lst[parcelas - 1].valor.Replace(".", "").Replace(",", ""));
+
+                vrUltParc += iValor - vrSum;
+
+                lst[parcelas - 1].valor = mon.setMoneyFormat(vrUltParc);
             }
 
             return Ok(new

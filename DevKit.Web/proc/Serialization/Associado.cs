@@ -7,6 +7,7 @@ namespace DevKit.Web.Controllers
                       nome = "",
                       dispMensal = "",
                       dispTotal = "",
+                      dispExtra = "",
                       maxParcelasEmpresa = "";
 
         public bool bloqueado = false;

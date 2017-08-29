@@ -105,6 +105,7 @@ namespace DevKit.Web.Controllers
                         nome = dadosProprietario.st_nome,
                         dispMensal = mon.setMoneyFormat ((long)associado.vr_limiteMensal - dispMensal),
                         dispTotal = mon.setMoneyFormat ((long)associado.vr_limiteTotal - dispTotal),
+                        dispExtra = mon.setMoneyFormat ((long)associado.vr_extraCota),
                         maxParcelasEmpresa = tEmpresa.nu_parcelas.ToString(),
                         bloqueado = associado.tg_status == '1' ? true : false,
                     }

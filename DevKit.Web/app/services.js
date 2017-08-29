@@ -46,6 +46,7 @@ angular.module('app.services', ['ngResource'])
         Associado: $resource('api/associado/:id', {}, opcoes),
         Lojista: $resource('api/lojista/:id', {}, opcoes),
         SimulaParcelada: $resource('api/simulaparcelada/:id', {}, opcoes),
+        SomaParcelada: $resource('api/somaparcelada/:id', {}, opcoes),
 		Cache: $resource('api/cache/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),
         MonthCombo: $resource('api/month/:id', {}, opcoes),

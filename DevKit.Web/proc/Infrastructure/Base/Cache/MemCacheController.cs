@@ -53,6 +53,35 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
+        public object RestoreTimerCache(string tag, string id, int minutes)
+        {
+            currentCacheTag = tag + id;
+
+            if (myApplication == null)
+                myApplication = HttpContext.Current.Application;
+
+            var ret = myApplication[currentCacheTag] as object;
+
+            if (ret != null)
+            {
+                var obj = GetHit(tag);
+                if (obj == null)
+                    SaveHit(tag);
+                else
+                {
+                    var ts = DateTime.Now - obj.dt_last;
+
+                    if (ts.TotalMinutes > 0)
+                        return null;                    
+                    
+                    SaveHit(tag);
+                }                
+            }
+                
+            return ret;
+        }
+
+        [NonAction]
         public object RestoreCache(string tag)
         {
             currentCacheTag = tag;
@@ -67,7 +96,7 @@ namespace DevKit.Web.Controllers
 
             return ret;
         }
-
+        
         [NonAction]
         public object RestoreCacheNoHit(string tag)
         {
@@ -208,7 +237,7 @@ namespace DevKit.Web.Controllers
             (myApplication["%lstTags"] as List<string>).Remove(tag);
             (myApplication["%hshHits"] as Hashtable)[tag] = null;
         }
-
+        
         [NonAction]
         public void SaveHit(string tag)
         {
@@ -225,6 +254,14 @@ namespace DevKit.Web.Controllers
                 obj.hits++;
                 obj.dt_last = DateTime.Now;
             }
+        }
+
+        [NonAction]
+        public CacheHitRecord GetHit(string tag)
+        {
+            var hshHits = GetCacheHitRecord();
+
+            return hshHits[tag] as CacheHitRecord;
         }
     }
 }

@@ -210,10 +210,9 @@
                                 </tr>
 
                                 <tr height="12px" ng-if="modoVenda == 'simulacao'"></tr>
+
                             </table>
-
-                            <br />
-
+                            
                             <div class="btn btn-warning btn-lg" ng-show="erro.length > 0">
                                 {{erro}}
                             </div>
@@ -222,15 +221,124 @@
                                 {{erroSoma}}
                             </div>
 
+                            <table class="table table-hover" ng-if="modoVenda == 'confirmacao'" style="font-size:16px">
+                                <thead>
+                                    <tr>
+                                        <th>Confirmação das parcelas</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>Valor total da venda</td>
+                                    <td><b>R$ {{viewModel.valor}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Número de parcelas</td>
+                                    <td>{{viewModel.parcelas}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 1">
+                                    <td>Parcela 1</td>
+                                    <td>R$ {{viewModel.p1}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 2">
+                                    <td>Parcela 2</td>
+                                    <td>R$ {{viewModel.p2}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 3">
+                                    <td>Parcela 3</td>
+                                    <td>R$ {{viewModel.p3}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 4">
+                                    <td>Parcela 4</td>
+                                    <td>R$ {{viewModel.p4}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 5">
+                                    <td>Parcela 5</td>
+                                    <td>R$ {{viewModel.p5}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 6">
+                                    <td>Parcela 6</td>
+                                    <td>R$ {{viewModel.p6}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 7">
+                                    <td>Parcela 7</td>
+                                    <td>R$ {{viewModel.p7}}</td>
+                                </tr>
+                                
+                                <tr ng-if="viewModel.parcelas >= 8">
+                                    <td>Parcela 8</td>
+                                    <td>R$ {{viewModel.p8}}</td>
+                                </tr>
+                                
+                                <tr ng-if="viewModel.parcelas >= 9">
+                                    <td>Parcela 9</td>
+                                    <td>R$ {{viewModel.p9}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 10">
+                                    <td>Parcela 10</td>
+                                    <td>R$ {{viewModel.p10}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 11">
+                                    <td>Parcela 11</td>
+                                    <td>R$ {{viewModel.p11}}</td>
+                                </tr>
+
+                                <tr ng-if="viewModel.parcelas >= 12">
+                                    <td>Parcela 12</td>
+                                    <td>R$ {{viewModel.p12}}</td>
+                                </tr>
+
+                            </table>
+
+                            <table ng-if="modoVenda == 'confirmacao'">
+                                
+                                <tr height="22px"></tr>
+
+                                <tr>
+                                    <td width="90px">
+                                        <b>SENHA CARTÃO</b>
+                                    </td>
+                                    <td width="20px"></td>
+                                    <td width="90px">
+                                        <input type="password" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.senha">
+                                    </td>
+                                </tr>        
+
+                                <tr height="22px"></tr>
+
+                                <tr>
+                                    <td width="90px">
+                                        <button class="btn btn-danger" ng-click="cancelar()">Cancelar</button>
+                                    </td>
+                                    <td width="20px">
+                                    </td>
+                                    <td width="90px">
+                                        <button class="btn btn-primary" ng-click="confirmar()">Confirmar</button>
+                                    </td>
+                                </tr>        
+                                
+                                <tr height="42px"></tr>
+
+                            </table>
+                            
                         </td>
 
                         <td width="20px"></td>
 
                         <td width="500px" valign="top">
-                            <table class="table table-hover" ng-if="viewModel.data.bloqueado == false">
+                            <table class="table table-hover" ng-if="viewModel.data.bloqueado == false && modoVenda != 'confirmacao'">
                                 <thead>
                                     <tr>
-                                        <th>Item</th>
+                                        <th>Situação do cartão</th>
                                         <th></th>
                                     </tr>
                                 </thead>

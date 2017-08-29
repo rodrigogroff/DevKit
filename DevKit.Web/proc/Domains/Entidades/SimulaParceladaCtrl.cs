@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System;
 using SyCrafEngine;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
@@ -32,7 +33,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var cartao = Request.GetQueryStringValue<int>("cartao");
+            var idCartao = Request.GetQueryStringValue<int>("cartao");
             var valor = Request.GetQueryStringValue("valor");
             var parcelas = Request.GetQueryStringValue<int>("parcelas");
 
@@ -75,13 +76,33 @@ namespace DevKit.Web.Controllers
 
             long iValor = ObtemValor(valor);
 
-            var associado = (from e in db.T_Cartao where e.i_unique == cartao select e).FirstOrDefault();
+            var associado = RestoreTimerCache("associado", idCartao.ToString(), 5) as T_Cartao;
+
+            if (associado == null)
+            {
+                associado = (from e in db.T_Cartao
+                             where e.i_unique == idCartao
+                             select e).
+                             FirstOrDefault();
+
+                BackupCache(associado);
+            }                
 
             if (iValor > (int)associado.vr_limiteTotal)
-                return BadRequest("Valor fora do limite");
+                return BadRequest("Limite excedido");
 
-            var empresa = (from e in db.T_Empresa where e.st_empresa == associado.st_empresa select e).FirstOrDefault();
+            var empresa = RestoreTimerCache("empresa", associado.st_empresa, 5) as T_Empresa;
 
+            if (empresa == null)
+            {
+                empresa = (from e in db.T_Empresa
+                           where e.st_empresa == associado.st_empresa
+                           select e).
+                           FirstOrDefault();
+
+                BackupCache(empresa);
+            }
+            
             if (parcelas > empresa.nu_parcelas)
                 return BadRequest("Excedeu número de parcelas da empresa");
             
@@ -93,26 +114,45 @@ namespace DevKit.Web.Controllers
                 iUltimaParc += iValor - (iParcIdeal * parcelas);
 
             if (iParcIdeal > associado.vr_limiteMensal + associado.vr_extraCota)
-                return BadRequest("Excedeu limite mensal");
+                return BadRequest("Limite mensal excedido");
 
             var mon = new money();
             var lst = new List<SimulacaoParcela>();
 
-            var lstCarts = (from e in db.T_Cartao
-                           where e.st_empresa == associado.st_empresa
-                           where e.st_matricula == associado.st_matricula
-                           select (int) e.i_unique).
+            var tagEmpMat = associado.st_empresa + associado.st_matricula;
+
+            var lstCarts = RestoreTimerCache("lstCarts", tagEmpMat, 5) as List<int>;
+
+            if (lstCarts == null)
+            {
+                lstCarts = (from e in db.T_Cartao
+                            where e.st_empresa == associado.st_empresa
+                            where e.st_matricula == associado.st_matricula
+                            select (int)e.i_unique).
                            ToList();
+
+                BackupCache(lstCarts);
+            }
 
             long vrSum = 0;
 
             for (int t=0; t < parcelas; ++t)
             {
-                var maxParcAtual = (from e in db.T_Parcelas
+                var tagParcelaAtual = tagEmpMat + t.ToString();
+
+                var maxParcAtual = RestoreTimerCache("parcelasCartao", tagParcelaAtual, 5) as string;
+
+                if (maxParcAtual == null)
+                {
+                    maxParcAtual = (from e in db.T_Parcelas
                                     where lstCarts.Contains((int)e.fk_cartao)
                                     where e.nu_parcela == t + 1
                                     select (long)e.vr_valor).
-                                    Sum();
+                                    Sum().
+                                    ToString();
+
+                    BackupCache(maxParcAtual);
+                }                
 
                 string vr = "0,00";
 
@@ -125,7 +165,7 @@ namespace DevKit.Web.Controllers
                 lst.Add(new SimulacaoParcela
                 {
                     valor = vr,
-                    valorMax = "máx " + mon.setMoneyFormat((int)associado.vr_limiteMensal + (int)associado.vr_extraCota - (int)maxParcAtual),
+                    valorMax = "máx " + mon.setMoneyFormat((int)associado.vr_limiteMensal + (int)associado.vr_extraCota - Convert.ToInt32(maxParcAtual)),
                 });
             }
 

@@ -173,12 +173,17 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         function (data)
         {
             $scope.loading = false;
+            $scope.modoVenda = 'confirmacao';
         },
         function (response)
         {
             $scope.loading = false;
             $scope.erroSoma = response.data.message;
         });
+    }
+
+    $scope.cancelar = function () {
+        $scope.modoVenda = 'simulacao';
     }
 
     $scope.confirmar = function ()

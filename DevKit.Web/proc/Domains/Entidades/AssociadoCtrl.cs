@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Web.Http;
 using SyCrafEngine;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
@@ -24,20 +25,37 @@ namespace DevKit.Web.Controllers
 
             // busca associado
 
-            var associado = (from e in db.T_Cartao
+            var associado = RestoreTimerCache("associadoEMV", empresa + matricula + vencimento, 5) as T_Cartao;
+
+            if (associado == null)
+            {
+                associado = (from e in db.T_Cartao
                              where e.st_empresa == empresa
                              where e.st_matricula == matricula
                              where e.st_venctoCartao == vencimento
                              select e).
                              FirstOrDefault();
 
-            if (associado == null)
-                return BadRequest();
+                if (associado == null)
+                    return BadRequest();
 
-            var tEmpresa = (from e in db.T_Empresa
-                            where e.st_empresa == associado.st_empresa
-                            select e).
-                            FirstOrDefault();
+                BackupCache(associado);
+            }
+
+            var tEmpresa = RestoreTimerCache("empresa", associado.st_empresa, 5) as T_Empresa;
+
+            if (tEmpresa == null)
+            {
+                tEmpresa = (from e in db.T_Empresa
+                           where e.st_empresa == associado.st_empresa
+                           select e).
+                           FirstOrDefault();
+
+                if (tEmpresa == null)
+                    return BadRequest();
+
+                BackupCache(tEmpresa);
+            }
 
             // busca dados proprietario
 

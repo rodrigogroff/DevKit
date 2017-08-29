@@ -137,6 +137,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             if ($scope.viewModel.parcelas >= 10) $scope.viewModel.p10m = data.results[9].valorMax;
             if ($scope.viewModel.parcelas >= 11) $scope.viewModel.p11m = data.results[10].valorMax;
             if ($scope.viewModel.parcelas >= 12) $scope.viewModel.p12m = data.results[11].valorMax;
+
+            $scope.viewModel.valor = data.results[$scope.viewModel.parcelas].valor;
                 
             $scope.loading = false;
         },

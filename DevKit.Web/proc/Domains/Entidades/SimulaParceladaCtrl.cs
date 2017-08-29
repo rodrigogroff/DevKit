@@ -178,6 +178,11 @@ namespace DevKit.Web.Controllers
                 lst[parcelas - 1].valor = mon.setMoneyFormat(vrUltParc);
             }
 
+            lst.Add(new SimulacaoParcela
+            {
+                valor = mon.setMoneyFormat(iValor)                
+            });
+
             return Ok(new
             {
                 count = lst.Count(),

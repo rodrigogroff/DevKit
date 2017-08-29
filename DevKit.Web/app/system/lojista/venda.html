@@ -76,7 +76,7 @@
                                         <button class="btn btn-xs btn-danger" ng-show="valor_fail">!</button>
                                     </td>
                                     <td width="90px">
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.valor" style="background-color:darkblue;color:white">
+                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.valor" style="background-color:darkgreen;color:white">
                                     </td>
                                     <td width="30px"> </td>
                                     <td width="60px">
@@ -87,7 +87,7 @@
                                         <button class="btn btn-xs btn-danger" ng-show="parcelas_fail">!</button>
                                     </td>
                                     <td width="90px">
-                                        <input type="text" numeric-only maxlength="2" class="form-control input-transparent" ng-model="viewModel.parcelas"  style="background-color:darkblue;color:white">
+                                        <input type="text" numeric-only maxlength="2" class="form-control input-transparent" ng-model="viewModel.parcelas"  style="background-color:darkgreen;color:white">
                                     </td>
                                     <td width="30px"></td>
                                     <td width="90px">
@@ -228,10 +228,17 @@
                                         <th></th>
                                     </tr>
                                 </thead>
+
+                                <tr>
+                                    <td>Nome associado</td>
+                                    <td><b>{{ viewModel.data.nome }}</b></td>
+                                </tr>
+
                                 <tr>
                                     <td>Valor total da venda</td>
                                     <td><b>R$ {{viewModel.valor}}</b></td>
                                 </tr>
+
                                 <tr>
                                     <td>Número de parcelas</td>
                                     <td>{{viewModel.parcelas}}</td>
@@ -297,13 +304,35 @@
                                     <td>R$ {{viewModel.p12}}</td>
                                 </tr>
 
-                            </table>
-
-                            <table ng-if="modoVenda == 'confirmacao'">
-                                
                                 <tr height="22px"></tr>
 
+                            </table>
+
+                            <br />
+                            <br />
+                            
+                        </td>
+
+                        <td width="20px"></td>
+
+                        <td width="500px" valign="top">
+
+                            <table ng-if="modoVenda == 'confirmacao'">
+
                                 <tr>
+                                    <td width="20px"></td>
+                                    <td colspan="3">                                        
+                                        <h3>Autorização</h3><br />
+                                        <input type="radio" value="false" ng-model="viewModel.requerSenha"> Ao portador (tele-vendas)
+                                        <br />
+                                        <input type="radio" value="true" ng-model="viewModel.requerSenha"> Senha digitada
+                                    </td>
+                                </tr>
+
+                                <tr height="22px"></tr>
+
+                                <tr ng-if="viewModel.requerSenha">
+                                    <td width="20px"></td>
                                     <td width="90px">
                                         <b>SENHA CARTÃO</b>
                                     </td>
@@ -311,30 +340,25 @@
                                     <td width="90px">
                                         <input type="password" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.senha">
                                     </td>
-                                </tr>        
+                                </tr>
 
                                 <tr height="22px"></tr>
 
                                 <tr>
-                                    <td width="90px">
+                                    <td></td>
+                                    <td>
                                         <button class="btn btn-danger" ng-click="cancelar()">Cancelar</button>
                                     </td>
-                                    <td width="20px">
+                                    <td width="20px"></td>
+                                    <td>
+                                        <button class="btn btn-success" ng-click="confirmar()" ng-if="viewModel.requerSenha != undefined && ( (viewModel.requerSenha == true && viewModel.senha.length == 4) || true)">Confirmar</button>
                                     </td>
-                                    <td width="90px">
-                                        <button class="btn btn-primary" ng-click="confirmar()">Confirmar</button>
-                                    </td>
-                                </tr>        
-                                
-                                <tr height="42px"></tr>
+                                </tr>
+
+                                <tr height="22px"></tr>
 
                             </table>
-                            
-                        </td>
 
-                        <td width="20px"></td>
-
-                        <td width="500px" valign="top">
                             <table class="table table-hover" ng-if="viewModel.data.bloqueado == false && modoVenda != 'confirmacao'">
                                 <thead>
                                     <tr>

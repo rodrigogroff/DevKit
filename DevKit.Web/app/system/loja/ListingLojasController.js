@@ -7,7 +7,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	$scope.loading = false;
 
     $scope.campos = {
-        bloqueada: false,
+        bloqueada: 'false',
+        comSenha: 'true',
 		selects: {		
 		}
 	};
@@ -17,7 +18,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	init();
 
 	function init()
-	{
+    {
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;
 	}

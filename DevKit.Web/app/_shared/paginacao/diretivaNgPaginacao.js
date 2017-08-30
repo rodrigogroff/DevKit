@@ -101,7 +101,7 @@ angular.module('app.directives').directive('ngPaginacao', function () {
 			});
 
 			$scope.$watch("paginaAtual", function (valorNovo, valorAntigo) {
-				$scope.carregarAutomaticamente = $scope.carregarAutomaticamente || true;
+				$scope.carregarAutomaticamente = $scope.carregarAutomaticamente || false;
 				if (valorNovo != valorAntigo || $scope.carregarAutomaticamente == true) {
 					ngHistoricoFiltro.filtro.paginaAtual = valorNovo;
 					$scope.carregar(valorNovo * $scope.itensporpagina, $scope.itensporpagina);

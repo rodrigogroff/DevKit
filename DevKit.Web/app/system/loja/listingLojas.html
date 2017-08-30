@@ -5,9 +5,9 @@
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td>Listagem de <b>Perfils </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td>Listagem de <b>Lojistas </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
 					<td width="80px"></td>
-					<td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
+					<td><!--<input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()">--></td>
 					<td width="20px"></td>
 				</tr>
 				<tr height="12px"></tr>
@@ -18,7 +18,7 @@
 				<tr>
 					<td width="15px"></td>
 					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/profile/_filterProfile.html" funcao-pesquisar="search"></ng-filtro>
+						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/loja/_filterLoja.html" funcao-pesquisar="search"></ng-filtro>
 					</td>
 				</tr>
 			</table>
@@ -39,15 +39,23 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th width="250px">Perfil</th>
-										<th width="120px">Usuários</th>
-										<th width="120px">Permissões</th>
+										<th>Código</th>
+                                        <th>Terminal</th>
+										<th>Nome loja</th>
+                                        <th>Cidade</th>
+                                        <th>Estado</th>
+                                        <th>Situação</th>
+                                        <th>Tipo Venda</th>										
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-									<td>{{ mdl.stName }}</td>
-									<td><div data-ng-repeat="m in mdl.users | limitTo:5">{{ m.stLogin}}</div></td>
-									<td>{{ mdl.qttyPermissions }}</td>
+                                    <td>{{ mdl.id }}</td>
+									<td>{{ mdl.terminal }}</td>
+                                    <td>{{ mdl.nome }}</td>
+                                    <td>{{ mdl.cidade }}</td>
+                                    <td>{{ mdl.estado }}</td>
+                                    <td>{{ mdl.situacao }}</td>
+                                    <td>{{ mdl.tipoVenda }}</td>									
 								</tr>
 							</table>
 						</div>

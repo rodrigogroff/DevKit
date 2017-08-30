@@ -245,11 +245,11 @@
     <Content Include="app\home\HomeController.js" />
     <Content Include="app\system\lojista\venda.html" />
     <Content Include="app\system\lojista\VendaController.js" />
-    <Content Include="app\system\profile\listingProfiles.html" />
-    <Content Include="app\system\profile\ListingProfilesController.js" />
-    <Content Include="app\system\profile\profile.html" />
-    <Content Include="app\system\profile\ProfileController.js" />
-    <Content Include="app\system\profile\_filterProfile.html" />
+    <Content Include="app\system\loja\listingLojas.html" />
+    <Content Include="app\system\loja\ListingLojasController.js" />
+    <Content Include="app\system\loja\loja.html" />
+    <Content Include="app\system\loja\LojaController.js" />
+    <Content Include="app\system\loja\_filterLoja.html" />
     <Content Include="app\system\setup\setup.html" />
     <Content Include="app\system\setup\SetupController.js" />
     <Content Include="app\system\associado\listingAssociados.html" />
@@ -832,6 +832,7 @@
     <Compile Include="proc\Combos\ClientComboCtrl.cs" />
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
+    <Compile Include="proc\Domains\Entidades\LojaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\SomaParceladaCtrl.cs" />

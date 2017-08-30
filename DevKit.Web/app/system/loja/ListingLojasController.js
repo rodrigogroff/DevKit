@@ -1,4 +1,4 @@
-﻿angular.module('app.controllers').controller('ListingProfilesController',
+﻿angular.module('app.controllers').controller('ListingLojasController',
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
@@ -6,34 +6,18 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 	$scope.loading = false;
 
-	$scope.campos = {
-		selects: {
-			user: ngSelects.obterConfiguracao(Api.UserCombo, { }),
+    $scope.campos = {
+        bloqueada: false,
+		selects: {		
 		}
 	};
 
 	$scope.itensporpagina = 15;
-	$scope.permModel = {};	
-	$scope.permID = 101;
-
-	function CheckPermissions() {
-        Api.Permission.get({ id: $scope.permID }, function (data) {
-			$scope.permModel = data;
-
-			if (!$scope.permModel.listagem) {
-				toastr.error('Accesso negado!', 'Permissão');
-				$state.go('home');
-			}
-		},
-		function (response) { });
-	}
-
+	
 	init();
 
 	function init()
 	{
-		CheckPermissions();
-
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;
 	}
@@ -57,7 +41,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 		delete opcoes.selects;
 
-		Api.Profile.listPage(opcoes, function (data) {
+        Api.Loja.listPage(opcoes, function (data)
+        {
 			$scope.list = data.results;
 			$scope.total = data.count;		
 			$scope.loading = false;
@@ -66,18 +51,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 	$scope.show = function (mdl)
 	{
-		if (!$scope.permModel.visualizar) 
-            toastr.error('Accesso negado!', 'Permissão');
-		else
-			$state.go('profile', { id: mdl.id });
+        $state.go('loja', { id: mdl.id });
 	}
 
 	$scope.new = function ()
 	{
-		if (!$scope.permModel.novo)
-            toastr.error('Accesso negado!', 'Permissão');
-		else
-			$state.go('profile-new');
+		//$state.go('profile-new');
 	}
 	
 }]);

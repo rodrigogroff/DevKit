@@ -33,17 +33,27 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api)
                 $scope.loginOK = true;
                 $rootScope.exibirMenu = true;              
 
-                Api.Lojista.listPage({
-                    terminal: $scope.loginData.userName,
-                    senha: $scope.loginData.password,
-                },
-                function (data)
+                if ($scope.loginData.userName == "DBA")
                 {
-                    $rootScope.lojistaLogado = data.results[0].nome;
-                    $rootScope.lojistaEnd = data.results[0].endereco;
-                });
+                    $rootScope.lojistaLogado = "DBA";
+                    $rootScope.lojistaEnd = "Modo de configuração do portal";
 
-                $state.go('venda', {});
+                    $state.go('lojas', {});
+                }
+                else
+                {
+                    Api.Lojista.listPage({
+                        terminal: $scope.loginData.userName,
+                        senha: $scope.loginData.password,
+                    },
+                        function (data) {
+                            $rootScope.lojistaLogado = data.results[0].nome;
+                            $rootScope.lojistaEnd = data.results[0].endereco;
+                        });
+
+                    $state.go('venda', {});
+                }
+                
     		},
 			function (err)
 			{

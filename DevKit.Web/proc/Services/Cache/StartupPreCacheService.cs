@@ -24,6 +24,7 @@ namespace DevKit.Web.Services
                 // ----------------------------------------------------------------------------------------------------
 
                 foreach (var item in new EnumMonth().lst) cache.StoreCache(CacheTags.EnumMonth, item.id, item);
+                foreach (var item in new EnumTipoVenda().lst) cache.StoreCache(CacheTags.EnumMonth, item.id, item);
 
                 // ----------------------------------------------------------------------------------------------------
 
@@ -34,16 +35,12 @@ namespace DevKit.Web.Services
                     hshReport[""] = ret;
                 }
 
-                // ----------------------------------------------------------------------------------------------------
-                
-                // user
- //               {
-//                    var hshReport = cache.SetupCacheReport(CacheTags.UserReport);
-                                        
-  //                  var filter = new UserFilter { skip = 0, take = 15 };
-    //                hshReport[filter.Parameters()] = new User().ComposedFilters(db, filter);
-   //             }
-
+                {
+                    var hshReport = cache.SetupCacheReport(CacheTags.EnumTipoVendaReport);
+                    var query = (from e in new EnumTipoVenda().lst select e);
+                    var ret = new { count = query.Count(), results = query.ToList() };
+                    hshReport[""] = ret;
+                }
             }
         }
     }

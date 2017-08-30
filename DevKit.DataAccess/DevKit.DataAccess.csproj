@@ -66,18 +66,10 @@
     </Compile>
     <Compile Include="DataModel\AutorizadorDB\AutorizadorDB_CurrentUser.cs" />
     <Compile Include="DataModel\AutorizadorDB\AutorizadorDB_db.cs" />
+    <Compile Include="DataModel\Enums\TipoVenda_enum.cs" />
     <Compile Include="DataModel\Enums\Month_enum.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Client\Client_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\LoginInfo.cs" />
     <Compile Include="DataModel\Domains\DTOs.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Client\Client_ComposedFilters.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Client\Client_Create.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Client\Client_Delete.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Client\Client_DTO.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Client\Client_LoadAssociations.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Client\Client_TrackChanges.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Client\Client_Update.cs" />
-    <Compile Include="DataModel\Domains\Configuration\Client\Client_Loader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -3,6 +3,7 @@ using DevKit.Web.Services;
 using System.Web.Http;
 using System.Linq;
 using System.Threading;
+using System.Web;
 
 namespace DevKit.Web.Controllers
 {
@@ -27,23 +28,32 @@ namespace DevKit.Web.Controllers
             db = new AutorizadorCNDB();
 
             var userCurrentName = userLoggedName;
-            var tagName = CacheTags.T_Loja + userCurrentName;
 
-            db.currentUser = RestoreCacheNoHit(tagName) as T_Loja;
-            
-            if (db.currentUser == null)
+            if (userCurrentName != "DBA")
             {
-                db.currentUser = (from ne in db.T_Loja
-                                  where ne.st_loja.ToUpper() == userCurrentName
-                                  select ne).
-                                  FirstOrDefault();
+                var tagName = CacheTags.T_Loja + userCurrentName;
+
+                db.currentUser = RestoreCacheNoHit(tagName) as T_Loja;
 
                 if (db.currentUser == null)
-                    return false;
+                {
+                    db.currentUser = (from ne in db.T_Loja
+                                      where ne.st_loja.ToUpper() == userCurrentName
+                                      select ne).
+                                      FirstOrDefault();
 
-                BackupCacheNoHit(tagName, db.currentUser);
+                    if (db.currentUser == null)
+                        return false;
+
+                    BackupCacheNoHit(tagName, db.currentUser);
+                }
             }
-
+            else
+            {
+                if (myApplication == null)
+                    myApplication = HttpContext.Current.Application;
+            }
+            
             if (myApplication["start"] == null)
             {
                 myApplication["start"] = true;

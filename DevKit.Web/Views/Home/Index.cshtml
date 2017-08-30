@@ -51,24 +51,15 @@
 			</div>
 		</header>
 		<nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:6px;padding-left:-200px">
-			<section class="widget" style="height:100%;font-size:11px">
+			
+            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.nameUser == 'DBA'">
 				<ul id="side-nav" class="side-nav" style="color:black">
 					<li class="panel">
 						<a class="accordion-toggle " data-toggle="collapse"
-						   data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Associado</span></a>
+						   data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Configuração</span></a>
 						<ul id="forms-collapseSystem" class="panel-collapse collapse">
-							<li><a ui-sref="associado"><span>Verificar cartão</span></a></li>
+							<li><a ui-sref="lojas"><span>Lojistas</span></a></li>
                         </ul>
-					</li>
-					<li class="panel">
-						<a class="accordion-toggle " data-toggle="collapse"
-						   data-parent="#side-nav" href="#forms-collapseSetup"><span class="name">Vendas</span></a>
-						<ul id="forms-collapseSetup" class="panel-collapse collapse">
-							<li><a ui-sref="clients"><span>Efetuar Venda</span></a></li>
-							<li><a ui-sref="clientgroups"><span>Cancelamento</span></a></li>
-                            <li><a ui-sref="clientgroups"><span>Transações</span></a></li>
-                            <li><a ui-sref="clientgroups"><span>Comprovantes</span></a></li>
-						</ul>
 					</li>
 				</ul>
 				<ul><li>&nbsp;</li></ul>
@@ -80,6 +71,36 @@
 				</ul>
 				<ul><li></li></ul>
 			</section>			
+            
+            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.nameUser != 'DBA'">
+                <ul id="side-nav" class="side-nav" style="color:black">
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Associado</span></a>
+                        <ul id="forms-collapseSystem" class="panel-collapse collapse">
+                            <li><a ui-sref="associado"><span>Verificar cartão</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseSetup"><span class="name">Vendas</span></a>
+                        <ul id="forms-collapseSetup" class="panel-collapse collapse">
+                            <li><a ui-sref="venda"><span>Efetuar Venda</span></a></li>
+                            <li><a ui-sref=""><span>Cancelamento</span></a></li>
+                            <li><a ui-sref=""><span>Transações</span></a></li>
+                            <li><a ui-sref=""><span>Comprovantes</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul>
+                    <li>
+                        <span style="color:grey;text-align:center;padding-left:20px">Version {{version}}</span>
+                    </li>
+                </ul>
+                <ul><li></li></ul>
+            </section>			
 		</nav>
 	</div>
 	<table align="left" style="width:100%">

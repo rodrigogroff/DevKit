@@ -17,6 +17,9 @@ namespace DevKit.Web.Controllers
         public const string EnumMonth = "EnumMonth";
         public const string EnumMonthReport = "EnumMonthReport";
 
+        public const string EnumTipoVenda = "EnumTipoVenda";
+        public const string EnumTipoVendaReport = "EnumTipoVendaReport";
+
         // ------------------------
         // combos
         // ------------------------

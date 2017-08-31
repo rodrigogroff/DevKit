@@ -25,7 +25,7 @@
                     </td>
                     <td width="90px">
                         <input type="text" focus="true" numeric-only maxlength="6" class="form-control input-transparent" 
-                               ng-model="viewModel.stEmpresa" ng-blur="conferirCartao()" >
+                               ng-model="viewModel.stEmpresa" ng-blur="conferirCartao()" style="font-size:14px; font-weight:800" >
                     </td>                 
                     <td width="10px"></td>
                     <td width="20px">
@@ -33,7 +33,7 @@
                     </td>
                     <td width="90px">
                         <input type="text" numeric-only maxlength="6" class="form-control input-transparent" 
-                               ng-model="viewModel.stMatricula" ng-blur="conferirCartao()" >
+                               ng-model="viewModel.stMatricula" ng-blur="conferirCartao()"  style="font-size:14px; font-weight:800">
                     </td>
                     <td width="10px"></td>
                     <td width="20px">
@@ -41,7 +41,7 @@
                     </td>
                     <td width="60px">
                         <input type="text" numeric-only maxlength="4" class="form-control input-transparent" 
-                               ng-model="viewModel.stAcesso" ng-blur="conferirCartao()"  >
+                               ng-model="viewModel.stAcesso" ng-blur="conferirCartao()"  style="font-size:14px; font-weight:800" >
                     </td>                 
                     <td width="10px"></td>
                     <td width="20px">
@@ -49,17 +49,20 @@
                     </td>
                     <td width="60px">
                         <input type="text" numeric-only maxlength="4" class="form-control input-transparent" 
-                               ng-model="viewModel.stVencimento" ng-blur="conferirCartao()"
+                               ng-model="viewModel.stVencimento" ng-blur="conferirCartao()"  style="font-size:14px; font-weight:800"
                                ng-keyup="$event.keyCode == 13 && conferirCartao()" >
+                    </td>
+                    <td width="10px"></td>
+
+                    <td width="150px">
+                        <span class="btn btn-warning" ng-if="viewModel.error.length > 0">
+                            {{viewModel.error}}
+                        </span>
                     </td>
                 </tr>
                 <tr height="24px"></tr>
             </table>
             
-            <span class="btn btn-warning btn-lg" ng-if="viewModel.error.length > 0">
-                {{viewModel.error}}
-            </span>
-
             <div ng-if="viewModel.data.nome != undefined">
 
                 <div class="btn btn-warning btn-lg" ng-if="viewModel.data.bloqueado == true">

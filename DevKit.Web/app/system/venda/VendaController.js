@@ -50,6 +50,14 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         function (response) {                
             $scope.viewModel.error = "Cartão Inválido";
             $scope.loading = false;
+
+            $scope.viewModel.data = undefined;
+            $scope.viewModel.parcelas = '';
+            $scope.viewModel.valor = '';
+            $scope.simulacao = undefined;
+            $scope.modoVenda = '';
+            $scope.erro = '';
+            $scope.lastTag = '';
         });
     }
     

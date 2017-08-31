@@ -104,7 +104,7 @@ namespace DevKit.Web
 				"~/app/app.js",
 				"~/app/home/HomeController.js",
                 "~/app/system/associado/ListingAssociadosController.js",
-                "~/app/system/lojista/VendaController.js",
+                "~/app/system/venda/VendaController.js",
                 "~/app/home/CacheController.js",
                 "~/app/system/loja/ListingLojasController.js",
                 "~/app/system/loja/LojaController.js"

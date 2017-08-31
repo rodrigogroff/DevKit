@@ -48,10 +48,11 @@ angular.module('app.directives', [])
     };
 })       
 
-.directive('numericOnly', function () {
-    return {
-        require: 'ngModel',
-        link: function (scope, element, attrs, modelCtrl) {
+    .directive('numericOnly', function ()
+    {
+        return {
+            require: 'ngModel',
+            link: function (scope, element, attrs, modelCtrl) {
 
             modelCtrl.$parsers.push(function (inputValue) {
                 var transformedInput = inputValue ? inputValue.replace(/[^\d.-]/g, '') : null;
@@ -66,6 +67,25 @@ angular.module('app.directives', [])
         }
     };
 })       
+
+    //.directive('myEnter', function ()
+    //{
+    //    return {
+    //        require: 'ngModel',
+    //        link: function (scope, element, attrs) {
+    //            element.bind("keydown keypress", function (event) {
+    //                if (event.which === 13) {
+    //                    scope.$apply(function () {
+    //                        scope.$eval(attrs.myEnter);
+    //                    });
+
+    //                    event.preventDefault();
+    //                }
+    //            });
+    //        }
+    //    };
+    //})
+
 
 .directive('checkboxAll', function () {
 	return function (scope, iElement, iAttrs) {

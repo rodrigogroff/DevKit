@@ -21,45 +21,47 @@
                     </td>
                     <td width="10px"></td>
                     <td width="20px">
-                        <button class="btn btn-xs btn-danger" ng-show="stEmpresa_fail">!</button>
+                        <span class="btn btn-xs btn-danger" ng-show="stEmpresa_fail">!</span>
                     </td>
                     <td width="90px">
-                        <input type="text" numeric-only maxlength="6" class="form-control input-transparent" ng-model="viewModel.stEmpresa">
+                        <input type="text" focus="true" numeric-only maxlength="6" class="form-control input-transparent" 
+                               ng-model="viewModel.stEmpresa" ng-blur="conferirCartao()" >
                     </td>                 
                     <td width="10px"></td>
                     <td width="20px">
-                        <button class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</button>
+                        <span class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</span>
                     </td>
                     <td width="90px">
-                        <input type="text" numeric-only maxlength="6" class="form-control input-transparent" ng-model="viewModel.stMatricula">
+                        <input type="text" numeric-only maxlength="6" class="form-control input-transparent" 
+                               ng-model="viewModel.stMatricula" ng-blur="conferirCartao()" >
                     </td>
                     <td width="10px"></td>
                     <td width="20px">
-                        <button class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</button>
+                        <span class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</span>
                     </td>
                     <td width="60px">
-                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.stAcesso">
+                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" 
+                               ng-model="viewModel.stAcesso" ng-blur="conferirCartao()"  >
                     </td>                 
                     <td width="10px"></td>
                     <td width="20px">
-                        <button class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</button>
+                        <span class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</span>
                     </td>
                     <td width="60px">
-                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.stVencimento">
-                    </td>
-                    <td width="40px"></td>
-                    <td width="160px">
-                        <button class="btn btn-primary" ng-click="conferirCartao()">Validar</button>
+                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" 
+                               ng-model="viewModel.stVencimento" ng-blur="conferirCartao()"
+                               ng-keyup="$event.keyCode == 13 && conferirCartao()" >
                     </td>
                 </tr>
                 <tr height="24px"></tr>
             </table>
-
-            <div class="btn btn-warning btn-lg" ng-if="viewModel.data.error != '' && viewModel.data.error != undefined">
-                {{viewModel.data.error}}
-            </div>
+            
+            <span class="btn btn-warning btn-lg" ng-if="viewModel.error.length > 0">
+                {{viewModel.error}}
+            </span>
 
             <div ng-if="viewModel.data.nome != undefined">
+
                 <div class="btn btn-warning btn-lg" ng-if="viewModel.data.bloqueado == true">
                     Atenção: cartão situação BLOQUEADO. Entre em contato com sua entidade.
                 </div>
@@ -67,16 +69,19 @@
                 <table width="100%" ng-if="viewModel.data.bloqueado == false">
                     <tr>
                         <td width="500px" valign="top">
+
                             <table ng-if="modoVenda == 'simulacao' || modoVenda == ''">
                                 <tr>
-                                    <td width="70px">
+                                    <td width="80px">
                                         <b>Valor</b>
                                     </td>
                                     <td width="20px">
                                         <button class="btn btn-xs btn-danger" ng-show="valor_fail">!</button>
                                     </td>
                                     <td width="90px">
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.valor" style="background-color:darkgreen;color:white">
+                                        <input type="text" price-only class="form-control input-transparent" 
+                                               ng-model="viewModel.valor" style="background-color:darkgreen;color:white"
+                                                ng-keyup="$event.keyCode == 13 && parcelar()" >
                                     </td>
                                     <td width="30px"> </td>
                                     <td width="60px">
@@ -87,7 +92,9 @@
                                         <button class="btn btn-xs btn-danger" ng-show="parcelas_fail">!</button>
                                     </td>
                                     <td width="90px">
-                                        <input type="text" numeric-only maxlength="2" class="form-control input-transparent" ng-model="viewModel.parcelas"  style="background-color:darkgreen;color:white">
+                                        <input type="text" numeric-only maxlength="2" class="form-control input-transparent"
+                                               ng-model="viewModel.parcelas"  style="background-color:darkgreen;color:white"
+                                               ng-keyup="$event.keyCode == 13 && parcelar()" >
                                     </td>
                                     <td width="30px"></td>
                                     <td width="90px">
@@ -101,99 +108,134 @@
                                     <td>Parc. 1<br /><span style="font-size:9px;color:black">{{viewModel.p1m}}</span></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p1" ng-show="viewModel.parcelas >= 1" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent"
+                                               ng-model="viewModel.p1" ng-show="viewModel.parcelas >= 1"
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
-                                    <td><span ng-show="viewModel.parcelas >= 2">Parc. 2</span><br /><span style="font-size:9px;color:black" ng-show="viewModel.parcelas >= 2">{{viewModel.p2m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 2">Parc. 2</span><br />
+                                    <span style="font-size:9px;color:black" ng-show="viewModel.parcelas >= 2">{{viewModel.p2m}}</span></td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p2" ng-show="viewModel.parcelas >= 2" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent" 
+                                               ng-model="viewModel.p2" ng-show="viewModel.parcelas >= 2" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
                                     <td></td>
                                 </tr>
 
                                 <tr height="42px" ng-if="modoVenda == 'simulacao'" ng-show="viewModel.parcelas >= 3">
-                                    <td><span ng-show="viewModel.parcelas >= 3">Parc. 3</span><br /><span style="font-size:9px;color:black">{{viewModel.p3m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 3">Parc. 3</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p3m}}</span></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p3" ng-show="viewModel.parcelas >= 3" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent"
+                                               ng-model="viewModel.p3" ng-show="viewModel.parcelas >= 3" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
-                                    <td><span ng-show="viewModel.parcelas >= 4">Parc. 4</span><br /><span style="font-size:9px;color:black">{{viewModel.p4m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 4">Parc. 4</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p4m}}</span></td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p4" ng-show="viewModel.parcelas >= 4" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent" 
+                                               ng-model="viewModel.p4" ng-show="viewModel.parcelas >= 4" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
                                     <td></td>
                                 </tr>
 
                                 <tr height="42px" ng-if="modoVenda == 'simulacao'" ng-show="viewModel.parcelas >= 5">
-                                    <td><span ng-show="viewModel.parcelas >= 5">Parc. 5</span><br /><span style="font-size:9px;color:black">{{viewModel.p5m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 5">Parc. 5</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p5m}}</span></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p5" ng-show="viewModel.parcelas >= 5" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent" 
+                                               ng-model="viewModel.p5" ng-show="viewModel.parcelas >= 5" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
-                                    <td><span ng-show="viewModel.parcelas >= 6">Parc. 6</span><br /><span style="font-size:9px;color:black">{{viewModel.p6m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 6">Parc. 6</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p6m}}</span></td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p6" ng-show="viewModel.parcelas >= 6" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent" 
+                                               ng-model="viewModel.p6" ng-show="viewModel.parcelas >= 6"
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
                                     <td></td>
                                 </tr>
 
                                 <tr height="42px" ng-if="modoVenda == 'simulacao'" ng-show="viewModel.parcelas >= 7">
-                                    <td><span ng-show="viewModel.parcelas >= 7">Parc. 7</span><br /><span style="font-size:9px;color:black">{{viewModel.p7m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 7">Parc. 7</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p7m}}</span></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p7" ng-show="viewModel.parcelas >= 7" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent"
+                                               ng-model="viewModel.p7" ng-show="viewModel.parcelas >= 7" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
-                                    <td><span ng-show="viewModel.parcelas >= 8">Parc. 8</span><br /><span style="font-size:9px;color:black">{{viewModel.p8m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 8">Parc. 8</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p8m}}</span></td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p8" ng-show="viewModel.parcelas >= 8" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent" 
+                                               ng-model="viewModel.p8" ng-show="viewModel.parcelas >= 8" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
                                     <td></td>
                                 </tr>
 
                                 <tr height="42px" ng-if="modoVenda == 'simulacao'" ng-show="viewModel.parcelas >= 9">
-                                    <td><span ng-show="viewModel.parcelas >= 9">Parc. 9</span><br /><span style="font-size:9px;color:black">{{viewModel.p9m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 9">Parc. 9</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p9m}}</span></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p9" ng-show="viewModel.parcelas >= 9" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent"
+                                               ng-model="viewModel.p9" ng-show="viewModel.parcelas >= 9" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
-                                    <td><span ng-show="viewModel.parcelas >= 10">Parc. 10</span><br /><span style="font-size:9px;color:black">{{viewModel.p10m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 10">Parc. 10</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p10m}}</span></td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p10" ng-show="viewModel.parcelas >= 10" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent"
+                                               ng-model="viewModel.p10" ng-show="viewModel.parcelas >= 10" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
                                     <td></td>
                                 </tr>
 
                                 <tr height="42px" ng-if="modoVenda == 'simulacao'" ng-show="viewModel.parcelas >= 11">
-                                    <td><span ng-show="viewModel.parcelas >= 11">Parc. 11</span><br /><span style="font-size:9px;color:black">{{viewModel.p11m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 11">Parc. 11</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p11m}}</span></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p11" ng-show="viewModel.parcelas >= 11" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent" 
+                                               ng-model="viewModel.p11" ng-show="viewModel.parcelas >= 11" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
-                                    <td><span ng-show="viewModel.parcelas >= 12">Parc. 12</span><br /><span style="font-size:9px;color:black">{{viewModel.p12m}}</span></td>
+                                    <td><span ng-show="viewModel.parcelas >= 12">Parc. 12</span><br />
+                                    <span style="font-size:9px;color:black">{{viewModel.p12m}}</span></td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <input type="text" price-only class="form-control input-transparent" ng-model="viewModel.p12" ng-show="viewModel.parcelas >= 12" style="background-color:black;color:white">
+                                        <input type="text" price-only class="form-control input-transparent" 
+                                               ng-model="viewModel.p12" ng-show="viewModel.parcelas >= 12" 
+                                               style="background-color:black;color:white">
                                     </td>
                                     <td></td>
                                     <td></td>
@@ -202,11 +244,19 @@
                                 <tr height="12px" ng-if="modoVenda == 'simulacao'"></tr>
 
                                 <tr height="42px" ng-if="modoVenda == 'simulacao'">
-                                    <td colspan="3">
-                                        <button class="btn btn-success" ng-click="efetuarVenda()">Efetuar venda</button>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="5">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <button class="btn btn-danger" ng-click="cancelarSimula()">Cancelar</button>
+                                                </td>
+                                                <td width="20px"></td>
+                                                <td>
+                                                    <button class="btn btn-success" ng-click="efetuarVenda()">Efetuar venda</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>                                    
                                 </tr>
 
                                 <tr height="12px" ng-if="modoVenda == 'simulacao'"></tr>
@@ -338,7 +388,8 @@
                                     </td>
                                     <td width="20px"></td>
                                     <td width="90px">
-                                        <input type="password" numeric-only maxlength="4" class="form-control input-transparent" ng-model="viewModel.senha">
+                                        <input type="password" numeric-only maxlength="4" class="form-control input-transparent"
+                                               ng-model="viewModel.senha">
                                     </td>
                                 </tr>
 
@@ -351,7 +402,8 @@
                                     </td>
                                     <td width="20px"></td>
                                     <td>
-                                        <button class="btn btn-success" ng-click="confirmar()" ng-if="viewModel.requerSenha != undefined && ( (viewModel.requerSenha == true && viewModel.senha.length == 4) || true)">Confirmar</button>
+                                        <button class="btn btn-success" ng-click="confirmar()"
+                                                ng-if="viewModel.requerSenha != undefined && ( (viewModel.requerSenha == true && viewModel.senha.length == 4) || true)">Confirmar</button>
                                     </td>
                                 </tr>
 

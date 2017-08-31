@@ -243,8 +243,8 @@
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
-    <Content Include="app\system\lojista\venda.html" />
-    <Content Include="app\system\lojista\VendaController.js" />
+    <Content Include="app\system\venda\venda.html" />
+    <Content Include="app\system\venda\VendaController.js" />
     <Content Include="app\system\loja\listingLojas.html" />
     <Content Include="app\system\loja\ListingLojasController.js" />
     <Content Include="app\system\loja\loja.html" />

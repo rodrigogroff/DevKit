@@ -10,6 +10,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.conferirCartao = function ()
     {
+        $scope.viewModel.error = '';
+
         $scope.stEmpresa_fail = invalidCheck($scope.viewModel.stEmpresa);
         $scope.stMatricula_fail = invalidCheck($scope.viewModel.stMatricula);
         $scope.stAcesso_fail = invalidCheck($scope.viewModel.stAcesso);
@@ -22,6 +24,17 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             return;
         }
 
+        var tag = $scope.viewModel.stEmpresa +
+            $scope.viewModel.stMatricula +
+            $scope.viewModel.stAcesso +
+            $scope.viewModel.stVencimento;
+
+        if (tag == $scope.lastTag)
+            return;
+
+        $scope.lastTag = tag;
+        $scope.modoVenda = '';
+
         $scope.loading = true;
 
         Api.Associado.listPage({
@@ -30,15 +43,14 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             acesso: $scope.viewModel.stAcesso,
             vencimento: $scope.viewModel.stVencimento,
         },
-            function (data) {
-                $scope.viewModel.data = data.results[0];
-                $scope.loading = false;
-            },
-            function (response) {
-                $scope.viewModel.data = {};
-                $scope.viewModel.data.error = "Cartão Inválido";
-                $scope.loading = false;
-            });
+        function (data) {
+            $scope.viewModel.data = data.results[0];
+            $scope.loading = false;
+        },
+        function (response) {                
+            $scope.viewModel.error = "Cartão Inválido";
+            $scope.loading = false;
+        });
     }
     
     var invalidCheck = function (element) {
@@ -68,6 +80,21 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.viewModel.p10m = ''; $scope.viewModel.p11m = ''; $scope.viewModel.p12m = '';
         }
     });
+
+    $scope.cancelarSimula = function ()
+    {
+        $scope.viewModel.stEmpresa = '';
+        $scope.viewModel.stMatricula = ''; 
+        $scope.viewModel.stAcesso = '';
+        $scope.viewModel.stVencimento = '';
+        $scope.viewModel.data = undefined;
+        $scope.viewModel.parcelas = '';
+        $scope.viewModel.valor = '';
+        $scope.simulacao = undefined;
+        $scope.modoVenda = '';
+        $scope.erro = '';
+        $scope.lastTag = '';
+    }
     
     $scope.parcelar = function ()
     {

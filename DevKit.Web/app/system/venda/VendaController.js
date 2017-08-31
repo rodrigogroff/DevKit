@@ -70,25 +70,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         return false;
     }
-
-    $scope.$watch("viewModel.parcelas", function (novo, antigo)
-    {
-        if (novo !== antigo)
-        {
-            $scope.simulacao = undefined;
-            $scope.erro = '';
-            $scope.viewModel.p1 = ''; $scope.viewModel.p2 = ''; $scope.viewModel.p3 = '';
-            $scope.viewModel.p4 = ''; $scope.viewModel.p5 = ''; $scope.viewModel.p6 = '';
-            $scope.viewModel.p7 = ''; $scope.viewModel.p8 = ''; $scope.viewModel.p9 = '';
-            $scope.viewModel.p10 = ''; $scope.viewModel.p11 = ''; $scope.viewModel.p12 = '';
-
-            $scope.viewModel.p1m = ''; $scope.viewModel.p2m = ''; $scope.viewModel.p3m = '';
-            $scope.viewModel.p4m = ''; $scope.viewModel.p5m = ''; $scope.viewModel.p6m = '';
-            $scope.viewModel.p7m = ''; $scope.viewModel.p8m = ''; $scope.viewModel.p9m = '';
-            $scope.viewModel.p10m = ''; $scope.viewModel.p11m = ''; $scope.viewModel.p12m = '';
-        }
-    });
-
+    
     $scope.cancelarSimula = function ()
     {
         $scope.viewModel.stEmpresa = '';
@@ -114,6 +96,14 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         $scope.loading = true;
         $scope.erro = '';
+
+        if ($scope.viewModel.parcelas != $scope.viewModel.parcelasSim)
+        {
+            $scope.viewModel.p1 = ''; $scope.viewModel.p2 = ''; $scope.viewModel.p3 = '';
+            $scope.viewModel.p4 = ''; $scope.viewModel.p5 = ''; $scope.viewModel.p6 = '';
+            $scope.viewModel.p7 = ''; $scope.viewModel.p8 = ''; $scope.viewModel.p9 = '';
+            $scope.viewModel.p10 = ''; $scope.viewModel.p11 = ''; $scope.viewModel.p12 = '';
+        }
 
         Api.SimulaParcelada.listPage(
         {
@@ -174,7 +164,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             if ($scope.viewModel.parcelas >= 12) $scope.viewModel.p12m = data.results[11].valorMax;
 
             $scope.viewModel.valor = data.results[$scope.viewModel.parcelas].valor;
-                
+
+            $scope.viewModel.parcelasSim = $scope.viewModel.parcelas;
+
             $scope.loading = false;
         },
         function (response)

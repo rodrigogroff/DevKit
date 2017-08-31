@@ -8,9 +8,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.campos = {
         bloqueada: 'false',
-        comSenha: 'true',
-		selects: {		
-		}
+        comSenha: 'true'
 	};
 
 	$scope.itensporpagina = 15;
@@ -38,16 +36,16 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 		var filtro = ngHistoricoFiltro.filtro.filtroGerado;
 
 		if (filtro)
-			angular.extend(opcoes, filtro);
+            angular.extend(opcoes, filtro);
 
-		delete opcoes.selects;
+        opcoes.bloqueada = $scope.campos.bloqueada;
+        opcoes.comSenha = $scope.campos.comSenha;
 
-        Api.Loja.listPage(opcoes, function (data)
-        {
-			$scope.list = data.results;
-			$scope.total = data.count;		
-			$scope.loading = false;
-		});
+        Api.Loja.listPage(opcoes, function (data) {
+            $scope.list = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        });
 	}
 
 	$scope.show = function (mdl)

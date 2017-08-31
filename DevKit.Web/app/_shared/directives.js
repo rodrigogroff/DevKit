@@ -29,6 +29,7 @@ angular.module('app.directives', [])
 	};
 })
 
+    /*
 .directive('priceOnly', function () {
     return {
         require: 'ngModel',
@@ -47,7 +48,7 @@ angular.module('app.directives', [])
         }
     };
 })       
-
+*/
     .directive('numericOnly', function ()
     {
         return {
@@ -67,25 +68,6 @@ angular.module('app.directives', [])
         }
     };
 })       
-
-    //.directive('myEnter', function ()
-    //{
-    //    return {
-    //        require: 'ngModel',
-    //        link: function (scope, element, attrs) {
-    //            element.bind("keydown keypress", function (event) {
-    //                if (event.which === 13) {
-    //                    scope.$apply(function () {
-    //                        scope.$eval(attrs.myEnter);
-    //                    });
-
-    //                    event.preventDefault();
-    //                }
-    //            });
-    //        }
-    //    };
-    //})
-
 
 .directive('checkboxAll', function () {
 	return function (scope, iElement, iAttrs) {
@@ -141,30 +123,6 @@ angular.module('app.directives', [])
 			identificador: '='
 		},
 		templateUrl: 'app/cadastros/templateUploads.html'
-	};
-})
-
-.directive('onlynumber', function () {
-	return {
-		require: 'ngModel',
-		link: function (scope, element, attrs, modelCtrl) {
-			var uppercase = function (inputValue) {
-				if (inputValue == undefined) inputValue = '';
-
-				var uppercased = inputValue.match(/\d/g);
-				uppercased = uppercased.join("");
-
-				if (uppercased !== inputValue) {
-					modelCtrl.$setViewValue(uppercased);
-					modelCtrl.$render();
-				}
-
-				return uppercased;
-			}
-			modelCtrl.$parsers.push(uppercase);
-			modelCtrl.$formatters.push(uppercase);
-			uppercase(scope[attrs.ngModel]);
-		}
 	};
 })
 

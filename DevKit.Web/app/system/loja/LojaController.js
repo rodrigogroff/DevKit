@@ -50,12 +50,10 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		{
 			if (id > 0)
             {
-				Api.Loja.update({ id: id }, $scope.viewModel, function (data)
-				{
+				Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
 					toastr.success('Loja salva!', 'Sucesso');
 				},
-				function (response)
-				{
+				function (response) {
 					toastr.error(response.data.message, 'Error');
 				});
 			}

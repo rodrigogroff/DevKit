@@ -67,7 +67,7 @@ namespace DevKit.Web.Controllers
                 count = 0,
                 results = new List<string>
                 {
-                    db.currentUser.tg_portalComSenha != 1 ? "0" : "1"
+                    db.currentUser.tg_portalComSenha == 1 ? "1" : "0"
                 }
             });
         }

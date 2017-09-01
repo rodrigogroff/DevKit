@@ -444,9 +444,15 @@
 
                                     </table>
 
+                                    <br />
+
                                 </div>
+
+                                <br />
                                 
                             </section>
+
+                            <br />
 
                         </td>
 
@@ -454,7 +460,7 @@
 
                         <td width="500px" valign="top">
 
-                            <table ng-if="modoVenda == 'confirmacao'">
+                            <table ng-if="modoVenda == 'confirmacao'" align="center">
 
                                 <tr height="22px"></tr>
 
@@ -467,6 +473,13 @@
                                     <td width="90px">
                                         <input type="password" numeric-only maxlength="4" class="form-control input-transparent"
                                                ng-model="viewModel.senha">
+                                    </td>
+                                </tr>
+
+                                <tr ng-if="viewModel.requerSenha == 1">
+                                    <td width="20px"></td>
+                                    <td colspan="3">
+                                        <b>VENDA AO PORTADOR</b>
                                     </td>
                                 </tr>
 

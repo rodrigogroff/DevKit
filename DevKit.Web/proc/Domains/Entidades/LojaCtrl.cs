@@ -7,19 +7,6 @@ using System;
 
 namespace DevKit.Web.Controllers
 {
-    public class Loja
-    {
-        public string id, 
-                      terminal, 
-                      nome, 
-                      cidade, 
-                      estado,
-                      situacao, 
-                      tipoVenda, 
-                      tg_blocked, 
-                      tg_comsenha;
-    }
-
     public class LojaController : ApiControllerBase
     {
         public IHttpActionResult Get()
@@ -31,6 +18,7 @@ namespace DevKit.Web.Controllers
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
             var bloqueada = Request.GetQueryStringValue<bool?>("bloqueada", null);
+            var comSenha = Request.GetQueryStringValue<bool?>("comSenha", null);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -77,6 +65,18 @@ namespace DevKit.Web.Controllers
                             select e;
             }
 
+            if (comSenha != null)
+            {
+                if (comSenha == true)
+                    query = from e in query
+                            where e.tg_portalComSenha == 1
+                            select e;
+                else
+                    query = from e in query
+                            where e.tg_portalComSenha != 1
+                            select e;
+            }
+
             query = query.OrderBy(y => y.st_nome);
 
             var lst = new List<Loja>();
@@ -91,7 +91,7 @@ namespace DevKit.Web.Controllers
                     cidade = item.st_cidade,
                     estado = item.st_estado,
                     situacao = item.tg_blocked == '1' ? "Bloqueada" : "Ativa",
-                    tipoVenda = "Com senha",
+                    tipoVenda = item.tg_portalComSenha == 1 ? "Com Senha" : "Sem senha",
                 });
             }
 
@@ -123,7 +123,7 @@ namespace DevKit.Web.Controllers
                 cidade = mdl.st_cidade,
                 estado = mdl.st_estado,
                 tg_blocked = mdl.tg_blocked.ToString(),
-                tg_comsenha = "1"                
+                tg_portalComSenha = mdl.tg_portalComSenha != 1 ? "0" : "1"
             });
         }
 
@@ -139,7 +139,8 @@ namespace DevKit.Web.Controllers
                              FirstOrDefault();
 
             mdlUpdate.st_nome = mdl.nome;
-
+            mdlUpdate.tg_portalComSenha = Convert.ToInt32(mdl.tg_portalComSenha);
+            
             db.Update(mdlUpdate);
 
             return Ok();

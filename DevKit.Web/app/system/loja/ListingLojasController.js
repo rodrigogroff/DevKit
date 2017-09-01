@@ -8,7 +8,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.campos = {
         bloqueada: 'false',
-        comSenha: 'true'
+        comSenha: 'undefined'
 	};
 
 	$scope.itensporpagina = 15;

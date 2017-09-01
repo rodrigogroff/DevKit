@@ -2,33 +2,6 @@
 
 angular.module('app.directives', [])
 
-.directive('appVersion', ['version', function (version) {
-	return function (scope, elm, attrs) {
-		elm.text(version);
-	};
-}])
-
-.directive("contenteditable", function () {
-	return {
-		restrict: "A",
-		require: "ngModel",
-		link: ['scope', 'element', 'attrs', 'ngModel', function (scope, element, attrs, ngModel) {
-
-			function read() {
-				ngModel.$setViewValue(element.html());
-			}
-
-			ngModel.$render = function () {
-				element.html(ngModel.$viewValue || "");
-			};
-
-			element.bind("blur keyup change", function () {
-				scope.$apply(read);
-			});
-		}]
-	};
-})
-
     /*
 .directive('priceOnly', function () {
     return {
@@ -68,63 +41,6 @@ angular.module('app.directives', [])
         }
     };
 })       
-
-.directive('checkboxAll', function () {
-	return function (scope, iElement, iAttrs) {
-		var parts = iAttrs.checkboxAll.split(':');
-		iElement.attr('type', 'checkbox');
-		iElement.bind('change', function (evt) {
-			scope.$apply(function () {
-				var setValue = iElement.prop('checked');
-				angular.forEach(scope.$eval(parts[0]), function (v) {
-					var ignorar = v['ignorarCheckAll'] || false;
-					if (!ignorar) {
-						v[parts[1]] = setValue;
-					}
-				});
-			});
-		});
-		scope.$watch(parts[0], function (newVal) {
-			var hasTrue, hasFalse;
-			angular.forEach(newVal, function (v) {
-				if (v[parts[1]]) {
-					hasTrue = true;
-				} else {
-					hasFalse = true;
-				}
-			});
-			if (hasTrue && hasFalse) {
-				iElement.attr('checked', false);
-				iElement.addClass('greyed');
-			} else {
-				iElement.attr('checked', hasTrue);
-				iElement.removeClass('greyed');
-			}
-		}, true);
-	};
-})
-
-.directive('ngUpdateHidden', function () {
-	return function (scope, el, attr) {
-		var model = attr['ngModel'];
-		scope.$watch(model, function (nv) {
-			el.val(nv);
-		});
-	};
-})
-
-.directive('uploads', function () {
-	return {
-		restrict: 'AE',
-		transclude: true,
-		scope: {
-			context: '@',
-			entidade: '=',
-			identificador: '='
-		},
-		templateUrl: 'app/cadastros/templateUploads.html'
-	};
-})
 
 .directive('uppercase', function () {
 	return {

@@ -840,6 +840,8 @@
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Serialization\Associado.cs" />
+    <Compile Include="proc\Serialization\SimulacaoParcela.cs" />
+    <Compile Include="proc\Serialization\Loja.cs" />
     <Compile Include="proc\Serialization\Lojista.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\Cache\CacheClean.cs" />

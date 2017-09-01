@@ -14,8 +14,10 @@ namespace DevKit.Web.Controllers
 
             var iValor = 0;
 
-            if (!valor.Contains(",")) valor += ",00"; // 10 => 10,00
-            valor = valor.Replace(",", "").Replace(".", ""); // 10,00 => 1000
+            if (!valor.Contains(","))
+                valor += ",00";
+
+            valor = valor.Replace(",", "").Replace(".", "");
             iValor = Convert.ToInt32(valor);
 
             return iValor;
@@ -56,11 +58,17 @@ namespace DevKit.Web.Controllers
 
             if (vrTotal != valor)
                 return BadRequest("SOMA DAS PARCELAS DIVERGE DO VALOR TOTAL");
+
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
             
             return Ok(new
             {
                 count = 0,
-                results = new List<string>()
+                results = new List<string>
+                {
+                    db.currentUser.tg_portalComSenha != 1 ? "0" : "1"
+                }
             });
         }
     }

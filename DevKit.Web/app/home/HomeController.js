@@ -23,7 +23,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		{
 			$scope.viewModel = data;
 			$scope.loading = false;
-		});
+        });
 	}
 
 	$scope.showTask = function (mdl) {

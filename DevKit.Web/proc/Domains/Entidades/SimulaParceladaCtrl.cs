@@ -138,12 +138,39 @@ namespace DevKit.Web.Controllers
 
                 if (maxParcAtual == null)
                 {
-                    maxParcAtual = (from e in db.T_Parcelas
+                    var lstParcs = (from e in db.T_Parcelas
                                     where lstCarts.Contains((int)e.fk_cartao)
+                                    where e.nu_parcela == t + 1
+                                    select e).
+                                    ToList();
+
+                    int mTot = 0;
+
+                    foreach (var item in lstParcs)
+                    {
+                        var ltr = (from e in db.LOG_Transacoes
+                                   where e.i_unique == item.fk_log_transacoes
+                                   select e).
+                                   FirstOrDefault();
+                        
+                        if (ltr.tg_confirmada == TipoConfirmacao.Confirmada)
+                        {
+                            mTot += (int) item.vr_valor;
+                        }
+                    }
+
+                    maxParcAtual = mTot.ToString();
+
+                    /*
+                    maxParcAtual = (from e in db.T_Parcelas
+                                    join el in db.LOG_Transacoes on e.fk_log_transacoes equals el.i_unique
+                                    where lstCarts.Contains((int)e.fk_cartao)
+                                    where el.nu
                                     where e.nu_parcela == t + 1
                                     select (long)e.vr_valor).
                                     Sum().
                                     ToString();
+                                    */
 
                     BackupCache(maxParcAtual);
                 }                
@@ -159,7 +186,7 @@ namespace DevKit.Web.Controllers
                 lst.Add(new SimulacaoParcela
                 {
                     valor = vr,
-                    valorMax = "máx " + mon.setMoneyFormat((int)associado.vr_limiteMensal + (int)associado.vr_extraCota - Convert.ToInt32(maxParcAtual)),
+                    valorMax = mon.setMoneyFormat ( ((int)associado.vr_limiteMensal + (int)associado.vr_extraCota) - Convert.ToInt32(maxParcAtual)),
                 });
             }
 

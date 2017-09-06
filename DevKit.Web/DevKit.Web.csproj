@@ -835,10 +835,15 @@
     <Compile Include="proc\Domains\Entidades\LojaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\AssociadoCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\EfetuaVendaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\SomaParceladaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\SimulaParceladaCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
+    <Compile Include="proc\Infrastructure\Iso8583\ISO8583.cs" />
+    <Compile Include="proc\Infrastructure\Iso8583\ISO8583_desmontaRegistro.cs" />
+    <Compile Include="proc\Infrastructure\Iso8583\ISO8583_montaRegistro.cs" />
+    <Compile Include="proc\Infrastructure\Iso8583\SocketConvey.cs" />
     <Compile Include="proc\Serialization\Associado.cs" />
     <Compile Include="proc\Serialization\SimulacaoParcela.cs" />
     <Compile Include="proc\Serialization\Loja.cs" />

@@ -131,7 +131,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.viewModel.p4 = ''; $scope.viewModel.p5 = ''; $scope.viewModel.p6 = '';
             $scope.viewModel.p7 = ''; $scope.viewModel.p8 = ''; $scope.viewModel.p9 = '';
             $scope.viewModel.p10 = ''; $scope.viewModel.p11 = ''; $scope.viewModel.p12 = '';
-
             $scope.viewModel.p1m = ''; $scope.viewModel.p2m = ''; $scope.viewModel.p3m = '';
             $scope.viewModel.p4m = ''; $scope.viewModel.p5m = ''; $scope.viewModel.p6m = '';
             $scope.viewModel.p7m = ''; $scope.viewModel.p8m = ''; $scope.viewModel.p9m = '';
@@ -164,7 +163,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             if ($scope.viewModel.parcelas >= 12) $scope.viewModel.p12m = data.results[11].valorMax;
 
             $scope.viewModel.valor = data.results[$scope.viewModel.parcelas].valor;
-
             $scope.viewModel.parcelasSim = $scope.viewModel.parcelas;
 
             $scope.loading = false;
@@ -204,7 +202,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.loading = false;
             $scope.modoVenda = 'confirmacao';
             $scope.viewModel.requerSenha = data.results[0];
-            console.log($scope.viewModel.requerSenha);
         },
         function (response)
         {
@@ -219,7 +216,40 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.confirmar = function ()
     {
+        console.log($rootScope);
 
+        /*
+        Api.EfetuaVenda.listPage(
+            {
+                empresa: $scope.viewModel.stEmpresa,
+                matricula: $scope.viewModel.stMatricula,
+                codAcesso: $scope.viewModel.stAcesso,
+                stVencimento: $scope.viewModel.stVencimento,
+                valor: $scope.viewModel.valor,
+                parcelas: $scope.viewModel.parcelas,
+                p1: $scope.viewModel.p1,
+                p2: $scope.viewModel.p2,
+                p3: $scope.viewModel.p3,
+                p4: $scope.viewModel.p4,
+                p5: $scope.viewModel.p5,
+                p6: $scope.viewModel.p6,
+                p7: $scope.viewModel.p7,
+                p8: $scope.viewModel.p8,
+                p9: $scope.viewModel.p9,
+                p10: $scope.viewModel.p10,
+                p11: $scope.viewModel.p11,
+                p12: $scope.viewModel.p12,
+            },
+            function (data) {
+
+                $scope.loading = false;
+                
+            },
+            function (response) {
+                $scope.loading = false;
+                $scope.erroSoma = response.data.message;
+            });
+        */
     }
 
 }]);

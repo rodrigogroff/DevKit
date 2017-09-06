@@ -26,7 +26,7 @@ namespace DevKit.Web.Controllers
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-
+            
             var idCartao = Request.GetQueryStringValue<int>("cartao");
             var valor = Request.GetQueryStringValue("valor");
             var parcelas = Request.GetQueryStringValue<int>("parcelas");

@@ -160,18 +160,7 @@ namespace DevKit.Web.Controllers
                     }
 
                     maxParcAtual = mTot.ToString();
-
-                    /*
-                    maxParcAtual = (from e in db.T_Parcelas
-                                    join el in db.LOG_Transacoes on e.fk_log_transacoes equals el.i_unique
-                                    where lstCarts.Contains((int)e.fk_cartao)
-                                    where el.nu
-                                    where e.nu_parcela == t + 1
-                                    select (long)e.vr_valor).
-                                    Sum().
-                                    ToString();
-                                    */
-
+                                       
                     BackupCache(maxParcAtual);
                 }                
 

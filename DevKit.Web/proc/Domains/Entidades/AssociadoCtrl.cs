@@ -67,7 +67,7 @@ namespace DevKit.Web.Controllers
             var codAcessoCalc = new CodigoAcesso().Obter(empresa,
                                                            matricula,
                                                            associado.st_titularidade,
-                                                           associado.nu_viaCartao.ToString(),
+                                                           associado.nu_viaCartao,
                                                            dadosProprietario.st_cpf);
 
             // verificação de código de acesso
@@ -90,7 +90,7 @@ namespace DevKit.Web.Controllers
                     codAcessoCalc = new CodigoAcesso().Obter(empresa,
                                                            matricula,
                                                            cartDep.st_titularidade,
-                                                           associado.nu_viaCartao.ToString(),
+                                                           associado.nu_viaCartao,
                                                            dadosProprietario.st_cpf);
 
                     if (acesso == codAcessoCalc)

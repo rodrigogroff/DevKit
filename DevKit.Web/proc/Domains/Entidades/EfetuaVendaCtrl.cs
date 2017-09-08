@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using System;
+using DataModel;
+using LinqToDB;
+using System.Linq;
 
 namespace DevKit.Web.Controllers
 {
     public class EfetuaVendaController : ApiControllerBase
     {
+        public string cnet_server = "54.233.109.221";
+        public int cnet_port = 2000;
+
         [NonAction]
         public long ObtemValor(string valor)
         {
@@ -23,13 +29,13 @@ namespace DevKit.Web.Controllers
             return iValor;
         }
 
-        public string empresa, matricula, codAcesso, stVencimento, retorno;
+        public string terminal, empresa, matricula, codAcesso, stVencimento, strMessage, retorno, nsu_retorno;
         public long valor, parcelas, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12;
 
         public IHttpActionResult Get()
         {
-            empresa = Request.GetQueryStringValue("empresa");
-            matricula = Request.GetQueryStringValue("matricula");
+            empresa = Request.GetQueryStringValue("empresa").PadLeft(6,'0');
+            matricula = Request.GetQueryStringValue("matricula").PadLeft(6, '0');
             codAcesso = Request.GetQueryStringValue("codAcesso");
             stVencimento = Request.GetQueryStringValue("stVencimento");
             valor = ObtemValor(Request.GetQueryStringValue("valor"));
@@ -50,29 +56,156 @@ namespace DevKit.Web.Controllers
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest("Não autorizado!");
+
+            // =============================
+            // obtem terminal
+            // =============================
+
+            terminal = (from e in db.T_Terminal
+                        where e.fk_loja == db.currentUser.i_unique
+                        select e).
+                        FirstOrDefault().
+                        nu_terminal;
+
+            // =============================
+            // verifica cartão
+            // =============================
+
+            #region - code - 
+
+            var associadoPrincipal = (from e in db.T_Cartao
+                             where e.st_empresa == empresa
+                             where e.st_matricula == matricula
+                             where e.st_titularidade == "01"
+                             select e).
+                             FirstOrDefault();
+
+            var dadosProprietario = ( from e in db.T_Proprietario
+                                      where e.i_unique == associadoPrincipal.fk_dadosProprietario
+                                      select e).
+                                      FirstOrDefault();
+
+            int titularidadeFinal = 1, via = 1;
+
+            var calcAcesso = new CodigoAcesso();
+
+            var codAcessoCalc = calcAcesso.Obter ( empresa,
+                                                   matricula, 
+                                                   titularidadeFinal, 
+                                                   via, 
+                                                   dadosProprietario.st_cpf );
             
+            while (codAcessoCalc != codAcesso)
+            {
+                via = 0;
+
+                for (int t=0; t < 9; ++t)
+                {
+                    codAcessoCalc = calcAcesso.Obter ( empresa, 
+                                                       matricula, 
+                                                       titularidadeFinal, 
+                                                       ++via, 
+                                                       dadosProprietario.st_cpf );
+
+                    if (codAcessoCalc == codAcesso)
+                        break;
+                }
+
+                if (codAcessoCalc == codAcesso)
+                    break;
+
+                titularidadeFinal++;
+            }
+
+            if (titularidadeFinal != 1 )
+            {
+                var associado = (from e in db.T_Cartao
+                                 where e.st_empresa == empresa
+                                 select e).
+                                 FirstOrDefault();
+
+                if (associado.st_venctoCartao != stVencimento)
+                    return BadRequest("Cartão inválido (0xA1)");
+            }
+            else
+            {
+                if (associadoPrincipal.st_venctoCartao != stVencimento)
+                    return BadRequest("Cartão inválido (0xA)");
+            }
+
+            #endregion
+
             var sc = new SocketConvey();
 
-            var sck = sc.connectSocket("localhost", 2000);
+            var sck = sc.connectSocket(cnet_server, cnet_port);
 
             if (sck == null)
                 return BadRequest("Falha de comunicação com servidor (0x1)");
+
+            // #############################################################
+            // #############################################################
+
+            // Venda
+
+            // #############################################################
+            // #############################################################
+
+            strMessage = MontaVendaDigitada(titularidadeFinal);
             
-            if (!sc.socketEnvia(sck, MontaVendaDigitada()))
+            if (!sc.socketEnvia(sck, strMessage))
+            {
+                sck.Close();
                 return BadRequest("Falha de comunicação com servidor (0x2)");
-
+            }
+                
             retorno = sc.socketRecebe(sck);
 
-            if (retorno == "")
+            if (retorno.Length < 6 )
+            {
+                sck.Close();
                 return BadRequest("Falha de comunicação com servidor (0x3)");
+            }
+                
+            var codResp = retorno.Substring(2, 4);
 
-            if (!sc.socketEnvia(sck, MontaConfirmacao()))
+            if (codResp != "0000")
+            {
+                sck.Close();
+                return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+            }                
+
+            nsu_retorno = ObtemNsuRetorno(retorno);
+
+            // #############################################################
+            // #############################################################
+
+            // Confirmação
+
+            // #############################################################
+            // #############################################################
+
+            strMessage = MontaConfirmacao(titularidadeFinal);
+            
+
+            if (!sc.socketEnvia(sck, strMessage))
+            {
+                sck.Close();
                 return BadRequest("Falha de comunicação com servidor (0x4)");
-
+            }
+                
             retorno = sc.socketRecebe(sck);
 
-            if (retorno == "")
+            sck.Close();
+
+            if (retorno.Length < 6)
                 return BadRequest("Falha de comunicação com servidor (0x5)");
+                
+            codResp = retorno.Substring(2, 4);
+
+            if (codResp != "0000")
+                return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+
+            sck.Close();
 
             return Ok(new
             {
@@ -81,26 +214,23 @@ namespace DevKit.Web.Controllers
             });
         }
 
-        public string MontaVendaDigitada()
+        public string MontaVendaDigitada(int titularidade)
         {
-            // ------------------------------------
-            // monta venda digitada
-            // ------------------------------------
+            var reg = "09DICE";
 
-            var reg = "05DICE";
-
-            reg += db.currentUser.st_loja.PadRight(8, ' ');
+            reg += terminal.PadRight(8, ' ');
 
             reg += "000000";
 
             reg += empresa.PadLeft(6, '0');
             reg += matricula.PadLeft(6, '0');
-            reg += "01";
-            reg += codAcesso.PadRight(16, ' ');
-
+            reg += titularidade.ToString().PadLeft(2, '0');
+            reg += "       ";
+            reg += "            ";
+            reg += codAcesso;
             reg += valor.ToString().PadLeft(12, '0');
             reg += parcelas.ToString().PadLeft(2, '0');
-
+            
             string valores = "";
 
             if (parcelas >= 1) valores += p1.ToString().PadLeft(12, '0');
@@ -121,34 +251,26 @@ namespace DevKit.Web.Controllers
             return reg;
         }
 
-        public string MontaConfirmacao()
+        public string ObtemNsuRetorno(string message)
         {
-            // ------------------------------------
-            // monta venda digitada
-            // ------------------------------------
+            return message.Substring(7,6).TrimStart('0');
+        }
 
-            var reg = "05CECC";
-            
-            /*
-            
-            string trilha = client_msg.Substring ( 14, 27 );
-			
-			POS_Entrada  pe = new POS_Entrada();
-			
-			pe.set_st_terminal 		( client_msg.Substring 	(  6,  8 ) );
-			
-            pe.set_st_empresa   	( trilha.Substring 		(  6,  6 ) );
-            pe.set_st_matricula 	( trilha.Substring	 	( 12,  6 ) );
-            pe.set_st_titularidade 	( trilha.Substring 		( 18,  2 ) );
+        public string MontaConfirmacao(int titularidade)
+        {
+            var reg = "09CECC";
 
-            exec_pos_confirmaVendaEmpresarial tr = new exec_pos_confirmaVendaEmpresarial ( trans );
-            
-            tr.input_cont_pe  = pe;
-            tr.input_st_nsu   = client_msg.Substring ( 41, 6 );
-            
-            */
+            reg += terminal.PadRight(8, ' ');
 
-            return reg;
+            reg += "000000";
+
+            reg += empresa.PadLeft(6, '0');
+            reg += matricula.PadLeft(6, '0');
+            reg += titularidade.ToString().PadLeft(2, '0');
+            reg += "       ";
+            reg += nsu_retorno;
+            
+            return reg.PadRight(100, ' ');
         }
     }
 }

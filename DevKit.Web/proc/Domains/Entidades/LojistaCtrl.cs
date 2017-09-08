@@ -33,9 +33,9 @@ namespace DevKit.Web.Controllers
                     new Lojista
                     {
                        nome = lojista.st_nome,
-                       endereco = lojista.st_endereco.Replace ("{$SE3}","") + " / " +
+                       endereco = (lojista.st_endereco + " / " +
                                   lojista.st_cidade + " " + 
-                                  lojista.st_estado
+                                  lojista.st_estado ).Replace ("{SE$3}","")
                     }
                 }
             });

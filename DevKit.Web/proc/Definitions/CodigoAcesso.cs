@@ -1,11 +1,20 @@
-﻿
+﻿using System;
+
 namespace DevKit.Web.Controllers
 {
     public class CodigoAcesso
     {
-        public string Obter (string empresa, string matricula, string titularidade, string via, string cpf) 
+        public string Obter(string empresa, string matricula, string titularidade, int? via, string cpf)
         {
-            string chave = matricula + empresa + "01" + via + cpf.PadRight(14, ' ');
+            return Obter ( empresa, 
+                           matricula, 
+                           Convert.ToInt32(titularidade), 
+                           Convert.ToInt32(via), cpf);
+        }
+
+        public string Obter (string empresa, string matricula, int titularidade, int via, string cpf) 
+        {
+            string chave = matricula + empresa + titularidade.ToString().PadLeft(2, '0') + via + cpf.PadRight(14, ' ');
             int temp = 0;
             for (int n = 0; n<chave.Length; n++)
             {

@@ -53,33 +53,40 @@ namespace DevKit.Web
                 }
                 else
                 {
-                    var lojista = (from e in db.T_Loja
-                                   where e.st_loja == context.UserName
-                                   where e.st_senha.ToUpper() == context.Password.ToUpper()
-                                   select e).
+                    try
+                    {
+                        var lojista = (from e in db.T_Loja
+                                       where e.st_loja == context.UserName
+                                       where e.st_senha.ToUpper() == context.Password.ToUpper()
+                                       select e).
                                FirstOrDefault();
 
-                    if (lojista != null)
-                    {
-                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-
-                        identity.AddClaim(new Claim(ClaimTypes.Name, lojista.st_loja));
-
-
-                        var ticket = new AuthenticationTicket(identity, null);
-
-                        if (lojista.tg_blocked == '1')
+                        if (lojista != null)
                         {
-                         //   context.SetError("invalid_grant", "Terminal BLOQUEADO pela administradora");
-                           // return;
-                        }
+                            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
-                        context.Validated(ticket);
+                            identity.AddClaim(new Claim(ClaimTypes.Name, lojista.st_loja));
+
+
+                            var ticket = new AuthenticationTicket(identity, null);
+
+                            if (lojista.tg_blocked == '1')
+                            {
+                                //   context.SetError("invalid_grant", "Terminal BLOQUEADO pela administradora");
+                                // return;
+                            }
+
+                            context.Validated(ticket);
+                        }
+                        else
+                        {
+                            context.SetError("invalid_grant", "Senha ou terminal inválido");
+                            return;
+                        }
                     }
-                    else
+                    catch (System.Exception ex)
                     {
-                        context.SetError("invalid_grant", "Senha ou terminal inválido");
-                        return;
+                        context.SetError("invalid_grant", ex.ToString());                        
                     }
                 }
 

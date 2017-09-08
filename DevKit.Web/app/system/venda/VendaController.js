@@ -216,9 +216,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.confirmar = function ()
     {
-        console.log($rootScope);
-
-        /*
         Api.EfetuaVenda.listPage(
             {
                 empresa: $scope.viewModel.stEmpresa,
@@ -241,15 +238,13 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 p12: $scope.viewModel.p12,
             },
             function (data) {
-
                 $scope.loading = false;
-                
+                toastr.success("Venda OK", 'Sucesso');
             },
             function (response) {
                 $scope.loading = false;
-                $scope.erroSoma = response.data.message;
+                toastr.error(response.data.message, 'Error');
             });
-        */
     }
 
 }]);

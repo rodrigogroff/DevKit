@@ -218,6 +218,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     {
         Api.EfetuaVenda.listPage(
             {
+                cartao: $scope.viewModel.data.id,
                 empresa: $scope.viewModel.stEmpresa,
                 matricula: $scope.viewModel.stMatricula,
                 codAcesso: $scope.viewModel.stAcesso,

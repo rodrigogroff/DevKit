@@ -11,10 +11,15 @@ namespace DevKit.Web.Controllers
                     if (id != null)
                     {
                         StoreCache(CacheTags.T_Loja, id, null);
-                        
+
                     }
                     //CleanCacheReport(CacheTags.UserReport);
                     //CleanCacheReport(CacheTags.UserComboReport);
+                    break;
+
+                case CacheTags.associado:
+                    if (id != null)
+                        StoreCache(CacheTags.associado, id, null);
                     break;
             }
         }

@@ -31,7 +31,6 @@ namespace DevKit.Web.Controllers
         // ------------------------
 
         public const string T_Loja = "T_Loja";
-
-        //public const string User = "User";
+        public const string associado = "associado";
     }
 }

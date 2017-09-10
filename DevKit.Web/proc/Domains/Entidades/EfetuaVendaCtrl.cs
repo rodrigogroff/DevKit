@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using System;
-using DataModel;
-using LinqToDB;
 using System.Linq;
+using LinqToDB;
 
 namespace DevKit.Web.Controllers
 {
@@ -30,7 +29,7 @@ namespace DevKit.Web.Controllers
         }
 
         public string terminal, empresa, matricula, codAcesso, stVencimento, strMessage, retorno, nsu_retorno;
-        public long valor, parcelas, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12;
+        public long idCartao, valor, parcelas, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12;
 
         public IHttpActionResult Get()
         {
@@ -38,7 +37,8 @@ namespace DevKit.Web.Controllers
             matricula = Request.GetQueryStringValue("matricula").PadLeft(6, '0');
             codAcesso = Request.GetQueryStringValue("codAcesso");
             stVencimento = Request.GetQueryStringValue("stVencimento");
-            valor = ObtemValor(Request.GetQueryStringValue("valor"));
+            idCartao = Request.GetQueryStringValue<int>("cartao");
+            valor = ObtemValor(Request.GetQueryStringValue("valor"));            
             parcelas = Request.GetQueryStringValue<int>("parcelas");
             
             p1 = ObtemValor(Request.GetQueryStringValue("p1"));
@@ -204,6 +204,8 @@ namespace DevKit.Web.Controllers
 
             if (codResp != "0000")
                 return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+
+            CleanCache(db, CacheTags.associado, idCartao );
 
             sck.Close();
 

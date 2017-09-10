@@ -19,13 +19,15 @@ namespace DevKit.Web
         public override System.Threading.Tasks.Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
             string nameUser = context.Identity.Claims.Where(x => x.Type == ClaimTypes.Name).Select(x => x.Value).FirstOrDefault();
-            //string IdUser = context.Identity.Claims.Where(x => x.Type == "IdUser").Select(x => x.Value).FirstOrDefault();
+
+            string m1 = context.Identity.Claims.Where(x => x.Type == "m1").Select(x => x.Value).FirstOrDefault();
+            string m2 = context.Identity.Claims.Where(x => x.Type == "m2").Select(x => x.Value).FirstOrDefault();
             //string Session = context.Identity.Claims.Where(x => x.Type == "Session").Select(x => x.Value).FirstOrDefault();
 
             context.AdditionalResponseParameters.Add("nameUser", nameUser);
-            //context.AdditionalResponseParameters.Add("idUser", IdUser);
-            //context.AdditionalResponseParameters.Add("session", Session);
-
+            context.AdditionalResponseParameters.Add("m1", m1);
+            context.AdditionalResponseParameters.Add("m2", m2);  
+            
             return System.Threading.Tasks.Task.FromResult<object>(null);
         }
 
@@ -66,7 +68,10 @@ namespace DevKit.Web
                             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
                             identity.AddClaim(new Claim(ClaimTypes.Name, lojista.st_loja));
-
+                            identity.AddClaim(new Claim("m1", lojista.st_nome));
+                            identity.AddClaim(new Claim("m2", (lojista.st_endereco + " / " +
+                                                               lojista.st_cidade + " " +
+                                                               lojista.st_estado).Replace("{SE$3}", "")));
 
                             var ticket = new AuthenticationTicket(identity, null);
 

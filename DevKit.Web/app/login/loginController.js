@@ -47,8 +47,7 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api)
                         senha: $scope.loginData.password,
                     },
                         function (data) {
-                            $rootScope.lojistaLogado = data.results[0].nome;
-                            $rootScope.lojistaEnd = data.results[0].endereco;
+                            
                         });
 
                     $state.go('venda', {});

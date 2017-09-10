@@ -70,7 +70,7 @@ namespace DevKit.Web.Controllers
 
             long iValor = ObtemValor(valor);
 
-            var associado = RestoreTimerCache("associado", idCartao.ToString(), 5) as T_Cartao;
+            var associado = RestoreTimerCache(CacheTags.associado, idCartao.ToString(), 1) as T_Cartao;
 
             if (associado == null)
             {
@@ -85,7 +85,7 @@ namespace DevKit.Web.Controllers
             if (iValor > (int)associado.vr_limiteTotal)
                 return BadRequest("Limite excedido");
 
-            var empresa = RestoreTimerCache("empresa", associado.st_empresa, 5) as T_Empresa;
+            var empresa = RestoreTimerCache("empresa", associado.st_empresa, 1) as T_Empresa;
 
             if (empresa == null)
             {
@@ -115,7 +115,7 @@ namespace DevKit.Web.Controllers
 
             var tagEmpMat = associado.st_empresa + associado.st_matricula;
 
-            var lstCarts = RestoreTimerCache("lstCarts", tagEmpMat, 5) as List<int>;
+            var lstCarts = RestoreTimerCache("lstCarts", tagEmpMat, 1) as List<int>;
 
             if (lstCarts == null)
             {
@@ -134,7 +134,7 @@ namespace DevKit.Web.Controllers
             {
                 var tagParcelaAtual = tagEmpMat + t.ToString();
 
-                var maxParcAtual = RestoreTimerCache("parcelasCartao", tagParcelaAtual, 5) as string;
+                var maxParcAtual = RestoreTimerCache("parcelasCartao", tagParcelaAtual, 1) as string;
 
                 if (maxParcAtual == null)
                 {
@@ -154,9 +154,7 @@ namespace DevKit.Web.Controllers
                                    FirstOrDefault();
                         
                         if (ltr.tg_confirmada == TipoConfirmacao.Confirmada)
-                        {
                             mTot += (int) item.vr_valor;
-                        }
                     }
 
                     maxParcAtual = mTot.ToString();

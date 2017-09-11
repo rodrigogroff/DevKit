@@ -17,7 +17,7 @@
 	@Styles.Render("~/bundles/css")
 	@Scripts.Render("~/bundles/scripts")
 </head>
-<body class="background">
+<body class="background" ng-cloak>
 	<div class="header" ng-show="exibirMenu" ng-controller="MenuController">
 		<div class="logo" style="padding-top:-4px; padding-left:-80px">
 			<a ng-click="goHome()">

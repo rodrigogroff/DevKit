@@ -29,7 +29,7 @@ namespace DevKit.Web.Controllers
             return iValor;
         }
 
-        public string terminal, empresa, matricula, codAcesso, stVencimento, strMessage, retorno, nsu_retorno;
+        public string terminal, empresa, matricula, codAcesso, stVencimento, strMessage, retorno, nsu_retorno, ultima_linha;
         public long idCartao, valor, parcelas, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12;
 
         public IHttpActionResult Get()
@@ -142,15 +142,20 @@ namespace DevKit.Web.Controllers
 
             var ultVenda = (from e in db.LOG_Transacoes
                             where e.fk_cartao == associadoPrincipal.i_unique
-                            where e.fk_loja == db.currentUser.i_unique
-                            where e.vr_total == valor
+                            //where e.fk_loja == db.currentUser.i_unique
+                            //where e.vr_total == valor
                             where e.tg_confirmada == TipoConfirmacao.Confirmada
                             orderby e.dt_transacao descending
                             select e).
                             FirstOrDefault();
 
-            if ((ultVenda.dt_transacao - DateTime.Now ).Value.Minutes < 5 )
-                return BadRequest("Transação em duplicidade de valor");
+            if (ultVenda != null)
+            {
+                ultima_linha = (DateTime.Now - ultVenda.dt_transacao).Value.TotalSeconds.ToString();
+
+                if ((DateTime.Now - ultVenda.dt_transacao).Value.TotalMinutes < 5)
+                    return BadRequest("Transação em duplicidade de valor");
+            }
             
             var sc = new SocketConvey();
 
@@ -264,6 +269,8 @@ namespace DevKit.Web.Controllers
             cupom.Add(dadosProprietario.st_nome);
             cupom.Add("Saldo disponivel no mes: R$" + mon.setMoneyFormat(dispM));
             cupom.Add("Saldo disponivel parcelado: R$" + mon.setMoneyFormat(dispT));
+
+            cupom.Add(ultima_linha);
 
             return Ok(new
             {

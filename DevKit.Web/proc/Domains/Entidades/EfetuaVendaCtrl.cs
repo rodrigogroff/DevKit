@@ -136,18 +136,22 @@ namespace DevKit.Web.Controllers
                     return BadRequest("Cartão inválido (0xA)");
             }
 
-            // verifica duplicidade
-
-            /*
-            var ltr = (from e in db.LOG_Transacoes
-                       where e.fk_cartao == associadoPrincipal.i_unique
-                       where e.nu
-
-                )
-                */
-
             #endregion
 
+            // verifica duplicidade
+
+            var ultVenda = (from e in db.LOG_Transacoes
+                            where e.fk_cartao == associadoPrincipal.i_unique
+                            where e.fk_loja == db.currentUser.i_unique
+                            where e.vr_total == valor
+                            where e.tg_confirmada == TipoConfirmacao.Confirmada
+                            orderby e.dt_transacao descending
+                            select e).
+                            FirstOrDefault();
+
+            if ((ultVenda.dt_transacao - DateTime.Now ).Value.Minutes < 5 )
+                return BadRequest("Transação em duplicidade de valor");
+            
             var sc = new SocketConvey();
 
             var sck = sc.connectSocket(cnet_server, cnet_port);

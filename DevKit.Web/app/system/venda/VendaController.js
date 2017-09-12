@@ -9,8 +9,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     function init()
     {
         $scope.loading = false;
+        $scope.lastTag = '';
         $scope.modoVenda = '';
         $scope.viewModel = {};
+        $scope.viewModel.cupom = undefined;
     }
 
     $scope.conferirCartao = function ()
@@ -25,7 +27,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         if ($scope.stEmpresa_fail ||
             $scope.stMatricula_fail ||
             $scope.stAcesso_fail ||
-            $scope.stVencimento_fail) {
+            $scope.stVencimento_fail)
+        {
             return;
         }
 
@@ -35,8 +38,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.viewModel.stVencimento;
 
         if (tag == $scope.lastTag)
+        {
             return;
-
+        }
+            
         $scope.lastTag = tag;
         $scope.modoVenda = '';
 
@@ -55,7 +60,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         function (response) {                
             $scope.viewModel.error = "Cartão Inválido";
             $scope.loading = false;
-
             $scope.viewModel.data = undefined;
             $scope.viewModel.parcelas = '';
             $scope.viewModel.valor = '';

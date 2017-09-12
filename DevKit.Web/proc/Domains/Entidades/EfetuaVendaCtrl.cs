@@ -3,6 +3,7 @@ using System.Web.Http;
 using System;
 using System.Linq;
 using LinqToDB;
+using SyCrafEngine;
 
 namespace DevKit.Web.Controllers
 {
@@ -121,6 +122,8 @@ namespace DevKit.Web.Controllers
             {
                 var associado = (from e in db.T_Cartao
                                  where e.st_empresa == empresa
+                                 where e.st_matricula == matricula
+                                 where e.st_titularidade == titularidadeFinal.ToString().PadLeft(2,'0')
                                  select e).
                                  FirstOrDefault();
 
@@ -132,6 +135,16 @@ namespace DevKit.Web.Controllers
                 if (associadoPrincipal.st_venctoCartao != stVencimento)
                     return BadRequest("Cartão inválido (0xA)");
             }
+
+            // verifica duplicidade
+
+            /*
+            var ltr = (from e in db.LOG_Transacoes
+                       where e.fk_cartao == associadoPrincipal.i_unique
+                       where e.nu
+
+                )
+                */
 
             #endregion
 
@@ -186,7 +199,6 @@ namespace DevKit.Web.Controllers
 
             strMessage = MontaConfirmacao(titularidadeFinal);
             
-
             if (!sc.socketEnvia(sck, strMessage))
             {
                 sck.Close();
@@ -209,10 +221,50 @@ namespace DevKit.Web.Controllers
 
             sck.Close();
 
+            var mon = new money();
+
+            var cupom = new List<string>();
+
+            cupom.Add("CONVEYNET - CONVÊNIOS");
+            cupom.Add(db.currentUser.st_nome);
+            cupom.Add("CNPJ: " + db.currentUser.nu_CNPJ);
+            cupom.Add(db.currentUser.st_endereco.Replace ("{SE$3}","") + " " + db.currentUser.st_cidade + " / " + db.currentUser.st_estado );
+            cupom.Add("Estabelecimento: " + db.currentUser.st_loja);
+            cupom.Add("Cartão: " + associadoPrincipal.st_empresa + associadoPrincipal.st_matricula);
+            cupom.Add("Data transação: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
+            cupom.Add("NSU: " + nsu_retorno);
+            cupom.Add("Terminal: " + terminal);
+            cupom.Add("VALOR TOTAL: R$ " + mon.setMoneyFormat(valor)); 
+
+            int iParc = 1;
+
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p1)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p2)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p3)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p4)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p5)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p6)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p7)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p8)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p9)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p10)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p11)); iParc++;
+            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p12)); iParc++;
+
+            long dispM = (long)associadoPrincipal.vr_limiteMensal,
+                 dispT = (long)associadoPrincipal.vr_limiteTotal;
+
+            new SaldoDisponivel().Obter(db, associadoPrincipal, ref dispM, ref dispT);
+
+            cupom.Add("ASSINATURA/RG_________________________________");
+            cupom.Add(dadosProprietario.st_nome);
+            cupom.Add("Saldo disponivel no mes: R$" + mon.setMoneyFormat(dispM));
+            cupom.Add("Saldo disponivel parcelado: R$" + mon.setMoneyFormat(dispT));
+
             return Ok(new
             {
-                count = 0,
-                results = new List<string> { "OK" }
+                count = 1,
+                results = cupom 
             });
         }
 

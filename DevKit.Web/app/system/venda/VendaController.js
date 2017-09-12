@@ -2,11 +2,16 @@
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
 {
-	$rootScope.exibirMenu = true;
-    $scope.loading = false;
-    $scope.modoVenda = '';
+    $rootScope.exibirMenu = true;
 
-    $scope.viewModel = {};
+    init();
+
+    function init()
+    {
+        $scope.loading = false;
+        $scope.modoVenda = '';
+        $scope.viewModel = {};
+    }
 
     $scope.conferirCartao = function ()
     {
@@ -238,14 +243,54 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 p11: $scope.viewModel.p11,
                 p12: $scope.viewModel.p12,
             },
-            function (data) {
-                $scope.loading = false;
-                toastr.success("Venda OK", 'Sucesso');
+            function (data)
+            {                
+                $scope.viewModel.cupom = data.results;                
             },
             function (response) {
                 $scope.loading = false;
                 toastr.error(response.data.message, 'Error');
             });
+    }
+    
+    $scope.printDiv = function (divName) {
+        var printContents = "<table>";
+
+        printContents += "<tr><td>" + $scope.viewModel.cupom[0] + "</td></tr>";
+        printContents += "<tr><td>" + $scope.viewModel.cupom[1] + "</td></tr>";
+        printContents += "<tr><td>" + $scope.viewModel.cupom[2] + "</td></tr>";
+        printContents += "<tr><td>" + $scope.viewModel.cupom[3] + "</td></tr>";
+        printContents += "<tr><td>" + $scope.viewModel.cupom[4] + "</td></tr>";
+        printContents += "<tr><td>" + $scope.viewModel.cupom[5] + "</td></tr>";
+        printContents += "<tr><td>" + $scope.viewModel.cupom[6] + "</td></tr>";
+        printContents += "<tr><td>" + $scope.viewModel.cupom[7] + "</td></tr>";
+        printContents += "<tr><td>" + $scope.viewModel.cupom[8] + "</td></tr>";
+        printContents += "<tr><td>" + $scope.viewModel.cupom[9] + "</td></tr>";
+
+        var pos = 10;
+
+        for (var i = 0; i < $scope.viewModel.parcelas; ++i)
+        {
+            printContents += "<tr><td>" + $scope.viewModel.cupom[pos] + "</td></tr>";
+            pos = pos + 1;
+        }
+               
+        printContents += "<tr><td>" + $scope.viewModel.cupom[pos] + "</td></tr>"; pos = pos + 1;
+        printContents += "<tr><td>" + $scope.viewModel.cupom[pos] + "</td></tr>"; pos = pos + 1;
+        printContents += "<tr><td>" + $scope.viewModel.cupom[pos] + "</td></tr>"; pos = pos + 1;
+        printContents += "<tr><td>" + $scope.viewModel.cupom[pos] + "</td></tr>"; pos = pos + 1;
+
+        printContents += "</table>"
+
+        var popupWin = window.open('', '_blank', 'width=800,height=600');
+        popupWin.document.open();
+        popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
+        popupWin.document.close();
+    }
+
+    $scope.novaVenda = function ()
+    {
+        init();
     }
 
 }]);

@@ -61,12 +61,8 @@ namespace DevKit.Web.Controllers
             // =============================
             // obtem terminal
             // =============================
-
-            terminal = (from e in db.T_Terminal
-                        where e.fk_loja == db.currentUser.i_unique
-                        select e).
-                        FirstOrDefault().
-                        nu_terminal;
+                        
+            terminal = userLoggedName.PadLeft(8,'0');
 
             // =============================
             // verifica cartão
@@ -140,23 +136,27 @@ namespace DevKit.Web.Controllers
 
             // verifica duplicidade
 
-            var ultVenda = (from e in db.LOG_Transacoes
+            var ultParcela = (from e in db.T_Parcelas
                             where e.fk_cartao == associadoPrincipal.i_unique
-                            //where e.fk_loja == db.currentUser.i_unique
-                            //where e.vr_total == valor
-                            where e.tg_confirmada == TipoConfirmacao.Confirmada
-                            orderby e.dt_transacao descending
+                            where e.fk_loja == db.currentUser.i_unique
+                            where e.nu_parcela == 1
+                            orderby e.dt_inclusao descending
                             select e).
                             FirstOrDefault();
 
-            if (ultVenda != null)
+            if (ultParcela != null)
             {
-                ultima_linha = (DateTime.Now - ultVenda.dt_transacao).Value.TotalSeconds.ToString();
+                var ultLog = (from e in db.LOG_Transacoes where e.i_unique == ultParcela.fk_log_transacoes select e).FirstOrDefault();
 
-                if ((DateTime.Now - ultVenda.dt_transacao).Value.TotalMinutes < 5)
-                    return BadRequest("Transação em duplicidade de valor");
+                if (ultLog.vr_total == valor)
+                {
+                    var ts = (DateTime.Now - ultLog.dt_transacao).Value;
+
+                    if (ts.TotalMinutes < 5)
+                        return BadRequest("Transação em duplicidade de valor");
+                }
             }
-            
+
             var sc = new SocketConvey();
 
             var sck = sc.connectSocket(cnet_server, cnet_port);

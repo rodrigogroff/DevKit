@@ -57,8 +57,19 @@ namespace DevKit.Web
                 {
                     try
                     {
-                        var lojista = (from e in db.T_Loja
-                                       where e.st_loja == context.UserName
+                        var terminal = (from e in db.T_Terminal
+                                        where e.nu_terminal == context.UserName.PadLeft(8,'0')
+                                        select e ).
+                                        FirstOrDefault();
+
+                        if (terminal == null)
+                        {
+                            context.SetError("invalid_grant", "Terminal inexistente");
+                            return;
+                        }
+                                                        
+                        var lojista = (from e in db.T_Loja                                       
+                                       where e.i_unique == terminal.fk_loja                                       
                                        where e.st_senha.ToUpper() == context.Password.ToUpper()
                                        select e).
                                FirstOrDefault();
@@ -67,20 +78,14 @@ namespace DevKit.Web
                         {
                             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
-                            identity.AddClaim(new Claim(ClaimTypes.Name, lojista.st_loja));
-                            identity.AddClaim(new Claim("m1", lojista.st_nome));
+                            identity.AddClaim(new Claim(ClaimTypes.Name, terminal.nu_terminal.TrimStart('0')));
+                            identity.AddClaim(new Claim("m1", "Lojista " + lojista.st_loja + " - " + lojista.st_nome));
                             identity.AddClaim(new Claim("m2", (lojista.st_endereco + " / " +
                                                                lojista.st_cidade + " " +
                                                                lojista.st_estado).Replace("{SE$3}", "")));
 
                             var ticket = new AuthenticationTicket(identity, null);
-
-                            if (lojista.tg_blocked == '1')
-                            {
-                                //   context.SetError("invalid_grant", "Terminal BLOQUEADO pela administradora");
-                                // return;
-                            }
-
+                            
                             context.Validated(ticket);
                         }
                         else

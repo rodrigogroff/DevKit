@@ -37,8 +37,13 @@ namespace DevKit.Web.Controllers
 
                 if (db.currentUser == null)
                 {
+                    var term = (from e in db.T_Terminal
+                                where e.nu_terminal == userCurrentName.PadLeft(8, '0')
+                                select e).
+                                FirstOrDefault();
+
                     db.currentUser = (from ne in db.T_Loja
-                                      where ne.st_loja.ToUpper() == userCurrentName
+                                      where ne.i_unique == term.fk_loja
                                       select ne).
                                       FirstOrDefault();
 

@@ -340,62 +340,7 @@
                                     <tr ng-if="modoVenda == 'simulacao'">
                                         <td></td>
                                         <td colspan="9">
-                                            <table class="table table-hover" style="font-size:16px">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Parcela</th>
-                                                        <th>Valor máximo</th>
-                                                    </tr>
-                                                </thead>
-                                                <tr ng-show="viewModel.parcelasSim >= 1">
-                                                    <td>1</td>
-                                                    <td>{{viewModel.p1m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 2">
-                                                    <td>2</td>
-                                                    <td>{{viewModel.p2m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 3">
-                                                    <td>3</td>
-                                                    <td>{{viewModel.p3m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 4">
-                                                    <td>4</td>
-                                                    <td>{{viewModel.p4m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 5">
-                                                    <td>5</td>
-                                                    <td>{{viewModel.p5m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 6">
-                                                    <td>6</td>
-                                                    <td>{{viewModel.p6m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 7">
-                                                    <td>7</td>
-                                                    <td>{{viewModel.p7m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 8">
-                                                    <td>8</td>
-                                                    <td>{{viewModel.p8m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 9">
-                                                    <td>9</td>
-                                                    <td>{{viewModel.p9m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 10">
-                                                    <td>10</td>
-                                                    <td>{{viewModel.p10m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 11">
-                                                    <td>11</td>
-                                                    <td>{{viewModel.p11m}}</td>
-                                                </tr>
-                                                <tr ng-show="viewModel.parcelasSim >= 12">
-                                                    <td>12</td>
-                                                    <td>{{viewModel.p11m}}</td>
-                                                </tr>
-                                            </table>
+                                           
                                         </td>
                                     </tr>
 
@@ -554,15 +499,7 @@
                                     </td>
                                     <td width="20px"></td>
                                     <td width="90px">
-                                        <input type="password" numeric-only maxlength="4" class="form-control input-transparent"
-                                                ng-model="viewModel.senha">
-                                    </td>
-                                </tr>
-
-                                <tr ng-if="viewModel.requerSenha == 1">
-                                    <td width="20px"></td>
-                                    <td colspan="3">
-                                        <b>VENDA AO PORTADOR</b>
+                                        <input type="password" numeric-only maxlength="4" class="form-control input-transparent" autocomplete="off" ng-model="viewModel.senhaPortadorCartao">
                                     </td>
                                 </tr>
 
@@ -576,7 +513,7 @@
                                     <td width="20px"></td>
                                     <td>
                                         <button class="btn btn-success" ng-click="confirmar()"
-                                                ng-if="viewModel.requerSenha == 0 || (viewModel.requerSenha == 1 && viewModel.senha.length == 4)">
+                                                ng-if="viewModel.requerSenha == 0 || (viewModel.requerSenha == 1 && viewModel.senhaPortadorCartao.length == 4)">
                                             Confirmar
                                         </button>
                                     </td>
@@ -614,6 +551,68 @@
                                     <td>{{ viewModel.data.maxParcelasEmpresa }}</td>
                                 </tr>
                             </table>
+
+                            <span ng-if="modoVenda == 'simulacao'"  align="center"><b>CONDIÇÕES DE PARCELAMENTO</b></span><br />
+                            <br />
+
+                            <table ng-if="modoVenda == 'simulacao'"  class="table table-hover" style="font-size:16px">
+                                <thead ng-show="viewModel.parcelasSim >= 1">
+                                    <tr>
+                                        <th>Parcela</th>
+                                        <th>Valor máximo</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-show="viewModel.parcelasSim >= 1">
+                                    <td>1</td>
+                                    <td>{{viewModel.p1m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 2">
+                                    <td>2</td>
+                                    <td>{{viewModel.p2m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 3">
+                                    <td>3</td>
+                                    <td>{{viewModel.p3m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 4">
+                                    <td>4</td>
+                                    <td>{{viewModel.p4m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 5">
+                                    <td>5</td>
+                                    <td>{{viewModel.p5m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 6">
+                                    <td>6</td>
+                                    <td>{{viewModel.p6m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 7">
+                                    <td>7</td>
+                                    <td>{{viewModel.p7m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 8">
+                                    <td>8</td>
+                                    <td>{{viewModel.p8m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 9">
+                                    <td>9</td>
+                                    <td>{{viewModel.p9m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 10">
+                                    <td>10</td>
+                                    <td>{{viewModel.p10m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 11">
+                                    <td>11</td>
+                                    <td>{{viewModel.p11m}}</td>
+                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 12">
+                                    <td>12</td>
+                                    <td>{{viewModel.p11m}}</td>
+                                </tr>
+                            </table>
+
+
                         </td>
                     </tr>
                 </table>

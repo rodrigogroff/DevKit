@@ -61,13 +61,18 @@ namespace DevKit.Web.Controllers
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-            
+
+            var senha = "1";
+
+            if (db.currentUser.tg_portalComSenha == 0 )
+                senha = "0";
+
             return Ok(new
             {
                 count = 0,
                 results = new List<string>
                 {
-                    db.currentUser.tg_portalComSenha == 1 ? "1" : "0"
+                    senha
                 }
             });
         }

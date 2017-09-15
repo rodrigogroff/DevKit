@@ -115,6 +115,11 @@ namespace DevKit.Web.Controllers
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
+            string comSenha = "1";
+
+            if (mdl.tg_portalComSenha == 0)
+                comSenha = "0";
+
             return Ok(new Loja
             {
                 id = mdl.i_unique.ToString(),
@@ -123,7 +128,7 @@ namespace DevKit.Web.Controllers
                 cidade = mdl.st_cidade,
                 estado = mdl.st_estado,
                 tg_blocked = mdl.tg_blocked.ToString(),
-                tg_portalComSenha = mdl.tg_portalComSenha != 1 ? "0" : "1"
+                tg_portalComSenha = comSenha
             });
         }
 

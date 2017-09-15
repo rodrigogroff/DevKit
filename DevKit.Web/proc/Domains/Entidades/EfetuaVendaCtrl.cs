@@ -29,12 +29,13 @@ namespace DevKit.Web.Controllers
             return iValor;
         }
 
-        public string terminal, empresa, matricula, codAcesso, stVencimento, strMessage, retorno, nsu_retorno, ultima_linha;
+        public string terminal, empresa, matricula, codAcesso, stVencimento, strMessage, retorno, nsu_retorno, ultima_linha, senha;
         public long idCartao, valor, parcelas, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12;
 
         public IHttpActionResult Get()
         {
             empresa = Request.GetQueryStringValue("empresa").PadLeft(6,'0');
+            senha = Request.GetQueryStringValue("senha");
             matricula = Request.GetQueryStringValue("matricula").PadLeft(6, '0');
             codAcesso = Request.GetQueryStringValue("codAcesso");
             stVencimento = Request.GetQueryStringValue("stVencimento");
@@ -291,8 +292,17 @@ namespace DevKit.Web.Controllers
             reg += matricula.PadLeft(6, '0');
             reg += titularidade.ToString().PadLeft(2, '0');
             reg += "       ";
-            reg += "            ";
-            reg += codAcesso;
+
+            if (senha != null)
+            {
+                reg += new Criptografia().DESCript(senha);
+            }
+            else
+            {
+                reg += "            ";
+                reg += codAcesso;
+            }
+            
             reg += valor.ToString().PadLeft(12, '0');
             reg += parcelas.ToString().PadLeft(2, '0');
             

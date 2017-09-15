@@ -12,6 +12,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.lastTag = '';
         $scope.modoVenda = '';
         $scope.viewModel = {};
+        $scope.viewModel.senhaPortadorCartao = undefined;        
         $scope.viewModel.cupom = undefined;
     }
 
@@ -233,6 +234,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 codAcesso: $scope.viewModel.stAcesso,
                 stVencimento: $scope.viewModel.stVencimento,
                 valor: $scope.viewModel.valor,
+                senha: $scope.viewModel.senhaPortadorCartao,
                 parcelas: $scope.viewModel.parcelas,
                 p1: $scope.viewModel.p1,
                 p2: $scope.viewModel.p2,

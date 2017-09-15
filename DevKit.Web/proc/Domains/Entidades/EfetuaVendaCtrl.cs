@@ -282,7 +282,12 @@ namespace DevKit.Web.Controllers
 
         public string MontaVendaDigitada(int titularidade)
         {
-            var reg = "09DICE";
+            var reg = "09"; 
+                
+            if (senha != null)
+                reg += "CECE";
+            else
+                reg += "DICE";
 
             reg += terminal.PadRight(8, ' ');
 

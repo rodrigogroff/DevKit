@@ -211,7 +211,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         {
             $scope.loading = false;
             $scope.modoVenda = 'confirmacao';
-            $scope.viewModel.requerSenha = data.results[0];
+            $scope.viewModel.requerSenha = data.results[0].requerSenha;
         },
         function (response)
         {

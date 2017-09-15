@@ -4,6 +4,11 @@ using System;
 
 namespace DevKit.Web.Controllers
 {
+    public class SomaParceladaView
+    {
+        public string requerSenha = "";
+    }
+    
     public class SomaParceladaController : ApiControllerBase
     {
         [NonAction]
@@ -67,13 +72,17 @@ namespace DevKit.Web.Controllers
             if (db.currentUser.tg_portalComSenha == 0 )
                 senha = "0";
 
+            var lst = new List<SomaParceladaView>();
+
+            lst.Add(new SomaParceladaView
+            {
+                requerSenha = senha
+            });
+
             return Ok(new
             {
                 count = 0,
-                results = new List<string>
-                {
-                    senha
-                }
+                results = lst
             });
         }
     }

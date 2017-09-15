@@ -83,6 +83,11 @@ namespace DevKit.Web.Controllers
 
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
+                var senha = "Com Senha";
+
+                if (item.tg_portalComSenha == 0)
+                    senha = "Sem senha";
+
                 lst.Add(new Loja
                 {
                     id = item.i_unique.ToString(),
@@ -91,7 +96,7 @@ namespace DevKit.Web.Controllers
                     cidade = item.st_cidade,
                     estado = item.st_estado,
                     situacao = item.tg_blocked == '1' ? "Bloqueada" : "Ativa",
-                    tipoVenda = item.tg_portalComSenha == 1 ? "Com Senha" : "Sem senha",
+                    tipoVenda = senha,
                 });
             }
 

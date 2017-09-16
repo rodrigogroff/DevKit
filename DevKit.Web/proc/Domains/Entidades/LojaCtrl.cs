@@ -153,6 +153,14 @@ namespace DevKit.Web.Controllers
             
             db.Update(mdlUpdate);
 
+            var lstTerminais = (from e in db.T_Terminal
+                                where e.fk_loja.ToString() == mdl.id
+                                select e).
+                                ToList();
+
+            foreach (var item in lstTerminais)
+                CleanCache(db, CacheTags.T_Terminal, Convert.ToInt32(item.nu_terminal) );
+
             return Ok();
         }
     }

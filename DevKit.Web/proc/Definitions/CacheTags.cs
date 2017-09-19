@@ -30,7 +30,7 @@ namespace DevKit.Web.Controllers
         // tables
         // ------------------------
 
-        public const string T_Loja = "T_Loja";
+        public const string T_Terminal = "T_Loja";
         public const string associado = "associado";
     }
 }

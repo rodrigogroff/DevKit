@@ -31,7 +31,7 @@ namespace DevKit.Web.Controllers
 
             if (userCurrentName != "DBA")
             {
-                var tagName = CacheTags.T_Loja + userCurrentName;
+                var tagName = CacheTags.T_Terminal + userCurrentName;
 
                 db.currentUser = RestoreCacheNoHit(tagName) as T_Loja;
 

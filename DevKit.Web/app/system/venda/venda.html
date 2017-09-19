@@ -67,6 +67,8 @@
                 <tr height="24px"></tr>
             </table>
             
+            
+
             <div ng-if="viewModel.cupom != undefined">
                 <table width="500px" class="widgetForm">
                     <tr>
@@ -75,9 +77,9 @@
                                 <tr height="20px"></tr>
                                 <tr data-ng-repeat="mdl in viewModel.cupom">
                                     <td width="20px"></td>
-                                    <td>                                        
+                                    <td>
                                         {{mdl}}
-                                    </td>                                    
+                                    </td>
                                     <td width="20px"></td>
                                 </tr>
                                 <tr height="20px"></tr>
@@ -339,9 +341,7 @@
 
                                     <tr ng-if="modoVenda == 'simulacao'">
                                         <td></td>
-                                        <td colspan="9">
-                                           
-                                        </td>
+                                        <td colspan="9"></td>
                                     </tr>
 
                                     <tr height="22px" ng-if="modoVenda == 'simulacao'"></tr>
@@ -488,7 +488,27 @@
 
                         <td width="500px" valign="top">
 
-                            <table ng-if="modoVenda == 'confirmacao'" align="center">
+                            <div ng-if="falhaVenda == true">
+
+                                <br />
+                                <br />
+    
+                                <table width="380px">
+                                    <tr><td>{{falhaVendaMsg}}</td></tr>
+                                </table>
+
+                                <br />
+                                <br />
+
+                                <button class="btn btn-info" ng-click="operadorOkFalha()">OK</button>
+
+                                <br />
+                                <br />
+                                <br />
+
+                            </div>
+
+                            <table ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined" align="center">
 
                                 <tr height="22px"></tr>
 
@@ -552,10 +572,10 @@
                                 </tr>
                             </table>
 
-                            <span ng-if="modoVenda == 'simulacao'"  align="center"><b>CONDIÇÕES DE PARCELAMENTO</b></span><br />
+                            <span ng-if="modoVenda == 'simulacao'" align="center"><b>CONDIÇÕES DE PARCELAMENTO</b></span><br />
                             <br />
 
-                            <table ng-if="modoVenda == 'simulacao'"  class="table table-hover" style="font-size:16px">
+                            <table ng-if="modoVenda == 'simulacao'" class="table table-hover" style="font-size:16px">
                                 <thead ng-show="viewModel.parcelasSim >= 1">
                                     <tr>
                                         <th>Parcela</th>
@@ -618,6 +638,10 @@
                 </table>
                 <br />
             </div>
+
             
-	</section>
+
+        </div>
+
+    </section>
 </div>

@@ -194,7 +194,36 @@ namespace DevKit.Web.Controllers
             if (codResp != "0000")
             {
                 sck.Close();
-                return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+
+                if (codResp == "0505")
+                {
+                    return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                }
+                else if (codResp == "4343")
+                {
+                    var numErros = (from e in db.T_Cartao
+                                    where e.i_unique == associadoPrincipal.i_unique
+                                    select e.nu_senhaErrada).
+                                    FirstOrDefault();
+
+                    if (numErros == 3)
+                    {
+                        // ultima!
+                        return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
+                    }
+                    else if (numErros >= 4)
+                    {
+                        return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                    }
+                    else
+                    {
+                        var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
+
+                        return BadRequest("(43) Senha inválida! " + tentativas);
+                    }                    
+                }
+                else
+                    return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
             }                
 
             nsu_retorno = ObtemNsuRetorno(retorno);

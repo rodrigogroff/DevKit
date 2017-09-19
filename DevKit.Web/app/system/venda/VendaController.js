@@ -253,10 +253,18 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             {                
                 $scope.viewModel.cupom = data.results;                
             },
-            function (response) {
+            function (response)
+            {
                 $scope.loading = false;
-                toastr.error(response.data.message, 'Error');
+               // toastr.error(response.data.message, 'Error');
+
+                $scope.falhaVendaMsg = response.data.message;
+                $scope.falhaVenda = true;                
             });
+    }
+
+    $scope.operadorOkFalha = function () {
+        $scope.falhaVenda = undefined;
     }
     
     $scope.printDiv = function (divName) {

@@ -10,6 +10,9 @@ namespace DevKit.Web.Controllers
 	[Authorize]
 	public class ApiControllerBase : MemCacheController
 	{
+        public string cnet_server = "54.233.109.221";
+        public int cnet_port = 2000;
+
         public AutorizadorCNDB db;
         
         public string apiError = "";

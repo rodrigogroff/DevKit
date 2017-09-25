@@ -9,9 +9,6 @@ namespace DevKit.Web.Controllers
 {
     public class EfetuaVendaController : ApiControllerBase
     {
-        public string cnet_server = "54.233.109.221";
-        public int cnet_port = 2000;
-
         [NonAction]
         public long ObtemValor(string valor)
         {

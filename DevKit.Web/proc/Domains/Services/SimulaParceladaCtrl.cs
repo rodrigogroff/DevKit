@@ -169,11 +169,18 @@ namespace DevKit.Web.Controllers
                     vrSum += iParcIdeal;
                     vr = mon.setMoneyFormat(iParcIdeal);
                 }
-                
+
+                string vrMax = "";
+
+                if (associado.vr_extraCota > 0 && t == 0 )
+                    vrMax = mon.setMoneyFormat(((int)associado.vr_limiteMensal + (int)associado.vr_extraCota) - Convert.ToInt32(maxParcAtual));
+                else
+                    vrMax = mon.setMoneyFormat((int)associado.vr_limiteMensal - Convert.ToInt32(maxParcAtual));
+
                 lst.Add(new SimulacaoParcela
                 {
                     valor = vr,
-                    valorMax = mon.setMoneyFormat ( ((int)associado.vr_limiteMensal + (int)associado.vr_extraCota) - Convert.ToInt32(maxParcAtual)),
+                    valorMax = vrMax
                 });
             }
 

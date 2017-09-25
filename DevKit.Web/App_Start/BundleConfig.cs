@@ -107,7 +107,8 @@ namespace DevKit.Web
                 "~/app/system/venda/VendaController.js",
                 "~/app/home/CacheController.js",
                 "~/app/system/loja/ListingLojasController.js",
-                "~/app/system/loja/LojaController.js"
+                "~/app/system/loja/LojaController.js",
+                "~/app/system/cancelamento/CancelamentoController.js"
 
                 ));
 

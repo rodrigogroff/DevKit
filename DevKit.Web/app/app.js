@@ -12,11 +12,11 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
         
     .state('associado', { url: '/system/associado', templateUrl: 'app/system/associado/listingAssociados.html', controller: 'ListingAssociadosController' })
     .state('venda', { url: '/system/venda', templateUrl: 'app/system/venda/venda.html', controller: 'VendaController' })
+    .state('cancelamento', { url: '/system/cancelamento', templateUrl: 'app/system/cancelamento/cancelamento.html', controller: 'CancelamentoController' })
 
     .state('lojas', { url: '/system/lojas', templateUrl: 'app/system/loja/listingLojas.html', controller: 'ListingLojasController' })
     .state('loja-new', { url: '/system/loja/new', templateUrl: 'app/system/loja/loja.html', controller: 'LojaController' })
     .state('loja', { url: '/system/loja/:id', templateUrl: 'app/system/loja/loja.html', controller: 'LojaController' })
-
 
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
@@ -37,5 +37,4 @@ angular.module('app').config(function ($httpProvider) {
 	$httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
 	$httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache no-store';
 	$httpProvider.defaults.headers.get['Pragma'] = 'no-cache no-store';
-
 });

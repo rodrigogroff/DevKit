@@ -31,9 +31,7 @@ namespace DevKit.Web.Controllers
 
             if (userCurrentName != "DBA")
             {
-                var tagName = CacheTags.T_Terminal + userCurrentName;
-
-                db.currentUser = RestoreCacheNoHit(tagName) as T_Loja;
+                db.currentUser = RestoreTimerCache(CacheTags.T_Terminal, userCurrentName, 2) as T_Loja;
 
                 if (db.currentUser == null)
                 {
@@ -50,7 +48,7 @@ namespace DevKit.Web.Controllers
                     if (db.currentUser == null)
                         return false;
 
-                    BackupCacheNoHit(tagName, db.currentUser);
+                    BackupCache(db.currentUser);
                 }
             }
             else

@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace DevKit.Web.Controllers
 {
     public class Associado
@@ -9,6 +11,8 @@ namespace DevKit.Web.Controllers
                       dispTotal = "",
                       dispExtra = "",
                       maxParcelasEmpresa = "";
+
+        public List<string> lstParcelas = new List<string>();
 
         public bool bloqueado = false;
     }

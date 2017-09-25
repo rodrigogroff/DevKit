@@ -243,6 +243,8 @@
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
+    <Content Include="app\system\cancelamento\cancelamento.html" />
+    <Content Include="app\system\cancelamento\CancelamentoController.js" />
     <Content Include="app\system\venda\venda.html" />
     <Content Include="app\system\venda\VendaController.js" />
     <Content Include="app\system\loja\listingLojas.html" />
@@ -833,11 +835,12 @@
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Entidades\LojaCtrl.cs" />
-    <Compile Include="proc\Domains\Entidades\LojistaCtrl.cs" />
+    <Compile Include="proc\Domains\Services\ConfereNSUCtrl.cs" />
+    <Compile Include="proc\Domains\Services\LojistaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\AssociadoCtrl.cs" />
-    <Compile Include="proc\Domains\Entidades\EfetuaVendaCtrl.cs" />
-    <Compile Include="proc\Domains\Entidades\SomaParceladaCtrl.cs" />
-    <Compile Include="proc\Domains\Entidades\SimulaParceladaCtrl.cs" />
+    <Compile Include="proc\Domains\Services\EfetuaVendaCtrl.cs" />
+    <Compile Include="proc\Domains\Services\SomaParceladaCtrl.cs" />
+    <Compile Include="proc\Domains\Services\SimulaParceladaCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Infrastructure\Iso8583\ISO8583.cs" />
@@ -848,8 +851,8 @@
     <Compile Include="proc\Serialization\SimulacaoParcela.cs" />
     <Compile Include="proc\Serialization\Loja.cs" />
     <Compile Include="proc\Serialization\Lojista.cs" />
-    <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
-    <Compile Include="proc\Services\Cache\CacheClean.cs" />
+    <Compile Include="proc\Base\Cache\StartupPreCacheService.cs" />
+    <Compile Include="proc\Base\Cache\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />
     <Compile Include="proc\Infrastructure\Base\Cache\MemCacheController.cs" />
     <Compile Include="proc\Domains\Enums\MonthCtrl.cs" />
@@ -864,11 +867,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="proc\Services\Criptografia.cs" />
-    <Compile Include="proc\Services\SaldoDisponivel.cs" />
+    <Compile Include="proc\Base\Criptografia.cs" />
+    <Compile Include="proc\Base\SaldoDisponivel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proc\Domains\Login\Login.cs" />
-    <Compile Include="proc\Services\Cache\CacheControlService.cs" />
+    <Compile Include="proc\Base\Cache\CacheControlService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup />

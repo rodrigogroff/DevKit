@@ -71,7 +71,7 @@ namespace DevKit.Web.Controllers
                 {
                     var ts = DateTime.Now - obj.dt_last;
 
-                    if (ts.TotalMinutes > 0)
+                    if (ts.TotalSeconds > minutes * 60)
                         return null;                    
                     
                     SaveHit(tag);
@@ -219,13 +219,27 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public Hashtable GetCacheHitRecord()
         {
-            return myApplication["%hshHits"] as Hashtable;
+            var hshHits = myApplication["%hshHits"] as Hashtable;
+
+            if (hshHits == null)
+            {
+                hshHits = new Hashtable();
+                myApplication["%hshHits"] = hshHits;
+            }
+                
+            return hshHits;
         }
 
         [NonAction]
         public void StoreTag(string tag)
         {
             var lstTags = myApplication["%lstTags"] as List<string>;
+
+            if (lstTags == null)
+            {
+                lstTags = new List<string>();
+                myApplication["%lstTags"] = lstTags;
+            }                
 
             if (!lstTags.Contains(tag))
                 lstTags.Add(tag);
@@ -252,7 +266,7 @@ namespace DevKit.Web.Controllers
             else
             {
                 obj.hits++;
-                obj.dt_last = DateTime.Now;
+                //obj.dt_last = DateTime.Now;
             }
         }
 

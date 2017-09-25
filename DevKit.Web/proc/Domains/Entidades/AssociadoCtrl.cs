@@ -25,7 +25,7 @@ namespace DevKit.Web.Controllers
 
             // busca associado
 
-            var associado = RestoreTimerCache("associadoEMV", empresa + matricula + vencimento, 5) as T_Cartao;
+            var associado = RestoreTimerCache("associadoEMV", empresa + matricula + vencimento, 1) as T_Cartao;
 
             if (associado == null)
             {
@@ -42,7 +42,7 @@ namespace DevKit.Web.Controllers
                 BackupCache(associado);
             }
 
-            var tEmpresa = RestoreTimerCache("empresa", associado.st_empresa, 5) as T_Empresa;
+            var tEmpresa = RestoreTimerCache("empresa", associado.st_empresa, 1) as T_Empresa;
 
             if (tEmpresa == null)
             {
@@ -110,7 +110,37 @@ namespace DevKit.Web.Controllers
             new SaldoDisponivel().
                 Obter(db, associado, ref dispMensal, ref dispTotal);
 
+            var lstParcelas = new List<string>();
+
             var mon = new money();
+            
+            int it = 1, totParc = 0;
+
+            foreach (var item in (from e in db.T_Parcelas
+                                  where e.fk_cartao == associado.i_unique
+                                  where e.nu_parcela >= 1
+                                  orderby e.nu_parcela, e.dt_inclusao
+                                  select e).
+                                  ToList())
+            {
+
+                var ltr = (from e in db.LOG_Transacoes
+                           where e.i_unique == item.fk_log_transacoes
+                           select e).
+                           FirstOrDefault();
+
+                if (ltr.tg_confirmada == TipoConfirmacao.Confirmada)
+                {
+                    totParc += (int) item.vr_valor;
+                  //  lstParcelas.Add("Parcela " + item.nu_parcela + " -> R$ " + mon.setMoneyFormat((long)item.vr_valor));
+                }
+                
+                if (it != item.nu_parcela)
+                {
+                    lstParcelas.Add("Total " + it + " : R$ " + mon.setMoneyFormat((long)totParc));
+                    it = (int)item.nu_parcela;
+                }                    
+            }
 
             return Ok(new
             {
@@ -126,6 +156,7 @@ namespace DevKit.Web.Controllers
                         dispExtra = mon.setMoneyFormat ((long)associado.vr_extraCota),
                         maxParcelasEmpresa = tEmpresa.nu_parcelas.ToString(),
                         bloqueado = associado.tg_status == '1' ? true : false,
+                        lstParcelas = lstParcelas
                     }
                 }
             });

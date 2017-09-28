@@ -49,6 +49,7 @@ angular.module('app.services', ['ngResource'])
         SimulaParcelada: $resource('api/simulaparcelada/:id', {}, opcoes),
         SomaParcelada: $resource('api/somaparcelada/:id', {}, opcoes),
         EfetuaVenda: $resource('api/efetuavenda/:id', {}, opcoes),
+        CancelaVenda: $resource('api/cancelavenda/:id', {}, opcoes),
         Cache: $resource('api/cache/:id', {}, opcoes),
         ConfereNSU: $resource('api/conferensu/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),

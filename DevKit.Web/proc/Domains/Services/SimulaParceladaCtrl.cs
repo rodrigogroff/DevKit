@@ -10,18 +10,6 @@ namespace DevKit.Web.Controllers
 {
     public class SimulaParceladaController : ApiControllerBase
     {
-        [NonAction]
-        public long ObtemValor(string valor)
-        {
-            var iValor = 0;
-
-            if (!valor.Contains(",")) valor += ",00"; // 10 => 10,00
-            valor = valor.Replace(",", "").Replace(".", ""); // 10,00 => 1000
-            iValor = Convert.ToInt32(valor);
-
-            return iValor;
-        }
-
         public IHttpActionResult Get()
         {
             if (!StartDatabaseAndAuthorize())

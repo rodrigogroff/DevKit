@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using System;
 
 namespace DevKit.Web.Controllers
 {
@@ -74,6 +75,23 @@ namespace DevKit.Web.Controllers
             }
 
             return true;
+        }
+
+        [NonAction]
+        public long ObtemValor(string valor)
+        {
+            if (valor == null)
+                return 0;
+
+            var iValor = 0;
+
+            if (!valor.Contains(","))
+                valor += ",00";
+
+            valor = valor.Replace(",", "").Replace(".", "");
+            iValor = Convert.ToInt32(valor);
+
+            return iValor;
         }
     }
 }

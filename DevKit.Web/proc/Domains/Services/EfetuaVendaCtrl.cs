@@ -9,25 +9,21 @@ namespace DevKit.Web.Controllers
 {
     public class EfetuaVendaController : ApiControllerBase
     {
-        [NonAction]
-        public long ObtemValor(string valor)
-        {
-            if (valor == null)
-                return 0;
+        public string terminal, 
+                        empresa, 
+                        matricula, 
+                        codAcesso, 
+                        stVencimento, 
+                        strMessage, 
+                        retorno, 
+                        nsu_retorno, 
+                        ultima_linha,
+                        senha;
 
-            var iValor = 0;
-
-            if (!valor.Contains(","))
-                valor += ",00";
-
-            valor = valor.Replace(",", "").Replace(".", "");
-            iValor = Convert.ToInt32(valor);
-
-            return iValor;
-        }
-
-        public string terminal, empresa, matricula, codAcesso, stVencimento, strMessage, retorno, nsu_retorno, ultima_linha, senha;
-        public long idCartao, valor, parcelas, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12;
+        public long idCartao, 
+                    valor, 
+                    parcelas, 
+                    p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12;
 
         public IHttpActionResult Get()
         {

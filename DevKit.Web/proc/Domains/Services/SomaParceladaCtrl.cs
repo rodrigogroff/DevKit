@@ -11,23 +11,6 @@ namespace DevKit.Web.Controllers
     
     public class SomaParceladaController : ApiControllerBase
     {
-        [NonAction]
-        public long ObtemValor(string valor)
-        {
-            if (valor == null)
-                return 0;
-
-            var iValor = 0;
-
-            if (!valor.Contains(","))
-                valor += ",00";
-
-            valor = valor.Replace(",", "").Replace(".", "");
-            iValor = Convert.ToInt32(valor);
-
-            return iValor;
-        }
-
         public IHttpActionResult Get()
         {
             var valor = ObtemValor(Request.GetQueryStringValue("valor"));

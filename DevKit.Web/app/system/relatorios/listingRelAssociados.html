@@ -1,0 +1,57 @@
+﻿<div class="webFormPostion">
+	<section class="widgetForm" style="width:975px">
+		<legend class="legendTop">
+			<table><tr height="12px"><td> </td></tr></table>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td>Relatório de <b>Associados </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+		<div class="divWebForm">
+			<table width="100%">
+				<tr>
+					<td width="15px"></td>
+					<td valign="top">
+						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/relatorios/_filterRelAssociados.html" funcao-pesquisar="search"></ng-filtro>
+					</td>
+				</tr>
+			</table>
+			<table width="100%">
+				<tr>
+					<td valign="top">
+						<div ng-show="list.length == 0">
+							<br />
+							<br />
+							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+							<br />
+							<br />
+						</div>
+						<div ng-show="list.length > 0">
+							<br />
+							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+							<br />
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Associado</th>
+                                        <th>Cartão</th>
+										<th>CPF</th>
+									</tr>
+								</thead>
+								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td>{{ mdl.associado }}</td>
+									<td>{{ mdl.cartao }}</td>
+                                    <td>{{ mdl.cpf }}</td>									
+								</tr>
+							</table>
+						</div>
+						<br />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+</div>

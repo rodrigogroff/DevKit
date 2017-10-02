@@ -45,6 +45,7 @@ angular.module('app.services', ['ngResource'])
         //Startup: $resource('api/startup/:id', {}, opcoes),
         Associado: $resource('api/associado/:id', {}, opcoes),
         Loja: $resource('api/loja/:id', {}, opcoes),
+        Empresa: $resource('api/empresa/:id', {}, opcoes),
         Lojista: $resource('api/lojista/:id', {}, opcoes),
         SimulaParcelada: $resource('api/simulaparcelada/:id', {}, opcoes),
         SomaParcelada: $resource('api/somaparcelada/:id', {}, opcoes),
@@ -53,6 +54,7 @@ angular.module('app.services', ['ngResource'])
         Cache: $resource('api/cache/:id', {}, opcoes),
         ConfereNSU: $resource('api/conferensu/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),
+        RelAssociados: $resource('api/relAssociados/:id', {}, opcoes),
         MonthCombo: $resource('api/month/:id', {}, opcoes),
 	};
 }]);

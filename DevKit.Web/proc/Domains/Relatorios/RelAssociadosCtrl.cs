@@ -65,7 +65,10 @@ namespace DevKit.Web.Controllers
 
             var res = new List<RelAssociadosItem>();
 
-            query = query.OrderBy(y => y.st_matricula);
+            query = (from e in query
+                     join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int)associado.i_unique
+                     orderby associado.st_nome
+                     select e);
 
             var calcAcesso = new CodigoAcesso();
 

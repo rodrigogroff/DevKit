@@ -33,7 +33,7 @@ namespace DevKit.Web.Controllers
                 lst.Add(new EmpresaItem
                 {
                     id = item.i_unique.ToString(),
-                    stName = item.st_fantasia
+                    stName = "(" + item.st_empresa + ") " + item.st_fantasia
                 });
             }
 
@@ -60,7 +60,7 @@ namespace DevKit.Web.Controllers
             return Ok(new EmpresaItem
             {
                 id = mdl.i_unique.ToString(),
-                stName = mdl.st_fantasia
+                stName = "(" + mdl.st_empresa + ") " + mdl.st_fantasia
             });
         }
     }

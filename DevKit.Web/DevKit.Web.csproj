@@ -250,7 +250,6 @@
     <Content Include="app\system\relatorios\ListingRelatoriosController.js" />
     <Content Include="app\system\relatorios\ListingRelAssociadosController.js" />
     <Content Include="app\system\relatorios\relatorios.html" />
-    <Content Include="app\system\relatorios\_filterRelAssociados.html" />
     <Content Include="app\system\venda\venda.html" />
     <Content Include="app\system\venda\VendaController.js" />
     <Content Include="app\system\loja\listingLojas.html" />

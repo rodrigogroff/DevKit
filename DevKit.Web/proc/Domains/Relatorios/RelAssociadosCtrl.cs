@@ -67,6 +67,8 @@ namespace DevKit.Web.Controllers
 
             query = query.OrderBy(y => y.st_matricula);
 
+            var calcAcesso = new CodigoAcesso();
+
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
                 var assoc = (from e in db.T_Proprietario
@@ -75,12 +77,26 @@ namespace DevKit.Web.Controllers
                              FirstOrDefault();
 
                 if (assoc != null)
+                {
+                    var codAcessoCalc = calcAcesso.Obter(  item.st_empresa,
+                                                           item.st_matricula,
+                                                           item.st_titularidade,
+                                                           item.nu_viaCartao,
+                                                           assoc.st_cpf);
+
                     res.Add(new RelAssociadosItem
                     {
                         associado = assoc.st_nome,
-                        cartao = "E" + item.st_empresa + "M" + item.st_matricula,
+
+                        cartao = item.st_empresa + "." +
+                                 item.st_matricula + "." + 
+                                 codAcessoCalc + "." + 
+                                 item.st_venctoCartao,
+
                         cpf = assoc.st_cpf
                     });
+                }
+                    
             }
 
             return Ok(new { count = query.Count(), results = res });

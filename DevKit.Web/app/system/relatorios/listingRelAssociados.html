@@ -5,7 +5,7 @@
 			<table style="color:white; width:100%">
 				<tr>
 					<td width="20px"></td>
-					<td>Relatório de <b>Associados </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+					<td>Relatório <b>Associados </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
 				</tr>
 				<tr height="12px"></tr>
 			</table>
@@ -13,9 +13,45 @@
 		<div class="divWebForm">
 			<table width="100%">
 				<tr>
-					<td width="15px"></td>
 					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/relatorios/_filterRelAssociados.html" funcao-pesquisar="search"></ng-filtro>
+                        <table class="widget" style="color: white">
+                            <tr height="12px"> </tr>
+                            <tr height="36px">
+                                <td width="20px"></td>
+                                <td width="120px"><b>Empresa</b></td>
+                                <td>
+                                    <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.empresa" ng-model="campos.idEmpresa" />
+                                </td>
+                                <td width="20px"></td>
+                                <td width="120px">
+                                    <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                                </td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Nome Associado</b></td>
+                                <td>
+                                    <input type="text" focus="true"
+                                            class="form-control input-transparent"
+                                            ng-model="campos.busca" />
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Situação</b></td>
+                                <td>
+                                    <br />
+                                    <input type="radio" value="false" ng-model="campos.bloqueado"> Ativo
+                                    <br />
+                                    <input type="radio" value="true" ng-model="campos.bloqueado"> Bloqueado
+                                    <br />
+                                    <input type="radio" value="undefined" ng-model="campos.bloqueado"> (Ambos)
+                                </td>
+                            </tr>
+                            <tr height="22px"> </tr>
+                        </table>
 					</td>
 				</tr>
 			</table>
@@ -30,7 +66,7 @@
 							<br />
 						</div>
 						<div ng-show="list.length > 0">
-							<br />
+							
 							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
 							<table class="table table-hover">

@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingRelAssociadosController',
+﻿
+angular.module('app.controllers').controller('ListingRelAssociadosController',
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
@@ -7,7 +8,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.loading = false;
 
     $scope.campos = {
-        bloqueado: false,
+        bloqueado: 'false',
         selects: {
             empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
         }
@@ -33,12 +34,15 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     {
         $scope.loading = true;
 
-        var opcoes = { skip: skip, take: take };
+        var opcoes = {
+            skip: skip,
+            take: take,
+            idEmpresa: $scope.campos.idEmpresa
+        };
 
-        var filtro = ngHistoricoFiltro.filtro.filtroGerado;
+        angular.extend(opcoes, $scope.campos);
 
-        if (filtro)
-            angular.extend(opcoes, filtro);
+        delete opcoes.selects;
 
         Api.RelAssociados.listPage(opcoes, function (data)
         {

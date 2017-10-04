@@ -245,6 +245,8 @@
     <Content Include="app\home\HomeController.js" />
     <Content Include="app\system\cancelamento\cancelamento.html" />
     <Content Include="app\system\cancelamento\CancelamentoController.js" />
+    <Content Include="app\system\relatorios\ListingLojistaTransController.js" />
+    <Content Include="app\system\relatorios\listingRelLojistaTrans.html" />
     <Content Include="app\system\relatorios\listingRelAssociados.html" />
     <Content Include="app\system\relatorios\ListingLojasController.js" />
     <Content Include="app\system\relatorios\ListingRelatoriosController.js" />
@@ -839,8 +841,11 @@
     <Compile Include="proc\Combos\ClientComboCtrl.cs" />
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
+    <Compile Include="proc\Domains\Entidades\TerminalLojaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojaCtrl.cs" />
+    <Compile Include="proc\Domains\Enums\OrdemRelLojistaTransCtrl.cs" />
+    <Compile Include="proc\Domains\Relatorios\RelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelAssociadosCtrl.cs" />
     <Compile Include="proc\Domains\Services\ConfereNSUCtrl.cs" />
     <Compile Include="proc\Domains\Services\CancelaVendaCtrl.cs" />

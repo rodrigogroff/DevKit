@@ -46,15 +46,18 @@ angular.module('app.services', ['ngResource'])
         Associado: $resource('api/associado/:id', {}, opcoes),
         Loja: $resource('api/loja/:id', {}, opcoes),
         Empresa: $resource('api/empresa/:id', {}, opcoes),
+        TerminalLoja: $resource('api/terminalLoja/:id', {}, opcoes),
         Lojista: $resource('api/lojista/:id', {}, opcoes),
         SimulaParcelada: $resource('api/simulaparcelada/:id', {}, opcoes),
         SomaParcelada: $resource('api/somaparcelada/:id', {}, opcoes),
         EfetuaVenda: $resource('api/efetuavenda/:id', {}, opcoes),
         CancelaVenda: $resource('api/cancelavenda/:id', {}, opcoes),
         Cache: $resource('api/cache/:id', {}, opcoes),
+        OrdemRelLojistaTrans: $resource('api/OrdemRelLojistaTrans/:id', {}, opcoes),        
         ConfereNSU: $resource('api/conferensu/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),
         RelAssociados: $resource('api/relAssociados/:id', {}, opcoes),
+        RelLojistaTrans: $resource('api/relLojistaTrans/:id', {}, opcoes),
         MonthCombo: $resource('api/month/:id', {}, opcoes),
 	};
 }]);

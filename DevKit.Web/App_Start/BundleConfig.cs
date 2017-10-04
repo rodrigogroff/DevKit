@@ -110,6 +110,7 @@ namespace DevKit.Web
                 "~/app/system/loja/LojaController.js",
                 "~/app/system/relatorios/ListingRelatoriosController.js",
                 "~/app/system/relatorios/ListingRelAssociadosController.js",
+                "~/app/system/relatorios/ListingLojistaTransController.js",
                 "~/app/system/cancelamento/CancelamentoController.js"
 
                 ));

@@ -20,12 +20,81 @@
                                 <td width="20px"></td>
                                 <td width="120px"><b>Terminal</b></td>
                                 <td width="240px">
-                                    <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.terminal" ng-model="campos.idTerminal" />
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.terminal" ng-model="campos.idTerminal" />
                                 </td>
                                 <td width="20px"></td>
                                 <td width="120px">
                                     <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
                                 </td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Período inicial</b></td>
+                                <td> 
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="40px">
+                                                <input type="text" class="form-control input-transparent" maxlength="2"
+                                                       ng-model="campos.dia_inicial">
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="90px">                                            
+                                                <input type="hidden" style="width:100%" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="50px">
+                                                <input type="text" class="form-control input-transparent" maxlength="2"
+                                                       ng-model="campos.ano_inicial">
+                                            </td>
+                                        </tr>
+                                    </table>                                    
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Período final</b></td>
+                                <td>
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="40px">
+                                                <input type="text" class="form-control input-transparent" maxlength="2"
+                                                       ng-model="campos.dia_final">
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="90px">
+                                                <input type="hidden" style="width:100%" ui-select2="campos.selects.mes" ng-model="campos.mes_final" />
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="50px">
+                                                <input type="text" class="form-control input-transparent" maxlength="2"
+                                                       ng-model="campos.ano_final">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>NSU</b></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.nsu">
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Situação</b></td>
+                                <td>
+                                    <input type="checkbox" ng-model="campos.confirmada"> Confirmada<br />
+                                    <input type="checkbox" ng-model="campos.cancelada"> Cancelada<br />
+                                </td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr height="22px"> </tr>
                             <tr height="36px">
@@ -53,8 +122,9 @@
 							<br />
 							<br />
 						</div>
-						<div ng-show="list.length > 0">
-							
+						<div ng-show="list.length > 0">							
+                            <h4>Total de transações: {{ list[0].totalTransacoes }}</h4>
+                            <h4>Total em vendas: R$ <b>{{ list[0].totalValor }}</b></h4>
 							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
 							<table class="table table-hover">
@@ -78,7 +148,7 @@
                                     <td>{{ mdl.terminal }}</td>
                                     <td></td>									
 								</tr>
-							</table>
+							</table>                            
 						</div>
 						<br />
 					</td>

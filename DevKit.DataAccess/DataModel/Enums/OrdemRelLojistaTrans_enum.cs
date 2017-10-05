@@ -19,11 +19,12 @@ namespace DataModel
     {
         public List<OrdemRelLojistaTransItem> lst = new List<OrdemRelLojistaTransItem>();
 
-        public const long data = 1;
+        public const long data = 1, valor = 2;
 
         public EnumOrdemRelLojistaTrans()
         {
             lst.Add(new OrdemRelLojistaTransItem() { id = data, stName = "Data" });
+            lst.Add(new OrdemRelLojistaTransItem() { id = valor, stName = "Valor" });
         }
 
         public OrdemRelLojistaTransItem Get(long _id)

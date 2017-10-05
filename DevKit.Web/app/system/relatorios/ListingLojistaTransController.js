@@ -5,11 +5,18 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
 
+    $scope.date = new Date();
+
     $scope.loading = false;
 
     $scope.campos = {
         idOrdem: '1',
+        confirmada: true,
+        cancelada: false,
+        mes_inicial: $scope.date.getMonth()+ 1,
+        mes_final: $scope.date.getMonth() + 1,
         selects: {
+            mes: ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 }),            
             terminal: ngSelects.obterConfiguracao(Api.TerminalLoja, { tamanhoPagina: 15 }),
             ordem: ngSelects.obterConfiguracao(Api.OrdemRelLojistaTrans, { tamanhoPagina: 15 }),
         }
@@ -23,6 +30,14 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     {
         if (ngHistoricoFiltro.filtro)
             ngHistoricoFiltro.filtro.exibeFiltro = false;
+
+        console.log($scope.date);
+
+        $scope.campos.ano_inicial = $scope.date.getFullYear();
+        $scope.campos.ano_final = $scope.date.getFullYear();
+        
+        $scope.campos.dia_inicial = $scope.date.getDay() + 1;
+        $scope.campos.dia_final = $scope.date.getDay() + 1;
     }
 
     $scope.search = function ()

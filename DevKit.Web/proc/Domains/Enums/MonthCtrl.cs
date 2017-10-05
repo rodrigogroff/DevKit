@@ -33,16 +33,16 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-            var obj = RestoreCache(CacheTags.EnumMonth, id);
-            if (obj != null)
-                return Ok(obj);
+           // var obj = RestoreCache(CacheTags.EnumMonth, id);
+            //if (obj != null)
+              //  return Ok(obj);
 
             var mdl = new EnumMonth().Get(id);
 
 			if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            BackupCache(mdl);
+            //BackupCache(mdl);
 
             return Ok(mdl);
 		}

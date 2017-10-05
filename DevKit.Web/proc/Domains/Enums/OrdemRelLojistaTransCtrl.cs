@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
 		{
             string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
-            var hshReport = SetupCacheReport(CacheTags.EnumOrdemRelLojistaTrans);
+            var hshReport = SetupCacheReport(CacheTags.EnumOrdemRelLojistaTransReport);
             if (hshReport[busca] is OrdemRelLojistaTransReport report)
                 return Ok(report);
             
@@ -33,16 +33,16 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-            var obj = RestoreCache(CacheTags.EnumOrdemRelLojistaTrans, id);
-            if (obj != null)
-                return Ok(obj);
+         //   var obj = RestoreCache(CacheTags.EnumOrdemRelLojistaTrans, id);
+           // if (obj != null)
+             //   return Ok(obj);
 
             var mdl = new EnumOrdemRelLojistaTrans().Get(id);
 
 			if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            BackupCache(mdl);
+            //BackupCache(mdl);
 
             return Ok(mdl);
 		}

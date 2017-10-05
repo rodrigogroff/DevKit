@@ -15,12 +15,13 @@ namespace DevKit.Web.Controllers
         // ------------------------
 
         public const string EnumMonth = "EnumMonth";
-        public const string EnumMonthReport = "EnumMonthReport";
+        public const string EnumTipoVenda = "EnumTipoVenda";
         public const string EnumOrdemRelLojistaTrans = "EnumOrdemRelLojistaTrans";
 
-        public const string EnumTipoVenda = "EnumTipoVenda";
+        public const string EnumMonthReport = "EnumMonthReport";
         public const string EnumTipoVendaReport = "EnumTipoVendaReport";
-
+        public const string EnumOrdemRelLojistaTransReport = "EnumOrdemRelLojistaTransReport";        
+        
         // ------------------------
         // combos
         // ------------------------

@@ -129,7 +129,7 @@ namespace DevKit.Web.Controllers
                            select e).
                            FirstOrDefault();
 
-                if (ltr.tg_confirmada == TipoConfirmacao.Confirmada)
+                if (ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada)
                 {
                     totParc += (int) item.vr_valor;
                   //  lstParcelas.Add("Parcela " + item.nu_parcela + " -> R$ " + mon.setMoneyFormat((long)item.vr_valor));

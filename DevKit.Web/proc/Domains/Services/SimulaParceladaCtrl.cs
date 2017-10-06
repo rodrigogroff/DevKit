@@ -141,7 +141,7 @@ namespace DevKit.Web.Controllers
                                    select e).
                                    FirstOrDefault();
                         
-                        if (ltr.tg_confirmada == TipoConfirmacao.Confirmada)
+                        if (ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada)
                             mTot += (int) item.vr_valor;
                     }
 

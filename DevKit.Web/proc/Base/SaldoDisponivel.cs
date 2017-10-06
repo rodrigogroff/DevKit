@@ -30,8 +30,8 @@ namespace DevKit.Web.Controllers
                 if (transacao == null)
                     continue;
 
-                if (transacao.tg_confirmada == TipoConfirmacao.Confirmada ||
-                    transacao.tg_confirmada == TipoConfirmacao.Pendente )
+                if (transacao.tg_confirmada.ToString() == TipoConfirmacao.Confirmada ||
+                    transacao.tg_confirmada.ToString() == TipoConfirmacao.Pendente )
                 {
                     dispMensal -= (int) parc.vr_valor;
                 }
@@ -53,8 +53,10 @@ namespace DevKit.Web.Controllers
                 if (transacao == null)
                     continue;
 
-                if (transacao.tg_confirmada == TipoConfirmacao.Confirmada ||
-                    transacao.tg_confirmada == TipoConfirmacao.Pendente)
+                var sit = transacao.tg_confirmada.ToString();
+
+                if (sit == TipoConfirmacao.Confirmada ||
+                    sit == TipoConfirmacao.Pendente)
                 {
                     dispTotal -= (int)parc.vr_valor;
                 }

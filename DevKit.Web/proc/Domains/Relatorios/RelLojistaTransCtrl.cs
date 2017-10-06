@@ -10,7 +10,15 @@ namespace DevKit.Web.Controllers
 {
     public class RelLojistaTransItem
     {
-        public string data, nsu, associado, valor, parcelas, terminal, totalTransacoes, totalValor;
+        public string data,
+                        nsu, 
+                        situacao,
+                        associado, 
+                        valor, 
+                        parcelas, 
+                        terminal, 
+                        totalTransacoes,
+                        totalValor;
     }
 
     public class RelLojistaTransController : ApiControllerBase
@@ -38,22 +46,35 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var query = (from e in db.LOG_Transacoes
-                         //where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada.ToString()
                          where e.fk_loja == db.currentUser.i_unique
                          select e);
 
-            if (confirmada != null)
-                if (confirmada == true)
-                    query = (from e in query
-                             where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada.ToString()
-                             select e);
+            var lstSits = new List<string>();
 
-            if (cancelada != null)
-                if (cancelada == true)
-                    query = (from e in query
-                             where e.tg_confirmada.ToString() == TipoConfirmacao.Cancelada.ToString()
-                             select e);
+            if (confirmada == null) confirmada = false;
+            if (cancelada == null) cancelada = false;
 
+            if (confirmada == true)
+                lstSits.Add(TipoConfirmacao.Confirmada);
+
+            if (cancelada == true)
+                lstSits.Add(TipoConfirmacao.Cancelada);
+
+            if (confirmada == false && cancelada == false)
+            {
+                lstSits.Add(TipoConfirmacao.Pendente);
+                lstSits.Add(TipoConfirmacao.Confirmada);
+                lstSits.Add(TipoConfirmacao.Negada);
+                lstSits.Add(TipoConfirmacao.Erro);
+                lstSits.Add(TipoConfirmacao.Registro);
+                lstSits.Add(TipoConfirmacao.Cancelada);
+                lstSits.Add(TipoConfirmacao.Desfeita);
+            }
+
+            query = (from e in query
+                     where lstSits.Contains(e.tg_confirmada.ToString())
+                     select e);
+            
             if (idTerminal != null)
             {
                 query = (from e in query
@@ -105,44 +126,69 @@ namespace DevKit.Web.Controllers
             }
 
             var totTrans = query.Count();
-            var totValor = query.Sum(y => y.vr_total);
-            
+
+            long totValor = (long)  query.
+                                    Where (y=> y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                    Sum(y => (decimal) y.vr_total);
+
+            var mon = new money();
             var res = new List<RelLojistaTransItem>();
 
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
+                var nomeAssoc = "(não definido)";
+                var nomeTerm = "";
+
                 var cart = (from e in db.T_Cartao
                             where e.i_unique == item.fk_cartao
                             select e).
                             FirstOrDefault();
 
-                var assoc = (from e in db.T_Proprietario
-                             where e.i_unique == cart.fk_dadosProprietario
-                             select e).
-                             FirstOrDefault();
+                if (cart!= null)
+                {
+                    var assoc = (from e in db.T_Proprietario
+                                 where e.i_unique == cart.fk_dadosProprietario
+                                 select e).
+                                 FirstOrDefault();
 
+                    if (assoc != null)
+                    {
+                        nomeAssoc = assoc.st_nome;
+                    }
+                }
+                
                 var term = (from e in db.T_Terminal
                              where e.i_unique == item.fk_terminal
                              select e).
                              FirstOrDefault();
 
-                var nomeAssoc = "(não definido)";
+                if (term != null)
+                    nomeTerm = term.nu_terminal;
 
-                if (assoc != null)
-                    nomeAssoc = assoc.st_nome;
+                var sit = "";
 
-                var mon = new money();
+                switch (item.tg_confirmada.ToString())
+                {
+                    case TipoConfirmacao.Pendente: sit = "Pendente"; break;
+                    case TipoConfirmacao.Confirmada: sit = "Confirmada"; break;
+                    case TipoConfirmacao.Negada: sit = "Negada"; break;
+                    case TipoConfirmacao.Erro: sit = "Erro: " + item.st_msg_transacao; break;
+                    case TipoConfirmacao.Registro: sit = "Registro"; break;
+                    case TipoConfirmacao.Cancelada: sit = "Cancelada"; break;
+                    case TipoConfirmacao.Desfeita: sit = "Desfeita"; break;
+                }
 
                 res.Add(new RelLojistaTransItem
                 {
                     data = Convert.ToDateTime(item.dt_transacao).ToString("dd/MM/yyyy HH:mm:ss"),
                     nsu = item.nu_nsu.ToString(),
+                    situacao = sit,
                     associado = nomeAssoc,
                     valor = mon.setMoneyFormat((long)item.vr_total),
                     parcelas = item.nu_parcelas.ToString(),
-                    terminal = term.nu_terminal.ToString(),
+                    terminal = nomeTerm,
                     totalTransacoes = totTrans.ToString(),
-                    totalValor = mon.setMoneyFormat((long)totValor)
+                    totalValor = mon.setMoneyFormat(totValor)
                 });
             }
 

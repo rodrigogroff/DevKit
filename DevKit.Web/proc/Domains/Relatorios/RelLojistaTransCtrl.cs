@@ -124,6 +124,14 @@ namespace DevKit.Web.Controllers
                                  orderby e.vr_total descending
                                  select e);
                         break;
+
+                    case EnumOrdemRelLojistaTrans.associado:
+                        query = (from e in query
+                                 join c in db.T_Cartao on e.fk_cartao equals (int)c.i_unique
+                                 join p in db.T_Proprietario on c.fk_dadosProprietario equals (int)p.i_unique
+                                 orderby p.st_nome 
+                                 select e);
+                        break;
                 }
             }
 

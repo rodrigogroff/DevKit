@@ -68,4 +68,38 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         });
     }
 
+    $scope.printDiv = function (parcelas, cupom) {
+        var printContents = "<table>";
+
+        printContents += "<tr><td>" + cupom[0] + "</td></tr>";
+        printContents += "<tr><td>" + cupom[1] + "</td></tr>";
+        printContents += "<tr><td>" + cupom[2] + "</td></tr>";
+        printContents += "<tr><td>" + cupom[3] + "</td></tr>";
+        printContents += "<tr><td>" + cupom[4] + "</td></tr>";
+        printContents += "<tr><td>" + cupom[5] + "</td></tr>";
+        printContents += "<tr><td>" + cupom[6] + "</td></tr>";
+        printContents += "<tr><td>" + cupom[7] + "</td></tr>";
+        printContents += "<tr><td>" + cupom[8] + "</td></tr>";
+        printContents += "<tr><td>" + cupom[9] + "</td></tr>";
+
+        var pos = 10;
+
+        for (var i = 0; i < parcelas; ++i) {
+            printContents += "<tr><td>" + cupom[pos] + "</td></tr>";
+            pos = pos + 1;
+        }
+
+        printContents += "<tr><td>" + cupom[pos] + "</td></tr>"; pos = pos + 1;
+        printContents += "<tr><td>" + cupom[pos] + "</td></tr>"; pos = pos + 1;
+        printContents += "<tr><td>" + cupom[pos] + "</td></tr>"; pos = pos + 1;
+        printContents += "<tr><td>" + cupom[pos] + "</td></tr>"; pos = pos + 1;
+
+        printContents += "</table>"
+
+        var popupWin = window.open('', '_blank', 'width=800,height=600');
+        popupWin.document.open();
+        popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
+        popupWin.document.close();
+    }
+
 }]);

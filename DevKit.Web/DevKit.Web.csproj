@@ -838,6 +838,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="proc\Base\Saldo.cs" />
     <Compile Include="proc\Combos\ClientComboCtrl.cs" />
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
@@ -881,7 +882,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="proc\Base\Criptografia.cs" />
-    <Compile Include="proc\Base\SaldoDisponivel.cs" />
+    <Compile Include="proc\Base\Cupom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proc\Domains\Login\Login.cs" />
     <Compile Include="proc\Base\Cache\CacheControlService.cs" />

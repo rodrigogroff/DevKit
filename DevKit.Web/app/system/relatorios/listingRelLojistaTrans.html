@@ -20,7 +20,7 @@
                                 <td width="20px"></td>
                                 <td width="120px"><b>Terminal</b></td>
                                 <td width="240px">
-                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.terminal" ng-model="campos.idTerminal" />
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.terminal" ng-model="campos.idTerminal" />
                                 </td>
                                 <td width="20px"></td>
                                 <td width="120px">
@@ -39,7 +39,7 @@
                                             </td>
                                             <td width="15px"></td>
                                             <td width="90px">                                            
-                                                <input type="hidden" style="width:100%" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                                                <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
                                             </td>
                                             <td width="15px"></td>
                                             <td width="50px">
@@ -64,7 +64,7 @@
                                             </td>
                                             <td width="15px"></td>
                                             <td width="90px">
-                                                <input type="hidden" style="width:100%" ui-select2="campos.selects.mes" ng-model="campos.mes_final" />
+                                                <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_final" />
                                             </td>
                                             <td width="15px"></td>
                                             <td width="50px">
@@ -101,7 +101,7 @@
                                 <td ></td>
                                 <td ><b>Ordenação</b></td>
                                 <td>
-                                    <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.ordem" ng-model="campos.idOrdem" />
+                                    <input type="hidden" name="setor" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.ordem" ng-model="campos.idOrdem" />
                                 </td>
                                 <td ></td>
                                 <td >                                    
@@ -148,7 +148,7 @@
                                     <td>{{ mdl.valor }}</td>
                                     <td>{{ mdl.parcelas }}</td>
                                     <td>{{ mdl.terminal }}</td>
-                                    <td></td>									
+                                    <td><a ng-if="mdl.situacao == 'Confirmada' || mdl.situacao == 'Cancelada'" ng-click="printDiv(mdl.parcelas, mdl.cupom)">Cupom</a></td>
 								</tr>
 							</table>                            
 						</div>

@@ -252,49 +252,17 @@ namespace DevKit.Web.Controllers
             CleanCache(db, CacheTags.associado, idCartao );
 
             sck.Close();
-
-            var mon = new money();
-
-            var cupom = new List<string>();
-
-            cupom.Add("CONVEYNET - CONVÊNIOS");
-            cupom.Add(db.currentUser.st_nome);
-            cupom.Add("CNPJ: " + db.currentUser.nu_CNPJ);
-            cupom.Add(db.currentUser.st_endereco.Replace ("{SE$3}","") + " " + db.currentUser.st_cidade + " / " + db.currentUser.st_estado );
-            cupom.Add("Estabelecimento: " + db.currentUser.st_loja);
-            cupom.Add("Cartão: " + associadoPrincipal.st_empresa + associadoPrincipal.st_matricula);
-            cupom.Add("Data transação: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
-            cupom.Add("NSU: " + nsu_retorno);
-            cupom.Add("Terminal: " + terminal);
-            cupom.Add("VALOR TOTAL: R$ " + mon.setMoneyFormat(valor)); 
-
-            int iParc = 1;
-
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p1)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p2)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p3)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p4)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p5)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p6)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p7)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p8)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p9)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p10)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p11)); iParc++;
-            if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p12)); iParc++;
-
-            long dispM = (long)associadoPrincipal.vr_limiteMensal,
-                 dispT = (long)associadoPrincipal.vr_limiteTotal;
-
-            new SaldoDisponivel().Obter(db, associadoPrincipal, ref dispM, ref dispT);
-
-            cupom.Add("ASSINATURA/RG_________________________________");
-            cupom.Add(dadosProprietario.st_nome);
-            cupom.Add("Saldo disponivel no mes: R$" + mon.setMoneyFormat(dispM));
-            cupom.Add("Saldo disponivel parcelado: R$" + mon.setMoneyFormat(dispT));
-
-            cupom.Add(ultima_linha);
-
+                        
+            var cupom = new Cupom().
+                Venda ( db, 
+                        associadoPrincipal, 
+                        dadosProprietario, 
+                        nsu_retorno,
+                        terminal,
+                        (int) parcelas, 
+                        valor, 
+                        p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12 );
+            
             return Ok(new
             {
                 count = 1,

@@ -125,6 +125,28 @@ namespace DevKit.Web.Controllers
             if (mdl.tg_portalComSenha == 0)
                 comSenha = "0";
 
+            var lstMensagens = new List<LojaMensagem>();
+
+            foreach (var item in (from e in db.T_LojaMensagem
+                                  where e.fk_loja == id || e.fk_loja == 0
+                                  orderby e.dt_validade
+                                  select e).
+                                  ToList() )
+            {
+                var tipo = "Institucional";
+
+                if (item.fk_loja > 0)
+                    tipo = "Mensagem privada";
+
+                lstMensagens.Add(new LojaMensagem
+                {
+                    link = item.st_link,
+                    tipo = tipo,
+                    mensagem = item.st_msg,
+                    validade = Convert.ToDateTime(item.dt_validade).ToString("dd/MM/yyyy")
+                });
+            }
+
             return Ok(new Loja
             {
                 id = mdl.i_unique.ToString(),
@@ -133,7 +155,8 @@ namespace DevKit.Web.Controllers
                 cidade = mdl.st_cidade,
                 estado = mdl.st_estado,
                 tg_blocked = mdl.tg_blocked.ToString(),
-                tg_portalComSenha = comSenha
+                tg_portalComSenha = comSenha,
+                lstMensagens = lstMensagens
             });
         }
 

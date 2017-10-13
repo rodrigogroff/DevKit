@@ -1,6 +1,16 @@
 ﻿
+using System.Collections.Generic;
+
 namespace DevKit.Web.Controllers
 {
+    public class LojaMensagem
+    {
+        public string validade,
+                        mensagem,
+                        link,
+                        tipo;
+    }
+
     public class Loja
     {
         public string id,
@@ -12,5 +22,7 @@ namespace DevKit.Web.Controllers
                       tipoVenda,
                       tg_blocked,
                       tg_portalComSenha;
+
+        public List<LojaMensagem> lstMensagens;
     }
 }

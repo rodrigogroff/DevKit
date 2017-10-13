@@ -64,6 +64,7 @@ namespace DataModel
 		public ITable<T_FaturamentoDetalhe>           T_FaturamentoDetalhes          { get { return this.GetTable<T_FaturamentoDetalhe>(); } }
 		public ITable<T_InfoAdicionai>                T_InfoAdicionais               { get { return this.GetTable<T_InfoAdicionai>(); } }
 		public ITable<T_Loja>                         T_Loja                         { get { return this.GetTable<T_Loja>(); } }
+		public ITable<T_LojaMensagem>                 T_LojaMensagem                 { get { return this.GetTable<T_LojaMensagem>(); } }
 		public ITable<T_MensagemEdu>                  T_MensagemEdu                  { get { return this.GetTable<T_MensagemEdu>(); } }
 		public ITable<T_Parcela>                      T_Parcelas                     { get { return this.GetTable<T_Parcela>(); } }
 		public ITable<T_PayFone>                      T_PayFone                      { get { return this.GetTable<T_PayFone>(); } }
@@ -555,6 +556,7 @@ namespace DataModel
 		[Column,     Nullable] public int?    tg_isentoFat    { get; set; } // int
 		[Column,     Nullable] public string  st_obs          { get; set; } // varchar(400)
 		[Column,     Nullable] public int?    tg_bloq         { get; set; } // int
+		[Column,     Nullable] public string  st_homepage     { get; set; } // varchar(500)
 	}
 
 	[Table(Schema="dbo", Name="T_EmpresaAfiliada")]
@@ -653,6 +655,16 @@ namespace DataModel
 		[Column,     Nullable] public string  st_senha          { get; set; } // varchar(16)
 		[Column,     Nullable] public int?    tg_cancel         { get; set; } // int
 		[Column,     Nullable] public int?    tg_portalComSenha { get; set; } // int
+	}
+
+	[Table(Schema="dbo", Name="T_LojaMensagem")]
+	public partial class T_LojaMensagem
+	{
+		[Identity          ] public long      i_unique    { get; set; } // bigint
+		[Column,   Nullable] public long?     fk_loja     { get; set; } // bigint
+		[Column,   Nullable] public string    st_msg      { get; set; } // varchar(999)
+		[Column,   Nullable] public string    st_link     { get; set; } // varchar(150)
+		[Column,   Nullable] public DateTime? dt_validade { get; set; } // datetime
 	}
 
 	[Table(Schema="dbo", Name="T_MensagemEdu")]

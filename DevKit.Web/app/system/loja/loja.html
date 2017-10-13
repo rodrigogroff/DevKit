@@ -99,13 +99,77 @@
 						</table>
 					</div>
 				</tab>				
+
+                <tab heading="Mensagens">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table class="table table-hover" ng-if="viewModel.lstMensagens.length > 0">
+                            <thead>
+                                <tr>
+                                    <th>Validade</th>
+                                    <th>Mensagem / Link</th>
+                                    <th>Tipo</th>
+                                </tr>
+                            </thead>
+                            <tr height="28px"></tr>
+                            <tr ng-click="show(mdl)" data-ng-repeat="mdl in viewModel.lstMensagens">
+                                <td>{{ mdl.validade }}</td>
+                                <td>{{ mdl.mensagem }}<br />{{ mdl.link }}</td>
+                                <td>{{ mdl.tipo }}</td>
+                            </tr>
+                        </table>
+                        <br />
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="24px"></th>
+                                    <th width="120px"></th>
+                                    <th width="20px"></th>
+                                    <th width="240px"></th>
+                                </tr>
+                            </thead>
+                            <tr height="28px"></tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>Mensagem</td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="mensagem_texto_fail">!</button>
+                                </td>
+                                <td>
+                                    <textarea class="form-control input-transparent" maxlength="150" style="width:400px"
+                                           ng-model="viewModelMensagem.mensagem"></textarea>
+                                </td>
+                            </tr>
+
+                            <tr height="40px">
+                                <td></td>
+                                <td>Tipo Mensagem</td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="viewModelMensagem.generica"> Institucional (todas as lojas)<br />
+                                </td>
+                            </tr>
+
+                            <tr height="28px"></tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td colspan="3">
+                                    <button class="btn btn-primary" ng-click="salvarMensagem()">Salvar</button><br />
+                                </td>
+                            </tr>                            
+                        </table>
+                        <br />
+                    </div>
+                </tab>				
+
 			</tabset>
 			<br />
 			<br />
 			<table>
 				<tr>
 					<td><button class="btn btn-default" ng-click="list()">Cancelar</button> </td>
-					<td width="34px"></td>
+					<td width="20px"></td>
 					<td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
 				</tr>
 			</table>

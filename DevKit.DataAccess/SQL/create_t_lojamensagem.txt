@@ -1,0 +1,20 @@
+﻿USE [AutorizadorCN]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[T_LojaMensagem](
+	[i_unique] [bigint] IDENTITY(1,1) NOT NULL,
+	[fk_loja] [bigint] NULL,
+	[st_msg] [varchar](999) NULL,
+	[st_link] [varchar](150) NULL,
+	[dt_validade] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO

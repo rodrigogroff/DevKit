@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Net;
 using System;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
@@ -133,15 +134,10 @@ namespace DevKit.Web.Controllers
                                   select e).
                                   ToList() )
             {
-                var tipo = "Institucional";
-
-                if (item.fk_loja > 0)
-                    tipo = "Mensagem privada";
-
                 lstMensagens.Add(new LojaMensagem
                 {
                     link = item.st_link,
-                    tipo = tipo,
+                    tipo = item.fk_loja > 0 ? "Mensagem privada": "Institucional",
                     mensagem = item.st_msg,
                     validade = Convert.ToDateTime(item.dt_validade).ToString("dd/MM/yyyy")
                 });
@@ -175,6 +171,19 @@ namespace DevKit.Web.Controllers
             mdlUpdate.tg_portalComSenha = Convert.ToInt32(mdl.tg_portalComSenha);
             
             db.Update(mdlUpdate);
+
+            if (mdl.novaMensagem != null)
+            {
+                db.Insert(new T_LojaMensagem
+                {
+                    dt_validade = new DateTime (Convert.ToInt32(mdl.novaMensagem.ano_final),
+                                                Convert.ToInt32(mdl.novaMensagem.mes_final),
+                                                Convert.ToInt32(mdl.novaMensagem.dia_final),23,59,59),
+                    fk_loja = Convert.ToInt64(mdl.id),
+                    st_link = mdl.novaMensagem.link,
+                    st_msg = mdl.novaMensagem.mensagem,
+                });
+            }
 
             var lstTerminais = (from e in db.T_Terminal
                                 where e.fk_loja.ToString() == mdl.id

@@ -5,10 +5,15 @@ namespace DevKit.Web.Controllers
 {
     public class LojaMensagem
     {
-        public string validade,
+        public string   validade,
+                        dia_final,
+                        mes_final,
+                        ano_final,
                         mensagem,
                         link,
                         tipo;
+
+        public bool generica;
     }
 
     public class Loja
@@ -24,5 +29,7 @@ namespace DevKit.Web.Controllers
                       tg_portalComSenha;
 
         public List<LojaMensagem> lstMensagens;
+
+        public LojaMensagem novaMensagem;
     }
 }

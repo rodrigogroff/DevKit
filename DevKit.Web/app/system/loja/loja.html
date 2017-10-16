@@ -100,23 +100,8 @@
 					</div>
 				</tab>				
 
-                <tab heading="Mensagens">
+                <tab heading="Mensagens" ng-if="viewModel.id > 0">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-                        <table class="table table-hover" ng-if="viewModel.lstMensagens.length > 0">
-                            <thead>
-                                <tr>
-                                    <th>Validade</th>
-                                    <th>Mensagem / Link</th>
-                                    <th>Tipo</th>
-                                </tr>
-                            </thead>
-                            <tr height="28px"></tr>
-                            <tr ng-click="show(mdl)" data-ng-repeat="mdl in viewModel.lstMensagens">
-                                <td>{{ mdl.validade }}</td>
-                                <td>{{ mdl.mensagem }}<br />{{ mdl.link }}</td>
-                                <td>{{ mdl.tipo }}</td>
-                            </tr>
-                        </table>
                         <br />
                         <table>
                             <thead>
@@ -127,7 +112,25 @@
                                     <th width="240px"></th>
                                 </tr>
                             </thead>
-                            <tr height="28px"></tr>
+                            <tr height="28px">
+                                <td></td>
+                                <td colspan="3">
+                                    <table class="table table-hover" ng-if="viewModel.lstMensagens.length > 0">
+                                        <thead>
+                                            <tr>
+                                                <th>Validade</th>
+                                                <th>Mensagem / Link</th>
+                                                <th>Tipo</th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in viewModel.lstMensagens">
+                                            <td>{{ mdl.validade }}</td>
+                                            <td>{{ mdl.mensagem }}<br />{{ mdl.link }}</td>
+                                            <td>{{ mdl.tipo }}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
                             <tr height="40px">
                                 <td></td>
                                 <td>Mensagem</td>
@@ -137,6 +140,42 @@
                                 <td>
                                     <textarea class="form-control input-transparent" maxlength="150" style="width:400px"
                                            ng-model="viewModelMensagem.mensagem"></textarea>
+                                </td>
+                            </tr>
+
+                            <tr height="40px">
+                                <td></td>
+                                <td>Link (opcional)</td>
+                                <td>                                    
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="150"
+                                           ng-model="viewModelMensagem.link">
+                                </td>
+                            </tr>
+
+                            <tr height="40px">
+                                <td></td>
+                                <td>Vencimento</td>
+                                <td></td>
+                                <td>
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="40px">
+                                                <input type="text" class="form-control input-transparent" maxlength="2"
+                                                       ng-model="viewModelMensagem.dia_final">
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="90px">
+                                                <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="selectMes" ng-model="viewModelMensagem.mes_final" />
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="50px">
+                                                <input type="text" class="form-control input-transparent" maxlength="2"
+                                                       ng-model="viewModelMensagem.ano_final">
+                                            </td>
+                                        </tr>
+                                    </table>   
                                 </td>
                             </tr>
 
@@ -155,7 +194,7 @@
                             <tr height="40px">
                                 <td></td>
                                 <td colspan="3">
-                                    <button class="btn btn-primary" ng-click="salvarMensagem()">Salvar</button><br />
+                                    <button class="btn btn-primary" ng-click="save()">Salvar</button><br />
                                 </td>
                             </tr>                            
                         </table>

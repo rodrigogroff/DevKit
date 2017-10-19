@@ -665,6 +665,8 @@ namespace DataModel
 		[Column,   Nullable] public string    st_msg      { get; set; } // varchar(999)
 		[Column,   Nullable] public string    st_link     { get; set; } // varchar(150)
 		[Column,   Nullable] public DateTime? dt_validade { get; set; } // datetime
+		[Column,   Nullable] public DateTime? dt_criacao  { get; set; } // datetime
+		[Column,   Nullable] public bool?     tg_ativa    { get; set; } // bit
 	}
 
 	[Table(Schema="dbo", Name="T_MensagemEdu")]

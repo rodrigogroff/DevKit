@@ -83,6 +83,13 @@
                 <ul id="side-nav" class="side-nav" style="color:black">
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseAdm"><span class="name">Administrativo</span></a>
+                        <ul id="forms-collapseAdm" class="panel-collapse collapse">
+                            <li><a ui-sref="mensagens"><span>Mensagens</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Associado</span></a>
                         <ul id="forms-collapseSystem" class="panel-collapse collapse">
                             <li><a ui-sref="associado"><span>Verificar cartão</span></a></li>

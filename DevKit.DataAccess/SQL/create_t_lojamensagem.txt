@@ -1,20 +1,27 @@
 ﻿USE [AutorizadorCN]
 GO
 
+/****** Object:  Table [dbo].[T_LojaMensagem]    Script Date: 19/10/2017 10:51:58 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 SET ANSI_PADDING ON
 GO
+
 CREATE TABLE [dbo].[T_LojaMensagem](
 	[i_unique] [bigint] IDENTITY(1,1) NOT NULL,
 	[fk_loja] [bigint] NULL,
 	[st_msg] [varchar](999) NULL,
 	[st_link] [varchar](150) NULL,
-	[dt_validade] [datetime] NULL
+	[dt_validade] [datetime] NULL,
+	[dt_criacao] [datetime] NULL,
+	[tg_ativa] [bit] NULL
 ) ON [PRIMARY]
 
 GO
+
 SET ANSI_PADDING OFF
 GO

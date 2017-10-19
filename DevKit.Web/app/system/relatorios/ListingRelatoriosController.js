@@ -11,4 +11,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $state.go('relAssociados', { });
     }
 
+
+
 }]);

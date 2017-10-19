@@ -42,17 +42,14 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api)
                 }
                 else
                 {
-                    Api.Lojista.listPage({
-                        terminal: $scope.loginData.userName,
-                        senha: $scope.loginData.password,
-                    },
-                        function (data) {
-                            
-                        });
-
-                    $state.go('venda', {});
-                }
-                
+                    Api.LojistaMensagens.listPage({}, function (data)
+                    {
+                        if (data.count == 0)
+                            $state.go('venda', {});
+                        else 
+                            $state.go('mensagens', {});                                                
+                    });                    
+                }                
     		},
 			function (err)
 			{

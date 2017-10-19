@@ -42,15 +42,14 @@ angular.module('app.services', ['ngResource'])
     return {
 
         Setup: $resource('api/setup/:id', {}, opcoes),
-        //Startup: $resource('api/startup/:id', {}, opcoes),
         Associado: $resource('api/associado/:id', {}, opcoes),
         Loja: $resource('api/loja/:id', {}, opcoes),
         Empresa: $resource('api/empresa/:id', {}, opcoes),
         TerminalLoja: $resource('api/terminalLoja/:id', {}, opcoes),
-        Lojista: $resource('api/lojista/:id', {}, opcoes),
         SimulaParcelada: $resource('api/simulaparcelada/:id', {}, opcoes),
         SomaParcelada: $resource('api/somaparcelada/:id', {}, opcoes),
         EfetuaVenda: $resource('api/efetuavenda/:id', {}, opcoes),
+        LojistaMensagens: $resource('api/lojistamensagens/:id', {}, opcoes),
         CancelaVenda: $resource('api/cancelavenda/:id', {}, opcoes),
         Cache: $resource('api/cache/:id', {}, opcoes),
         OrdemRelLojistaTrans: $resource('api/OrdemRelLojistaTrans/:id', {}, opcoes),        

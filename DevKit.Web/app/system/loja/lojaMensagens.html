@@ -1,0 +1,40 @@
+﻿
+<div class="modal-backdrop" style="background: rgba(55, 55, 55, 0.5	);" >
+    <div class="modal-dialog">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="modal-content">
+            Mensagens da <b>Administração </b><br />
+
+            <div ng-show="list.length == 0">
+                <br />
+                <br />
+                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                <br />
+                <br />
+            </div>
+            <div ng-show="list.length > 0" class="widgetForm">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="100px">Data Envio</th>
+                            <th width="400px">Assunto</th>
+                            <th width="200px">Links / Imagens</th>
+                        </tr>
+                    </thead>
+                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                        <td>{{ mdl.dt_criacao }}</td>
+                        <td>{{ mdl.mensagem }}</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <input type="checkbox" ng-model="aceite"> Estou ciente do assunto, e darei encaminhamento.<br />
+            <br />
+            <button class="btn btn-primary" ng-click="confirmar()">Confirmar</button> 
+        </div>
+    </div>
+</div>

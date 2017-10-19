@@ -139,7 +139,7 @@ namespace DevKit.Web.Controllers
                     link = item.st_link,
                     tipo = item.fk_loja > 0 ? "Mensagem privada": "Institucional",
                     mensagem = item.st_msg,
-                    validade = Convert.ToDateTime(item.dt_validade).ToString("dd/MM/yyyy")
+                    validade = Convert.ToDateTime(item.dt_validade).ToString("dd/MM/yyyy"),
                 });
             }
 
@@ -157,7 +157,7 @@ namespace DevKit.Web.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult Post(Loja mdl)
+        public IHttpActionResult Put(Loja mdl)
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -182,6 +182,8 @@ namespace DevKit.Web.Controllers
                     fk_loja = Convert.ToInt64(mdl.id),
                     st_link = mdl.novaMensagem.link,
                     st_msg = mdl.novaMensagem.mensagem,
+                    dt_criacao = DateTime.Now,
+                    tg_ativa = true
                 });
             }
 

@@ -10,6 +10,7 @@ namespace DevKit.Web.Controllers
                         mes_final,
                         ano_final,
                         mensagem,
+                        dt_criacao,
                         link,
                         tipo;
 

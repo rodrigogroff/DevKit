@@ -136,10 +136,15 @@ namespace DevKit.Web.Controllers
             {
                 lstMensagens.Add(new LojaMensagem
                 {
+                    id = item.i_unique.ToString(),
                     link = item.st_link,
-                    tipo = item.fk_loja > 0 ? "Mensagem privada": "Institucional",
+                    tipo = item.fk_loja > 0 ? "Mensagem privada" : "Institucional",
                     mensagem = item.st_msg,
                     validade = Convert.ToDateTime(item.dt_validade).ToString("dd/MM/yyyy"),
+                    ativa = item.tg_ativa == null || item.tg_ativa == false ? false : true,
+                    dia_final = item.dt_validade.Value.Day.ToString(),
+                    mes_final = item.dt_validade.Value.Month.ToString(),
+                    ano_final = item.dt_validade.Value.Year.ToString(),
                 });
             }
 
@@ -174,17 +179,46 @@ namespace DevKit.Web.Controllers
 
             if (mdl.novaMensagem != null)
             {
-                db.Insert(new T_LojaMensagem
+                if (mdl.novaMensagem.id == "" || mdl.novaMensagem.id == null)
                 {
-                    dt_validade = new DateTime (Convert.ToInt32(mdl.novaMensagem.ano_final),
-                                                Convert.ToInt32(mdl.novaMensagem.mes_final),
-                                                Convert.ToInt32(mdl.novaMensagem.dia_final),23,59,59),
-                    fk_loja = Convert.ToInt64(mdl.id),
-                    st_link = mdl.novaMensagem.link,
-                    st_msg = mdl.novaMensagem.mensagem,
-                    dt_criacao = DateTime.Now,
-                    tg_ativa = true
-                });
+                    if (mdl.novaMensagem.mensagem != "" && mdl.novaMensagem.mensagem != null)
+                    {
+                        db.Insert(new T_LojaMensagem
+                        {
+                            dt_validade = new DateTime(Convert.ToInt32(mdl.novaMensagem.ano_final),
+                                                    Convert.ToInt32(mdl.novaMensagem.mes_final),
+                                                    Convert.ToInt32(mdl.novaMensagem.dia_final), 23, 59, 59),
+                            fk_loja = Convert.ToInt64(mdl.id),
+                            st_link = mdl.novaMensagem.link,
+                            st_msg = mdl.novaMensagem.mensagem,
+                            dt_criacao = DateTime.Now,
+                            tg_ativa = true
+                        });
+                    }                    
+                }
+                else
+                {
+                    var dbItem = (from e in db.T_LojaMensagem
+                                  where e.i_unique.ToString() == mdl.novaMensagem.id
+                                  select e ).
+                                  FirstOrDefault();
+
+                    if (dbItem != null)
+                    {
+                        if (mdl.novaMensagem.mensagem != null)
+                        {
+                            dbItem.dt_validade = new DateTime(Convert.ToInt32(mdl.novaMensagem.ano_final),
+                                                    Convert.ToInt32(mdl.novaMensagem.mes_final),
+                                                    Convert.ToInt32(mdl.novaMensagem.dia_final), 23, 59, 59);
+
+                            dbItem.st_link = mdl.novaMensagem.link;
+                            dbItem.st_msg = mdl.novaMensagem.mensagem;
+                            dbItem.tg_ativa = mdl.novaMensagem.ativa;
+
+                            db.Update(dbItem);
+                        }
+                    }
+                }
             }
 
             var lstTerminais = (from e in db.T_Terminal

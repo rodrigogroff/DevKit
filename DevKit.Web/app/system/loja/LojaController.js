@@ -23,6 +23,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
                 mes_final: $scope.date.getMonth() + 1,
                 ano_final: $scope.date.getFullYear(),
                 dia_final: $scope.date.getDate(),
+                ativa: true
             };
 
 		if (id > 0)
@@ -65,9 +66,7 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
                 Api.Loja.update({ id: id }, $scope.viewModel, function (data)
                 {
                     toastr.success('Loja salva!', 'Sucesso');
-
-                    //recarrega mensagens
-                    init();
+                    init(); //recarrega mensagens
 				},
                 function (response)
                 {
@@ -88,6 +87,11 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 			}
 		}	
 	};
+
+    $scope.showMsg = function (mdl)
+    {
+        $scope.viewModelMensagem = mdl;
+    }
 
 	$scope.list = function () {
 		$state.go('lojas');

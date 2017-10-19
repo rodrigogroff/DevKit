@@ -5,7 +5,8 @@ namespace DevKit.Web.Controllers
 {
     public class LojaMensagem
     {
-        public string   validade,
+        public string   id,
+                        validade,
                         dia_final,
                         mes_final,
                         ano_final,
@@ -14,7 +15,8 @@ namespace DevKit.Web.Controllers
                         link,
                         tipo;
 
-        public bool generica;
+        public bool generica, 
+                    ativa;
     }
 
     public class Loja

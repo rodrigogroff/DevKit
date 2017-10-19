@@ -660,13 +660,13 @@ namespace DataModel
 	[Table(Schema="dbo", Name="T_LojaMensagem")]
 	public partial class T_LojaMensagem
 	{
-		[Identity          ] public long      i_unique    { get; set; } // bigint
-		[Column,   Nullable] public long?     fk_loja     { get; set; } // bigint
-		[Column,   Nullable] public string    st_msg      { get; set; } // varchar(999)
-		[Column,   Nullable] public string    st_link     { get; set; } // varchar(150)
-		[Column,   Nullable] public DateTime? dt_validade { get; set; } // datetime
-		[Column,   Nullable] public DateTime? dt_criacao  { get; set; } // datetime
-		[Column,   Nullable] public bool?     tg_ativa    { get; set; } // bit
+		[PrimaryKey, Identity] public long      i_unique    { get; set; } // bigint
+		[Column,     Nullable] public long?     fk_loja     { get; set; } // bigint
+		[Column,     Nullable] public string    st_msg      { get; set; } // varchar(999)
+		[Column,     Nullable] public string    st_link     { get; set; } // varchar(150)
+		[Column,     Nullable] public DateTime? dt_validade { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_criacao  { get; set; } // datetime
+		[Column,     Nullable] public bool?     tg_ativa    { get; set; } // bit
 	}
 
 	[Table(Schema="dbo", Name="T_MensagemEdu")]
@@ -1245,6 +1245,12 @@ namespace DataModel
 		}
 
 		public static T_Loja Find(this ITable<T_Loja> table, decimal i_unique)
+		{
+			return table.FirstOrDefault(t =>
+				t.i_unique == i_unique);
+		}
+
+		public static T_LojaMensagem Find(this ITable<T_LojaMensagem> table, long i_unique)
 		{
 			return table.FirstOrDefault(t =>
 				t.i_unique == i_unique);

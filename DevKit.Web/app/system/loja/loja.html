@@ -121,16 +121,23 @@
                                                 <th>Validade</th>
                                                 <th>Mensagem / Link</th>
                                                 <th>Tipo</th>
+                                                <th>Ativa</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
-                                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in viewModel.lstMensagens">
+                                        <tr ng-click="showMsg(mdl)" data-ng-repeat="mdl in viewModel.lstMensagens">
                                             <td>{{ mdl.validade }}</td>
                                             <td>{{ mdl.mensagem }}<br />{{ mdl.link }}</td>
                                             <td>{{ mdl.tipo }}</td>
+                                            <td>{{ mdl.ativa == true ? 'sim' : 'não' }}</td>
                                         </tr>
                                     </table>
+                                    <br />
+                                    <h4><b>Incluir / Alterar mensagem</b></h4>
+                                    <br />
                                 </td>
                             </tr>
+
                             <tr height="40px">
                                 <td></td>
                                 <td>Mensagem</td>
@@ -176,6 +183,15 @@
                                             </td>
                                         </tr>
                                     </table>   
+                                </td>
+                            </tr>
+                            
+                            <tr height="40px">
+                                <td></td>
+                                <td>Ativa?</td>
+                                <td></td>
+                                <td>
+                                    <input type="checkbox" ng-model="viewModelMensagem.ativa"> Sim<br />
                                 </td>
                             </tr>
 

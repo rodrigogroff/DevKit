@@ -10,63 +10,211 @@
 	
 </head>
 <body class="background-white" >
-	<div align="center" style="padding-top:110px;">
-		<div align="center" style="width:400px;height:460px;background-color:#e0e0e0;" ng-show="!loginOK">
-			<form id="validate" style="width:300px;">
-				<fieldset>
-					<br /><br />
-					<br />
-					<div style="padding-left:0px">
-						<img src='../../images/logo.png' height="120px" /><br />
-					</div>		
-                    
-                    <h4>Autorização de venda CONVÊNIO</h4>
-                    
-					<table>
-						<tr height="24px"></tr>
-						<tr height="48px">
-							<td width="120px">
-								<p for="login" style="color: black">Terminal Lojista</p>
-							</td>
-							<td width="180px">
-								<div class="input-group input-group-lg">
-									<span class="input-group-addon"  style="width:45px"><i class="fa fa-user"></i></span>
-									<input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
-										   class="form-control" name="username" ng-model="loginData.userName" value="" autofocus>
-								</div>
-							</td>
-						</tr>
-						<tr height="48px">
-							<td>
-								<p for="pass" style="color: black">Senha</p>
-							</td>
-							<td>
-								<div class="input-group input-group-lg">
-									<span class="input-group-addon" style="width:45px"><i class="fa fa-lock"></i></span>
-									<input id="login-password" style="font-size: 12px; border: 1px solid #ccc;" type="password"
-										   class="form-control" name="password" ng-model="loginData.password" >
-								</div>
-							</td>
-						</tr>
-						<tr height="24px"></tr>
-						<tr height="48px">
-							<td colspan="2" align="center">
-								<button type="submit" id="btn-login" class="btn btn-block btn-lg btn-primary" ng-click="login()">
-									<div ng-show="!loading">Efetuar login </div> <div ng-show="loading">Processando... <i class="fa fa-spinner fa-spin"></i></div> 									
-								</button>
-							</td>
-						</tr>
-						<tr height="48px">
-							<td colspan="2">
-								<div align="center">
-									<span style="color:#ff0000;">{{mensagem}}</span>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</fieldset>
-				<span style="color:grey;text-align:center">Versão {{version}}</span>
-			</form>
+	<div align="center" style="padding-top:80px;">
+		<div align="center" style="width:850px;" ng-show="!loginOK">
+            <div class="widget" align="center">
+                <br />
+                <div style="padding-left:0px">
+                    <img src='../../images/logo.png' height="120px" /><br />
+                </div>                
+                <br />
+                <tabset class="tabs-left" style="font-size:13px;padding-left:20px">
+                    <tab heading="Lojista" style="font-size:16px">
+                        <div style="padding-left:30px">
+                            <br />
+                            <table align="left" style="background-color:#e0e0e0;width:475px">
+                                <tr height="54px">
+                                    <td> </td>
+                                    <td colspan="2">
+                                        <br />
+                                        <h4 style="color:black;text-align:center">Autorização de venda CONVÊNIO</h4>
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr height="48px">
+                                    <td width="20px"> </td>
+                                    <td width="80px">
+                                        <p for="login" style="color: black">Terminal Lojista</p>
+                                    </td>
+                                    <td width="180px">
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" style="width:45px"><i class="fa fa-user"></i></span>
+                                            <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
+                                                   class="form-control" name="username" ng-model="loginData.userName" value="" autofocus>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr height="48px">
+                                    <td></td>
+                                    <td>
+                                        <p for="pass" style="color: black">Senha</p>
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" style="width:45px"><i class="fa fa-lock"></i></span>
+                                            <input id="login-password" style="font-size: 12px; border: 1px solid #ccc;" type="password"
+                                                   class="form-control" name="password" ng-model="loginData.password">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr height="24px"></tr>
+                                <tr height="48px">
+                                    <td></td>
+                                    <td colspan="2" align="center">
+                                        <button style="width:260px" type="submit" id="btn-login" class="btn btn-block btn-lg btn-primary" ng-click="login()">
+                                            <div ng-show="!loading">Efetuar login </div> <div ng-show="loading">Processando... <i class="fa fa-spinner fa-spin"></i></div>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr height="48px">
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div align="center">
+                                            <span style="color:#ff0000;">{{mensagem}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </tab>
+
+                    <tab heading="Associado" style="font-size:16px">
+                        <div style="padding-left:30px">
+                            <br />
+                            <table align="left" style="background-color:#e0e0e0;width:475px">
+                                <tr height="54px">
+                                    <td> </td>
+                                    <td colspan="2">
+                                        <br />
+                                        <h4 style="color:black;text-align:center">Área do Associado</h4>
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr height="48px">
+                                    <td width="20px"> </td>
+                                    <td width="80px">
+                                        <p for="login" style="color: black">Empresa</p>
+                                    </td>
+                                    <td width="180px">
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" style="width:45px"><i class="fa fa-user"></i></span>
+                                            <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
+                                                   class="form-control" name="username" ng-model="loginData.userName" value="" autofocus>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr height="48px">
+                                    <td > </td>
+                                    <td >
+                                        <p for="login" style="color: black">Matrícula</p>
+                                    </td>
+                                    <td >
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" style="width:45px"><i class="fa fa-user"></i></span>
+                                            <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
+                                                   class="form-control" name="username" ng-model="loginData.userMatricula" value="">
+                                        </div>
+                                    </td>
+                                    
+                                </tr>
+                                <tr height="48px">
+                                    <td></td>
+                                    <td>
+                                        <p for="pass" style="color: black">Senha</p>
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" style="width:45px"><i class="fa fa-lock"></i></span>
+                                            <input id="login-password" style="font-size: 12px; border: 1px solid #ccc;" type="password"
+                                                   class="form-control" name="password" ng-model="loginData.password">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr height="24px"></tr>
+                                <tr height="48px">
+                                    <td></td>
+                                    <td colspan="2" align="center">
+                                        <button style="width:260px" type="submit" id="btn-login" class="btn btn-block btn-lg btn-primary" ng-click="login()">
+                                            <div ng-show="!loading">Efetuar login </div> <div ng-show="loading">Processando... <i class="fa fa-spinner fa-spin"></i></div>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr height="48px">
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div align="center">
+                                            <span style="color:#ff0000;">{{mensagem}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </tab>
+
+                    <tab heading="Administrador" style="font-size:16px">
+                        <div style="padding-left:30px">
+                            <br />
+                            <table align="left" style="background-color:#e0e0e0;width:475px">
+                                <tr height="54px">
+                                    <td> </td>
+                                    <td colspan="2">
+                                        <br />
+                                        <h4 style="color:black;text-align:center">Área restrita</h4>
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr height="48px">
+                                    <td width="20px"> </td>
+                                    <td width="80px">
+                                        <p for="login" style="color: black">Usuário</p>
+                                    </td>
+                                    <td width="180px">
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" style="width:45px"><i class="fa fa-user"></i></span>
+                                            <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
+                                                   class="form-control" name="username" ng-model="loginData.userName" value="" autofocus>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr height="48px">
+                                    <td></td>
+                                    <td>
+                                        <p for="pass" style="color: black">Senha</p>
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" style="width:45px"><i class="fa fa-lock"></i></span>
+                                            <input id="login-password" style="font-size: 12px; border: 1px solid #ccc;" type="password"
+                                                   class="form-control" name="password" ng-model="loginData.password">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr height="24px"></tr>
+                                <tr height="48px">
+                                    <td></td>
+                                    <td colspan="2" align="center">
+                                        <button style="width:260px" type="submit" id="btn-login" class="btn btn-block btn-lg btn-primary" ng-click="login()">
+                                            <div ng-show="!loading">Efetuar login </div> <div ng-show="loading">Processando... <i class="fa fa-spinner fa-spin"></i></div>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr height="48px">
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div align="center">
+                                            <span style="color:#ff0000;">{{mensagem}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </tab>
+                </tabset>
+                <br />
+
+                <span style="color:grey;text-align:center">Versão {{version}}</span><br />
+                <br />
+            </div>
 		</div>
 	</div>
 </body>

@@ -1,10 +1,10 @@
 ﻿'use strict';
 angular.module('app.controllers').controller('LoginController',
-['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version','Api',
-function ($scope, $rootScope, $location, $state, AuthService, version, Api)
+['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version', 'Api', '$stateParams',
+function ($scope, $rootScope, $location, $state, AuthService, version, Api, $stateParams)
 {
 	$rootScope.exibirMenu = false;
-
+    
 	$scope.version = version;	
 	$scope.loading = false;
 	$scope.loginOK = false;
@@ -14,7 +14,14 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api)
 		{
 			userName: "",
 			password: ""
-		};
+        };
+
+    init();
+
+    function init()
+    {
+        $scope.tipo = $location.search().tipo;
+    }
 
     $scope.login = function ()
     {

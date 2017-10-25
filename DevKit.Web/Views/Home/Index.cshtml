@@ -31,13 +31,14 @@
 						<td width="900px">
                             <table>
                                 <tr>
-                                    <td >
-                                        <span style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
+                                    <td>
+                                        <span ng-if="authentication.tipo == '1'" style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
+                                        <span ng-if="authentication.tipo == '2'" style="color:black"><h3>Cartão <b>{{authentication.nameUser}}</b></h3></span>
                                     </td>
                                     <td width="20px"></td>
-                                    <td style="padding-top:12px">
+                                    <td style="padding-top:12px">                                        
                                         <b>{{authentication.m1}}</b><br />
-                                        {{authentication.m2}}
+                                        {{authentication.m2}}                                        
                                     </td>
                                 </tr>
                             </table>
@@ -78,8 +79,36 @@
 				</ul>
 				<ul><li></li></ul>
 			</section>			
+
+            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.tipo == '2'">
+                <ul id="side-nav" class="side-nav" style="color:black">
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseUsrExtratos"><span class="name">Financeiro</span></a>
+                        <ul id="forms-collapseUsrExtratos" class="panel-collapse collapse">
+                            <li><a ui-sref="limitesUsr"><span>Limites</span></a></li>
+                            <li><a ui-sref="extratosUsr"><span>Extratos</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseUsrRede"><span class="name">Rede</span></a>
+                        <ul id="forms-collapseUsrRede" class="panel-collapse collapse">
+                            <li><a ui-sref="associado"><span>Lojas credenciadas</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul>
+                    <li>
+                        <span style="color:grey;text-align:center;padding-left:20px">Version {{version}}</span>
+                    </li>
+                </ul>
+                <ul><li></li></ul>
+            </section>			
             
-            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.nameUser != 'DBA'">
+            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.tipo == '1'">
                 <ul id="side-nav" class="side-nav" style="color:black">
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
@@ -120,6 +149,7 @@
                 </ul>
                 <ul><li></li></ul>
             </section>			
+
 		</nav>
 	</div>
 	<table align="left" style="width:100%">

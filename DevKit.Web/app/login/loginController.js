@@ -21,6 +21,9 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
     function init()
     {
         $scope.tipo = $location.search().tipo;
+
+        if ($scope.tipo == '' || $scope.tipo == undefined)
+            $scope.tipo = 1;
     }
 
     $scope.login = function ()
@@ -34,29 +37,61 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
     		$scope.mensagem = 'Please enter valid credentials';
     	}
     	else
-    	{
-    		AuthService.login($scope.loginData).then(function (response)
+        {
+            var lData = { };
+            
+            if ($scope.tipo == 2)
+            {
+                // usuarios
+
+                lData.userName = "2." +
+                    $scope.loginData.userName + "." +
+                    $scope.loginData.userNameMat + "." +
+                    $scope.loginData.userNameAcesso + "." +
+                    $scope.loginData.userNameVenc;
+            }
+            else
+            {
+                // lojista
+
+                lData.userName = "1" + $scope.loginData.userName;
+            }
+
+            lData.password = $scope.loginData.password;
+            lData.tipo = $scope.tipo;
+
+            AuthService.login(lData).then(function (response)
     		{
                 $scope.loginOK = true;
                 $rootScope.exibirMenu = true;              
 
-                if ($scope.loginData.userName == "DBA")
+                if ($scope.tipo == 2)
                 {
-                    $rootScope.lojistaLogado = "DBA";
-                    $rootScope.lojistaEnd = "Modo de configuração do portal";
+                    // usuarios
 
-                    $state.go('relatorios', {});
+                    $state.go('limitesUsr', {});
                 }
-                else
+                else 
                 {
-                    Api.LojistaMensagens.listPage({}, function (data)
-                    {
-                        if (data.count == 0)
-                            $state.go('venda', {});
-                        else 
-                            $state.go('mensagens', {});                                                
-                    });                    
-                }                
+                    // lojistas
+
+                    if ($scope.loginData.userName == "DBA") {
+                        $rootScope.lojistaLogado = "DBA";
+                        $rootScope.lojistaEnd = "Modo de configuração do portal";
+
+                        $state.go('relatorios', {});
+                    }
+                    else {
+
+                        Api.LojistaMensagens.listPage({}, function (data) {
+                            if (data.count == 0)
+                                $state.go('venda', {});
+                            else
+                                $state.go('mensagens', {});
+                        });
+                    }
+                }
+                                
     		},
 			function (err)
 			{

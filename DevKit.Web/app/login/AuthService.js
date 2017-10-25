@@ -10,7 +10,8 @@ function ($http, $q)
         isAuth: false,
         nameUser: null,
         m1: '',
-        m2: ''
+        m2: '',
+        tipo: ''
     };
 
     var _login = function (loginData)
@@ -27,12 +28,14 @@ function ($http, $q)
                     nameUser: response.nameUser,
                     m1: response.m1,
                     m2: response.m2,
+                    tipo: response.tipo
                 }));
 
             _authentication.isAuth = true;
             _authentication.nameUser = response.nameUser;
             _authentication.m1 = response.m1;
             _authentication.m2 = response.m2;
+            _authentication.tipo = loginData.tipo;
 
             deferred.resolve(response);
 
@@ -53,6 +56,7 @@ function ($http, $q)
         _authentication.idProfile = null;
         _authentication.m1 = '';
         _authentication.m2 = '';
+        _authentication.tipo = '';
     };
 
     var _fillAuthData = function ()
@@ -64,6 +68,7 @@ function ($http, $q)
             _authentication.nameUser = authData.nameUser;
             _authentication.m1 = authData.m1;
             _authentication.m2 = authData.m2;
+            _authentication.tipo = authData.tipo;
         }
     }
 	

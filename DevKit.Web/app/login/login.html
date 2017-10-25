@@ -68,7 +68,7 @@
             </form>
         </div>
 
-        <div ng-if="tipo == 2" align="center" style="width:400px;height:550px;background-color:#e0e0e0;" ng-show="!loginOK">
+        <div ng-if="tipo == 2" align="center" style="width:500px;height:530px;background-color:#e0e0e0;" ng-show="!loginOK">
             <form id="validate" style="width:300px;">
                 <fieldset>
                     <br /><br />
@@ -80,27 +80,33 @@
                     <table>
                         <tr height="24px"></tr>
                         <tr height="48px">
-                            <td width="120px">
-                                <p for="login" style="color: black">Empresa</p>
+                            <td width="80px">
+                                <p for="login" style="color: black">Cartão</p>
                             </td>
-                            <td width="180px">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" style="width:45px"><i class="fa fa-user"></i></span>
-                                    <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
-                                           class="form-control" name="username" ng-model="loginData.userNameEmp" value="" autofocus>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr height="48px">
-                            <td width="120px">
-                                <p for="login" style="color: black">Matricula</p>
-                            </td>
-                            <td width="180px">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" style="width:45px"><i class="fa fa-user"></i></span>
-                                    <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
-                                           class="form-control" name="username" ng-model="loginData.userNameMat" value="" autofocus>
-                                </div>
+                            <td width="400px">                                
+                                <table>
+                                    <tr>
+                                        <td width="122px">
+                                            <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text" width="100%"  maxlength="6"
+                                                   class="form-control" name="username" ng-model="loginData.userName" value="" autofocus>
+                                        </td>
+                                        <td width="4px"></td>
+                                        <td width="122px">
+                                            <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text" width="100%"  maxlength="6"
+                                                   class="form-control" name="username" ng-model="loginData.userNameMat" value="" >
+                                        </td>
+                                        <td width="4px"></td>
+                                        <td width="92px">
+                                            <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text" width="100%" maxlength="4"
+                                                   class="form-control" name="username" ng-model="loginData.userNameAcesso" value="">
+                                        </td>
+                                        <td width="4px"></td>
+                                        <td width="92px">
+                                            <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text" width="100%" maxlength="4"
+                                                   class="form-control" name="username" ng-model="loginData.userNameVenc" value="">
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                         <tr height="48px">
@@ -110,7 +116,7 @@
                             <td>
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-addon" style="width:45px"><i class="fa fa-lock"></i></span>
-                                    <input id="login-password" style="font-size: 12px; border: 1px solid #ccc;" type="password"
+                                    <input id="login-password" style="font-size: 12px; border: 1px solid #ccc; width:62px" type="password"
                                            class="form-control" name="password" ng-model="loginData.password">
                                 </div>
                             </td>

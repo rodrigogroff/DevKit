@@ -6,6 +6,8 @@ namespace DevKit.Web.Controllers
 {
     public class SaldoDisponivel
     {
+        public long vrUtilizadoAtual = 0;
+
         public void Obter (AutorizadorCNDB db, T_Cartao cart, ref long dispMensal, ref long dispTotal)
         {
             var lstCartoes = (from e in db.T_Cartao
@@ -34,6 +36,7 @@ namespace DevKit.Web.Controllers
                     transacao.tg_confirmada.ToString() == TipoConfirmacao.Pendente )
                 {
                     dispMensal -= (int) parc.vr_valor;
+                    vrUtilizadoAtual += (long) parc.vr_valor;
                 }
             }
 

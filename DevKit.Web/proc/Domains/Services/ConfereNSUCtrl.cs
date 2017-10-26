@@ -20,7 +20,7 @@ namespace DevKit.Web.Controllers
 
             var q = (from e in db.LOG_Transacoes
 
-                       where e.fk_loja == db.currentUser.i_unique
+                       where e.fk_loja == db.currentLojista.i_unique
                        where e.nu_nsu == nsu
 
                        where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada.ToString()

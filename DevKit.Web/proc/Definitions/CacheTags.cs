@@ -33,6 +33,9 @@ namespace DevKit.Web.Controllers
         // ------------------------
 
         public const string T_Terminal = "T_Loja";
+        public const string T_Cartao = "T_Cartao";
+        public const string T_Empresa = "T_Empresa";
+        public const string I_Scheduler = "I_Scheduler";
         public const string associado = "associado";
     }
 }

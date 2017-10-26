@@ -132,7 +132,7 @@ namespace DevKit.Web.Controllers
 
             var ultParcela = (from e in db.T_Parcelas
                             where e.fk_cartao == associadoPrincipal.i_unique
-                            where e.fk_loja == db.currentUser.i_unique
+                            where e.fk_loja == db.currentLojista.i_unique
                             where e.nu_parcela == 1
                             orderby e.dt_inclusao descending
                             select e).

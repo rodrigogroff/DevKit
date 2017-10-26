@@ -23,7 +23,7 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var query = (from e in db.T_Terminal
-                         where e.fk_loja == db.currentUser.i_unique
+                         where e.fk_loja == db.currentLojista.i_unique
                          select e);
 
             query = query.OrderBy(y => y.nu_terminal);
@@ -53,7 +53,7 @@ namespace DevKit.Web.Controllers
 
             var mdl = (from e in db.T_Terminal
                        where e.i_unique == id
-                       where e.fk_loja == db.currentUser.i_unique 
+                       where e.fk_loja == db.currentLojista.i_unique 
                        select e).
                        FirstOrDefault();
 

@@ -52,7 +52,7 @@ namespace DevKit.Web.Controllers
 
             var senha = "1";
 
-            if (db.currentUser.tg_portalComSenha == 0 )
+            if (db.currentLojista.tg_portalComSenha == 0 )
                 senha = "0";
 
             var lst = new List<SomaParceladaView>();

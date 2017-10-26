@@ -1,1 +1,60 @@
-﻿
+﻿<div class="webFormPostion">
+    <section class="widgetForm" style="width:425px; height: 370px">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Limites do <b>associado </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm" ng-show="list.length > 0">
+            {{list[0].nome}}: <b>R$ {{list[0].valor}}</b> <br />
+            {{list[1].nome}}: <b>{{list[1].valor}} parcelas</b> 
+            <br />
+            <table width="320px">
+                <tr>
+                    <td valign="top">
+                        <div>
+                            <br />
+                            <table class="table table-hover">
+                                <tr>
+                                    <td width="20px"></td>
+                                    <td>
+                                        <h4>{{list[2].nome}}</h4>
+                                        <b>{{list[2].valor}}</b>
+                                        <br />
+                                    </td>
+                                    <td width="20px"></td>
+                                    <td>
+                                        <h4>{{list[3].nome}}</h4>
+                                        <b>{{list[3].valor}}</b>
+                                    </td>
+                                    <td width="20px"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <h4>{{list[4].nome}}</h4>
+                                        <b>{{list[4].valor}}</b>
+                                        <br />
+                                        <br />
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <h4>{{list[5].nome}}</h4>
+                                        <b>{{list[5].valor}}</b>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</div>

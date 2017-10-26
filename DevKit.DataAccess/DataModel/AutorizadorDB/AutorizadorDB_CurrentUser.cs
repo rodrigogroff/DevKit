@@ -6,6 +6,8 @@ namespace DataModel
 {
 	public partial class AutorizadorCNDB
     {				
-		public T_Loja currentUser = null;
+		public T_Loja currentLojista = null;
+        public T_Cartao currentAssociado = null;
+        public T_Empresa currentAssociadoEmpresa = null;
     }
 }

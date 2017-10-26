@@ -19,7 +19,7 @@ namespace DevKit.Web.Services
 
             using (var db = new AutorizadorCNDB())
             {
-                db.currentUser = currentUser;
+                db.currentLojista = currentUser;
 
                 // ----------------------------------------------------------------------------------------------------
 

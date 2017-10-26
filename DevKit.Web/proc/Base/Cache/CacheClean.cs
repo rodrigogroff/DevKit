@@ -17,6 +17,11 @@ namespace DevKit.Web.Controllers
                     //CleanCacheReport(CacheTags.UserComboReport);
                     break;
 
+                case CacheTags.T_Cartao:
+                    if (id != null)
+                        StoreCache(CacheTags.T_Cartao, id, null);
+                    break;
+
                 case CacheTags.associado:
                     if (id != null)
                         StoreCache(CacheTags.associado, id, null);

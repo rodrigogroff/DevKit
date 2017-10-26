@@ -20,10 +20,10 @@ namespace DevKit.Web.Controllers
 
             cupom.Add("CONVEYNET - CONVÊNIOS");
             cupom.Add("COMPROVANTE CANCELAMENTO VENDA");
-            cupom.Add(db.currentUser.st_nome);
-            cupom.Add("CNPJ: " + db.currentUser.nu_CNPJ);
-            cupom.Add(db.currentUser.st_endereco.Replace("{SE$3}", "") + " " + db.currentUser.st_cidade + " / " + db.currentUser.st_estado);
-            cupom.Add("Estabelecimento: " + db.currentUser.st_loja);
+            cupom.Add(db.currentLojista.st_nome);
+            cupom.Add("CNPJ: " + db.currentLojista.nu_CNPJ);
+            cupom.Add(db.currentLojista.st_endereco.Replace("{SE$3}", "") + " " + db.currentLojista.st_cidade + " / " + db.currentLojista.st_estado);
+            cupom.Add("Estabelecimento: " + db.currentLojista.st_loja);
             cupom.Add("Cartão: " + cart.st_empresa + cart.st_matricula);
             cupom.Add("Data transação: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
             cupom.Add("NSU: " + nsu_retorno);
@@ -66,10 +66,10 @@ namespace DevKit.Web.Controllers
             var cupom = new List<string>();
 
             cupom.Add("CONVEYNET - CONVÊNIOS");
-            cupom.Add(db.currentUser.st_nome);
-            cupom.Add("CNPJ: " + db.currentUser.nu_CNPJ);
-            cupom.Add(db.currentUser.st_endereco.Replace("{SE$3}", "") + " " + db.currentUser.st_cidade + " / " + db.currentUser.st_estado);
-            cupom.Add("Estabelecimento: " + db.currentUser.st_loja);
+            cupom.Add(db.currentLojista.st_nome);
+            cupom.Add("CNPJ: " + db.currentLojista.nu_CNPJ);
+            cupom.Add(db.currentLojista.st_endereco.Replace("{SE$3}", "") + " " + db.currentLojista.st_cidade + " / " + db.currentLojista.st_estado);
+            cupom.Add("Estabelecimento: " + db.currentLojista.st_loja);
             cupom.Add("Cartão: " + associadoPrincipal.st_empresa + associadoPrincipal.st_matricula);
             cupom.Add("Data transação: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
             cupom.Add("NSU: " + nsu_retorno);

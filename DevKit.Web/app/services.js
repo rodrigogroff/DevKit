@@ -45,6 +45,7 @@ angular.module('app.services', ['ngResource'])
         Associado: $resource('api/associado/:id', {}, opcoes),
         Loja: $resource('api/loja/:id', {}, opcoes),
         Empresa: $resource('api/empresa/:id', {}, opcoes),
+        LimiteAssociado: $resource('api/limiteassociado/:id', {}, opcoes),
         TerminalLoja: $resource('api/terminalLoja/:id', {}, opcoes),
         SimulaParcelada: $resource('api/simulaparcelada/:id', {}, opcoes),
         SomaParcelada: $resource('api/somaparcelada/:id', {}, opcoes),

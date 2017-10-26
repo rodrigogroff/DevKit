@@ -16,7 +16,7 @@ namespace DevKit.Web.Controllers
                       retorno;
 
         public long titularidadeFinal;
-        
+
         public IHttpActionResult Get()
         {
             if (!StartDatabaseAndAuthorize())
@@ -30,7 +30,7 @@ namespace DevKit.Web.Controllers
 
             var q = (from e in db.LOG_Transacoes
 
-                     where e.fk_loja == db.currentUser.i_unique
+                     where e.fk_loja == db.currentLojista.i_unique
                      where e.nu_nsu.ToString() == nsu.ToString()
 
                      where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada.ToString()
@@ -60,12 +60,12 @@ namespace DevKit.Web.Controllers
 
             empresa = cart.st_empresa;
             matricula = cart.st_matricula;
-            
+
             var sc = new SocketConvey();
 
             var sck = sc.connectSocket(cnet_server, cnet_port);
 
-            strMessage = MontaCancelamento( cart.st_titularidade, nsu);
+            strMessage = MontaCancelamento(cart.st_titularidade, nsu);
 
             if (!sc.socketEnvia(sck, strMessage))
             {
@@ -90,17 +90,17 @@ namespace DevKit.Web.Controllers
                 return BadRequest("Falha (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
             }
 
-            CleanCache(db, CacheTags.associado, (long) cart.i_unique);
+            CleanCache(db, CacheTags.associado, (long)cart.i_unique);
 
             var cupom = new Cupom().
-                Cancelamento ( db, 
-                               cart, 
+                Cancelamento(db,
+                               cart,
                                ObtemNsuRetorno(retorno),
-                               terminal, 
+                               terminal,
                                nsu,
-                               lTr, 
+                               lTr,
                                prop);
-            
+
             return Ok(new
             {
                 count = 1,
@@ -119,9 +119,9 @@ namespace DevKit.Web.Controllers
             reg += matricula.PadLeft(6, '0');
             reg += titularidade.ToString().PadLeft(2, '0');
             reg += "       ";
-            reg += nsu.ToString().PadLeft(6,'0');
-            
-            return reg.PadRight (61, ' ');
+            reg += nsu.ToString().PadLeft(6, '0');
+
+            return reg.PadRight(61, ' ');
         }
 
         public string ObtemNsuRetorno(string message)

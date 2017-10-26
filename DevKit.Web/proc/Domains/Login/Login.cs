@@ -3,14 +3,41 @@ using DevKit.Web.Controllers;
 using LinqToDB;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using System;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace DevKit.Web
 {
 	public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
 	{
-		public override async System.Threading.Tasks.Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+        public static string DESdeCript(string dados, string chave)
+        {
+            byte[] key = System.Text.Encoding.ASCII.GetBytes(chave);//{1,2,3,4,5,6,7,8};
+            byte[] data = new byte[8];
+
+            for (int n = 0; n < dados.Length / 2; n++)
+            {
+                data[n] = (byte)Convert.ToInt32(dados.Substring(n * 2, 2), 16);
+            }
+
+            DES des = new DESCryptoServiceProvider();
+            des.Key = key;
+            des.Mode = CipherMode.ECB;
+            ICryptoTransform crypto = des.CreateDecryptor();
+            MemoryStream cipherStream = new MemoryStream();
+            CryptoStream cryptoStream = new CryptoStream(cipherStream, crypto, CryptoStreamMode.Write);
+            cryptoStream.Write(data, 0, data.Length);
+            crypto.TransformBlock(data, 0, 8, data, 0);
+            System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
+            string retorno = enc.GetString(data);
+
+            return retorno;
+        }
+
+        public override async System.Threading.Tasks.Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
 		{
 			context.Validated();
 			await System.Threading.Tasks.Task.FromResult(0);
@@ -153,18 +180,30 @@ namespace DevKit.Web
                                 return;
                             }
 
+                            // cod acesso
+
                             var dadosProprietario = (from e in db.T_Proprietario
                                                      where e.i_unique == associadoPrincipal.fk_dadosProprietario
                                                      select e).
                                                      FirstOrDefault();
-                                                        
-                            var codAcessoCalc = new CodigoAcesso().Obter (  empresa,
+
+                            var codAcessoCalc = new CodigoAcesso().Obter(empresa,
                                                                             matricula,
                                                                             associadoPrincipal.st_titularidade,
                                                                             associadoPrincipal.nu_viaCartao,
-                                                                            dadosProprietario.st_cpf );
-                            
+                                                                            dadosProprietario.st_cpf);
+
                             if (codAcessoCalc != codAcesso)
+                            {
+                                context.SetError("invalid_grant", "Autenticação de cartão inválida");
+                                return;
+                            }
+
+                            // senha
+
+                            var senhaComputada = DESdeCript(associadoPrincipal.st_senha, "12345678").TrimStart('*');
+
+                            if (senhaComputada != context.Password)
                             {
                                 context.SetError("invalid_grant", "Autenticação de cartão inválida");
                                 return;

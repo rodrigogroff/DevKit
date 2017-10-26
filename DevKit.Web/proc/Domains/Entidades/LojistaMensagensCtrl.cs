@@ -14,7 +14,7 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var query = (from e in db.T_LojaMensagem
-                         where e.fk_loja == db.currentUser.i_unique || e.fk_loja == 0
+                         where e.fk_loja == db.currentLojista.i_unique || e.fk_loja == 0
                          where DateTime.Now < e.dt_validade
                          where e.tg_ativa == true
                          select e);

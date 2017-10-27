@@ -29,7 +29,8 @@ namespace DevKit.Web.Controllers
             list.Add(new LimiteAssociadoDTO
             {
                 nome = "Limite cartão",
-                valor = mon.setMoneyFormat((long)db.currentAssociado.vr_limiteMensal)
+                valor = mon.setMoneyFormat ( (long)db.currentAssociado.vr_limiteMensal + 
+                                             (long)db.currentAssociado.vr_extraCota )
             });
 
             list.Add(new LimiteAssociadoDTO
@@ -38,8 +39,8 @@ namespace DevKit.Web.Controllers
                 valor = db.currentAssociadoEmpresa.nu_parcelas.ToString().PadLeft(2,'0')
             });
 
-            long dispMensal = (long)db.currentAssociado.vr_limiteMensal,
-                 dispTot = (long)db.currentAssociado.vr_limiteMensal;
+            long dispMensal = (long)db.currentAssociado.vr_limiteMensal + (long)db.currentAssociado.vr_extraCota,
+                 dispTot = (long)db.currentAssociado.vr_limiteTotal;
             
             sd.Obter(db, db.currentAssociado, ref dispMensal, ref dispTot);
 
@@ -47,6 +48,12 @@ namespace DevKit.Web.Controllers
             {
                 nome = "Limite Disponível",
                 valor = "R$ " + mon.setMoneyFormat(dispMensal)
+            });
+
+            list.Add(new LimiteAssociadoDTO
+            {
+                nome = "Cota Extra",
+                valor = "R$ " + mon.setMoneyFormat((long)db.currentAssociado.vr_extraCota)
             });
 
             var scheduler = RestoreTimerCache(CacheTags.I_Scheduler, db.currentAssociado.st_empresa, 100) as I_Scheduler;

@@ -20,10 +20,8 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
 
     function init()
     {
-        $scope.tipo = $location.search().tipo;
-
-        if ($scope.tipo == '' || $scope.tipo == undefined)
-            $scope.tipo = 1;
+        if ($rootScope.tipo == undefined)
+            $rootScope.tipo = $location.search().tipo;
     }
 
     $scope.login = function ()
@@ -40,7 +38,7 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
         {
             var lData = { };
             
-            if ($scope.tipo == 2)
+            if ($rootScope.tipo == 2)
             {
                 // usuarios
 
@@ -65,7 +63,7 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
                 $scope.loginOK = true;
                 $rootScope.exibirMenu = true;              
 
-                if ($scope.tipo == 2)
+                if ($rootScope.tipo == 2)
                 {
                     // usuarios
 

@@ -240,7 +240,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\associado\extratos.html" />
     <Content Include="app\associado\limites.html" />
+    <Content Include="app\associado\ExtratosController.js" />
     <Content Include="app\associado\LimitesController.js" />
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
@@ -853,6 +855,7 @@
     <Compile Include="proc\Domains\Enums\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelAssociadosCtrl.cs" />
+    <Compile Include="proc\Domains\Services\ExtratoAssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Services\LimitesAssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Services\ConfereNSUCtrl.cs" />
     <Compile Include="proc\Domains\Services\CancelaVendaCtrl.cs" />

@@ -35,7 +35,9 @@ namespace DevKit.Web.Controllers
                 case 1: // extrato fechado
                 {
                     var lst = new List<ExtratoAssociadoFechado>();
-                        
+
+                    long total = 0;
+
                     foreach (var item in (from e in db.LOG_Fechamento
                                             where e.fk_cartao == db.currentAssociado.i_unique
                                             where e.st_ano == ano
@@ -54,6 +56,8 @@ namespace DevKit.Web.Controllers
                                     select e).
                                     FirstOrDefault();
 
+                        total += (long) item.vr_valor;
+
                         lst.Add(new ExtratoAssociadoFechado
                         {
                             dataHora = Convert.ToDateTime(item.dt_compra).ToString("dd/MM/yyyy"),
@@ -67,6 +71,7 @@ namespace DevKit.Web.Controllers
                     return Ok(new
                     {
                         count = 1,
+                        total = "R$ " + mon.setMoneyFormat(total),
                         results = lst
                     });
                 }

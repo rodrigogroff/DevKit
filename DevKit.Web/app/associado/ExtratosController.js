@@ -1,9 +1,11 @@
 ﻿
 angular.module('app.controllers').controller('ExtratosController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+    ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 'AuthService',
+        function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, AuthService)
 {
 	$rootScope.exibirMenu = true;
+            
+    $scope.authentication = AuthService.authentication;
 
     $scope.date = new Date();
 
@@ -33,9 +35,48 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         Api.ExtratoAssociado.listPage($scope.opcoes, function (data)
         {
             $scope.list = data.results;
-            $scope.total = data.count;
+            $scope.total = data.total;
             $scope.loading = false;
         });
-	}
+    }
+
+    $scope.imprimir = function ()
+    {
+        if ($scope.tipoExtrato == '1')
+        {
+            var printContents = "<h2>CONVEYNET BENEFíCIOS</h2>";
+            printContents += "Data de emissão: " + $scope.date.getDate() + "/" + ($scope.date.getMonth() + 1) + "/" + $scope.date.getFullYear();
+            printContents += "<table>";
+
+            printContents += "<tr><td>Associado: " + $scope.authentication.m2 + "</td></tr>";
+            printContents += "<tr><td>Cartão: " + $scope.authentication.nameUser + "</td></tr>";
+            printContents += "<tr><td>Valor total: " + $scope.total + "</td></tr>";
+            printContents += "<tr><td>Mês " + $scope.opcoes.extrato_fech_mes + " / " + $scope.opcoes.extrato_fech_ano_inicial + "</td></tr>";
+
+            printContents += "</table>";
+            printContents += "<table><thead><tr><th align='left'>Data venda</th><th align='left'>NSU</th><th align='left'>Valor</th><th align='left'>Parcela</th><th align='left'>Estabelecimento</th></tr></thead>";
+            
+            for (var i = 0; i < $scope.list.length; ++i)
+            {
+                var mdl = $scope.list[i];
+
+                printContents += "<tr>";
+
+                printContents += "<td width='90px'>" + mdl.dataHora + "</td>";
+                printContents += "<td width='90px'>" + mdl.nsu + "</td>";
+                printContents += "<td width='90px'>" + mdl.valor + "</td>";
+                printContents += "<td width='90px'>" + mdl.parcela + "</td>";
+                printContents += "<td width='300px'>" + mdl.estab + "</td>";
+                printContents += "</tr>";
+            }
+
+            printContents += "</table>"
+
+            var popupWin = window.open('', '_blank', 'width=800,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
+            popupWin.document.close();
+        }        
+    }
 	
 }]);

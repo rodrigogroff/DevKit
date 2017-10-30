@@ -53,7 +53,13 @@
                         <td>{{ mdl.estab }}</td>
                     </tr>
                 </table>
-                <br />
+                <div ng-if="list.length > 0">
+                    Total: <b>{{total}}</b><br />
+                    <br />
+                    <button class="btn btn-success" ng-click="imprimir()">Imprimir</button>
+                    <br />
+                    <br />
+                </div>
                 <br />
             </div>
 

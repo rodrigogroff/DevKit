@@ -267,7 +267,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.falhaVenda = undefined;
     }
     
-    $scope.printDiv = function (divName) {
+    $scope.printDiv = function () {
         var printContents = "<table>";
 
         printContents += "<tr><td>" + $scope.viewModel.cupom[0] + "</td></tr>";

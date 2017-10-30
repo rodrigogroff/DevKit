@@ -64,6 +64,52 @@
             </div>
 
             <div ng-if="tipoExtrato == 2">
+                <table>
+                    <tr>
+                        <td width="80px">Mês</td>
+                        <td width="150px">
+                            <input type="hidden" style="width:100%"
+                                   placeholder="(Selecione)" ui-select2="selectMeses"
+                                   ng-model="opcoes.extrato_fech_mes" />
+                        </td>
+                        <td width="20px"></td>
+                        <td width="80px">Ano</td>
+                        <td width="120px">
+                            <input type="text" class="form-control input-transparent" maxlength="4"
+                                   ng-model="opcoes.extrato_fech_ano_inicial">
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <button class="btn btn-primary" ng-click="pesquisar()">Pesquisar</button>
+                <br />
+                <br />
+                <table class="table table-hover" ng-if="list.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Data venda</th>
+                            <th>NSU</th>
+                            <th>Valor</th>
+                            <th>Parcela</th>
+                            <th>Estabelecimento</th>
+                        </tr>
+                    </thead>
+                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                        <td>{{ mdl.dataHora }}</td>
+                        <td>{{ mdl.nsu }}</td>
+                        <td>{{ mdl.valor }}</td>
+                        <td>{{ mdl.parcela }}</td>
+                        <td>{{ mdl.estab }}</td>
+                    </tr>
+                </table>
+                <div ng-if="list.length > 0">
+                    Total: <b>{{total}}</b><br />
+                    <br />
+                    <button class="btn btn-success" ng-click="imprimir()">Imprimir</button>
+                    <br />
+                    <br />
+                </div>
+                <br />
             </div>
 
         </div>

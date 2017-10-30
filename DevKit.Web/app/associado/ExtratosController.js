@@ -3,12 +3,9 @@ angular.module('app.controllers').controller('ExtratosController',
     ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 'AuthService',
         function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, AuthService)
 {
-	$rootScope.exibirMenu = true;
-            
+	$rootScope.exibirMenu = true;            
     $scope.authentication = AuthService.authentication;
-
     $scope.date = new Date();
-
     $scope.loading = false;
 
     $scope.selectMeses = ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 });
@@ -24,7 +21,6 @@ angular.module('app.controllers').controller('ExtratosController',
     function init()
     {
         $scope.loading = false;
-     //   $scope.extrato_fech_mes = undefined;
         $scope.extrato_fech_ano_inicial = $scope.date.getFullYear();
     }
 

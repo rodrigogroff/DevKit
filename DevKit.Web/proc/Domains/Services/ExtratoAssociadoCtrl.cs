@@ -75,6 +75,50 @@ namespace DevKit.Web.Controllers
                         results = lst
                     });
                 }
+
+                case 2: // atual
+                    {
+                        var lst = new List<ExtratoAssociadoFechado>();
+
+                        long total = 0;
+
+                        foreach (var item in (from e in db.T_Parcelas
+                                              join tr in db.LOG_Transacoes on e.fk_log_transacoes equals (int) tr.i_unique
+                                              where e.fk_cartao == db.currentAssociado.i_unique
+                                              where e.nu_parcela == 1                                              
+                                              orderby tr.dt_transacao descending
+                                              select e).
+                                                ToList())
+                        {
+                            var ltr = (from e in db.LOG_Transacoes
+                                       where e.i_unique == item.fk_log_transacoes
+                                       select e).
+                                       FirstOrDefault();
+                            
+                            var loja = (from e in db.T_Loja
+                                        where e.i_unique == item.fk_loja
+                                        select e).
+                                        FirstOrDefault();
+
+                            total += (long)item.vr_valor;
+
+                            lst.Add(new ExtratoAssociadoFechado
+                            {
+                                dataHora = Convert.ToDateTime(ltr.dt_transacao).ToString("dd/MM/yyyy"),
+                                nsu = item.nu_nsu.ToString(),
+                                valor = mon.formatToMoney(item.vr_valor.ToString()),
+                                parcela = item.nu_indice.ToString() + " / " + item.nu_tot_parcelas.ToString(),
+                                estab = loja.st_nome
+                            });
+                        }
+
+                        return Ok(new
+                        {
+                            count = 1,
+                            total = "R$ " + mon.setMoneyFormat(total),
+                            results = lst
+                        });
+                    }
             }
 
             return BadRequest();            

@@ -95,7 +95,8 @@ namespace DevKit.Web.Controllers
                         foreach (var item in (from e in db.T_Parcelas
                                               join tr in db.LOG_Transacoes on e.fk_log_transacoes equals (int) tr.i_unique
                                               where e.fk_cartao == db.currentAssociado.i_unique
-                                              where e.nu_parcela == 1                                              
+                                              where e.nu_parcela == 1
+                                              where tr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
                                               orderby tr.dt_transacao descending
                                               select e).
                                               ToList())

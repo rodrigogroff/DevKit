@@ -77,7 +77,7 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
                         $rootScope.lojistaLogado = "DBA";
                         $rootScope.lojistaEnd = "Modo de configuração do portal";
 
-                        $state.go('relatorios', {});
+                        $state.go('relAssociados', {});
                     }
                     else {
 

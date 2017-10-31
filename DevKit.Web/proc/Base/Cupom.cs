@@ -91,8 +91,7 @@ namespace DevKit.Web.Controllers
             if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p11)); iParc++;
             if (parcelas >= iParc) cupom.Add("Parcela " + iParc + " R$ " + mon.setMoneyFormat(p12)); iParc++;
 
-            long dispM = (long)associadoPrincipal.vr_limiteMensal,
-                 dispT = (long)associadoPrincipal.vr_limiteTotal;
+            long dispM = 0, dispT = 0;
 
             new SaldoDisponivel().Obter(db, associadoPrincipal, ref dispM, ref dispT);
 

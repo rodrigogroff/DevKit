@@ -2,12 +2,13 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Web.Http;
+using SyCrafEngine;
 
 namespace DevKit.Web.Controllers
 {
     public class RelAssociadosItem
     {
-        public string associado, cartao, cpf;
+        public string associado, cartao, cpf, dispM, limM, dispT, limT, tit;
     }
 
     public class RelAssociadosController : ApiControllerBase
@@ -15,6 +16,7 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Get()
         {
             var busca = Request.GetQueryStringValue("busca");
+            var matricula = Request.GetQueryStringValue("matricula");
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
             var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa", null);
@@ -56,6 +58,13 @@ namespace DevKit.Web.Controllers
                          select e);
             }
 
+            if (matricula != null && matricula != "")
+            {
+                query = (from e in query
+                         where e.st_matricula.Contains(matricula)
+                         select e);
+            }
+
             if (stEmpresa != "")
             {
                 query = (from e in query
@@ -72,12 +81,19 @@ namespace DevKit.Web.Controllers
 
             var calcAcesso = new CodigoAcesso();
 
+            var sd = new SaldoDisponivel();
+            var mon = new money();
+
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
                 var assoc = (from e in db.T_Proprietario
                              where e.i_unique == item.fk_dadosProprietario
                              select e).
                              FirstOrDefault();
+
+                long dispM = 0, dispT = 0;
+
+                sd.Obter(db, item, ref dispM, ref dispT);
 
                 if (assoc != null)
                 {
@@ -92,11 +108,16 @@ namespace DevKit.Web.Controllers
                         associado = assoc.st_nome,
 
                         cartao = item.st_empresa + "." +
-                                 item.st_matricula + "." + 
-                                 codAcessoCalc + "." + 
+                                 item.st_matricula + "." +
+                                 codAcessoCalc + "." +
                                  item.st_venctoCartao,
 
-                        cpf = assoc.st_cpf
+                        cpf = assoc.st_cpf,
+                        tit = item.st_titularidade,
+                        dispM = mon.setMoneyFormat(dispM),
+                        dispT = mon.setMoneyFormat(dispT),
+                        limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
+                        limT = mon.setMoneyFormat((long)item.vr_limiteTotal),
                     });
                 }
                     

@@ -104,8 +104,7 @@ namespace DevKit.Web.Controllers
                     return BadRequest();
             }
 
-            long dispMensal = 0,
-                 dispTotal = 0;
+            long dispMensal = 0, dispTotal = 0;
 
             new SaldoDisponivel().
                 Obter(db, associado, ref dispMensal, ref dispTotal);
@@ -151,8 +150,8 @@ namespace DevKit.Web.Controllers
                     {
                         id = associado.i_unique.ToString(),
                         nome = dadosProprietario.st_nome,
-                        dispMensal = mon.setMoneyFormat ((long)associado.vr_limiteMensal - dispMensal),
-                        dispTotal = mon.setMoneyFormat ((long)associado.vr_limiteTotal - dispTotal),
+                        dispMensal = mon.setMoneyFormat (dispMensal),
+                        dispTotal = mon.setMoneyFormat (dispTotal),
                         dispExtra = mon.setMoneyFormat ((long)associado.vr_extraCota),
                         maxParcelasEmpresa = tEmpresa.nu_parcelas.ToString(),
                         bloqueado = associado.tg_status == '1' ? true : false,

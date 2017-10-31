@@ -10,6 +10,15 @@ namespace DevKit.Web.Controllers
 
         public void Obter (AutorizadorCNDB db, T_Cartao cart, ref long dispMensal, ref long dispTotal)
         {
+            dispMensal = (long)cart.vr_limiteMensal;
+            dispTotal = (long)cart.vr_limiteTotal;
+
+            if (cart.vr_extraCota > 0)
+            {
+                dispMensal += (long)cart.vr_extraCota;
+                dispTotal += (long)cart.vr_extraCota;
+            }
+                
             var lstCartoes = (from e in db.T_Cartao
                               where e.st_empresa == cart.st_empresa
                               where e.st_matricula == cart.st_matricula

@@ -53,7 +53,7 @@
 		</header>
 		<nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:6px;padding-left:-200px">
 			
-            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.nameUser == 'DBA'">
+            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.nameUser == 'DBA' && authentication.tipo == '1'">
 				<ul id="side-nav" class="side-nav" style="color:black">
 					<li class="panel">
 						<a class="accordion-toggle " data-toggle="collapse"
@@ -108,20 +108,13 @@
                 <ul><li></li></ul>
             </section>			
             
-            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.tipo == '1'">
+            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.nameUser != 'DBA' && authentication.tipo == '1'">
                 <ul id="side-nav" class="side-nav" style="color:black">
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseAdm"><span class="name">Administrativo</span></a>
                         <ul id="forms-collapseAdm" class="panel-collapse collapse">
                             <li><a ui-sref="mensagens"><span>Mensagens</span></a></li>
-                        </ul>
-                    </li>
-                    <li class="panel">
-                        <a class="accordion-toggle " data-toggle="collapse"
-                           data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Associado</span></a>
-                        <ul id="forms-collapseSystem" class="panel-collapse collapse">
-                            <li><a ui-sref="associado"><span>Verificar cartão</span></a></li>
                         </ul>
                     </li>
                     <li class="panel">

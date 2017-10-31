@@ -39,8 +39,7 @@ namespace DevKit.Web.Controllers
                 valor = db.currentAssociadoEmpresa.nu_parcelas.ToString().PadLeft(2,'0')
             });
 
-            long dispMensal = (long)db.currentAssociado.vr_limiteMensal + (long)db.currentAssociado.vr_extraCota,
-                 dispTot = (long)db.currentAssociado.vr_limiteTotal;
+            long dispMensal = 0, dispTot = 0;
             
             sd.Obter(db, db.currentAssociado, ref dispMensal, ref dispTot);
 

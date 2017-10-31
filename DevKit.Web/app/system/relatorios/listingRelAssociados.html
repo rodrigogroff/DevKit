@@ -40,6 +40,17 @@
                             </tr>
                             <tr height="36px">
                                 <td></td>
+                                <td><b>Matrícula</b></td>
+                                <td>
+                                    <input type="text" focus="true"
+                                           class="form-control input-transparent"
+                                           ng-model="campos.matricula" />
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
                                 <td><b>Situação</b></td>
                                 <td>
                                     <br />
@@ -65,8 +76,7 @@
 							<br />
 							<br />
 						</div>
-						<div ng-show="list.length > 0">
-							
+						<div ng-show="list.length > 0">							
 							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
 							<table class="table table-hover">
@@ -75,12 +85,22 @@
 										<th>Associado</th>
                                         <th>Cartão</th>
 										<th>CPF</th>
+                                        <th>Tit.</th>
+                                        <th>Disp. M</th>
+                                        <th>Limite M</th>
+                                        <th>Disp. T</th>
+                                        <th>Limite T</th>
 									</tr>
 								</thead>
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                                     <td>{{ mdl.associado }}</td>
 									<td>{{ mdl.cartao }}</td>
-                                    <td>{{ mdl.cpf }}</td>									
+                                    <td>{{ mdl.cpf }}</td>
+                                    <td>{{ mdl.tit }}</td>
+                                    <td>{{ mdl.dispM }}</td>
+                                    <td>{{ mdl.limM }}</td>
+                                    <td>{{ mdl.dispT }}</td>
+                                    <td>{{ mdl.limT }}</td>
 								</tr>
 							</table>
 						</div>

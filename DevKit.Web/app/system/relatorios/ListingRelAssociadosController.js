@@ -9,6 +9,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.campos = {
         bloqueado: 'false',
+        matricula: '',
         selects: {
             empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
         }
@@ -37,6 +38,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         var opcoes = {
             skip: skip,
             take: take,
+            matricula: $scope.campos.matricula,
             idEmpresa: $scope.campos.idEmpresa
         };
 

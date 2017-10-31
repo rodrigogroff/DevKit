@@ -22,13 +22,21 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Get()
         {
             var tipo = Request.GetQueryStringValue<int>("tipo", 0);
-            var mes = Request.GetQueryStringValue("extrato_fech_mes").PadLeft(2,'0');
+            var mes = Request.GetQueryStringValue("extrato_fech_mes");
             var ano = Request.GetQueryStringValue("extrato_fech_ano_inicial");
+
+            if (mes != null && mes != "")
+                mes = mes.PadLeft(2, '0');
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest("Não autorizado!");
 
             var mon = new money();
+            var sd = new SaldoDisponivel();
+
+            long dispM = 0, dispT = 0;
+
+            sd.Obter(db, db.currentAssociado, ref dispM, ref dispT);
 
             switch (tipo)
             {
@@ -71,7 +79,9 @@ namespace DevKit.Web.Controllers
                     return Ok(new
                     {
                         count = 1,
+                        mesAtual = new EnumMonth().Get(Convert.ToInt32(mes)).stName,
                         total = "R$ " + mon.setMoneyFormat(total),
+                        saldoDisp = "R$ " + mon.setMoneyFormat(dispM),
                         results = lst
                     });
                 }
@@ -88,7 +98,7 @@ namespace DevKit.Web.Controllers
                                               where e.nu_parcela == 1                                              
                                               orderby tr.dt_transacao descending
                                               select e).
-                                                ToList())
+                                              ToList())
                         {
                             var ltr = (from e in db.LOG_Transacoes
                                        where e.i_unique == item.fk_log_transacoes
@@ -112,9 +122,21 @@ namespace DevKit.Web.Controllers
                             });
                         }
 
+                        var dt = DateTime.Now;
+
+                        int _mes = DateTime.Now.Month;
+
+                        if ( (int) db.currentAssociadoEmpresa.nu_diaVenc > DateTime.Now.Day )
+                        {
+                            dt = DateTime.Now.AddMonths(-1);
+                            _mes = dt.Month;
+                        }                            
+
                         return Ok(new
                         {
                             count = 1,
+                            mesAtual = new EnumMonth().Get(_mes).stName + " / " + dt.Year,
+                            saldoDisp = "R$ " + mon.setMoneyFormat(dispM),
                             total = "R$ " + mon.setMoneyFormat(total),
                             results = lst
                         });

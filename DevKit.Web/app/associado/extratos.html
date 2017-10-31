@@ -11,9 +11,12 @@
             </table>
         </legend>
         <div class="divWebForm" style="width:100%;">            
+            
             <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="1" ng-model="tipoExtrato"> Extratos encerrados</label>
             <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="2" ng-model="tipoExtrato"> Mês atual</label>            
+            
             <br />
+
             <div ng-if="tipoExtrato == 1">
                 <table>
                     <tr>
@@ -64,26 +67,16 @@
             </div>
 
             <div ng-if="tipoExtrato == 2">
-                <table>
-                    <tr>
-                        <td width="80px">Mês</td>
-                        <td width="150px">
-                            <input type="hidden" style="width:100%"
-                                   placeholder="(Selecione)" ui-select2="selectMeses"
-                                   ng-model="opcoes.extrato_fech_mes" />
-                        </td>
-                        <td width="20px"></td>
-                        <td width="80px">Ano</td>
-                        <td width="120px">
-                            <input type="text" class="form-control input-transparent" maxlength="4"
-                                   ng-model="opcoes.extrato_fech_ano_inicial">
-                        </td>
-                    </tr>
-                </table>
                 <br />
                 <button class="btn btn-primary" ng-click="pesquisar()">Pesquisar</button>
                 <br />
                 <br />
+                <div ng-if="list.length > 0">
+                    Mês atual: <b>{{mesAtual}}</b><br />
+                    Total extrato atual: <b>{{total}}</b><br />
+                    Saldo disponível: <b>{{saldoDisp}}</b><br />
+                    <br />
+                    </div>
                 <table class="table table-hover" ng-if="list.length > 0">
                     <thead>
                         <tr>
@@ -103,15 +96,12 @@
                     </tr>
                 </table>
                 <div ng-if="list.length > 0">
-                    Total: <b>{{total}}</b><br />
-                    <br />
                     <button class="btn btn-success" ng-click="imprimir()">Imprimir</button>
-                    <br />
-                    <br />
                 </div>
                 <br />
+                <br />
+                <br />
             </div>
-
         </div>
     </section>
 </div>

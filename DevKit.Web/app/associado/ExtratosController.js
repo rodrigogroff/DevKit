@@ -61,21 +61,29 @@ angular.module('app.controllers').controller('ExtratosController',
             printContents += "</table>";
             printContents += "<table><thead><tr><th align='left'>Data venda</th><th align='left'>NSU</th><th align='left'>Valor</th><th align='left'>Parcela</th><th align='left'>Estabelecimento</th></tr></thead>";
             
-            for (var i = 0; i < $scope.list.length; ++i)
+            if ($scope.list.length == 0)
             {
-                var mdl = $scope.list[i];
-
-                printContents += "<tr>";
-
-                printContents += "<td width='90px'>" + mdl.dataHora + "</td>";
-                printContents += "<td width='90px'>" + mdl.nsu + "</td>";
-                printContents += "<td width='90px'>" + mdl.valor + "</td>";
-                printContents += "<td width='90px'>" + mdl.parcela + "</td>";
-                printContents += "<td width='300px'>" + mdl.estab + "</td>";
-                printContents += "</tr>";
+                printContents += "<br>Nenhum registro encontrado.<br>";
             }
+            else if ($scope.list.length > 0)
+            {
+                printContents += "<table><thead><tr><th align='left'>Data venda</th><th align='left'>NSU</th><th align='left'>Valor</th><th align='left'>Parcela</th><th align='left'>Estabelecimento</th></tr></thead>";
 
-            printContents += "</table>"
+                for (var i = 0; i < $scope.list.length; ++i)
+                {
+                    var mdl = $scope.list[i];
+
+                    printContents += "<tr>";
+                    printContents += "<td width='90px'>" + mdl.dataHora + "</td>";
+                    printContents += "<td width='90px'>" + mdl.nsu + "</td>";
+                    printContents += "<td width='90px'>" + mdl.valor + "</td>";
+                    printContents += "<td width='90px'>" + mdl.parcela + "</td>";
+                    printContents += "<td width='300px'>" + mdl.estab + "</td>";
+                    printContents += "</tr>";
+                }
+
+                printContents += "</table>"
+            }           
 
             var popupWin = window.open('', '_blank', 'width=800,height=600');
             popupWin.document.open();
@@ -95,24 +103,33 @@ angular.module('app.controllers').controller('ExtratosController',
             printContents += "<tr><td>Valor total: " + $scope.total + "</td></tr>";
             
             printContents += "</table>";
-            printContents += "<table><thead><tr><th align='left'>Data venda</th><th align='left'>NSU</th><th align='left'>Valor</th><th align='left'>Parcela</th><th align='left'>Estabelecimento</th></tr></thead>";
-
-            for (var i = 0; i < $scope.list.length; ++i) {
-                var mdl = $scope.list[i];
-
-                printContents += "<tr>";
-
-                printContents += "<td width='90px'>" + mdl.dataHora + "</td>";
-                printContents += "<td width='90px'>" + mdl.nsu + "</td>";
-                printContents += "<td width='90px'>" + mdl.valor + "</td>";
-                printContents += "<td width='90px'>" + mdl.parcela + "</td>";
-                printContents += "<td width='300px'>" + mdl.estab + "</td>";
-                printContents += "</tr>";
+            
+            if ($scope.list.length == 0)
+            {
+                printContents += "<br>Nenhum registro encontrado.<br>";
             }
+            else if ($scope.list.length > 0)
+            {
+                printContents += "<table><thead><tr><th align='left'>Data venda</th><th align='left'>NSU</th><th align='left'>Valor</th><th align='left'>Parcela</th><th align='left'>Estabelecimento</th></tr></thead>";
 
-            printContents += "</table>"
+                for (var i = 0; i < $scope.list.length; ++i)
+                {
+                    var mdl = $scope.list[i];
+
+                    printContents += "<tr>";
+                    printContents += "<td width='90px'>" + mdl.dataHora + "</td>";
+                    printContents += "<td width='90px'>" + mdl.nsu + "</td>";
+                    printContents += "<td width='90px'>" + mdl.valor + "</td>";
+                    printContents += "<td width='90px'>" + mdl.parcela + "</td>";
+                    printContents += "<td width='300px'>" + mdl.estab + "</td>";
+                    printContents += "</tr>";
+                }
+
+                printContents += "</table>"
+            }           
 
             var popupWin = window.open('', '_blank', 'width=800,height=600');
+
             popupWin.document.open();
             popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
             popupWin.document.close();

@@ -21,7 +21,9 @@ namespace DevKit.Web.Controllers
     {
         public string total = "",
                       compras = "",
-                      mes_ano = "";
+                      mes_ano = "",
+                      pct_real = "",
+                      disp = "";
 
         public List<ExtratoAssociado> vendas = new List<ExtratoAssociado>();
     }
@@ -41,6 +43,7 @@ namespace DevKit.Web.Controllers
                 return BadRequest("Não autorizado!");
 
             var mon = new money();
+            var eMonth = new EnumMonth();
             var sd = new SaldoDisponivel();
 
             long dispM = 0, dispT = 0;
@@ -89,7 +92,7 @@ namespace DevKit.Web.Controllers
                         return Ok(new
                         {
                             count = 1,
-                            mesAtual = new EnumMonth().Get(Convert.ToInt32(mes)).stName,
+                            mesAtual = eMonth.Get(Convert.ToInt32(mes)).stName,
                             total = "R$ " + mon.setMoneyFormat(total),
                             saldoDisp = "R$ " + mon.setMoneyFormat(dispM),
                             results = lst
@@ -148,7 +151,7 @@ namespace DevKit.Web.Controllers
                         return Ok(new
                         {
                             count = 1,
-                            mesAtual = new EnumMonth().Get(_mes).stName + " / " + dt.Year,
+                            mesAtual = eMonth.Get(_mes).stName + " / " + dt.Year,
                             saldoDisp = "R$ " + mon.setMoneyFormat(dispM),
                             total = "R$ " + mon.setMoneyFormat(total),
                             results = lst
@@ -160,7 +163,6 @@ namespace DevKit.Web.Controllers
                     #region - code - 
                     {
                         var dt = DateTime.Now.AddMonths(1);
-
                         var lstFinal = new List<ExtratoAssociadoFuturo>();
 
                         int t_parc = 2;
@@ -199,16 +201,20 @@ namespace DevKit.Web.Controllers
                                         dataHora = Convert.ToDateTime(ltr.dt_transacao).ToString("dd/MM/yyyy"),
                                         nsu = item.nu_nsu.ToString(),
                                         valor = mon.formatToMoney(item.vr_valor.ToString()),
-                                        parcela = item.nu_indice.ToString() + " / " + item.nu_tot_parcelas.ToString(),
+                                         parcela = item.nu_indice.ToString() + " / " + item.nu_tot_parcelas.ToString(),
                                         estab = loja.st_nome
                                     });
                                 }
 
+                                long vrPctReal = (long) tot * 10000/ (long)db.currentAssociado.vr_limiteMensal;
+
                                 lstFinal.Add(new ExtratoAssociadoFuturo
                                 {
+                                    mes_ano = eMonth.Get(dt.Month).stName + " / " + dt.Year,
                                     compras = lst.Count.ToString(),
-                                    mes_ano = new EnumMonth().Get(dt.Month) + " / " + dt.Year,
-                                    total = new money().setMoneyFormat((long) tot),
+                                    total = mon.setMoneyFormat((long)tot),
+                                    pct_real = mon.setMoneyFormat((long)vrPctReal),
+                                    disp = mon.setMoneyFormat((long)db.currentAssociado.vr_limiteMensal - (long)tot),
                                     vendas = lstParc
                                 });
                             }

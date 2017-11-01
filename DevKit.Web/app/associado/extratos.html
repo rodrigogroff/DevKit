@@ -10,10 +10,11 @@
                 <tr height="12px"></tr>
             </table>
         </legend>
-        <div class="divWebForm" style="width:100%;">            
+        <div class="divWebForm" style="width:92%;">            
             
             <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="1" ng-model="tipoExtrato"> Extratos encerrados</label>
-            <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="2" ng-model="tipoExtrato"> Mês atual</label>            
+            <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="2" ng-model="tipoExtrato"> Mês atual</label>
+            <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="3" ng-model="tipoExtrato"> Extratos futuros</label>            
             
             <br />
 
@@ -107,6 +108,78 @@
                 <br />
                 <br />
                 <br />
+            </div>
+
+            <div ng-if="tipoExtrato == 3">
+                <br />
+                <button class="btn btn-primary" ng-click="pesquisar()">Pesquisar</button>
+                <br />
+                <br />
+                <div ng-if="list.length == 0">
+                    <h3>Nenhum registro encontrado</h3>
+                    <br />
+                </div>
+                <table class="table table-hover" ng-if="list.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Mês / Ano</th>
+                            <th>Compras</th>
+                            <th>Total</th>
+                            <th>Comprometido</th>
+                            <th>Disponível</th>
+                        </tr>
+                    </thead>
+                    <tr ng-click="showModal(mdl)" data-ng-repeat="mdl in list">
+                        <td>{{ mdl.mes_ano }}</td>
+                        <td>{{ mdl.compras }}</td>
+                        <td>{{ mdl.total }}</td>
+                        <td>{{ mdl.pct_real }}%</td>
+                        <td>{{ mdl.disp }}</td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+                <br />
+
+
+                <div class="modal-backdrop" 
+                     width="700px"
+                     ng-if="listaDetalheFuturo != undefined"
+                     style="background: rgba(55, 55, 55, 0.5 );">
+                    <div class="modal-dialog">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="modal-content" style="color:black">
+
+                            <h3>Parcelas futuras para: <b>{{ listaDetalheFuturo.mes_ano }} </b></h3>
+                            <br />
+
+                            <table class="table table-hover" ng-if="listaDetalheFuturo.vendas.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Data venda</th>
+                                        <th>NSU</th>
+                                        <th>Valor</th>
+                                        <th>Parcela</th>
+                                        <th>Estabelecimento</th>
+                                    </tr>
+                                </thead>
+                                <tr data-ng-repeat="mdl in listaDetalheFuturo.vendas">
+                                    <td style="color:black">{{ mdl.dataHora }}</td>
+                                    <td style="color:black">{{ mdl.nsu }}</td>
+                                    <td style="color:black">{{ mdl.valor }}</td>
+                                    <td style="color:black">{{ mdl.parcela }}</td>
+                                    <td style="color:black">{{ mdl.estab }}</td>
+                                </tr>
+                            </table>
+                            <br />
+                            <button class="btn btn-success" ng-click="fecharModal()">Fechar</button>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

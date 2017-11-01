@@ -44,6 +44,18 @@ angular.module('app.controllers').controller('ExtratosController',
         });
     }
 
+    $scope.listaDetalheFuturo = undefined;
+
+    $scope.showModal = function (mdl)
+    {
+        $scope.listaDetalheFuturo = mdl;
+    }
+
+    $scope.fecharModal = function ()
+    {
+        $scope.listaDetalheFuturo = undefined;
+    }    
+
     $scope.imprimir = function ()
     {
         if ($scope.tipoExtrato == '1')

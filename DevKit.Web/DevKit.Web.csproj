@@ -855,8 +855,8 @@
     <Compile Include="proc\Domains\Enums\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelAssociadosCtrl.cs" />
-    <Compile Include="proc\Domains\Services\ExtratoAssociadoCtrl.cs" />
-    <Compile Include="proc\Domains\Services\LimitesAssociadoCtrl.cs" />
+    <Compile Include="proc\Domains\Relatorios\ExtratoAssociadoCtrl.cs" />
+    <Compile Include="proc\Domains\Relatorios\LimitesAssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Services\ConfereNSUCtrl.cs" />
     <Compile Include="proc\Domains\Services\CancelaVendaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\AssociadoCtrl.cs" />

@@ -20,11 +20,9 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest("Não autorizado!");
 
-            var sd = new SaldoDisponivel();
-
-            var list = new List<LimiteAssociadoDTO>();
-
             var mon = new money();
+            var sd = new SaldoDisponivel();
+            var list = new List<LimiteAssociadoDTO>();            
 
             list.Add(new LimiteAssociadoDTO
             {
@@ -45,7 +43,7 @@ namespace DevKit.Web.Controllers
 
             list.Add(new LimiteAssociadoDTO
             {
-                nome = "Limite Disponível",
+                nome = "Limite mensal disponível",
                 valor = "R$ " + mon.setMoneyFormat(dispMensal)
             });
 

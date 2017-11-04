@@ -241,8 +241,10 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\associado\extratos.html" />
+    <Content Include="app\associado\lojistas.html" />
     <Content Include="app\associado\limites.html" />
     <Content Include="app\associado\ExtratosController.js" />
+    <Content Include="app\associado\LojistasAssociadoController.js" />
     <Content Include="app\associado\LimitesController.js" />
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
@@ -853,6 +855,7 @@
     <Compile Include="proc\Domains\Entidades\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojaCtrl.cs" />
     <Compile Include="proc\Domains\Enums\OrdemRelLojistaTransCtrl.cs" />
+    <Compile Include="proc\Domains\Relatorios\LojistasAssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelAssociadosCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\ExtratoAssociadoCtrl.cs" />

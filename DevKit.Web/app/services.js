@@ -51,6 +51,7 @@ angular.module('app.services', ['ngResource'])
         SimulaParcelada: $resource('api/simulaparcelada/:id', {}, opcoes),
         SomaParcelada: $resource('api/somaparcelada/:id', {}, opcoes),
         EfetuaVenda: $resource('api/efetuavenda/:id', {}, opcoes),
+        LojistasAssociado: $resource('api/lojistasassociado/:id', {}, opcoes),
         LojistaMensagens: $resource('api/lojistamensagens/:id', {}, opcoes),
         CancelaVenda: $resource('api/cancelavenda/:id', {}, opcoes),
         Cache: $resource('api/cache/:id', {}, opcoes),

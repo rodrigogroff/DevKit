@@ -1,0 +1,62 @@
+﻿<div class="webFormPostion">
+    <section class="widgetForm" style="width:995px;">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Lojas <b>credenciadas</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm" >            
+            <div style="background: rgba(15, 43, 89, 0.4) ">
+                <br />
+                <table style="padding-left:20px">
+                    <tr>
+                        <td width="20px"></td>
+                        <td width="120px">
+                            Nome da loja
+                        </td>
+                        <td width="120px">
+                            <input type="text" focus="true"
+                                   class="form-control input-transparent"
+                                   ng-model="busca" 
+                                   ng-keyup="$event.keyCode == 13 && search()"/>
+                        </td>
+                        <td width="20px"></td>
+                        <td width="200px">
+                            <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+            </div>
+            <br />
+            <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+
+            <div ng-if="list.length > 0">
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Estado</th>
+                            <th>Cidade</th>
+                            <th>Estabelecimento</th>
+                            <th>Endereço</th>
+                        </tr>
+                    </thead>
+                    <tr data-ng-repeat="mdl in list">
+                        <td>{{ mdl.estado }}</td>
+                        <td>{{ mdl.cidade }}</td>
+                        <td>{{ mdl.nome }}</td>
+                        <td>{{ mdl.endereco }}</td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+            </div>
+        </div>
+    </section>
+</div>

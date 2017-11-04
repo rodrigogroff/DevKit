@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
     {
         public string nome = "", valor = "";
     }
-    
+
     public class LimiteAssociadoController : ApiControllerBase
     {
         public IHttpActionResult Get()
@@ -22,23 +22,23 @@ namespace DevKit.Web.Controllers
 
             var mon = new money();
             var sd = new SaldoDisponivel();
-            var list = new List<LimiteAssociadoDTO>();            
+            var list = new List<LimiteAssociadoDTO>();
 
             list.Add(new LimiteAssociadoDTO
             {
                 nome = "Limite cartão",
-                valor = mon.setMoneyFormat ( (long)db.currentAssociado.vr_limiteMensal + 
-                                             (long)db.currentAssociado.vr_extraCota )
+                valor = mon.setMoneyFormat((long)db.currentAssociado.vr_limiteMensal +
+                                             (long)db.currentAssociado.vr_extraCota)
             });
 
             list.Add(new LimiteAssociadoDTO
             {
                 nome = "Parcelamento",
-                valor = db.currentAssociadoEmpresa.nu_parcelas.ToString().PadLeft(2,'0')
+                valor = db.currentAssociadoEmpresa.nu_parcelas.ToString().PadLeft(2, '0')
             });
 
             long dispMensal = 0, dispTot = 0;
-            
+
             sd.Obter(db, db.currentAssociado, ref dispMensal, ref dispTot);
 
             list.Add(new LimiteAssociadoDTO
@@ -64,7 +64,7 @@ namespace DevKit.Web.Controllers
 
                 BackupCache(scheduler);
             }
-                        
+
             list.Add(new LimiteAssociadoDTO
             {
                 nome = "Melhor dia de compra",
@@ -77,7 +77,7 @@ namespace DevKit.Web.Controllers
                 valor = "R$ " + mon.setMoneyFormat(sd.vrUtilizadoAtual)
             });
 
-            if (DateTime.Now.Day >= scheduler.nu_monthly_day )
+            if (DateTime.Now.Day >= scheduler.nu_monthly_day)
             {
                 var dt = DateTime.Now;
 

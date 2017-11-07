@@ -224,6 +224,44 @@ namespace DevKit.Web
 
                             break;
                         }
+
+                    case "3": // gestão lojista 
+                        {
+                            try
+                            {
+                                var lojista = (from e in db.T_Loja
+                                                where e.st_loja == UserName
+                                                select e).
+                                                FirstOrDefault();
+
+                                if (lojista == null)
+                                {
+                                    context.SetError("invalid_grant", "Senha ou terminal inválido");
+                                    return;
+                                }
+
+                                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+
+                                identity.AddClaim(new Claim(ClaimTypes.Name, lojista.st_loja));
+                                identity.AddClaim(new Claim("m1", "Administrador Lojista: " + lojista.st_nome));
+                                identity.AddClaim(new Claim("m2", (lojista.st_endereco + " / " +
+                                                                    lojista.st_cidade + " " +
+                                                                    lojista.st_estado).Replace("{SE$3}", "")));
+
+                                identity.AddClaim(new Claim("tipo", "3"));
+
+                                var ticket = new AuthenticationTicket(identity, null);
+
+                                context.Validated(ticket);
+                                
+                            }
+                            catch (System.Exception ex)
+                            {
+                                context.SetError("invalid_grant", ex.ToString());
+                            }
+                            
+                            break;
+                        }
                 }
 
 				await System.Threading.Tasks.Task.FromResult(0);

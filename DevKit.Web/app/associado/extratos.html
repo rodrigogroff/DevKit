@@ -119,6 +119,10 @@
                     <h3>Nenhum registro encontrado</h3>
                     <br />
                 </div>
+                <div ng-if="list.length > 0">
+                    Clique na linha do relatório abaixo para obter os detalhes das vendas.<br />
+                    <br />
+                </div>
                 <table class="table table-hover" ng-if="list.length > 0">
                     <thead>
                         <tr>
@@ -141,42 +145,45 @@
                 <br />
                 <br />
 
+                <div class="modal-backdrop"                        
+                        ng-if="listaDetalheFuturo != undefined"
+                        style="background: rgba(55, 55, 55, 0.5 );">
+                    <div class="modal-dialog" style="width:700px">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="modal-content" style="color:black" width="750px">
+                            <div style="overflow-y:scroll;height:500px">
+                                <h3>Parcelas futuras para: <b>{{ listaDetalheFuturo.mes_ano }} </b></h3>
+                                <br />
+                                Total: R$ <b>{{ listaDetalheFuturo.total }}</b><br />
+                                <br />
 
-                <div class="modal-backdrop" 
-                     width="700px"
-                     ng-if="listaDetalheFuturo != undefined"
-                     style="background: rgba(55, 55, 55, 0.5 );">
-                    <div class="modal-dialog">
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <div class="modal-content" style="color:black">
-
-                            <h3>Parcelas futuras para: <b>{{ listaDetalheFuturo.mes_ano }} </b></h3>
-                            <br />
-
-                            <table class="table table-hover" ng-if="listaDetalheFuturo.vendas.length > 0">
-                                <thead>
-                                    <tr>
-                                        <th>Data venda</th>
-                                        <th>NSU</th>
-                                        <th>Valor</th>
-                                        <th>Parcela</th>
-                                        <th>Estabelecimento</th>
+                                <table class="table table-hover" 
+                                       ng-if="listaDetalheFuturo.vendas.length > 0"
+                                       style="width:600px">
+                                    <thead>
+                                        <tr>
+                                            <th>Data venda</th>
+                                            <th>NSU</th>
+                                            <th>Valor</th>
+                                            <th>Parcela</th>
+                                            <th>Estabelecimento</th>
+                                        </tr>
+                                    </thead>
+                                    <tr data-ng-repeat="mdl in listaDetalheFuturo.vendas">
+                                        <td style="color:black">{{ mdl.dataHora }}</td>
+                                        <td style="color:black">{{ mdl.nsu }}</td>
+                                        <td style="color:black">{{ mdl.valor }}</td>
+                                        <td style="color:black">{{ mdl.parcela }}</td>
+                                        <td style="color:black">{{ mdl.estab }}</td>
                                     </tr>
-                                </thead>
-                                <tr data-ng-repeat="mdl in listaDetalheFuturo.vendas">
-                                    <td style="color:black">{{ mdl.dataHora }}</td>
-                                    <td style="color:black">{{ mdl.nsu }}</td>
-                                    <td style="color:black">{{ mdl.valor }}</td>
-                                    <td style="color:black">{{ mdl.parcela }}</td>
-                                    <td style="color:black">{{ mdl.estab }}</td>
-                                </tr>
-                            </table>
-                            <br />
-                            <button class="btn btn-success" ng-click="fecharModal()">Fechar</button>
-
+                                </table>
+                                <br />
+                                <button class="btn btn-success" ng-click="fecharModal()">Fechar</button>
+                                <br />
+                            </div>
                         </div>
                     </div>
                 </div>

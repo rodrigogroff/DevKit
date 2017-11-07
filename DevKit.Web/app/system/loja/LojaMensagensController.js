@@ -24,7 +24,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.confirmar = function ()
     {
         if ($scope.aceite == true)
-            $state.go('venda', {});
+            if ($rootScope != 3)
+                $state.go('venda', {});
     }
 	
 }]);

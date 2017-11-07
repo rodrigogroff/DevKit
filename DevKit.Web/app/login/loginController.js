@@ -48,11 +48,11 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
                     $scope.loginData.userNameAcesso + "." +
                     $scope.loginData.userNameVenc;
             }
-            else
+            else if ($rootScope.tipo == 1 || $rootScope.tipo == 3)
             {
                 // lojista
 
-                lData.userName = "1" + $scope.loginData.userName;
+                lData.userName = $rootScope.tipo + $scope.loginData.userName;
             }
 
             lData.password = $scope.loginData.password;
@@ -69,7 +69,7 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
 
                     $state.go('limitesUsr', {});
                 }
-                else 
+                else if ($rootScope.tipo == 1 || $rootScope.tipo == 3)
                 {
                     // lojistas
 
@@ -79,13 +79,18 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
 
                         $state.go('relAssociados', {});
                     }
-                    else {
-
-                        Api.LojistaMensagens.listPage({}, function (data) {
-                            if (data.count == 0)
+                    else
+                    {
+                        Api.LojistaMensagens.listPage({}, function (data)
+                        {
+                            if (data.count == 0 && $rootScope.tipo == 1)
+                            {
                                 $state.go('venda', {});
-                            else
+                            }
+                            else if (data.count > 0)
+                            {
                                 $state.go('mensagens', {});
+                            }                                
                         });
                     }
                 }

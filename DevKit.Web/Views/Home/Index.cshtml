@@ -143,6 +143,33 @@
                 <ul><li></li></ul>
             </section>			
 
+            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.tipo == '3'">
+                <ul id="side-nav" class="side-nav" style="color:black">
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseAdm"><span class="name">Administrativo</span></a>
+                        <ul id="forms-collapseAdm" class="panel-collapse collapse">
+                            <li><a ui-sref="mensagens"><span>Mensagens</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseSetup"><span class="name">Financeiro</span></a>
+                        <ul id="forms-collapseSetup" class="panel-collapse collapse">
+                            <li><a ui-sref="demonstrativosGestaoLojista"><span>Demonsrtativos</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul>
+                    <li>
+                        <span style="color:grey;text-align:center;padding-left:20px">Version {{version}}</span>
+                    </li>
+                </ul>
+                <ul><li></li></ul>
+            </section>			
+
 		</nav>
 	</div>
 	<table align="left" style="width:100%">

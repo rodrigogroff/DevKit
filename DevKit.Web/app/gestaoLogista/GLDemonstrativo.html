@@ -1,0 +1,66 @@
+﻿<div class="webFormPostion">
+	<section class="widgetForm" style="width:975px">
+		<legend class="legendTop">
+			<table><tr height="12px"><td> </td></tr></table>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td>Demonstrativos <b>Financeiros </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+		<div class="divWebForm">
+
+            <table>
+                <tr>
+                    <td width="200px">
+                        <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="1" ng-model="tipoDemonstrativo"> Em aberto</label>
+                        <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="2" ng-model="tipoDemonstrativo"> Encerrados </label>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr>
+                    <td valign="top">
+                        <div ng-show="list.length == 0">
+                            <br />
+                            <br />
+                            <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <br />
+                            <br />
+                        </div>
+                        <div ng-show="list.length > 0">
+                            <br />
+                            <br />
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Mês / Ano<br />Vencimento</th>
+                                        <th>Convênio</th>
+                                        <th>Total Vendas</th>
+                                        <th>Valor repasse<br />Mensal</th>
+                                        <th>situação</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td>{{ mdl.mesAno }}</td>
+                                    <td>{{ mdl.convenio }}</td>
+                                    <td>{{ mdl.totalVendas }}</td>
+                                    <td>{{ mdl.vlrRepasseMensal }}</td>
+                                    <td>{{ mdl.situacao }}</td>                                    
+                                </tr>
+                            </table>
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+
+		</div>
+	</section>
+</div>

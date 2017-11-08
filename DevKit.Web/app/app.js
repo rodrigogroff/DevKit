@@ -17,11 +17,18 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('relAssociados', { url: '/system/relAssociados', templateUrl: 'app/system/relatorios/listingRelAssociados.html', controller: 'ListingRelAssociadosController' })
     .state('relLojistaTrans', { url: '/system/relLojistaTrans', templateUrl: 'app/system/relatorios/listingRelLojistaTrans.html', controller: 'ListingLojistaTransController' })
         
-        .state('gestaoLojistaRelTrans',
+    .state('gestaoLojistaRelTrans',
         {
             url: '/gestaoLogista/transacoes',
             templateUrl: 'app/gestaoLogista/GLTrans.html',
             controller: 'GLTransController'
+        })
+
+    .state('gestaoLojistaDemonstrativo',
+        {
+            url: '/gestaoLogista/demonstrativos',
+            templateUrl: 'app/gestaoLogista/GLDemonstrativo.html',
+            controller: 'GLDemonstrativoController'
         })
         
     .state('limitesUsr', { url: '/associado/limites', templateUrl: 'app/associado/limites.html', controller: 'LimitesController' })

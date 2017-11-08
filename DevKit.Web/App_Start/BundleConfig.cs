@@ -112,6 +112,7 @@ namespace DevKit.Web
                 "~/app/associado/LimitesController.js",
                 "~/app/associado/ExtratosController.js",
                 "~/app/gestaoLogista/GLTransController.js",
+                "~/app/gestaoLogista/GLDemonstrativo.js",
                 "~/app/associado/LojistasAssociadoController.js",
                 "~/app/system/relatorios/ListingRelatoriosController.js",
                 "~/app/system/relatorios/ListingRelAssociadosController.js",

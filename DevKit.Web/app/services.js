@@ -60,7 +60,9 @@ angular.module('app.services', ['ngResource'])
         HomeView: $resource('api/homeView/:id', {}, opcoes),
         RelAssociados: $resource('api/relAssociados/:id', {}, opcoes),
         RelLojistaTrans: $resource('api/relLojistaTrans/:id', {}, opcoes),
+        GLDemonstrativo: $resource('api/glDemonstrativo/:id', {}, opcoes),
         MonthCombo: $resource('api/month/:id', {}, opcoes),
         ConveniosCombo: $resource('api/convenios/:id', {}, opcoes),
+
 	};
 }]);

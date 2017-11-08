@@ -1,0 +1,172 @@
+﻿<div class="webFormPostion">
+	<section class="widgetForm" style="width:975px">
+		<legend class="legendTop">
+			<table><tr height="12px"><td> </td></tr></table>
+			<table style="color:white; width:100%">
+				<tr>
+					<td width="20px"></td>
+					<td>Relatório de <b>Transações </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+				</tr>
+				<tr height="12px"></tr>
+			</table>
+		</legend>
+		<div class="divWebForm">
+			<table width="100%">
+				<tr>
+					<td valign="top">
+                        <table class="widget" style="color: white">
+                            <tr height="12px"> </tr>
+                            <tr height="36px">
+                                <td width="20px"></td>
+                                <td width="120px"><b>Terminal</b></td>
+                                <td width="240px">
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.terminal" ng-model="campos.idTerminal" />
+                                </td>
+                                <td width="20px"></td>
+                                <td width="120px">
+                                    <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                                </td>
+                            </tr>
+                            <tr height="36px">
+                                <td width="20px"></td>
+                                <td width="120px"><b>Convênio</b></td>
+                                <td width="240px">
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.convenios" ng-model="campos.idEmpresa" />
+                                </td>
+                                <td width="20px"></td>
+                                <td width="120px">
+                                    
+                                </td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Período inicial</b></td>
+                                <td> 
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="40px">
+                                                <input type="text" class="form-control input-transparent" maxlength="2"
+                                                       ng-model="campos.dia_inicial">
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="90px">                                            
+                                                <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="50px">
+                                                <input type="text" class="form-control input-transparent" maxlength="4"
+                                                       ng-model="campos.ano_inicial">
+                                            </td>
+                                        </tr>
+                                    </table>                                    
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Período final</b></td>
+                                <td>
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="40px">
+                                                <input type="text" class="form-control input-transparent" maxlength="2"
+                                                       ng-model="campos.dia_final">
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="90px">
+                                                <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_final" />
+                                            </td>
+                                            <td width="15px"></td>
+                                            <td width="50px">
+                                                <input type="text" class="form-control input-transparent" maxlength="4"
+                                                       ng-model="campos.ano_final">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>NSU</b></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.nsu">
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Situação</b></td>
+                                <td>
+                                    <input type="checkbox" ng-model="campos.confirmada"> Confirmada<br />
+                                    <input type="checkbox" ng-model="campos.cancelada"> Cancelada<br />
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="22px"> </tr>
+                            <tr height="36px">
+                                <td ></td>
+                                <td ><b>Ordenação</b></td>
+                                <td>
+                                    <input type="hidden" name="setor" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.ordem" ng-model="campos.idOrdem" />
+                                </td>
+                                <td ></td>
+                                <td >                                    
+                                </td>
+                            </tr>
+                            <tr height="22px"> </tr>
+                        </table>
+					</td>
+				</tr>
+			</table>
+			<table width="100%">
+				<tr>
+					<td valign="top">
+						<div ng-show="list.length == 0">
+							<br />
+							<br />
+							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+							<br />
+							<br />
+						</div>
+						<div ng-show="list.length > 0">							
+                            <h4>Total de transações: {{ list[0].totalTransacoes }}</h4>
+                            <h4>Total em vendas: R$ <b>{{ list[0].totalValor }}</b></h4>
+							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+							<br />
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Data venda</th>
+                                        <th>NSU</th>
+                                        <th>Situação</th>
+										<th>Associado</th>
+                                        <th>Valor total</th>
+                                        <th>Parcelas</th>
+                                        <th>Terminal</th>
+                                        <th>Segunda Via</th>
+									</tr>
+								</thead>
+								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td>{{ mdl.data }}</td>
+                                    <td>{{ mdl.nsu }}</td>
+                                    <td>{{ mdl.situacao }}</td>
+									<td>{{ mdl.associado }}</td>
+                                    <td>{{ mdl.valor }}</td>
+                                    <td>{{ mdl.parcelas }}</td>
+                                    <td>{{ mdl.terminal }}</td>
+                                    <td><a ng-if="mdl.situacao == 'Confirmada' || mdl.situacao == 'Cancelada'" ng-click="printDiv(mdl.parcelas, mdl.cupom)">Cupom</a></td>
+								</tr>
+							</table>                            
+						</div>
+						<br />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+</div>

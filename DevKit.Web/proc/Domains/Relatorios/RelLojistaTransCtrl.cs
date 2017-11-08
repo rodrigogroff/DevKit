@@ -29,7 +29,8 @@ namespace DevKit.Web.Controllers
         {
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
-            
+
+            var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa", null);
             var idTerminal = Request.GetQueryStringValue<int?>("idTerminal", null);
             var idOrdem = Request.GetQueryStringValue<int?>("idOrdem", null);
             var nsu = Request.GetQueryStringValue<int?>("nsu", null);
@@ -82,6 +83,13 @@ namespace DevKit.Web.Controllers
                 query = (from e in query
                         where e.fk_terminal == idTerminal
                         select e);  
+            }
+
+            if (idEmpresa != null)
+            {
+                query = (from e in query
+                         where e.fk_empresa == idEmpresa
+                         select e);
             }
 
             if (dia_inicial != null && mes_inicial != null && ano_inicial != null)

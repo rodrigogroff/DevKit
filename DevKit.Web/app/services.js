@@ -61,5 +61,6 @@ angular.module('app.services', ['ngResource'])
         RelAssociados: $resource('api/relAssociados/:id', {}, opcoes),
         RelLojistaTrans: $resource('api/relLojistaTrans/:id', {}, opcoes),
         MonthCombo: $resource('api/month/:id', {}, opcoes),
+        ConveniosCombo: $resource('api/convenios/:id', {}, opcoes),
 	};
 }]);

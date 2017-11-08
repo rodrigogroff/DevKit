@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System;
+using LinqToDB;
+using System.Security.Claims;
 
 namespace DevKit.Web.Controllers
 {
@@ -25,7 +27,17 @@ namespace DevKit.Web.Controllers
                 return Thread.CurrentPrincipal.Identity.Name.ToUpper();
             }
         }
-        
+
+        public string userLoggedType
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+                
+                return identity.Claims.Where(c => c.Type == "tipo").Select(c => c.Value).SingleOrDefault();
+            }
+        }
+
         [NonAction]
         public bool StartDatabaseAndAuthorize()
         {
@@ -33,10 +45,38 @@ namespace DevKit.Web.Controllers
 
             var userCurrentName = userLoggedName;
 
-            if (userCurrentName != "DBA")
+            switch(userLoggedType)
             {
-                if (userCurrentName.Contains("."))
-                {
+                case "1":
+
+                    #region - terminal lojista - 
+
+                    db.currentLojista = RestoreTimerCache(CacheTags.T_Terminal, userCurrentName, 2) as T_Loja;
+
+                    if (db.currentLojista == null)
+                    {
+                        var term = (from e in db.T_Terminal
+                                    where e.nu_terminal == userCurrentName.PadLeft(8, '0')
+                                    select e).
+                                    FirstOrDefault();
+
+                        db.currentLojista = (from ne in db.T_Loja
+                                             where ne.i_unique == term.fk_loja
+                                             select ne).
+                                          FirstOrDefault();
+
+                        if (db.currentLojista == null)
+                            return false;
+
+                        BackupCache(db.currentLojista);
+                    }
+
+                    #endregion
+
+                    break;
+
+                case "2":
+
                     #region - associado -
 
                     db.currentAssociado = RestoreTimerCache(CacheTags.T_Cartao, userCurrentName, 2) as T_Cartao;
@@ -46,10 +86,10 @@ namespace DevKit.Web.Controllers
                         var lstName = userCurrentName.Split('.');
 
                         db.currentAssociado = (from e in db.T_Cartao
-                                                where e.st_empresa == lstName[0].PadLeft(6,'0')
-                                                where e.st_matricula == lstName[1].PadLeft(6, '0')
-                                                where e.st_titularidade == "01"
-                                                select e).
+                                               where e.st_empresa == lstName[0].PadLeft(6, '0')
+                                               where e.st_matricula == lstName[1].PadLeft(6, '0')
+                                               where e.st_titularidade == "01"
+                                               select e).
                                                 FirstOrDefault();
 
                         if (db.currentAssociado == null)
@@ -74,24 +114,21 @@ namespace DevKit.Web.Controllers
                     }
 
                     #endregion
-                }
-                else
-                {
-                    #region - lojista - 
 
-                    db.currentLojista = RestoreTimerCache(CacheTags.T_Terminal, userCurrentName, 2) as T_Loja;
+                    break;
+                    
+                case "3":
+
+                    #region - gestão lojista - 
+
+                    db.currentLojista = RestoreTimerCache(CacheTags.T_Loja, userCurrentName, 2) as T_Loja;
 
                     if (db.currentLojista == null)
                     {
-                        var term = (from e in db.T_Terminal
-                                    where e.nu_terminal == userCurrentName.PadLeft(8, '0')
-                                    select e).
-                                    FirstOrDefault();
-
-                        db.currentLojista = (from ne in db.T_Loja
-                                             where ne.i_unique == term.fk_loja
-                                             select ne).
-                                          FirstOrDefault();
+                        db.currentLojista = (from e in db.T_Loja
+                                             where e.st_loja == userCurrentName
+                                             select e).
+                                             FirstOrDefault();
 
                         if (db.currentLojista == null)
                             return false;
@@ -100,15 +137,10 @@ namespace DevKit.Web.Controllers
                     }
 
                     #endregion
-                }                
-            }
-            else
-            {
-                // ---------------------------------------------
-                // DBA fica sem usuário atual logado
-                // ---------------------------------------------
-            }
 
+                    break;
+            }
+            
             if (myApplication == null)
                 myApplication = HttpContext.Current.Application;
 

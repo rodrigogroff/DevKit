@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using LinqToDB;
 using SyCrafEngine;
-using DataModel;
 
 namespace DevKit.Web.Controllers
 {
@@ -22,6 +21,7 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Get()
         {
             var tipo = Request.GetQueryStringValue<int>("tipoDemonstrativo", 0);
+            var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa", null);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest("Não autorizado!");
@@ -36,6 +36,7 @@ namespace DevKit.Web.Controllers
 
                     var listConvenios = (from e in db.LINK_LojaEmpresa
                                          where e.fk_loja == db.currentLojista.i_unique
+                                         where idEmpresa == null || e.fk_empresa == idEmpresa
                                          select e).
                                          ToList();
 
@@ -47,6 +48,11 @@ namespace DevKit.Web.Controllers
 
                     var st_mes = dt.Month.ToString("00");
                     var st_ano = dt.Year.ToString();
+
+                    long    totAtual = 0, 
+                            totFuturo = 0,
+                            totAtualRepasse = 0,
+                            totFuturoRepasse = 0;
 
                     // pega do LOG_FECHAMENTO
 
@@ -73,8 +79,12 @@ namespace DevKit.Web.Controllers
                             if (totalVendas == null)
                                 totalVendas = 0;
 
+                            totAtual += (long) totalVendas;
+
                             var repasse = totalVendas -
                                           totalVendas * convenioAtual.tx_admin / 10000;
+
+                            totAtualRepasse += (long) repasse;
 
                             results.Add(new Demonstrativo
                             {
@@ -109,9 +119,13 @@ namespace DevKit.Web.Controllers
 
                             if (totalVendas == null)
                                 break;
-                            
+
+                            totFuturo += (long)totalVendas;
+
                             var repasse = totalVendas -
                                           totalVendas * convenioAtual.tx_admin / 10000;
+
+                            totFuturoRepasse += (long) repasse;
 
                             results.Add(new Demonstrativo
                             {
@@ -127,7 +141,11 @@ namespace DevKit.Web.Controllers
                     return Ok(new
                     {
                         count = results.Count,
-                        results = results
+                        results = results,
+                        totAtual = "R$ " + mon.setMoneyFormat(totAtual),
+                        totFuturo = "R$ " + mon.setMoneyFormat(totFuturo),
+                        totAtualRepasse = "R$ " + mon.setMoneyFormat(totAtualRepasse),
+                        totFuturoRepasse = "R$ " + mon.setMoneyFormat(totFuturoRepasse),
                     });
 
                     break;                    

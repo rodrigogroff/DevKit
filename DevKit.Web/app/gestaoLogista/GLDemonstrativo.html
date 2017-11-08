@@ -14,17 +14,24 @@
 
             <table>
                 <tr>
-                    <td width="200px">
+                    <td width="150px">
                         <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="1" ng-model="tipoDemonstrativo"> Em aberto</label>
                         <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="2" ng-model="tipoDemonstrativo"> Encerrados </label>
                     </td>
-                    <td>
+                    <td width="100px"> 
+                        Convênio
+                    </td>
+                    <td width="170px">
+                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="convenios" ng-model="idEmpresa" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="200px">
                         <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
                     </td>
                 </tr>
             </table>
 
-            <table width="100%">
+            <table width="90%">
                 <tr>
                     <td valign="top">
                         <div ng-show="list.length == 0">
@@ -53,6 +60,31 @@
                                     <td>{{ mdl.totalVendas }}</td>
                                     <td>{{ mdl.vlrRepasseMensal }}</td>
                                     <td>{{ mdl.situacao }}</td>                                    
+                                </tr>
+                            </table>
+                            <br />
+                            <table class="table table-hover" style="width:500px">
+                                <thead>
+                                    <tr>
+                                        <th>Total</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>Total Atual</td>
+                                    <td>{{totAtual}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Repasse Atual</td>
+                                    <td>{{totAtualRepasse}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Futuro</td>
+                                    <td>{{totFuturo}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Repasse Futuro</td>
+                                    <td>{{totFuturoRepasse}}</td>
                                 </tr>
                             </table>
                         </div>

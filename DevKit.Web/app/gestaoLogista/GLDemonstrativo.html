@@ -10,28 +10,64 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div class="divWebForm">
-
+		<div class="divWebForm">            
+            <b>Selecione o tipo de demonstrativo:</b><br />
+            <br />
             <table>
                 <tr>
-                    <td width="150px">
-                        <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="1" ng-model="tipoDemonstrativo"> Em aberto</label>
-                        <label style="display:block;"><input type="radio" name="status" id="statusAtivo" value="2" ng-model="tipoDemonstrativo"> Encerrados </label>
-                    </td>
-                    <td width="100px"> 
-                        Convênio
-                    </td>
-                    <td width="170px">
-                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="convenios" ng-model="idEmpresa" />
+                    <td width="90px">
+                        <label><input type="radio" name="status" id="statusAtivo" value="1" ng-model="tipoDemonstrativo"> Em aberto</label>
                     </td>
                     <td width="20px"></td>
-                    <td width="200px">
-                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                    <td width="90px">
+                        <label><input type="radio" name="status" id="statusAtivo" value="2" ng-model="tipoDemonstrativo"> Encerrados </label>
                     </td>
                 </tr>
             </table>
+            <br />
+            <table>
+                <tr>
+                    <td valign="top">
+                        <table ng-if="tipoDemonstrativo == 1">
+                            <tr height="46px">
+                                <td width="100px">
+                                    Convênio
+                                </td>
+                                <td width="170px">
+                                    <input type="hidden" style="width:100%" placeholder="(Todos)" ui-select2="convenios" ng-model="campos.idEmpresa" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="46px">
+                                <td width="100px">
+                                    Terminal
+                                </td>
+                                <td width="170px">
+                                    <input type="hidden" style="width:100%" placeholder="(Todos)" ui-select2="terminais" ng-model="campos.idTerminal" />
+                                </td>
+                                <td></td>
+                            </tr>
 
-            <table width="90%">
+                            <tr height="46px">
+                                <td width="100px">
+                                    Opções
+                                </td>
+                                <td width="170px">
+                                    <input type="checkbox" ng-model="campos.porTerminal"> Expandir por terminal<br />
+                                </td>
+                                <td></td>
+                            </tr>
+
+                        </table>
+                    </td>
+                    <td width="20px"></td>
+                    <td valign="top" style="padding-top:8px">
+                        <button ng-if="tipoDemonstrativo != undefined" class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                    </td>
+                </tr>
+            </table>
+            
+            <table width="90%" ng-if="tipoDemonstrativo == 1">
                 <tr>
                     <td valign="top">
                         <div ng-show="list.length == 0">
@@ -59,7 +95,7 @@
                                     <td>{{ mdl.convenio }}</td>
                                     <td>{{ mdl.totalVendas }}</td>
                                     <td>{{ mdl.vlrRepasseMensal }}</td>
-                                    <td>{{ mdl.situacao }}</td>                                    
+                                    <td>{{ mdl.situacao }}</td>
                                 </tr>
                             </table>
                             <br />
@@ -92,7 +128,6 @@
                     </td>
                 </tr>
             </table>
-
-		</div>
+        </div>
 	</section>
 </div>

@@ -5,29 +5,43 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
     $scope.loading = false;
-    $scope.idEmpresa = undefined;
+
+    $scope.campos = {
+        idEmpresa: '',
+        idTerminal: '',
+        porTerminal: true
+    };
 
     $scope.convenios = ngSelects.obterConfiguracao(Api.ConveniosCombo, { tamanhoPagina: 15 });
+    $scope.terminais = ngSelects.obterConfiguracao(Api.TerminalLoja, { tamanhoPagina: 15 });
 
     $scope.search = function ()
     {
         $scope.loading = true;
 
-        Api.GLDemonstrativo.listPage({
+        var opcoes = {
             tipoDemonstrativo: $scope.tipoDemonstrativo,
-            idEmpresa: $scope.idEmpresa },
-            function (data)
-            {
-                $scope.list = data.results;
-                $scope.total = data.count;            
+            idEmpresa: $scope.campos.idEmpresa,
+            idTerminal: $scope.campos.idTerminal,
+            porTerminal: $scope.campos.porTerminal,
+        };
 
-                $scope.totAtual = data.totAtual;
-                $scope.totFuturo = data.totFuturo;
-                $scope.totAtualRepasse = data.totAtualRepasse;
-                $scope.totFuturoRepasse = data.totFuturoRepasse;
+        console.log('updated 3');
+        console.log(opcoes);
 
-                $scope.loading = false;
-            });
+        Api.GLDemonstrativo.listPage(opcoes,
+        function (data)
+        {
+            $scope.list = data.results;
+            $scope.total = data.count;            
+
+            $scope.totAtual = data.totAtual;
+            $scope.totFuturo = data.totFuturo;
+            $scope.totAtualRepasse = data.totAtualRepasse;
+            $scope.totFuturoRepasse = data.totFuturoRepasse;
+
+            $scope.loading = false;
+        });
     }
    
 }]);

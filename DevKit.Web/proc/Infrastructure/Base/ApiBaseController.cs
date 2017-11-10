@@ -44,34 +44,37 @@ namespace DevKit.Web.Controllers
             db = new AutorizadorCNDB();
 
             var userCurrentName = userLoggedName;
-
+            
             switch(userLoggedType)
             {
                 case "1":
 
-                    #region - terminal lojista - 
-
-                    db.currentLojista = RestoreTimerCache(CacheTags.T_Terminal, userCurrentName, 2) as T_Loja;
-
-                    if (db.currentLojista == null)
+                    if (userCurrentName != "DBA")
                     {
-                        var term = (from e in db.T_Terminal
-                                    where e.nu_terminal == userCurrentName.PadLeft(8, '0')
-                                    select e).
-                                    FirstOrDefault();
+                        #region - terminal lojista - 
 
-                        db.currentLojista = (from ne in db.T_Loja
-                                             where ne.i_unique == term.fk_loja
-                                             select ne).
-                                          FirstOrDefault();
+                        db.currentLojista = RestoreTimerCache(CacheTags.T_Terminal, userCurrentName, 2) as T_Loja;
 
                         if (db.currentLojista == null)
-                            return false;
+                        {
+                            var term = (from e in db.T_Terminal
+                                        where e.nu_terminal == userCurrentName.PadLeft(8, '0')
+                                        select e).
+                                        FirstOrDefault();
 
-                        BackupCache(db.currentLojista);
+                            db.currentLojista = (from ne in db.T_Loja
+                                                 where ne.i_unique == term.fk_loja
+                                                 select ne).
+                                              FirstOrDefault();
+
+                            if (db.currentLojista == null)
+                                return false;
+
+                            BackupCache(db.currentLojista);
+                        }
+
+                        #endregion
                     }
-
-                    #endregion
 
                     break;
 

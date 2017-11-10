@@ -1,16 +1,16 @@
 ﻿<div class="webFormPostion">
-	<section class="widgetForm" style="width:975px">
-		<legend class="legendTop">
-			<table><tr height="12px"><td> </td></tr></table>
-			<table style="color:white; width:100%">
-				<tr>
-					<td width="20px"></td>
-					<td>Demonstrativos <b>Financeiros </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-				</tr>
-				<tr height="12px"></tr>
-			</table>
-		</legend>
-		<div class="divWebForm">            
+    <section class="widgetForm" style="width:975px">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Demonstrativos <b>Financeiros </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm">
             <b>Selecione o tipo de demonstrativo:</b><br />
             <br />
             <table>
@@ -53,7 +53,7 @@
                                     Opções
                                 </td>
                                 <td width="170px">
-                                    <input type="checkbox" ng-model="campos.porTerminal"> Expandir por terminal<br />
+                                    <input type="checkbox" ng-model="campos.porTerminal" ng-click="list == undefined"> Expandir por terminal<br />
                                 </td>
                                 <td></td>
                             </tr>
@@ -66,8 +66,8 @@
                     </td>
                 </tr>
             </table>
-            
-            <table width="90%" ng-if="tipoDemonstrativo == 1">
+
+            <table width="90%" ng-if="tipoDemonstrativoSel == 1 && campos.porTerminal == false && list != undefined">
                 <tr>
                     <td valign="top">
                         <div ng-show="list.length == 0">
@@ -128,6 +128,102 @@
                     </td>
                 </tr>
             </table>
+
+            <div ng-if="tipoDemonstrativoSel == 1 && campos.porTerminal == true && list != undefined">
+                <table width="90%" data-ng-repeat="term in list">
+                    <tr>
+                        <td valign="top">
+                            <div ng-show="list.length == 0">
+                                <br />
+                                <br />
+                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="list.length > 0">
+
+                                <h3>Valores para: {{term.terminal}}</h3>
+                                <br />
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Mês / Ano<br />Vencimento</th>
+                                            <th>Convênio</th>
+                                            <th>Total Vendas</th>
+                                            <th>Valor repasse<br />Mensal</th>
+                                            <th>situação</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in term.lstDemonstrativos">
+                                        <td>{{ mdl.mesAno }}</td>
+                                        <td>{{ mdl.convenio }}</td>
+                                        <td>{{ mdl.totalVendas }}</td>
+                                        <td>{{ mdl.vlrRepasseMensal }}</td>
+                                        <td>{{ mdl.situacao }}</td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <table class="table table-hover" style="width:500px">
+                                    <thead>
+                                        <tr>
+                                            <th>Total</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td>Total Atual</td>
+                                        <td>{{term.totAtual}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Repasse Atual</td>
+                                        <td>{{term.totAtualRepasse}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Futuro</td>
+                                        <td>{{term.totFuturo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Repasse Futuro</td>
+                                        <td>{{term.totFuturoRepasse}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div ng-if="campos.idTerminal == ''">
+                    <br />
+                    <h2>Resultado final</h2>
+                    <br />
+                    <table class="table table-hover" style="width:500px">
+                        <thead>
+                            <tr>
+                                <th>Total</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>Total Atual</td>
+                            <td>{{totAtual}}</td>
+                        </tr>
+                        <tr>
+                            <td>Repasse Atual</td>
+                            <td>{{totAtualRepasse}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Futuro</td>
+                            <td>{{totFuturo}}</td>
+                        </tr>
+                        <tr>
+                            <td>Repasse Futuro</td>
+                            <td>{{totFuturoRepasse}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <br />
+                <br />
+                <br />
+            </div>
         </div>
-	</section>
+    </section>
 </div>

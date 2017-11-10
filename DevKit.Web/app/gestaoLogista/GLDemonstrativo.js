@@ -26,12 +26,13 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             porTerminal: $scope.campos.porTerminal,
         };
 
-        console.log('updated 3');
-        console.log(opcoes);
+        $scope.tipoDemonstrativoSel = undefined;
 
         Api.GLDemonstrativo.listPage(opcoes,
         function (data)
         {
+            $scope.tipoDemonstrativoSel = $scope.tipoDemonstrativo;
+
             $scope.list = data.results;
             $scope.total = data.count;            
 

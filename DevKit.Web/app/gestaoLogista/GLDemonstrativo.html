@@ -142,9 +142,10 @@
                             </div>
                             <div ng-show="list.length > 0">
 
-                                <h3>Valores para: {{term.terminal}}</h3>
+                                <h3>Terminal: {{term.terminal}}</h3>
+                                Clique na linhas abaixo para visualizar as transações:<br />
                                 <br />
-                                <table class="table table-hover">
+                                <table class="table table-hover" >
                                     <thead>
                                         <tr>
                                             <th>Mês / Ano<br />Vencimento</th>
@@ -160,6 +161,13 @@
                                         <td>{{ mdl.totalVendas }}</td>
                                         <td>{{ mdl.vlrRepasseMensal }}</td>
                                         <td>{{ mdl.situacao }}</td>
+                                    </tr>
+                                    <tr style="background-color:white;color:black">
+                                        <td colspan="2">
+                                            <b style="color:black">Total demonstrativo</b>
+                                        </td>
+                                        <td><b style="color:black">{{term.totGeral}}</b></td>
+                                        <td><b style="color:black">{{term.totGeralRepasse}}</b></td>
                                     </tr>
                                 </table>
                                 <br />
@@ -191,38 +199,62 @@
                         </td>
                     </tr>
                 </table>
-                <div ng-if="campos.idTerminal == ''">
-                    <br />
-                    <h2>Resultado final</h2>
-                    <br />
-                    <table class="table table-hover" style="width:500px">
-                        <thead>
-                            <tr>
-                                <th>Total</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tr>
-                            <td>Total Atual</td>
-                            <td>{{totAtual}}</td>
-                        </tr>
-                        <tr>
-                            <td>Repasse Atual</td>
-                            <td>{{totAtualRepasse}}</td>
-                        </tr>
-                        <tr>
-                            <td>Total Futuro</td>
-                            <td>{{totFuturo}}</td>
-                        </tr>
-                        <tr>
-                            <td>Repasse Futuro</td>
-                            <td>{{totFuturoRepasse}}</td>
-                        </tr>
-                    </table>
+                <br />
+                <br />
+                <br />
+                <div class="modal-backdrop" style="background: rgba(55, 55, 55, 0.5	);" ng-if="transacoes.length >= 0">
+                    <div class="modal-dialog" style="width:900px">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="modal-content">
+                            <div ng-show="transacoes.length == 0">
+                                <br />
+                                <b style="color:black">Nenhum registro encontrado!</b>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="transacoes.length > 0" >
+                                
+                                <span style="color:black">
+                                    Mês/Ano: <b>{{mdlSelecionado.mesAno}}</b><br /> 
+                                    Convênio: <b>{{mdlSelecionado.convenio}}</b><br /> 
+                                    Situação: <b>{{mdlSelecionado.situacao}}</b><br /> 
+                                    Total vendas: <b>{{mdlSelecionado.totalVendas}}</b><br /> 
+                                    Total repasse: <b>{{mdlSelecionado.vlrRepasseMensal}}</b><br /> 
+                                </span>
+                                
+                                <div class="widgetForm" style="overflow-y: scroll; height:350px">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Serial</th>
+                                                <th>Data</th>
+                                                <th>NSU</th>
+                                                <th>Cartão</th>
+                                                <th>Valor total</th>
+                                                <th>Parcela</th>
+                                                <th>Vlr. Parcela</th>
+                                            </tr>
+                                        </thead>
+                                        <tr data-ng-repeat="mdl in transacoes">
+                                            <td>{{ mdl.serial }}</td>
+                                            <td>{{ mdl.data }}</td>
+                                            <td>{{ mdl.nsu }}</td>
+                                            <td>{{ mdl.cartao }}</td>
+                                            <td>{{ mdl.vlr }}</td>
+                                            <td>{{ mdl.parcela }}</td>
+                                            <td>{{ mdl.vlrPar }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br />
+                            <button class="btn btn-primary" ng-click="fecharPopUp()">Fechar</button>
+                        </div>
+                    </div>
                 </div>
-                <br />
-                <br />
-                <br />
             </div>
         </div>
     </section>

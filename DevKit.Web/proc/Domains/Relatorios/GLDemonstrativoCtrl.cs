@@ -9,6 +9,11 @@ namespace DevKit.Web.Controllers
 {
     public class GLDemonstrativoController : ApiControllerBase
     {
+        public class DemoTransacao
+        {
+            public string serial, data, nsu, cartao, vlr, parcela, vlrPar;
+        }
+
         public class Demonstrativo
         {
             public string mesAno, 
@@ -17,11 +22,15 @@ namespace DevKit.Web.Controllers
                           terminal,
                           vlrRepasseMensal, 
                           situacao;
+
+            public List<DemoTransacao> lst = new List<DemoTransacao>();
         }
 
         public class DemonstrativoTerminal
         {
             public string   terminal,
+                            totGeral,
+                            totGeralRepasse,
                             totAtual,
                             totFuturo,
                             totAtualRepasse,
@@ -200,7 +209,7 @@ namespace DevKit.Web.Controllers
                              totAtualRepasse = 0,
                              totFuturoRepasse = 0;
 
-                            var resultItem = new DemonstrativoTerminal { terminal = term.nu_terminal };
+                            var resultItem = new DemonstrativoTerminal { terminal = term.nu_terminal + " " + term.st_localizacao};
 
                             foreach (var convenioAtual in listConvenios)
                             {
@@ -239,14 +248,53 @@ namespace DevKit.Web.Controllers
                                     totAtualRepasse += (long)repasse;
                                     supertotAtualRepasse += totAtualRepasse;
 
-                                    resultItem.lstDemonstrativos.Add(new Demonstrativo
+                                    var nItem = new Demonstrativo
                                     {
                                         convenio = tEmpresa.st_fantasia,
                                         mesAno = st_mes + "/" + st_ano,
                                         totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
                                         vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
                                         situacao = "ATUAL",
-                                    });
+                                    };
+
+                                    var tListParcelas = (from e in db.T_Parcelas
+                                                 join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
+                                                 where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
+                                                 where e.fk_empresa == tEmpresa.i_unique
+                                                 where e.fk_loja == db.currentLojista.i_unique
+                                                 where ltr.fk_terminal == term.i_unique
+                                                 where e.nu_parcela == 1
+                                                 select e).
+                                                 ToList();
+
+                                    int serial = 1;
+
+                                    var tempIdCarts = tListParcelas.Select(y => (int) y.fk_cartao).ToList();
+                                    var tempIdTrans = tListParcelas.Select(y => (int) y.fk_log_transacoes).ToList();
+
+                                    var lstCarts = (from e in db.T_Cartao where tempIdCarts.Contains((int)e.i_unique) select e).ToList();
+                                    var lstTrans = (from e in db.LOG_Transacoes where tempIdTrans.Contains((int)e.i_unique) select e).ToList();
+
+                                    foreach (var itemParcela in tListParcelas)
+                                    {
+                                        var cart = lstCarts.Where(y => y.i_unique == itemParcela.fk_cartao ).FirstOrDefault();
+                                        var tr = lstTrans.Where(y => y.i_unique == itemParcela.fk_log_transacoes).FirstOrDefault();
+
+                                        nItem.lst.Add(new DemoTransacao
+                                        {
+                                            serial = serial.ToString(),
+                                            data = Convert.ToDateTime(itemParcela.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
+                                            nsu = itemParcela.nu_nsu.ToString(),
+                                            cartao = cart.st_empresa + "." + cart.st_matricula,
+                                            vlr = "R$ " + mon.setMoneyFormat((long)tr.vr_total),
+                                            parcela = itemParcela.nu_indice.ToString() + " / " + itemParcela.nu_tot_parcelas.ToString(),
+                                            vlrPar = "R$ " + mon.setMoneyFormat((long)itemParcela.vr_valor),
+                                        });
+
+                                        serial++;
+                                    }
+
+                                    resultItem.lstDemonstrativos.Add(nItem);
                                 }
 
                                 var dtFut = dt;
@@ -285,21 +333,63 @@ namespace DevKit.Web.Controllers
                                                     totalVendas * convenioAtual.tx_admin / 10000;
 
                                     totFuturoRepasse += (long)repasse;
-
-                                    resultItem.lstDemonstrativos.Add(new Demonstrativo
+                                    
+                                    var nItem = new Demonstrativo
                                     {
                                         convenio = tEmpresa.st_fantasia,
                                         mesAno = st_mes + "/" + st_ano,
-                                        totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
+                                        totalVendas = "R$ " + mon.setMoneyFormat((long)totFuturo),
                                         vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
                                         situacao = "FUTURO",
-                                    });
+                                    };
+
+                                    var tListParcelas = (from e in db.T_Parcelas
+                                                         join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
+                                                         where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
+                                                         where e.fk_empresa == tEmpresa.i_unique
+                                                         where e.fk_loja == db.currentLojista.i_unique
+                                                         where ltr.fk_terminal == term.i_unique
+                                                         where e.nu_parcela == nuParc
+                                                         select e).
+                                                 ToList();
+
+                                    int serial = 1;
+
+                                    var tempIdCarts = tListParcelas.Select(y => (int)y.fk_cartao).ToList();
+                                    var tempIdTrans = tListParcelas.Select(y => (int)y.fk_log_transacoes).ToList();
+
+                                    var lstCarts = (from e in db.T_Cartao where tempIdCarts.Contains((int)e.i_unique) select e).ToList();
+                                    var lstTrans = (from e in db.LOG_Transacoes where tempIdTrans.Contains((int)e.i_unique) select e).ToList();
+
+                                    foreach (var itemParcela in tListParcelas)
+                                    {
+                                        var cart = lstCarts.Where(y => y.i_unique == itemParcela.fk_cartao).FirstOrDefault();
+                                        var tr = lstTrans.Where(y => y.i_unique == itemParcela.fk_log_transacoes).FirstOrDefault();
+
+                                        nItem.lst.Add(new DemoTransacao
+                                        {
+                                            serial = serial.ToString(),
+                                            data = Convert.ToDateTime(itemParcela.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
+                                            nsu = itemParcela.nu_nsu.ToString(),
+                                            cartao = cart.st_empresa + "." + cart.st_matricula,
+                                            vlr = "R$ " + mon.setMoneyFormat((long)tr.vr_total),
+                                            parcela = itemParcela.nu_indice.ToString() + " / " + itemParcela.nu_tot_parcelas.ToString(),
+                                            vlrPar = "R$ " + mon.setMoneyFormat((long)itemParcela.vr_valor),
+                                        });
+
+                                        serial++;
+                                    }
+
+                                    resultItem.lstDemonstrativos.Add(nItem);
                                 }
 
                                 resultItem.totAtual = "R$ " + mon.setMoneyFormat(totAtual);
                                 resultItem.totFuturo = "R$ " + mon.setMoneyFormat(totFuturo);
                                 resultItem.totAtualRepasse = "R$ " + mon.setMoneyFormat(totAtualRepasse);
                                 resultItem.totFuturoRepasse = "R$ " + mon.setMoneyFormat(totFuturoRepasse);
+
+                                resultItem.totGeral = "R$ " + mon.setMoneyFormat(totAtual + totFuturo);
+                                resultItem.totGeralRepasse = "R$ " + mon.setMoneyFormat(totAtualRepasse + totFuturoRepasse);
                             }
 
                             results.Add(resultItem);
@@ -308,7 +398,7 @@ namespace DevKit.Web.Controllers
                         return Ok(new
                         {
                             count = results.Count,
-                            results = results,
+                            results = results,                            
                             totAtual = "R$ " + mon.setMoneyFormat(supertotAtual),
                             totFuturo = "R$ " + mon.setMoneyFormat(supertotFuturo),
                             totAtualRepasse = "R$ " + mon.setMoneyFormat(supertotAtualRepasse),
@@ -317,114 +407,7 @@ namespace DevKit.Web.Controllers
 
                         #endregion
                     }
-                    else
-                    {
-                        /*
-                        foreach (var convenioAtual in listConvenios)
-                        {
-                            if (convenioAtual.fk_empresa == 11) // convey testes
-                                continue;
-
-                            var tEmpresa = (from e in db.T_Empresa
-                                            where e.i_unique == convenioAtual.fk_empresa
-                                            select e).
-                                            FirstOrDefault();
-
-                            // ----------------
-                            // atuais
-                            // ----------------
-
-                            {
-                                var totalVendas = (from e in db.T_Parcelas
-                                                    join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
-                                                    where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                                    where e.fk_empresa == tEmpresa.i_unique
-                                                    where e.fk_loja == db.currentLojista.i_unique
-                                                    where idTerminal == null || ltr.fk_terminal == idTerminal
-                                                    where e.nu_parcela == 1
-                                                    select (long?)e.vr_valor).
-                                                    Sum();
-
-                                if (totalVendas == null)
-                                    totalVendas = 0;
-
-                                totAtual += (long)totalVendas;
-
-                                var repasse = totalVendas -
-                                                totalVendas * convenioAtual.tx_admin / 10000;
-
-                                totAtualRepasse += (long)repasse;
-
-                                results.Add(new Demonstrativo
-                                {
-                                    convenio = tEmpresa.st_fantasia,
-                                    mesAno = st_mes + "/" + st_ano,
-                                    totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
-                                    vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
-                                    situacao = "ATUAL",
-                                });
-                            }
-
-                            var dtFut = dt;
-                            var nuParc = 1;
-
-                            // ----------------
-                            // futuros
-                            // ----------------
-
-                            while (true)
-                            {
-                                dtFut = dtFut.AddMonths(1);
-
-                                st_mes = dtFut.Month.ToString("00");
-                                st_ano = dtFut.Year.ToString();
-
-                                nuParc++;
-
-                                var totalVendas = (from e in db.T_Parcelas
-                                                    join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
-                                                    where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                                    where e.fk_empresa == tEmpresa.i_unique
-                                                    where idTerminal == null || ltr.fk_terminal == idTerminal
-                                                    where e.fk_loja == db.currentLojista.i_unique
-                                                    where e.nu_parcela == nuParc
-                                                    select (long?)e.vr_valor).
-                                                Sum();
-
-                                if (totalVendas == null)
-                                    break;
-
-                                totFuturo += (long)totalVendas;
-
-                                var repasse = totalVendas -
-                                                totalVendas * convenioAtual.tx_admin / 10000;
-
-                                totFuturoRepasse += (long)repasse;
-
-                                results.Add(new Demonstrativo
-                                {
-                                    convenio = tEmpresa.st_fantasia,
-                                    mesAno = st_mes + "/" + st_ano,
-                                    totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
-                                    vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
-                                    situacao = "FUTURO",
-                                });
-                            }
-                        }
-
-                        return Ok(new
-                        {
-                            count = results.Count,
-                            results = results,
-                            totAtual = "R$ " + mon.setMoneyFormat(totAtual),
-                            totFuturo = "R$ " + mon.setMoneyFormat(totFuturo),
-                            totAtualRepasse = "R$ " + mon.setMoneyFormat(totAtualRepasse),
-                            totFuturoRepasse = "R$ " + mon.setMoneyFormat(totFuturoRepasse),
-                        });
-*/
-                    }
-
-                    
+                                       
                     #endregion
 
                     break;                    

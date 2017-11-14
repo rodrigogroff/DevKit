@@ -15,6 +15,17 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.convenios = ngSelects.obterConfiguracao(Api.ConveniosCombo, { tamanhoPagina: 15 });
     $scope.terminais = ngSelects.obterConfiguracao(Api.TerminalLoja, { tamanhoPagina: 15 });
 
+    $scope.fecharPopUp = function ()
+    {
+        $scope.transacoes = undefined;
+    };
+
+    $scope.show = function (mdl)
+    {
+        $scope.transacoes = mdl.lst;
+        $scope.mdlSelecionado = mdl;
+    }
+
     $scope.search = function ()
     {
         $scope.loading = true;

@@ -11,16 +11,16 @@
             </table>
         </legend>
         <div class="divWebForm">
-            <b>Selecione o tipo de demonstrativo:</b><br />
+            <b>Selecione o tipo de demonstrativo do período:</b><br />
             <br />
             <table>
                 <tr>
                     <td width="90px">
-                        <label><input type="radio" name="status" id="statusAtivo" value="1" ng-model="tipoDemonstrativo"> Em aberto</label>
+                        <label><input type="radio" name="status" id="statusAtivo" value="1" ng-change="limpa()" ng-model="tipoDemonstrativo"> Em aberto</label>
                     </td>
                     <td width="20px"></td>
                     <td width="90px">
-                        <label><input type="radio" name="status" id="statusAtivo" value="2" ng-model="tipoDemonstrativo"> Encerrados </label>
+                        <label><input type="radio" name="status" id="statusAtivo" value="2" ng-change="limpa()" ng-model="tipoDemonstrativo"> Encerrados </label>
                     </td>
                 </tr>
             </table>
@@ -99,7 +99,7 @@
                                     Opções
                                 </td>
                                 <td width="170px">
-                                    <input type="checkbox" ng-model="campos.porTerminal" ng-click="list == undefined"> Expandir por terminal<br />
+                                    <input type="checkbox" ng-model="campos.porTerminal" ng-change="limpa()" ng-click="list == undefined"> Expandir por terminal<br />
                                 </td>
                                 <td></td>
                             </tr>
@@ -112,7 +112,7 @@
                 </tr>
             </table>
 
-            <table width="90%" ng-if="tipoDemonstrativoSel == 1 && campos.porTerminal == false && list != undefined">
+            <table width="90%" ng-if="tipoDemonstrativoSel == 1 && porTerminalSel == false && list != undefined">
                 <tr>
                     <td valign="top">
                         <div ng-show="list.length == 0">
@@ -174,7 +174,7 @@
                 </tr>
             </table>
 
-            <table width="90%" ng-if="tipoDemonstrativoSel == 2 && campos.porTerminal == false && list != undefined">
+            <table width="90%" ng-if="tipoDemonstrativoSel == 2 && porTerminalSel == false && list != undefined">
                 <tr>
                     <td valign="top">
                         <div ng-show="list.length == 0">
@@ -230,7 +230,7 @@
 
             <!--atual e futuro-->
 
-            <div ng-if="tipoDemonstrativoSel == 1 && campos.porTerminal == true && list != undefined">
+            <div ng-if="tipoDemonstrativoSel == 1 && porTerminalSel == true && list != undefined">
                 <table width="90%" data-ng-repeat="term in list">
                     <tr>
                         <td valign="top">
@@ -307,8 +307,6 @@
                     <div class="modal-dialog" style="width:900px">
                         <br />
                         <br />
-                        <br />
-                        <br />
                         <div class="modal-content">
                             <div ng-show="transacoes.length == 0">
                                 <br />
@@ -326,27 +324,28 @@
                                     Total repasse: <b>{{mdlSelecionado.vlrRepasseMensal}}</b><br /> 
                                 </span>
                                 
-                                <div class="widgetForm" style="overflow-y: scroll; height:350px">
+                                <div style="overflow-y: scroll; height:350px">
+                                    <br />
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Serial</th>
-                                                <th>Data</th>
-                                                <th>NSU</th>
-                                                <th>Cartão</th>
-                                                <th>Valor total</th>
-                                                <th>Parcela</th>
-                                                <th>Vlr. Parcela</th>
+                                                <th style="color:black">Serial</th>
+                                                <th style="color:black">Data</th>
+                                                <th style="color:black">NSU</th>
+                                                <th style="color:black">Cartão</th>
+                                                <th style="color:black">Valor total</th>
+                                                <th style="color:black">Parcela</th>
+                                                <th style="color:black">Vlr. Parcela</th>
                                             </tr>
                                         </thead>
                                         <tr data-ng-repeat="mdl in transacoes">
-                                            <td>{{ mdl.serial }}</td>
-                                            <td>{{ mdl.data }}</td>
-                                            <td>{{ mdl.nsu }}</td>
-                                            <td>{{ mdl.cartao }}</td>
-                                            <td>{{ mdl.vlr }}</td>
-                                            <td>{{ mdl.parcela }}</td>
-                                            <td>{{ mdl.vlrPar }}</td>
+                                            <td style="color:black">{{ mdl.serial }}</td>
+                                            <td style="color:black">{{ mdl.data }}</td>
+                                            <td style="color:black">{{ mdl.nsu }}</td>
+                                            <td style="color:black">{{ mdl.cartao }}</td>
+                                            <td style="color:black">{{ mdl.vlr }}</td>
+                                            <td style="color:black">{{ mdl.parcela }}</td>
+                                            <td style="color:black">{{ mdl.vlrPar }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -360,7 +359,7 @@
 
             <!--fechado-->
 
-            <div ng-if="tipoDemonstrativoSel == 2 && campos.porTerminal == true && list != undefined">
+            <div ng-if="tipoDemonstrativoSel == 2 && porTerminalSel == true && list != undefined">
                 <table width="90%" data-ng-repeat="term in list">
                     <tr>
                         <td valign="top">
@@ -429,8 +428,6 @@
                     <div class="modal-dialog" style="width:900px">
                         <br />
                         <br />
-                        <br />
-                        <br />
                         <div class="modal-content">
                             <div ng-show="transacoes.length == 0">
                                 <br />
@@ -448,27 +445,28 @@
                                     Total repasse: <b>{{mdlSelecionado.vlrRepasseMensal}}</b><br />
                                 </span>
 
-                                <div class="widgetForm" style="overflow-y: scroll; height:350px">
+                                <div style="overflow-y: scroll; height:350px">
+                                    <br />
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Serial</th>
-                                                <th>Data</th>
-                                                <th>NSU</th>
-                                                <th>Cartão</th>
-                                                <th>Valor total</th>
-                                                <th>Parcela</th>
-                                                <th>Vlr. Parcela</th>
+                                                <th style="color:black">Serial</th>
+                                                <th style="color:black">Data</th>
+                                                <th style="color:black">NSU</th>
+                                                <th style="color:black">Cartão</th>
+                                                <th style="color:black">Valor total</th>
+                                                <th style="color:black">Parcela</th>
+                                                <th style="color:black">Vlr. Parcela</th>
                                             </tr>
                                         </thead>
                                         <tr data-ng-repeat="mdl in transacoes">
-                                            <td>{{ mdl.serial }}</td>
-                                            <td>{{ mdl.data }}</td>
-                                            <td>{{ mdl.nsu }}</td>
-                                            <td>{{ mdl.cartao }}</td>
-                                            <td>{{ mdl.vlr }}</td>
-                                            <td>{{ mdl.parcela }}</td>
-                                            <td>{{ mdl.vlrPar }}</td>
+                                            <td style="color:black">{{ mdl.serial }}</td>
+                                            <td style="color:black">{{ mdl.data }}</td>
+                                            <td style="color:black">{{ mdl.nsu }}</td>
+                                            <td style="color:black">{{ mdl.cartao }}</td>
+                                            <td style="color:black">{{ mdl.vlr }}</td>
+                                            <td style="color:black">{{ mdl.parcela }}</td>
+                                            <td style="color:black">{{ mdl.vlrPar }}</td>
                                         </tr>
                                     </table>
                                 </div>

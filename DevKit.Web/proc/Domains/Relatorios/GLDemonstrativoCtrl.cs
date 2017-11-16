@@ -51,6 +51,7 @@ namespace DevKit.Web.Controllers
 
             var lstTerminais = (from e in db.T_Terminal
                                 where e.fk_loja == db.currentLojista.i_unique
+                                where idTerminal == null || e.i_unique == idTerminal
                                 select e).
                                 ToList();
                 
@@ -68,10 +69,7 @@ namespace DevKit.Web.Controllers
                                              select e).
                                              ToList();
 
-                        var dt = DateTime.Now;
-
-                        var st_mes = dt.Month.ToString("00");
-                        var st_ano = dt.Year.ToString();
+                        var dt = DateTime.Now;                                               
 
                         // --------------------------------------------------
                         // todos os terminais, sem separação de terminal
@@ -85,6 +83,9 @@ namespace DevKit.Web.Controllers
                                  totFuturo = 0,
                                  totAtualRepasse = 0,
                                  totFuturoRepasse = 0;
+
+                            var st_mes = dt.Month.ToString("00");
+                            var st_ano = dt.Year.ToString();
 
                             #region - agrupado / total geral -
 
@@ -114,6 +115,9 @@ namespace DevKit.Web.Controllers
 
                                     if (totalVendas == null)
                                         totalVendas = 0;
+
+                                    if (totalVendas == 0)
+                                        continue;
 
                                     totAtual += (long)totalVendas;
 
@@ -239,6 +243,12 @@ namespace DevKit.Web.Controllers
                                         if (totalVendas == null)
                                             totalVendas = 0;
 
+                                        if (totalVendas == 0)
+                                            continue;
+
+                                        var st_mes = dt.Month.ToString("00");
+                                        var st_ano = dt.Year.ToString();
+
                                         totAtual += (long)totalVendas;
                                         supertotAtual += totAtual;
 
@@ -308,8 +318,8 @@ namespace DevKit.Web.Controllers
                                     {
                                         dtFut = dtFut.AddMonths(1);
 
-                                        st_mes = dtFut.Month.ToString("00");
-                                        st_ano = dtFut.Year.ToString();
+                                        var st_mes = dtFut.Month.ToString("00");
+                                        var st_ano = dtFut.Year.ToString();
 
                                         nuParc++;
 
@@ -325,7 +335,7 @@ namespace DevKit.Web.Controllers
 
                                         if (totalVendas == null)
                                             break;
-
+                                        
                                         totFuturo += (long)totalVendas;
                                         supertotFuturo += totFuturo;
 
@@ -392,7 +402,8 @@ namespace DevKit.Web.Controllers
                                     resultItem.totGeralRepasse = "R$ " + mon.setMoneyFormat(totAtualRepasse + totFuturoRepasse);
                                 }
 
-                                results.Add(resultItem);
+                                if (totAtual > 0)
+                                    results.Add(resultItem);
                             }
 
                             return Ok(new
@@ -437,6 +448,19 @@ namespace DevKit.Web.Controllers
                         // todos os terminais, sem separação de terminal
                         // --------------------------------------------------
 
+                        if (!(from e in db.LOG_Fechamento
+                              where e.fk_loja == db.currentLojista.i_unique
+                              where e.st_ano.ToString() == st_ano
+                              where st_mes == "00" || e.st_mes == st_mes
+                              select e).Any())
+                        {
+                            return Ok(new
+                            {
+                                count = 0,
+                                results = new List<string>()
+                            });
+                        }
+
                         if (idTerminal == null && separarPorTerminal == false)
                         {
                             var results = new List<Demonstrativo>();
@@ -468,6 +492,9 @@ namespace DevKit.Web.Controllers
 
                                     if (totalVendas == null)
                                         totalVendas = 0;
+
+                                    if (totalVendas == 0)
+                                        continue;
 
                                     totAtual += (long)totalVendas;
 
@@ -511,7 +538,7 @@ namespace DevKit.Web.Controllers
                             {
                                 long totAtual = 0,
                                      totAtualRepasse = 0;
-
+                                
                                 var resultItem = new DemonstrativoTerminal { terminal = term.nu_terminal + " " + term.st_localizacao };
 
                                 foreach (var convenioAtual in listConvenios)
@@ -530,6 +557,8 @@ namespace DevKit.Web.Controllers
 
                                     {
                                         var totalVendas = (from e in db.LOG_Fechamento
+                                                           join parc in db.T_Parcelas on e.fk_parcela equals (int) parc.i_unique
+                                                           where parc.fk_terminal == term.i_unique
                                                            where e.fk_empresa == tEmpresa.i_unique
                                                            where e.fk_loja == db.currentLojista.i_unique
                                                            where st_mes == "00" || e.st_mes == st_mes
@@ -539,6 +568,9 @@ namespace DevKit.Web.Controllers
 
                                         if (totalVendas == null)
                                             totalVendas = 0;
+
+                                        if (totalVendas == 0)
+                                            continue;
 
                                         totAtual += (long)totalVendas;
                                         supertotAtual += totAtual;
@@ -559,11 +591,12 @@ namespace DevKit.Web.Controllers
                                         };
 
                                         var tListParcelas = (from e in db.LOG_Fechamento
+                                                             join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                                             where parc.fk_terminal == term.i_unique
                                                              where e.fk_empresa == tEmpresa.i_unique
                                                              where e.fk_loja == db.currentLojista.i_unique
                                                              where st_mes == "00" || e.st_mes == st_mes
                                                              where st_ano == e.st_ano
-                                                             join  parc in db.T_Parcelas on e.fk_parcela equals (int) parc.i_unique                                                            
                                                              select parc).
                                                              ToList();
 
@@ -604,7 +637,8 @@ namespace DevKit.Web.Controllers
                                     resultItem.totGeralRepasse = "R$ " + mon.setMoneyFormat(totAtualRepasse);
                                 }
 
-                                results.Add(resultItem);
+                                if (totAtual > 0)
+                                    results.Add(resultItem);
                             }
 
                             return Ok(new

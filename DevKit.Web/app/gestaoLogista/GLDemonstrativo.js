@@ -13,7 +13,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         idTerminal: '',
         mes_inicial: $scope.date.getMonth() + 1,
         ano: $scope.date.getFullYear(),
-        porTerminal: true
+        porTerminal: false
     };
 
     $scope.convenios = ngSelects.obterConfiguracao(Api.ConveniosCombo, { tamanhoPagina: 15 });
@@ -45,11 +45,13 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         };
 
         $scope.tipoDemonstrativoSel = undefined;
+        $scope.porTerminalSel = undefined;
 
         Api.GLDemonstrativo.listPage(opcoes,
         function (data)
         {
             $scope.tipoDemonstrativoSel = $scope.tipoDemonstrativo;
+            $scope.porTerminalSel = $scope.campos.porTerminal;
 
             $scope.list = data.results;
             $scope.total = data.count;            
@@ -62,5 +64,16 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.loading = false;
         });
     }
+
+    $scope.$watch("$scope.campos.porTerminal", function (novo, anterior)
+    {
+        $scope.tipoDemonstrativoSel = undefined;
+        $scope.list = undefined;
+        $scope.total = undefined;
+        $scope.totAtual = undefined;
+        $scope.totFuturo = undefined;
+        $scope.totAtualRepasse = undefined;
+        $scope.totFuturoRepasse = undefined;
+    }, true);
    
 }]);

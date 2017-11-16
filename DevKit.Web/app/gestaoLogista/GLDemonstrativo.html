@@ -47,7 +47,6 @@
                                 </td>
                                 <td></td>
                             </tr>
-
                             <tr height="46px">
                                 <td width="100px">
                                     Opções
@@ -57,7 +56,53 @@
                                 </td>
                                 <td></td>
                             </tr>
-
+                        </table>
+                        <table ng-if="tipoDemonstrativo == 2">
+                            <tr height="46px">
+                                <td width="100px">
+                                    Convênio
+                                </td>
+                                <td width="170px">
+                                    <input type="hidden" style="width:100%" placeholder="(Todos)" ui-select2="convenios" ng-model="campos.idEmpresa" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="46px">
+                                <td width="100px">
+                                    Terminal
+                                </td>
+                                <td width="170px">
+                                    <input type="hidden" style="width:100%" placeholder="(Todos)" ui-select2="terminais" ng-model="campos.idTerminal" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="46px">
+                                <td width="100px">
+                                    Mês
+                                </td>
+                                <td width="170px">
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="mes" ng-model="campos.mes_inicial" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="46px">
+                                <td width="100px">
+                                    Ano
+                                </td>
+                                <td width="170px">
+                                    <input type="text" class="form-control input-transparent" maxlength="4" ng-model="campos.ano">
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="46px">
+                                <td width="100px">
+                                    Opções
+                                </td>
+                                <td width="170px">
+                                    <input type="checkbox" ng-model="campos.porTerminal" ng-click="list == undefined"> Expandir por terminal<br />
+                                </td>
+                                <td></td>
+                            </tr>
                         </table>
                     </td>
                     <td width="20px"></td>
@@ -128,6 +173,62 @@
                     </td>
                 </tr>
             </table>
+
+            <table width="90%" ng-if="tipoDemonstrativoSel == 2 && campos.porTerminal == false && list != undefined">
+                <tr>
+                    <td valign="top">
+                        <div ng-show="list.length == 0">
+                            <br />
+                            <br />
+                            <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <br />
+                            <br />
+                        </div>
+                        <div ng-show="list.length > 0">
+                            <br />
+                            <br />
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Vencimento</th>
+                                        <th>Convênio</th>
+                                        <th>Total Vendas</th>
+                                        <th>Valor repasse<br />Mensal</th>
+                                        <th>situação</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td>{{ mdl.mesAno }}</td>
+                                    <td>{{ mdl.convenio }}</td>
+                                    <td>{{ mdl.totalVendas }}</td>
+                                    <td>{{ mdl.vlrRepasseMensal }}</td>
+                                    <td>{{ mdl.situacao }}</td>
+                                </tr>
+                            </table>
+                            <br />
+                            <table class="table table-hover" style="width:500px">
+                                <thead>
+                                    <tr>
+                                        <th>Total</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>{{totAtual}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Repasse</td>
+                                    <td>{{totAtualRepasse}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+
+            <!--atual e futuro-->
 
             <div ng-if="tipoDemonstrativoSel == 1 && campos.porTerminal == true && list != undefined">
                 <table width="90%" data-ng-repeat="term in list">
@@ -256,6 +357,129 @@
                     </div>
                 </div>
             </div>
+
+            <!--fechado-->
+
+            <div ng-if="tipoDemonstrativoSel == 2 && campos.porTerminal == true && list != undefined">
+                <table width="90%" data-ng-repeat="term in list">
+                    <tr>
+                        <td valign="top">
+                            <div ng-show="list.length == 0">
+                                <br />
+                                <br />
+                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="list.length > 0">
+
+                                <h3>Terminal: {{term.terminal}}</h3>
+                                Clique na linhas abaixo para visualizar as transações:<br />
+                                <br />
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Mês / Ano<br />Vencimento</th>
+                                            <th>Convênio</th>
+                                            <th>Total Vendas</th>
+                                            <th>Valor repasse<br />Mensal</th>
+                                            <th>situação</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in term.lstDemonstrativos">
+                                        <td>{{ mdl.mesAno }}</td>
+                                        <td>{{ mdl.convenio }}</td>
+                                        <td>{{ mdl.totalVendas }}</td>
+                                        <td>{{ mdl.vlrRepasseMensal }}</td>
+                                        <td>{{ mdl.situacao }}</td>
+                                    </tr>
+                                    <tr style="background-color:white;color:black">
+                                        <td colspan="2">
+                                            <b style="color:black">Total demonstrativo</b>
+                                        </td>
+                                        <td><b style="color:black">{{term.totGeral}}</b></td>
+                                        <td><b style="color:black">{{term.totGeralRepasse}}</b></td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <table class="table table-hover" style="width:500px">
+                                    <thead>
+                                        <tr>
+                                            <th>Total</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td>Total vendas</td>
+                                        <td>{{term.totAtual}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Repasse vendas</td>
+                                        <td>{{term.totAtualRepasse}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+                <br />
+                <div class="modal-backdrop" style="background: rgba(55, 55, 55, 0.5	);" ng-if="transacoes.length >= 0">
+                    <div class="modal-dialog" style="width:900px">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="modal-content">
+                            <div ng-show="transacoes.length == 0">
+                                <br />
+                                <b style="color:black">Nenhum registro encontrado!</b>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="transacoes.length > 0">
+
+                                <span style="color:black">
+                                    Mês/Ano: <b>{{mdlSelecionado.mesAno}}</b><br />
+                                    Convênio: <b>{{mdlSelecionado.convenio}}</b><br />
+                                    Situação: <b>{{mdlSelecionado.situacao}}</b><br />
+                                    Total vendas: <b>{{mdlSelecionado.totalVendas}}</b><br />
+                                    Total repasse: <b>{{mdlSelecionado.vlrRepasseMensal}}</b><br />
+                                </span>
+
+                                <div class="widgetForm" style="overflow-y: scroll; height:350px">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Serial</th>
+                                                <th>Data</th>
+                                                <th>NSU</th>
+                                                <th>Cartão</th>
+                                                <th>Valor total</th>
+                                                <th>Parcela</th>
+                                                <th>Vlr. Parcela</th>
+                                            </tr>
+                                        </thead>
+                                        <tr data-ng-repeat="mdl in transacoes">
+                                            <td>{{ mdl.serial }}</td>
+                                            <td>{{ mdl.data }}</td>
+                                            <td>{{ mdl.nsu }}</td>
+                                            <td>{{ mdl.cartao }}</td>
+                                            <td>{{ mdl.vlr }}</td>
+                                            <td>{{ mdl.parcela }}</td>
+                                            <td>{{ mdl.vlrPar }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br />
+                            <button class="btn btn-primary" ng-click="fecharPopUp()">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 </div>

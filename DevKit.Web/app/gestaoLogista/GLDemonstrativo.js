@@ -6,14 +6,19 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $rootScope.exibirMenu = true;
     $scope.loading = false;
 
+    $scope.date = new Date();
+
     $scope.campos = {
         idEmpresa: '',
         idTerminal: '',
+        mes_inicial: $scope.date.getMonth() + 1,
+        ano: $scope.date.getFullYear(),
         porTerminal: true
     };
 
     $scope.convenios = ngSelects.obterConfiguracao(Api.ConveniosCombo, { tamanhoPagina: 15 });
     $scope.terminais = ngSelects.obterConfiguracao(Api.TerminalLoja, { tamanhoPagina: 15 });
+    $scope.mes = ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 });
 
     $scope.fecharPopUp = function ()
     {
@@ -34,6 +39,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             tipoDemonstrativo: $scope.tipoDemonstrativo,
             idEmpresa: $scope.campos.idEmpresa,
             idTerminal: $scope.campos.idTerminal,
+            mes_inicial: $scope.campos.mes_inicial,
+            ano: $scope.campos.ano,
             porTerminal: $scope.campos.porTerminal,
         };
 

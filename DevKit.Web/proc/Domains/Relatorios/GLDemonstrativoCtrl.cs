@@ -348,7 +348,7 @@ namespace DevKit.Web.Controllers
                                         {
                                             convenio = tEmpresa.st_fantasia,
                                             mesAno = st_mes + "/" + st_ano,
-                                            totalVendas = "R$ " + mon.setMoneyFormat((long)totFuturo),
+                                            totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
                                             vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
                                             situacao = "FUTURO",
                                         };

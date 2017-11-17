@@ -84,9 +84,6 @@ namespace DevKit.Web.Controllers
                                  totAtualRepasse = 0,
                                  totFuturoRepasse = 0;
 
-                            var st_mes = dt.Month.ToString("00");
-                            var st_ano = dt.Year.ToString();
-
                             #region - agrupado / total geral -
 
                             foreach (var convenioAtual in listConvenios)
@@ -98,6 +95,9 @@ namespace DevKit.Web.Controllers
                                                 where e.i_unique == convenioAtual.fk_empresa
                                                 select e).
                                                 FirstOrDefault();
+
+                                var st_mes = dt.Month.ToString("00");
+                                var st_ano = dt.Year.ToString();
 
                                 // ----------------
                                 // atuais

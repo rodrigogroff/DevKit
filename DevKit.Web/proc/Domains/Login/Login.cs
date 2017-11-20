@@ -8,11 +8,35 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace DevKit.Web
 {
 	public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
 	{
+        public string getMd5Hash(string input)
+        {
+            // Create a new instance of the MD5CryptoServiceProvider object.
+            MD5 md5Hasher = MD5.Create();
+
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
+
         public static string DESdeCript(string dados, string chave)
         {
             byte[] key = System.Text.Encoding.ASCII.GetBytes(chave);//{1,2,3,4,5,6,7,8};
@@ -200,7 +224,6 @@ namespace DevKit.Web
                             }
 
                             // senha
-
                             var senhaComputada = DESdeCript(associadoPrincipal.st_senha, "12345678").TrimStart('*');
 
                             if (senhaComputada != context.Password)
@@ -260,6 +283,58 @@ namespace DevKit.Web
                                 context.SetError("invalid_grant", ex.ToString());
                             }
                             
+                            break;
+                        }
+                        
+                    case "4": // emissoras
+                        {
+                            var dados = UserName.Split('.');
+
+                            string empresa = dados[1].PadLeft(6, '0'),
+                                    usuario = dados[2].PadLeft(6, '0');
+
+                            var tEmp = (from e in db.T_Empresa
+                                        where e.st_empresa == empresa
+                                        select e).
+                                        FirstOrDefault();
+
+                            if (tEmp == null)
+                            {
+                                context.SetError("invalid_grant", "Usuário / Senha inválida");
+                                return;
+                            }
+
+                            var tUser = (from e in db.T_Usuario
+                                         where e.st_empresa == empresa
+                                         where e.st_nome == usuario
+                                         select e).
+                                         FirstOrDefault();
+
+                            if (tUser == null)
+                            {
+                                context.SetError("invalid_grant", "Usuário / Senha inválida");
+                                return;
+                            }
+
+                            if (tUser.st_senha != getMd5Hash(context.Password))
+                            {
+                                context.SetError("invalid_grant", "Usuário / Senha inválida");
+                                return;
+                            }
+                      
+                            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+
+                            identity.AddClaim(new Claim(ClaimTypes.Name, usuario));
+
+                            identity.AddClaim(new Claim("m1", tEmp.st_fantasia));
+                            identity.AddClaim(new Claim("m2", tEmp.st_endereco));
+
+                            identity.AddClaim(new Claim("tipo", "4"));
+
+                            var ticket = new AuthenticationTicket(identity, null);
+
+                            context.Validated(ticket);
+
                             break;
                         }
                 }

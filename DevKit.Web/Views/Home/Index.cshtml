@@ -171,6 +171,81 @@
                 <ul><li></li></ul>
             </section>			
 
+            <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.tipo == '4'">
+                <ul id="side-nav" class="side-nav" style="color:black">
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseEmpCartoes"><span class="name">Cartões</span></a>
+                        <ul id="forms-collapseEmpCartoes" class="panel-collapse collapse">
+                            <li><a ui-sref=""><span>Novo cartão</span></a></li>
+                            <li><a ui-sref=""><span>Segunda-via</span></a></li>
+                            <li><a ui-sref=""><span>Criar dependente</span></a></li>
+                            <li><a ui-sref=""><span>Alterar senha</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseEmpBloq"><span class="name">Bloqueios</span></a>
+                        <ul id="forms-collapseEmpBloq" class="panel-collapse collapse">
+                            <li><a ui-sref=""><span>Bloqueio cartão</span></a></li>
+                            <li><a ui-sref=""><span>Desbloqueio cartão</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseEmpLim"><span class="name">Limites cartões</span></a>
+                        <ul id="forms-collapseEmpLim" class="panel-collapse collapse">
+                            <li><a ui-sref=""><span>Mensal / Total</span></a></li>
+                            <li><a ui-sref=""><span>Cota extra</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseEmpRel"><span class="name">Relatórios</span></a>
+                        <ul id="forms-collapseEmpRel" class="panel-collapse collapse">
+                            <li><a ui-sref=""><span>Cartões</span></a></li>
+                            <li><a ui-sref=""><span>Financeiros</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseEmpFech"><span class="name">Fechamento</span></a>
+                        <ul id="forms-collapseEmpFech" class="panel-collapse collapse">
+                            <li><a ui-sref=""><span>Demonstrativos</span></a></li>
+                            <li><a ui-sref=""><span>Exportação</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseEmpLoj"><span class="name">Lojistas</span></a>
+                        <ul id="forms-collapseEmpLoj" class="panel-collapse collapse">
+                            <li><a ui-sref=""><span>Pesquisa</span></a></li>
+                            <li><a ui-sref=""><span>Bloqueio convênio</span></a></li>
+                            <li><a ui-sref=""><span>Bonificação</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseEmpAdm"><span class="name">Administração</span></a>
+                        <ul id="forms-collapseEmpAdm" class="panel-collapse collapse">
+                            <li><a ui-sref=""><span>Usuários</span></a></li>
+                            <li><a ui-sref=""><span>Novo usuário</span></a></li>
+                            <li><a ui-sref=""><span>Troca de senha</span></a></li>
+                            <li><a ui-sref=""><span>Limpeza de senha</span></a></li>
+                            <li><a ui-sref=""><span>Remover usuário</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul>
+                    <li>
+                        <span style="color:grey;text-align:center;padding-left:20px">Version {{version}}</span>
+                    </li>
+                </ul>
+                <ul><li></li></ul>
+            </section>			
+
 		</nav>
 	</div>
 	<table align="left" style="width:100%">

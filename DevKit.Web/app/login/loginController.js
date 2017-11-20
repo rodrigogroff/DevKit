@@ -41,17 +41,22 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
             if ($rootScope.tipo == 2)
             {
                 // usuarios
-
                 lData.userName = "2." +
                     $scope.loginData.userName + "." +
                     $scope.loginData.userNameMat + "." +
                     $scope.loginData.userNameAcesso + "." +
                     $scope.loginData.userNameVenc;
             }
+            else if ($rootScope.tipo == 4)
+            {
+                // emissoras
+                lData.userName = "4." +
+                    $scope.loginData.userEmp + "." +
+                    $scope.loginData.userName;
+            }
             else if ($rootScope.tipo == 1 || $rootScope.tipo == 3)
             {
                 // lojista
-
                 lData.userName = $rootScope.tipo + $scope.loginData.userName;
             }
 

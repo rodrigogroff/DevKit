@@ -40,6 +40,8 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('loja-new', { url: '/system/loja/new', templateUrl: 'app/system/loja/loja.html', controller: 'LojaController' })
     .state('loja', { url: '/system/loja/:id', templateUrl: 'app/system/loja/loja.html', controller: 'LojaController' })
 
+    .state('empNovoCartao', { url: '/emissora/novoCartao', templateUrl: 'app/emissora/novoCartao.html', controller: 'EmissoraNovoCartaoController' })
+
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);

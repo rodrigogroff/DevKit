@@ -1,0 +1,243 @@
+﻿<div class="webFormPostion">
+    <section class="widgetForm" style="width:775px">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Novo <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm">
+            <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
+                <tab heading="Cartão">
+                    <table>
+                        <tr height="43px">
+                            <td width="100px">
+                                <b>Matrícula</b>
+                            </td>
+                            <td width="20px">
+                                <button class="btn btn-xs btn-danger" ng-show="mat_fail">!</button>
+                            </td>
+                            <td width="160px">
+                                <input type="text" class="form-control input-transparent" maxlength="6"
+                                       ng-model="viewModel.matricula">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>CPF</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="6"
+                                       ng-model="viewModel.cpf">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Nome</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="nome_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="6"
+                                       ng-model="viewModel.nome">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Data Nasc.</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="nome_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="6"
+                                       ng-model="viewModel.dtNasc">
+                            </td>
+                        </tr>
+                    </table>
+                </tab>
+
+                <tab heading="Limites">
+                    <table>
+                        <tr height="43px">
+                            <td width="100px">
+                                <b>Limite Mensal</b>
+                            </td>
+                            <td width="20px">
+                                <button class="btn btn-xs btn-danger" ng-show="limMes_fail">!</button>
+                            </td>
+                            <td width="160px">
+                                <input type="text" class="form-control input-transparent" maxlength="12"
+                                       ng-model="viewModel.limMes">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Limite Total</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="12"
+                                       ng-model="viewModel.limTot">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Banco</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="12"
+                                       ng-model="viewModel.banco">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Agência</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="12"
+                                       ng-model="viewModel.bancoAg">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Conta</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="12"
+                                       ng-model="viewModel.bancoCta">
+                            </td>
+                        </tr>
+                    </table>
+                </tab>
+
+                <tab heading="Cadastro Geral">
+                    <table>
+                        <tr height="43px">
+                            <td>
+                                <b>Telefone</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="250"
+                                       ng-model="viewModel.tel">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Email</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="250"
+                                       ng-model="viewModel.email">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td width="100px">
+                                <b>Estado</b>
+                            </td>
+                            <td width="20px">
+                                <button class="btn btn-xs btn-danger" ng-show="mat_fail">!</button>
+                            </td>
+                            <td width="200px">
+                                <input type="text" class="form-control input-transparent" maxlength="2"
+                                       ng-model="viewModel.uf">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Cidade</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="120"
+                                       ng-model="viewModel.cidade">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>CEP</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="250"
+                                       ng-model="viewModel.cep">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Endereço</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="250"
+                                       ng-model="viewModel.end">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Núm./Compl.</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="250"
+                                       ng-model="viewModel.numero">
+                            </td>
+                        </tr>
+                        <tr height="43px">
+                            <td>
+                                <b>Bairro</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="250"
+                                       ng-model="viewModel.bairro">
+                            </td>
+                        </tr>
+                    </table>
+                </tab>
+            </tabset>
+            <br />
+            <br />
+            <button class="btn btn-primary" ng-click="criaCartao()">Criar cartão</button>
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </section>
+</div>

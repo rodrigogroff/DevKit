@@ -31,9 +31,14 @@
 						<td width="900px">
                             <table>
                                 <tr>
-                                    <td>
+                                    <td width="160px">
                                         <span ng-if="authentication.tipo == '1'" style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
                                         <span ng-if="authentication.tipo == '2'" style="color:black"><h3>Cartão <b>{{authentication.nameUser}}</b></h3></span>
+                                        <div ng-if="authentication.tipo == '4'" style="padding-top:28px">
+                                            <span style="color:black;">
+                                                Bem-vindo <b>{{authentication.nameUser}}</b>
+                                            </span>
+                                        </div>
                                     </td>
                                     <td width="20px"></td>
                                     <td style="padding-top:12px">                                        
@@ -177,7 +182,7 @@
                         <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseEmpCartoes"><span class="name">Cartões</span></a>
                         <ul id="forms-collapseEmpCartoes" class="panel-collapse collapse">
-                            <li><a ui-sref=""><span>Novo cartão</span></a></li>
+                            <li><a ui-sref="empNovoCartao"><span>Novo cartão</span></a></li>
                             <li><a ui-sref=""><span>Segunda-via</span></a></li>
                             <li><a ui-sref=""><span>Criar dependente</span></a></li>
                             <li><a ui-sref=""><span>Alterar senha</span></a></li>

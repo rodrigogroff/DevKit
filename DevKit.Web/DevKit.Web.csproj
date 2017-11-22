@@ -246,6 +246,8 @@
     <Content Include="app\associado\ExtratosController.js" />
     <Content Include="app\associado\LojistasAssociadoController.js" />
     <Content Include="app\associado\LimitesController.js" />
+    <Content Include="app\emissora\EmissoraNovoCartao.js" />
+    <Content Include="app\emissora\novoCartao.html" />
     <Content Include="app\gestaoLogista\GLDemonstrativo.html" />
     <Content Include="app\gestaoLogista\GLDemonstrativo.js" />
     <Content Include="app\gestaoLogista\GLTransController.js" />

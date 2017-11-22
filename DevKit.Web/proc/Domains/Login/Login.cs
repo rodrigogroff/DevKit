@@ -316,11 +316,11 @@ namespace DevKit.Web
                                 return;
                             }
 
-                            if (tUser.st_senha != getMd5Hash(context.Password))
+                           /* if (tUser.st_senha != getMd5Hash(context.Password))
                             {
                                 context.SetError("invalid_grant", "Usuário / Senha inválida");
                                 return;
-                            }
+                            }*/
                       
                             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 

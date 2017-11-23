@@ -1,20 +1,26 @@
 ﻿<div class="webFormPostion">
-    <section class="widgetForm" style="width:775px">
+    <section class="widgetForm" style="width:680px">
         <legend class="legendTop">
             <table><tr height="12px"><td> </td></tr></table>
             <table style="color:white; width:100%">
                 <tr>
                     <td width="20px"></td>
-                    <td>Novo <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td ng-if="id == undefined">Novo <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td ng-if="id > 0">Manutenção <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
                 </tr>
                 <tr height="12px"></tr>
             </table>
         </legend>
-        <div class="divWebForm">
+        <div class="divWebForm" ng-if="id == undefined">
             <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
                 <tab heading="Cartão">
-                    <table>
+                    <br />
+                    Dados do cartão: <b>{{viewModel.cartao}}</b><br />
+                    <br />
+                    <table class="widget" style="color:white">
+                        <tr height="12px"></tr>
                         <tr height="43px">
+                            <td width="20px"></td>
                             <td width="100px">
                                 <b>Matrícula</b>
                             </td>
@@ -25,8 +31,63 @@
                                 <input type="text" class="form-control input-transparent" maxlength="6"
                                        ng-model="viewModel.matricula">
                             </td>
+                            <td width="20px"></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
+                            <td>
+                                <b>Situação</b>
+                            </td>
+                            <td></td>
+                            <td width="160px">
+                                {{ viewModel.situacao }}
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr height="43px">
+                            <td></td>
+                            <td>
+                                <b>Via atual</b>
+                            </td>
+                            <td></td>
+                            <td>
+                                {{ viewModel.via }}
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr height="43px">
+                            <td></td>
+                            <td>
+                                <b>Cd. Acesso</b>
+                            </td>
+                            <td></td>
+                            <td>
+                                {{ viewModel.cdAcesso }}
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr height="20px"></tr>
+                    </table>
+                    Dados do proprietário:<br />
+                    <br />
+                    <table class="widget" style="color:white">
+                        <tr height="12px"></tr>
+                        <tr height="43px">
+                            <td width="20px"></td>
+                            <td width="100px">
+                                <b>Nome</b>
+                            </td>
+                            <td width="20px">
+                                <button class="btn btn-xs btn-danger" ng-show="nome_fail">!</button>
+                            </td>
+                            <td width="260px">
+                                <input type="text" class="form-control input-transparent" maxlength="90"
+                                       ng-model="viewModel.nome">
+                            </td>
+                            <td width="20px"></td>
+                        </tr>
+                        <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>CPF</b>
                             </td>
@@ -34,40 +95,36 @@
                                 <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" maxlength="6"
+                                <input type="text" class="form-control input-transparent" maxlength="11"
                                        ng-model="viewModel.cpf">
                             </td>
+                            <td></td>
                         </tr>
                         <tr height="43px">
-                            <td>
-                                <b>Nome</b>
-                            </td>
-                            <td>
-                                <button class="btn btn-xs btn-danger" ng-show="nome_fail">!</button>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control input-transparent" maxlength="6"
-                                       ng-model="viewModel.nome">
-                            </td>
-                        </tr>
-                        <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>Data Nasc.</b>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-danger" ng-show="nome_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="dtNasc_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" maxlength="6"
+                                <input type="text" class="form-control input-transparent" maxlength="10"
                                        ng-model="viewModel.dtNasc">
                             </td>
+                            <td></td>
                         </tr>
+                        <tr height="20px"></tr>
                     </table>
                 </tab>
-
                 <tab heading="Limites">
-                    <table>
+                    <br />
+                    Configuração do cartão convênio:<br />
+                    <br />
+                    <table class="widget" style="color:white">
+                        <tr height="12px"></tr>
                         <tr height="43px">
+                            <td width="20px"></td>
                             <td width="100px">
                                 <b>Limite Mensal</b>
                             </td>
@@ -78,8 +135,10 @@
                                 <input type="text" class="form-control input-transparent" maxlength="12"
                                        ng-model="viewModel.limMes">
                             </td>
+                            <td width="20px"></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>Limite Total</b>
                             </td>
@@ -90,150 +149,190 @@
                                 <input type="text" class="form-control input-transparent" maxlength="12"
                                        ng-model="viewModel.limTot">
                             </td>
+                            <td></td>
                         </tr>
+                        <tr height="20px"></tr>
+                    </table>
+                    Informações bancárias:<br />
+                    <br />
+                    <table class="widget" style="color:white">
+                        <tr height="12px"></tr>
                         <tr height="43px">
-                            <td>
+                            <td width="20px"></td>
+                            <td width="100px">
                                 <b>Banco</b>
                             </td>
-                            <td>
-                                <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button>
+                            <td width="20px">
+                                <button class="btn btn-xs btn-danger" ng-show="banco_fail">!</button>
                             </td>
-                            <td>
-                                <input type="text" class="form-control input-transparent" maxlength="12"
+                            <td width="160px">
+                                <input type="text" class="form-control input-transparent" maxlength="3"
                                        ng-model="viewModel.banco">
                             </td>
+                            <td width="20px"></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>Agência</b>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="bancoAg_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" maxlength="12"
+                                <input type="text" class="form-control input-transparent" maxlength="7"
                                        ng-model="viewModel.bancoAg">
                             </td>
+                            <td></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>Conta</b>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="bancoCta_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" maxlength="12"
+                                <input type="text" class="form-control input-transparent" maxlength="10"
                                        ng-model="viewModel.bancoCta">
                             </td>
+                            <td></td>
                         </tr>
+                        <tr height="20px"></tr>
                     </table>
                 </tab>
-
                 <tab heading="Cadastro Geral">
-                    <table>
+                    <br />
+                    Informações de contato:<br />
+                    <br />
+                    <table class="widget" style="color:white">
+                        <tr height="12px"></tr>
                         <tr height="43px">
-                            <td>
+                            <td width="20px"></td>
+                            <td width="100px">
                                 <b>Telefone</b>
                             </td>
-                            <td>
-                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                            <td width="20px">
+                                <button class="btn btn-xs btn-danger" ng-show="tel_fail">!</button>
                             </td>
-                            <td>
-                                <input type="text" class="form-control input-transparent" maxlength="250"
+                            <td width="200px">
+                                <input type="text" class="form-control input-transparent" maxlength="12"
                                        ng-model="viewModel.tel">
                             </td>
+                            <td width="20px"></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>Email</b>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="email_fail">!</button>
                             </td>
                             <td>
                                 <input type="text" class="form-control input-transparent" maxlength="250"
                                        ng-model="viewModel.email">
                             </td>
+                            <td></td>
                         </tr>
+                        <tr height="20px"></tr>
+                    </table>
+                    Endereço para uso do correio:<br />
+                    <br />
+                    <table class="widget" style="color:white">
+                        <tr height="12px"></tr>
                         <tr height="43px">
+                            <td width="20px"></td>
                             <td width="100px">
                                 <b>Estado</b>
                             </td>
                             <td width="20px">
-                                <button class="btn btn-xs btn-danger" ng-show="mat_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="uf_fail">!</button>
                             </td>
                             <td width="200px">
                                 <input type="text" class="form-control input-transparent" maxlength="2"
                                        ng-model="viewModel.uf">
                             </td>
+                            <td width="20px"></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>Cidade</b>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="cidade_fail">!</button>
                             </td>
                             <td>
                                 <input type="text" class="form-control input-transparent" maxlength="120"
                                        ng-model="viewModel.cidade">
                             </td>
+                            <td></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>CEP</b>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="cep_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" maxlength="250"
+                                <input type="text" class="form-control input-transparent" maxlength="8"
                                        ng-model="viewModel.cep">
                             </td>
+                            <td></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>Endereço</b>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="end_fail">!</button>
                             </td>
                             <td>
                                 <input type="text" class="form-control input-transparent" maxlength="250"
                                        ng-model="viewModel.end">
                             </td>
+                            <td></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>Núm./Compl.</b>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="num_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" maxlength="250"
+                                <input type="text" class="form-control input-transparent" maxlength="90"
                                        ng-model="viewModel.numero">
                             </td>
+                            <td></td>
                         </tr>
                         <tr height="43px">
+                            <td></td>
                             <td>
                                 <b>Bairro</b>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                                <button class="btn btn-xs btn-danger" ng-show="bairro_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" maxlength="250"
+                                <input type="text" class="form-control input-transparent" maxlength="90"
                                        ng-model="viewModel.bairro">
                             </td>
+                            <td></td>
                         </tr>
+                        <tr height="20px"></tr>
                     </table>
                 </tab>
             </tabset>
             <br />
             <br />
-            <button class="btn btn-primary" ng-click="criaCartao()">Criar cartão</button>
+            <button class="btn btn-primary" ng-click="save()">Criar cartão</button>
             <br />
             <br />
             <br />

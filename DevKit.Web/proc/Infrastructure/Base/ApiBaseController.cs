@@ -13,12 +13,12 @@ namespace DevKit.Web.Controllers
 	[Authorize]
 	public class ApiControllerBase : MemCacheController
 	{
-        public string cnet_server = "54.233.109.221";
-        public int cnet_port = 2000;
-
         public AutorizadorCNDB db;
-        
-        public string apiError = "";
+
+        public string   cnet_server = "54.233.109.221",
+                        apiError = "";
+
+        public int cnet_port = 2000;
 
         public string userLoggedName
         {
@@ -34,7 +34,23 @@ namespace DevKit.Web.Controllers
             {
                 var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
                 
-                return identity.Claims.Where(c => c.Type == "tipo").Select(c => c.Value).SingleOrDefault();
+                return identity.Claims.
+                    Where(c => c.Type == "tipo").
+                    Select(c => c.Value).
+                    SingleOrDefault();
+            }
+        }
+
+        public string userLoggedEmpresa
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+                return identity.Claims.
+                    Where(c => c.Type == "empresa").
+                    Select(c => c.Value).
+                    SingleOrDefault();
             }
         }
 
@@ -48,11 +64,11 @@ namespace DevKit.Web.Controllers
             switch(userLoggedType)
             {
                 case "1":
+                    
+                    #region - terminal lojista - 
 
                     if (userCurrentName != "DBA")
                     {
-                        #region - terminal lojista - 
-
                         db.currentLojista = RestoreTimerCache(CacheTags.T_Terminal, userCurrentName, 2) as T_Loja;
 
                         if (db.currentLojista == null)
@@ -73,49 +89,49 @@ namespace DevKit.Web.Controllers
                             BackupCache(db.currentLojista);
                         }
 
-                        #endregion
                     }
+                    #endregion                    
 
                     break;
 
                 case "2":
 
                     #region - associado -
-
-                    db.currentAssociado = RestoreTimerCache(CacheTags.T_Cartao, userCurrentName, 2) as T_Cartao;
-
-                    if (db.currentAssociado == null)
                     {
-                        var lstName = userCurrentName.Split('.');
-
-                        db.currentAssociado = (from e in db.T_Cartao
-                                               where e.st_empresa == lstName[0].PadLeft(6, '0')
-                                               where e.st_matricula == lstName[1].PadLeft(6, '0')
-                                               where e.st_titularidade == "01"
-                                               select e).
-                                                FirstOrDefault();
+                        db.currentAssociado = RestoreTimerCache(CacheTags.T_Cartao, userCurrentName, 2) as T_Cartao;
 
                         if (db.currentAssociado == null)
-                            return false;
+                        {
+                            var lstName = userCurrentName.Split('.');
 
-                        BackupCache(db.currentAssociado);
-                    }
+                            db.currentAssociado = (from e in db.T_Cartao
+                                                   where e.st_empresa == lstName[0].PadLeft(6, '0')
+                                                   where e.st_matricula == lstName[1].PadLeft(6, '0')
+                                                   where e.st_titularidade == "01"
+                                                   select e).
+                                                    FirstOrDefault();
 
-                    db.currentAssociadoEmpresa = RestoreTimerCache(CacheTags.T_Empresa, db.currentAssociado.st_empresa, 2) as T_Empresa;
+                            if (db.currentAssociado == null)
+                                return false;
 
-                    if (db.currentAssociadoEmpresa == null)
-                    {
-                        db.currentAssociadoEmpresa = (from e in db.T_Empresa
-                                                      where e.st_empresa == db.currentAssociado.st_empresa
-                                                      select e).
-                                                      FirstOrDefault();
+                            BackupCache(db.currentAssociado);
+                        }
+
+                        db.currentAssociadoEmpresa = RestoreTimerCache(CacheTags.T_Empresa, db.currentAssociado.st_empresa, 2) as T_Empresa;
 
                         if (db.currentAssociadoEmpresa == null)
-                            return false;
+                        {
+                            db.currentAssociadoEmpresa = (from e in db.T_Empresa
+                                                          where e.st_empresa == db.currentAssociado.st_empresa
+                                                          select e).
+                                                          FirstOrDefault();
 
-                        BackupCache(db.currentAssociadoEmpresa);
+                            if (db.currentAssociadoEmpresa == null)
+                                return false;
+
+                            BackupCache(db.currentAssociadoEmpresa);
+                        }
                     }
-
                     #endregion
 
                     break;
@@ -123,22 +139,48 @@ namespace DevKit.Web.Controllers
                 case "3":
 
                     #region - gestão lojista - 
-
-                    db.currentLojista = RestoreTimerCache(CacheTags.T_Loja, userCurrentName, 2) as T_Loja;
-
-                    if (db.currentLojista == null)
                     {
-                        db.currentLojista = (from e in db.T_Loja
-                                             where e.st_loja == userCurrentName
-                                             select e).
-                                             FirstOrDefault();
+                        db.currentLojista = RestoreTimerCache(CacheTags.T_Loja, userCurrentName, 2) as T_Loja;
 
                         if (db.currentLojista == null)
-                            return false;
+                        {
+                            db.currentLojista = (from e in db.T_Loja
+                                                 where e.st_loja == userCurrentName
+                                                 select e).
+                                                 FirstOrDefault();
 
-                        BackupCache(db.currentLojista);
+                            if (db.currentLojista == null)
+                                return false;
+
+                            BackupCache(db.currentLojista);
+                        }
                     }
+                    #endregion
 
+                    break;
+
+                case "4":
+
+                    #region - gestão emissora - 
+                    {
+                        var st_empresa = userLoggedEmpresa.PadLeft(6,'0');
+
+                        db.currentEmpresa = RestoreTimerCache(CacheTags.T_Empresa, st_empresa, 2) as T_Empresa;
+
+                        if (db.currentEmpresa == null)
+                        {
+                            db.currentEmpresa = (from e in db.T_Empresa
+                                                 where e.st_empresa == st_empresa
+                                                 select e).
+                                                 FirstOrDefault();
+
+                            if (db.currentEmpresa == null)
+                                return false;
+
+                            BackupCache(db.currentEmpresa);
+                        }
+
+                    }
                     #endregion
 
                     break;

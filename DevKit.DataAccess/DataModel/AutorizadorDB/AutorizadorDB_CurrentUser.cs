@@ -9,5 +9,6 @@ namespace DataModel
 		public T_Loja currentLojista = null;
         public T_Cartao currentAssociado = null;
         public T_Empresa currentAssociadoEmpresa = null;
+        public T_Empresa currentEmpresa = null;
     }
 }

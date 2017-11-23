@@ -328,6 +328,7 @@ namespace DevKit.Web
 
                             identity.AddClaim(new Claim("m1", tEmp.st_fantasia));
                             identity.AddClaim(new Claim("m2", tEmp.st_endereco));
+                            identity.AddClaim(new Claim("empresa", empresa));
 
                             identity.AddClaim(new Claim("tipo", "4"));
 

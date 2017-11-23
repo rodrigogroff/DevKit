@@ -247,6 +247,8 @@
     <Content Include="app\associado\LojistasAssociadoController.js" />
     <Content Include="app\associado\LimitesController.js" />
     <Content Include="app\emissora\EmissoraNovoCartao.js" />
+    <Content Include="app\emissora\listagemCartao.html" />
+    <Content Include="app\emissora\EmissoraListagemCartaoController.js" />
     <Content Include="app\emissora\novoCartao.html" />
     <Content Include="app\gestaoLogista\GLDemonstrativo.html" />
     <Content Include="app\gestaoLogista\GLDemonstrativo.js" />
@@ -856,6 +858,7 @@
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraCartaoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaMensagensCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\TerminalLojaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\EmpresaCtrl.cs" />

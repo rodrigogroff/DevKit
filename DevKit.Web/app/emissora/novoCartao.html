@@ -33,6 +33,35 @@
                             </td>
                             <td width="20px"></td>
                         </tr>
+
+                        <tr height="43px">
+                            <td></td>
+                            <td>
+                                <b>Vencimento</b>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="venc_fail">!</button>
+                            </td>
+                            <td width="160px">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control input-transparent" maxlength="2" style="width:40px"
+                                                   ng-model="viewModel.vencMes">
+                                        </td>
+
+                                        <td width="20px"> &nbsp;&nbsp;/&nbsp;&nbsp; </td>
+
+                                        <td>
+                                            <input type="text" class="form-control input-transparent" maxlength="2" style="width:40px"
+                                                   ng-model="viewModel.vencAno">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td></td>
+                        </tr>
+
                         <tr height="43px">
                             <td></td>
                             <td>

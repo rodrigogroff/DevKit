@@ -54,6 +54,19 @@ namespace DevKit.Web.Controllers
             }
         }
 
+        public string userLoggedEmpresaIdUsuario
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+                return identity.Claims.
+                    Where(c => c.Type == "IdUsuario").
+                    Select(c => c.Value).
+                    SingleOrDefault();
+            }
+        }
+
         [NonAction]
         public bool StartDatabaseAndAuthorize()
         {
@@ -203,6 +216,20 @@ namespace DevKit.Web.Controllers
             }
 
             return true;
+        }
+
+        [NonAction]
+        public DateTime? ObtemData(string valor)
+        {
+            if (valor == null)
+                return null;
+
+            if (valor.Length < 10)
+                return null;
+
+            return new DateTime(Convert.ToInt32(valor.Substring(6, 4)),
+                                            Convert.ToInt32(valor.Substring(3, 2)),
+                                            Convert.ToInt32(valor.Substring(0, 2)), 0, 0, 0);
         }
 
         [NonAction]

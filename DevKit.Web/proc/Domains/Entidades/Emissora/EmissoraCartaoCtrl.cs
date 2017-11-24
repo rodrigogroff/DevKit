@@ -27,29 +27,27 @@ namespace DevKit.Web.Controllers
     public class CartaoDTO
     {
         public string id,
-            matricula,
-            nome, cpf, dtNasc, limMes, limTot, banco, bancoAg, bancoCta, tel, email;
-
-        /*
-         * $scope.mat_fail = invalidCheck($scope.viewModel.matricula);
-                $scope.nome_fail = invalidCheck($scope.viewModel.nome);
-                $scope.cpf_fail = invalidCheck($scope.viewModel.cpf);
-                $scope.dtNasc_fail = invalidCheck($scope.viewModel.dtNasc);
-                $scope.limMes_fail = invalidCheck($scope.viewModel.limMes);
-                $scope.limTot_fail = invalidCheck($scope.viewModel.limTot);
-                $scope.banco_fail = invalidCheck($scope.viewModel.banco);
-                $scope.bancoAg_fail = invalidCheck($scope.viewModel.bancoAg);
-                $scope.bancoCta_fail = invalidCheck($scope.viewModel.bancoCta);
-                $scope.tel_fail = invalidCheck($scope.viewModel.tel);
-                $scope.email_fail = invalidCheck($scope.viewModel.email);
-                */
-                        
+                        matricula,
+                        nome, 
+                        cpf, 
+                        vencMes,
+                        vencAno,
+                        dtNasc, 
+                        limMes, 
+                        limTot, 
+                        banco,
+                        bancoAg, 
+                        bancoCta, 
+                        tel, 
+                        email;                        
     }
 
     public class EmissoraCartaoController : ApiControllerBase
     {
         public IHttpActionResult Get()
         {
+            var nome = Request.GetQueryStringValue("nome");
+            var cpf = Request.GetQueryStringValue("cpf");
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
             var matricula = Request.GetQueryStringValue("matricula");
@@ -61,6 +59,22 @@ namespace DevKit.Web.Controllers
                          where e.st_empresa == userLoggedEmpresa
                          select e);
 
+            if (!String.IsNullOrEmpty(nome))
+            {
+                query = (from e in query
+                         join p in db.T_Proprietario on e.fk_dadosProprietario equals (int)p.i_unique
+                         where p.st_nome.ToUpper().Contains(nome)
+                         select e);
+            }
+
+            if (!String.IsNullOrEmpty(cpf))
+            {
+                query = (from e in query
+                         join p in db.T_Proprietario on e.fk_dadosProprietario equals (int)p.i_unique
+                         where p.st_cpf == cpf
+                         select e);
+            }
+
             if (matricula != null && matricula != "")
             {
                 query = (from e in query
@@ -68,17 +82,22 @@ namespace DevKit.Web.Controllers
                          select e);
             }
 
+            query = (from e in query
+                     orderby e.st_matricula
+                     select e);
+
             var res = new List<CartaoListagemDTO>();
 
             query = (from e in query
-                     join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int)associado.i_unique
+                     join associado in db.T_Proprietario 
+                          on e.fk_dadosProprietario equals (int)associado.i_unique
                      orderby associado.st_nome
                      select e);
 
             var calcAcesso = new CodigoAcesso();
 
-            var sd = new SaldoDisponivel();
             var mon = new money();
+            var se = new StatusExpedicao();
 
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
@@ -86,11 +105,7 @@ namespace DevKit.Web.Controllers
                              where e.i_unique == item.fk_dadosProprietario
                              select e).
                              FirstOrDefault();
-
-                long dispM = 0, dispT = 0;
-
-                sd.Obter(db, item, ref dispM, ref dispT);
-
+                
                 if (assoc != null)
                 {
                     var codAcessoCalc = calcAcesso.Obter(item.st_empresa,
@@ -108,11 +123,9 @@ namespace DevKit.Web.Controllers
                                  codAcessoCalc + "." +
                                  item.st_venctoCartao,
                         cpf = assoc.st_cpf,
-                        situacao = "",
+                        situacao = se.Convert(item.tg_emitido),
                         matricula = item.st_matricula,
                         tit = item.st_titularidade,
-                        dispM = mon.setMoneyFormat(dispM),
-                        dispT = mon.setMoneyFormat(dispT),
                         limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
                         limT = mon.setMoneyFormat((long)item.vr_limiteTotal),
                     });
@@ -135,62 +148,150 @@ namespace DevKit.Web.Controllers
             if (cart == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            var assoc = (from e in db.T_Proprietario
+            var prop = (from e in db.T_Proprietario
                          where e.i_unique == cart.fk_dadosProprietario
                          select e).
                          FirstOrDefault();
 
+            var mon = new money();
+
             return Ok(new CartaoDTO
             {
+                // dados proprietário
+                nome = prop.st_nome,
+                cpf = prop.st_cpf,
+                tel = prop.st_telefone,
+                email = prop.st_email,
+
+                // cartão
                 id = id.ToString(),
-                nome = assoc.st_nome,
+                matricula = cart.st_matricula,
+                limMes = mon.setMoneyFormat((long)cart.vr_limiteMensal),
+                limTot = mon.setMoneyFormat((long)cart.vr_limiteTotal),
             });
         }
 
+        [NonAction]
+        public void CopiaDadosCartao ( CartaoDTO mdl, 
+                                       ref T_Cartao cart, 
+                                       int? id_prop, 
+                                       string st_empresa )
+        {
+            cart.fk_dadosProprietario = id_prop;
+            cart.st_empresa = st_empresa;
+            cart.st_matricula = mdl.matricula.PadLeft(6,'0');
+            cart.vr_limiteMensal = (int)ObtemValor(mdl.limMes);
+            cart.vr_limiteTotal = (int)ObtemValor(mdl.limTot);
+            cart.st_banco = mdl.banco;
+            cart.st_agencia = mdl.bancoAg;
+            cart.st_conta = mdl.bancoCta;
+            cart.st_venctoCartao = mdl.vencMes.PadLeft(2, '0') + mdl.vencAno.PadLeft(2, '0');
+        }
+
+        [NonAction]
+        public void CopiaDadosProprietario(CartaoDTO mdl, ref T_Proprietario prop)
+        {
+            if (!string.IsNullOrEmpty(mdl.dtNasc))
+                prop.dt_nasc = ObtemData(mdl.dtNasc);
+
+            prop.st_nome = mdl.nome;
+            prop.st_cpf = mdl.cpf;
+            prop.st_telefone = mdl.tel;
+            prop.st_email = mdl.email;
+        }
+        
         [HttpPost]
         public IHttpActionResult Post(CartaoDTO mdl)
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            var st_empresa = userLoggedEmpresa;
+
+            if ( (from e in db.T_Cartao
+                  join p in db.T_Proprietario 
+                    on e.fk_dadosProprietario equals (int) p.i_unique
+                  where e.st_empresa == st_empresa
+                  where p.st_cpf == mdl.cpf
+                  select e).Any() )
+            {
+                return BadRequest("CPF já cadastrado nesta empresa!");
+            }
+
+            if ((from e in db.T_Cartao
+                 where e.st_empresa == st_empresa
+                 where e.st_matricula == mdl.matricula.PadLeft (6,'0')
+                 select e).Any())
+            {
+                return BadRequest("Matrícula já cadastrada nesta empresa!");
+            }
+
+            var prop = new T_Proprietario();
             var cart = new T_Cartao();
 
-            cart.st_empresa = userLoggedEmpresa;
-            cart.st_matricula = mdl.matricula;
+            CopiaDadosProprietario(mdl, ref prop);
+            
+            var id_prop = Convert.ToInt32(db.InsertWithIdentity(prop));
+            
+            CopiaDadosCartao(mdl, ref cart, id_prop, st_empresa);
 
-            //if (mdl.limMes.Contains )
+            cart.st_titularidade = "01";
+            cart.nu_viaCartao = 1;
+            cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
+            cart.tg_tipoCartao = Convert.ToChar(TipoCartao.empresarial);
+            cart.nu_senhaErrada = Convert.ToInt32(Context.NONE);
+            
+            db.Insert(cart);
 
-            /*
-             * 
-             * $scope.mat_fail = invalidCheck($scope.viewModel.matricula);
-                $scope.nome_fail = invalidCheck($scope.viewModel.nome);
-                $scope.cpf_fail = invalidCheck($scope.viewModel.cpf);
-                $scope.dtNasc_fail = invalidCheck($scope.viewModel.dtNasc);
-                $scope.limMes_fail = invalidCheck($scope.viewModel.limMes);
-                $scope.limTot_fail = invalidCheck($scope.viewModel.limTot);
-                $scope.banco_fail = invalidCheck($scope.viewModel.banco);
-                $scope.bancoAg_fail = invalidCheck($scope.viewModel.bancoAg);
-                $scope.bancoCta_fail = invalidCheck($scope.viewModel.bancoCta);
-                $scope.tel_fail = invalidCheck($scope.viewModel.tel);
-                $scope.email_fail = invalidCheck($scope.viewModel.email);
-                
-                */
+            // ----------------------------------
+            // log de auditoria
+            // ----------------------------------
 
-        db.Insert(cart);
+            db.Insert(new LOG_Audit
+            {
+                tg_operacao = Convert.ToInt32(TipoOperacao.CadCartao),
+                fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                dt_operacao = DateTime.Now,
+                st_observacao = "",
+                fk_generic = 0
+            });
 
             return Ok();
         }
-
+        
         [HttpPut]
         public IHttpActionResult Put(CartaoDTO mdl)
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            var st_empresa = userLoggedEmpresa;
+
             var cart = (from e in db.T_Cartao
-                             where e.i_unique == Convert.ToInt32(mdl.id)
-                             select e).
-                             FirstOrDefault();
+                        where e.i_unique == Convert.ToInt32(mdl.id)
+                        select e).
+                        FirstOrDefault();
+
+            var prop = (from e in db.T_Proprietario
+                        where e.i_unique == cart.fk_dadosProprietario
+                        select e).
+                        FirstOrDefault();
+
+            CopiaDadosProprietario(mdl, ref prop);
+            CopiaDadosCartao(mdl, ref cart, (int?) prop.i_unique, st_empresa);
+
+            // ----------------------------------
+            // log de auditoria
+            // ----------------------------------
+
+            db.Insert(new LOG_Audit
+            {
+                tg_operacao = Convert.ToInt32(TipoOperacao.AltDadosPropCart),
+                fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                dt_operacao = DateTime.Now,
+                st_observacao = "",
+                fk_generic = 0
+            });
 
             db.Update(cart);
 

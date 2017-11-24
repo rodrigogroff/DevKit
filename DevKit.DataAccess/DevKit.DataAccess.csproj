@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="DataModel\AutorizadorDB\AutorizadorDB_CurrentUser.cs" />
     <Compile Include="DataModel\AutorizadorDB\AutorizadorDB_db.cs" />
+    <Compile Include="DataModel\Domains\Constantes.cs" />
     <Compile Include="DataModel\Enums\OrdemRelLojistaTrans_enum.cs" />
     <Compile Include="DataModel\Enums\TipoVenda_enum.cs" />
     <Compile Include="DataModel\Enums\Month_enum.cs" />

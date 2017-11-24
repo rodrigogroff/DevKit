@@ -45,6 +45,8 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
 
             $scope.save = function () {
                 $scope.mat_fail = invalidCheck($scope.viewModel.matricula);
+                $scope.limMes_fail = invalidCheck($scope.viewModel.limMes);
+                $scope.venc_fail = invalidCheck($scope.viewModel.vencMes) || invalidCheck($scope.viewModel.vencAno);
                 $scope.nome_fail = invalidCheck($scope.viewModel.nome);
                 $scope.cpf_fail = invalidCheck($scope.viewModel.cpf);
                 $scope.dtNasc_fail = invalidCheck($scope.viewModel.dtNasc);

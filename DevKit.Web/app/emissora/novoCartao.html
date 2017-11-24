@@ -5,8 +5,8 @@
             <table style="color:white; width:100%">
                 <tr>
                     <td width="20px"></td>
-                    <td ng-if="id == undefined">Novo <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-                    <td ng-if="id > 0">Manutenção <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td ng-if="id == 0">Novo <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td ng-if="id != 0">Manutenção <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
                 </tr>
                 <tr height="12px"></tr>
             </table>
@@ -33,7 +33,6 @@
                             </td>
                             <td width="20px"></td>
                         </tr>
-
                         <tr height="43px">
                             <td></td>
                             <td>
@@ -49,9 +48,7 @@
                                             <input type="text" class="form-control input-transparent" maxlength="2" style="width:40px"
                                                    ng-model="viewModel.vencMes">
                                         </td>
-
                                         <td width="20px"> &nbsp;&nbsp;/&nbsp;&nbsp; </td>
-
                                         <td>
                                             <input type="text" class="form-control input-transparent" maxlength="2" style="width:40px"
                                                    ng-model="viewModel.vencAno">
@@ -61,7 +58,6 @@
                             </td>
                             <td></td>
                         </tr>
-
                         <tr height="43px">
                             <td></td>
                             <td>
@@ -81,17 +77,6 @@
                             <td></td>
                             <td>
                                 {{ viewModel.via }}
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr height="43px">
-                            <td></td>
-                            <td>
-                                <b>Cd. Acesso</b>
-                            </td>
-                            <td></td>
-                            <td>
-                                {{ viewModel.cdAcesso }}
                             </td>
                             <td></td>
                         </tr>
@@ -361,7 +346,7 @@
             </tabset>
             <br />
             <br />
-            <button class="btn btn-primary" ng-click="save()">Criar cartão</button>
+            <button class="btn btn-primary" ng-click="save()">Salvar</button>
             <br />
             <br />
             <br />

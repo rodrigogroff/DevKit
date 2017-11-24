@@ -45,4 +45,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         });
     }
 
+    $scope.show = function (mdl) {
+        $state.go('empManutCartao', { id: mdl.id });
+    }
+
 }]);

@@ -28,18 +28,21 @@ namespace DevKit.Web.Controllers
     {
         public string id,
                         matricula,
-                        nome, 
-                        cpf, 
+                        nome,
+                        cpf,
                         vencMes,
                         vencAno,
-                        dtNasc, 
-                        limMes, 
-                        limTot, 
+                        dtNasc,
+                        limMes,
+                        limTot,
                         banco,
-                        bancoAg, 
-                        bancoCta, 
-                        tel, 
-                        email;                        
+                        bancoAg,
+                        bancoCta,
+                        tel,
+                        email,
+                        situacao,
+                        via,
+                        uf, cidade, cep, end, numero, bairro;
     }
 
     public class EmissoraCartaoController : ApiControllerBase
@@ -154,6 +157,7 @@ namespace DevKit.Web.Controllers
                          FirstOrDefault();
 
             var mon = new money();
+            var se = new StatusExpedicao();
 
             return Ok(new CartaoDTO
             {
@@ -162,12 +166,26 @@ namespace DevKit.Web.Controllers
                 cpf = prop.st_cpf,
                 tel = prop.st_telefone,
                 email = prop.st_email,
+                dtNasc = prop.dt_nasc != null ? Convert.ToDateTime(prop.dt_nasc).ToString("dd/MM/yyyy") : "",
+                uf = prop.st_UF,
+                cidade = prop.st_cidade,
+                cep = prop.st_cep,
+                end = prop.st_endereco,
+                numero = prop.st_numero,
+                bairro = prop.st_bairro,
 
                 // cartão
                 id = id.ToString(),
                 matricula = cart.st_matricula,
                 limMes = mon.setMoneyFormat((long)cart.vr_limiteMensal),
                 limTot = mon.setMoneyFormat((long)cart.vr_limiteTotal),
+                vencMes = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(0, 2),
+                vencAno = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(2, 2),
+                banco = cart.st_banco,                
+                bancoAg = cart.st_agencia,
+                bancoCta = cart.st_conta,                
+                situacao = se.Convert(cart.tg_emitido),
+                via = cart.nu_viaCartao.ToString(),
             });
         }
 
@@ -198,6 +216,12 @@ namespace DevKit.Web.Controllers
             prop.st_cpf = mdl.cpf;
             prop.st_telefone = mdl.tel;
             prop.st_email = mdl.email;
+            prop.st_UF = mdl.uf;
+            prop.st_cidade = mdl.cidade;
+            prop.st_cep = mdl.cep;
+            prop.st_endereco = mdl.end;
+            prop.st_numero = mdl.numero;
+            prop.st_bairro = mdl.bairro;
         }
         
         [HttpPost]
@@ -278,7 +302,12 @@ namespace DevKit.Web.Controllers
                         FirstOrDefault();
 
             CopiaDadosProprietario(mdl, ref prop);
+
+            db.Update(prop);
+
             CopiaDadosCartao(mdl, ref cart, (int?) prop.i_unique, st_empresa);
+
+            db.Update(cart);
 
             // ----------------------------------
             // log de auditoria

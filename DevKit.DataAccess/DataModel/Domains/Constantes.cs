@@ -27,6 +27,9 @@ namespace DataModel
 
         public string Convert(int? vlr)
         {
+            if (vlr == null)
+                return "";
+
             var sit = "";
 
             switch (vlr.ToString())

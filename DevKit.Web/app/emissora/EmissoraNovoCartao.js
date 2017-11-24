@@ -72,7 +72,7 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                 {
                     if (id > 0) {
                         Api.EmissoraCartao.update({ id: id }, $scope.viewModel, function (data) {
-                            toastr.success('Cartão salvo!', 'Sucesso');
+                            toastr.success('Cartão salvo!', 'Sucesso');                            
                         },
                             function (response) {
                                 toastr.error(response.data.message, 'Erro');
@@ -81,6 +81,7 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                     else {
                         Api.EmissoraCartao.add($scope.viewModel, function (data) {
                             toastr.success('Cartão salvo!', 'Sucesso');
+                            $state.go('empListagemCartao');
                         },
                             function (response) {
                                 toastr.error(response.data.message, 'Erro');

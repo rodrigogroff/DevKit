@@ -48,6 +48,23 @@ namespace DataModel
         public const string Habilitado = "0",
                             Bloqueado = "1",
                             EmDesativacao = "2";
+
+        public string Convert(char? vlr)
+        {
+            if (vlr == null)
+                return "";
+
+            var sit = "";
+
+            switch (vlr.ToString())
+            {
+                case Habilitado: sit = "Habilitado"; break;
+                case Bloqueado: sit = "Bloqueado"; break;
+                case EmDesativacao: sit = "Em desativacao"; break;
+            }
+
+            return sit;
+        }
     }
 
     public class TipoOperacao

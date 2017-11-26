@@ -10,51 +10,64 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div class="divWebForm">
-			<table>
-				<tr>
-					<td valign="top" width="340px">
-                        <table class="widget" style="color: white">
-                            <tr height="12px"> </tr>
-                            <tr height="43px">
-                                <td width="20px"></td>
-                                <td width="150px"><b>Nome Associado</b></td>
-                                <td width="120px">
-                                    <input type="text" focus="true"
-                                            class="form-control input-transparent"
-                                            ng-model="campos.nome" />
-                                </td>
-                                <td width="20px"></td>
-                            </tr>
-                            <tr height="43px">
-                                <td></td>
-                                <td><b>Matrícula</b></td>
-                                <td>
-                                    <input type="text" 
-                                           class="form-control input-transparent"
-                                           ng-model="campos.matricula" />
-                                </td>
-                                <td></td>
-                            </tr>                            
-                            <tr height="43px">
-                                <td></td>
-                                <td><b>CPF</b></td>
-                                <td>
-                                    <input type="text" 
-                                           class="form-control input-transparent"
-                                           ng-model="campos.cpf" />
-                                </td>
-                                <td></td>
-                            </tr>                            
-                            <tr height="22px"> </tr>
-                        </table>                        
-					</td>
+		<div class="divWebForm">			
+            <table class="widget" style="color: white">
+                <tr height="22px"> </tr>
+                <tr height="43px">
                     <td width="20px"></td>
-                    <td width="120px" valign="top">
+                    <td width="150px"><b>Nome Associado</b></td>
+                    <td width="120px">
+                        <input type="text" focus="true"
+                                class="form-control input-transparent"
+                                ng-model="campos.nome" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="150px"><b>Situação</b></td>
+                    <td width="120px">
+                        <input type="hidden" style="width:100%" placeholder="(Todos)" ui-select2="situacoes" ng-model="campos.idSit" />
+                    </td>
+                    <td width="20px"></td>
+                </tr>
+                <tr height="43px">
+                    <td></td>
+                    <td><b>Matrícula</b></td>
+                    <td>
+                        <input type="text" 
+                                class="form-control input-transparent"
+                                ng-model="campos.matricula" />
+                    </td>
+                    <td></td>
+                    <td> <b>Expedição</b> </td>
+                    <td>
+                        <input type="hidden" style="width:100%" placeholder="(Todos)" ui-select2="expedicoes" ng-model="campos.idExp" />
+                    </td>
+                    <td></td>
+                </tr>                            
+                <tr height="43px">
+                    <td></td>
+                    <td><b>CPF</b></td>
+                    <td>
+                        <input type="text" 
+                                class="form-control input-transparent"
+                                ng-model="campos.cpf" />
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>                            
+                <tr height="12px"></tr>
+                <tr height="22px">
+                    <td></td>
+                    <td colspan="3">
                         <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
                     </td>
-				</tr>
-			</table>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr height="22px"></tr>
+            </table>
 			<table width="100%">
 				<tr>
 					<td valign="top">
@@ -73,6 +86,7 @@
 									<tr>
 										<th>Cartão / Associado / CPF</th>
                                         <th>Situação</th>
+                                        <th>Expedição</th>
                                         <th>Matricula</th>
                                         <th>Limite Mensal</th>                                        
                                         <th>Limite Total</th>                                        
@@ -81,6 +95,7 @@
 								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                                     <td>{{ mdl.cartao }}<br /><b>{{ mdl.associado }}</b><br />{{ mdl.cpf }}</td>
                                     <td>{{ mdl.situacao }}</td>
+                                    <td>{{ mdl.expedicao }}</td>
                                     <td>{{ mdl.matricula }}</td>
                                     <td>{{ mdl.limM }}</td>
                                     <td>{{ mdl.limT }}</td>

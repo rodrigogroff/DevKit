@@ -14,6 +14,7 @@ namespace DevKit.Web.Controllers
         public string   id,
                         associado, 
                         situacao,
+                        expedicao,
                         matricula,
                         cartao, 
                         cpf, 
@@ -30,17 +31,13 @@ namespace DevKit.Web.Controllers
                         matricula,
                         nome,
                         cpf,
-                        vencMes,
-                        vencAno,
+                        vencMes, vencAno,
                         dtNasc,
-                        limMes,
-                        limTot,
-                        banco,
-                        bancoAg,
-                        bancoCta,
+                        limMes, limTot,
+                        banco, bancoAg, bancoCta,
                         tel,
                         email,
-                        situacao,
+                        situacao, expedicao,
                         via,
                         uf, cidade, cep, end, numero, bairro;
     }
@@ -54,6 +51,9 @@ namespace DevKit.Web.Controllers
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
             var matricula = Request.GetQueryStringValue("matricula");
+
+            var idSit = Request.GetQueryStringValue("idSit");
+            var idExp = Request.GetQueryStringValue("idExp");
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -75,6 +75,20 @@ namespace DevKit.Web.Controllers
                 query = (from e in query
                          join p in db.T_Proprietario on e.fk_dadosProprietario equals (int)p.i_unique
                          where p.st_cpf == cpf
+                         select e);
+            }
+
+            if (!String.IsNullOrEmpty(idExp))
+            {
+                query = (from e in query
+                         where e.tg_emitido.ToString() == idExp
+                         select e);
+            }
+
+            if (!String.IsNullOrEmpty(idSit))
+            {
+                query = (from e in query
+                         where e.tg_status.ToString() == idSit
                          select e);
             }
 
@@ -101,6 +115,7 @@ namespace DevKit.Web.Controllers
 
             var mon = new money();
             var se = new StatusExpedicao();
+            var cs = new CartaoStatus();
 
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
@@ -126,7 +141,8 @@ namespace DevKit.Web.Controllers
                                  codAcessoCalc + "." +
                                  item.st_venctoCartao,
                         cpf = assoc.st_cpf,
-                        situacao = se.Convert(item.tg_emitido),
+                        situacao = cs.Convert(item.tg_status),
+                        expedicao = se.Convert(item.tg_emitido),
                         matricula = item.st_matricula,
                         tit = item.st_titularidade,
                         limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
@@ -158,6 +174,7 @@ namespace DevKit.Web.Controllers
 
             var mon = new money();
             var se = new StatusExpedicao();
+            var cs = new CartaoStatus();
 
             return Ok(new CartaoDTO
             {
@@ -183,8 +200,9 @@ namespace DevKit.Web.Controllers
                 vencAno = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(2, 2),
                 banco = cart.st_banco,                
                 bancoAg = cart.st_agencia,
-                bancoCta = cart.st_conta,                
-                situacao = se.Convert(cart.tg_emitido),
+                bancoCta = cart.st_conta,
+                situacao = cs.Convert(cart.tg_status),
+                expedicao = se.Convert(cart.tg_emitido),
                 via = cart.nu_viaCartao.ToString(),
             });
         }

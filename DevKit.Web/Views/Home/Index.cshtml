@@ -34,9 +34,10 @@
                                     <td width="190px">
                                         <span ng-if="authentication.tipo == '1'" style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
                                         <span ng-if="authentication.tipo == '2'" style="color:black"><h3>Cartão <b>{{authentication.nameUser}}</b></h3></span>
-                                        <div ng-if="authentication.tipo == '4'" style="padding-top:28px">
+                                        <div ng-if="authentication.tipo == '4'" style="padding-top:16px">
                                             <span style="color:black;">
-                                                Bem-vindo, <b>{{authentication.nameUser}}</b>
+                                                Bem-vindo, <br>
+                                                <b>{{authentication.nameUser}}</b>
                                             </span>
                                         </div>
                                     </td>
@@ -184,61 +185,61 @@
                         <ul id="forms-collapseEmpCartoes" class="panel-collapse collapse">
                             <li><a ui-sref="empListagemCartao"><span>Listagem</span></a></li>
                             <li><a ui-sref="empNovoCartao"><span>Novo cartão</span></a></li>                            
-                            <li><a ui-sref=""><span>Alterar senha</span></a></li>
-                            <li><a ui-sref=""><span>Segunda-via</span></a></li>
-                            <li><a ui-sref=""><span>Criar dependente</span></a></li>                            
+                            <li><a ><span>Alterar senha</span></a></li>
+                            <li><a ><span>Segunda-via</span></a></li>
+                            <li><a ><span>Criar dependente</span></a></li>                            
                         </ul>
                     </li>
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseEmpBloq"><span class="name">Bloqueios</span></a>
                         <ul id="forms-collapseEmpBloq" class="panel-collapse collapse">
-                            <li><a ui-sref=""><span>Bloqueio cartão</span></a></li>
-                            <li><a ui-sref=""><span>Desbloqueio cartão</span></a></li>
+                            <li><a ><span>Bloqueio cartão</span></a></li>
+                            <li><a ><span>Desbloqueio cartão</span></a></li>
                         </ul>
                     </li>
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseEmpLim"><span class="name">Limites cartões</span></a>
                         <ul id="forms-collapseEmpLim" class="panel-collapse collapse">
-                            <li><a ui-sref=""><span>Mensal / Total</span></a></li>
-                            <li><a ui-sref=""><span>Cota extra</span></a></li>
+                            <li><a ><span>Mensal / Total</span></a></li>
+                            <li><a ><span>Cota extra</span></a></li>
                         </ul>
                     </li>
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseEmpRel"><span class="name">Relatórios</span></a>
                         <ul id="forms-collapseEmpRel" class="panel-collapse collapse">
-                            <li><a ui-sref=""><span>Cartões</span></a></li>
-                            <li><a ui-sref=""><span>Financeiros</span></a></li>
+                            <li><a ><span>Cartões</span></a></li>
+                            <li><a ><span>Financeiros</span></a></li>
                         </ul>
                     </li>
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseEmpFech"><span class="name">Fechamento</span></a>
                         <ul id="forms-collapseEmpFech" class="panel-collapse collapse">
-                            <li><a ui-sref=""><span>Demonstrativos</span></a></li>
-                            <li><a ui-sref=""><span>Exportação</span></a></li>
+                            <li><a ><span>Demonstrativos</span></a></li>
+                            <li><a ><span>Exportação</span></a></li>
                         </ul>
                     </li>
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseEmpLoj"><span class="name">Lojistas</span></a>
                         <ul id="forms-collapseEmpLoj" class="panel-collapse collapse">
-                            <li><a ui-sref=""><span>Pesquisa</span></a></li>
-                            <li><a ui-sref=""><span>Bloqueio convênio</span></a></li>
-                            <li><a ui-sref=""><span>Bonificação</span></a></li>
+                            <li><a ><span>Pesquisa</span></a></li>
+                            <li><a ><span>Bloqueio convênio</span></a></li>
+                            <li><a ><span>Bonificação</span></a></li>
                         </ul>
                     </li>
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseEmpAdm"><span class="name">Administração</span></a>
                         <ul id="forms-collapseEmpAdm" class="panel-collapse collapse">
-                            <li><a ui-sref=""><span>Usuários</span></a></li>
-                            <li><a ui-sref=""><span>Novo usuário</span></a></li>
-                            <li><a ui-sref=""><span>Troca de senha</span></a></li>
-                            <li><a ui-sref=""><span>Limpeza de senha</span></a></li>
-                            <li><a ui-sref=""><span>Remover usuário</span></a></li>
+                            <li><a ><span>Usuários</span></a></li>
+                            <li><a ><span>Novo usuário</span></a></li>
+                            <li><a ><span>Troca de senha</span></a></li>
+                            <li><a ><span>Limpeza de senha</span></a></li>
+                            <li><a ><span>Remover usuário</span></a></li>
                         </ul>
                     </li>
                 </ul>

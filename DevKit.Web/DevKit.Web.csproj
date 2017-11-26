@@ -863,7 +863,9 @@
     <Compile Include="proc\Domains\Entidades\TerminalLojaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojaCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\OrdemRelLojistaTransCtrl.cs" />
+    <Compile Include="proc\Domains\Combos\ExpedicoesCtrl.cs" />
+    <Compile Include="proc\Domains\Combos\SituacoesCtrl.cs" />
+    <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\GLDemonstrativoCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\LojistasAssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelLojistaTransCtrl.cs" />
@@ -890,7 +892,7 @@
     <Compile Include="proc\Base\Cache\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />
     <Compile Include="proc\Infrastructure\Base\Cache\MemCacheController.cs" />
-    <Compile Include="proc\Domains\Enums\MonthCtrl.cs" />
+    <Compile Include="proc\Domains\Combos\MonthCtrl.cs" />
     <Compile Include="proc\Infrastructure\HomeController.cs" />
     <Compile Include="proc\Infrastructure\GlobalExtensions.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

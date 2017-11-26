@@ -8,7 +8,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.loading = false;
 
     $scope.campos = {
+        idSit: '',
+        idExp: '',
     };
+
+    $scope.situacoes = ngSelects.obterConfiguracao(Api.SituacoesCombo, { tamanhoPagina: 15 });
+    $scope.expedicoes = ngSelects.obterConfiguracao(Api.ExpedicoesCombo, { tamanhoPagina: 15 });
 
     $scope.itensporpagina = 15;
 
@@ -36,7 +41,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         };
 
         angular.extend(opcoes, $scope.campos);
-        
+
+        delete opcoes.situacoes;
+        delete opcoes.expedicoes;
+
         Api.EmissoraCartao.listPage(opcoes, function (data)
         {
             $scope.list = data.results;

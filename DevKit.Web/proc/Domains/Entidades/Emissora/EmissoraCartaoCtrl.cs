@@ -283,6 +283,10 @@ namespace DevKit.Web.Controllers
             cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
             cart.tg_tipoCartao = Convert.ToChar(TipoCartao.empresarial);
             cart.nu_senhaErrada = Convert.ToInt32(Context.NONE);
+
+            cart.dt_bloqueio = DateTime.Now;
+            cart.dt_inclusao = DateTime.Now;
+            cart.dt_utlPagto = DateTime.Now;
             
             db.Insert(cart);
 

@@ -37,7 +37,7 @@ namespace DevKit.Web
             return sBuilder.ToString();
         }
 
-        public static string DESdeCript(string dados, string chave)
+        public static string DESdeCript(string dados, string chave = "12345678")
         {
             byte[] key = System.Text.Encoding.ASCII.GetBytes(chave);//{1,2,3,4,5,6,7,8};
             byte[] data = new byte[8];

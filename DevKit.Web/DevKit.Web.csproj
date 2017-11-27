@@ -246,9 +246,11 @@
     <Content Include="app\associado\ExtratosController.js" />
     <Content Include="app\associado\LojistasAssociadoController.js" />
     <Content Include="app\associado\LimitesController.js" />
+    <Content Include="app\emissora\EmissoraAltSenha.js" />
     <Content Include="app\emissora\EmissoraNovoCartao.js" />
     <Content Include="app\emissora\listagemCartao.html" />
     <Content Include="app\emissora\EmissoraListagemCartaoController.js" />
+    <Content Include="app\emissora\altSenha.html" />
     <Content Include="app\emissora\novoCartao.html" />
     <Content Include="app\gestaoLogista\GLDemonstrativo.html" />
     <Content Include="app\gestaoLogista\GLDemonstrativo.js" />

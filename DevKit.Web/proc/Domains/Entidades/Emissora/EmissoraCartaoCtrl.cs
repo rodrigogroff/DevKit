@@ -39,7 +39,8 @@ namespace DevKit.Web.Controllers
                         email,
                         situacao, expedicao,
                         via,
-                        uf, cidade, cep, end, numero, bairro;
+                        uf, cidade, cep, end, numero, bairro,
+                        modo, valor;
     }
 
     public class EmissoraCartaoController : ApiControllerBase
@@ -48,8 +49,8 @@ namespace DevKit.Web.Controllers
         {
             var nome = Request.GetQueryStringValue("nome");
             var cpf = Request.GetQueryStringValue("cpf");
-            var skip = Request.GetQueryStringValue<int>("skip");
-            var take = Request.GetQueryStringValue<int>("take");
+            var skip = Request.GetQueryStringValue<int>("skip", 0);
+            var take = Request.GetQueryStringValue<int>("take", 1);
             var matricula = Request.GetQueryStringValue("matricula");
 
             var idSit = Request.GetQueryStringValue("idSit");
@@ -319,6 +320,30 @@ namespace DevKit.Web.Controllers
                         select e).
                         FirstOrDefault();
 
+            switch (mdl.modo)
+            {
+                case "altSenha":
+                    {
+                        if (mdl.valor.Length != 4)
+                            return BadRequest("Senha requer 4 caracteres numéricos!");
+
+                        cart.st_senha = DESCript(mdl.valor);
+
+                        db.Update(cart);
+
+                        db.Insert(new LOG_Audit
+                        {
+                            tg_operacao = Convert.ToInt32(TipoOperacao.AlterSenha),
+                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                            dt_operacao = DateTime.Now,
+                            st_observacao = "",
+                            fk_generic = 0
+                        });
+                                                
+                        return Ok();                        
+                    }                    
+            }
+            
             CopiaDadosProprietario(mdl, ref prop);
 
             db.Update(prop);

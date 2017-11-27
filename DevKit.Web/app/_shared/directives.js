@@ -22,14 +22,14 @@ angular.module('app.directives', [])
     };
 })       
 */
-    .directive('numericOnly', function ()
+    .directive('numeric', function ()
     {
         return {
             require: 'ngModel',
-            link: function (scope, element, attrs, modelCtrl) {
-
-            modelCtrl.$parsers.push(function (inputValue) {
-                var transformedInput = inputValue ? inputValue.replace(/[^\d.-]/g, '') : null;
+            link: function (scope, element, attrs, modelCtrl)
+            {
+                modelCtrl.$parsers.push(function (inputValue) {
+                    var transformedInput = inputValue ? inputValue.replace(/[^\d.-]/g, '') : null;
 
                 if (transformedInput != inputValue) {
                     modelCtrl.$setViewValue(transformedInput);

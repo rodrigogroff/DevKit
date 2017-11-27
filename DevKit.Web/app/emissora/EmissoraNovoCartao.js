@@ -71,13 +71,14 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
             !$scope.tel_fail &&
             !$scope.email_fail )
         {
-            if (id > 0) {
+            if (id > 0)
+            {
                 Api.EmissoraCartao.update({ id: id }, $scope.viewModel, function (data) {
                     toastr.success('Cartão salvo!', 'Sucesso');                            
                 },
-                    function (response) {
-                        toastr.error(response.data.message, 'Erro');
-                    });
+                function (response) {
+                    toastr.error(response.data.message, 'Erro');
+                });
             }
             else {
                 Api.EmissoraCartao.add($scope.viewModel, function (data) {

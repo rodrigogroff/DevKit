@@ -39,13 +39,25 @@
                     <td></td>
                 </tr>
                 <tr ng-if="campos.nomeCartao != ''" height="43px">
-                    <td> <b>Nova senha</b></td>
-                    <td> <button class="btn btn-xs btn-danger" ng-show="senha_fail">!</button></td>
+                    <td> <b>Limite Mensal</b></td>
+                    <td> <button class="btn btn-xs btn-danger" ng-show="limMes_fail">!</button></td>
                     <td>
                         <input type="text"
                                class="form-control input-transparent" 
-                               maxlength="4" numeric 
-                               ng-model="campos.novaSenha" />
+                               maxlength="12"
+                               ng-model="campos.limMes" />
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr ng-if="campos.nomeCartao != ''" height="43px">
+                    <td> <b>Limite Total</b></td>
+                    <td> <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button></td>
+                    <td>
+                        <input type="text"
+                               class="form-control input-transparent"
+                               maxlength="12"
+                               ng-model="campos.limTot" />
                     </td>
                     <td></td>
                     <td></td>
@@ -53,7 +65,7 @@
             </table>
             <br />
             <br />
-            <button ng-if="campos.nomeCartao != ''" class="btn btn-primary" ng-click="confirmar()">Alterar senha</button>
+            <button ng-if="campos.nomeCartao != ''" class="btn btn-primary" ng-click="confirmar()">Alterar limite</button>
             <br />
             <br />
             <br />

@@ -1,5 +1,5 @@
 ﻿
-angular.module('app.controllers').controller('EmissoraAltSenhaController',
+angular.module('app.controllers').controller('EmissoraAltLimiteController',
 ['$scope', '$rootScope', 'AuthService', '$state', '$stateParams', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFiltro, Api, ngSelects)
 {
@@ -10,7 +10,6 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         mat: '',
         nomeCartao: '',
         id: '',
-        novaSenha: ''
     };
 
     $scope.buscar = function ()
@@ -23,37 +22,40 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         {
             $scope.campos.nomeCartao = data.results[0].associado;
             $scope.campos.id = data.results[0].id;
+            $scope.campos.limMes = data.results[0].limM;
+            $scope.campos.limTot = data.results[0].limT;
             $scope.loading = false;
         },
-        function (response) {
-            toastr.error(response.data.message, 'Erro');
-            $scope.loading = false;
-        });
+            function (response) {
+                toastr.error(response.data.message, 'Erro');
+                $scope.loading = false;
+            });
     }
 
     $scope.confirmar = function ()
     {
-        $scope.senha_fail = invalidCheck($scope.campos.novaSenha);
+        $scope.limMes_fail = invalidCheck($scope.viewModel.limMes);
+        $scope.limTot_fail = invalidCheck($scope.viewModel.limTot);
 
-        if (!$scope.senha_fail)
+        if (!$scope.limMes_fail && $scope.limTot_fail)
         {
             $scope.loading = true;
 
             var opcoes = {
                 id: $scope.campos.id,
-                modo: 'altSenha',
-                valor: $scope.campos.novaSenha
+                modo: 'altLim',
+                valor: $scope.campos.limMes + "|" + $scope.campos.limTot
             };
 
             Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data) {
-                toastr.success('Cartão Atualizado!', 'Sucesso');
+                toastr.success('Limites atualizados!', 'Sucesso');
                 $scope.loading = false;
             },
-            function (response) {
-                toastr.error(response.data.message, 'Erro');
-                $scope.loading = false;
-            });
-        }        
+                function (response) {
+                    toastr.error(response.data.message, 'Erro');
+                    $scope.loading = false;
+                });
+        }
     }
 
 }]);

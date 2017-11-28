@@ -319,6 +319,12 @@ namespace DevKit.Web.Controllers
                         select e).
                         FirstOrDefault();
 
+            if (cart == null)
+                return BadRequest("Cartão inválido");
+
+            if (cart.fk_dadosProprietario == null)
+                return BadRequest("Cartão inválido");
+
             var prop = (from e in db.T_Proprietario
                         where e.i_unique == cart.fk_dadosProprietario
                         select e).
@@ -343,9 +349,36 @@ namespace DevKit.Web.Controllers
                             st_observacao = "",
                             fk_generic = 0
                         });
-                                                
-                        return Ok();                        
-                    }                    
+                        
+                        return Ok();
+                    }
+
+                case "altLim":
+                    {
+                        if (mdl.valor.Length == 0)
+                            return BadRequest("Informe os limites corretamente!");
+
+                        if (!mdl.valor.Contains("|"))
+                            return BadRequest("Informe os limites corretamente!");
+
+                        var lst = mdl.valor.Split('|');
+                        
+                        cart.vr_limiteMensal = (int)ObtemValor(lst[0]);
+                        cart.vr_limiteTotal = (int)ObtemValor(lst[1]);
+                        
+                        db.Update(cart);
+
+                        db.Insert(new LOG_Audit
+                        {
+                            tg_operacao = Convert.ToInt32(TipoOperacao.AlterCartao),
+                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                            dt_operacao = DateTime.Now,
+                            st_observacao = "",
+                            fk_generic = 0
+                        });
+
+                        return Ok();
+                    }
             }
             
             CopiaDadosProprietario(mdl, ref prop);

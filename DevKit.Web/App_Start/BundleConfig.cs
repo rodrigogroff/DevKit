@@ -115,6 +115,7 @@ namespace DevKit.Web
                 "~/app/gestaoLogista/GLDemonstrativo.js",
                 "~/app/emissora/EmissoraNovoCartao.js",
                 "~/app/emissora/EmissoraAltSenha.js",
+                "~/app/emissora/EmissoraAltLimite.js",
                 "~/app/emissora/EmissoraListagemCartaoController.js",
                 "~/app/associado/LojistasAssociadoController.js",
                 "~/app/system/relatorios/ListingRelatoriosController.js",

@@ -44,9 +44,81 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         return false;
     }
 
-    $scope.save = function () {
-        $scope.mat_fail = invalidCheck($scope.viewModel.matricula);
+    $scope.altLim = function ()
+    {
         $scope.limMes_fail = invalidCheck($scope.viewModel.limMes);
+        $scope.limTot_fail = invalidCheck($scope.viewModel.limTot);
+
+        if ($scope.limMes_fail || $scope.limTot_fail) {
+            toastr.error('Dados inconsistentes para mudança de limites!', 'Erro');
+            return;
+        }
+
+        $scope.loading = true;
+
+        var opcoes = {
+            id: id,
+            modo: 'altLim',
+            valor: $scope.viewModel.limMes + "|" + $scope.viewModel.limTot
+        };
+
+        Api.EmissoraCartao.update({ id: id }, opcoes, function (data) {
+            toastr.success('Limites trocados com sucesso!', 'Sucesso');
+            $scope.loading = false;
+        },
+            function (response) {
+                toastr.error(response.data.message, 'Erro');
+                $scope.loading = false;
+            });
+    }
+
+    $scope.altSenha = function () {
+
+        $scope.senha_fail = invalidCheck($scope.viewModel.senhaAtual);
+        $scope.senhaConf_fail = invalidCheck($scope.viewModel.senhaConf);
+
+        if ($scope.senha_fail == false && $scope.senhaConf_fail == false)
+        {
+            if ($scope.viewModel.senhaAtual != $scope.viewModel.senhaConf)
+            {
+                $scope.senhaConf_fail = true;
+                toastr.error('Confirmação de senha inválida', 'Erro');
+                return;
+            }
+        }
+
+        if ($scope.senha_fail || $scope.senhaConf_fail)
+        {
+            toastr.error('Dados inconsistentes para troca de senha!', 'Erro');
+            return;
+        }
+
+        $scope.loading = true;
+
+        var opcoes = {
+            id: id,
+            modo: 'altSenha',
+            valor: $scope.viewModel.senhaAtual
+        };
+
+        Api.EmissoraCartao.update({ id: id }, opcoes, function (data) {
+            toastr.success('Senha trocada com sucesso!', 'Sucesso');
+            $scope.viewModel.senhaAtual = undefined;
+            $scope.viewModel.senhaConf = undefined;
+            $scope.loading = false;
+        },
+            function (response) {
+                toastr.error(response.data.message, 'Erro');
+                $scope.loading = false;
+            });
+    }
+
+    $scope.save = function () {
+
+        $scope.loading = true;
+
+        $scope.mat_fail = invalidCheck($scope.viewModel.matricula);
+        
         $scope.venc_fail = invalidCheck($scope.viewModel.vencMes) || invalidCheck($scope.viewModel.vencAno);
         $scope.nome_fail = invalidCheck($scope.viewModel.nome);
         $scope.cpf_fail = invalidCheck($scope.viewModel.cpf);
@@ -78,6 +150,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
                 },
                 function (response) {
                     toastr.error(response.data.message, 'Erro');
+                    $scope.loading = false;
                 });
             }
             else {
@@ -87,12 +160,14 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
                 },
                     function (response) {
                         toastr.error(response.data.message, 'Erro');
+                        $scope.loading = false;
                     });
             }
         }
         else
         {
             toastr.error('Existem pendências de cadastro', 'Erro');
+            $scope.loading = false;
         }
     };
 

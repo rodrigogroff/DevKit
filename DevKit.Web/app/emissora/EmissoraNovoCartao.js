@@ -79,10 +79,18 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 
         if ($scope.senha_fail == false && $scope.senhaConf_fail == false)
         {
+            if ($scope.viewModel.senhaAtual.length != 4)
+            {
+                $scope.senhaConf_fail = true;
+                toastr.error('Senha precisa ter 4 catacteres!', 'Erro');
+                return;
+            }
+
+
             if ($scope.viewModel.senhaAtual != $scope.viewModel.senhaConf)
             {
                 $scope.senhaConf_fail = true;
-                toastr.error('Confirmação de senha inválida', 'Erro');
+                toastr.error('Confirmação de senha inválida!', 'Erro');
                 return;
             }
         }

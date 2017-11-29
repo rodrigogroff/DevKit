@@ -42,9 +42,13 @@
                                         </div>
                                     </td>
                                     <td width="20px"></td>
-                                    <td style="padding-top:12px">                                        
+                                    <td ng-if="authentication.tipo == '4'" style="padding-top:12px">
+                                        Emissora: <b>{{authentication.m1}}</b><br />
+                                        {{authentication.m2}}
+                                    </td>
+                                    <td ng-if="authentication.tipo != '4'" style="padding-top:12px">
                                         <b>{{authentication.m1}}</b><br />
-                                        {{authentication.m2}}                                        
+                                        {{authentication.m2}}
                                     </td>
                                 </tr>
                             </table>
@@ -183,7 +187,7 @@
                         <a class="accordion-toggle " data-toggle="collapse"
                            data-parent="#side-nav" href="#forms-collapseEmpCartoes"><span class="name">Cartões</span></a>
                         <ul id="forms-collapseEmpCartoes" class="panel-collapse collapse">
-                            <li><a ui-sref="empListagemCartao"><span>Listagem</span></a></li>
+                            <li><a ui-sref="empListagemCartao"><span>Manutenção de cartões</span></a></li>
                             <li><a ui-sref="empNovoCartao"><span>Novo cartão</span></a></li>                            
                             <li><a ui-sref="empAltSenha"><span>Alterar senha</span></a></li>
                             <li><a ><span>Segunda-via</span></a></li>

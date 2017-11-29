@@ -9,31 +9,44 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
     $scope.campos = {
         mat: '',
         nomeCartao: '',
-        id: '',
+        id: 0,
         novaSenha: ''
     };
 
     $scope.buscar = function ()
     {
-        $scope.loading = true;
+        $scope.campos.id = 0;
 
-        var opcoes = { matricula: $scope.campos.mat };
-
-        Api.EmissoraCartao.listPage(opcoes, function (data)
+        if ($scope.campos.mat != '')
         {
-            $scope.campos.nomeCartao = data.results[0].associado;
-            $scope.campos.id = data.results[0].id;
-            $scope.loading = false;
-        },
-        function (response) {
-            toastr.error(response.data.message, 'Erro');
-            $scope.loading = false;
-        });
+            $scope.loading = true;
+
+            var opcoes = { matricula: $scope.campos.mat };
+
+            Api.EmissoraCartao.listPage(opcoes, function (data) {
+                $scope.campos.nomeCartao = data.results[0].associado;
+                $scope.campos.id = data.results[0].id;
+                $scope.loading = false;
+            },
+                function (response) {
+                    toastr.error(response.data.message, 'Erro');
+                    $scope.loading = false;
+                });
+        }        
     }
 
     $scope.confirmar = function ()
     {
         $scope.senha_fail = invalidCheck($scope.campos.novaSenha);
+
+        if (!$scope.senha_fail)
+        {
+            if ($scope.campos.novaSenha.length != 4)
+            {
+                toastr.error('Senha precisa ter 4 caracteres!', 'Erro');
+                return;
+            }
+        }
 
         if (!$scope.senha_fail)
         {

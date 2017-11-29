@@ -9,27 +9,31 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
     $scope.campos = {
         mat: '',
         nomeCartao: '',
-        id: '',
+        id: 0,
     };
 
     $scope.buscar = function ()
     {
-        $scope.loading = true;
+        $scope.campos.id = 0;
 
-        var opcoes = { matricula: $scope.campos.mat };
-
-        Api.EmissoraCartao.listPage(opcoes, function (data)
+        if ($scope.campos.mat != '')
         {
-            $scope.campos.nomeCartao = data.results[0].associado;
-            $scope.campos.id = data.results[0].id;
-            $scope.campos.limMes = data.results[0].limM;
-            $scope.campos.limTot = data.results[0].limT;
-            $scope.loading = false;
-        },
+            $scope.loading = true;
+
+            var opcoes = { matricula: $scope.campos.mat };
+
+            Api.EmissoraCartao.listPage(opcoes, function (data) {
+                $scope.campos.nomeCartao = data.results[0].associado;
+                $scope.campos.id = data.results[0].id;
+                $scope.campos.limMes = data.results[0].limM;
+                $scope.campos.limTot = data.results[0].limT;
+                $scope.loading = false;
+            },
             function (response) {
                 toastr.error(response.data.message, 'Erro');
                 $scope.loading = false;
             });
+        }
     }
 
     $scope.confirmar = function ()

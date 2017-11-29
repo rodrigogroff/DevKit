@@ -16,13 +16,18 @@ namespace DevKit.Web.Controllers
                         situacao,
                         expedicao,
                         matricula,
-                        cartao, 
+                        dtInicial,
+                        dtUltExp,
+                        cartao,
+                        cartaoTitVia,
                         cpf, 
                         tit, 
                         dispM, 
                         limM, 
                         dispT, 
-                        limT;             
+                        limT,
+                        colorBack, colorFront,
+                        limCota;   
     }
 
     public class CartaoDTO
@@ -33,7 +38,7 @@ namespace DevKit.Web.Controllers
                         cpf,
                         vencMes, vencAno,
                         dtNasc,
-                        limMes, limTot,
+                        limMes, limTot, limCota,
                         banco, bancoAg, bancoCta,
                         tel,
                         email,
@@ -62,6 +67,8 @@ namespace DevKit.Web.Controllers
             var query = (from e in db.T_Cartao
                          where e.st_empresa == userLoggedEmpresa
                          select e);
+
+            #region - filtros - 
 
             if (!String.IsNullOrEmpty(nome))
             {
@@ -100,6 +107,8 @@ namespace DevKit.Web.Controllers
                          select e);
             }
 
+            #endregion
+
             query = (from e in query
                      orderby e.st_matricula
                      select e);
@@ -112,42 +121,65 @@ namespace DevKit.Web.Controllers
                      orderby associado.st_nome
                      select e);
 
-            var calcAcesso = new CodigoAcesso();
-
             var mon = new money();
             var se = new StatusExpedicao();
+            var sd = new SaldoDisponivel();
             var cs = new CartaoStatus();
+
+            var lst = query.Skip(skip).Take(take).ToList();
+
+            var lstIdAssoc = lst.Select(y => y.fk_dadosProprietario).ToList();
+
+            var lstAssoc = (from e in db.T_Proprietario
+                            where lstIdAssoc.Contains((int)e.i_unique)
+                            select e).
+                            ToList();
 
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
-                var assoc = (from e in db.T_Proprietario
+                var assoc = (from e in lstAssoc
                              where e.i_unique == item.fk_dadosProprietario
                              select e).
                              FirstOrDefault();
                 
                 if (assoc != null)
                 {
-                    var codAcessoCalc = calcAcesso.Obter(item.st_empresa,
-                                                           item.st_matricula,
-                                                           item.st_titularidade,
-                                                           item.nu_viaCartao,
-                                                           assoc.st_cpf);
+                    long dispM = 0, dispT = 0;
+
+                    sd.Obter(db, item, ref dispM, ref dispT);
+
+                    if (item.vr_extraCota == null) item.vr_extraCota = 0;
+                    if (item.vr_limiteMensal == null) item.vr_limiteMensal = 0;
+                    if (item.vr_limiteTotal == null) item.vr_limiteTotal = 0;
+
+                    string colorBack = "", colorFront = "";
+
+                    if (item.tg_status.ToString() == CartaoStatus.Bloqueado)
+                    {
+                        colorBack = "white";
+                        colorFront = "black";
+                    }
 
                     res.Add(new CartaoListagemDTO
                     {
+                        colorBack = colorBack,
+                        colorFront = colorFront,
                         id = item.i_unique.ToString(),
                         associado = assoc.st_nome,
-                        cartao = item.st_empresa + "." +
-                                 item.st_matricula + "." +
-                                 codAcessoCalc + "." +
-                                 item.st_venctoCartao,
+                        cartaoTitVia =  item.st_matricula + "." +
+                                        item.st_titularidade + ":" +
+                                        item.nu_viaCartao,
                         cpf = assoc.st_cpf,
                         situacao = cs.Convert(item.tg_status),
                         expedicao = se.Convert(item.tg_emitido),
                         matricula = item.st_matricula,
+                        dtInicial = item.dt_inclusao != null ? Convert.ToDateTime(item.dt_inclusao).ToString("dd/MM/yyyy") : "",
                         tit = item.st_titularidade,
                         limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
                         limT = mon.setMoneyFormat((long)item.vr_limiteTotal),
+                        limCota = mon.setMoneyFormat((long)item.vr_extraCota),
+                        dispM = mon.setMoneyFormat(dispM),
+                        dispT = mon.setMoneyFormat(dispT),
                     });
                 }
             }
@@ -196,7 +228,7 @@ namespace DevKit.Web.Controllers
                 id = id.ToString(),
                 matricula = cart.st_matricula,
                 limMes = mon.setMoneyFormat((long)cart.vr_limiteMensal),
-                limTot = mon.setMoneyFormat((long)cart.vr_limiteTotal),
+                limTot = mon.setMoneyFormat((long)cart.vr_limiteTotal),                
                 vencMes = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(0, 2),
                 vencAno = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(2, 2),
                 banco = cart.st_banco,                
@@ -219,6 +251,7 @@ namespace DevKit.Web.Controllers
             cart.st_matricula = mdl.matricula.PadLeft(6,'0');
             cart.vr_limiteMensal = (int)ObtemValor(mdl.limMes);
             cart.vr_limiteTotal = (int)ObtemValor(mdl.limTot);
+            cart.vr_extraCota = (int)ObtemValor(mdl.limCota);
             cart.st_banco = mdl.banco;
             cart.st_agencia = mdl.bancoAg;
             cart.st_conta = mdl.bancoCta;
@@ -280,6 +313,7 @@ namespace DevKit.Web.Controllers
 
             cart.st_titularidade = "01";
             cart.nu_viaCartao = 1;
+            cart.tg_status = Convert.ToChar(CartaoStatus.Habilitado);
             cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
             cart.tg_tipoCartao = Convert.ToChar(TipoCartao.empresarial);
             cart.nu_senhaErrada = Convert.ToInt32(Context.NONE);

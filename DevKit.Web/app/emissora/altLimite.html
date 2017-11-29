@@ -28,7 +28,7 @@
                         <button class="btn btn-primary" ng-click="buscar()">Buscar</button>
                     </td>
                 </tr>
-                <tr ng-if="campos.nomeCartao != ''" height="43px"> 
+                <tr ng-if="campos.id > 0" height="43px"> 
                     <td>
                         <b>Associado</b></td>
                     <td></td>
@@ -38,7 +38,7 @@
                     <td></td>
                     <td></td>
                 </tr>
-                <tr ng-if="campos.nomeCartao != ''" height="43px">
+                <tr ng-if="campos.id > 0" height="43px">
                     <td> <b>Limite Mensal</b></td>
                     <td> <button class="btn btn-xs btn-danger" ng-show="limMes_fail">!</button></td>
                     <td>
@@ -50,7 +50,7 @@
                     <td></td>
                     <td></td>
                 </tr>
-                <tr ng-if="campos.nomeCartao != ''" height="43px">
+                <tr ng-if="campos.id > 0" height="43px">
                     <td> <b>Limite Total</b></td>
                     <td> <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button></td>
                     <td>
@@ -65,7 +65,7 @@
             </table>
             <br />
             <br />
-            <button ng-if="campos.nomeCartao != ''" class="btn btn-primary" ng-click="confirmar()">Alterar limite</button>
+            <button ng-if="campos.id > 0" class="btn btn-primary" ng-click="confirmar()">Alterar limite</button>
             <br />
             <br />
             <br />

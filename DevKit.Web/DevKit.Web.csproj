@@ -246,7 +246,11 @@
     <Content Include="app\associado\ExtratosController.js" />
     <Content Include="app\associado\LojistasAssociadoController.js" />
     <Content Include="app\associado\LimitesController.js" />
+    <Content Include="app\emissora\altDesbloq.html" />
+    <Content Include="app\emissora\altBloq.html" />
     <Content Include="app\emissora\altLimite.html" />
+    <Content Include="app\emissora\EmissoraAltDesbloq.js" />
+    <Content Include="app\emissora\EmissoraAltBloq.js" />
     <Content Include="app\emissora\EmissoraAltLimite.js" />
     <Content Include="app\emissora\EmissoraAltSenha.js" />
     <Content Include="app\emissora\EmissoraNovoCartao.js" />

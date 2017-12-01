@@ -1,5 +1,5 @@
 ﻿
-angular.module('app.controllers').controller('EmissoraAltLimiteController',
+angular.module('app.controllers').controller('EmissoraAltBloqueioController',
 ['$scope', '$rootScope', 'AuthService', '$state', '$stateParams', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFiltro, Api, ngSelects)
 {
@@ -24,15 +24,15 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 
             Api.EmissoraCartao.listPage(opcoes, function (data)
             {
-                if (data.results.length > 0) {
+                if (data.results.length > 0)
+                {
                     $scope.campos.nomeCartao = data.results[0].associado;
                     $scope.campos.id = data.results[0].id;
-                    $scope.campos.limMes = data.results[0].limM;
-                    $scope.campos.limTot = data.results[0].limT;
+                    $scope.campos.situacao = data.results[0].situacao;               
                 }
                 else
                     toastr.error('matrícula inválida', 'Erro');
-
+                
                 $scope.loading = false;
             },
             function (response) {
@@ -44,28 +44,21 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 
     $scope.confirmar = function ()
     {
-        $scope.limMes_fail = invalidCheck($scope.viewModel.limMes);
-        $scope.limTot_fail = invalidCheck($scope.viewModel.limTot);
+        $scope.loading = true;
 
-        if (!$scope.limMes_fail && $scope.limTot_fail)
-        {
-            $scope.loading = true;
+        var opcoes = {
+            id: $scope.campos.id,
+            modo: 'altBloq',            
+        };
 
-            var opcoes = {
-                id: $scope.campos.id,
-                modo: 'altLim',
-                valor: $scope.campos.limMes + "|" + $scope.campos.limTot
-            };
-
-            Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data) {
-                toastr.success('Limites atualizados!', 'Sucesso');
-                $scope.loading = false;
-            },
-                function (response) {
-                    toastr.error(response.data.message, 'Erro');
-                    $scope.loading = false;
-                });
-        }
+        Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data) {
+            toastr.success('Cartão bloqueado!', 'Sucesso');
+            $scope.loading = false;
+        },
+        function (response) {
+            toastr.error(response.data.message, 'Erro');
+            $scope.loading = false;
+        });       
     }
 
 }]);

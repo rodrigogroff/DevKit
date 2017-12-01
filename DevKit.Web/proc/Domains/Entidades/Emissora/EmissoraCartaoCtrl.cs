@@ -1,10 +1,10 @@
-﻿using LinqToDB;
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Net;
 using SyCrafEngine;
+using LinqToDB;
 using DataModel;
 
 namespace DevKit.Web.Controllers
@@ -88,7 +88,7 @@ namespace DevKit.Web.Controllers
 
             if (idSit != null)
             {
-                idSit--;
+                idSit--; // zero não pode em combos
 
                 query = (from e in query
                          where e.tg_status.ToString() == idSit.ToString()
@@ -97,7 +97,7 @@ namespace DevKit.Web.Controllers
 
             if (idExp != null)
             {
-                idExp--;
+                idExp--; // zero não pode em combos
 
                 query = (from e in query
                          where e.tg_emitido.ToString() == idExp.ToString()
@@ -203,7 +203,7 @@ namespace DevKit.Web.Controllers
                        FirstOrDefault();
 
             if (cart == null)
-                return StatusCode(HttpStatusCode.NotFound);
+                return BadRequest();
 
             var prop = (from e in db.T_Proprietario
                          where e.i_unique == cart.fk_dadosProprietario
@@ -410,6 +410,43 @@ namespace DevKit.Web.Controllers
                         db.Insert(new LOG_Audit
                         {
                             tg_operacao = Convert.ToInt32(TipoOperacao.AlterCartao),
+                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                            dt_operacao = DateTime.Now,
+                            st_observacao = "",
+                            fk_generic = (int)cart.i_unique
+                        });
+
+                        return Ok();
+                    }
+
+                case "altBloq":
+                    {
+                        cart.tg_status = Convert.ToChar(CartaoStatus.Bloqueado);
+                        cart.dt_bloqueio = DateTime.Now;
+
+                        db.Update(cart);
+
+                        db.Insert(new LOG_Audit
+                        {
+                            tg_operacao = Convert.ToInt32(TipoOperacao.BloqueioCartao),
+                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                            dt_operacao = DateTime.Now,
+                            st_observacao = "",
+                            fk_generic = (int)cart.i_unique
+                        });
+
+                        return Ok();
+                    }
+
+                case "altDesbloq":
+                    {
+                        cart.tg_status = Convert.ToChar(CartaoStatus.Habilitado);
+                        
+                        db.Update(cart);
+
+                        db.Insert(new LOG_Audit
+                        {
+                            tg_operacao = Convert.ToInt32(TipoOperacao.DesbloqueioCartao),
                             fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
                             st_observacao = "",

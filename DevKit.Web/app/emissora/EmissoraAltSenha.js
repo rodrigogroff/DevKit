@@ -23,15 +23,21 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 
             var opcoes = { matricula: $scope.campos.mat };
 
-            Api.EmissoraCartao.listPage(opcoes, function (data) {
-                $scope.campos.nomeCartao = data.results[0].associado;
-                $scope.campos.id = data.results[0].id;
+            Api.EmissoraCartao.listPage(opcoes, function (data)
+            {
+                if (data.results.length > 0) {
+                    $scope.campos.nomeCartao = data.results[0].associado;
+                    $scope.campos.id = data.results[0].id;
+                }
+                else
+                    toastr.error('matrícula inválida', 'Erro');
+
                 $scope.loading = false;
             },
-                function (response) {
-                    toastr.error(response.data.message, 'Erro');
-                    $scope.loading = false;
-                });
+            function (response) {
+                toastr.error(response.data.message, 'Erro');
+                $scope.loading = false;
+            });
         }        
     }
 

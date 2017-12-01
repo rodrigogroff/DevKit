@@ -21,9 +21,9 @@ namespace DataModel
 
         public EnumExpedicao()
         {
-            lst.Add(new Expedicao() { id = 0, stName = "Não expedido" });
-            lst.Add(new Expedicao() { id = 1, stName = "Em expedição" });
-            lst.Add(new Expedicao() { id = 2, stName = "Expedido" });
+            lst.Add(new Expedicao() { id = 1, stName = "Não expedido" });
+            lst.Add(new Expedicao() { id = 2, stName = "Em expedição" });
+            lst.Add(new Expedicao() { id = 3, stName = "Expedido" });
         }
 
         public Expedicao Get(long _id)

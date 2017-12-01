@@ -58,8 +58,8 @@ namespace DevKit.Web.Controllers
             var take = Request.GetQueryStringValue<int>("take", 1);
             var matricula = Request.GetQueryStringValue("matricula");
 
-            var idSit = Request.GetQueryStringValue("idSit");
-            var idExp = Request.GetQueryStringValue("idExp");
+            var idSit = Request.GetQueryStringValue<int?>("idSit", null);
+            var idExp = Request.GetQueryStringValue<int?>("idExp", null);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -86,17 +86,21 @@ namespace DevKit.Web.Controllers
                          select e);
             }
 
-            if (!String.IsNullOrEmpty(idExp))
+            if (idSit != null)
             {
+                idSit--;
+
                 query = (from e in query
-                         where e.tg_emitido.ToString() == idExp
+                         where e.tg_status.ToString() == idSit.ToString()
                          select e);
             }
 
-            if (!String.IsNullOrEmpty(idSit))
+            if (idExp != null)
             {
+                idExp--;
+
                 query = (from e in query
-                         where e.tg_status.ToString() == idSit
+                         where e.tg_emitido.ToString() == idExp.ToString()
                          select e);
             }
 
@@ -110,16 +114,11 @@ namespace DevKit.Web.Controllers
             #endregion
 
             query = (from e in query
-                     orderby e.st_matricula
+                     join p in db.T_Proprietario on e.fk_dadosProprietario equals (int) p.i_unique
+                     orderby p.st_nome, e.st_titularidade
                      select e);
 
             var res = new List<CartaoListagemDTO>();
-
-            query = (from e in query
-                     join associado in db.T_Proprietario 
-                          on e.fk_dadosProprietario equals (int)associado.i_unique
-                     orderby associado.st_nome
-                     select e);
 
             var mon = new money();
             var se = new StatusExpedicao();
@@ -160,6 +159,11 @@ namespace DevKit.Web.Controllers
                         colorFront = "black";
                     }
 
+                    var dtPrimTtrans = (from e in db.LOG_Transacoes
+                                        where e.fk_cartao == item.i_unique
+                                        select e.dt_transacao).
+                                        FirstOrDefault();
+
                     res.Add(new CartaoListagemDTO
                     {
                         colorBack = colorBack,
@@ -174,6 +178,7 @@ namespace DevKit.Web.Controllers
                         expedicao = se.Convert(item.tg_emitido),
                         matricula = item.st_matricula,
                         dtInicial = item.dt_inclusao != null ? Convert.ToDateTime(item.dt_inclusao).ToString("dd/MM/yyyy") : "",
+                        dtUltExp = dtPrimTtrans != null ? Convert.ToDateTime(dtPrimTtrans).ToString("dd/MM/yyyy") : "",
                         tit = item.st_titularidade,
                         limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
                         limT = mon.setMoneyFormat((long)item.vr_limiteTotal),
@@ -381,7 +386,7 @@ namespace DevKit.Web.Controllers
                             fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
                             st_observacao = "",
-                            fk_generic = 0
+                            fk_generic = (int) cart.i_unique
                         });
                         
                         return Ok();
@@ -408,7 +413,7 @@ namespace DevKit.Web.Controllers
                             fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
                             st_observacao = "",
-                            fk_generic = 0
+                            fk_generic = (int)cart.i_unique
                         });
 
                         return Ok();
@@ -433,7 +438,7 @@ namespace DevKit.Web.Controllers
                 fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                 dt_operacao = DateTime.Now,
                 st_observacao = "",
-                fk_generic = 0
+                fk_generic = (int)cart.i_unique
             });
 
             db.Update(cart);

@@ -21,8 +21,8 @@ namespace DataModel
 
         public EnumSituacao()
         {
-            lst.Add(new Situacao() { id = 0, stName = "Habilitado" });
-            lst.Add(new Situacao() { id = 1, stName = "Bloqueado" });
+            lst.Add(new Situacao() { id = 1, stName = "Habilitado" });
+            lst.Add(new Situacao() { id = 2, stName = "Bloqueado" });
         }
 
         public Situacao Get(long _id)

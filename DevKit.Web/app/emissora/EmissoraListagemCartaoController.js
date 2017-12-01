@@ -37,13 +37,13 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         var opcoes = {
             skip: skip,
-            take: take             
+            take: take,
+            nome: $scope.campos.nome,
+            matricula: $scope.campos.matricula,
+            cpf: $scope.campos.cpf,
+            idSit: $scope.campos.idSit,
+            idExp: $scope.campos.idExp,
         };
-
-        angular.extend(opcoes, $scope.campos);
-
-        delete opcoes.situacoes;
-        delete opcoes.expedicoes;
 
         Api.EmissoraCartao.listPage(opcoes, function (data)
         {

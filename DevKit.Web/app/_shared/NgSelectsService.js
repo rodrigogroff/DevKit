@@ -22,7 +22,7 @@ function (Api, $rootScope)
 			funcaoDadosIniciais: parametros ? parametros.funcaoDadosIniciais : undefined,
 
 			initSelection: function (element, callback)
-			{
+            {
 				if (parametros && parametros.funcaoDadosIniciais)
 				{
 					var valores = [];
@@ -40,7 +40,7 @@ function (Api, $rootScope)
 					var id = $(element).select2('val');
 
 					opcoesObter[campoId] = id;
-                                        
+
 					if (parametros && parametros.opcoes)
 						angular.extend(opcoesObter, parametros.opcoes);
 
@@ -51,7 +51,7 @@ function (Api, $rootScope)
 			},
 
 			formatSelection: function (item)
-			{
+            {
                 if (item == undefined)
                     return;
 				configuracao.itemSelecionado = item.source;
@@ -132,4 +132,5 @@ function (Api, $rootScope)
 	};
 
 	return { obterConfiguracao: obterConfiguracao }
+
 }])

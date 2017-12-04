@@ -10,10 +10,13 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.campos = {
         idSit: '',
         idExp: '',
+        idOrdem: 1,
     };
-
+        
     $scope.situacoes = ngSelects.obterConfiguracao(Api.SituacoesCombo, { tamanhoPagina: 15 });
     $scope.expedicoes = ngSelects.obterConfiguracao(Api.ExpedicoesCombo, { tamanhoPagina: 15 });
+
+    $scope.ordem = ngSelects.obterConfiguracao(Api.OrdemEmissorManutCartoes, { tamanhoPagina: 15 });
 
     $scope.itensporpagina = 15;
 
@@ -37,12 +40,13 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         var opcoes = {
             skip: skip,
-            take: take,
+            take: take,            
             nome: $scope.campos.nome,
             matricula: $scope.campos.matricula,
             cpf: $scope.campos.cpf,
             idSit: $scope.campos.idSit,
             idExp: $scope.campos.idExp,
+            idOrdem: $scope.campos.idOrdem,
         };
 
         Api.EmissoraCartao.listPage(opcoes, function (data)

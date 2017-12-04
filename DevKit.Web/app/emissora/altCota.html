@@ -5,7 +5,7 @@
             <table style="color:white; width:100%">
                 <tr>
                     <td width="20px"></td>
-                    <td >Alteração de <b>Limites financeiros</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td >Alteração de <b>Cota Extra</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
                 </tr>
                 <tr height="12px"></tr>
             </table>
@@ -40,24 +40,42 @@
                 </tr>
                 <tr ng-if="campos.id > 0" height="43px">
                     <td> <b>Limite Mensal</b></td>
-                    <td> <button class="btn btn-xs btn-danger" ng-show="limMes_fail">!</button></td>
+                    <td> </td>
                     <td>
-                        <input type="text"
-                               class="form-control input-transparent" 
-                               maxlength="12"
-                               ng-model="campos.limMes" />
+                        {{campos.limMes}}
                     </td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr ng-if="campos.id > 0" height="43px">
                     <td> <b>Limite Total</b></td>
-                    <td> <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button></td>
+                    <td> </td>
                     <td>
+                        {{campos.limTot}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr ng-if="campos.id > 0" height="43px">
+                    <td> <b>Cota Extra atual</b></td>
+                    <td> </td>
+                    <td>
+                        {{campos.limCota}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr height="12px"></tr>
+                <tr ng-if="campos.id > 0" height="43px">
+                    <td> <b>Nova Cota Extra</b></td>
+                    <td> <button class="btn btn-xs btn-danger" ng-show="novaCota_fail">!</button></td>
+                    <td>
+
                         <input type="text"
                                class="form-control input-transparent"
                                maxlength="12"
-                               ng-model="campos.limTot" />
+                               ng-model="campos.novaCota" />
+
                     </td>
                     <td></td>
                     <td></td>
@@ -65,7 +83,7 @@
             </table>
             <br />
             <br />
-            <button ng-if="campos.id > 0" class="btn btn-primary" ng-click="confirmar()">Alterar limite</button>
+            <button ng-if="campos.id > 0" class="btn btn-primary" ng-click="confirmar()">Alterar cota-extra</button>
             <br />
             <br />
             <br />
@@ -83,7 +101,7 @@
         <br />
         <br />
         <div class="modal-content" style="color:black">
-            <h3>Limites alterados com sucesso!</h3>
+            <h3>Cota extra alterada com sucesso!</h3>
             <br />
             <br />
             <button class="btn btn-info" ng-click="fecharModal()">Fechar</button>

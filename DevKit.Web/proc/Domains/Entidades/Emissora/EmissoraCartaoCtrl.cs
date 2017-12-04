@@ -22,6 +22,7 @@ namespace DevKit.Web.Controllers
                         cartaoTitVia,
                         cpf, 
                         tit, 
+                        via,
                         dispM, 
                         limM, 
                         dispT, 
@@ -60,6 +61,7 @@ namespace DevKit.Web.Controllers
 
             var idSit = Request.GetQueryStringValue<int?>("idSit", null);
             var idExp = Request.GetQueryStringValue<int?>("idExp", null);
+            var idOrdem = Request.GetQueryStringValue<long?>("idOrdem", null);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -113,10 +115,26 @@ namespace DevKit.Web.Controllers
 
             #endregion
 
-            query = (from e in query
-                     join p in db.T_Proprietario on e.fk_dadosProprietario equals (int) p.i_unique
-                     orderby p.st_nome, e.st_titularidade
-                     select e);
+            switch (idOrdem)
+            {
+                case null:
+                case EnumOrdemEmissorManutCartoes.nomeAssociado:
+
+                    query = (from e in query
+                             join p in db.T_Proprietario on e.fk_dadosProprietario equals (int)p.i_unique
+                             orderby p.st_nome, e.st_titularidade
+                             select e);
+
+                    break;
+
+                case EnumOrdemEmissorManutCartoes.matricula:
+
+                    query = (from e in query
+                             orderby e.st_matricula, e.st_titularidade
+                             select e);
+
+                    break;
+            }
 
             var res = new List<CartaoListagemDTO>();
 
@@ -169,6 +187,7 @@ namespace DevKit.Web.Controllers
                         colorBack = colorBack,
                         colorFront = colorFront,
                         id = item.i_unique.ToString(),
+                        via = item.nu_viaCartao.ToString(),
                         associado = assoc.st_nome,
                         cartaoTitVia =  item.st_matricula + "." +
                                         item.st_titularidade + ":" +
@@ -254,9 +273,6 @@ namespace DevKit.Web.Controllers
             cart.fk_dadosProprietario = id_prop;
             cart.st_empresa = st_empresa;
             cart.st_matricula = mdl.matricula.PadLeft(6,'0');
-            cart.vr_limiteMensal = (int)ObtemValor(mdl.limMes);
-            cart.vr_limiteTotal = (int)ObtemValor(mdl.limTot);
-            cart.vr_extraCota = (int)ObtemValor(mdl.limCota);
             cart.st_banco = mdl.banco;
             cart.st_agencia = mdl.bancoAg;
             cart.st_conta = mdl.bancoCta;
@@ -326,7 +342,11 @@ namespace DevKit.Web.Controllers
             cart.dt_bloqueio = DateTime.Now;
             cart.dt_inclusao = DateTime.Now;
             cart.dt_utlPagto = DateTime.Now;
-            
+
+            cart.vr_limiteMensal = 0;
+            cart.vr_limiteTotal = 0;
+            cart.vr_extraCota = 0;
+
             db.Insert(cart);
 
             // ----------------------------------
@@ -419,6 +439,27 @@ namespace DevKit.Web.Controllers
                         return Ok();
                     }
 
+                case "altCota":
+                    {
+                        if (mdl.valor.Length == 0)
+                            return BadRequest("Informe a cota extra corretamente!");
+
+                        cart.vr_extraCota = (int)ObtemValor(mdl.valor);
+                        
+                        db.Update(cart);
+
+                        db.Insert(new LOG_Audit
+                        {
+                            tg_operacao = Convert.ToInt32(TipoOperacao.CotaExtraMensal),
+                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                            dt_operacao = DateTime.Now,
+                            st_observacao = "",
+                            fk_generic = (int)cart.i_unique
+                        });
+
+                        return Ok();
+                    }
+
                 case "altBloq":
                     {
                         cart.tg_status = Convert.ToChar(CartaoStatus.Bloqueado);
@@ -447,6 +488,25 @@ namespace DevKit.Web.Controllers
                         db.Insert(new LOG_Audit
                         {
                             tg_operacao = Convert.ToInt32(TipoOperacao.DesbloqueioCartao),
+                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                            dt_operacao = DateTime.Now,
+                            st_observacao = "",
+                            fk_generic = (int)cart.i_unique
+                        });
+
+                        return Ok();
+                    }
+
+                case "altSegVia":
+                    {
+                        cart.nu_viaCartao = cart.nu_viaCartao + 1;
+                        cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
+
+                        db.Update(cart);
+
+                        db.Insert(new LOG_Audit
+                        {
+                            tg_operacao = Convert.ToInt32(TipoOperacao.ReqSegViaCart),
                             fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
                             st_observacao = "",

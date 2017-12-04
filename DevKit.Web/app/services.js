@@ -55,7 +55,8 @@ angular.module('app.services', ['ngResource'])
         LojistaMensagens: $resource('api/lojistamensagens/:id', {}, opcoes),
         CancelaVenda: $resource('api/cancelavenda/:id', {}, opcoes),
         Cache: $resource('api/cache/:id', {}, opcoes),
-        OrdemRelLojistaTrans: $resource('api/OrdemRelLojistaTrans/:id', {}, opcoes),        
+        OrdemRelLojistaTrans: $resource('api/ordemrellojistaTrans/:id', {}, opcoes),
+        OrdemEmissorManutCartoes: $resource('api/ordememissormanutcartoes/:id', {}, opcoes),
         ConfereNSU: $resource('api/conferensu/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),
         EmissoraCartao: $resource('api/emissoracartao/:id', {}, opcoes),
@@ -66,6 +67,5 @@ angular.module('app.services', ['ngResource'])
         SituacoesCombo: $resource('api/situacoes/:id', {}, opcoes),
         ExpedicoesCombo: $resource('api/expedicoes/:id', {}, opcoes),
         ConveniosCombo: $resource('api/convenios/:id', {}, opcoes),
-
 	};
 }]);

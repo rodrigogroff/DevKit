@@ -1,5 +1,5 @@
 ﻿
-angular.module('app.controllers').controller('EmissoraAltLimiteController',
+angular.module('app.controllers').controller('EmissoraAltCotaController',
 ['$scope', '$rootScope', 'AuthService', '$state', '$stateParams', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFiltro, Api, ngSelects)
 {
@@ -30,6 +30,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
                     $scope.campos.id = data.results[0].id;
                     $scope.campos.limMes = data.results[0].limM;
                     $scope.campos.limTot = data.results[0].limT;
+                    $scope.campos.limCota = data.results[0].limCota;
                 }
                 else
                     toastr.error('matrícula inválida', 'Erro');
@@ -55,18 +56,16 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 
     $scope.confirmar = function ()
     {
-        $scope.limMes_fail = invalidCheck($scope.campos.limMes);
-        $scope.limTot_fail = invalidCheck($scope.campos.limTot);
-
-        if (!$scope.limMes_fail &&
-            !$scope.limTot_fail)
+        $scope.novaCota_fail = invalidCheck($scope.campos.novaCota);
+        
+        if (!$scope.limCota_fail)
         {
             $scope.loading = true;
 
             var opcoes = {
                 id: $scope.campos.id,
-                modo: 'altLim',
-                valor: $scope.campos.limMes + "|" + $scope.campos.limTot
+                modo: 'altCota',
+                valor: $scope.campos.novaCota
             };
 
             $scope.modal = false;
@@ -74,7 +73,20 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
             Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data)
             {
                 $scope.modal = true;                
-                $scope.loading = false;
+                $scope.loading = false;  
+
+                $scope.campos.novaCota = '';
+
+                var opcoes = { matricula: $scope.campos.mat };
+
+                Api.EmissoraCartao.listPage(opcoes, function (data) {
+                    if (data.results.length > 0) {
+                        $scope.campos.limCota = data.results[0].limCota;
+                    }
+                },
+                function (response) {
+                    $scope.loading = false;
+                });
             },
             function (response) {
                 toastr.error(response.data.message, 'Erro');
@@ -84,7 +96,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
     }
 
     $scope.fecharModal = function () {
-        $scope.modal = false;
+        $scope.modal = false;        
     }
 
 }]);

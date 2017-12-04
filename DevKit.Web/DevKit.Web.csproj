@@ -246,9 +246,13 @@
     <Content Include="app\associado\ExtratosController.js" />
     <Content Include="app\associado\LojistasAssociadoController.js" />
     <Content Include="app\associado\LimitesController.js" />
+    <Content Include="app\emissora\altCota.html" />
+    <Content Include="app\emissora\altSegVia.html" />
     <Content Include="app\emissora\altDesbloq.html" />
     <Content Include="app\emissora\altBloq.html" />
     <Content Include="app\emissora\altLimite.html" />
+    <Content Include="app\emissora\EmissoraAltCota.js" />
+    <Content Include="app\emissora\EmissoraAltSegVia.js" />
     <Content Include="app\emissora\EmissoraAltDesbloq.js" />
     <Content Include="app\emissora\EmissoraAltBloq.js" />
     <Content Include="app\emissora\EmissoraAltLimite.js" />
@@ -862,9 +866,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="proc\Base\Saldo.cs" />
-    <Compile Include="proc\Combos\ClientComboCtrl.cs" />
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
+    <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraCartaoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaMensagensCtrl.cs" />
@@ -873,7 +877,7 @@
     <Compile Include="proc\Domains\Entidades\LojaCtrl.cs" />
     <Compile Include="proc\Domains\Combos\ExpedicoesCtrl.cs" />
     <Compile Include="proc\Domains\Combos\SituacoesCtrl.cs" />
-    <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
+    <Compile Include="proc\Domains\Combos\OrdemEmissorManutCartoesCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\GLDemonstrativoCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\LojistasAssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelLojistaTransCtrl.cs" />

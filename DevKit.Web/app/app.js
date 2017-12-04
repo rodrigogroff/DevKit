@@ -44,7 +44,9 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('empManutCartao', { url: '/emissora/manutCartao/:id', templateUrl: 'app/emissora/novoCartao.html', controller: 'EmissoraNovoCartaoController' })
     .state('empListagemCartao', { url: '/emissora/listagemCartao', templateUrl: 'app/emissora/listagemCartao.html', controller: 'EmissoraListagemCartaoController' })
     .state('empAltSenha', { url: '/emissora/altsenha', templateUrl: 'app/emissora/altSenha.html', controller: 'EmissoraAltSenhaController' })
+    .state('empAltSegVia', { url: '/emissora/altsegvia', templateUrl: 'app/emissora/altSegVia.html', controller: 'EmissoraAltSegViaController' })
     .state('empAltLim', { url: '/emissora/altlim', templateUrl: 'app/emissora/altLimite.html', controller: 'EmissoraAltLimiteController' })
+    .state('empAltCota', { url: '/emissora/altCota', templateUrl: 'app/emissora/altCota.html', controller: 'EmissoraAltCotaController' })
     .state('empAltBloq', { url: '/emissora/altBloq', templateUrl: 'app/emissora/altBloq.html', controller: 'EmissoraAltBloqueioController' })
     .state('empAltDesbloq', { url: '/emissora/altDesbloq', templateUrl: 'app/emissora/altDesbloq.html', controller: 'EmissoraAltDesbloqueioController' })
 

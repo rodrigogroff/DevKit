@@ -5,6 +5,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 {
     $rootScope.exibirMenu = true;
     $scope.loading = false;
+    $scope.modal = false;
 
     $scope.campos = {
         mat: '',
@@ -46,14 +47,26 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
             modo: 'altDesbloq',
         };
 
-        Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data) {
-            toastr.success('Cartão desbloqueado!', 'Sucesso');
+        $scope.modal = false;
+
+        Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data)
+        {
+            $scope.campos.mat = '';
+            $scope.campos.nomeCartao = '';
+            $scope.campos.situacao = '';
+            $scope.campos.id = 0;
+            $scope.modal = true;
+
             $scope.loading = false;
         },
         function (response) {
             toastr.error(response.data.message, 'Erro');
             $scope.loading = false;
         });
+    }
+
+    $scope.fecharModal = function () {
+        $scope.modal = false;
     }
 
 }]);

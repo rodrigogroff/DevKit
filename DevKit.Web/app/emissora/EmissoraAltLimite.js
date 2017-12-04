@@ -5,6 +5,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 {
     $rootScope.exibirMenu = true;
     $scope.loading = false;
+    $scope.modal = false;
 
     $scope.campos = {
         mat: '',
@@ -42,13 +43,28 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         }
     }
 
+    var invalidCheck = function (element) {
+        if (element == undefined)
+            return true;
+        else
+            if (element.length == 0)
+                return true;
+
+        return false;
+    }
+
     $scope.confirmar = function ()
     {
-        $scope.limMes_fail = invalidCheck($scope.viewModel.limMes);
-        $scope.limTot_fail = invalidCheck($scope.viewModel.limTot);
+        console.log('xx');
 
-        if (!$scope.limMes_fail && $scope.limTot_fail)
+        $scope.limMes_fail = invalidCheck($scope.campos.limMes);
+        $scope.limTot_fail = invalidCheck($scope.campos.limTot);
+
+        if (!$scope.limMes_fail &&
+            !$scope.limTot_fail)
         {
+            console.log('xa');
+
             $scope.loading = true;
 
             var opcoes = {
@@ -57,15 +73,22 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
                 valor: $scope.campos.limMes + "|" + $scope.campos.limTot
             };
 
-            Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data) {
-                toastr.success('Limites atualizados!', 'Sucesso');
+            $scope.modal = false;
+
+            Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data)
+            {
+                $scope.modal = true;                
                 $scope.loading = false;
             },
-                function (response) {
-                    toastr.error(response.data.message, 'Erro');
-                    $scope.loading = false;
-                });
+            function (response) {
+                toastr.error(response.data.message, 'Erro');
+                $scope.loading = false;
+            });
         }
+    }
+
+    $scope.fecharModal = function () {
+        $scope.modal = false;
     }
 
 }]);

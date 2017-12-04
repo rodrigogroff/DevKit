@@ -5,6 +5,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 {
     $rootScope.exibirMenu = true;
     $scope.loading = false;
+    $scope.modal = false;
 
     $scope.campos = {
         mat: '',
@@ -41,6 +42,16 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         }        
     }
 
+    var invalidCheck = function (element) {
+        if (element == undefined)
+            return true;
+        else
+            if (element.length == 0)
+                return true;
+
+        return false;
+    }
+
     $scope.confirmar = function ()
     {
         $scope.senha_fail = invalidCheck($scope.campos.novaSenha);
@@ -64,8 +75,15 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
                 valor: $scope.campos.novaSenha
             };
 
-            Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data) {
-                toastr.success('Cartão Atualizado!', 'Sucesso');
+            $scope.modal = false;
+
+            Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data)
+            {
+                $scope.campos.mat = '';
+                $scope.campos.nomeCartao = '';
+                $scope.campos.novaSenha = '';
+                $scope.campos.id = 0;
+                $scope.modal = true;
                 $scope.loading = false;
             },
             function (response) {
@@ -73,6 +91,10 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
                 $scope.loading = false;
             });
         }        
+    }
+
+    $scope.fecharModal = function () {
+        $scope.modal = false;
     }
 
 }]);

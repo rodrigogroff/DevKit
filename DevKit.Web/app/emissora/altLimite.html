@@ -5,7 +5,7 @@
             <table style="color:white; width:100%">
                 <tr>
                     <td width="20px"></td>
-                    <td >Alteração de <b>Senha</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td >Alteração de <b>Limites financeiros</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
                 </tr>
                 <tr height="12px"></tr>
             </table>
@@ -72,4 +72,22 @@
             <br />
         </div>
     </section>
+</div>
+
+<div class="modal-backdrop"
+     ng-if="modal == true"
+     style="background: rgba(55, 55, 55, 0.5 );">
+    <div class="modal-dialog" style="width:500px">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="modal-content" style="color:black">
+            <h3>Limites alterados com sucesso!</h3>
+            <br />
+            <br />
+            <button class="btn btn-info" ng-click="fecharModal()">Fechar</button>
+            <br />
+        </div>
+    </div>
 </div>

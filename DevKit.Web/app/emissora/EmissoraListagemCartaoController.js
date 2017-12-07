@@ -4,8 +4,9 @@ angular.module('app.controllers').controller('EmissoraListagemCartaoController',
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
     $rootScope.exibirMenu = true;
-
     $scope.loading = false;
+
+    $scope.itensporpagina = 15;
 
     $scope.campos = {
         idSit: '',
@@ -15,11 +16,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         
     $scope.situacoes = ngSelects.obterConfiguracao(Api.SituacoesCombo, { tamanhoPagina: 15 });
     $scope.expedicoes = ngSelects.obterConfiguracao(Api.ExpedicoesCombo, { tamanhoPagina: 15 });
-
     $scope.ordem = ngSelects.obterConfiguracao(Api.OrdemEmissorManutCartoes, { tamanhoPagina: 15 });
-
-    $scope.itensporpagina = 15;
-
+    
     init();
 
     function init()
@@ -86,26 +84,24 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.limTot_fail = invalidCheck($scope.cartaoSelecionado.limT);
 
         if (!$scope.limMes_fail &&
-            !$scope.limTot_fail) {
+            !$scope.limTot_fail)
+        {
             $scope.loading = true;
 
             var opcoes = {
-                id: $scope.campos.id,
+                id: $scope.cartaoSelecionado.id,
                 modo: 'altLim',
                 valor: $scope.cartaoSelecionado.limM + "|" + $scope.cartaoSelecionado.limT
             };
 
             $scope.modal = false;
 
-            Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data) {
-                $scope.modal = true;
-                $scope.loading = false;
-
-                $scope.list = undefined;
-                $scope.total = undefined;
-
+            Api.EmissoraCartao.update({ id: $scope.cartaoSelecionado.id }, opcoes, function (data)
+            {
+                toastr.success('Limite alterado com sucesso', 'Sucesso');
             },
-            function (response) {
+            function (response)
+            {
                 toastr.error(response.data.message, 'Erro');
                 $scope.loading = false;
             });

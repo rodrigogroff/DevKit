@@ -58,7 +58,58 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     }
 
     $scope.show = function (mdl) {
-        $state.go('empManutCartao', { id: mdl.id });
+        $scope.cartaoSelecionado = mdl;
+        $scope.modal = true;
+    }
+
+    $scope.editar = function () {
+        $state.go('empManutCartao', { id: $scope.cartaoSelecionado.id });
+    }
+
+    $scope.fecharModal = function () {
+        $scope.modal = false;
+    }
+
+    var invalidCheck = function (element) {
+        if (element == undefined)
+            return true;
+        else
+            if (element.length == 0)
+                return true;
+
+        return false;
+    }
+
+    $scope.confirmar = function ()
+    {
+        $scope.limMes_fail = invalidCheck($scope.cartaoSelecionado.limM);
+        $scope.limTot_fail = invalidCheck($scope.cartaoSelecionado.limT);
+
+        if (!$scope.limMes_fail &&
+            !$scope.limTot_fail) {
+            $scope.loading = true;
+
+            var opcoes = {
+                id: $scope.campos.id,
+                modo: 'altLim',
+                valor: $scope.cartaoSelecionado.limM + "|" + $scope.cartaoSelecionado.limT
+            };
+
+            $scope.modal = false;
+
+            Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data) {
+                $scope.modal = true;
+                $scope.loading = false;
+
+                $scope.list = undefined;
+                $scope.total = undefined;
+
+            },
+            function (response) {
+                toastr.error(response.data.message, 'Erro');
+                $scope.loading = false;
+            });
+        }
     }
 
 }]);

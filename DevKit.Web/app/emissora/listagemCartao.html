@@ -1,16 +1,16 @@
 ﻿<div class="webFormPostion" style="width:99%">
-	<section class="widgetForm" style="width:95%">
-		<legend class="legendTop">
-			<table><tr height="12px"><td> </td></tr></table>
-			<table style="color:white; width:100%">
-				<tr>
-					<td width="20px"></td>
-					<td>Manutenção de <b>Cartões convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-				</tr>
-				<tr height="12px"></tr>
-			</table>
-		</legend>
-		<div class="divWebForm" style="max-width:95%;min-width:95%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Manutenção de <b>Cartões convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
             <table class="widget" style="color: white">
                 <tr height="22px"> </tr>
                 <tr height="43px">
@@ -18,19 +18,19 @@
                     <td width="150px"><b>Nome Associado</b></td>
                     <td width="120px">
                         <input type="text" focus="true"
-                                class="form-control input-transparent"
-                                ng-model="campos.nome" />
+                               class="form-control input-transparent"
+                               ng-model="campos.nome" />
                     </td>
                     <td width="20px"></td>
                     <td width="150px"><b>Situação</b></td>
                     <td width="120px">
                         <input type="hidden" style="width:100%"
-                               placeholder="(Todos)" 
-                               ui-select2="situacoes" 
+                               placeholder="(Todos)"
+                               ui-select2="situacoes"
                                ng-model="campos.idSit" />
                     </td>
                     <td width="20px"></td>
-                    <td width="200px" align="right"> 
+                    <td width="200px" align="right">
                         <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
                     </td>
                     <td width="20px"></td>
@@ -39,28 +39,28 @@
                     <td></td>
                     <td><b>Matrícula</b></td>
                     <td>
-                        <input type="text" 
-                                class="form-control input-transparent"
-                                ng-model="campos.matricula" />
+                        <input type="text"
+                               class="form-control input-transparent"
+                               ng-model="campos.matricula" />
                     </td>
                     <td></td>
                     <td> <b>Expedição</b> </td>
                     <td>
-                        <input type="hidden" style="width:100%" 
-                               placeholder="(Todos)" 
+                        <input type="hidden" style="width:100%"
+                               placeholder="(Todos)"
                                ui-select2="expedicoes"
                                ng-model="campos.idExp" />
                     </td>
-                </tr>                            
+                </tr>
                 <tr height="43px">
                     <td></td>
                     <td><b>CPF</b></td>
                     <td>
-                        <input type="text" 
-                                class="form-control input-transparent"
-                                ng-model="campos.cpf" />
+                        <input type="text"
+                               class="form-control input-transparent"
+                               ng-model="campos.cpf" />
                     </td>
-                </tr>                            
+                </tr>
                 <tr height="12px"></tr>
                 <tr>
                     <td></td>
@@ -102,9 +102,9 @@
                                             <th>Disp. Total</th>
                                         </tr>
                                     </thead>
-                                    <tr ng-click="show(mdl)" 
+                                    <tr ng-click="show(mdl)"
                                         style="background-color:{{mdl.colorBack}}"
-                                        data-ng-repeat="mdl in list" >
+                                        data-ng-repeat="mdl in list">
                                         <td style="min-width:320px;color:{{mdl.colorFront}}">{{ mdl.cartaoTitVia }}<br /><b>{{ mdl.associado }}</b></td>
                                         <td style="min-width:150px;color:{{mdl.colorFront}}">{{ mdl.cpf }}</td>
                                         <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.dtInicial }}</td>
@@ -116,9 +116,9 @@
                                         <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.dispM }}</td>
                                         <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.dispT }}</td>
                                     </tr>
-                                </table>                                
+                                </table>
                             </div>
-                            
+
                         </td>
                     </tr>
                 </table>
@@ -131,4 +131,93 @@
     <br />
     <br />
     <br />
+</div>
+
+<div class="modal-backdrop"
+     ng-if="modal == true"
+     style="background: rgba(55, 55, 55, 0.5 );">
+    <div class="modal-dialog" style="width:500px">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="modal-content" style="color:black">
+            <table>
+                <tr>
+                    <td width="350px">
+                        <h3>Alterar limites do cartão</h3>
+                    </td>
+                    <td width="20px"></td>
+                    <td style="padding-top:12px">
+                        <button class="btn btn-info" ng-click="editar()">Editar cartão</button>
+                    </td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>     
+            <table class="widgetForm" style="color:black">
+                <tr height="12px"> </tr>
+                <tr height="43px">
+                    <td width="20px"></td>
+                    <td width="130px">
+                        <b>Matrícula</b>
+                    </td>
+                    <td width="20px"></td>
+                    <td width="320px">
+                        {{cartaoSelecionado.cartaoTitVia}}
+                    </td>
+                    <td width="20px"></td>
+                </tr>
+                <tr height="43px">
+                    <td></td>
+                    <td>
+                        <b>Associado</b>
+                    </td>
+                    <td></td>
+                    <td>
+                        <b>{{cartaoSelecionado.associado}}</b>
+                    </td>
+                    <td></td>                    
+                </tr>
+                <tr height="43px">
+                    <td></td>
+                    <td> <b>Limite Mensal</b></td>
+                    <td> <button class="btn btn-xs btn-danger" ng-show="limMes_fail">!</button></td>
+                    <td>
+                        <input type="text"
+                               class="form-control input-transparent"
+                               maxlength="12"
+                               ng-model="cartaoSelecionado.limM" />
+                    </td>
+                    <td></td>                    
+                </tr>
+                <tr height="43px">
+                    <td></td>
+                    <td> <b>Limite Total</b></td>
+                    <td> <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button></td>
+                    <td>
+                        <input type="text"
+                               class="form-control input-transparent"
+                               maxlength="12"
+                               ng-model="cartaoSelecionado.limT" />
+                    </td>
+                    <td></td>                    
+                </tr>
+                <tr height="22px"> </tr>
+            </table>
+            <br />
+            <br />
+            <table>
+                <tr>
+                    <td>
+                        <button class="btn btn-default" ng-click="fecharModal()">Cancelar</button>
+                    </td>
+                    <td width="20px"></td>
+                    <td>
+                        <button class="btn btn-info" ng-click="confirmar()">Alterar limites</button>
+                    </td>
+                </tr>                
+            </table>            
+            <br />
+        </div>
+    </div>
 </div>

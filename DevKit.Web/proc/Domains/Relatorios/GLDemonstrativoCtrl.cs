@@ -88,8 +88,8 @@ namespace DevKit.Web.Controllers
 
                             foreach (var convenioAtual in listConvenios)
                             {
-                                if (convenioAtual.fk_empresa == 11) // convey testes
-                                    continue;
+                               // if (convenioAtual.fk_empresa == 11) // convey testes
+                                 //   continue;
 
                                 var tEmpresa = (from e in db.T_Empresa
                                                 where e.i_unique == convenioAtual.fk_empresa
@@ -217,8 +217,8 @@ namespace DevKit.Web.Controllers
 
                                 foreach (var convenioAtual in listConvenios)
                                 {
-                                    if (convenioAtual.fk_empresa == 11) // convey testes
-                                        continue;
+                                //    if (convenioAtual.fk_empresa == 11) // convey testes
+                                   //     continue;
 
                                     var tEmpresa = (from e in db.T_Empresa
                                                     where e.i_unique == convenioAtual.fk_empresa
@@ -472,8 +472,8 @@ namespace DevKit.Web.Controllers
 
                             foreach (var convenioAtual in listConvenios)
                             {
-                                if (convenioAtual.fk_empresa == 11) // convey testes
-                                    continue;
+                                //if (convenioAtual.fk_empresa == 11) // convey testes
+                                  //  continue;
 
                                 var tEmpresa = (from e in db.T_Empresa
                                                 where e.i_unique == convenioAtual.fk_empresa
@@ -543,8 +543,8 @@ namespace DevKit.Web.Controllers
 
                                 foreach (var convenioAtual in listConvenios)
                                 {
-                                    if (convenioAtual.fk_empresa == 11) // convey testes
-                                        continue;
+                                    //if (convenioAtual.fk_empresa == 11) // convey testes
+                                      //  continue;
 
                                     var tEmpresa = (from e in db.T_Empresa
                                                     where e.i_unique == convenioAtual.fk_empresa

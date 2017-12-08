@@ -95,6 +95,33 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         }
     }
 
+    $scope.confirmarTodos = function ()
+    {
+        $scope.novaCota_fail = invalidCheck($scope.campos.novaCota);
+
+        if (!$scope.limCota_fail)
+        {
+            $scope.loading = true;
+
+            var opcoes = {
+                id: $scope.campos.id,
+                modo: 'altCotaGeral',
+                valor: $scope.campos.novaCota
+            };
+
+            $scope.modal = false;
+
+            Api.EmissoraCartao.update({ id: 1 }, opcoes, function (data) {
+                $scope.modal = true;
+                $scope.loading = false;
+            },
+                function (response) {
+                    toastr.error(response.data.message, 'Erro');
+                    $scope.loading = false;
+                });
+        }
+    }
+
     $scope.fecharModal = function () {
         $scope.modal = false;        
     }

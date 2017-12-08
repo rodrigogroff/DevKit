@@ -373,6 +373,35 @@ namespace DevKit.Web.Controllers
 
             var st_empresa = userLoggedEmpresa;
 
+            if (mdl.modo == "altCotaGeral")
+            {
+                if (mdl.valor.Length == 0)
+                    return BadRequest("Informe a cota extra corretamente!");
+
+                var lst = (from e in db.T_Cartao
+                           where e.st_empresa == st_empresa
+                           select e).
+                           ToList();
+
+                foreach (var _cart in lst)
+                {
+                    _cart.vr_extraCota = (int)ObtemValor(mdl.valor);
+
+                    db.Update(_cart);
+
+                    db.Insert(new LOG_Audit
+                    {
+                        tg_operacao = Convert.ToInt32(TipoOperacao.CotaExtraMensal),
+                        fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                        dt_operacao = DateTime.Now,
+                        st_observacao = "",
+                        fk_generic = (int)_cart.i_unique
+                    });
+                }
+
+                return Ok();
+            }
+            
             var cart = (from e in db.T_Cartao
                         where e.i_unique == Convert.ToInt32(mdl.id)
                         select e).
@@ -459,7 +488,7 @@ namespace DevKit.Web.Controllers
 
                         return Ok();
                     }
-
+                    
                 case "altBloq":
                     {
                         cart.tg_status = Convert.ToChar(CartaoStatus.Bloqueado);

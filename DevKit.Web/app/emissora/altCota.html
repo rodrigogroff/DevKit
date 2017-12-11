@@ -1,5 +1,5 @@
 ﻿<div class="webFormPostion">
-    <section class="widgetForm" style="width:680px">
+    <section class="widgetForm" style="width:780px">
         <legend class="legendTop">
             <table><tr height="12px"><td> </td></tr></table>
             <table style="color:white; width:100%">
@@ -100,23 +100,64 @@
 
             <!--total-->
             <div ng-if="tipoCota == 2">
-                <table>
-                    <tr height="12px"></tr>
-                    <tr height="43px">
-                        <td width="130px"> <b>Cota Extra geral</b></td>
-                        <td width="20px"> <button class="btn btn-xs btn-danger" ng-show="novaCota_fail">!</button></td>
-                        <td width="120px">
-                            <input type="text"
-                                   class="form-control input-transparent"
-                                   maxlength="12"
-                                   ng-model="campos.novaCota" />
 
+                <br />
+                <table >
+                    <tr>
+                        <td>
+                            <button class="btn btn-primary" ng-click="listar()">Listar associados</button><br />
+                        </td>
+                        <td width="20px"></td>
+                        <td ng-if="list != undefined">
+                            <button class="btn btn-default" ng-click="marcarTodos()">Marcar todos</button><br />
+                        </td>
+                        <td width="20px"></td>
+                        <td ng-if="list != undefined">
+                            <button class="btn btn-default" ng-click="desmarcarTodos()">Desmarcar todos</button><br />
                         </td>
                     </tr>
                 </table>
                 <br />
-                <br />
-                <button class="btn btn-primary" ng-click="confirmarTodos()">Alterar cota-extra</button>
+
+                <!--lista-->
+                <div ng-if="list.length > 0" style="width:400px">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="min-width:120px;">Cartão.TIT.Via</th>
+                                <th style="min-width:320px;">Associado</th>
+                                <th style="min-width:70px;">Cota</th>
+                                <th style="min-width:100px;">Selecionado</th>
+                            </tr>
+                        </thead>
+                        <tr ng-click="marcar(mdl)" data-ng-repeat="mdl in list">
+                            <td>{{ mdl.cartaoTitVia }} </td>
+                            <td>
+                                <span ng-if="mdl.selecionado == true">{{ mdl.associado }}</span>
+                                <span ng-if="mdl.selecionado == false" style="background-color:white;color:black"><b>{{ mdl.associado }}</b></span>
+                            </td>
+                            <td>{{ mdl.limCota }} </td>
+                            <td>{{ mdl.selecionado == true ? 'Sim' : 'Não' }} </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr height="12px"></tr>
+                        <tr height="43px">
+                            <td width="130px"> <b>Cota Extra geral</b></td>
+                            <td width="20px"> <button class="btn btn-xs btn-danger" ng-show="novaCota_fail">!</button></td>
+                            <td width="120px">
+                                <input type="text"
+                                       class="form-control input-transparent"
+                                       maxlength="12"
+                                       ng-model="campos.novaCota" />
+
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <button ng-if="list.length > 0" class="btn btn-primary" ng-click="confirmarTodos()">Alterar cota-extra</button>
+                </div>
+
                 <br />
                 <br />
                 <br />
@@ -125,6 +166,11 @@
         </div>
     </section>
 </div>
+
+<br />
+<br />
+<br />
+<br />
 
 <div class="modal-backdrop"
      ng-if="modal == true"
@@ -139,6 +185,28 @@
             <br />
             <br />
             <button class="btn btn-info" ng-click="fecharModal()">Fechar</button>
+            <br />
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop"
+     ng-if="modalConf == true"
+     style="background: rgba(55, 55, 55, 0.5 );">
+    <div class="modal-dialog" style="width:500px">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="modal-content" style="color:black">
+            <h3>Alteração de cota extra</h3>
+            Confirmar alteração de cota extra de todos os cartões selecionados?<br />
+            <br />
+            <br />
+            <br />
+            <button class="btn btn-default" ng-click="cancelarModalConf()">Cancelar</button>
+            &nbsp;&nbsp;&nbsp;
+            <button class="btn btn-info" ng-click="fecharModalConf()">Confirmar</button>
             <br />
         </div>
     </div>

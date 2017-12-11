@@ -6,6 +6,8 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
     $rootScope.exibirMenu = true;
     $scope.loading = false;
     $scope.modal = false;
+    $scope.modalConf = false;
+    $scope.confirmado = false;
 
     $scope.campos = {
         mat: '',
@@ -95,35 +97,93 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         }
     }
 
-    $scope.confirmarTodos = function ()
+    $scope.listar = function ()
     {
+        $scope.confirmado = false;
+        $scope.loading = true;
+
+        var opcoes = { skip: 0, take: 9000, cota: true, idOrdem: 1 };
+
+        Api.EmissoraCartao.listPage(opcoes, function (data)
+        {
+            $scope.list = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        });
+    }
+
+    $scope.marcarTodos = function ()
+    {
+        for (var i = 0; i < $scope.list.length; i++) {
+            $scope.list[i].selecionado = true;
+        }
+    }
+
+    $scope.desmarcarTodos = function () {
+        for (var i = 0; i < $scope.list.length; i++) {
+            $scope.list[i].selecionado = false;
+        }
+    }
+
+    $scope.marcar = function (mdl)
+    {
+        mdl.selecionado = !mdl.selecionado;
+    }
+
+    $scope.confirmarTodos = function () {
         $scope.novaCota_fail = invalidCheck($scope.campos.novaCota);
 
-        if (!$scope.limCota_fail)
-        {
-            $scope.loading = true;
-
-            var opcoes = {
-                id: $scope.campos.id,
-                modo: 'altCotaGeral',
-                valor: $scope.campos.novaCota
-            };
-
-            $scope.modal = false;
-
-            Api.EmissoraCartao.update({ id: 1 }, opcoes, function (data) {
-                $scope.modal = true;
-                $scope.loading = false;
-            },
-                function (response) {
-                    toastr.error(response.data.message, 'Erro');
-                    $scope.loading = false;
-                });
+        if (!$scope.novaCota_fail) {
+            if (!$scope.confirmado) {
+                $scope.modalConf = true;
+                return;
+            }
         }
+    }
+
+    $scope.confirmarGeral = function ()
+    {
+        $scope.loading = true;
+
+        var array = '';
+
+        for (var i = 0; i < $scope.list.length; i++) 
+            if ($scope.list[i].selecionado == true) 
+                array += $scope.list[i].matricula + ',';
+
+        var opcoes = {
+            id: $scope.campos.id,
+            modo: 'altCotaGeral',
+            valor: $scope.campos.novaCota,
+            array: array
+        };
+
+        $scope.modal = false;
+
+        Api.EmissoraCartao.update({ id: 1 }, opcoes, function (data) {
+            $scope.modal = true;
+            $scope.loading = false;
+            $scope.list = undefined;
+            $scope.campos.novaCota = undefined;
+        },
+        function (response) {
+            toastr.error(response.data.message, 'Erro');
+            $scope.loading = false;
+        });
     }
 
     $scope.fecharModal = function () {
         $scope.modal = false;        
+    }
+
+    $scope.fecharModalConf = function () {
+        $scope.modalConf = false;
+        $scope.confirmado = true;
+        $scope.confirmarGeral();        
+    }
+
+    $scope.cancelarModalConf = function () {
+        $scope.modalConf = false;
     }
 
 }]);

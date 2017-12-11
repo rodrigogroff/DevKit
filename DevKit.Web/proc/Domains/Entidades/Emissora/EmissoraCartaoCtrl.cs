@@ -28,7 +28,9 @@ namespace DevKit.Web.Controllers
                         dispT, 
                         limT,
                         colorBack, colorFront,
-                        limCota;   
+                        limCota;
+
+        public bool selecionado;
     }
 
     public class CartaoDTO
@@ -46,7 +48,7 @@ namespace DevKit.Web.Controllers
                         situacao, expedicao,
                         via,
                         uf, cidade, cep, end, numero, bairro,
-                        modo, valor;
+                        modo, valor, array;
     }
 
     public class EmissoraCartaoController : ApiControllerBase
@@ -58,6 +60,8 @@ namespace DevKit.Web.Controllers
             var skip = Request.GetQueryStringValue<int>("skip", 0);
             var take = Request.GetQueryStringValue<int>("take", 1);
             var matricula = Request.GetQueryStringValue("matricula");
+
+            var listagemCota = Request.GetQueryStringValue<bool>("cota", false);
 
             var idSit = Request.GetQueryStringValue<int?>("idSit", null);
             var idExp = Request.GetQueryStringValue<int?>("idExp", null);
@@ -163,7 +167,8 @@ namespace DevKit.Web.Controllers
                 {
                     long dispM = 0, dispT = 0;
 
-                    sd.Obter(db, item, ref dispM, ref dispT);
+                    if (!listagemCota)
+                        sd.Obter(db, item, ref dispM, ref dispT);
 
                     if (item.vr_extraCota == null) item.vr_extraCota = 0;
                     if (item.vr_limiteMensal == null) item.vr_limiteMensal = 0;
@@ -177,34 +182,54 @@ namespace DevKit.Web.Controllers
                         colorFront = "black";
                     }
 
-                    var dtPrimTtrans = (from e in db.LOG_Transacoes
+                    DateTime? dtPrimTtrans = null;
+
+                    if (!listagemCota)
+                        dtPrimTtrans = (from e in db.LOG_Transacoes
                                         where e.fk_cartao == item.i_unique
                                         select e.dt_transacao).
                                         FirstOrDefault();
 
-                    res.Add(new CartaoListagemDTO
+                    if (!listagemCota)
                     {
-                        colorBack = colorBack,
-                        colorFront = colorFront,
-                        id = item.i_unique.ToString(),
-                        via = item.nu_viaCartao.ToString(),
-                        associado = assoc.st_nome,
-                        cartaoTitVia =  item.st_matricula + "." +
-                                        item.st_titularidade + ":" +
-                                        item.nu_viaCartao,
-                        cpf = assoc.st_cpf,
-                        situacao = cs.Convert(item.tg_status),
-                        expedicao = se.Convert(item.tg_emitido),
-                        matricula = item.st_matricula,
-                        dtInicial = item.dt_inclusao != null ? Convert.ToDateTime(item.dt_inclusao).ToString("dd/MM/yyyy") : "",
-                        dtUltExp = dtPrimTtrans != null ? Convert.ToDateTime(dtPrimTtrans).ToString("dd/MM/yyyy") : "",
-                        tit = item.st_titularidade,
-                        limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
-                        limT = mon.setMoneyFormat((long)item.vr_limiteTotal),
-                        limCota = mon.setMoneyFormat((long)item.vr_extraCota),
-                        dispM = mon.setMoneyFormat(dispM),
-                        dispT = mon.setMoneyFormat(dispT),
-                    });
+                        res.Add(new CartaoListagemDTO
+                        {
+                            colorBack = colorBack,
+                            colorFront = colorFront,
+                            id = item.i_unique.ToString(),
+                            via = item.nu_viaCartao.ToString(),
+                            associado = assoc.st_nome,
+                            cartaoTitVia = item.st_matricula + "." +
+                                            item.st_titularidade + ":" +
+                                            item.nu_viaCartao,
+                            cpf = assoc.st_cpf,
+                            situacao = cs.Convert(item.tg_status),
+                            expedicao = se.Convert(item.tg_emitido),
+                            matricula = item.st_matricula,
+                            dtInicial = item.dt_inclusao != null ? Convert.ToDateTime(item.dt_inclusao).ToString("dd/MM/yyyy") : "",
+                            dtUltExp = dtPrimTtrans != null ? Convert.ToDateTime(dtPrimTtrans).ToString("dd/MM/yyyy") : "",
+                            tit = item.st_titularidade,
+                            limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
+                            limT = mon.setMoneyFormat((long)item.vr_limiteTotal),
+                            limCota = mon.setMoneyFormat((long)item.vr_extraCota),
+                            dispM = mon.setMoneyFormat(dispM),
+                            dispT = mon.setMoneyFormat(dispT),
+                        });
+                    }
+                    else
+                    {
+                        res.Add(new CartaoListagemDTO
+                        {
+                            id = item.i_unique.ToString(),
+                            associado = assoc.st_nome,
+                            matricula = item.st_matricula,
+                            limCota = mon.setMoneyFormat((long)item.vr_extraCota),
+                            cartaoTitVia = item.st_matricula + "." +
+                                            item.st_titularidade + ":" +
+                                            item.nu_viaCartao,
+                            selecionado = false,
+                        });
+                    }
                 }
             }
 
@@ -378,11 +403,14 @@ namespace DevKit.Web.Controllers
                 if (mdl.valor.Length == 0)
                     return BadRequest("Informe a cota extra corretamente!");
 
+                var mats = mdl.array.TrimEnd(',').Split(',');
+
                 var lst = (from e in db.T_Cartao
                            where e.st_empresa == st_empresa
+                           where mats.Contains (e.st_matricula)
                            select e).
                            ToList();
-
+                
                 foreach (var _cart in lst)
                 {
                     _cart.vr_extraCota = (int)ObtemValor(mdl.valor);

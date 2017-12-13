@@ -43,14 +43,25 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             ano: $scope.campos.ano_inicial,
         };
 
-        Api.EmissoraFechamento.listPage(opcoes, function (data)
-        {
-            $scope.list = data.results;
-            $scope.totalFechamento = data.totalFechamento;
-            $scope.totalCartoes = data.totalCartoes;
-            $scope.convenio = data.convenio;
-            $scope.loading = false;
-        });
+        if ($scope.tipoFech == '1') {
+            Api.EmissoraFechamento.listPage(opcoes, function (data) {
+                $scope.list = data.results;
+                $scope.totalFechamento = data.totalFechamento;
+                $scope.totalCartoes = data.totalCartoes;
+                $scope.convenio = data.convenio;
+                $scope.loading = false;
+            });
+        }
+        else if ($scope.tipoFech == '2') {
+            Api.EmissoraFechamento.listPage(opcoes, function (data) {
+                $scope.list = data.results;
+                $scope.totalFechamento = data.totalFechamento;
+                $scope.totalRepasse = data.totalRepasse;
+                $scope.totalLojistas = data.totalLojistas;
+                $scope.convenio = data.convenio;
+                $scope.loading = false;
+            });
+        }
     }
 
     $scope.imprimir = function ()
@@ -75,8 +86,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 var mdl = $scope.list[i];
 
                 printContents += "<br>Fechamento para: <b>" + mdl.associado + "</b> , Matrícula: " + mdl.matricula + "<br />";
-
-                printContents += "<table><thead><tr><th align='left'>Estabelecimento</th><th align='left'>Data compra</th><th align='left'>Valor</th><th align='left'>Parcela</th></tr></thead>";
+                printContents += "<table><thead><tr><th align='left'>Estabelecimento</th><th align='left'>Data compra</th><th align='left'>Valor Parcela</th><th align='left'>Parcela</th></tr></thead>";
 
                 for (var t = 0; t < mdl.vendas.length; ++t)
                 {

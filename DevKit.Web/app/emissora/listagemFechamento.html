@@ -61,7 +61,7 @@
                                             Convênio:<b> {{convenio}}</b><br />
                                             Período: <b> {{campos.mes_inicial}} / {{campos.ano_inicial}}</b><br />
                                             Total fechamento: <b>R$ {{totalFechamento}}</b><br />
-                                            Total cartões: <b> {{totalCartoes}}</b><br />
+                                            Quantidade cartões: <b> {{totalCartoes}}</b><br />
                                         </td>
                                         <td width="20px"></td>
                                         <td width="120px" valign="top">
@@ -69,7 +69,7 @@
                                             <button class="btn btn-success" ng-click="imprimir()">Imprimir</button>
                                         </td>
                                     </tr>
-                                </table>                                
+                                </table>
                                 <br />
                                 <div data-ng-repeat="mdl in list">
                                     <div class="widget" style="color:white">
@@ -80,7 +80,7 @@
                                                 <tr>
                                                     <th>Estabelecimento</th>
                                                     <th>Data compra</th>
-                                                    <th>Valor venda</th>
+                                                    <th>Valor parcela</th>
                                                     <th>Parcela</th>
                                                 </tr>
                                             </thead>
@@ -92,6 +92,73 @@
                                             </tr>
                                         </table>
                                         Total cartão: <b>R$ {{mdl.total}}</b><br />
+                                        <br />
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+                            <br />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="overflow-x:scroll;overflow:auto;" ng-if="tipoFech == 2">
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div ng-show="list.length == 0">
+                                <br />
+                                <br />
+                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="list.length > 0">
+                                <table>
+                                    <tr>
+                                        <td width="320px" valign="top" style="padding-left:20px">
+                                            <h3>ConveyNET Benefícios</h3>
+                                            Convênio:<b> {{convenio}}</b><br />
+                                            Período: <b> {{campos.mes_inicial}} / {{campos.ano_inicial}}</b><br />
+                                            Total fechamento: <b>R$ {{totalFechamento}}</b><br />
+                                            Total repasse: <b>R$ {{totalRepasse}}</b><br />
+                                            Quantidade lojistas: <b> {{totalLojistas}}</b><br />
+                                        </td>
+                                        <td width="20px"></td>
+                                        <td width="120px" valign="top">
+                                            <br />
+                                            <button class="btn btn-success" ng-click="imprimir()">Imprimir</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <div data-ng-repeat="mdl in list">
+                                    <div class="widget" style="color:white">
+                                        Fechamento para: <b>{{mdl.lojista}} ({{mdl.sigla}})</b>, Endereço: {{mdl.endereco}} <br />
+                                        <br />
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Associado</th>
+                                                    <th>Matricula</th>
+                                                    <th>Data compra</th>
+                                                    <th>Valor </th>
+                                                    <th>Parcela</th>
+                                                    <th>Repasse</th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="tr in mdl.vendas">
+                                                <td style="min-width:300px;">{{ tr.associado }}</td>
+                                                <td style="min-width:70px;">{{ tr.matricula }}</td>
+                                                <td style="min-width:120px;">{{ tr.dtCompra }}</td>
+                                                <td style="min-width:90px;">{{ tr.valor }}</td>
+                                                <td style="min-width:90px;">{{ tr.parcela }}</td>
+                                                <td style="min-width:90px;">{{ tr.repasse }}</td>
+                                            </tr>
+                                        </table>
+                                        Total: <b>R$ {{mdl.total}}</b><br />
+                                        Total repasse: <b>R$ {{mdl.repasse}}</b><br />
                                         <br />
                                     </div>
                                 </div>

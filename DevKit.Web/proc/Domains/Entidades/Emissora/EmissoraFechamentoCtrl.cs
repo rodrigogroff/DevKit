@@ -14,7 +14,17 @@ namespace DevKit.Web.Controllers
                       parcela,
                       valor;
     }
-    
+
+    public class FechamentoVendaLoja
+    {
+        public string associado,
+                      matricula,
+                      repasse,
+                      dtCompra,
+                      parcela,
+                      valor;
+    }
+
     public class FechamentoListagemCartao
     {
         public int fkCartao;
@@ -24,6 +34,19 @@ namespace DevKit.Web.Controllers
                       total;
 
         public List<FechamentoVenda> vendas = new List<FechamentoVenda>();
+    }
+
+    public class FechamentoListagemLoja
+    {
+        public int fkLoja, taxa;
+
+        public string lojista,
+                      endereco,
+                      sigla,
+                      total,
+                      repasse;
+
+        public List<FechamentoVendaLoja> vendas = new List<FechamentoVendaLoja>();
     }
 
     public class EmissoraFechamentoController : ApiControllerBase
@@ -41,6 +64,8 @@ namespace DevKit.Web.Controllers
 
             if (tipoFech == "1")
             {
+                #region - code -
+
                 var itensFechamento = (from e in db.LOG_Fechamento
                                        where e.fk_empresa == db.currentEmpresa.i_unique
                                        where e.st_mes == mes
@@ -193,11 +218,184 @@ namespace DevKit.Web.Controllers
                     convenio = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa.TrimStart('0') + ")",
                     results = lst
                 });
+
+                #endregion
             }
             else if (tipoFech == "2")
             {
+                #region - code - 
 
-            }        
+                var itensFechamento = (from e in db.LOG_Fechamento
+                                       where e.fk_empresa == db.currentEmpresa.i_unique
+                                       where e.st_mes == mes
+                                       where e.st_ano == ano
+                                       select e).
+                                      ToList();
+
+                #region - indexamento em memoria -
+
+                #region - cartoes -
+
+                var lstIDsCarts = (from e in itensFechamento
+                                   join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
+                                   select cart.i_unique).
+                                   ToList();
+
+                var lstCartoes = (from e in db.T_Cartao
+                                  where lstIDsCarts.Contains(e.i_unique)
+                                  select e).
+                                  ToList();
+
+                #endregion
+
+                #region - proprietarios -
+
+                var lstIDsProps = (from e in itensFechamento
+                                   join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
+                                   join prop in db.T_Proprietario on cart.fk_dadosProprietario equals (int)prop.i_unique
+                                   select prop.i_unique).
+                                   ToList();
+
+                var lstProprietarios = (from e in db.T_Proprietario
+                                        where lstIDsProps.Contains(e.i_unique)
+                                        select e).
+                                        ToList();
+
+                #endregion
+
+                #region - parcelas -
+
+                var lstIDsParcelas = (from e in itensFechamento
+                                      join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                      select parc.i_unique).
+                                       ToList();
+
+                var lstParcelas = (from e in db.T_Parcelas
+                                   where lstIDsParcelas.Contains(e.i_unique)
+                                   select e).
+                                  ToList();
+
+                #endregion
+
+                #region - lojistas -
+
+                var lstIDsLojistas = (from e in itensFechamento
+                                      join loja in db.T_Loja on e.fk_loja equals (int)loja.i_unique
+                                      select loja.i_unique).
+                                      ToList();
+
+                var lstLojistas = (from e in db.T_Loja
+                                   where lstIDsLojistas.Contains(e.i_unique)
+                                   select e).
+                                  ToList();
+
+                #endregion
+
+                #endregion
+
+                var lst = new List<FechamentoListagemLoja>();
+
+                // ---------------------------------------
+                // ## iterar por todos os lojistas
+                // ---------------------------------------
+
+                var dList = itensFechamento.
+                            Select(y => y.fk_loja).
+                            Distinct().
+                            ToList();
+
+                var finalLojistas = (from e in db.T_Loja
+                                     where dList.Contains((int)e.i_unique)
+                                     orderby e.st_nome
+                                     select e.i_unique).
+                                     ToList();
+
+                foreach (var fkLoja in finalLojistas)
+                {
+                    var t_loja = lstLojistas.
+                                 Where(y => y.i_unique == fkLoja).
+                                 FirstOrDefault();
+
+                    var tr = (from e in db.LINK_LojaEmpresa
+                              where e.fk_empresa == db.currentEmpresa.i_unique
+                              where e.fk_loja == fkLoja
+                              select (int)e.tx_admin).
+                              FirstOrDefault();
+
+                    lst.Add(new FechamentoListagemLoja
+                    {
+                        fkLoja = (int)fkLoja,
+                        lojista = t_loja.st_nome,
+                        endereco = t_loja.st_endereco,
+                        sigla = t_loja.st_loja,
+                        taxa = tr
+                    });
+                }
+
+                long vrTotalFechamento = 0, vrTotalRepasse = 0;
+
+                foreach (var item in lst)
+                {
+                    // -------------------------------------------
+                    // ## iterar por todas as vendas do associado
+                    // -------------------------------------------
+
+                    var lstParcsFechamento = itensFechamento.
+                                             Where(y => y.fk_loja == item.fkLoja).
+                                             ToList();
+
+                    long vrTotal = 0, vrRepasse = 0;
+
+                    foreach (var vendas in lstParcsFechamento)
+                    {
+                        var parc = lstParcelas.
+                                   Where(y => y.i_unique == vendas.fk_parcela).
+                                   FirstOrDefault();
+
+                        var cart = lstCartoes.
+                                   Where(y => y.i_unique == vendas.fk_cartao).
+                                   FirstOrDefault();
+
+                        var prop = lstProprietarios.
+                                   Where(y => y.i_unique == cart.fk_dadosProprietario).
+                                   FirstOrDefault();
+
+                        vrTotal += (long)vendas.vr_valor;
+
+                        var rep = (long)vendas.vr_valor - (long)(vendas.vr_valor * item.taxa / 10000);
+
+                        vrRepasse += rep;
+
+                        item.vendas.Add(new FechamentoVendaLoja
+                        {
+                            associado = prop.st_nome,
+                            matricula = cart.st_matricula,
+                            dtCompra = ObtemData(parc.dt_inclusao),
+                            parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
+                            valor = m.setMoneyFormat((int)parc.vr_valor),
+                            repasse = m.setMoneyFormat((int)rep)
+                        });
+                    }
+
+                    vrTotalFechamento += vrTotal;
+                    vrTotalRepasse += vrRepasse;
+
+                    item.total = m.setMoneyFormat((int)vrTotal);
+                    item.repasse = m.setMoneyFormat((int)vrTotalRepasse);
+                }
+
+                return Ok(new
+                {
+                    count = lst.Count(),
+                    totalFechamento = m.setMoneyFormat((int)vrTotalFechamento),
+                    totalRepasse = m.setMoneyFormat((int)vrTotalRepasse),
+                    totalLojistas = dList.Count(),
+                    convenio = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa.TrimStart('0') + ")",
+                    results = lst
+                });
+
+                #endregion
+            }
 
             return BadRequest();
         }

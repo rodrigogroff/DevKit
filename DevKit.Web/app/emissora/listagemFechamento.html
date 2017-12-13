@@ -54,6 +54,23 @@
                                 <br />
                             </div>
                             <div ng-show="list.length > 0">
+                                <table>
+                                    <tr>
+                                        <td width="320px" valign="top" style="padding-left:20px">
+                                            <h3>ConveyNET Benefícios</h3>
+                                            Convênio:<b> {{convenio}}</b><br />
+                                            Período: <b> {{campos.mes_inicial}} / {{campos.ano_inicial}}</b><br />
+                                            Total fechamento: <b>R$ {{totalFechamento}}</b><br />
+                                            Total cartões: <b> {{totalCartoes}}</b><br />
+                                        </td>
+                                        <td width="20px"></td>
+                                        <td width="120px" valign="top">
+                                            <br />
+                                            <button class="btn btn-success" ng-click="imprimir()">Imprimir</button>
+                                        </td>
+                                    </tr>
+                                </table>                                
+                                <br />
                                 <div data-ng-repeat="mdl in list">
                                     <div class="widget" style="color:white">
                                         Fechamento para: <b>{{mdl.associado}}</b>, Matrícula: {{mdl.matricula}} <br />
@@ -61,7 +78,7 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>Lojista</th>
+                                                    <th>Estabelecimento</th>
                                                     <th>Data compra</th>
                                                     <th>Valor venda</th>
                                                     <th>Parcela</th>
@@ -79,7 +96,6 @@
                                     </div>
                                 </div>
                                 <br />
-                                Total fechamento: <b>R$ {{totalFechamento}}</b><br />
                                 <br />
                             </div>
                             <br />

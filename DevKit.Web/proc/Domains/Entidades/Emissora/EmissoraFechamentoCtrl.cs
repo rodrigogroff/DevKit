@@ -189,6 +189,8 @@ namespace DevKit.Web.Controllers
                 {
                     count = lst.Count(),
                     totalFechamento = m.setMoneyFormat((int)vrTotalFechamento),
+                    totalCartoes = dList.Count(),
+                    convenio = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa.TrimStart('0') + ")",
                     results = lst
                 });
             }

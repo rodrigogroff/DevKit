@@ -257,7 +257,9 @@
     <Content Include="app\emissora\EmissoraAltBloq.js" />
     <Content Include="app\emissora\EmissoraAltLimite.js" />
     <Content Include="app\emissora\EmissoraAltSenha.js" />
+    <Content Include="app\emissora\EmissoraListagemFechamentoController.js" />
     <Content Include="app\emissora\EmissoraNovoCartao.js" />
+    <Content Include="app\emissora\listagemFechamento.html" />
     <Content Include="app\emissora\listagemCartao.html" />
     <Content Include="app\emissora\EmissoraListagemCartaoController.js" />
     <Content Include="app\emissora\altSenha.html" />
@@ -870,6 +872,7 @@
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraFechamentoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraCartaoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaMensagensCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\TerminalLojaCtrl.cs" />

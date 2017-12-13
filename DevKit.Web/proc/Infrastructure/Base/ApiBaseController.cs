@@ -220,6 +220,15 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
+        public string ObtemData(DateTime? valor)
+        {
+            if (valor == null)
+                return "";
+
+            return Convert.ToDateTime(valor).ToString("dd/MM/yyyy HH:mm");
+        }
+
+        [NonAction]
         public DateTime? ObtemData(string valor)
         {
             if (valor == null)

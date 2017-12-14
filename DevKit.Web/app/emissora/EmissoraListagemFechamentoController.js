@@ -5,7 +5,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
     $scope.loading = false;
-    $scope.tipoFech = 1;
+    $scope.sintetico = false;
+    $scope.tipoFech = 1;    
     $scope.date = new Date();
 
     $scope.campos = {
@@ -36,6 +37,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         }
         
         $scope.loading = true;
+        $scope.tipoFechSel = undefined;
 
         var opcoes = {
             tipoFech: $scope.tipoFech,
@@ -45,6 +47,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         if ($scope.tipoFech == '1') {
             Api.EmissoraFechamento.listPage(opcoes, function (data) {
+                $scope.tipoFechSel = $scope.tipoFech;
                 $scope.list = data.results;
                 $scope.totalFechamento = data.totalFechamento;
                 $scope.totalCartoes = data.totalCartoes;
@@ -54,6 +57,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         }
         else if ($scope.tipoFech == '2') {
             Api.EmissoraFechamento.listPage(opcoes, function (data) {
+                $scope.tipoFechSel = $scope.tipoFech;
                 $scope.list = data.results;
                 $scope.totalFechamento = data.totalFechamento;
                 $scope.totalRepasse = data.totalRepasse;

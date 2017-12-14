@@ -7,6 +7,8 @@ using LinqToDB;
 
 namespace DevKit.Web.Controllers
 {
+    // dto
+
     #region - cartão - 
 
     public class FechamentoVendaCartao
@@ -297,7 +299,7 @@ namespace DevKit.Web.Controllers
 
                 #endregion
 
-                #region - lojistas -
+                #region - lojistas & convenios -
 
                 var lstIDsLojistas = (from e in itensFechamento
                                       join loja in db.T_Loja on e.fk_loja equals (int)loja.i_unique
@@ -306,8 +308,14 @@ namespace DevKit.Web.Controllers
 
                 var lstLojistas = (from e in db.T_Loja
                                    where lstIDsLojistas.Contains(e.i_unique)
+                                   orderby e.st_nome
                                    select e).
                                   ToList();
+
+                var lstConvenios = (from e in db.LINK_LojaEmpresa
+                                    where e.fk_empresa == db.currentEmpresa.i_unique
+                                    select e).
+                                    ToList();
 
                 #endregion
 
@@ -319,35 +327,19 @@ namespace DevKit.Web.Controllers
                 // ## iterar por todos os lojistas
                 // ---------------------------------------
 
-                var dList = itensFechamento.
-                            Select(y => y.fk_loja).
-                            Distinct().
-                            ToList();
-
-                var finalLojistas = (from e in db.T_Loja
-                                     where dList.Contains((int)e.i_unique)
-                                     orderby e.st_nome
-                                     select e.i_unique).
-                                     ToList();
-
-                foreach (var fkLoja in finalLojistas)
+                foreach (var tLoj in lstLojistas)
                 {
-                    var t_loja = lstLojistas.
-                                 Where(y => y.i_unique == fkLoja).
-                                 FirstOrDefault();
-
-                    var tr = (from e in db.LINK_LojaEmpresa
-                              where e.fk_empresa == db.currentEmpresa.i_unique
-                              where e.fk_loja == fkLoja
+                    var tr = (from e in lstConvenios
+                              where e.fk_loja == tLoj.i_unique
                               select (int)e.tx_admin).
                               FirstOrDefault();
 
                     lst.Add(new FechamentoListagemLoja
                     {
-                        fkLoja = (int)fkLoja,
-                        lojista = t_loja.st_nome,
-                        endereco = t_loja.st_endereco,
-                        sigla = t_loja.st_loja,
+                        fkLoja = (int)tLoj.i_unique,
+                        lojista = tLoj.st_nome,
+                        endereco = tLoj.st_endereco,
+                        sigla = tLoj.st_loja,
                         _taxa = tr
                     });
                 }
@@ -392,6 +384,7 @@ namespace DevKit.Web.Controllers
                                     (long)(vendas.vr_valor * item._taxa / 10000);
 
                         vrRepasse += rep;
+
                         vrBonus += (long)vendas.vr_valor - rep;
 
                         item.vendas.Add(new FechamentoVendaLoja
@@ -403,7 +396,7 @@ namespace DevKit.Web.Controllers
                             dtCompra = ObtemData(parc.dt_inclusao),
                             parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
                             valor = m.setMoneyFormat((int)parc.vr_valor),
-                            repasse = m.setMoneyFormat((int)rep),
+                            //repasse = m.setMoneyFormat((int)rep),
                             terminal = term.nu_terminal
                         });
                     }
@@ -424,7 +417,7 @@ namespace DevKit.Web.Controllers
                     totalFechamento = m.setMoneyFormat((int)vrTotalFechamento),
                     totalRepasse = m.setMoneyFormat((int)vrTotalRepasse),
                     totalBonus = m.setMoneyFormat((int)vrTotalBonus),
-                    totalLojistas = dList.Count(),
+                    totalLojistas = lstLojistas.Count(),
                     convenio = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa.TrimStart('0') + ")",
                     results = lst
                 });

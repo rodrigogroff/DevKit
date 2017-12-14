@@ -72,6 +72,32 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
             });
     }
 
+    $scope.criaDep = function ()
+    {
+        $scope.novoDep_fail = invalidCheck($scope.viewModel.novoDep);
+        
+        if ($scope.novoDep_fail) 
+            return;
+        
+        $scope.loading = true;
+
+        var opcoes = {
+            id: id,
+            modo: 'criaDep',
+            valor: $scope.viewModel.novoDep
+        };
+
+        Api.EmissoraCartao.update({ id: id }, opcoes, function (data) {
+            toastr.success('Dependente criado com sucesso!', 'Sucesso');
+            $scope.loading = false;
+            init();
+        },
+        function (response) {
+            toastr.error(response.data.message, 'Erro');
+            $scope.loading = false;
+        });
+    }
+
     $scope.altSenha = function () {
 
         $scope.senha_fail = invalidCheck($scope.viewModel.senhaAtual);
@@ -85,8 +111,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
                 toastr.error('Senha precisa ter 4 catacteres!', 'Erro');
                 return;
             }
-
-
+            
             if ($scope.viewModel.senhaAtual != $scope.viewModel.senhaConf)
             {
                 $scope.senhaConf_fail = true;

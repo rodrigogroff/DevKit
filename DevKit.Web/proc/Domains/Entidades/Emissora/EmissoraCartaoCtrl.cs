@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Web.Http;
-using System.Net;
+
 using SyCrafEngine;
 using LinqToDB;
 using DataModel;
@@ -33,9 +33,14 @@ namespace DevKit.Web.Controllers
         public bool selecionado;
     }
 
+    public class CartaoDependenteDTO
+    {
+        public string nome, tit, dt;
+    }
+    
     public class CartaoDTO
     {
-        public string id,
+        public string   id,
                         matricula,
                         nome,
                         cpf,
@@ -49,6 +54,8 @@ namespace DevKit.Web.Controllers
                         via,
                         uf, cidade, cep, end, numero, bairro,
                         modo, valor, array;
+
+        public List<CartaoDependenteDTO> lstDeps = new List<CartaoDependenteDTO>();
     }
 
     public class EmissoraCartaoController : ApiControllerBase
@@ -258,6 +265,29 @@ namespace DevKit.Web.Controllers
             var se = new StatusExpedicao();
             var cs = new CartaoStatus();
 
+            var lstDeps = new List<CartaoDependenteDTO>();
+
+            foreach (var cartDep in (from e in db.T_Cartao
+                                     where e.st_matricula == cart.st_matricula
+                                     where e.st_empresa == cart.st_empresa
+                                     where e.st_titularidade != "01"
+                                     select e).
+                                     ToList())
+            {
+                var propDep = (from e in db.T_Dependente
+                               where e.fk_proprietario == cart.fk_dadosProprietario
+                               where e.nu_titularidade.ToString().PadLeft(2, '0') == cartDep.st_titularidade
+                               select e).
+                               FirstOrDefault();
+
+                lstDeps.Add(new CartaoDependenteDTO
+                {
+                    nome = propDep.st_nome,
+                    tit = propDep.nu_titularidade.ToString(),
+                    dt = ObtemData(cartDep.dt_inclusao)
+                });
+            }
+
             return Ok(new CartaoDTO
             {
                 // dados proprietário
@@ -286,6 +316,7 @@ namespace DevKit.Web.Controllers
                 situacao = cs.Convert(cart.tg_status),
                 expedicao = se.Convert(cart.tg_emitido),
                 via = cart.nu_viaCartao.ToString(),
+                lstDeps = lstDeps
             });
         }
 
@@ -564,6 +595,55 @@ namespace DevKit.Web.Controllers
                         db.Insert(new LOG_Audit
                         {
                             tg_operacao = Convert.ToInt32(TipoOperacao.ReqSegViaCart),
+                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                            dt_operacao = DateTime.Now,
+                            st_observacao = "",
+                            fk_generic = (int)cart.i_unique
+                        });
+
+                        return Ok();
+                    }
+
+                case "criaDep":
+                    {
+                        int proxTit = (from e in db.T_Cartao
+                                       where e.st_matricula == cart.st_matricula
+                                       where e.st_empresa == cart.st_empresa
+                                       select e).Count() + 1;
+
+                        db.Insert(new T_Cartao
+                        {
+                            st_empresa = cart.st_empresa,
+                            st_matricula = cart.st_matricula,
+                            nu_viaCartao = 1,
+                            st_titularidade = proxTit.ToString().PadLeft(2, '0'),
+                            vr_limiteMensal = cart.vr_limiteMensal,
+                            vr_limiteTotal = cart.vr_limiteTotal,
+                            tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido),
+                            tg_tipoCartao = Convert.ToChar(TipoCartao.empresarial),
+                            tg_status = Convert.ToChar(CartaoStatus.Habilitado),
+                            nu_senhaErrada = Convert.ToInt32(Context.NONE),
+                            dt_bloqueio = DateTime.Now,
+                            dt_inclusao = DateTime.Now,
+                            dt_utlPagto = DateTime.Now,
+                            fk_dadosProprietario = cart.fk_dadosProprietario,
+                            st_venctoCartao = cart.st_venctoCartao,
+                            st_banco = "",
+                            st_agencia = "",
+                            st_conta = "",
+                            st_senha = cart.st_senha // copiar senha do proprietario
+                        });
+
+                        db.Insert(new T_Dependente
+                        {
+                            fk_proprietario = cart.fk_dadosProprietario,
+                            nu_titularidade = proxTit,
+                            st_nome = mdl.valor
+                        });
+
+                        db.Insert(new LOG_Audit
+                        {
+                            tg_operacao = Convert.ToInt32(TipoOperacao.CadDepenCart),
                             fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
                             st_observacao = "",

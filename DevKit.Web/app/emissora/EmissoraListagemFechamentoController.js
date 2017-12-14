@@ -57,6 +57,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.list = data.results;
                 $scope.totalFechamento = data.totalFechamento;
                 $scope.totalRepasse = data.totalRepasse;
+                $scope.totalBonus = data.totalBonus;
                 $scope.totalLojistas = data.totalLojistas;
                 $scope.convenio = data.convenio;
                 $scope.loading = false;
@@ -105,6 +106,76 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             }
             
             var popupWin = window.open('', '_blank', 'width=800,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
+            popupWin.document.close();
+        }     
+        else if ($scope.tipoFech == '2') {
+            var printContents = "<h2>CONVEYNET BENEFÍCIOS</h2>";
+
+            printContents += "<h3>Relatório de Fechamento por lojistas</h3>";
+            printContents += "Data de emissão: " + $scope.date.getDate() + "/" + ($scope.date.getMonth() + 1) + "/" + $scope.date.getFullYear();
+            printContents += "<table>";
+
+            //<h3>ConveyNET Benefícios</h3>
+            //Convênio: <b> {{ convenio }}</b> <br />
+            //Período: <b> {{ campos.mes_inicial }} / {{ campos.ano_inicial }}</b> <br />
+            //Total fechamento convênio: <b>R$ {{ totalFechamento }}</b> <br />
+            //Total repasse fornecedores: <b>R$ {{ totalRepasse }}</b> <br />
+            //Total bonificação: <b>R$ {{ totalBonus }}</b> <br />
+            //Quantidade lojistas: <b> {{ totalLojistas }}</b> <br />
+            
+            printContents += "<tr><td>Convênio: " + $scope.convenio + "</td></tr>";
+            printContents += "<tr><td>Período: " + $scope.campos.mes_inicial + " / " + $scope.campos.ano_inicial + "</td></tr>";
+            printContents += "<tr><td>Total fechamento convênio: R$ " + $scope.totalFechamento + "</td></tr>";
+            printContents += "<tr><td>Total repasse fornecedores: R$ " + $scope.totalRepasse + "</td></tr>";
+            printContents += "<tr><td>Total bonificação: R$ " + $scope.totalBonus + "</td></tr>";
+            printContents += "<tr><td>Quantidade fornecedores: " + $scope.totalLojistas + "</td></tr>";
+
+            printContents += "</table>";
+
+            for (var i = 0; i < $scope.list.length; ++i)
+            {
+                var mdl = $scope.list[i];
+
+                printContents += "<br>Fechamento para: <b>" + mdl.lojista + " - " + mdl.sigla + "</b> , Endereco: " + mdl.endereco + "<br />";
+
+                printContents += "<table><thead><tr>";
+                printContents += "<th width='50px' align='left'>ID</th>"
+                printContents += "<th width='50px' align='left'>NSU</th>"
+                printContents += "<th width='270px' align='left'>Associado</th>"
+                printContents += "<th width='90px' align='left'>Cartão</th>"
+                printContents += "<th width='120px' align='left'>Data Compra</th>"
+                printContents += "<th width='90px' align='left'>Valor</th>"
+                printContents += "<th width='70px' align='left'>Parcela</th>"
+                printContents += "<th width='60px' align='left'>Terminal</th>"
+                printContents += "</tr ></thead > ";
+
+                for (var t = 0; t < mdl.vendas.length; ++t)
+                {
+                    var venda = mdl.vendas[t];
+
+                    printContents += "<tr>";
+                    printContents += "<td>" + venda.id + "</td>";
+                    printContents += "<td>" + venda.nsu + "</td>";
+                    printContents += "<td>" + venda.associado + "</td>";
+                    printContents += "<td>" + venda.matricula + "</td>";
+                    printContents += "<td>" + venda.dtCompra + "</td>";
+                    printContents += "<td>" + venda.valor + "</td>";
+                    printContents += "<td>" + venda.parcela + "</td>";
+                    printContents += "<td>" + venda.terminal + "</td>";
+                    
+                    printContents += "</tr>";
+                }
+
+                printContents += "</table>";
+                printContents += "<br>Bonificação: " + mdl.taxa;
+                printContents += "<br>Valor bonificação: " + mdl.bonus ;
+                printContents += "<br>Valor a repassar: " + mdl.repasse;
+                printContents += "<br><br>";
+            }
+
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
             popupWin.document.open();
             popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
             popupWin.document.close();

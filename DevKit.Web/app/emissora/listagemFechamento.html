@@ -119,11 +119,12 @@
                                     <tr>
                                         <td width="320px" valign="top" style="padding-left:20px">
                                             <h3>ConveyNET Benefícios</h3>
-                                            Convênio:<b> {{convenio}}</b><br />
+                                            Convênio: <b> {{convenio}}</b><br />
                                             Período: <b> {{campos.mes_inicial}} / {{campos.ano_inicial}}</b><br />
-                                            Total fechamento: <b>R$ {{totalFechamento}}</b><br />
-                                            Total repasse: <b>R$ {{totalRepasse}}</b><br />
-                                            Quantidade lojistas: <b> {{totalLojistas}}</b><br />
+                                            Total fechamento convênio: <b>R$ {{totalFechamento}}</b><br />
+                                            Total repasse fornecedores: <b>R$ {{totalRepasse}}</b><br />
+                                            Total bonificação: <b>R$ {{totalBonus}}</b><br />
+                                            Quantidade fornecedores: <b> {{totalLojistas}}</b><br />
                                         </td>
                                         <td width="20px"></td>
                                         <td width="120px" valign="top">
@@ -135,30 +136,35 @@
                                 <br />
                                 <div data-ng-repeat="mdl in list">
                                     <div class="widget" style="color:white">
-                                        Fechamento para: <b>{{mdl.lojista}} ({{mdl.sigla}})</b>, Endereço: {{mdl.endereco}} <br />
+                                        Fechamento para: <b>{{mdl.lojista}} - ({{mdl.sigla}})</b>, Endereço: {{mdl.endereco}} <br />
                                         <br />
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th>ID</th>
+                                                    <th>Nsu</th>
                                                     <th>Associado</th>
-                                                    <th>Matricula</th>
+                                                    <th>Cartão</th>
                                                     <th>Data compra</th>
                                                     <th>Valor </th>
                                                     <th>Parcela</th>
-                                                    <th>Repasse</th>
+                                                    <th>Terminal</th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="tr in mdl.vendas">
-                                                <td style="min-width:300px;">{{ tr.associado }}</td>
-                                                <td style="min-width:70px;">{{ tr.matricula }}</td>
-                                                <td style="min-width:120px;">{{ tr.dtCompra }}</td>
-                                                <td style="min-width:90px;">{{ tr.valor }}</td>
-                                                <td style="min-width:90px;">{{ tr.parcela }}</td>
-                                                <td style="min-width:90px;">{{ tr.repasse }}</td>
+                                                <td >{{ tr.id }}</td>
+                                                <td >{{ tr.nsu }}</td>
+                                                <td >{{ tr.associado }}</td>
+                                                <td >{{ tr.matricula }}</td>
+                                                <td >{{ tr.dtCompra }}</td>
+                                                <td >{{ tr.valor }}</td>
+                                                <td >{{ tr.parcela }}</td>
+                                                <td >{{ tr.terminal }}</td>
                                             </tr>
                                         </table>
-                                        Total: <b>R$ {{mdl.total}}</b><br />
-                                        Total repasse: <b>R$ {{mdl.repasse}}</b><br />
+                                        Bonificação: <b>{{mdl.taxa}}</b><br />
+                                        Valor bonificação: <b>R$ {{mdl.bonus}}</b><br />
+                                        Valor a repassar: <b>R$ {{mdl.repasse}}</b><br />
                                         <br />
                                     </div>
                                 </div>

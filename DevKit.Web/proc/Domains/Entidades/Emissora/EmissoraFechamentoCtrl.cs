@@ -7,19 +7,11 @@ using LinqToDB;
 
 namespace DevKit.Web.Controllers
 {
-    public class FechamentoVenda
+    #region - cartão - 
+
+    public class FechamentoVendaCartao
     {
         public string lojista,
-                      dtCompra,
-                      parcela,
-                      valor;
-    }
-
-    public class FechamentoVendaLoja
-    {
-        public string associado,
-                      matricula,
-                      repasse,
                       dtCompra,
                       parcela,
                       valor;
@@ -33,21 +25,42 @@ namespace DevKit.Web.Controllers
                       matricula,
                       total;
 
-        public List<FechamentoVenda> vendas = new List<FechamentoVenda>();
+        public List<FechamentoVendaCartao> vendas = new List<FechamentoVendaCartao>();
+    }
+
+    #endregion
+
+    #region - loja -
+
+    public class FechamentoVendaLoja
+    {
+        public string id,
+                      nsu,
+                      terminal,
+                      associado,
+                      matricula,
+                      repasse,
+                      dtCompra,
+                      parcela,
+                      valor;
     }
 
     public class FechamentoListagemLoja
     {
-        public int fkLoja, taxa;
+        public int fkLoja, _taxa;
 
         public string lojista,
+                      bonus,
                       endereco,
                       sigla,
+                      taxa,
                       total,
                       repasse;
 
         public List<FechamentoVendaLoja> vendas = new List<FechamentoVendaLoja>();
     }
+
+    #endregion
 
     public class EmissoraFechamentoController : ApiControllerBase
     {
@@ -196,7 +209,7 @@ namespace DevKit.Web.Controllers
 
                         vrTotal += (long) vendas.vr_valor;
 
-                        item.vendas.Add(new FechamentoVenda
+                        item.vendas.Add(new FechamentoVendaCartao
                         {
                             lojista = loja.st_nome,
                             dtCompra = ObtemData(parc.dt_inclusao),
@@ -263,7 +276,7 @@ namespace DevKit.Web.Controllers
 
                 #endregion
 
-                #region - parcelas -
+                #region - parcelas & terminais -
 
                 var lstIDsParcelas = (from e in itensFechamento
                                       join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
@@ -272,6 +285,13 @@ namespace DevKit.Web.Controllers
 
                 var lstParcelas = (from e in db.T_Parcelas
                                    where lstIDsParcelas.Contains(e.i_unique)
+                                   select e).
+                                  ToList();
+
+                var lstIdsTerminais = lstParcelas.Select(y => y.fk_terminal).ToList();
+
+                var lstTerminais = (from e in db.T_Terminal
+                                   where lstIdsTerminais.Contains((int)e.i_unique)
                                    select e).
                                   ToList();
 
@@ -328,11 +348,13 @@ namespace DevKit.Web.Controllers
                         lojista = t_loja.st_nome,
                         endereco = t_loja.st_endereco,
                         sigla = t_loja.st_loja,
-                        taxa = tr
+                        _taxa = tr
                     });
                 }
 
-                long vrTotalFechamento = 0, vrTotalRepasse = 0;
+                long vrTotalFechamento = 0, 
+                     vrTotalRepasse = 0,
+                     vrTotalBonus = 0;
 
                 foreach (var item in lst)
                 {
@@ -344,7 +366,7 @@ namespace DevKit.Web.Controllers
                                              Where(y => y.fk_loja == item.fkLoja).
                                              ToList();
 
-                    long vrTotal = 0, vrRepasse = 0;
+                    long vrTotal = 0, vrRepasse = 0, vrBonus = 0, _id = 0;
 
                     foreach (var vendas in lstParcsFechamento)
                     {
@@ -360,28 +382,40 @@ namespace DevKit.Web.Controllers
                                    Where(y => y.i_unique == cart.fk_dadosProprietario).
                                    FirstOrDefault();
 
+                        var term = lstTerminais.
+                                   Where(y => y.i_unique == parc.fk_terminal).
+                                   FirstOrDefault();
+
                         vrTotal += (long)vendas.vr_valor;
 
-                        var rep = (long)vendas.vr_valor - (long)(vendas.vr_valor * item.taxa / 10000);
+                        var rep   = (long) vendas.vr_valor - 
+                                    (long)(vendas.vr_valor * item._taxa / 10000);
 
                         vrRepasse += rep;
+                        vrBonus += (long)vendas.vr_valor - rep;
 
                         item.vendas.Add(new FechamentoVendaLoja
                         {
+                            id = (++_id).ToString(),
+                            nsu = parc.nu_nsu.ToString(),
                             associado = prop.st_nome,
-                            matricula = cart.st_matricula,
+                            matricula = cart.st_matricula + "." + cart.st_titularidade.PadLeft(2,'0'),
                             dtCompra = ObtemData(parc.dt_inclusao),
                             parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
                             valor = m.setMoneyFormat((int)parc.vr_valor),
-                            repasse = m.setMoneyFormat((int)rep)
+                            repasse = m.setMoneyFormat((int)rep),
+                            terminal = term.nu_terminal
                         });
                     }
 
                     vrTotalFechamento += vrTotal;
                     vrTotalRepasse += vrRepasse;
+                    vrTotalBonus += vrBonus;
 
+                    item.taxa = m.setMoneyFormat(item._taxa) + "%";
                     item.total = m.setMoneyFormat((int)vrTotal);
                     item.repasse = m.setMoneyFormat((int)vrTotalRepasse);
+                    item.bonus = m.setMoneyFormat((int)vrTotalBonus);
                 }
 
                 return Ok(new
@@ -389,6 +423,7 @@ namespace DevKit.Web.Controllers
                     count = lst.Count(),
                     totalFechamento = m.setMoneyFormat((int)vrTotalFechamento),
                     totalRepasse = m.setMoneyFormat((int)vrTotalRepasse),
+                    totalBonus = m.setMoneyFormat((int)vrTotalBonus),
                     totalLojistas = dList.Count(),
                     convenio = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa.TrimStart('0') + ")",
                     results = lst

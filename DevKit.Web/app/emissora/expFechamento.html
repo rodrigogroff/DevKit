@@ -1,0 +1,42 @@
+﻿<div class="webFormPostion" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>Exportação de <b>Fechamento</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>                
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color: white">
+                <tr height="22px"> </tr>
+                <tr height="43px">
+                    <td width="20px"></td>
+                    <td width="120px" >Mês</td>
+                    <td>
+                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="120px"> <button class="btn btn-primary" ng-click="search()">Exportar</button> </td>
+                </tr>
+                <tr height="43px">
+                    <td></td>
+                    <td>Ano</td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="4"
+                               ng-model="campos.ano_inicial">
+                    </td>
+                </tr>
+                <tr height="22px"></tr>
+            </table>
+            <br />
+            <br />
+        </div>
+    </section>
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

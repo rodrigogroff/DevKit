@@ -122,6 +122,7 @@ namespace DevKit.Web
                 "~/app/emissora/EmissoraAltDesbloq.js",
                 "~/app/emissora/EmissoraListagemCartaoController.js",
                 "~/app/emissora/EmissoraListagemFechamentoController.js",
+                "~/app/emissora/EmissoraExpFechamentoController.js",
                 "~/app/associado/LojistasAssociadoController.js",
                 "~/app/system/relatorios/ListingRelatoriosController.js",
                 "~/app/system/relatorios/ListingRelAssociadosController.js",

@@ -120,6 +120,7 @@ namespace DevKit.Web
                 "~/app/emissora/EmissoraAltCota.js",
                 "~/app/emissora/EmissoraAltBloq.js",
                 "~/app/emissora/EmissoraAltDesbloq.js",
+                "~/app/emissora/EmissoraRelatoriosController.js",
                 "~/app/emissora/EmissoraListagemCartaoController.js",
                 "~/app/emissora/EmissoraListagemFechamentoController.js",
                 "~/app/emissora/EmissoraExpFechamentoController.js",

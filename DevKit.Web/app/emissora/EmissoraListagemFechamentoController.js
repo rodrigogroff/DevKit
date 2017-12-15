@@ -174,7 +174,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
                 printContents += "</table>";
                 printContents += "<br>Bonificação: " + mdl.taxa;
-                printContents += "<br>Valor bonificação: " + mdl.bonus ;
+                printContents += "<br>Valor total: " + mdl.total;
+                printContents += "<br>Valor bonificação: " + mdl.bonus;
                 printContents += "<br>Valor a repassar: " + mdl.repasse;
                 printContents += "<br><br>";
             }

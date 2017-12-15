@@ -148,6 +148,10 @@
       <HintPath>..\packages\SimpleInjector.Integration.WebApi.3.3.2\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SocialExplorer.FastDBF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\SocialExplorer.FastDBF.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
@@ -852,6 +856,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="SocialExplorer.FastDBF.dll" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Packages.config">
       <SubType>Designer</SubType>
@@ -898,7 +903,6 @@
     <Compile Include="proc\Domains\Services\SimulaParceladaCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
-    <Compile Include="proc\Extras\DBFilegen.cs" />
     <Compile Include="proc\Infrastructure\Iso8583\ISO8583.cs" />
     <Compile Include="proc\Infrastructure\Iso8583\ISO8583_desmontaRegistro.cs" />
     <Compile Include="proc\Infrastructure\Iso8583\ISO8583_montaRegistro.cs" />

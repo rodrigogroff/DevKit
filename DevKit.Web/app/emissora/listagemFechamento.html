@@ -159,17 +159,18 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="tr in mdl.vendas">
-                                                <td >{{ tr.id }}</td>
-                                                <td >{{ tr.nsu }}</td>
-                                                <td >{{ tr.associado }}</td>
-                                                <td >{{ tr.matricula }}</td>
-                                                <td >{{ tr.dtCompra }}</td>
-                                                <td >{{ tr.valor }}</td>
-                                                <td >{{ tr.parcela }}</td>
-                                                <td >{{ tr.terminal }}</td>
+                                                <td>{{ tr.id }}</td>
+                                                <td>{{ tr.nsu }}</td>
+                                                <td>{{ tr.associado }}</td>
+                                                <td>{{ tr.matricula }}</td>
+                                                <td>{{ tr.dtCompra }}</td>
+                                                <td>{{ tr.valor }}</td>
+                                                <td>{{ tr.parcela }}</td>
+                                                <td>{{ tr.terminal }}</td>
                                             </tr>
                                         </table>
                                         Bonificação: <b>{{mdl.taxa}}</b><br />
+                                        Valor total: <b>R$ {{mdl.total}}</b><br />
                                         Valor bonificação: <b>R$ {{mdl.bonus}}</b><br />
                                         Valor a repassar: <b>R$ {{mdl.repasse}}</b><br />
                                         <br />

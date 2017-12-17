@@ -50,6 +50,8 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('empAltBloq', { url: '/emissora/altBloq', templateUrl: 'app/emissora/altBloq.html', controller: 'EmissoraAltBloqueioController' })
     .state('empAltDesbloq', { url: '/emissora/altDesbloq', templateUrl: 'app/emissora/altDesbloq.html', controller: 'EmissoraAltDesbloqueioController' })
     .state('empListagemFechamento', { url: '/emissora/listagemFechamento', templateUrl: 'app/emissora/listagemFechamento.html', controller: 'EmissoraListagemFechamentoController' })
+    .state('empExpFechamento', { url: '/emissora/expFechamento', templateUrl: 'app/emissora/expFechamento.html', controller: 'EmissoraExpFechamentoController' })
+    .state('empRelatorios', { url: '/emissora/relatorios', templateUrl: 'app/emissora/relatorios.html', controller: 'EmissoraRelatoriosController' })
 
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 

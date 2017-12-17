@@ -351,7 +351,7 @@ namespace DevKit.Web.Controllers
                 foreach (var item in lst)
                 {
                     // -------------------------------------------
-                    // ## iterar por todas as vendas do associado
+                    // ## iterar por todas as vendas da loja
                     // -------------------------------------------
 
                     var lstParcsFechamento = itensFechamento.
@@ -407,8 +407,8 @@ namespace DevKit.Web.Controllers
 
                     item.taxa = m.setMoneyFormat(item._taxa) + "%";
                     item.total = m.setMoneyFormat((int)vrTotal);
-                    item.repasse = m.setMoneyFormat((int)vrTotalRepasse);
-                    item.bonus = m.setMoneyFormat((int)vrTotalBonus);
+                    item.repasse = m.setMoneyFormat((int)vrRepasse);
+                    item.bonus = m.setMoneyFormat((int)vrBonus);
                 }
 
                 return Ok(new

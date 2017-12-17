@@ -148,6 +148,10 @@
       <HintPath>..\packages\SimpleInjector.Integration.WebApi.3.3.2\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SocialExplorer.FastDBF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\SocialExplorer.FastDBF.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
@@ -257,8 +261,12 @@
     <Content Include="app\emissora\EmissoraAltBloq.js" />
     <Content Include="app\emissora\EmissoraAltLimite.js" />
     <Content Include="app\emissora\EmissoraAltSenha.js" />
+    <Content Include="app\emissora\EmissoraRelatoriosController.js" />
+    <Content Include="app\emissora\EmissoraExpFechamentoController.js" />
     <Content Include="app\emissora\EmissoraListagemFechamentoController.js" />
     <Content Include="app\emissora\EmissoraNovoCartao.js" />
+    <Content Include="app\emissora\relatorios.html" />
+    <Content Include="app\emissora\expFechamento.html" />
     <Content Include="app\emissora\listagemFechamento.html" />
     <Content Include="app\emissora\listagemCartao.html" />
     <Content Include="app\emissora\EmissoraListagemCartaoController.js" />
@@ -850,6 +858,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="SocialExplorer.FastDBF.dll" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Packages.config">
       <SubType>Designer</SubType>
@@ -872,6 +881,7 @@
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraFechamentoExpCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraFechamentoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraCartaoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaMensagensCtrl.cs" />

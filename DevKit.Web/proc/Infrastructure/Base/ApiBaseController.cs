@@ -8,6 +8,10 @@ using System;
 using LinqToDB;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Net.Http;
+using System.IO;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace DevKit.Web.Controllers
 {
@@ -282,6 +286,20 @@ namespace DevKit.Web.Controllers
             }
 
             return retorno;
+        }
+
+        public HttpResponseMessage TransferirConteudo(string dir, string fileName, string exten)
+        {
+            byte[] fileData = File.ReadAllBytes(dir + "\\" + fileName + "." + exten);
+
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
+            var stream2 = new MemoryStream(fileData);
+
+            result.Content = new StreamContent(stream2);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileName + "." + exten };
+
+            return result;
         }
     }
 }

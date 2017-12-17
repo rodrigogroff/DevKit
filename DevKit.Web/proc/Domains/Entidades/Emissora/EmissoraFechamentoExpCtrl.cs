@@ -2,7 +2,6 @@
 using System.Web.Http;
 using System.IO;
 using System.Linq;
-using System.Collections;
 using SocialExplorer.IO.FastDBF;
 
 namespace DevKit.Web.Controllers
@@ -39,7 +38,7 @@ namespace DevKit.Web.Controllers
                 odbf.Header.AddColumn(new DbfColumn("nsu", DbfColumn.DbfColumnType.Character, 6, 0));
                 odbf.Header.AddColumn(new DbfColumn("matricula", DbfColumn.DbfColumnType.Character, 6, 0));
 
-                odbf.Header.AddColumn(new DbfColumn("valor", DbfColumn.DbfColumnType.Float, 10, 2));
+                odbf.Header.AddColumn(new DbfColumn("valor", DbfColumn.DbfColumnType.Float, 10, 5));
                 odbf.Header.AddColumn(new DbfColumn("parcela", DbfColumn.DbfColumnType.Character, 6, 0));
                 odbf.Header.AddColumn(new DbfColumn("cnpj", DbfColumn.DbfColumnType.Character, 14, 0));
 
@@ -92,13 +91,13 @@ namespace DevKit.Web.Controllers
                     vr_val = vr_val.Insert(vr_val.Length - 2, ".");
 
                     //add some records...
-                    var orec = new DbfRecord(odbf.Header) { AllowDecimalTruncate = true };
+                    var orec = new DbfRecord(odbf.Header);
 
                     orec[0] = ObtemData(parc.dt_inclusao).Substring(0, 10);
                     orec[1] = parc.nu_nsu.ToString().PadLeft(6, '0');
                     orec[2] = cart.st_matricula;
                     orec[3] = vr_val;
-                    orec[4] = item.nu_parcela.ToString();
+                    orec[4] = parc.nu_indice + "/"+ parc.nu_tot_parcelas;
                     orec[5] = lojista.nu_CNPJ;
 
                     odbf.Write(orec, true);

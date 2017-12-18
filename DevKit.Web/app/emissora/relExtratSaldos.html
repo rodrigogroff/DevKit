@@ -1,0 +1,77 @@
+﻿<div class="webFormPostion" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>Relatório: <b>EXTRATO SALDOS / LIMITES POR CARTÃO</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>                
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color: white">
+                <tr height="22px"> </tr>
+
+                <tr height="43px">
+                    <td width="20px"></td>
+                    <td width="120px">
+                        Matrícula
+                    </td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="mat_fail">!</button>
+                    </td>
+                    <td width="120px">
+                        <input type="text" class="form-control input-transparent" maxlength="6"
+                               ng-model="campos.matricula">
+                    </td>
+                    <td width="20px"></td>
+                    <td width="120px">
+                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                    </td>
+                </tr>
+
+                <tr height="22px"></tr>
+
+                <tr height="43px">
+                    <td></td>
+                    <td colspan="5">
+                        <b>Selecione o que deseja visualizar:</b> <br />
+                        <br />
+                        <label><input type="radio" name="status" value="1" ng-model="tipo"> Mês encerrados</label><br />
+                        <label><input type="radio" name="status" value="2" ng-model="tipo"> Mês atual</label><br />
+                        <label><input type="radio" name="status" value="3" ng-model="tipo"> Futuros</label><br />
+                    </td>
+                </tr>
+
+                <tr height="22px"> </tr>
+
+                <tr height="43px" ng-if="tipo == 1">
+                    <td></td>
+                    <td>Mês</td>
+                    <td><button class="btn btn-xs btn-danger" ng-show="mes_fail">!</button></td>
+                    <td>
+                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                    </td>
+                </tr>
+                <tr height="43px" ng-if="tipo == 1">
+                    <td></td>
+                    <td>Ano</td>
+                    <td><button class="btn btn-xs btn-danger" ng-show="ano_fail">!</button></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="4"
+                               ng-model="campos.ano_inicial">
+                    </td>
+                </tr>
+                <tr height="32px"></tr>
+            </table>
+
+            <br />
+            <br />
+        </div>
+    </section>
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

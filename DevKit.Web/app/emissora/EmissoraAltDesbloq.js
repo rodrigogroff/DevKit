@@ -13,10 +13,14 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         id: 0,
     };
 
-    $scope.buscar = function () {
+    $scope.buscar = function ()
+    {
         $scope.campos.id = 0;
 
-        if ($scope.campos.mat != '') {
+        $scope.mat_fail = invalidCheck($scope.viewModel.mat);
+
+        if (!$scope.mat_fail)
+        {
             $scope.loading = true;
 
             var opcoes = { matricula: $scope.campos.mat };

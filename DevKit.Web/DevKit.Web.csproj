@@ -261,10 +261,12 @@
     <Content Include="app\emissora\EmissoraAltBloq.js" />
     <Content Include="app\emissora\EmissoraAltLimite.js" />
     <Content Include="app\emissora\EmissoraAltSenha.js" />
+    <Content Include="app\emissora\EmissoraRelExtratSaldosController.js" />
     <Content Include="app\emissora\EmissoraRelatoriosController.js" />
     <Content Include="app\emissora\EmissoraExpFechamentoController.js" />
     <Content Include="app\emissora\EmissoraListagemFechamentoController.js" />
     <Content Include="app\emissora\EmissoraNovoCartao.js" />
+    <Content Include="app\emissora\relExtratSaldos.html" />
     <Content Include="app\emissora\relatorios.html" />
     <Content Include="app\emissora\expFechamento.html" />
     <Content Include="app\emissora\listagemFechamento.html" />

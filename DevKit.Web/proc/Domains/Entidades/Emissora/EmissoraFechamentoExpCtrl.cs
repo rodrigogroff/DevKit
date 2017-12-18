@@ -47,9 +47,11 @@ namespace DevKit.Web.Controllers
                 // ------------------------------------------------------
 
                 var lstFechamento = (from e in db.LOG_Fechamento
+                                     join cart in db.T_Cartao on e.fk_cartao equals (int) cart.i_unique
                                      where e.fk_empresa == tEmpresa.i_unique
                                      where e.st_mes == mes
                                      where e.st_ano == ano
+                                     orderby cart.st_matricula
                                      select e).
                                      ToList();
 

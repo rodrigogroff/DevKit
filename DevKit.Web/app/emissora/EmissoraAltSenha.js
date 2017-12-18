@@ -18,7 +18,9 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
     {
         $scope.campos.id = 0;
 
-        if ($scope.campos.mat != '')
+        $scope.mat_fail = invalidCheck($scope.viewModel.mat);
+
+        if (!$scope.mat_fail)
         {
             $scope.loading = true;
 

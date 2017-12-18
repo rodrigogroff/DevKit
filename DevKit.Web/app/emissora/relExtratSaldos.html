@@ -66,6 +66,46 @@
                 <tr height="32px"></tr>
             </table>
 
+            <div ng-if="tipo==1">
+                <div ng-show="list.length == 0">
+                    <br />
+                    <br />
+                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                    <br />
+                    <br />
+                </div>
+                <div ng-show="list.length > 0">
+
+                    <h3>ConveyNET Benefícios</h3>
+                    <b>Emissão</b>: {{dtEmissao}}<br />
+                    EXTRATO/SALDOS E LMITES ASSOCIADOS (ENCERRADOS) <br />
+                    <br />
+                    <b>Associado</b>: {{associado}}, <b>Cartão</b>: {{cartao}}, <b>CPF: {{cpf}}</b><br />
+                    <b>Mês</b>: {{campos.mes_inicial}} / {{campos.ano_inicial}}<br />
+                    <b>Total em parcelas</b>: R$ {{total}}<br />
+                    <br />
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Data Venda</th>
+                                <th>NSU</th>
+                                <th>Valor</th>
+                                <th>Parcela</th>
+                                <th>Fornecedor</th>
+                            </tr>
+                        </thead>
+                        <tr ng-click="show(mdl)"
+                            data-ng-repeat="mdl in list">
+                            <td style="min-width:120px;">{{ mdl.dtVenda }}</td>
+                            <td style="min-width:120px;">{{ mdl.nsu }}</td>
+                            <td style="min-width:120px;">{{ mdl.valor }}</td>
+                            <td style="min-width:120px;">{{ mdl.parcela }}</td>
+                            <td style="min-width:120px;">{{ mdl.fornecedor }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
             <br />
             <br />
         </div>

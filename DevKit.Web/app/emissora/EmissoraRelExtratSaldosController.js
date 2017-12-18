@@ -36,9 +36,27 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.mes_fail = invalidCheck($scope.campos.mes_inicial);
             $scope.ano_fail = invalidCheck($scope.campos.ano_inicial);
 
-            if (!$scope.ano_fail)
-                if ($scope.campos.ano_inicial.length != 4)
-                    $scope.ano_fail = true;
+            if (!$scope.mat_fail && !$scope.mes_fail && !$scope.ano_fail)
+            {
+                $scope.loading = true;
+
+                var opcoes = {
+                    tipo: $scope.tipo,
+                    mat: $scope.campos.matricula,
+                    mes: $scope.campos.mes_inicial,
+                    ano: $scope.campos.ano_inicial
+                };
+
+                Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
+                    $scope.list = data.results;
+                    $scope.associado = data.associado;
+                    $scope.cartao = data.cartao;
+                    $scope.cpf = data.cpf;
+                    $scope.total = data.total;
+                    $scope.dtEmissao = data.dtEmissao;
+                    $scope.loading = false;
+                });
+            }
         }        
     }
 

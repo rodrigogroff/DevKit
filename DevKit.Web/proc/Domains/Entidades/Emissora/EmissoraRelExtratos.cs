@@ -16,7 +16,17 @@ namespace DevKit.Web.Controllers
                         parcela,
                         fornecedor;
     }
-    
+
+    public class RelExtratoFutResumido
+    {
+        public string mesAno,
+                        compras,
+                        total,
+                        limite,
+                        comprometido,
+                        disponivel;
+    }
+
     public class EmissoraRelExtratosController : ApiControllerBase
     {
         public IHttpActionResult Get()
@@ -46,11 +56,9 @@ namespace DevKit.Web.Controllers
                                       select e).
                                       FirstOrDefault();
 
-                        var associado = (from e in db.T_Cartao
-                                         join prop in db.T_Proprietario on e.fk_dadosProprietario equals (int) prop.i_unique
-                                         where e.st_empresa == db.currentEmpresa.st_empresa
-                                         where e.st_matricula == mat
-                                         select prop).
+                        var associado = (from e in db.T_Proprietario
+                                         where cartao.fk_dadosProprietario == e.i_unique
+                                         select e).
                                          FirstOrDefault();
 
                         var lstFechamento = (from e in db.LOG_Fechamento 
@@ -113,7 +121,77 @@ namespace DevKit.Web.Controllers
 
                 case "3":
                     {
-                        break;
+                        var tipoFut = Request.GetQueryStringValue("tipoFut");
+                        
+                        var cartao = (from e in db.T_Cartao
+                                      where e.st_empresa == db.currentEmpresa.st_empresa
+                                      where e.st_matricula == mat
+                                      select e).
+                                      FirstOrDefault();
+
+                        var associado = (from e in db.T_Proprietario
+                                         where cartao.fk_dadosProprietario == e.i_unique
+                                         select e).
+                                         FirstOrDefault();
+
+                        var lstParcelasFuturas = (from e in db.T_Parcelas
+                                                  where e.fk_cartao == cartao.i_unique
+                                                  where e.nu_parcela >= 1
+                                                  orderby e.nu_parcela, e.dt_inclusao
+                                                  select e).
+                                                  ToList();
+
+                        if (tipoFut == "1") // resumido
+                        {
+                            var dtNow = DateTime.Now.AddMonths(1);
+                            var lst = new List<RelExtratoFutResumido>();
+                            var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
+
+                            var parcs = lstParcelasFuturas.
+                                        Select(y => y.nu_parcela).
+                                        ToList().
+                                        Distinct().
+                                        OrderBy(a => a.Value);
+                            
+                            foreach (var item in parcs)
+                            {
+                                var tot = (long)lstParcelasFuturas.
+                                            Where(y => y.nu_parcela == item).
+                                            Select(y => y.vr_valor).
+                                            Sum();
+
+                                lst.Add(new RelExtratoFutResumido
+                                {
+                                    mesAno = meses[dtNow.Month] + " / " + dtNow.Year,
+
+                                    compras = lstParcelasFuturas.
+                                              Where(y => y.nu_parcela == item).
+                                              Count().
+                                              ToString(),
+
+                                    total = "R$ " + mon.setMoneyFormat(tot),
+                                    limite = "R$ " + mon.setMoneyFormat((long)cartao.vr_limiteMensal),
+                                    disponivel = "R$ " + mon.setMoneyFormat((long)cartao.vr_limiteMensal - tot),
+                                    comprometido = mon.setMoneyFormat( 10000 * tot / (long)cartao.vr_limiteMensal) + "%",
+                                });
+
+                                dtNow = dtNow.AddMonths(1);                                
+                            }
+
+                            return Ok(new
+                            {
+                                count = lst.Count(),
+                                results = lst,                                
+                                associado = associado.st_nome,
+                                cartao = cartao.st_empresa + "." + cartao.st_matricula,
+                                cpf = associado.st_cpf,
+                                dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                            });
+                        }
+                        else // detalhado
+                        {
+                            return BadRequest();
+                        }                        
                     }
             }
 

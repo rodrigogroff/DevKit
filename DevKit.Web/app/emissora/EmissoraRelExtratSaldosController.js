@@ -7,6 +7,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.loading = false;
 
     $scope.tipo = 1;    
+    $scope.tipoFut = 1;    
+
     $scope.date = new Date();
 
     $scope.campos = {
@@ -58,6 +60,29 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 });
             }
         }        
+
+        if ($scope.tipo == 3)
+        {
+            if (!$scope.mat_fail)
+            {
+                $scope.loading = true;
+
+                var opcoes = {
+                    tipo: $scope.tipo,
+                    tipoFut: $scope.tipoFut,
+                    mat: $scope.campos.matricula                    
+                };
+
+                Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
+                    $scope.list = data.results;
+                    $scope.associado = data.associado;
+                    $scope.cartao = data.cartao;
+                    $scope.cpf = data.cpf;
+                    $scope.dtEmissao = data.dtEmissao;
+                    $scope.loading = false;
+                });
+            }
+        }   
     }
 
 }]);

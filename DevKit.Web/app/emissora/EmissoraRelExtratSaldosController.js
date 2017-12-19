@@ -60,28 +60,65 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 });
             }
         }        
-
-        if ($scope.tipo == 3)
+        else if ($scope.tipo == 3)
         {
-            if (!$scope.mat_fail)
+            if ($scope.tipoFut == 2)
             {
-                $scope.loading = true;
+                // --------------
+                // detalhado
+                // --------------
 
-                var opcoes = {
-                    tipo: $scope.tipo,
-                    tipoFut: $scope.tipoFut,
-                    mat: $scope.campos.matricula                    
-                };
+                $scope.mes_fail = invalidCheck($scope.campos.mes_inicial);
+                $scope.ano_fail = invalidCheck($scope.campos.ano_inicial);
 
-                Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
-                    $scope.list = data.results;
-                    $scope.associado = data.associado;
-                    $scope.cartao = data.cartao;
-                    $scope.cpf = data.cpf;
-                    $scope.dtEmissao = data.dtEmissao;
-                    $scope.loading = false;
-                });
+                if (!$scope.mat_fail && !$scope.mes_fail && !$scope.ano_fail)
+                {
+                    $scope.loading = true;
+
+                    var opcoes = {
+                        tipo: $scope.tipo,
+                        tipoFut: $scope.tipoFut,
+                        mat: $scope.campos.matricula,
+                        mes: $scope.campos.mes_inicial,
+                        ano: $scope.campos.ano_inicial,
+                    };
+
+                    Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
+                        $scope.list = data.results;
+                        $scope.associado = data.associado;
+                        $scope.cartao = data.cartao;
+                        $scope.cpf = data.cpf;
+                        $scope.dtEmissao = data.dtEmissao;
+                        $scope.loading = false;
+                    });
+                }
             }
+            else 
+            {
+                // ------------------
+                // sintético
+                // ------------------
+
+                if (!$scope.mat_fail)
+                {
+                    $scope.loading = true;
+
+                    var opcoes = {
+                        tipo: $scope.tipo,
+                        tipoFut: $scope.tipoFut,
+                        mat: $scope.campos.matricula
+                    };
+
+                    Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
+                        $scope.list = data.results;
+                        $scope.associado = data.associado;
+                        $scope.cartao = data.cartao;
+                        $scope.cpf = data.cpf;
+                        $scope.dtEmissao = data.dtEmissao;
+                        $scope.loading = false;
+                    });
+                }
+            }            
         }   
     }
 

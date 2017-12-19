@@ -71,9 +71,28 @@
                         <br />
                         <label><input type="radio" name="statusFut" value="1" ng-model="tipoFut"> Resumido</label><br />
                         <label><input type="radio" name="statusFut" value="2" ng-model="tipoFut"> Detalhado</label><br />
+                        
+                        <div ng-if="tipoFut == 2">                
+                            <table>
+                                <tr height="43px" ng-if="tipoFut == 2">                                    
+                                    <td width="120px">Mês</td>
+                                    <td width="20px"><button class="btn btn-xs btn-danger" ng-show="mes_fail">!</button></td>
+                                    <td width="120px">
+                                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                                    </td>
+                                </tr>
+                                <tr height="43px" ng-if="tipoFut == 2">                                    
+                                    <td>Ano</td>
+                                    <td><button class="btn btn-xs btn-danger" ng-show="ano_fail">!</button></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="4"
+                                               ng-model="campos.ano_inicial">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </td>
                 </tr>
-
                 <tr height="32px"></tr>
             </table>
 

@@ -26,14 +26,7 @@ namespace DevKit.Web.Controllers
                         comprometido,
                         disponivel;
     }
-
-    public class RelExtratoFutDetalhes
-    {
-        public string mesAno;
-
-        public List<RelExtratoEncerrado> lstCompras = new List<RelExtratoEncerrado>();
-    }
-
+        
     public class EmissoraRelExtratosController : ApiControllerBase
     {
         public IHttpActionResult Get()
@@ -201,48 +194,50 @@ namespace DevKit.Web.Controllers
                             // detalhado
                             // -------------------------
 
-                            var mes = Request.GetQueryStringValue("mes").PadLeft(2, '0');
+                            var mes = Request.GetQueryStringValue("mes");
                             var ano = Request.GetQueryStringValue("ano");
 
                             var dtNow = DateTime.Now.AddMonths(1);
-                            var lst = new List<RelExtratoFutResumido>();
+                            var lst = new List<RelExtratoEncerrado>();
                             var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
 
-                            var parcs = lstParcelasFuturas.
-                                        Select(y => y.nu_parcela).
-                                        ToList().
-                                        Distinct().
-                                        OrderBy(a => a.Value);
+                            var parc = 1;
 
-                            foreach (var item in parcs)
+                            while (dtNow.Month.ToString() != mes && dtNow.Year.ToString() != ano)
                             {
-                                var tot = (long)lstParcelasFuturas.
-                                            Where(y => y.nu_parcela == item).
-                                            Select(y => y.vr_valor).
-                                            Sum();
+                                dtNow = DateTime.Now.AddMonths(1);
+                                parc++;
+                            }
 
-                                lst.Add(new RelExtratoFutResumido
+                            var lstParcsSel = lstParcelasFuturas.Where(y => y.nu_parcela == parc).ToList();
+                            
+                            var lstIdLojista = lstParcsSel.Select(y => y.fk_loja).Distinct().ToList();
+                            var lstLojistas = (from e in db.T_Loja
+                                               where lstIdLojista.Contains((int)e.i_unique)
+                                               select e).
+                                               ToList();
+                            
+                            long tot = 0;
+
+                            foreach (var item in lstParcsSel)
+                            {
+                                lst.Add(new RelExtratoEncerrado
                                 {
-                                    mesAno = meses[dtNow.Month] + " / " + dtNow.Year,
-
-                                    compras = lstParcelasFuturas.
-                                              Where(y => y.nu_parcela == item).
-                                              Count().
-                                              ToString(),
-
-                                    total = "R$ " + mon.setMoneyFormat(tot),
-                                    limite = "R$ " + mon.setMoneyFormat((long)cartao.vr_limiteMensal),
-                                    disponivel = "R$ " + mon.setMoneyFormat((long)cartao.vr_limiteMensal - tot),
-                                    comprometido = mon.setMoneyFormat(10000 * tot / (long)cartao.vr_limiteMensal) + "%",
+                                    dtVenda = ObtemData(item.dt_inclusao),
+                                    fornecedor = lstLojistas.Where(y => y.i_unique == item.fk_loja).FirstOrDefault().st_nome,
+                                    nsu = item.nu_nsu.ToString(),
+                                    parcela = item.nu_indice + "/" + item.nu_tot_parcelas.ToString(),
+                                    valor = mon.setMoneyFormat((long)item.vr_valor),
                                 });
 
-                                dtNow = dtNow.AddMonths(1);
+                                tot += (long)item.vr_valor;
                             }
 
                             return Ok(new
                             {
                                 count = lst.Count(),
                                 results = lst,
+                                total = mon.setMoneyFormat(tot),
                                 associado = associado.st_nome,
                                 cartao = cartao.st_empresa + "." + cartao.st_matricula,
                                 cpf = associado.st_cpf,

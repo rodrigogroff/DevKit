@@ -1,4 +1,5 @@
-﻿<div class="webFormPostion" style="width:99%">
+﻿
+<div class="webFormPostion" style="width:99%">
     <section class="widgetForm" style="width:95%">
         <legend class="legendTop">
             <table><tr height="12px"><td> </td></tr></table>
@@ -38,15 +39,15 @@
                     <td colspan="5">
                         <b>Selecione o que deseja visualizar:</b> <br />
                         <br />
-                        <label><input type="radio" name="status" value="1" ng-model="tipo"> Mês encerrados</label><br />
-                        <label><input type="radio" name="status" value="2" ng-model="tipo"> Mês atual</label><br />
-                        <label><input type="radio" name="status" value="3" ng-model="tipo"> Futuros</label><br />
+                        <label><input type="radio" name="status1" value="1" ng-model="pesquisa.tipo" > Mês encerrados</label><br />
+                        <label><input type="radio" name="status2" value="2" ng-model="pesquisa.tipo" > Mês atual</label><br />
+                        <label><input type="radio" name="status3" value="3" ng-model="pesquisa.tipo" > Futuros</label><br />
                     </td>
                 </tr>
 
                 <tr height="22px"> </tr>
 
-                <tr height="43px" ng-if="tipo == 1">
+                <tr height="43px" ng-if="pesquisa.tipo == 1">
                     <td></td>
                     <td>Mês</td>
                     <td><button class="btn btn-xs btn-danger" ng-show="mes_fail">!</button></td>
@@ -54,7 +55,8 @@
                         <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
                     </td>
                 </tr>
-                <tr height="43px" ng-if="tipo == 1">
+
+                <tr height="43px" ng-if="pesquisa.tipo == 1">
                     <td></td>
                     <td>Ano</td>
                     <td><button class="btn btn-xs btn-danger" ng-show="ano_fail">!</button></td>
@@ -64,24 +66,24 @@
                     </td>
                 </tr>
 
-                <tr height="43px" ng-if="tipo == 3">
+                <tr height="43px" ng-if="pesquisa.tipo == 3">
                     <td></td>
                     <td colspan="5">
                         <b>Tipo de relatório:</b> <br />
                         <br />
-                        <label><input type="radio" name="statusFut" value="1" ng-model="tipoFut"> Resumido</label><br />
-                        <label><input type="radio" name="statusFut" value="2" ng-model="tipoFut"> Detalhado</label><br />
-                        
-                        <div ng-if="tipoFut == 2">                
+                        <label><input type="radio" name="statusFut1" value="1" ng-model="pesquisa.tipoFut" > Resumido</label><br />
+                        <label><input type="radio" name="statusFut2" value="2" ng-model="pesquisa.tipoFut" > Detalhado</label><br />
+
+                        <div ng-if="pesquisa.tipoFut == 2">
                             <table>
-                                <tr height="43px" ng-if="tipoFut == 2">                                    
+                                <tr height="43px" ng-if="pesquisa.tipoFut == 2">
                                     <td width="120px">Mês</td>
                                     <td width="20px"><button class="btn btn-xs btn-danger" ng-show="mes_fail">!</button></td>
                                     <td width="120px">
                                         <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
                                     </td>
                                 </tr>
-                                <tr height="43px" ng-if="tipoFut == 2">                                    
+                                <tr height="43px" ng-if="pesquisa.tipoFut == 2">
                                     <td>Ano</td>
                                     <td><button class="btn btn-xs btn-danger" ng-show="ano_fail">!</button></td>
                                     <td>
@@ -93,10 +95,12 @@
                         </div>
                     </td>
                 </tr>
-                <tr height="32px"></tr>
-            </table>
 
-            <div ng-if="tipo==1">
+                <tr height="32px"></tr>
+
+            </table>
+            
+            <div ng-if="pesquisa.tipoSel==1">
                 <div ng-show="list.length == 0">
                     <br />
                     <br />
@@ -105,7 +109,6 @@
                     <br />
                 </div>
                 <div ng-show="list.length > 0">
-
                     <h3>ConveyNET Benefícios</h3>
                     <b>Emissão</b>: {{dtEmissao}}<br />
                     EXTRATO/SALDOS E LMITES ASSOCIADOS (ENCERRADOS) <br />
@@ -135,8 +138,7 @@
                     </table>
                 </div>
             </div>
-
-            <div ng-if="tipo==3">
+            <div ng-if="pesquisa.tipoSel==3">
                 <div ng-show="list.length == 0">
                     <br />
                     <br />
@@ -144,7 +146,7 @@
                     <br />
                     <br />
                 </div>
-                <div ng-if="tipoFut==1">
+                <div ng-if="pesquisa.tipoFutSel==1">
                     <div ng-show="list.length > 0">
                         <h3>ConveyNET Benefícios</h3>
                         <b>Emissão</b>: {{dtEmissao}}<br />
@@ -174,13 +176,45 @@
                         </table>
                     </div>
                 </div>
+                <div ng-if="pesquisa.tipoFutSel==2">
+                    <div ng-show="list.length > 0">
+                        <h3>ConveyNET Benefícios</h3>
+                        <b>Emissão</b>: {{dtEmissao}}<br />
+                        EXTRATO FUTURO DETALHADO<br />
+                        <br />
+                        <b>Associado</b>: {{associado}}, <b>Cartão</b>: {{cartao}}, <b>CPF: {{cpf}}</b><br />
+                        <b>Mês</b>: {{campos.mes_inicial}} / {{campos.ano_inicial}}<br />
+                        <b>Total em parcelas</b>: R$ {{total}}<br />
+                        <br />
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Data Venda</th>
+                                    <th>NSU</th>
+                                    <th>Valor</th>
+                                    <th>Parcela</th>
+                                    <th>Fornecedor</th>
+                                </tr>
+                            </thead>
+                            <tr ng-click="show(mdl)"
+                                data-ng-repeat="mdl in list">
+                                <td style="min-width:120px;">{{ mdl.dtVenda }}</td>
+                                <td style="min-width:120px;">{{ mdl.nsu }}</td>
+                                <td style="min-width:120px;">{{ mdl.valor }}</td>
+                                <td style="min-width:120px;">{{ mdl.parcela }}</td>
+                                <td style="min-width:120px;">{{ mdl.fornecedor }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 <br />
                 <br />
-            </div>
+            </div>            
+            <br />
+            <br />
+            <br />
         </div>
     </section>
-    <br />
-    <br />
     <br />
     <br />
 </div>

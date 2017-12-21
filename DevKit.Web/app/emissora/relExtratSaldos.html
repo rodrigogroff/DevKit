@@ -39,9 +39,9 @@
                     <td colspan="5">
                         <b>Selecione o que deseja visualizar:</b> <br />
                         <br />
-                        <label><input type="radio" name="status1" value="1" ng-model="pesquisa.tipo" > Mês encerrados</label><br />
-                        <label><input type="radio" name="status2" value="2" ng-model="pesquisa.tipo" > Mês atual</label><br />
-                        <label><input type="radio" name="status3" value="3" ng-model="pesquisa.tipo" > Futuros</label><br />
+                        <label><input type="radio" name="status1" value="1" ng-model="pesquisa.tipo"> Mês encerrados</label><br />
+                        <label><input type="radio" name="status2" value="2" ng-model="pesquisa.tipo"> Mês atual</label><br />
+                        <label><input type="radio" name="status3" value="3" ng-model="pesquisa.tipo"> Futuros</label><br />
                     </td>
                 </tr>
 
@@ -71,8 +71,8 @@
                     <td colspan="5">
                         <b>Tipo de relatório:</b> <br />
                         <br />
-                        <label><input type="radio" name="statusFut1" value="1" ng-model="pesquisa.tipoFut" > Resumido</label><br />
-                        <label><input type="radio" name="statusFut2" value="2" ng-model="pesquisa.tipoFut" > Detalhado</label><br />
+                        <label><input type="radio" name="statusFut1" value="1" ng-model="pesquisa.tipoFut"> Resumido</label><br />
+                        <label><input type="radio" name="statusFut2" value="2" ng-model="pesquisa.tipoFut"> Detalhado</label><br />
 
                         <div ng-if="pesquisa.tipoFut == 2">
                             <table>
@@ -99,7 +99,7 @@
                 <tr height="32px"></tr>
 
             </table>
-            
+
             <div ng-if="pesquisa.tipoSel==1">
                 <div ng-show="list.length == 0">
                     <br />
@@ -138,6 +138,47 @@
                     </table>
                 </div>
             </div>
+
+            <div ng-if="pesquisa.tipoSel==2">
+                <div ng-show="list.length == 0">
+                    <br />
+                    <br />
+                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                    <br />
+                    <br />
+                </div>
+                <div ng-show="list.length > 0">
+                    <h3>ConveyNET Benefícios</h3>
+                    <b>Emissão</b>: {{dtEmissao}}<br />
+                    EXTRATO/SALDOS E LMITES ASSOCIADOS (MÊS ATUAL) <br />
+                    <br />
+                    <b>Associado</b>: {{associado}}, <b>Cartão</b>: {{cartao}}, <b>CPF: {{cpf}}</b><br />
+                    <b>Mês</b>: {{mesAtual}}<br />
+                    <b>Total extrato atual</b>: R$ {{total}} (comprometido)<br />
+                    <b>Saldo disponível</b>: R$ {{saldo}}<br />
+                    <br />
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Data Venda</th>
+                                <th>NSU</th>
+                                <th>Valor</th>
+                                <th>Parcela</th>
+                                <th>Fornecedor</th>
+                            </tr>
+                        </thead>
+                        <tr ng-click="show(mdl)"
+                            data-ng-repeat="mdl in list">
+                            <td style="min-width:120px;">{{ mdl.dtVenda }}</td>
+                            <td style="min-width:120px;">{{ mdl.nsu }}</td>
+                            <td style="min-width:120px;">{{ mdl.valor }}</td>
+                            <td style="min-width:120px;">{{ mdl.parcela }}</td>
+                            <td style="min-width:120px;">{{ mdl.fornecedor }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
             <div ng-if="pesquisa.tipoSel==3">
                 <div ng-show="list.length == 0">
                     <br />
@@ -209,7 +250,7 @@
                 </div>
                 <br />
                 <br />
-            </div>            
+            </div>
             <br />
             <br />
             <br />

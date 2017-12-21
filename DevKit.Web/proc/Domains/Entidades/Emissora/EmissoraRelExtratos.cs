@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Web.Http;
-
 using SyCrafEngine;
 using LinqToDB;
 using System;
@@ -33,6 +32,8 @@ namespace DevKit.Web.Controllers
         {
             var tipo = Request.GetQueryStringValue("tipo");            
             var mat = Request.GetQueryStringValue("mat").PadLeft(6,'0');
+
+            var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -116,7 +117,67 @@ namespace DevKit.Web.Controllers
 
                 case "2":
                     {
-                        break;
+                        // -------------------------
+                        // fatura atual
+                        // -------------------------
+
+                        var cartao = (from e in db.T_Cartao
+                                      where e.st_empresa == db.currentEmpresa.st_empresa
+                                      where e.st_matricula == mat
+                                      select e).
+                                      FirstOrDefault();
+
+
+                        long tot =0, dispMensal = 0, dispTot = 0;
+
+                        new SaldoDisponivel().Obter(db, cartao, ref dispMensal, ref dispTot);
+
+                        var associado = (from e in db.T_Proprietario
+                                         where cartao.fk_dadosProprietario == e.i_unique
+                                         select e).
+                                         FirstOrDefault();
+
+                        var lstParcelasAtuais = (from e in db.T_Parcelas
+                                                  where e.fk_cartao == cartao.i_unique
+                                                  where e.nu_parcela == 1
+                                                  orderby e.nu_parcela, e.dt_inclusao
+                                                  select e).
+                                                  ToList();
+                        
+                        var lst = new List<RelExtratoEncerrado>();                        
+
+                        var lstIdLojista = lstParcelasAtuais.Select(y => y.fk_loja).Distinct().ToList();
+                        var lstLojistas = (from e in db.T_Loja
+                                            where lstIdLojista.Contains((int)e.i_unique)
+                                            select e).
+                                            ToList();
+
+                        foreach (var item in lstParcelasAtuais)
+                        {
+                            lst.Add(new RelExtratoEncerrado
+                            {
+                                dtVenda = ObtemData(item.dt_inclusao),
+                                fornecedor = lstLojistas.Where(y => y.i_unique == item.fk_loja).FirstOrDefault().st_nome,
+                                nsu = item.nu_nsu.ToString(),
+                                parcela = item.nu_indice + "/" + item.nu_tot_parcelas.ToString(),
+                                valor = mon.setMoneyFormat((long)item.vr_valor),
+                            });
+
+                            tot += (long)item.vr_valor;
+                        }
+
+                        return Ok(new
+                        {
+                            count = lst.Count(),
+                            results = lst,
+                            mesAtual = meses[DateTime.Now.Month] + " / "+ DateTime.Now.Year,
+                            total = mon.setMoneyFormat(tot),
+                            saldo = mon.setMoneyFormat(dispMensal),
+                            associado = associado.st_nome,
+                            cartao = cartao.st_empresa + "." + cartao.st_matricula,
+                            cpf = associado.st_cpf,
+                            dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                        });
                     }
 
                 case "3":
@@ -145,8 +206,7 @@ namespace DevKit.Web.Controllers
                         {
                             var dtNow = DateTime.Now.AddMonths(1);
                             var lst = new List<RelExtratoFutResumido>();
-                            var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
-
+                            
                             var parcs = lstParcelasFuturas.
                                         Select(y => y.nu_parcela).
                                         ToList().
@@ -199,7 +259,6 @@ namespace DevKit.Web.Controllers
 
                             var dtNow = DateTime.Now.AddMonths(1);
                             var lst = new List<RelExtratoEncerrado>();
-                            var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
 
                             var parc = 1;
 

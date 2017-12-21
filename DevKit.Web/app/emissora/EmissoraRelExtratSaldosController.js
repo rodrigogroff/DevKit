@@ -51,8 +51,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         if ($scope.mat_fail) 
             return;
 
-        console.log('pesquisa');
-        
         if ($scope.pesquisa.tipo == 1)
         {
             if (!$scope.mes_fail && !$scope.ano_fail)
@@ -77,20 +75,37 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                     $scope.pesquisa.tipoSel = 1;
                 });
             }
-        }        
+        }
+        else if ($scope.pesquisa.tipo == 2)
+        {            
+            $scope.loading = true;
+
+            var opcoes = {
+                tipo: $scope.pesquisa.tipo,
+                mat: $scope.campos.matricula,
+                mes: $scope.campos.mes_inicial,
+                ano: $scope.campos.ano_inicial
+            };
+
+            Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
+                $scope.list = data.results;
+                $scope.associado = data.associado;
+                $scope.cartao = data.cartao;
+                $scope.cpf = data.cpf;
+                $scope.mesAtual = data.mesAtual;
+                $scope.total = data.total;
+                $scope.saldo = data.saldo;
+                $scope.dtEmissao = data.dtEmissao;
+                $scope.loading = false;
+                $scope.pesquisa.tipoSel = 2;
+            });            
+        }
         else if ($scope.pesquisa.tipo == 3)
         {
-            console.log('futuro');
-
             if ($scope.pesquisa.tipoFut != undefined)
-            {
-                console.log('valido');
-                console.log($scope.pesquisa.tipoFut);
-
+            {            
                 if ($scope.pesquisa.tipoFut == 1)
-                {
-                    console.log('sintetico');
-
+                {            
                     // ------------------
                     // sintético
                     // ------------------
@@ -116,8 +131,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 }
                 else if ($scope.pesquisa.tipoFut == 2)
                 {
-                    console.log('detalhado');
-
                     // --------------
                     // detalhado
                     // --------------
@@ -146,8 +159,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                             $scope.pesquisa.tipoFutSel = 2;    
                         });
                     }
-                }
-                            
+                }                            
             }
         }   
     }

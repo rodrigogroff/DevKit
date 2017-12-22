@@ -34,7 +34,7 @@ function ($scope, $rootScope, $location, AuthService, Api, version, $state)
 
         AuthService.logOut();
 
-      //  window.location = '/login?tipo=' + tipo;        
+        window.location = '/login?tipo=' + tipo;        
     };
 
 }]);

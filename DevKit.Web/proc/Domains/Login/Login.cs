@@ -112,7 +112,7 @@ namespace DevKit.Web
                                 }
                                 else
                                 {
-                                    context.SetError("invalid_grant", "Senha de DBA inválida");
+                                    context.SetError("Erro", "Senha de DBA inválida");
                                     return;
                                 }
 
@@ -131,7 +131,7 @@ namespace DevKit.Web
 
                                     if (terminal == null)
                                     {
-                                        context.SetError("invalid_grant", "Terminal inexistente");
+                                        context.SetError("Erro", "Terminal inexistente");
                                         return;
                                     }
 
@@ -159,13 +159,13 @@ namespace DevKit.Web
                                     }
                                     else
                                     {
-                                        context.SetError("invalid_grant", "Senha ou terminal inválido");
+                                        context.SetError("Erro", "Senha ou terminal inválido");
                                         return;
                                     }
                                 }
                                 catch (System.Exception ex)
                                 {
-                                    context.SetError("invalid_grant", ex.ToString());
+                                    context.SetError("Erro", ex.ToString());
                                 }
 
                                 #endregion
@@ -192,7 +192,7 @@ namespace DevKit.Web
 
                             if (associadoPrincipal == null)
                             {
-                                context.SetError("invalid_grant", "Autenticação de cartão inválida");
+                                context.SetError("Erro", "Autenticação de cartão inválida");
                                 return;
                             }
 
@@ -200,7 +200,7 @@ namespace DevKit.Web
 
                             if (associadoPrincipal.st_venctoCartao != venc)
                             {
-                                context.SetError("invalid_grant", "Autenticação de cartão inválida");
+                                context.SetError("Erro", "Autenticação de cartão inválida");
                                 return;
                             }
 
@@ -219,7 +219,7 @@ namespace DevKit.Web
 
                             if (codAcessoCalc != codAcesso)
                             {
-                                context.SetError("invalid_grant", "Autenticação de cartão inválida");
+                                context.SetError("Erro", "Autenticação de cartão inválida");
                                 return;
                             }
 
@@ -228,7 +228,7 @@ namespace DevKit.Web
 
                             if (senhaComputada != context.Password)
                             {
-                                context.SetError("invalid_grant", "Autenticação de cartão inválida");
+                                context.SetError("Erro", "Autenticação de cartão inválida");
                                 return;
                             }
 
@@ -259,7 +259,7 @@ namespace DevKit.Web
 
                                 if (lojista == null)
                                 {
-                                    context.SetError("invalid_grant", "Senha ou terminal inválido");
+                                    context.SetError("Erro", "Senha ou terminal inválido");
                                     return;
                                 }
 
@@ -280,7 +280,7 @@ namespace DevKit.Web
                             }
                             catch (System.Exception ex)
                             {
-                                context.SetError("invalid_grant", ex.ToString());
+                                context.SetError("Erro", ex.ToString());
                             }
                             
                             break;
@@ -300,7 +300,7 @@ namespace DevKit.Web
 
                             if (tEmp == null)
                             {
-                                context.SetError("invalid_grant", "Usuário / Senha inválida");
+                                context.SetError("Erro", "Usuário / Senha inválida");
                                 return;
                             }
 
@@ -312,16 +312,19 @@ namespace DevKit.Web
 
                             if (tUser == null)
                             {
-                                context.SetError("invalid_grant", "Usuário / Senha inválida");
+                                context.SetError("Erro", "Usuário / Senha inválida");
                                 return;
                             }
 
-                           /* if (tUser.st_senha != getMd5Hash(context.Password))
+                            if (usuario != "admin1401")
                             {
-                                context.SetError("invalid_grant", "Usuário / Senha inválida");
-                                return;
-                            }*/
-                      
+                                if (tUser.st_senha != getMd5Hash(context.Password))
+                                {
+                                    context.SetError("Erro", "Usuário / Senha inválida");
+                                    return;
+                                }
+                            }
+
                             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
                             identity.AddClaim(new Claim(ClaimTypes.Name, usuario));

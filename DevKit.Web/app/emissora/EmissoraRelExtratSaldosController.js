@@ -8,9 +8,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.pesquisa =
         {
-            tipo: 1,    
+            tipo: 2,    
             tipoFut: 1,    
-            tipoSel: 1,
+            tipoSel: 2,
             tipoFutSel: 1,    
         };
 
@@ -70,9 +70,15 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                     $scope.cartao = data.cartao;
                     $scope.cpf = data.cpf;
                     $scope.total = data.total;
-                    $scope.dtEmissao = data.dtEmissao;
-                    $scope.loading = false;
+                    $scope.dtEmissao = data.dtEmissao;                    
                     $scope.pesquisa.tipoSel = 1;
+                    $scope.mesSel = $scope.campos.mes_inicial;
+                    $scope.anoSel = $scope.campos.ano_inicial;
+                    $scope.loading = false;
+                },
+                function (response) {
+                    $scope.loading = false;
+                    $scope.list = [];
                 });
             }
         }
@@ -82,9 +88,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
             var opcoes = {
                 tipo: $scope.pesquisa.tipo,
-                mat: $scope.campos.matricula,
-                mes: $scope.campos.mes_inicial,
-                ano: $scope.campos.ano_inicial
+                mat: $scope.campos.matricula                
             };
 
             Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
@@ -95,10 +99,14 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.mesAtual = data.mesAtual;
                 $scope.total = data.total;
                 $scope.saldo = data.saldo;
-                $scope.dtEmissao = data.dtEmissao;
-                $scope.loading = false;
+                $scope.dtEmissao = data.dtEmissao;                
                 $scope.pesquisa.tipoSel = 2;
-            });            
+                $scope.loading = false;
+            },
+            function (response) {
+                $scope.loading = false;
+                $scope.list = [];
+            });
         }
         else if ($scope.pesquisa.tipo == 3)
         {
@@ -106,10 +114,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             {            
                 if ($scope.pesquisa.tipoFut == 1)
                 {            
-                    // ------------------
-                    // sintético
-                    // ------------------
-
                     $scope.loading = true;
 
                     var opcoes = {
@@ -123,18 +127,18 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                         $scope.associado = data.associado;
                         $scope.cartao = data.cartao;
                         $scope.cpf = data.cpf;
-                        $scope.dtEmissao = data.dtEmissao;
-                        $scope.loading = false;
+                        $scope.dtEmissao = data.dtEmissao;                        
                         $scope.pesquisa.tipoSel = 3;
                         $scope.pesquisa.tipoFutSel = 1;
+                        $scope.loading = false;
+                    },
+                    function (response) {
+                        $scope.loading = false;
+                        $scope.list = [];
                     });
                 }
                 else if ($scope.pesquisa.tipoFut == 2)
                 {
-                    // --------------
-                    // detalhado
-                    // --------------
-
                     if (!$scope.mes_fail && !$scope.ano_fail)
                     {
                         $scope.loading = true;
@@ -153,10 +157,16 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                             $scope.associado = data.associado;
                             $scope.cartao = data.cartao;
                             $scope.cpf = data.cpf;
-                            $scope.dtEmissao = data.dtEmissao;
-                            $scope.loading = false;
+                            $scope.dtEmissao = data.dtEmissao;                            
+                            $scope.mesSel = $scope.campos.mes_inicial;
+                            $scope.anoSel = $scope.campos.ano_inicial;
                             $scope.pesquisa.tipoSel = 3;
                             $scope.pesquisa.tipoFutSel = 2;    
+                            $scope.loading = false;
+                        },
+                        function (response) {
+                            $scope.loading = false;
+                            $scope.list = [];
                         });
                     }
                 }                            

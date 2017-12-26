@@ -3,8 +3,19 @@ angular.module('app.controllers').controller('EmissoraAltCotaController',
 ['$scope', '$rootScope', 'AuthService', '$state', '$stateParams', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFiltro, Api, ngSelects)
 {
+    var invalidCheck = function (element) {
+        if (element == undefined)
+            return true;
+        else
+            if (element.length == 0)
+                return true;
+
+        return false;
+    }
+
     $rootScope.exibirMenu = true;
     $scope.loading = false;
+
     $scope.modal = false;
     $scope.modalConf = false;
     $scope.confirmado = false;
@@ -19,7 +30,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
     {
         $scope.campos.id = 0;
 
-        $scope.mat_fail = invalidCheck($scope.viewModel.mat);
+        $scope.mat_fail = invalidCheck($scope.campos.mat);
 
         if (!$scope.mat_fail)
         {

@@ -60,6 +60,7 @@ angular.module('app.services', ['ngResource'])
         ConfereNSU: $resource('api/conferensu/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),
         EmissoraCartao: $resource('api/emissoracartao/:id', {}, opcoes),
+        EmissoraUsuario: $resource('api/emissorausuario/:id', {}, opcoes),
         EmissoraRelExtratos: $resource('api/emissorarelextratos/:id', {}, opcoes),
         EmissoraFechamento: $resource('api/emissorafechamento/:id', {}, opcoes),
         RelAssociados: $resource('api/relAssociados/:id', {}, opcoes),

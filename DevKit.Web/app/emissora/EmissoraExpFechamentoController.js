@@ -3,6 +3,16 @@ angular.module('app.controllers').controller('EmissoraExpFechamentoController',
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
+    var invalidCheck = function (element) {
+        if (element == undefined)
+            return true;
+        else
+            if (element.length == 0)
+                return true;
+
+        return false;
+    }
+
     $rootScope.exibirMenu = true;
     $scope.loading = false;
     
@@ -15,17 +25,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             mes: ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 }),
         }
     };
-
-    var invalidCheck = function (element) {
-        if (element == undefined)
-            return true;
-        else
-            if (element.length == 0)
-                return true;
-
-        return false;
-    }
-
+    
     $scope.search = function ()
     {
         AuthService.fillAuthData();

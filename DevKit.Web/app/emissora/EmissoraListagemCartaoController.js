@@ -3,6 +3,16 @@ angular.module('app.controllers').controller('EmissoraListagemCartaoController',
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
+    var invalidCheck = function (element) {
+        if (element == undefined)
+            return true;
+        else
+            if (element.length == 0)
+                return true;
+
+        return false;
+    }
+
     $rootScope.exibirMenu = true;
     $scope.loading = false;
 
@@ -67,17 +77,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.fecharModal = function () {
         $scope.modal = false;
     }
-
-    var invalidCheck = function (element) {
-        if (element == undefined)
-            return true;
-        else
-            if (element.length == 0)
-                return true;
-
-        return false;
-    }
-
+    
     $scope.confirmar = function ()
     {
         $scope.limMes_fail = invalidCheck($scope.cartaoSelecionado.limM);

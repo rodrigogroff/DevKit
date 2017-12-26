@@ -1,5 +1,5 @@
 ﻿
-angular.module('app.controllers').controller('EmissoraAltSenhaController',
+angular.module('app.controllers').controller('EmissoraAltSenhaUsuarioController',
 ['$scope', '$rootScope', 'AuthService', '$state', '$stateParams', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFiltro, Api, ngSelects)
 {
@@ -19,8 +19,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
     $scope.modal = false;
 
     $scope.campos = {
-        mat: '',
-        nomeCartao: '',
+        nome: '',
         id: 0,
         novaSenha: ''
     };
@@ -29,22 +28,22 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
     {
         $scope.campos.id = 0;
 
-        $scope.mat_fail = invalidCheck($scope.campos.mat);
+        $scope.nome_fail = invalidCheck($scope.campos.nome);
 
-        if (!$scope.mat_fail)
+        if (!$scope.nome_fail)
         {
             $scope.loading = true;
 
-            var opcoes = { matricula: $scope.campos.mat };
+            var opcoes = { nome: $scope.campos.nome };
 
-            Api.EmissoraCartao.listPage(opcoes, function (data)
+            Api.EmissoraUsuario.listPage(opcoes, function (data)
             {
                 if (data.results.length > 0) {
-                    $scope.campos.nomeCartao = data.results[0].associado;
+                    $scope.campos.nome = data.results[0].nome;
                     $scope.campos.id = data.results[0].id;
                 }
                 else
-                    toastr.error('matrícula inválida', 'Erro');
+                    toastr.error('Nome de usuário inválido', 'Erro');
 
                 $scope.loading = false;
             },
@@ -54,7 +53,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
             });
         }        
     }
-    
+
     $scope.confirmar = function ()
     {
         $scope.senha_fail = invalidCheck($scope.campos.novaSenha);
@@ -74,16 +73,15 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 
             var opcoes = {
                 id: $scope.campos.id,
-                modo: 'altSenha',
+                modo: 'altSenhaUsuario',
                 valor: $scope.campos.novaSenha
             };
 
             $scope.modal = false;
 
-            Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data)
+            Api.EmissoraUsuario.update({ id: $scope.campos.id }, opcoes, function (data)
             {
-                $scope.campos.mat = '';
-                $scope.campos.nomeCartao = '';
+                $scope.campos.nome = '';
                 $scope.campos.novaSenha = '';
                 $scope.campos.id = 0;
                 $scope.modal = true;

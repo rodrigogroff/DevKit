@@ -37,7 +37,10 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
     	else
         {
             var lData = { };
-            
+
+            if ($rootScope.tipo == undefined)
+                $rootScope.tipo = 1;
+
             if ($rootScope.tipo == 2)
             {
                 // usuarios

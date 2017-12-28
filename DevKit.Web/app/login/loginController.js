@@ -3,7 +3,8 @@ angular.module('app.controllers').controller('LoginController',
 ['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version', 'Api', '$stateParams',
 function ($scope, $rootScope, $location, $state, AuthService, version, Api, $stateParams)
 {
-	$rootScope.exibirMenu = false;
+    $rootScope.exibirMenu = false;
+    $rootScope.mobileVersion = false;
     
 	$scope.version = version;	
 	$scope.loading = false;
@@ -74,6 +75,7 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
                 if ($rootScope.tipo == 2)
                 {
                     // usuarios
+                    $rootScope.mobileVersion = true;
 
                     $state.go('limitesUsr', {});
                 }

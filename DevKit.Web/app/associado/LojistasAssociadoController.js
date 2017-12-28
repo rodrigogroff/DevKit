@@ -3,7 +3,9 @@ angular.module('app.controllers').controller('LojistasAssociadoController',
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
-	$rootScope.exibirMenu = true;
+    $rootScope.exibirMenu = true;
+    $rootScope.mobileVersion = true;
+
     $scope.itensporpagina = 15;
     $scope.loading = false;
     

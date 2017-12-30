@@ -126,9 +126,14 @@ namespace DevKit.Web.Controllers
                                       where e.st_matricula == mat
                                       select e).
                                       FirstOrDefault();
+                        
+                        var diaFech = (from e in db.I_Scheduler
+                                          where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
+                                          select e).
+                                          FirstOrDefault().
+                                          nu_monthly_day;
 
-
-                        long tot =0, dispMensal = 0, dispTot = 0;
+                        long tot = 0, dispMensal = 0, dispTot = 0;
 
                         new SaldoDisponivel().Obter(db, cartao, ref dispMensal, ref dispTot);
 
@@ -152,6 +157,11 @@ namespace DevKit.Web.Controllers
                                             select e).
                                             ToList();
 
+                        var dtNow = DateTime.Now;
+
+                        if (dtNow.Day >= diaFech)
+                            dtNow = dtNow.AddMonths(1);
+
                         foreach (var item in lstParcelasAtuais)
                         {
                             lst.Add(new RelExtratoEncerrado
@@ -170,7 +180,7 @@ namespace DevKit.Web.Controllers
                         {
                             count = lst.Count(),
                             results = lst,
-                            mesAtual = meses[DateTime.Now.Month] + " / "+ DateTime.Now.Year,
+                            mesAtual = meses[dtNow.Month] + " / "+ dtNow.Year,
                             total = mon.setMoneyFormat(tot),
                             saldo = mon.setMoneyFormat(dispMensal),
                             associado = associado.st_nome,
@@ -202,9 +212,19 @@ namespace DevKit.Web.Controllers
                                                   select e).
                                                   ToList();
 
+                        var diaFech = (from e in db.I_Scheduler
+                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
+                                       select e).
+                                          FirstOrDefault().
+                                          nu_monthly_day;
+
                         if (tipoFut == "1") // resumido
                         {
                             var dtNow = DateTime.Now.AddMonths(1);
+
+                            if (dtNow.Day > diaFech)
+                                dtNow = dtNow.AddMonths(1);
+
                             var lst = new List<RelExtratoFutResumido>();
                             
                             var parcs = lstParcelasFuturas.
@@ -257,18 +277,22 @@ namespace DevKit.Web.Controllers
                             var mes = Request.GetQueryStringValue("mes");
                             var ano = Request.GetQueryStringValue("ano");
 
-                            if (new DateTime(Convert.ToInt32(ano), Convert.ToInt32(mes), 15) < DateTime.Now)
+                            if (DateTime.Now > new DateTime(Convert.ToInt32(ano), Convert.ToInt32(mes), 1))
+                                // passado
                                 return BadRequest();
 
-                            var dtNow = DateTime.Now.AddMonths(1);
+                            var dtNow = DateTime.Now;
                             var lst = new List<RelExtratoEncerrado>();
 
-                            var parc = 1;
+                            var parc = 0;
 
-                            while (dtNow.Month.ToString() != mes && dtNow.Year.ToString() != ano)
+                            while (true)
                             {
-                                dtNow = DateTime.Now.AddMonths(1);
+                                dtNow = dtNow.AddMonths(1);
                                 parc++;
+
+                                if (dtNow.Month.ToString() == mes && dtNow.Year.ToString() == ano)
+                                    break;
                             }
 
                             var lstParcsSel = lstParcelasFuturas.Where(y => y.nu_parcela == parc).ToList();

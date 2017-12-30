@@ -104,6 +104,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.loading = false;
             },
             function (response) {
+                
+                toastr.error('Nenhum registro', 'Erro');
+                
                 $scope.loading = false;
                 $scope.list = [];
             });
@@ -132,7 +135,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                         $scope.pesquisa.tipoFutSel = 1;
                         $scope.loading = false;
                     },
-                    function (response) {
+                        function (response) {
+                            toastr.error('Nenhum registro', 'Erro');
                         $scope.loading = false;
                         $scope.list = [];
                     });
@@ -164,7 +168,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                             $scope.pesquisa.tipoFutSel = 2;    
                             $scope.loading = false;
                         },
-                        function (response) {
+                            function (response) {
+                                toastr.error('Nenhum registro', 'Erro');
                             $scope.loading = false;
                             $scope.list = [];
                         });

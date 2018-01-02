@@ -77,9 +77,11 @@ namespace DevKit.Web.Controllers
                 valor = "R$ " + mon.setMoneyFormat(sd.vrUtilizadoAtual)
             });
 
+            var dt = DateTime.Now;
+
             if (DateTime.Now.Day >= scheduler.nu_monthly_day)
             {
-                var dt = DateTime.Now;
+                dt = dt.AddMonths(1);
 
                 list.Add(new LimiteAssociadoDTO
                 {
@@ -89,8 +91,6 @@ namespace DevKit.Web.Controllers
             }
             else
             {
-                var dt = DateTime.Now.AddMonths(-1);
-
                 list.Add(new LimiteAssociadoDTO
                 {
                     nome = "Mês em vigência",

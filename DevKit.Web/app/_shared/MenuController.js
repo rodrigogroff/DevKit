@@ -30,11 +30,18 @@ function ($scope, $rootScope, $location, AuthService, Api, version, $state)
 
     $scope.logOut = function ()
     {
-        var tipo = $rootScope.tipo;
+        AuthService.fillAuthData();
 
-        AuthService.logOut();
+        $scope.authentication = AuthService.authentication;
 
-        window.location = '/login?tipo=' + tipo;        
+        console.log($scope.authentication)
+
+        var tipo = $scope.authentication.tipo;
+
+        if (tipo == 2 || tipo == 1)
+            AuthService.logOut();
+        else
+            window.location = '/login?tipo=' + tipo;        
     };
 
 }]);

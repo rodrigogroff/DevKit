@@ -39,22 +39,18 @@
                                     <a class="accordion-toggle " data-toggle="collapse"
                                        data-parent="#side-nav" href="#forms-collapseUsrRede"><span class="name">Rede</span></a>
                                     <ul id="forms-collapseUsrRede" class="panel-collapse collapse">
-                                        <li><a ui-sref="lojistasUsr"><span>Lojas credenciadas</span></a></li>
+                                        <li><a ui-sref="lojistasUsr"><span>Lojas</span></a></li>
                                     </ul>
                                 </li>
                             </ul>
                             <ul><li>&nbsp;</li></ul>
-                            <ul><li>&nbsp;</li></ul>
-                            <ul>
-                                <li>
-                                    <span style="color:grey;text-align:center;padding-left:20px">Version {{version}}</span>
-                                </li>
-                            </ul>
-                            <ul><li></li></ul>
-                        </section>
+                            <ul><li style="padding-left:20px"><a href="login" ng-click="logOut()" style="color:black">Sair</a></li></ul>
+                        </section>                        
                     </td>
                     <td width="20px"></td>
                     <td valign="top">
+                        <br />
+                        <h4>ConveyNET Benefícios</h4>
                         <div id="ui-view" style="width:100%" ui-view></div>
                     </td>
                 </tr>

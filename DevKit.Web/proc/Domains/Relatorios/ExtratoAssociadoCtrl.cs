@@ -140,18 +140,23 @@ namespace DevKit.Web.Controllers
 
                         var dt = DateTime.Now;
 
-                        int _mes = DateTime.Now.Month;
+                        var dtNow = DateTime.Now;
 
-                        if ( (int) db.currentAssociadoEmpresa.nu_diaVenc > DateTime.Now.Day )
-                        {
-                            dt = DateTime.Now.AddMonths(-1);
-                            _mes = dt.Month;
-                        }                            
+                        var diaFech = (from e in db.I_Scheduler
+                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentAssociadoEmpresa.st_empresa)
+                                       select e).
+                                       FirstOrDefault().
+                                       nu_monthly_day;
+
+                        if (dtNow.Day >= diaFech)
+                            dtNow = dtNow.AddMonths(1);
+
+                        var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
 
                         return Ok(new
                         {
                             count = 1,
-                            mesAtual = eMonth.Get(_mes).stName + " / " + dt.Year,
+                            mesAtual = meses [dtNow.Month] + " / " + dt.Year,
                             saldoDisp = "R$ " + mon.setMoneyFormat(dispM),
                             total = "R$ " + mon.setMoneyFormat(total),
                             results = lst
@@ -176,7 +181,7 @@ namespace DevKit.Web.Controllers
                                        where tr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
                                        orderby tr.dt_transacao descending
                                        select e).
-                                        ToList();
+                                       ToList();
 
                             if (lst.Count > 0)
                             {
@@ -201,7 +206,7 @@ namespace DevKit.Web.Controllers
                                         dataHora = Convert.ToDateTime(ltr.dt_transacao).ToString("dd/MM/yyyy"),
                                         nsu = item.nu_nsu.ToString(),
                                         valor = mon.formatToMoney(item.vr_valor.ToString()),
-                                         parcela = item.nu_indice.ToString() + " / " + item.nu_tot_parcelas.ToString(),
+                                        parcela = item.nu_indice.ToString() + " / " + item.nu_tot_parcelas.ToString(),
                                         estab = loja.st_nome
                                     });
                                 }

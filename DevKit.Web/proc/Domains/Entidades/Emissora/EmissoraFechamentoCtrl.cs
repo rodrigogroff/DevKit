@@ -13,7 +13,10 @@ namespace DevKit.Web.Controllers
 
     public class FechamentoVendaCartao
     {
-        public string lojista,
+        public string id,
+                      nsu,
+                      terminal,
+                      lojista,
                       dtCompra,
                       parcela,
                       valor;
@@ -85,6 +88,7 @@ namespace DevKit.Web.Controllers
                                        where e.fk_empresa == db.currentEmpresa.i_unique
                                        where e.st_mes == mes
                                        where e.st_ano == ano
+                                       orderby e.dt_compra descending
                                        select e).
                                        ToList();
 
@@ -92,15 +96,8 @@ namespace DevKit.Web.Controllers
 
                 #region - cartoes -
 
-                var lstIDsCarts = (from e in itensFechamento
-                                   join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
-                                   select cart.i_unique).
-                                   ToList();
-
-                var lstCartoes = (from e in db.T_Cartao
-                                  where lstIDsCarts.Contains(e.i_unique)
-                                  select e).
-                                  ToList();
+                var lstIDsCarts = (from e in itensFechamento select (long)e.fk_cartao).ToList();
+                var lstCartoes = (from e in db.T_Cartao where lstIDsCarts.Contains((long)e.i_unique) select e).ToList();
 
                 #endregion
 
@@ -119,31 +116,35 @@ namespace DevKit.Web.Controllers
 
                 #endregion
 
+                #region - log transacoes -
+
+                var lstIDsLTRS = (from e in itensFechamento
+                                  join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                  select parc.fk_log_transacoes).
+                                  ToList();
+
+                var lstTrans = (from e in db.LOG_Transacoes where lstIDsLTRS.Contains((int)e.i_unique) select e).ToList();
+
+                #endregion
+
+                #region - terminais -
+
+                var lstIDsTERMS = (from e in lstTrans select e.fk_terminal).ToList();
+                var lstTerms = (from e in db.T_Terminal where lstIDsTERMS.Contains((int)e.i_unique) select e).ToList();
+
+                #endregion
+
                 #region - parcelas -
 
-                var lstIDsParcelas = (from e in itensFechamento
-                                       join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
-                                       select parc.i_unique).
-                                       ToList();
-
-                var lstParcelas = (from e in db.T_Parcelas
-                                  where lstIDsParcelas.Contains(e.i_unique)
-                                  select e).
-                                  ToList();
+                var lstIDsParcelas = (from e in itensFechamento select (long)e.fk_parcela).ToList();
+                var lstParcelas = (from e in db.T_Parcelas where lstIDsParcelas.Contains((long)e.i_unique) select e).ToList();
 
                 #endregion
 
                 #region - lojistas -
 
-                var lstIDsLojistas = (from e in itensFechamento
-                                      join loja in db.T_Loja on e.fk_loja equals (int)loja.i_unique
-                                      select loja.i_unique).
-                                      ToList();
-
-                var lstLojistas = (from e in db.T_Loja
-                                   where lstIDsLojistas.Contains(e.i_unique)
-                                   select e).
-                                  ToList();
+                var lstIDsLojistas = (from e in itensFechamento select (long)e.fk_loja).ToList();
+                var lstLojistas = (from e in db.T_Loja where lstIDsLojistas.Contains( (long)e.i_unique) select e).ToList();
 
                 #endregion
 
@@ -185,7 +186,7 @@ namespace DevKit.Web.Controllers
                     });
                 }
 
-                long vrTotalFechamento = 0;
+                long vrTotalFechamento = 0, id = 0;
                 
                 foreach (var item in lst)
                 {
@@ -205,14 +206,18 @@ namespace DevKit.Web.Controllers
                                    Where(y => y.i_unique == vendas.fk_parcela).
                                    FirstOrDefault();
 
-                        var loja = lstLojistas.
-                                   Where(y => y.i_unique == vendas.fk_loja).
-                                   FirstOrDefault();
+                        var ltr = lstTrans.Where ( y=> y.i_unique == parc.fk_log_transacoes).FirstOrDefault();
+                        var term = lstTerms.Where(y => y.i_unique == parc.fk_terminal).FirstOrDefault();
+                        var loja = lstLojistas.Where(y => y.i_unique == vendas.fk_loja).FirstOrDefault();
 
                         vrTotal += (long) vendas.vr_valor;
+                        id++;
 
                         item.vendas.Add(new FechamentoVendaCartao
                         {
+                            id = id.ToString(),
+                            nsu = ltr.nu_nsu.ToString(),
+                            terminal = term.nu_terminal.ToString(),
                             lojista = loja.st_nome,
                             dtCompra = ObtemData(parc.dt_inclusao),
                             parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,

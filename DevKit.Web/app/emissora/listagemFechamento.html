@@ -85,17 +85,21 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th>ID</th>
                                                     <th>Estabelecimento</th>
+                                                    <th>NSU</th>
                                                     <th>Data compra</th>
                                                     <th>Valor parcela</th>
                                                     <th>Parcela</th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="tr in mdl.vendas">
-                                                <td style="min-width:200px;">{{ tr.lojista }}</td>
+                                                <td style="min-width:70px;">{{ tr.id }}</td>
+                                                <td style="min-width:250px;">{{ tr.lojista }}</td>
+                                                <td style="min-width:70px;">{{ tr.nsu }}</td>
                                                 <td style="min-width:120px;">{{ tr.dtCompra }}</td>
-                                                <td style="min-width:120px;">{{ tr.valor }}</td>
-                                                <td style="min-width:120px;">{{ tr.parcela }}</td>
+                                                <td style="min-width:90px;">{{ tr.valor }}</td>
+                                                <td style="min-width:90px;">{{ tr.parcela }}</td>
                                             </tr>
                                         </table>
                                         Total cartão: <b>R$ {{mdl.total}}</b><br />

@@ -143,6 +143,8 @@ namespace DevKit.Web.Controllers
                                          FirstOrDefault();
 
                         var lstParcelasAtuais = (from e in db.T_Parcelas
+                                                 join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
+                                                 where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
                                                   where e.fk_cartao == cartao.i_unique
                                                   where e.nu_parcela == 1
                                                   orderby e.nu_parcela, e.dt_inclusao
@@ -206,6 +208,8 @@ namespace DevKit.Web.Controllers
                                          FirstOrDefault();
 
                         var lstParcelasFuturas = (from e in db.T_Parcelas
+                                                  join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
+                                                  where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
                                                   where e.fk_cartao == cartao.i_unique
                                                   where e.nu_parcela >= 1
                                                   orderby e.nu_parcela, e.dt_inclusao

@@ -74,10 +74,12 @@ namespace DevKit.Web.Controllers
                                                   select e).
                                                   ToList();
 
-                        long vrTotal = 0, vrBonus = 0, vrRepasse = 0;
+                        long vrTotalMax = 0, vrBonusMax = 0, vrRepasseMax = 0;
 
                         while (true)
                         {
+                            long vrTotal = 0, vrBonus = 0, vrRepasse = 0;
+
                             var query = (from e in totalParcsEmAberto
                                          where e.nu_parcela == nuParc  
                                          where e.fk_empresa == db.currentEmpresa.i_unique                                         
@@ -105,12 +107,16 @@ namespace DevKit.Web.Controllers
                                 vrTotal += t_vrValor;
                                 vrBonus += t_vrBonus;
                                 vrRepasse += t_repasse;
-                            } 
+                            }
+
+                            vrTotalMax += vrTotal;
+                            vrBonusMax += vrBonus;
+                            vrRepasseMax += vrRepasse;
 
                             lst.Add(new RelExtratoRepFinancMovResumido
                             {
                                 mesAno = meses [dtNow.Month] + " / " + dtNow.Year,
-                                tot = mon.setMoneyFormat(lstVendasConfirmadas.Sum (y=> (long)y.vr_valor)),
+                                tot = mon.setMoneyFormat(vrTotal),
                                 bonus = mon.setMoneyFormat(vrBonus),
                                 repasse = mon.setMoneyFormat(vrRepasse),
                                 totTrans = lstVendasConfirmadas.Count().ToString()
@@ -124,9 +130,9 @@ namespace DevKit.Web.Controllers
                         {
                             count = lst.Count(),
                             empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
-                            total = mon.setMoneyFormat(vrTotal),
-                            totalBonus = mon.setMoneyFormat(vrBonus),
-                            totalRep = mon.setMoneyFormat(vrRepasse),
+                            total = mon.setMoneyFormat(vrTotalMax),
+                            totalBonus = mon.setMoneyFormat(vrBonusMax),
+                            totalRep = mon.setMoneyFormat(vrRepasseMax),
                             results = lst,
                             dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
                         });

@@ -26,8 +26,39 @@
                                 </td>
                                 <td width="300px" ng-if="pesquisa.tipo == 1" valign="top">
                                     <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
-                                </td>                                
+                                </td>
                                 <td width="300px" ng-if="pesquisa.tipo == 2" valign="top">
+                                    <table>
+                                        <tr height="47px">
+                                            <td width="70px">Mês</td>
+                                            <td width="20px">
+                                                <button class="btn btn-xs btn-danger" ng-show="mes_fail">!</button>
+                                            </td>
+                                            <td width="160px">
+                                                <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                                            </td>
+                                        </tr>
+                                        <tr height="47px">
+                                            <td>Ano</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-danger" ng-show="mes_fail">!</button>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control input-transparent" maxlength="4" ng-model="campos.ano_inicial">
+                                            </td>
+                                        </tr>
+                                        <tr height="47px">
+                                            <td>Fornecedor</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-danger" ng-show="forn_fail">!</button>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control input-transparent" maxlength="4" ng-model="campos.lojista">
+                                            </td>
+                                        </tr>
+                                    </table>                                    
+                                </td>   
+                                <td width="100px" ng-if="pesquisa.tipo == 2" valign="top">
                                     <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
                                 </td>
                             </tr>

@@ -17,6 +17,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.campos = {
         mes_inicial: undefined,
         ano_inicial: $scope.date.getFullYear(),
+        lojista: undefined,
         selects: {
             mes: ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 }),
         }

@@ -207,15 +207,6 @@ namespace DevKit.Web.Controllers
                                          select e).
                                          FirstOrDefault();
 
-                        var lstParcelasFuturas = (from e in db.T_Parcelas
-                                                  join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
-                                                  where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                                  where e.fk_cartao == cartao.i_unique
-                                                  where e.nu_parcela >= 1
-                                                  orderby e.nu_parcela, e.dt_inclusao
-                                                  select e).
-                                                  ToList();
-
                         var diaFech = (from e in db.I_Scheduler
                                        where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
                                        select e).
@@ -224,11 +215,17 @@ namespace DevKit.Web.Controllers
 
                         if (tipoFut == "1") // resumido
                         {
+                            var lstParcelasFuturas = (from e in db.T_Parcelas
+                                                      join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
+                                                      where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
+                                                      where e.fk_cartao == cartao.i_unique
+                                                      where e.nu_parcela > 1
+                                                      orderby e.nu_parcela, e.dt_inclusao
+                                                      select e).
+                                                      ToList();
+
                             var dtNow = DateTime.Now.AddMonths(1);
-
-                            if (dtNow.Day > diaFech)
-                                dtNow = dtNow.AddMonths(1);
-
+                                                        
                             var lst = new List<RelExtratoFutResumido>();
                             
                             var parcs = lstParcelasFuturas.
@@ -277,6 +274,15 @@ namespace DevKit.Web.Controllers
                             // -------------------------
                             // detalhado
                             // -------------------------
+
+                            var lstParcelasFuturas = (from e in db.T_Parcelas
+                                                      join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
+                                                      where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
+                                                      where e.fk_cartao == cartao.i_unique
+                                                      where e.nu_parcela > 1
+                                                      orderby e.nu_parcela, e.dt_inclusao
+                                                      select e).
+                                                      ToList();
 
                             var mes = Request.GetQueryStringValue("mes");
                             var ano = Request.GetQueryStringValue("ano");

@@ -889,6 +889,7 @@
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelRepFinanc.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraUsuarioCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratos.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraFechamentoExpCtrl.cs" />

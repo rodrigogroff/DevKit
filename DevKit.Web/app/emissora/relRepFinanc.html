@@ -13,10 +13,8 @@
         <div class="divWebForm" style="max-width:95%;min-width:95%">
             <table class="widget" style="color: white; width:800px">
                 <tr height="22px"> </tr>
-
-                <tr height="43px">
-                    <td></td>
-                    <td colspan="6" valign="top">
+                <tr>
+                    <td valign="top">
                         <table>
                             <tr>
                                 <td width="20px"></td>
@@ -26,25 +24,17 @@
                                     <label><input type="radio" name="status2" value="1" ng-model="pesquisa.tipo"> Movimento resumido</label><br />
                                     <label><input type="radio" name="status1" value="2" ng-model="pesquisa.tipo"> Movimento aberto</label><br />
                                 </td>
-
                                 <td width="300px" ng-if="pesquisa.tipo == 1" valign="top">
-
-                                    <button class="btn btn-primary" ng-click="search()">Pesquisar 1</button>
-
-                                </td>
-                                
+                                    <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                                </td>                                
                                 <td width="300px" ng-if="pesquisa.tipo == 2" valign="top">
-
-                                    <button class="btn btn-primary" ng-click="search()">Pesquisar 2</button>
-
+                                    <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
                                 </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
-
                 <tr height="32px"></tr>
-
             </table>
 
             <div ng-if="pesquisa.tipoSel==1">
@@ -58,29 +48,27 @@
                 <div ng-show="list.length > 0">
                     <h3>ConveyNET Benefícios</h3>
                     <b>Emissão</b>: {{dtEmissao}}<br />
-                    EXTRATO/SALDOS E LMITES ASSOCIADOS (ENCERRADOS) <br />
-                    <br />
-                    <b>Associado</b>: {{associado}}, <b>Cartão</b>: {{cartao}}, <b>CPF: {{cpf}}</b><br />
-                    <b>Mês</b>: {{mesSel}} / {{anoSel}}<br />
-                    <b>Total em parcelas</b>: R$ {{total}}<br />
+                    <b>Convênio: </b> {{empresa}}<br />
+                    <b>Total previsto fechamento convênio</b>: R$ {{total}}<br />
+                    <b>Total previsto repasse fornecedores</b>: R$ {{totalRep}}<br />
+                    <b>Total previsto bonificação </b>: R$ {{totalBonus}}<br />
                     <br />
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Data Venda</th>
-                                <th>NSU</th>
-                                <th>Valor</th>
-                                <th>Parcela</th>
-                                <th>Fornecedor</th>
+                                <th>Mês / Ano <br />Fechamento</th>
+                                <th>Total vendas <br />em aberto</th>
+                                <th>Total em <br />bonificação</th>
+                                <th>previsão mensal <br />repasse</th>
+                                <th>Total transações</th>
                             </tr>
                         </thead>
-                        <tr ng-click="show(mdl)"
-                            data-ng-repeat="mdl in list">
-                            <td style="min-width:120px;">{{ mdl.dtVenda }}</td>
-                            <td style="min-width:120px;">{{ mdl.nsu }}</td>
-                            <td style="min-width:120px;">{{ mdl.valor }}</td>
-                            <td style="min-width:120px;">{{ mdl.parcela }}</td>
-                            <td style="min-width:120px;">{{ mdl.fornecedor }}</td>
+                        <tr data-ng-repeat="mdl in list">
+                            <td style="min-width:120px;">{{ mdl.mesAno }}</td>
+                            <td style="min-width:120px;">{{ mdl.tot }}</td>
+                            <td style="min-width:120px;">{{ mdl.bonus }}</td>
+                            <td style="min-width:120px;">{{ mdl.repasse }}</td>
+                            <td style="min-width:120px;">{{ mdl.totTrans }}</td>
                         </tr>
                     </table>
                 </div>

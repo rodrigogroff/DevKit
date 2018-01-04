@@ -8,8 +8,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.pesquisa =
         {
-            tipo: 2,                
-            tipoSel: 2,            
+            tipo: 1,                
+            tipoSel: 1,            
         };
 
     $scope.date = new Date();
@@ -50,6 +50,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.list = data.results;
                 $scope.dtEmissao = data.dtEmissao;                    
                 $scope.pesquisa.tipoSel = 1;
+                $scope.total = data.total;
+                $scope.totalBonus = data.totalBonus;
+                $scope.totalRep = data.totalRep;
                 $scope.loading = false;
             },
             function (response) {

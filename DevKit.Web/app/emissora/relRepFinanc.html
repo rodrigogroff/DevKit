@@ -18,18 +18,16 @@
                         <table>
                             <tr>
                                 <td width="20px"></td>
-                                <td width="300px" valign="top">
+                                <td width="250px" valign="top">
                                     <b>Selecione o que deseja visualizar:</b> <br />
                                     <br />
                                     <label><input type="radio" name="status2" value="1" ng-model="pesquisa.tipo"> Movimento resumido</label><br />
                                     <label><input type="radio" name="status1" value="2" ng-model="pesquisa.tipo"> Movimento aberto</label><br />
                                 </td>
-                                <td width="300px" ng-if="pesquisa.tipo == 1" valign="top">
-                                    <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
-                                </td>
                                 <td width="300px" ng-if="pesquisa.tipo == 2" valign="top">
                                     <table>
-                                        <tr height="47px">
+                                        <tr height="27px"></tr>
+                                        <tr height="43px">
                                             <td width="70px">Mês</td>
                                             <td width="20px">
                                                 <button class="btn btn-xs btn-danger" ng-show="mes_fail">!</button>
@@ -38,27 +36,29 @@
                                                 <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
                                             </td>
                                         </tr>
-                                        <tr height="47px">
+                                        <tr height="43px">
                                             <td>Ano</td>
                                             <td>
-                                                <button class="btn btn-xs btn-danger" ng-show="mes_fail">!</button>
+                                                <button class="btn btn-xs btn-danger" ng-show="ano_fail">!</button>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control input-transparent" maxlength="4" ng-model="campos.ano_inicial">
                                             </td>
                                         </tr>
-                                        <tr height="47px">
+                                        <tr height="43px">
                                             <td>Fornecedor</td>
-                                            <td>
-                                                <button class="btn btn-xs btn-danger" ng-show="forn_fail">!</button>
-                                            </td>
+                                            <td></td>
                                             <td>
                                                 <input type="text" class="form-control input-transparent" maxlength="4" ng-model="campos.lojista">
                                             </td>
                                         </tr>
-                                    </table>                                    
-                                </td>   
-                                <td width="100px" ng-if="pesquisa.tipo == 2" valign="top">
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr height="32px"></tr>
+                            <tr height="22px">
+                                <td></td>
+                                <td>
                                     <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
                                 </td>
                             </tr>
@@ -70,8 +70,6 @@
 
             <div ng-if="pesquisa.tipoSel==1">
                 <div ng-show="list.length == 0">
-                    <br />
-                    <br />
                     <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
                     <br />
                     <br />
@@ -104,6 +102,73 @@
                     </table>
                 </div>
             </div>
+
+            <div ng-if="pesquisa.tipoSel==2">
+                <div ng-show="list.length == 0">
+                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                    <br />
+                    <br />
+                </div>
+                <div ng-show="list.length > 0 && !pesquisa.fornecedor == false">
+                    <h3>ConveyNET Benefícios</h3>
+                    <b>Emissão</b>: {{dtEmissao}}<br />
+                    <b>Convênio: </b> {{empresa}}<br />
+                    <b>Total previsto fechamento convênio</b>: R$ {{total}}<br />
+                    <b>Total previsto repasse fornecedores</b>: R$ {{totalRep}}<br />
+                    <b>Total previsto bonificação </b>: R$ {{totalBonus}}<br />
+                    <br />
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Terminal</th>
+                                <th>Fornecedor</th>
+                                <th>Qtd. Transações</th>
+                                <th>Valor Parcelas</th>
+                            </tr>
+                        </thead>
+                        <tr data-ng-repeat="mdl in list">
+                            <td style="min-width:120px;">{{ mdl.terminal }}</td>
+                            <td style="min-width:120px;">{{ mdl.lojista }}</td>
+                            <td style="min-width:120px;">{{ mdl.trans }}</td>
+                            <td style="min-width:120px;">{{ mdl.valor }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div ng-show="list.length > 0 && !pesquisa.fornecedor == true">
+                    <h3>ConveyNET Benefícios</h3>
+                    <b>Emissão</b>: {{dtEmissao}}<br />
+                    <b>Convênio: </b> {{empresa}}<br />
+                    <b>Fornecedor: </b> {{campos.lojista}}<br />
+                    <b>Total previsto fechamento convênio</b>: R$ {{total}}<br />
+                    <b>Total previsto repasse fornecedores</b>: R$ {{totalRep}}<br />
+                    <b>Total previsto bonificação </b>: R$ {{totalBonus}}<br />
+                    <br />
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>NSU</th>
+                                <th>Matrícula</th>
+                                <th>Associado</th>
+                                <th>Valor parcela</th>
+                                <th>Valor repasse</th>
+                                <th>parcela</th>
+                            </tr>
+                        </thead>
+                        <tr data-ng-repeat="mdl in list">
+                            <td style="min-width:120px;">{{ mdl.data }}</td>
+                            <td style="min-width:120px;">{{ mdl.nsu }}</td>
+                            <td style="min-width:120px;">{{ mdl.matricula }}</td>
+                            <td style="min-width:120px;">{{ mdl.associado }}</td>
+                            <td style="min-width:120px;">{{ mdl.vlrParcela }}</td>
+                            <td style="min-width:120px;">{{ mdl.vlrRepasse }}</td>
+                            <td style="min-width:120px;">{{ mdl.parcela }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
             <br />
             <br />
             <br />

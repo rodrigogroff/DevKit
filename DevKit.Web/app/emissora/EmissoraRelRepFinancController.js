@@ -86,6 +86,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             Api.EmissoraRelRepFinanc.listPage(opcoes, function (data)
             {
                 $scope.list = data.results;
+                $scope.empresa = data.empresa;
+                $scope.lojista = data.lojista;
                 $scope.dtEmissao = data.dtEmissao;
                 $scope.pesquisa.tipoSel = 2;     
                 $scope.total = data.total;

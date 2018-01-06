@@ -415,11 +415,12 @@ namespace DevKit.Web.Controllers
                                     });
                                 }                                       
                             }
-                            
+
                             return Ok(new
                             {
-                                results = lst,                                
+                                results = lst,
                                 empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                                lojista = lojistaEspecifico.st_loja + " " + lojistaEspecifico.st_nome + " / " + lojistaEspecifico.st_social,
                                 total = mon.setMoneyFormat(vrTotal),
                                 totalBonus = mon.setMoneyFormat(vrBonus),
                                 totalRep = mon.setMoneyFormat(vrRepasse),

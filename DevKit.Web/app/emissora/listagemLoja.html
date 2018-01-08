@@ -49,19 +49,19 @@
                                     <thead>
                                         <tr>
                                             <th>Código</th>
-                                            <th>Nome Lojista</th>
-                                            <th>Endereço</th>
-                                            <th>Cidade</th>
-                                            <th>Estado</th>
+                                            <th>Razão Social<br />Nome Lojista</th>
+                                            <th>CNPJ</th>
+                                            <th>Endereço <br />Cidade / Estado</th>
+                                            <th>Tselefone</th>
                                             <th>Tx. Admin</th>
                                         </tr>
                                     </thead>
                                     <tr data-ng-repeat="mdl in list">
                                         <td>{{ mdl.codigo}}</td>
-                                        <td>{{ mdl.nome}}</td>
-                                        <td>{{ mdl.end}}</td>
-                                        <td>{{ mdl.cidade}}</td>
-                                        <td>{{ mdl.estado}}</td>
+                                        <td>{{ mdl.razSoc}}<br />{{ mdl.nome}}</td>
+                                        <td>{{ mdl.cnpj}}</td>
+                                        <td>{{ mdl.end}}<br />{{ mdl.cidade}} - {{ mdl.estado}}</td>
+                                        <td>{{ mdl.telefone}}</td>
                                         <td>{{ mdl.txAdmin}}</td>
                                     </tr>
                                 </table>

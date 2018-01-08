@@ -10,6 +10,9 @@ namespace DevKit.Web.Controllers
     public class LojaListagemDTO
     {
         public string nome, 
+                        razSoc,
+                        cnpj,
+                        telefone,
                         codigo,
                         end,
                         cidade,
@@ -62,6 +65,9 @@ namespace DevKit.Web.Controllers
                 res.Add(new LojaListagemDTO
                 {
                     nome = item.st_nome,
+                    razSoc = item.st_social,
+                    cnpj = item.nu_CNPJ,
+                    telefone = item.nu_telefone,
                     codigo = item.st_loja,
                     end = item.st_endereco.Replace ("{SE$3}",",").Replace("{SE$2}", ""),
                     cidade = item.st_cidade,

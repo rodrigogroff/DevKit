@@ -19,15 +19,31 @@
                     <td width="120px">
                         <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.nome" />
                     </td>
-                    <td width="20px"></td>
-                    <td width="150px"></td>
-                    <td width="120px">                        
+                    <td width="50px"></td>
+                    <td width="150px"><b>CNPJ</b></td>
+                    <td width="120px">
+                        <input type="text" class="form-control input-transparent" ng-model="campos.cnpj" />
                     </td>
                     <td width="20px"></td>
-                    <td width="200px" align="right">
+                    <td width="120px" align="right">
                         <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
                     </td>
-                    <td width="20px"></td>
+                    <td width="50px"></td>
+                </tr>
+                <tr height="43px">
+                    <td></td>
+                    <td><b>Código loja</b></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                    </td>
+                    <td></td>
+                    <td><b>Endereço</b></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.endereco" />
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr height="22px"></tr>
             </table>
@@ -48,21 +64,21 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Código<br /></th>
+                                            <th>Código<br />&nbsp;</th>
                                             <th>Razão Social<br />Nome Lojista</th>
-                                            <th>CNPJ</th>
+                                            <th>CNPJ<br />&nbsp;</th>
                                             <th>Endereço <br />Cidade / Estado</th>
-                                            <th>Telefone</th>
-                                            <th>Tx. Admin</th>
+                                            <th>Telefone<br />&nbsp;</th>
+                                            <th>Tx. Admin<br />&nbsp;</th>
                                         </tr>
                                     </thead>
                                     <tr data-ng-repeat="mdl in list">
-                                        <td>{{ mdl.codigo}}</td>
-                                        <td>{{ mdl.razSoc}}<br />{{ mdl.nome}}</td>
-                                        <td>{{ mdl.cnpj}}</td>
-                                        <td>{{ mdl.end}}<br />{{ mdl.cidade}} - {{ mdl.estado}}</td>
-                                        <td>{{ mdl.telefone}}</td>
-                                        <td>{{ mdl.txAdmin}}</td>
+                                        <td style="min-width:80px;">{{ mdl.codigo}}</td>
+                                        <td style="min-width:220px;"><b>{{ mdl.razSoc}}</b><br />{{ mdl.nome}}</td>
+                                        <td style="min-width:120px;">{{ mdl.cnpj}}</td>
+                                        <td style="min-width:240px;"><b>{{ mdl.end}}</b><br />{{ mdl.cidade}} - {{ mdl.estado}}</td>
+                                        <td style="min-width:120px;">{{ mdl.telefone}}</td>
+                                        <td style="min-width:90px;">{{ mdl.txAdmin}}</td>
                                     </tr>
                                 </table>
                             </div>

@@ -19,7 +19,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.itensporpagina = 15;
 
     $scope.campos = {
-        nome : ''
+        nome: '',
+        codigo: '',
+        cnpj: '',
+        endereco: ''
     };
     
     init();
@@ -43,7 +46,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         var opcoes = {
             skip: skip,
             take: take,        
-            nome: $scope.campos.nome
+            nome: $scope.campos.nome,
+            codigo: $scope.campos.codigo,
+            cnpj: $scope.campos.cnpj,
+            endereco: $scope.campos.endereco,
         };
 
         Api.EmissoraLoja.listPage(opcoes, function (data)

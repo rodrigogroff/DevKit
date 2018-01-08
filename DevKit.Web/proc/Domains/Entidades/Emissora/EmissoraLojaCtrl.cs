@@ -27,6 +27,9 @@ namespace DevKit.Web.Controllers
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
             var nome = Request.GetQueryStringValue("nome");
+            var codigo = Request.GetQueryStringValue("codigo");
+            var cnpj = Request.GetQueryStringValue("cnpj");
+            var endereco = Request.GetQueryStringValue("endereco");
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -41,6 +44,31 @@ namespace DevKit.Web.Controllers
             {
                 query = (from e in query
                          where e.st_nome.ToUpper().Contains(nome)
+                         select e);
+            }
+
+            if (!String.IsNullOrEmpty(codigo))
+            {
+                query = (from e in query
+                         where e.st_loja.ToUpper().Contains(codigo)
+                         select e);
+            }
+
+            if (!String.IsNullOrEmpty(cnpj))
+            {
+                query = (from e in query
+                         where e.nu_CNPJ.ToUpper().Contains(cnpj)
+                         select e);
+            }
+
+            if (!String.IsNullOrEmpty(endereco))
+            {
+                query = (from e in query
+
+                         where  e.st_endereco.ToUpper().Contains(endereco) ||
+                                e.st_cidade.ToUpper().Contains(endereco) ||
+                                e.st_estado.ToUpper().Contains(endereco) 
+
                          select e);
             }
 

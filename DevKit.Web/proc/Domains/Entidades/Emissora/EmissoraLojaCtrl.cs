@@ -72,6 +72,10 @@ namespace DevKit.Web.Controllers
                          select e);
             }
 
+            query = from e in query
+                    orderby e.st_social
+                    select e;
+            
             var res = new List<LojaListagemDTO>();
 
             var page = query.Skip(skip).Take(take).ToList();

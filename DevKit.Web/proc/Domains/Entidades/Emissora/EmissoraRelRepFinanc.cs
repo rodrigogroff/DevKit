@@ -154,7 +154,7 @@ namespace DevKit.Web.Controllers
                             totalBonus = mon.setMoneyFormat(vrBonusMax),
                             totalRep = mon.setMoneyFormat(vrRepasseMax),
                             results = lst,
-                            dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                            dtEmissao = ObtemData(DateTime.Now)
                         });
                     }
 
@@ -173,7 +173,7 @@ namespace DevKit.Web.Controllers
                             // --------------------------------
                             // todos os lojistas
                             // --------------------------------
-                            
+
                             var lst = new List<RelExtratoRepFinancMovAberto>();
 
                             var dtNow = DateTime.Now;
@@ -200,6 +200,9 @@ namespace DevKit.Web.Controllers
                             if (dtNow.Day > diaFech)
                                 dtNow = dtNow.AddMonths(1);
 
+                            if (new DateTime(ano, mes, 1) < new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1))
+                                return BadRequest();
+                            
                             int nuParc = 1;
 
                             if (dtNow.Month != mes && dtNow.Year != ano)
@@ -290,7 +293,7 @@ namespace DevKit.Web.Controllers
                                 total = mon.setMoneyFormat(vrTotal),
                                 totalBonus = mon.setMoneyFormat(vrBonus),
                                 totalRep = mon.setMoneyFormat(vrRepasse),
-                                dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                                dtEmissao = ObtemData(DateTime.Now)
                             });
                         }
                         else
@@ -424,7 +427,7 @@ namespace DevKit.Web.Controllers
                                 total = mon.setMoneyFormat(vrTotal),
                                 totalBonus = mon.setMoneyFormat(vrBonus),
                                 totalRep = mon.setMoneyFormat(vrRepasse),
-                                dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                                dtEmissao = ObtemData(DateTime.Now)
                             });
                         }                        
                     }

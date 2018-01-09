@@ -58,9 +58,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             Api.EmissoraRelExtratoForn.listPage(opcoes, function (data)
             {
                 $scope.list = data.results;
-                $scope.dtEmissao = data.dtEmissao;                    
+                $scope.dtEmissao = data.dtEmissao;
                 $scope.referencia = data.referencia;
-                $scope.list = data.list;
+                $scope.total = data.total;
                 $scope.totalBonus = data.totalBonus;
                 $scope.totalRep = data.totalRep;
                 $scope.txAdmin = data.txAdmin;
@@ -70,7 +70,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.loading = false;
                 $scope.list = [];
             });
-        }        
+        }  
     }
 
 }]);

@@ -40,6 +40,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     
     $scope.search = function ()
     {
+        $scope.list = [];
+        $scope.pesquisa.tipoSel = 0;
+
         if ($scope.pesquisa.tipo == 1)
         {
             $scope.loading = true;
@@ -51,6 +54,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             Api.EmissoraRelRepFinanc.listPage(opcoes, function (data) {
                 $scope.list = data.results;
                 $scope.dtEmissao = data.dtEmissao;
+                $scope.empresa = data.empresa;
                 $scope.pesquisa.tipoSel = 1;
                 $scope.total = data.total;
                 $scope.totalBonus = data.totalBonus;

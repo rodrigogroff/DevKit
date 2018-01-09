@@ -111,7 +111,7 @@ namespace DevKit.Web.Controllers
                             associado = associado.st_nome,
                             cartao = cartao.st_empresa + "." + cartao.st_matricula,
                             cpf = associado.st_cpf,                            
-                            dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                            dtEmissao = ObtemData(DateTime.Now)
                         });
                     }
 
@@ -188,7 +188,7 @@ namespace DevKit.Web.Controllers
                             associado = associado.st_nome,
                             cartao = cartao.st_empresa + "." + cartao.st_matricula,
                             cpf = associado.st_cpf,
-                            dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                            dtEmissao = ObtemData(DateTime.Now)
                         });
                     }
 
@@ -266,7 +266,7 @@ namespace DevKit.Web.Controllers
                                 associado = associado.st_nome,
                                 cartao = cartao.st_empresa + "." + cartao.st_matricula,
                                 cpf = associado.st_cpf,
-                                dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                                dtEmissao = ObtemData(DateTime.Now)
                             });
                         }
                         else                        
@@ -337,7 +337,7 @@ namespace DevKit.Web.Controllers
                                 associado = associado.st_nome,
                                 cartao = cartao.st_empresa + "." + cartao.st_matricula,
                                 cpf = associado.st_cpf,
-                                dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                                dtEmissao = ObtemData(DateTime.Now)
                             });
                         }                        
                     }

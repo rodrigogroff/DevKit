@@ -73,8 +73,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
             $scope.pesquisa.fornecedor = invalidCheck($scope.campos.lojista);
 
-            console.log('forn ' + $scope.pesquisa.fornecedor);
-
             if ($scope.mes_fail || $scope.ano_fail)
                 return;
 

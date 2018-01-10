@@ -82,7 +82,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         
             var printContents = "<h2>CONVEYNET BENEFÍCIOS</h2>";
 
-            printContents += "<h3>Relatório de fornecedores</h3>";
+            printContents += "<h3>Relatório de lojistas</h3>";
             printContents += "Data de emissão: " + $scope.date.getDate() + "/" + ($scope.date.getMonth() + 1) + "/" + $scope.date.getFullYear();
 
             printContents += "<table style='font-size:x-small;'><thead><tr><th align='left'>Código</th><th align='left'>Razão Social</th><th align='left'>CNPJ</th><th align='left'>Endereço</th><th align='left'>Telefone</th><th align='left'>Tx. Admin</th></tr></thead>";

@@ -60,6 +60,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.list = data.results;
                 $scope.dtEmissao = data.dtEmissao;
                 $scope.referencia = data.referencia;
+                $scope.lojista = data.lojista;
                 $scope.total = data.total;
                 $scope.totalBonus = data.totalBonus;
                 $scope.totalRep = data.totalRep;

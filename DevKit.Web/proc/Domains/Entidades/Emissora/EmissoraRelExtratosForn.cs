@@ -139,6 +139,8 @@ namespace DevKit.Web.Controllers
                                               where e.fk_terminal == term
                                               select e)
                         {
+                            
+
                             var lt = ltrs.Where(y => y.i_unique == parc.fk_log_transacoes).FirstOrDefault();
 
                             terminal.itens.Add(new ItensForn
@@ -151,13 +153,13 @@ namespace DevKit.Web.Controllers
                                 vlrParcela = mon.setMoneyFormat((long)parc.vr_valor)
                             });
 
-                            vrTotal += (long)lt.vr_total;
+                            vrTotal += (long)parc.vr_valor;
 
-                            var t_vrBonus = lt.vr_total * t_txAdmin / 10000;
+                            var t_vrBonus = parc.vr_valor * t_txAdmin / 10000;
 
                             vrBonusMax += (long) t_vrBonus;
 
-                            vrRepasse += (long)lt.vr_total - (long)t_vrBonus;
+                            vrRepasse += (long)parc.vr_valor - (long)t_vrBonus;
 
                             serial++;
                         }
@@ -173,6 +175,7 @@ namespace DevKit.Web.Controllers
                     {
                         referencia = meses[mes] + " / " + ano,
                         empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                        lojista = lojistaEsp.st_nome + " - " + lojistaEsp.st_social + " - CNPJ: " + lojistaEsp.nu_CNPJ,
                         total = mon.setMoneyFormat(vrTotalMax),
                         totalBonus = mon.setMoneyFormat(vrBonusMax),
                         totalRep = mon.setMoneyFormat(vrRepasseMax),
@@ -191,6 +194,7 @@ namespace DevKit.Web.Controllers
                     {
                         referencia = meses[mes] + " / " + ano,
                         empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                        lojista = lojistaEsp.st_nome + " - " + lojistaEsp.st_social + " - CNPJ: " + lojistaEsp.nu_CNPJ,
                         total = mon.setMoneyFormat(vrTotalMax),
                         totalBonus = mon.setMoneyFormat(vrBonusMax),
                         totalRep = mon.setMoneyFormat(vrRepasseMax),

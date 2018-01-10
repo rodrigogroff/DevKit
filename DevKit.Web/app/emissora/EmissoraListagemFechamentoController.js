@@ -133,9 +133,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             printContents += "<tr><td>Convênio: " + $scope.convenio + "</td></tr>";
             printContents += "<tr><td>Período: " + $scope.campos.mes_inicial + " / " + $scope.campos.ano_inicial + "</td></tr>";
             printContents += "<tr><td>Total fechamento convênio: R$ " + $scope.totalFechamento + "</td></tr>";
-            printContents += "<tr><td>Total repasse fornecedores: R$ " + $scope.totalRepasse + "</td></tr>";
+            printContents += "<tr><td>Total repasse lojistas: R$ " + $scope.totalRepasse + "</td></tr>";
             printContents += "<tr><td>Total bonificação: R$ " + $scope.totalBonus + "</td></tr>";
-            printContents += "<tr><td>Quantidade fornecedores: " + $scope.totalLojistas + "</td></tr>";
+            printContents += "<tr><td>Quantidade lojistas: " + $scope.totalLojistas + "</td></tr>";
 
             printContents += "</table>";
 

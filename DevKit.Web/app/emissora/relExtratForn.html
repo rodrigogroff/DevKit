@@ -73,7 +73,8 @@
             <div ng-show="list.length > 0">
                 <h3>ConveyNET Benefícios</h3>
                 <b>Emissão</b>: {{dtEmissao}}<br />
-                EXTRATO DO LOJISTA EM ABERTO: <br />
+                <h4 ng-if="tipoSel == 1">EXTRATO DO LOJISTA EM ABERTO</h4>
+                <h4 ng-if="tipoSel == 2">EXTRATO DO LOJISTA ENCERRADO</h4>
                 Referência: {{referencia}}<br />
                 <br />
                 <b>Resumo do lojista</b>: {{lojista}}<br />
@@ -84,7 +85,8 @@
                 <div data-ng-repeat="term in list">
                     <b>Terminal</b>: {{term.nome}}<br />
                     Convênio: {{term.empresa}}<br />
-                    Situação: ABERTO<br />
+                    Situação: <span ng-if="tipoSel == 1">ABERTO</span>
+                              <span ng-if="tipoSel == 2">ENCERRADO</span><br />                    
                     Total vendas: {{term.total}}<br />
                     Total repasse: {{term.totalRep}}<br />
                     <br />

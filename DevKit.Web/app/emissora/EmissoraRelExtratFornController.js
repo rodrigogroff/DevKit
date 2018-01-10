@@ -58,6 +58,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             Api.EmissoraRelExtratoForn.listPage(opcoes, function (data)
             {
                 $scope.list = data.results;
+                $scope.tipoSel = $scope.pesquisa.tipo;
                 $scope.dtEmissao = data.dtEmissao;
                 $scope.referencia = data.referencia;
                 $scope.lojista = data.lojista;

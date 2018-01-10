@@ -34,7 +34,7 @@ namespace DevKit.Web.Controllers
         {
             var tipo = Request.GetQueryStringValue("tipo");
             var codigo = Request.GetQueryStringValue("codigo");
-            var mes = Request.GetQueryStringValue("mes",0);
+            var mes = Request.GetQueryStringValue("mes", 0);
             var ano = Request.GetQueryStringValue("ano", 0);
 
             var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
@@ -69,139 +69,232 @@ namespace DevKit.Web.Controllers
                 // ------------------------
 
                 case "1":
+                    {
+                        var lstParcelasEmAberto = (from e in db.T_Parcelas
+                                                   join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
+                                                   where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
+                                                   where e.fk_empresa == db.currentEmpresa.i_unique
+                                                   where e.fk_loja == lojistaEsp.i_unique
+                                                   where e.nu_parcela >= 1
+                                                   select e);
 
-                    var lstParcelasEmAberto = (from e in db.T_Parcelas
-                                               join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
-                                               where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                               where e.fk_empresa == db.currentEmpresa.i_unique
-                                               where e.fk_loja == lojistaEsp.i_unique
-                                               where e.nu_parcela >= 1
-                                               select e);
+                        if (!lstParcelasEmAberto.Any())
+                            return BadRequest();
 
-                    if (!lstParcelasEmAberto.Any())
-                        return BadRequest();
+                        var diaFech = (from e in db.I_Scheduler
+                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
+                                       select e).
+                                       FirstOrDefault().
+                                       nu_monthly_day;
 
-                    var diaFech = (from e in db.I_Scheduler
-                                   where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
-                                   select e).
-                                   FirstOrDefault().
-                                   nu_monthly_day;
+                        var dtNow = DateTime.Now;
 
-                    var dtNow = DateTime.Now;
-
-                    if (dtNow.Day > diaFech)
-                        dtNow = dtNow.AddMonths(1);
-
-                    int nuParc = 1;
-
-                    if (dtNow.Month != mes && dtNow.Year != ano)
-                        while (dtNow.Month != mes && dtNow.Year != ano)
-                        {
-                            nuParc++;
+                        if (dtNow.Day > diaFech)
                             dtNow = dtNow.AddMonths(1);
-                        }
 
-                    var termsAbertos = (from e in lstParcelasEmAberto
-                                        where e.nu_parcela == nuParc
-                                        select e.fk_terminal).
-                                        Distinct().
-                                        ToList();
+                        int nuParc = 1;
 
-                    var terms = (from e in db.T_Terminal
-                                 where termsAbertos.Contains((int)e.i_unique)
-                                 select e).
-                                 ToList();
-
-                    var ltrs = (from e in lstParcelasEmAberto
-                                join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int) ltr.i_unique
-                                select ltr).
-                                ToList();
-
-                    long serial = 1;
-
-                    foreach (var term in termsAbertos)
-                    {
-                        var terminal = new EmissoraRelExtratosFornDTO();
-
-                        lst.Add(terminal);
-
-                        var t = terms.Where(y => y.i_unique == term).FirstOrDefault();
-                        
-                        terminal.nome = t.nu_terminal;
-                        terminal.empresa = db.currentEmpresa.st_fantasia;
-
-                        terminal.itens = new List<ItensForn>();
-
-                        long vrTotal = 0, vrRepasse = 0;
-
-                        foreach (var parc in from e in lstParcelasEmAberto
-                                              where e.nu_parcela == nuParc
-                                              where e.fk_terminal == term
-                                              select e)
-                        {
-                            
-
-                            var lt = ltrs.Where(y => y.i_unique == parc.fk_log_transacoes).FirstOrDefault();
-
-                            terminal.itens.Add(new ItensForn
+                        if (dtNow.Month != mes && dtNow.Year != ano)
+                            while (dtNow.Month != mes && dtNow.Year != ano)
                             {
-                                serial = serial.ToString(),                                
-                                dtVenda = ObtemData(parc.dt_inclusao),
-                                nsu = parc.nu_nsu.ToString(),
-                                parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,                                
-                                valor = mon.setMoneyFormat((long)lt.vr_total),
-                                vlrParcela = mon.setMoneyFormat((long)parc.vr_valor)
-                            });
+                                nuParc++;
+                                dtNow = dtNow.AddMonths(1);
+                            }
 
-                            vrTotal += (long)parc.vr_valor;
+                        var termsAbertos = (from e in lstParcelasEmAberto
+                                            where e.nu_parcela == nuParc
+                                            select e.fk_terminal).
+                                            Distinct().
+                                            ToList();
 
-                            var t_vrBonus = parc.vr_valor * t_txAdmin / 10000;
+                        var terms = (from e in db.T_Terminal
+                                     where termsAbertos.Contains((int)e.i_unique)
+                                     select e).
+                                     ToList();
 
-                            vrBonusMax += (long) t_vrBonus;
+                        var ltrs = (from e in lstParcelasEmAberto
+                                    join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
+                                    select ltr).
+                                    ToList();
 
-                            vrRepasse += (long)parc.vr_valor - (long)t_vrBonus;
+                        long serial = 1;
 
-                            serial++;
+                        foreach (var term in termsAbertos)
+                        {
+                            var terminal = new EmissoraRelExtratosFornDTO();
+
+                            lst.Add(terminal);
+
+                            var t = terms.Where(y => y.i_unique == term).FirstOrDefault();
+
+                            terminal.nome = t.nu_terminal;
+                            terminal.empresa = db.currentEmpresa.st_fantasia;
+
+                            terminal.itens = new List<ItensForn>();
+
+                            long vrTotal = 0, vrRepasse = 0;
+
+                            foreach (var parc in from e in lstParcelasEmAberto
+                                                 where e.nu_parcela == nuParc
+                                                 where e.fk_terminal == term
+                                                 select e)
+                            {
+
+
+                                var lt = ltrs.Where(y => y.i_unique == parc.fk_log_transacoes).FirstOrDefault();
+
+                                terminal.itens.Add(new ItensForn
+                                {
+                                    serial = serial.ToString(),
+                                    dtVenda = ObtemData(parc.dt_inclusao),
+                                    nsu = parc.nu_nsu.ToString(),
+                                    parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
+                                    valor = mon.setMoneyFormat((long)lt.vr_total),
+                                    vlrParcela = mon.setMoneyFormat((long)parc.vr_valor)
+                                });
+
+                                vrTotal += (long)parc.vr_valor;
+
+                                var t_vrBonus = parc.vr_valor * t_txAdmin / 10000;
+
+                                vrBonusMax += (long)t_vrBonus;
+
+                                vrRepasse += (long)parc.vr_valor - (long)t_vrBonus;
+
+                                serial++;
+                            }
+
+                            terminal.total = mon.setMoneyFormat(vrTotal);
+                            terminal.totalRep = mon.setMoneyFormat(vrRepasse);
+
+                            vrTotalMax += vrTotal;
+                            vrRepasseMax += vrRepasse;
                         }
 
-                        terminal.total = mon.setMoneyFormat(vrTotal);
-                        terminal.totalRep = mon.setMoneyFormat(vrRepasse);
-
-                        vrTotalMax += vrTotal;
-                        vrRepasseMax += vrRepasse;
-                    }                    
-
-                    return Ok(new
-                    {
-                        referencia = meses[mes] + " / " + ano,
-                        empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
-                        lojista = lojistaEsp.st_nome + " - " + lojistaEsp.st_social + " - CNPJ: " + lojistaEsp.nu_CNPJ,
-                        total = mon.setMoneyFormat(vrTotalMax),
-                        totalBonus = mon.setMoneyFormat(vrBonusMax),
-                        totalRep = mon.setMoneyFormat(vrRepasseMax),
-                        txAdmin,
-                        results = lst,
-                        dtEmissao = ObtemData(DateTime.Now)
-                    });
+                        return Ok(new
+                        {
+                            referencia = meses[mes] + " / " + ano,
+                            empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                            lojista = lojistaEsp.st_nome + " - " + lojistaEsp.st_social + " - CNPJ: " + lojistaEsp.nu_CNPJ,
+                            total = mon.setMoneyFormat(vrTotalMax),
+                            totalBonus = mon.setMoneyFormat(vrBonusMax),
+                            totalRep = mon.setMoneyFormat(vrRepasseMax),
+                            txAdmin,
+                            results = lst,
+                            dtEmissao = ObtemData(DateTime.Now)
+                        });
+                    }
 
                 // ------------------------
                 // encerrado
                 // ------------------------
 
                 case "2":
-
-                    return Ok(new
                     {
-                        referencia = meses[mes] + " / " + ano,
-                        empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
-                        lojista = lojistaEsp.st_nome + " - " + lojistaEsp.st_social + " - CNPJ: " + lojistaEsp.nu_CNPJ,
-                        total = mon.setMoneyFormat(vrTotalMax),
-                        totalBonus = mon.setMoneyFormat(vrBonusMax),
-                        totalRep = mon.setMoneyFormat(vrRepasseMax),
-                        txAdmin,
-                        results = lst,
-                        dtEmissao = ObtemData(DateTime.Now)
-                    });
+                        string sMes = mes.ToString().PadLeft(2,'0');
+                        string sAno = ano.ToString();
+
+                        var lstFechamento = (from e in db.LOG_Fechamento
+                                             join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                             join ltr in db.LOG_Transacoes on parc.fk_log_transacoes equals (int)ltr.i_unique
+                                             where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
+                                             where e.fk_empresa == db.currentEmpresa.i_unique
+                                             where e.fk_loja == lojistaEsp.i_unique
+                                             where e.st_mes == sMes && e.st_ano == sAno
+                                             select e);
+
+                        if (!lstFechamento.Any())
+                            return BadRequest();
+
+                        var termsAbertos = (from e in lstFechamento
+                                            join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                            join ltr in db.LOG_Transacoes on parc.fk_log_transacoes equals (int)ltr.i_unique
+                                            select ltr.fk_terminal).
+                                            Distinct().
+                                            ToList();
+
+                        var terms = (from e in db.T_Terminal
+                                     where termsAbertos.Contains((int)e.i_unique)
+                                     select e).
+                                     ToList();
+
+                        var parcs = (from e in lstFechamento
+                                    join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                    select parc).
+                                    ToList();
+
+                        var ltrs = (from e in lstFechamento
+                                    join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                    join ltr in db.LOG_Transacoes on parc.fk_log_transacoes equals (int)ltr.i_unique
+                                    select ltr).
+                                    ToList();
+
+                        long serial = 1;
+
+                        foreach (var term in termsAbertos)
+                        {
+                            var terminal = new EmissoraRelExtratosFornDTO();
+
+                            lst.Add(terminal);
+                            
+                            var t = terms.Where(y => y.i_unique == term).FirstOrDefault();
+
+                            terminal.nome = t.nu_terminal;
+                            terminal.empresa = db.currentEmpresa.st_fantasia;
+
+                            terminal.itens = new List<ItensForn>();
+
+                            long vrTotal = 0, vrRepasse = 0;
+
+                            foreach (var parc in from e in lstFechamento
+                                                 join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                                 join ltr in db.LOG_Transacoes on parc.fk_log_transacoes equals (int)ltr.i_unique
+                                                 where ltr.fk_terminal == term
+                                                 select parc)
+                            {
+                                var lt = ltrs.Where(y => y.i_unique == parc.fk_log_transacoes).FirstOrDefault();
+
+                                terminal.itens.Add(new ItensForn
+                                {
+                                    serial = serial.ToString(),
+                                    dtVenda = ObtemData(parc.dt_inclusao),
+                                    nsu = parc.nu_nsu.ToString(),
+                                    parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
+                                    valor = mon.setMoneyFormat((long)lt.vr_total),
+                                    vlrParcela = mon.setMoneyFormat((long)parc.vr_valor)
+                                });
+
+                                vrTotal += (long)parc.vr_valor;
+
+                                var t_vrBonus = parc.vr_valor * t_txAdmin / 10000;
+
+                                vrBonusMax += (long)t_vrBonus;
+
+                                vrRepasse += (long)parc.vr_valor - (long)t_vrBonus;
+
+                                serial++;
+                            }
+
+                            terminal.total = mon.setMoneyFormat(vrTotal);
+                            terminal.totalRep = mon.setMoneyFormat(vrRepasse);
+
+                            vrTotalMax += vrTotal;
+                            vrRepasseMax += vrRepasse;
+                        }
+
+                        return Ok(new
+                        {
+                            referencia = meses[mes] + " / " + ano,
+                            empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                            lojista = lojistaEsp.st_nome + " - " + lojistaEsp.st_social + " - CNPJ: " + lojistaEsp.nu_CNPJ,
+                            total = mon.setMoneyFormat(vrTotalMax),
+                            totalBonus = mon.setMoneyFormat(vrBonusMax),
+                            totalRep = mon.setMoneyFormat(vrRepasseMax),
+                            txAdmin,
+                            results = lst,
+                            dtEmissao = ObtemData(DateTime.Now)
+                        });
+                    }
             }
 
             return BadRequest();

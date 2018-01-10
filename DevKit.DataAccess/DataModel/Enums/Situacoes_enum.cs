@@ -23,6 +23,7 @@ namespace DataModel
         {
             lst.Add(new Situacao() { id = 1, stName = "Habilitado" });
             lst.Add(new Situacao() { id = 2, stName = "Bloqueado" });
+            lst.Add(new Situacao() { id = 3, stName = "Cancelado" });
         }
 
         public Situacao Get(long _id)

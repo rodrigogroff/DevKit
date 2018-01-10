@@ -287,22 +287,25 @@ namespace DevKit.Web.Controllers
                             var mes = Request.GetQueryStringValue("mes");
                             var ano = Request.GetQueryStringValue("ano");
 
-                            if (DateTime.Now > new DateTime(Convert.ToInt32(ano), Convert.ToInt32(mes), 1))
-                                // passado
+                            var dtNow = DateTime.Now.AddMonths(1); // fev
+                            //jan
+                            var dtReq = new DateTime(Convert.ToInt32(ano), Convert.ToInt32(mes), 1);
+
+                            // passado
+                            if (dtReq < new DateTime(dtNow.Year, dtNow.Month, 1))
                                 return BadRequest();
 
-                            var dtNow = DateTime.Now;
                             var lst = new List<RelExtratoEncerrado>();
-
-                            var parc = 0;
+                            
+                            var parc = 2;
 
                             while (true)
                             {
-                                dtNow = dtNow.AddMonths(1);
-                                parc++;
-
                                 if (dtNow.Month.ToString() == mes && dtNow.Year.ToString() == ano)
                                     break;
+
+                                parc++;
+                                dtNow = dtNow.AddMonths(1);
                             }
 
                             var lstParcsSel = lstParcelasFuturas.Where(y => y.nu_parcela == parc).ToList();

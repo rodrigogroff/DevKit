@@ -402,7 +402,7 @@ namespace DevKit.Web.Controllers
             cart.vr_limiteMensal = 0;
             cart.vr_limiteTotal = 0;
             cart.vr_extraCota = 0;
-
+            
             db.Insert(cart);
 
             // ----------------------------------

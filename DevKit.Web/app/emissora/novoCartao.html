@@ -11,7 +11,7 @@
                 <tr height="12px"></tr>
             </table>
         </legend>
-        <div class="divWebForm" ng-if="id == undefined">
+        <div class="divWebForm">
             <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
                 <tab heading="Cartão">
                     <table class="widget" style="color:white">
@@ -24,7 +24,10 @@
                             <td width="20px">
                                 <button class="btn btn-xs btn-danger" ng-show="mat_fail">!</button>
                             </td>
-                            <td width="160px">
+                            <td width="160px" ng-show="id > 0">{{viewModel.matricula}}</td>
+                            <td width="160px" ng-show="id == undefined">
+
+                                {{id}}
                                 <input type="text" class="form-control input-transparent" maxlength="6"
                                        ng-model="viewModel.matricula">
                             </td>
@@ -41,12 +44,14 @@
                             <td width="160px">
                                 <table>
                                     <tr>
-                                        <td>
+                                        <td ng-if="id > 0">{{viewModel.vencMes}}</td>
+                                        <td ng-if="id == undefined">
                                             <input type="text" class="form-control input-transparent" maxlength="2" style="width:40px"
                                                    ng-model="viewModel.vencMes">
                                         </td>
                                         <td width="20px"> &nbsp;&nbsp;/&nbsp;&nbsp; </td>
-                                        <td>
+                                        <td ng-if="id > 0">{{viewModel.vencAno}}</td>
+                                        <td ng-if="id == undefined">
                                             <input type="text" class="form-control input-transparent" maxlength="2" style="width:40px"
                                                    ng-model="viewModel.vencAno">
                                         </td>
@@ -105,7 +110,8 @@
                             <td>
                                 <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
                             </td>
-                            <td>
+                            <td ng-show="id > 0">{{viewModel.cpf}}</td>
+                            <td ng-show="id == undefined">
                                 <input type="text" class="form-control input-transparent" maxlength="11"
                                        ng-model="viewModel.cpf">
                             </td>

@@ -23,6 +23,8 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         if (id > 0) {
             $scope.loading = true;
 
+            $scope.id = id;
+
             Api.EmissoraCartao.get({ id: id }, function (data) {
                 $scope.viewModel = data;
                 $scope.loading = false;

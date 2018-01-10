@@ -390,6 +390,7 @@ namespace DevKit.Web.Controllers
 
             cart.st_titularidade = "01";
             cart.nu_viaCartao = 1;
+
             cart.tg_status = Convert.ToChar(CartaoStatus.Habilitado);
             cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
             cart.tg_tipoCartao = Convert.ToChar(TipoCartao.empresarial);
@@ -479,6 +480,27 @@ namespace DevKit.Web.Controllers
 
             switch (mdl.modo)
             {
+                case "altCota":
+                    {
+                        if (mdl.valor.Length == 0)
+                            return BadRequest("Informe a cota extra corretamente!");
+
+                        cart.vr_extraCota = (int)ObtemValor(mdl.valor);
+
+                        db.Update(cart);
+
+                        db.Insert(new LOG_Audit
+                        {
+                            tg_operacao = Convert.ToInt32(TipoOperacao.CotaExtraMensal),
+                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
+                            dt_operacao = DateTime.Now,
+                            st_observacao = "",
+                            fk_generic = (int)cart.i_unique
+                        });
+
+                        return Ok();
+                    }
+
                 case "altSenha":
                     {
                         if (mdl.valor.Length != 4)
@@ -518,27 +540,6 @@ namespace DevKit.Web.Controllers
                         db.Insert(new LOG_Audit
                         {
                             tg_operacao = Convert.ToInt32(TipoOperacao.AlterCartao),
-                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
-                            dt_operacao = DateTime.Now,
-                            st_observacao = "",
-                            fk_generic = (int)cart.i_unique
-                        });
-
-                        return Ok();
-                    }
-
-                case "altCota":
-                    {
-                        if (mdl.valor.Length == 0)
-                            return BadRequest("Informe a cota extra corretamente!");
-
-                        cart.vr_extraCota = (int)ObtemValor(mdl.valor);
-                        
-                        db.Update(cart);
-
-                        db.Insert(new LOG_Audit
-                        {
-                            tg_operacao = Convert.ToInt32(TipoOperacao.CotaExtraMensal),
                             fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
                             st_observacao = "",

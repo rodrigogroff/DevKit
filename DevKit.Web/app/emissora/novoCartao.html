@@ -209,7 +209,7 @@
                         </tr>
                         <tr height="20px"></tr>
                         <tr height="20px"></tr>
-                        <tr height="43px">
+                        <tr height="43px" ng-if="id > 0">
                             <td></td>
                             <td colspan="3">
                                 <button class="btn btn-primary" ng-click="altLim()">Alterar limites</button>
@@ -220,7 +220,7 @@
                         <tr height="20px"></tr>
                     </table>
                 </tab>
-                <tab heading="Senha" ng-if="id != 0">
+                <tab heading="Senha" ng-if="id > 0">
                     <table class="widget" style="color:white">
                         <tr height="12px"></tr>
                         <tr height="43px">
@@ -265,7 +265,7 @@
                         <tr height="20px"></tr>
                     </table>
                 </tab>
-                <tab heading="Dependentes">
+                <tab heading="Dependentes" ng-if="id > 0">
                     <table class="table table-hover" ng-if="viewModel.lstDeps.length > 0" style="width:440px">
                         <thead>
                             <tr>

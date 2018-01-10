@@ -73,7 +73,7 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
     {
         $scope.novaCota_fail = invalidCheck($scope.campos.novaCota);
         
-        if (!$scope.limCota_fail)
+        if (!$scope.novaCota_fail)
         {
             $scope.loading = true;
 

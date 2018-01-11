@@ -69,6 +69,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.list = data.results;
                 $scope.dtEmissao = data.dtEmissao;
                 $scope.cartao = data.cartao;
+                $scope.periodo = data.periodo;
+                $scope.total = data.total;
                 $scope.loading = false;
             },
             function (response) {

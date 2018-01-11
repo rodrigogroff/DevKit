@@ -4,7 +4,6 @@ using SyCrafEngine;
 using LinqToDB;
 using System;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace DevKit.Web.Controllers
 {
@@ -41,11 +40,18 @@ namespace DevKit.Web.Controllers
             var cart = (from e in db.T_Cartao
                         where e.st_empresa == db.currentEmpresa.st_empresa
                         where e.st_matricula == mat.PadLeft(6, '0')
+                        where e.st_titularidade == "01"
                         select e).
                         FirstOrDefault();
 
             if (cart == null)
                 return BadRequest();
+
+            var lstCarts = (from e in db.T_Cartao
+                            where e.st_empresa == db.currentEmpresa.st_empresa
+                            where e.st_matricula == mat.PadLeft(6, '0')
+                            select (int)e.i_unique).
+                            ToList();
 
             var prop = (from e in db.T_Proprietario
                         where e.i_unique == cart.fk_dadosProprietario
@@ -59,8 +65,11 @@ namespace DevKit.Web.Controllers
                 if (mesf >= mes && anof >= ano)
                     dt_final = new DateTime(anof, mesf, 1).AddMonths(1).AddSeconds(-1);
 
+            if (dt_final < dt_inicial)
+                return BadRequest();
+
             var trans = (from e in db.LOG_Transacoes
-                         where e.fk_cartao == cart.i_unique
+                         where lstCarts.Contains((int)e.fk_cartao)
                          where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
                          orderby e.tg_confirmada, e.dt_transacao
                          select e).
@@ -75,6 +84,12 @@ namespace DevKit.Web.Controllers
                              join term in db.T_Terminal on e.fk_terminal equals (int)term.i_unique
                              select term).
                              ToList();
+
+            var parcelasConf = (from e in trans
+                                join pa in db.T_Parcelas on (int)e.i_unique equals pa.fk_log_transacoes
+                                where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
+                                select pa).
+                                ToList();
             
             var mon = new money();
 
@@ -86,7 +101,7 @@ namespace DevKit.Web.Controllers
                 new EmissoraRelExtratosTrans()
             };
 
-            long serial = 0;
+            long serial = 0, tot = 0;
 
             // confirmadas
             {
@@ -99,6 +114,8 @@ namespace DevKit.Web.Controllers
                     var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
                     var term = terminais.Where(y => y.i_unique == tran.fk_terminal).FirstOrDefault();
 
+                    tot += (long) tran.vr_total;
+
                     lstIT.itens.Add(new ItensTrans
                     {
                         serial = serial.ToString(),
@@ -109,6 +126,30 @@ namespace DevKit.Web.Controllers
                         terminal = term.nu_terminal.ToString(),
                         valorTot = mon.setMoneyFormat((long)tran.vr_total)
                     });
+
+                    if (tran.nu_parcelas > 0)
+                    {
+                        foreach (var par in from e in parcelasConf
+                                            where e.fk_log_transacoes == tran.i_unique
+                                            orderby e.nu_indice
+                                            select e)
+
+                        {
+
+                            serial++;
+
+                            lstIT.itens.Add(new ItensTrans
+                            {
+                                serial = serial.ToString(),
+                                dt = "",
+                                loja = "",
+                                nsu = "",
+                                parcelas = par.nu_indice + " / " + par.nu_tot_parcelas,
+                                terminal = "",
+                                valorTot = mon.setMoneyFormat((long)par.vr_valor)
+                            });
+                        }
+                    }
                 }
             }
 
@@ -190,7 +231,9 @@ namespace DevKit.Web.Controllers
             {
                 results = lst,
                 dtEmissao = ObtemData(DateTime.Now),
-                cartao = cart.st_matricula + " - " + prop.st_nome
+                cartao = cart.st_matricula + " - " + prop.st_nome,
+                periodo = ObtemData(dt_inicial).Substring(0, 10) + " a " + ObtemData(dt_final).Substring(0, 10),
+                total = mon.setMoneyFormat(tot)
             });            
         }
     }

@@ -34,9 +34,9 @@ namespace DataModel
 
             switch (vlr.ToString())
             {
-                case NaoExpedido: sit = "Não expedido"; break;
-                case EmExpedicao: sit = "Em expedição"; break;
-                case Expedido: sit = "Expedido"; break;
+                case NaoExpedido: sit = "Requerido pela associação"; break;
+                case EmExpedicao: sit = "Em produção na gráfica"; break;
+                case Expedido: sit = "Emitido para associação"; break;
             }
 
             return sit;

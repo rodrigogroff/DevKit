@@ -163,10 +163,10 @@ namespace DevKit.Web.Controllers
                             select e).
                             ToList();
 
-            foreach (var item in query.Skip(skip).Take(take).ToList())
+            foreach (var cartaoAtual in query.Skip(skip).Take(take).ToList())
             {
                 var assoc = (from e in lstAssoc
-                             where e.i_unique == item.fk_dadosProprietario
+                             where e.i_unique == cartaoAtual.fk_dadosProprietario
                              select e).
                              FirstOrDefault();
                 
@@ -175,15 +175,15 @@ namespace DevKit.Web.Controllers
                     long dispM = 0, dispT = 0;
 
                     if (!listagemCota)
-                        sd.Obter(db, item, ref dispM, ref dispT);
+                        sd.Obter(db, cartaoAtual, ref dispM, ref dispT);
 
-                    if (item.vr_extraCota == null) item.vr_extraCota = 0;
-                    if (item.vr_limiteMensal == null) item.vr_limiteMensal = 0;
-                    if (item.vr_limiteTotal == null) item.vr_limiteTotal = 0;
+                    if (cartaoAtual.vr_extraCota == null) cartaoAtual.vr_extraCota = 0;
+                    if (cartaoAtual.vr_limiteMensal == null) cartaoAtual.vr_limiteMensal = 0;
+                    if (cartaoAtual.vr_limiteTotal == null) cartaoAtual.vr_limiteTotal = 0;
 
                     string colorBack = "", colorFront = "";
 
-                    if (item.tg_status.ToString() == CartaoStatus.Bloqueado)
+                    if (cartaoAtual.tg_status.ToString() == CartaoStatus.Bloqueado)
                     {
                         colorBack = "white";
                         colorFront = "black";
@@ -193,32 +193,59 @@ namespace DevKit.Web.Controllers
 
                     if (!listagemCota)
                         dtPrimTtrans = (from e in db.LOG_Transacoes
-                                        where e.fk_cartao == item.i_unique
+                                        where e.fk_cartao == cartaoAtual.i_unique
                                         select e.dt_transacao).
                                         FirstOrDefault();
 
                     if (!listagemCota)
                     {
+                        var limM = cartaoAtual.vr_limiteMensal;
+                        var limT = cartaoAtual.vr_limiteMensal;
+                        var limEC = cartaoAtual.vr_extraCota;
+                        var assocNome = assoc.st_nome;
+
+                        //dependente
+                        if (cartaoAtual.st_titularidade != "01")
+                        {
+                            var cartTit = (from e in db.T_Cartao
+                                       where e.st_titularidade == "01"
+                                       where e.st_matricula == cartaoAtual.st_matricula
+                                       where e.st_empresa == cartaoAtual.st_empresa
+                                       select e).FirstOrDefault();
+
+                             limM = cartTit.vr_limiteMensal;
+                             limT = cartTit.vr_limiteMensal;
+                             limEC = cartTit.vr_extraCota;
+
+                            var depDados = (from e in db.T_Dependente
+                                            where e.fk_proprietario == cartaoAtual.fk_dadosProprietario
+                                            select e).
+                                           FirstOrDefault();
+
+                            if (depDados != null)
+                                assocNome = depDados.st_nome;
+                        }
+
                         res.Add(new CartaoListagemDTO
                         {
                             colorBack = colorBack,
                             colorFront = colorFront,
-                            id = item.i_unique.ToString(),
-                            via = item.nu_viaCartao.ToString(),
-                            associado = assoc.st_nome,
-                            cartaoTitVia = item.st_matricula + "." +
-                                            item.st_titularidade + ":" +
-                                            item.nu_viaCartao,
+                            id = cartaoAtual.i_unique.ToString(),
+                            via = cartaoAtual.nu_viaCartao.ToString(),
+                            associado = assocNome,
+                            cartaoTitVia = cartaoAtual.st_matricula + "." +
+                                            cartaoAtual.st_titularidade + ":" +
+                                            cartaoAtual.nu_viaCartao,
                             cpf = assoc.st_cpf,
-                            situacao = cs.Convert(item.tg_status),
-                            expedicao = se.Convert(item.tg_emitido),
-                            matricula = item.st_matricula,
-                            dtInicial = item.dt_inclusao != null ? Convert.ToDateTime(item.dt_inclusao).ToString("dd/MM/yyyy") : "",
+                            situacao = cs.Convert(cartaoAtual.tg_status),
+                            expedicao = se.Convert(cartaoAtual.tg_emitido),
+                            matricula = cartaoAtual.st_matricula,
+                            dtInicial = cartaoAtual.dt_inclusao != null ? Convert.ToDateTime(cartaoAtual.dt_inclusao).ToString("dd/MM/yyyy") : "",
                             dtUltExp = dtPrimTtrans != null ? Convert.ToDateTime(dtPrimTtrans).ToString("dd/MM/yyyy") : "",
-                            tit = item.st_titularidade,
-                            limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
-                            limT = mon.setMoneyFormat((long)item.vr_limiteTotal),
-                            limCota = mon.setMoneyFormat((long)item.vr_extraCota),
+                            tit = cartaoAtual.st_titularidade,
+                            limM = mon.setMoneyFormat((long)limM),
+                            limT = mon.setMoneyFormat((long)limT),
+                            limCota = mon.setMoneyFormat((long)limEC),
                             dispM = mon.setMoneyFormat(dispM),
                             dispT = mon.setMoneyFormat(dispT),
                         });
@@ -227,13 +254,13 @@ namespace DevKit.Web.Controllers
                     {
                         res.Add(new CartaoListagemDTO
                         {
-                            id = item.i_unique.ToString(),
+                            id = cartaoAtual.i_unique.ToString(),
                             associado = assoc.st_nome,
-                            matricula = item.st_matricula,
-                            limCota = mon.setMoneyFormat((long)item.vr_extraCota),
-                            cartaoTitVia = item.st_matricula + "." +
-                                            item.st_titularidade + ":" +
-                                            item.nu_viaCartao,
+                            matricula = cartaoAtual.st_matricula,
+                            limCota = mon.setMoneyFormat((long)cartaoAtual.vr_extraCota),
+                            cartaoTitVia = cartaoAtual.st_matricula + "." +
+                                            cartaoAtual.st_titularidade + ":" +
+                                            cartaoAtual.nu_viaCartao,
                             selecionado = false,
                         });
                     }
@@ -400,8 +427,8 @@ namespace DevKit.Web.Controllers
             cart.dt_inclusao = DateTime.Now;
             cart.dt_utlPagto = DateTime.Now;
 
-            cart.vr_limiteMensal = 0;
-            cart.vr_limiteTotal = 0;
+            cart.vr_limiteMensal = LimpaValor(mdl.limMes);
+            cart.vr_limiteTotal = LimpaValor(mdl.limTot);
             cart.vr_extraCota = 0;
             
             db.Insert(cart);

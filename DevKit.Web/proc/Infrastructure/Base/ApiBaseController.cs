@@ -264,6 +264,17 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
+        public int? LimpaValor(string valor)
+        {
+            if (valor == null)
+                return 0;
+                        
+            int? iValor = Convert.ToInt32(valor.Replace (",","").Replace(".",""));
+
+            return iValor;
+        }
+
+        [NonAction]
         public string DESCript(string dados, string chave = "12345678")
         {
             dados = dados.PadLeft(8, '*');

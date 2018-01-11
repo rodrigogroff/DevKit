@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -240,7 +241,6 @@
     <Content Include="app\configuration\clientGroup\ClientGroupController.js" />
     <Content Include="app\configuration\clientGroup\listingClientGroups.html" />
     <Content Include="app\configuration\clientGroup\ListingClientGroupsController.js" />
-    <Content Include="app\configuration\clientGroup\_filterClientGroup.html" />
     <Content Include="app\configuration\news\listingNews.html" />
     <Content Include="app\configuration\news\ListingNewsController.js" />
     <Content Include="app\configuration\news\news.html" />
@@ -250,7 +250,6 @@
     <Content Include="app\configuration\client\ListingClientsController.js" />
     <Content Include="app\configuration\client\client.html" />
     <Content Include="app\configuration\client\ClientController.js" />
-    <Content Include="app\configuration\client\_filterClient.html" />
     <Content Include="app\configuration\surveys\listingSurveys.html" />
     <Content Include="app\configuration\surveys\ListingSurveysController.js" />
     <Content Include="app\configuration\surveys\survey.html" />
@@ -283,7 +282,6 @@
     <Content Include="app\configuration\project\ListingProjectsController.js" />
     <Content Include="app\configuration\project\project.html" />
     <Content Include="app\configuration\project\ProjectController.js" />
-    <Content Include="app\configuration\project\_filterProject.html" />
     <Content Include="app\system\setup\setup.html" />
     <Content Include="app\system\setup\SetupController.js" />
     <Content Include="app\system\user\UserPasswordController.js" />

@@ -200,7 +200,7 @@ namespace DevKit.Web.Controllers
                     if (!listagemCota)
                     {
                         var limM = cartaoAtual.vr_limiteMensal;
-                        var limT = cartaoAtual.vr_limiteMensal;
+                        var limT = cartaoAtual.vr_limiteTotal;
                         var limEC = cartaoAtual.vr_extraCota;
                         var assocNome = assoc.st_nome;
 
@@ -214,7 +214,7 @@ namespace DevKit.Web.Controllers
                                        select e).FirstOrDefault();
 
                              limM = cartTit.vr_limiteMensal;
-                             limT = cartTit.vr_limiteMensal;
+                             limT = cartTit.vr_limiteTotal;
                              limEC = cartTit.vr_extraCota;
 
                             var depDados = (from e in db.T_Dependente
@@ -559,8 +559,8 @@ namespace DevKit.Web.Controllers
 
                         var lst = mdl.valor.Split('|');
                         
-                        cart.vr_limiteMensal = (int)ObtemValor(lst[0]);
-                        cart.vr_limiteTotal = (int)ObtemValor(lst[1]);
+                        cart.vr_limiteMensal = LimpaValor(lst[0]);
+                        cart.vr_limiteTotal = LimpaValor(lst[1]);
                         
                         db.Update(cart);
 

@@ -99,6 +99,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             Api.EmissoraCartao.update({ id: $scope.cartaoSelecionado.id }, opcoes, function (data)
             {
                 toastr.success('Limite alterado com sucesso', 'Sucesso');
+                $scope.search();
             },
             function (response)
             {

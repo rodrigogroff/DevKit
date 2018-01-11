@@ -65,6 +65,7 @@ angular.module('app.services', ['ngResource'])
         EmissoraRelRepFinanc: $resource('api/emissorarelrepfinanc/:id', {}, opcoes),
         EmissoraRelExtratos: $resource('api/emissorarelextratos/:id', {}, opcoes),
         EmissoraRelExtratoForn: $resource('api/emissorarelextratoforn/:id', {}, opcoes),
+        EmissoraRelExtratoTrans: $resource('api/emissorarelextratotrans/:id', {}, opcoes),
         EmissoraFechamento: $resource('api/emissorafechamento/:id', {}, opcoes),
         RelAssociados: $resource('api/relAssociados/:id', {}, opcoes),
         RelLojistaTrans: $resource('api/relLojistaTrans/:id', {}, opcoes),

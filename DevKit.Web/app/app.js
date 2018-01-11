@@ -58,6 +58,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('empRelRepFinanc', { url: '/emissora/repFinanc', templateUrl: 'app/emissora/relRepFinanc.html', controller: 'EmissoraRelRepFinancController' })
     .state('empRelExtratSaldos', { url: '/emissora/relExtratSaldos', templateUrl: 'app/emissora/relExtratSaldos.html', controller: 'EmissoraRelExtratSaldosController' })
     .state('empRelExtratForn', { url: '/emissora/relExtratForn', templateUrl: 'app/emissora/relExtratForn.html', controller: 'EmissoraRelExtratFornController' })
+    .state('empRelExtratTrans', { url: '/emissora/relExtratTrans', templateUrl: 'app/emissora/relExtratTrans.html', controller: 'EmissoraRelExtratTransController' })
 
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 

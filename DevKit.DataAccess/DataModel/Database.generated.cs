@@ -21,10 +21,12 @@ namespace DataModel
 	{
 		public ITable<AuditLog>               AuditLog               { get { return this.GetTable<AuditLog>(); } }
 		public ITable<CacheControl>           CacheControl           { get { return this.GetTable<CacheControl>(); } }
+		public ITable<Cidade>                 Cidade                 { get { return this.GetTable<Cidade>(); } }
 		public ITable<Client>                 Client                 { get { return this.GetTable<Client>(); } }
 		public ITable<ClientGroup>            ClientGroup            { get { return this.GetTable<ClientGroup>(); } }
 		public ITable<ClientGroupAssociation> ClientGroupAssociation { get { return this.GetTable<ClientGroupAssociation>(); } }
 		public ITable<CompanyNews>            CompanyNews            { get { return this.GetTable<CompanyNews>(); } }
+		public ITable<Estado>                 Estado                 { get { return this.GetTable<Estado>(); } }
 		public ITable<PeopleCategory>         PeopleCategory         { get { return this.GetTable<PeopleCategory>(); } }
 		public ITable<Person>                 Person                 { get { return this.GetTable<Person>(); } }
 		public ITable<PersonCategory>         PersonCategory         { get { return this.GetTable<PersonCategory>(); } }
@@ -98,6 +100,14 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkTarget { get; set; } // bigint
 	}
 
+	[Table("Cidade")]
+	public partial class Cidade
+	{
+		[PrimaryKey, Identity] public long   id       { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEstado { get; set; } // bigint
+		[Column,     Nullable] public string stNome   { get; set; } // character varying(200)
+	}
+
 	[Table("Client")]
 	public partial class Client
 	{
@@ -138,6 +148,14 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
 		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
+	}
+
+	[Table("Estado")]
+	public partial class Estado
+	{
+		[PrimaryKey, Identity] public long   id      { get; set; } // bigint
+		[Column,     Nullable] public string stSigla { get; set; } // character varying(20)
+		[Column,     Nullable] public string stNome  { get; set; } // character varying(200)
 	}
 
 	[Table("PeopleCategory")]
@@ -557,6 +575,12 @@ namespace DataModel
 				t.id == id);
 		}
 
+		public static Cidade Find(this ITable<Cidade> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
 		public static Client Find(this ITable<Client> table, long id)
 		{
 			return table.FirstOrDefault(t =>
@@ -576,6 +600,12 @@ namespace DataModel
 		}
 
 		public static CompanyNews Find(this ITable<CompanyNews> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Estado Find(this ITable<Estado> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

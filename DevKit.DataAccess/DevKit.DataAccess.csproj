@@ -278,6 +278,8 @@
     <None Include="README.md" />
     <Content Include="LinqToDB.Templates\CopyMe.PostgreSQL.tt.txt" />
     <Content Include="SQL\devkit.sql" />
+    <Content Include="SQL\log_faixa_uf.txt" />
+    <Content Include="SQL\log_localidade.txt" />
     <Content Include="SQL\reset.sql" />
     <Content Include="SQL\start.sql" />
     <Content Include="SQL\create_tables.sql" />

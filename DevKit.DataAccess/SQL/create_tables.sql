@@ -1,8 +1,13 @@
 ﻿
-CREATE TABLE IF NOT EXISTS public."CacheControl" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."CacheControl" OWNER to postgres;
-ALTER TABLE public."CacheControl" ADD COLUMN if not exists "stEntity" character varying(99);
-ALTER TABLE public."CacheControl" ADD COLUMN if not exists "fkTarget" bigint;
+CREATE TABLE IF NOT EXISTS public."Estado" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."Estado" OWNER to postgres;
+ALTER TABLE public."Estado" ADD COLUMN if not exists "stSigla" character varying(20);
+ALTER TABLE public."Estado" ADD COLUMN if not exists "stNome" character varying(200);
+
+CREATE TABLE IF NOT EXISTS public."Cidade" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."Cidade" OWNER to postgres;
+ALTER TABLE public."Cidade" ADD COLUMN if not exists "fkEstado" bigint;
+ALTER TABLE public."Cidade" ADD COLUMN if not exists "stNome" character varying(200);
 
 CREATE TABLE IF NOT EXISTS public."Setup" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Setup" OWNER to postgres;

@@ -18,88 +18,101 @@
 			<tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
 				<tab heading="Cliente">
 					<div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-						<table>
-							<thead>
-								<tr>
-									<th width="20px"></th>
-									<th width="120px"></th>
-									<th width="20px"></th>
-									<th width="450px"></th>
-								</tr>
-							</thead>
-							<tr height="12px"></tr>
-							<tr height="40px" ng-show="viewModel.id > 0">
-								<td></td>
-								<td>Data de criação</td>
-								<td></td>
-								<td>
-									<b>{{viewModel.sdtStart }}</b>
-								</td>
-							</tr>
-							<tr height="40px" ng-show="viewModel.id > 0">
-								<td></td>
-								<td>Criado por</td>
-								<td></td>
-								<td>
-									<b>{{viewModel.sfkUser}}</b>
-								</td>
-							</tr>
-							<tr height="40px">
-								<td></td>
-								<td>Nome do cliente</td>
-								<td>
-									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
-								</td>
-								<td>
-									<input type="text" class="form-control input-transparent" maxlength="150"
-										   ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
-								</td>
-							</tr>							
-							<tr height="40px">
-								<td></td>
-								<td>Pessoa de contato</td>
-								<td>									
-								</td>
-								<td>
-									<input type="text" class="form-control input-transparent" maxlength="150"
-										   ng-disabled="!permModel.edicao" ng-model="viewModel.stContactPerson">
-								</td>
-							</tr>
-							<tr height="40px">
-								<td></td>
-								<td>Email de contato</td>
-								<td>
-									<button class="btn btn-xs btn-danger" ng-show="stEmail_fail">!</button>									
-								</td>
-								<td>
-									<input type="text" class="form-control input-transparent" maxlength="150"
-										   ng-disabled="!permModel.edicao" ng-model="viewModel.stContactEmail">
-								</td>
-							</tr>
-							<tr height="40px">
-								<td></td>
-								<td>Telefone de contato</td>
-								<td>									
-								</td>
-								<td>
-									<input type="text" class="form-control input-transparent" ng-model="viewModel.stContactPhone" maxlength="14"
-										ui-mask="{{ setupModel.stPhoneMask }}" ui-mask-placeholder ui-mask-placeholder-char="_">
-								</td>
-							</tr>
-							<tr height="6px"></tr>
-							<tr height="40px">
-								<td></td>
-								<td>Informação</td>
-								<td>									
-								</td>
-								<td>
-									<textarea rows="6" type="text" class="form-control input-transparent" maxlength="150"
-										   ng-disabled="!permModel.edicao" ng-model="viewModel.stInfo">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="20px"></th>
+                                    <th width="120px"></th>
+                                    <th width="20px"></th>
+                                    <th width="450px"></th>
+                                </tr>
+                            </thead>
+                            <tr height="12px"></tr>
+                            <tr height="40px" ng-show="viewModel.id > 0">
+                                <td></td>
+                                <td>Data de criação</td>
+                                <td></td>
+                                <td>
+                                    <b>{{viewModel.sdtStart }}</b>
+                                </td>
+                            </tr>
+                            <tr height="40px" ng-show="viewModel.id > 0">
+                                <td></td>
+                                <td>Criado por</td>
+                                <td></td>
+                                <td>
+                                    <b>{{viewModel.sfkUser}}</b>
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>Nome do cliente</td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="150"
+                                           ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>Pessoa de contato</td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="150"
+                                           ng-disabled="!permModel.edicao" ng-model="viewModel.stContactPerson">
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>Email de contato</td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="stEmail_fail">!</button>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="150"
+                                           ng-disabled="!permModel.edicao" ng-model="viewModel.stContactEmail">
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>Telefone de contato</td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" ng-model="viewModel.stContactPhone" maxlength="14"
+                                           ui-mask="{{ setupModel.stPhoneMask }}" ui-mask-placeholder ui-mask-placeholder-char="_">
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>Estado</td>
+                                <td></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="estado" data-placeholder="(Selecione)" ng-model="viewModel.fkEstado" />
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>Cidade</td>
+                                <td></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="cidade" data-placeholder="(Selecione)" ng-model="viewModel.fkCidade" />
+                                </td>
+                            </tr>
+                            <tr height="6px"></tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>Informação</td>
+                                <td></td>
+                                <td>
+                                    <textarea rows="6" type="text" class="form-control input-transparent" maxlength="150"
+                                              ng-disabled="!permModel.edicao" ng-model="viewModel.stInfo">
 									</textarea>
-								</td>
-							</tr>
-							<tr height="40px"></tr>
-						</table>
+                                </td>
+                            </tr>
+                            <tr height="40px"></tr>
+                        </table>
 					</div>
 				</tab>
 			</tabset>

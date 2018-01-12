@@ -10,9 +10,14 @@ namespace DataModel
 			var setup = db.GetSetup();
 
 			var mdlUser = db.GetUser(this.fkUser);
+            var mdlEstado = db.GetEstado(this.fkEstado);
+            var mdlCidade = db.GetCidade(this.fkCidade);
 
-			sfkUser = mdlUser?.stLogin;
-			sdtStart = dtStart?.ToString(setup.stDateFormat);
+            sfkUser = mdlUser?.stLogin;
+            sfkEstado = mdlEstado?.stNome;
+            sfkCidade = mdlCidade?.stNome;
+
+            sdtStart = dtStart?.ToString(setup.stDateFormat);
 
 			stContactPhone = GetMaskedValue(db, stContactPhone);
 

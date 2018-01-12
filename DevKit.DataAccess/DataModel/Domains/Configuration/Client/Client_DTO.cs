@@ -7,6 +7,8 @@ namespace DataModel
         public object anexedEntity;
 
 		public string sfkUser = "",
+                        sfkEstado = "",
+                        sfkCidade = "",
 						sdtStart = "",
 						updateCommand = "";
 	}

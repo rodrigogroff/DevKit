@@ -12,7 +12,7 @@ namespace DataModel
 			if (oldEntity.stName != this.stName)
 				ret += "Nome: " + oldEntity.stName + " => " + this.stName + ";";
 
-			return ret;
+            return ret;
 		}
 	}
 }

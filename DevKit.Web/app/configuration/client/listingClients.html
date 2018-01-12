@@ -85,19 +85,21 @@
 							<br />
 							<table class="table table-hover">
 								<thead>
-									<tr>
-										<th width="180px">Cliente</th>
-										<th width="180px">Pessoa de contato</th>
-										<th width="180px">Telefone de contato</th>
-										<th width="180px">Email de contato</th>
-									</tr>
+                                    <tr>
+                                        <th width="180px">Cliente</th>
+                                        <th width="180px">Estado / Cidade</th>
+                                        <th width="180px">Pessoa de contato</th>
+                                        <th width="180px">Telefone de contato</th>
+                                        <th width="180px">Email de contato</th>
+                                    </tr>
 								</thead>
-								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-									<td>{{ mdl.stName }}</td>
-									<td>{{ mdl.stContactPerson }}</td>
-									<td>{{ mdl.stContactPhone }}</td>
-									<td>{{ mdl.stContactEmail }}</td>
-								</tr>
+                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td>{{ mdl.stName }}</td>
+                                    <td>{{ mdl.sfkEstado }}<br />{{ mdl.sfkCidade }}</td>
+                                    <td>{{ mdl.stContactPerson }}</td>
+                                    <td>{{ mdl.stContactPhone }}</td>
+                                    <td>{{ mdl.stContactEmail }}</td>
+                                </tr>
 							</table>
 						</div>
 						<br />

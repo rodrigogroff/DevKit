@@ -4,14 +4,8 @@ angular.module('app.controllers').controller('ClientController',
 function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
 
-	$scope.setupModel = { stPhoneMask: '' }
-	$scope.viewModel = {};
-	$scope.permModel = {};	
-	$scope.permID = 120;
-	
 	function CheckPermissions()
 	{
         Api.Permission.get({ id: $scope.permID }, function (data)
@@ -32,7 +26,15 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 	init();
 
 	function init()
-	{
+    {
+        $scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, {});
+        $scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'viewModel.fkEstado' } });
+
+        $scope.setupModel = { stPhoneMask: '' }
+        $scope.viewModel = {};
+        $scope.permModel = {};
+        $scope.permID = 120;
+
 		CheckPermissions();
 
         Api.Setup.get({ id: 1 }, function (data) {

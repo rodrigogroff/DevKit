@@ -13,7 +13,10 @@ namespace DevKit.Web.Controllers
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
-                fkProject = Request.GetQueryStringValue<long?>("fkProject", null)
+                fkProject = Request.GetQueryStringValue<long?>("fkProject", null),
+                managed = Request.GetQueryStringValue<bool?>("managed", null),
+                condensed = Request.GetQueryStringValue<bool?>("condensed", null),
+                kpa = Request.GetQueryStringValue<bool?>("kpa", null),
             };
 
             var parameters = filter.Parameters();

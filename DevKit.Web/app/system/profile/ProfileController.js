@@ -97,6 +97,8 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             {
                 $scope.loaded = true;
 
+                console.log(data.stPermissions);
+
 				// setup
 				if (data.stPermissions.indexOf('|1001|') >= 0) data.tg1001 = true; else data.tg1001 = false;
 				if (data.stPermissions.indexOf('|1002|') >= 0) data.tg1002 = true; else data.tg1002 = false;

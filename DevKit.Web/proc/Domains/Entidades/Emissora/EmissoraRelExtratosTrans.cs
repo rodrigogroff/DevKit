@@ -32,8 +32,10 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var mat = Request.GetQueryStringValue("mat");
+            var dia = Request.GetQueryStringValue("dia", 0);
             var mes = Request.GetQueryStringValue("mes", 0);
             var ano = Request.GetQueryStringValue("ano", 0);
+            var diaf = Request.GetQueryStringValue("diaf", 0);
             var mesf = Request.GetQueryStringValue("mesf", 0);
             var anof = Request.GetQueryStringValue("anof", 0);
 
@@ -58,12 +60,11 @@ namespace DevKit.Web.Controllers
                         select e).
                         FirstOrDefault();
 
-            DateTime dt_inicial = new DateTime(ano, mes, 1);
-            DateTime dt_final = dt_inicial.AddMonths(1).AddSeconds(-1);
+            DateTime dt_inicial = new DateTime(ano, mes, dia);
+            DateTime dt_final = dt_inicial.AddDays(1).AddSeconds(-1);
 
-            if (mesf > 0 && anof > 0)
-                if (mesf >= mes && anof >= ano)
-                    dt_final = new DateTime(anof, mesf, 1).AddMonths(1).AddSeconds(-1);
+            if (mesf > 0 && anof > 0 && diaf > 0)
+                dt_final = new DateTime(anof, mesf, diaf).AddDays(1).AddSeconds(-1);
 
             if (dt_final < dt_inicial)
                 return BadRequest();

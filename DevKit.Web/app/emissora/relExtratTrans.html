@@ -15,6 +15,12 @@
                 <tr height="22px"> </tr>
                 <tr height="43px">
                     <td width="20px"></td>
+                    <td width="80px">Dia inicial</td>
+                    <td width="20px"><button class="btn btn-xs btn-danger" ng-show="dia_fail">!</button></td>
+                    <td width="80px">
+                        <input type="text" class="form-control input-transparent" maxlength="4" ng-model="campos.dia_inicial">
+                    </td>
+                    <td width="20px"></td>
                     <td width="80px">Mês inicial</td>
                     <td width="20px"><button class="btn btn-xs btn-danger" ng-show="mes_fail">!</button></td>
                     <td width="200px">
@@ -31,13 +37,19 @@
                 </tr>
                 <tr height="43px">
                     <td></td>
+                    <td>Dia final</td>
+                    <td><button class="btn btn-xs btn-danger" ng-show="diaf_fail">!</button></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="4" ng-model="campos.dia_final">
+                    </td>
+                    <td></td>
                     <td>Mês final</td>
                     <td><button class="btn btn-xs btn-danger" ng-show="mesf_fail">!</button></td>
                     <td>
                         <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_final" />
                     </td>
                     <td></td>
-                    <td>Ano </td>
+                    <td>Ano final</td>
                     <td><button class="btn btn-xs btn-danger" ng-show="anof_fail">!</button></td>
                     <td>
                         <input type="text" class="form-control input-transparent" maxlength="4"
@@ -81,7 +93,7 @@
                 <b>Período</b>: {{periodo}}<br />
                 <b>Valor total</b>: R$ {{total}}<br />
                 <br />
-                <h4>Trasações confirmadas</h4>
+                <h4>Transações confirmadas</h4>
                 <br />
                 <table class="table table-hover">
                     <thead>
@@ -109,7 +121,7 @@
                         <td>VENDA</td>
                     </tr>
                 </table>
-                <h4>Trasações canceladas</h4>
+                <h4>Transações canceladas</h4>
                 <br />
                 <table class="table table-hover">
                     <thead>
@@ -137,7 +149,7 @@
                         <td>VENDA</td>
                     </tr>
                 </table>
-                <h4>Trasações negadas</h4>
+                <h4>Transações negadas</h4>
                 <br />
                 <table class="table table-hover">
                     <thead>
@@ -165,7 +177,7 @@
                         <td>{{ mdl.motivo }}</td>
                     </tr>
                 </table>
-                <h4>Trasações pendentes</h4>
+                <h4>Transações pendentes</h4>
                 <br />
                 <table class="table table-hover">
                     <thead>

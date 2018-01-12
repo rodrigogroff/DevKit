@@ -14,8 +14,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.date = new Date();
 
     $scope.campos = {
+        dia_inicial: 1,
         mes_inicial: $scope.date.getMonth() + 1,
         ano_inicial: $scope.date.getFullYear(),
+        dia_final: undefined,
         mes_final: undefined,
         ano_final: undefined,
         selects: {
@@ -38,6 +40,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.list = undefined;
 
         $scope.mat_fail = invalidCheck($scope.campos.mat);
+
+        $scope.dia_fail = invalidCheck($scope.campos.dia_inicial);        
         $scope.mes_fail = invalidCheck($scope.campos.mes_inicial);
         $scope.ano_fail = invalidCheck($scope.campos.ano_inicial);
 
@@ -45,6 +49,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         if (!tAnoFim)
         {
+            $scope.diaf_fail = invalidCheck($scope.campos.dia_final);
             $scope.mesf_fail = invalidCheck($scope.campos.mes_final);
             $scope.anof_fail = tAnoFim;
         }
@@ -58,8 +63,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
             var opcoes = {
                 mat: $scope.campos.mat,
+                dia: $scope.campos.dia_inicial,
                 mes: $scope.campos.mes_inicial,
                 ano: $scope.campos.ano_inicial,
+                diaf: $scope.campos.dia_final,
                 mesf: $scope.campos.mes_final,
                 anof: $scope.campos.ano_final
             };

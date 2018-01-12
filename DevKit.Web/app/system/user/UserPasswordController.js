@@ -1,21 +1,10 @@
-﻿'use strict';
-
+﻿
 angular.module('app.controllers').controller('UserPasswordController',
-['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
-function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
+['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects',
+function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
-	$scope.loading = false;
-	$scope.viewModel = {};
-	$scope.permID = 200;
-
-	$scope.changePassModel =
-		{
-			stCurrentPassword: '',
-			stNewPassword: '',
-			stConfirmation: '',
-		};
-	
-	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
+    $rootScope.exibirMenu = true;
+    $scope.loading = false;
 
 	function CheckPermissions()
 	{
@@ -44,10 +33,22 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		function (response) { });
 	}
 
+    var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
+
 	init();
 
 	function init()
-	{
+    {
+        $scope.viewModel = {};
+        $scope.permID = 200;
+
+        $scope.changePassModel =
+            {
+                stCurrentPassword: '',
+                stNewPassword: '',
+                stConfirmation: '',
+            };
+
 		CheckPermissions();
 	}
 

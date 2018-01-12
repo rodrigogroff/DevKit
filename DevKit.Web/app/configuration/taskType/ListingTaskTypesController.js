@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingTaskTypesController',
+﻿
+angular.module('app.controllers').controller('ListingTaskTypesController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
 function ($scope, $rootScope, $state, Api, ngSelects)
 {

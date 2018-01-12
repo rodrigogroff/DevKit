@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingSprintsController',
+﻿
+angular.module('app.controllers').controller('ListingSprintsController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
 function ($scope, $rootScope, $state, Api, ngSelects)
 {

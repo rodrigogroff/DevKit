@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingProfilesController',
+﻿
+angular.module('app.controllers').controller('ListingProfilesController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
 function ($scope, $rootScope, $state, Api, ngSelects)
 {

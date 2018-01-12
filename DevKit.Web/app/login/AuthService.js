@@ -1,4 +1,5 @@
 ﻿'use strict';
+
 angular.module('app.services').factory('AuthService',
 ['$http', '$q',
 function ($http, $q)

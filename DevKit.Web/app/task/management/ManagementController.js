@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ManagementController',
+﻿
+angular.module('app.controllers').controller('ManagementController',
 ['$window', '$scope', '$rootScope', '$state', 'Api', 'ngSelects',
 function ($window, $scope, $rootScope, $state, Api, ngSelects)
 {

@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingUsersController',
+﻿
+angular.module('app.controllers').controller('ListingUsersController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects', 
 function ($scope, $rootScope, $state, Api, ngSelects )
 {

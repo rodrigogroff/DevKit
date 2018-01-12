@@ -1,20 +1,10 @@
-﻿'use strict';
-
+﻿
 angular.module('app.controllers').controller('UserController',
-['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects', 
-function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
+['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects', 
+function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
-	$scope.selectProfiles = ngSelects.obterConfiguracao(Api.ProfileCombo, {});
-
-	$scope.loading = false;
-
-	$scope.setupModel = { stPhoneMask: '' }	
-	$scope.viewModel = {};
-	$scope.permModel = {};	
-	$scope.permID = 102;
-	$scope.auditLogPerm = 112;
+    $scope.loading = false;
 
 	function CheckPermissions()
 	{
@@ -50,7 +40,15 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	init();
 
 	function init()
-	{
+    {
+        $scope.selectProfiles = ngSelects.obterConfiguracao(Api.ProfileCombo, {});
+
+        $scope.setupModel = { stPhoneMask: '' }
+        $scope.viewModel = {};
+        $scope.permModel = {};
+        $scope.permID = 102;
+        $scope.auditLogPerm = 112;
+
 		CheckPermissions();
 		loadSetup();
 

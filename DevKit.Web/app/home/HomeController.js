@@ -1,6 +1,7 @@
-﻿angular.module('app.controllers').controller('HomeController',
-['$window', '$scope', '$rootScope', 'AuthService', '$state', 'Api', 'ngSelects',
-function ($window, $scope, $rootScope, AuthService, $state, Api, ngSelects)
+﻿
+angular.module('app.controllers').controller('HomeController',
+['$window', '$scope', '$rootScope', '$state', 'Api', 'ngSelects',
+function ($window, $scope, $rootScope, $state, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
 	$scope.loading = false;

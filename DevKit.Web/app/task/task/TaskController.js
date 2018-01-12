@@ -1,30 +1,11 @@
-﻿'use strict';
-
+﻿
 angular.module('app.controllers').controller('TaskController',
-['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
-function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
+['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects',
+function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
-	$scope.selectPriority = ngSelects.obterConfiguracao(Api.Priority, {});
-    $scope.selectProjects = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
-    $scope.selectClients = ngSelects.obterConfiguracao(Api.ClientCombo, {});
-    $scope.selectClientGroups = ngSelects.obterConfiguracao(Api.ClientGroupCombo, {});
-    $scope.selectPhases = ngSelects.obterConfiguracao(Api.PhaseCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
-    $scope.selectSprints = ngSelects.obterConfiguracao(Api.SprintCombo, { scope: $scope, filtro: { campo: 'fkPhase', valor: 'viewModel.fkPhase' } });
-    $scope.selectVersions = ngSelects.obterConfiguracao(Api.VersionCombo, { scope: $scope, filtro: { campo: 'fkSprint', valor: 'viewModel.fkSprint' } });
-    $scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, { });
-    $scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskTypeCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
-    $scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategoryCombo, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.fkTaskType' } });
-    $scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlowCombo, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
-    $scope.selectTaskAcc = ngSelects.obterConfiguracao(Api.TaskTypeAccumulatorCombo, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
-
-	$scope.loading = false;
-
-	$scope.viewModel = {};
-	$scope.permModel = {};	
-	$scope.permID = 106;
-
+    $scope.loading = false;
+    
 	function CheckPermissions()
 	{
         Api.Permission.get({ id: $scope.permID }, function (data)
@@ -52,7 +33,24 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	init();
 
 	function init()
-	{
+    {
+        $scope.selectPriority = ngSelects.obterConfiguracao(Api.Priority, {});
+        $scope.selectProjects = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
+        $scope.selectClients = ngSelects.obterConfiguracao(Api.ClientCombo, {});
+        $scope.selectClientGroups = ngSelects.obterConfiguracao(Api.ClientGroupCombo, {});
+        $scope.selectPhases = ngSelects.obterConfiguracao(Api.PhaseCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
+        $scope.selectSprints = ngSelects.obterConfiguracao(Api.SprintCombo, { scope: $scope, filtro: { campo: 'fkPhase', valor: 'viewModel.fkPhase' } });
+        $scope.selectVersions = ngSelects.obterConfiguracao(Api.VersionCombo, { scope: $scope, filtro: { campo: 'fkSprint', valor: 'viewModel.fkSprint' } });
+        $scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, {});
+        $scope.selectTaskType = ngSelects.obterConfiguracao(Api.TaskTypeCombo, { scope: $scope, filtro: { campo: 'fkProject', valor: 'viewModel.fkProject' } });
+        $scope.selectTaskCategory = ngSelects.obterConfiguracao(Api.TaskCategoryCombo, { scope: $scope, filtro: { campo: 'fkTaskType', valor: 'viewModel.fkTaskType' } });
+        $scope.selectTaskFlow = ngSelects.obterConfiguracao(Api.TaskFlowCombo, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
+        $scope.selectTaskAcc = ngSelects.obterConfiguracao(Api.TaskTypeAccumulatorCombo, { scope: $scope, filtro: { campo: 'fkTaskCategory', valor: 'viewModel.fkTaskCategory' } });
+
+        $scope.viewModel = {};
+        $scope.permModel = {};
+        $scope.permID = 106;
+
 		CheckPermissions();
 		loadSetup();
 

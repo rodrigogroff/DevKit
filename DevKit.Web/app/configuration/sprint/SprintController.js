@@ -1,8 +1,7 @@
-﻿'use strict';
-
+﻿
 angular.module('app.controllers').controller('SprintController',
-['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
-function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
+['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects',
+function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
 

@@ -1,4 +1,5 @@
 ﻿'use strict';
+
 angular.module('app.services').factory('AuthInterceptorService', ['$q', '$rootScope', '$location', function ($q, $rootScope, $location) {
 
     var authInterceptorServiceFactory = {};

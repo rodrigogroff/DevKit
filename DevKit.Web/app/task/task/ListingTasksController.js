@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingTasksController',
+﻿
+angular.module('app.controllers').controller('ListingTasksController',
 ['$window', '$scope', '$rootScope', '$state', 'Api', 'ngSelects',
 function ($window, $scope, $rootScope, $state, Api, ngSelects )
 {

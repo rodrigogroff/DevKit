@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingUserKanbanController',
+﻿
+angular.module('app.controllers').controller('ListingUserKanbanController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
 function ($scope, $rootScope, $state, Api, ngSelects )
 {

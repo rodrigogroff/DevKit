@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingProjectsController',
+﻿
+angular.module('app.controllers').controller('ListingProjectsController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects', '$http',
 function ($scope, $rootScope, $state, Api, ngSelects, $http)
 {

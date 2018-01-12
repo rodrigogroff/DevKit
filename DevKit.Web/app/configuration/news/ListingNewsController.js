@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingNewsController',
+﻿
+angular.module('app.controllers').controller('ListingNewsController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
 function ($scope, $rootScope, $state, Api, ngSelects)
 {

@@ -1,19 +1,11 @@
-﻿'use strict';
-
+﻿
 angular.module('app.controllers').controller('PersonController',
-['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects', 
-function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
+['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects', 
+function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
-
-	$scope.setupModel = { stPhoneMask: '' }	
-	$scope.viewModel = {};
-	$scope.permModel = {};	
-	$scope.permID = 102;
-	$scope.auditLogPerm = 112;
-
+    
 	function CheckPermissions()
 	{
         Api.Permission.get({ id: $scope.permID }, function (data)
@@ -48,12 +40,18 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 	init();
 
 	function init()
-	{
-		CheckPermissions();
-        loadSetup();
+    {
+        $scope.setupModel = { stPhoneMask: '' }
+        $scope.viewModel = {};
+        $scope.permModel = {};
+        $scope.permID = 102;
+        $scope.auditLogPerm = 112;
 
         $scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
+
+		CheckPermissions();
+        loadSetup();
 
 		if (id > 0)
         {

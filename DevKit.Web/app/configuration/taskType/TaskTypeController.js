@@ -1,8 +1,7 @@
-﻿'use strict';
-
+﻿
 angular.module('app.controllers').controller('TaskTypeController',
-['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
-function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
+['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects',
+function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
 
@@ -23,7 +22,6 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
         Api.Permission.get({ id: $scope.permID }, function (data)
 		{
 			$scope.permModel = data;
-
 			if (!$scope.permModel.visualizar)
 			{
                 toastr.error('Acesso negado!', 'Permissão');

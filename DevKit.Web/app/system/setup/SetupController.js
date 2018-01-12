@@ -1,15 +1,10 @@
-﻿'use strict';
-
+﻿
 angular.module('app.controllers').controller('SetupController',
-['$scope', '$rootScope', 'AuthService', '$state', '$stateParams', '$location', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api, ngSelects)
+['$scope', '$rootScope', '$state', '$stateParams', 'Api', 'ngSelects',
+function ($scope, $rootScope, $state, $stateParams, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
-
-	$scope.permModel = {};
-	$scope.permID = 100;
 
 	function CheckPermissions()
 	{
@@ -29,11 +24,13 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, $location, Api,
 	init();
 
 	function init()
-	{
+    {
+        $scope.permModel = {};
+        $scope.permID = 100;
+
 		CheckPermissions();
 
-        if ($scope.loaded == undefined)
-		    $scope.loading = true;
+        $scope.loading = true;
 
         Api.Setup.get({ id: 1 }, function (data)
 		{

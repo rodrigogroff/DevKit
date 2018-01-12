@@ -1,17 +1,11 @@
-﻿'use strict';
-
+﻿
 angular.module('app.controllers').controller('ProfileController',
-['$scope', 'AuthService', '$state', '$stateParams', '$location', '$rootScope', 'Api', 'ngSelects',
-function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api, ngSelects)
+['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects',
+function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
 	
-	$scope.permModel = {};	
-	$scope.permID = 101;
-	$scope.auditLogPerm = 116;
-
 	function CheckPermissions()
 	{
         Api.Permission.get({ id: $scope.permID }, function (data)
@@ -30,64 +24,68 @@ function ($scope, AuthService, $state, $stateParams, $location, $rootScope, Api,
 		},
 		function (response) { });		
 	}
-
-	$scope.viewModel =
-		{
-			// ## System #########################
-			// setup
-			tg1001: false, tg1002: false, tg1003: false, tg1004: false, tg1005: false,
-			// profiles
-			tg1011: false, tg1012: false, tg1013: false, tg1014: false, tg1015: false,
-			// users
-			tg1021: false, tg1022: false, tg1023: false, tg1024: false, tg1025: false,
-			// projects
-			tg1031: false, tg1032: false, tg1033: false, tg1034: false, tg1035: false,
-			// sprints
-			tg1041: false, tg1042: false, tg1043: false, tg1044: false, tg1045: false,
-			// task type
-			tg1051: false, tg1052: false, tg1053: false, tg1054: false, tg1055: false,
-			// task 
-			tg1061: false, tg1062: false, tg1063: false, tg1064: false, tg1065: false,
-			// news 
-			tg1181: false, tg1182: false, tg1183: false, tg1184: false, tg1185: false,
-			// surveys 
-			tg1191: false, tg1192: false, tg1063: false, tg1194: false, tg1195: false,
-			// clients
-			tg1201: false, tg1202: false, tg1203: false, tg1204: false, tg1205: false,
-			// client groups
-			tg1211: false, tg1212: false, tg1213: false, tg1214: false, tg1215: false,
-			// user Kanban
-			tg1071: false,
-			// management
-			tg1081: false,
-			// timesheet
-			tg1091: false,
-			// timesheet admin
-			tg1101: false,
-			// audit log (project)
-			tg1111: false,
-			// audit log (user)
-			tg1121: false,
-			// audit log (task type)
-			tg1131: false,
-			// audit log (setup)
-			tg1141: false,
-			// audit log (task)
-			tg1151: false,
-			// audit log (profile)
-			tg1161: false,
-			// user change password (98)
-			tg2001: false,
-			// reset password (99)
-			tg2011: false,
-		};
-	
+    
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 	
 	init();
 
 	function init()
-	{
+    {
+        $scope.permModel = {};
+        $scope.permID = 101;
+        $scope.auditLogPerm = 116;
+
+        $scope.viewModel =
+            {
+                // ## System #########################
+                // setup
+                tg1001: false, tg1002: false, tg1003: false, tg1004: false, tg1005: false,
+                // profiles
+                tg1011: false, tg1012: false, tg1013: false, tg1014: false, tg1015: false,
+                // users
+                tg1021: false, tg1022: false, tg1023: false, tg1024: false, tg1025: false,
+                // projects
+                tg1031: false, tg1032: false, tg1033: false, tg1034: false, tg1035: false,
+                // sprints
+                tg1041: false, tg1042: false, tg1043: false, tg1044: false, tg1045: false,
+                // task type
+                tg1051: false, tg1052: false, tg1053: false, tg1054: false, tg1055: false,
+                // task 
+                tg1061: false, tg1062: false, tg1063: false, tg1064: false, tg1065: false,
+                // news 
+                tg1181: false, tg1182: false, tg1183: false, tg1184: false, tg1185: false,
+                // surveys 
+                tg1191: false, tg1192: false, tg1063: false, tg1194: false, tg1195: false,
+                // clients
+                tg1201: false, tg1202: false, tg1203: false, tg1204: false, tg1205: false,
+                // client groups
+                tg1211: false, tg1212: false, tg1213: false, tg1214: false, tg1215: false,
+                // user Kanban
+                tg1071: false,
+                // management
+                tg1081: false,
+                // timesheet
+                tg1091: false,
+                // timesheet admin
+                tg1101: false,
+                // audit log (project)
+                tg1111: false,
+                // audit log (user)
+                tg1121: false,
+                // audit log (task type)
+                tg1131: false,
+                // audit log (setup)
+                tg1141: false,
+                // audit log (task)
+                tg1151: false,
+                // audit log (profile)
+                tg1161: false,
+                // user change password (98)
+                tg2001: false,
+                // reset password (99)
+                tg2011: false,
+            };
+
 		CheckPermissions();
 
 		if (id > 0)

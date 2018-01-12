@@ -1,4 +1,5 @@
-﻿angular.module('app.controllers').controller('ListingSurveysController',
+﻿
+angular.module('app.controllers').controller('ListingSurveysController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
 function ($scope, $rootScope, $state, Api, ngSelects)
 {

@@ -1,4 +1,5 @@
 ﻿'use strict';
+
 angular.module('app.controllers').controller('LoginController',
 ['$scope', '$rootScope', '$location', 'AuthService', 'version','Api',
 function ($scope, $rootScope, $location, AuthService, version, Api)

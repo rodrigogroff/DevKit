@@ -16,25 +16,77 @@
 		<div class="divWebForm">
 			<table width="100%">
 				<tr>
-					<td width="15px"></td>
-					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/user/_filterUser.html"
-						funcao-pesquisar="search"></ng-filtro>
-					</td>
+                    <td valign="top">
+                        <table class="widget" style="color:white">
+                            <tr height="22px"> </tr>
+                            <tr height="36px">
+                                <td width="20px"></td>
+                                <td width="120px"><b>Situação</b></td>
+                                <td width="250px">
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.ativo" /></td>
+                                            <td> Ativo</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.ativo" /></td>
+                                            <td> Bloqueado</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="" ng-model="campos.ativo" /></td>
+                                            <td> Tudo</td>
+                                            <td width="20px"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="30px"></td>
+                                <td width="120px">Perfil</td>
+                                <td width="200px">
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.perfil" data-placeholder="(Selecione)" ng-model="campos.fkPerfil" />
+                                </td>
+                                <td width="60px"></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Login</b></td>
+                                <td>
+                                    <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.busca" />
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Email</b></td>
+                                <td>
+                                    <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.email" />
+                                </td>
+                                <td></td>
+                                <td><b>Telefone</b></td>
+                                <td>
+                                    <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.phone" />
+                                </td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
+                                </td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                        </table>
+                    </td>
 				</tr>
 			</table>
 			<table width="100%">
 				<tr>
 					<td valign="top">
 						<div ng-show="list.length == 0">
-							<br />
-							<br />
 							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 							<br />
 							<br />
 						</div>
 						<div ng-show="list.length > 0">
-							<br />
 							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
 							<table class="table table-hover">

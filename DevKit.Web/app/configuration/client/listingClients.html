@@ -43,14 +43,11 @@
 				<tr>
 					<td valign="top">
 						<div ng-show="list.length == 0">
-							<br />
-							<br />
 							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 							<br />
 							<br />
 						</div>
 						<div ng-show="list.length > 0">
-							<br />
 							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
 							<table class="table table-hover">

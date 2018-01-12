@@ -1,25 +1,13 @@
 ﻿angular.module('app.controllers').controller('ListingProfilesController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
+function ($scope, $rootScope, $state, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
-
-	$scope.campos = {
-		selects: {
-			user: ngSelects.obterConfiguracao(Api.UserCombo, { }),
-		}
-	};
-
-	$scope.itensporpagina = 15;
-	$scope.permModel = {};	
-	$scope.permID = 101;
 
 	function CheckPermissions() {
         Api.Permission.get({ id: $scope.permID }, function (data) {
 			$scope.permModel = data;
-
 			if (!$scope.permModel.listagem) {
 				toastr.error('Accesso negado!', 'Permissão');
 				$state.go('home');
@@ -31,11 +19,18 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	init();
 
 	function init()
-	{
-		CheckPermissions();
+    {
+        $scope.campos = {
+            selects: {
+                user: ngSelects.obterConfiguracao(Api.UserCombo, {}),
+            }
+        };
 
-		if (ngHistoricoFiltro.filtro)
-			ngHistoricoFiltro.filtro.exibeFiltro = false;
+        $scope.itensporpagina = 15;
+        $scope.permModel = {};
+        $scope.permID = 101;
+        
+		CheckPermissions();
 	}
 
 	$scope.search = function ()
@@ -48,14 +43,13 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	{
 		$scope.loading = true;
 
-        var opcoes = { skip: skip, take: take };
-
-		var filtro = ngHistoricoFiltro.filtro.filtroGerado;
-
-		if (filtro)
-			angular.extend(opcoes, filtro);
-
-		delete opcoes.selects;
+        var opcoes = {
+            skip: skip,
+            take: take,
+            busca: $scope.campos.busca,
+            stPermission: $scope.campos.stPermission,
+            fkUser: $scope.campos.fkUser,
+        };
 
 		Api.Profile.listPage(opcoes, function (data) {
 			$scope.list = data.results;

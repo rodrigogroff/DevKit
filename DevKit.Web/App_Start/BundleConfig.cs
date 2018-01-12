@@ -79,8 +79,7 @@ namespace DevKit.Web
     "~/scripts/jquery.fileupload-angular.js",
     "~/scripts/angular-ui-tree.min.js",
     "~/scripts/ng-currency.js"
- //   "~/scripts/maskMoney.js"
-                ));
+                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
 				"~/app/_shared/filters.js",

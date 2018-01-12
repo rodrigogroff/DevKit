@@ -16,10 +16,87 @@
 		<div class="divWebForm">
 			<table width="100%">
 				<tr>
-					<td width="15px"></td>
 					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/configuration/taskType/_filterTaskType.html" 
-								   funcao-pesquisar="search"></ng-filtro>
+                        <table class="widget" style="color:white">
+                            <tr height="22px"> </tr>
+                            <tr height="36px">
+                                <td width="20px"></td>
+                                <td width="120px"><b>Tipo de tarefa</b></td>
+                                <td width="180px">
+                                    <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.busca" />
+                                </td>
+                                <td width="60px"></td>
+                                <td width="120px"><b>Projeto</b></td>
+                                <td width="180px">
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.project" data-placeholder="(Selecione)" ng-model="campos.fkProject" />
+                                </td>
+                                <td width="60px"></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Gerenciado</b></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.managed" /></td>
+                                            <td> Sim</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.managed" /></td>
+                                            <td> Não</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="" ng-model="campos.managed" /></td>
+                                            <td> Ambos</td>
+                                            <td width="20px"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                                <td><b>Condensado</b></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.condensed" /></td>
+                                            <td> Sim</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.condensed" /></td>
+                                            <td> Não</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="" ng-model="campos.condensed" /></td>
+                                            <td> Todos</td>
+                                            <td width="20px"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>KPA</b></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.kpa" /></td>
+                                            <td> Sim</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.kpa" /></td>
+                                            <td> Não</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="" ng-model="campos.kpa" /></td>
+                                            <td> Todos</td>
+                                            <td width="20px"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
+                                </td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                        </table>
 					</td>
 				</tr>
 			</table>
@@ -27,14 +104,11 @@
 				<tr>
 					<td valign="top">
 						<div ng-show="list.length == 0">
-							<br />
-							<br />
 							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 							<br />
 							<br />
 						</div>
 						<div ng-show="list.length > 0">
-							<br />
 							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
 							<table class="table table-hover">

@@ -1,22 +1,10 @@
 ﻿angular.module('app.controllers').controller('ListingUsersController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
+['$scope', '$rootScope', '$state', 'Api', 'ngSelects', 
+function ($scope, $rootScope, $state, Api, ngSelects )
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
-
-	$scope.campos = {
-		ativo: 'true',
-		selects: {
-			perfil: ngSelects.obterConfiguracao(Api.ProfileCombo, { }),
-		}
-	};
-	$scope.itensporpagina = 15;
-
-	$scope.permModel = {};	
-	$scope.permID = 102;
-
+	
     function CheckPermissions()
     {
         Api.Permission.get({ id: $scope.permID }, function (data)
@@ -35,11 +23,19 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	init();
 
 	function init()
-	{
-		CheckPermissions();
+    {
+        $scope.campos = {
+            ativo: 'true',
+            selects: {
+                perfil: ngSelects.obterConfiguracao(Api.ProfileCombo, {}),
+            }
+        };
 
-		if (ngHistoricoFiltro.filtro)
-			ngHistoricoFiltro.filtro.exibeFiltro = false;		
+        $scope.itensporpagina = 15;
+        $scope.permModel = {};
+        $scope.permID = 102;
+
+		CheckPermissions();
 	}
 
 	$scope.search = function ()
@@ -52,14 +48,15 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	{
 		$scope.loading = true;
 
-        var opcoes = { active: 'true', skip: skip, take: take };
-
-		var filter = ngHistoricoFiltro.filtro.filtroGerado;
-
-		if (filter)
-			angular.extend(opcoes, filter);
-
-		delete opcoes.selects;
+        var opcoes = {            
+            skip: skip,
+            take: take,
+            fkPerfil: $scope.campos.ativo,
+            ativo: $scope.campos.ativo,
+            busca: $scope.campos.busca,
+            email: $scope.campos.email,
+            phone: $scope.campos.phone,
+        };
 
 		Api.User.listPage(opcoes, function (data)
 		{

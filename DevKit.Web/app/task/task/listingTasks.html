@@ -1,97 +1,222 @@
 ﻿<div class="webFormPostion" style="width:99%">
-	<section class="widgetForm" style="width:100%">
-		<legend class="legendTop" style="width:100%">
-			<table><tr height="12px"><td> </td></tr></table>
-			<table style="color:white; width:100%">
-				<tr>
-					<td width="20px"></td>
-					<td>Listagem de <b>Tarefas </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-					<td width="80px"></td>
-					<td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
-					<td width="20px"></td>
-				</tr>
-				<tr height="12px"></tr>
-			</table>
-		</legend>
-		<div class="divWebFormListing" style="padding-left:35px;width:{{windowWidth}}px">
-			<table>
-				<tr>
-					<td width="15px"></td>
-					<td valign="top">
-						<ng-filtro tipo="x" campos="campos" template-avancado="app/task/task/_filterTask.html"
-								   funcao-pesquisar="search"></ng-filtro>
-					</td>
-				</tr>
-			</table>
-			<table width="100%">
-				<tr>
-					<td valign="top">
-						<div ng-show="list.length == 0">
-							<br />
-							<br />
-							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
-							<br />
-							<br />
-						</div>
-						<div ng-show="list.length > 0">
-							<br />
-							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
-							<br />
-							<table class="table table-hover" ng-if="availWidth < 1400">
-								<thead>
-									<tr>
-										<th width="120px">Protocolo /<br /> Data </th>
-										<th width="140px">Prioridade /<br /> Aberto por</th>
-										<th width="140px">Tipo /<br /> Categoria</th>
-										<th width="180px">Título /<br /> Localização</th>
-										<th width="140px">Responsável</th>
-										<th width="180px">Projeto /<br /> Sprint</th>
-									</tr>
-								</thead>
-								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-									<td><b>{{ mdl.stProtocol }}</b><br />{{ mdl.sdtStart }}</td>
-									<td><b>{{mdl.sfkTaskFlowCurrent}}</b><br />{{ mdl.snuPriority }}<br />{{ mdl.sfkUserStart }}</td>
-									<td>{{ mdl.sfkTaskType }}<br />{{ mdl.sfkTaskCategory }}</td>
-									<td>{{ mdl.stTitle }}<br /><i>{{ mdl.stLocalization }}</i></td>
-									<td>{{ mdl.sfkUserResponsible }}</td>
-									<td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}<br />{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
-								</tr>
-							</table>
-							<table class="table table-hover" ng-if="availWidth > 1400" style="width:100%">
-								<thead>
-									<tr>
-										<th width="100px">Protocolo</th>
+    <section class="widgetForm" style="width:100%">
+        <legend class="legendTop" style="width:100%">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Listagem de <b>Tarefas </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td width="80px"></td>
+                    <td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
+                    <td width="20px"></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebFormListing" style="padding-left:35px;width:{{windowWidth}}px">
+            <table>
+                <tr>
+                    <td valign="top">                        
+                        <table class="widget" style="color:white">
+                            <tr height="22px"> </tr>
+                            <tr height="36px">
+                                <td width="25px"></td>
+                                <td width="110px"><b>Título</b></td>
+                                <td width="220px">
+                                    <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.busca" />
+                                </td>
+                                <td width="30px"></td>
+                                <td width="110px"><b>Prioridade</b></td>
+                                <td width="220px">
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.priority" data-placeholder="(Selecione)" ng-model="campos.nuPriority" />
+                                </td>
+                                <td width="60px"></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Projeto</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.project" data-placeholder="(Selecione)" ng-model="campos.fkProject" />
+                                </td>
+                                <td></td>
+                                <td><b>Fase</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.phase" data-placeholder="(Selecione)" ng-model="campos.fkPhase" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Sprint</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.sprint" data-placeholder="(Selecione)" ng-model="campos.fkSprint" />
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Responsável</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.user" data-placeholder="(Selecione)" ng-model="campos.fkUserResponsible" />
+                                </td>
+                                <td></td>
+                                <td><b>Aberto por</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.user" data-placeholder="(Selecione)" ng-model="campos.fkUserStart" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Tipo tarefa</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.tasktype" data-placeholder="(Selecione)" ng-model="campos.fkTaskType" />
+                                </td>
+                                <td></td>
+                                <td><b>Categoria</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.taskcategory" data-placeholder="(Selecione)" ng-model="campos.fkTaskCategory" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>KPA</b></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.kpa" /></td>
+                                            <td> Sim</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.kpa" /></td>
+                                            <td> Não</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Expirou?</b></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.expired" /></td>
+                                            <td> Não</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.expired" /></td>
+                                            <td> Sim</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Situação</b></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.complete" /></td>
+                                            <td> Aberto</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.complete" /></td>
+                                            <td> Fechado</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
+                                </td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%">
+                <tr>
+                    <td valign="top">
+                        <div ng-show="list.length == 0">
+                            <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <br />
+                            <br />
+                        </div>
+                        <div ng-show="list.length > 0">
+                            <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                            <br />
+                            <table class="table table-hover" ng-if="availWidth < 1400">
+                                <thead>
+                                    <tr>
+                                        <th width="120px">Protocolo /<br /> Data </th>
+                                        <th width="140px">Prioridade /<br /> Aberto por</th>
+                                        <th width="140px">Tipo /<br /> Categoria</th>
+                                        <th width="180px">Título /<br /> Localização</th>
+                                        <th width="140px">Responsável</th>
+                                        <th width="180px">Projeto /<br /> Sprint</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td><b>{{ mdl.stProtocol }}</b><br />{{ mdl.sdtStart }}</td>
+                                    <td><b>{{mdl.sfkTaskFlowCurrent}}</b><br />{{ mdl.snuPriority }}<br />{{ mdl.sfkUserStart }}</td>
+                                    <td>{{ mdl.sfkTaskType }}<br />{{ mdl.sfkTaskCategory }}</td>
+                                    <td>{{ mdl.stTitle }}<br /><i>{{ mdl.stLocalization }}</i></td>
+                                    <td>{{ mdl.sfkUserResponsible }}</td>
+                                    <td>{{ mdl.sfkProject }}<br />{{ mdl.sfkPhase }}<br />{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
+                                </tr>
+                            </table>
+                            <table class="table table-hover" ng-if="availWidth > 1400" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th width="100px">Protocolo</th>
                                         <th width="220px">Título / Localização</th>
                                         <th width="90px">Projeto / Fase</th>
                                         <th width="110px">Sprint / Versão</th>
-										<th width="60px">Prioridade</th>
-										<th width="80px">Situação</th>
-										<th width="90px">Aberto por</th>
-										<th width="90px">Responsável</th>
-										<th width="120px">Tipo</th>
-										<th width="150px">Categoria</th>										
-									</tr>
-								</thead>
-								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-									<td><b>{{ mdl.stProtocol }}</b><br />{{ mdl.sdtStart }}</td>
+                                        <th width="60px">Prioridade</th>
+                                        <th width="80px">Situação</th>
+                                        <th width="90px">Aberto por</th>
+                                        <th width="90px">Responsável</th>
+                                        <th width="120px">Tipo</th>
+                                        <th width="150px">Categoria</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td><b>{{ mdl.stProtocol }}</b><br />{{ mdl.sdtStart }}</td>
                                     <td><b>{{ mdl.stTitle }}</b><br /><i>{{ mdl.stLocalization }}</i></td>
                                     <td><b>{{ mdl.sfkProject }}</b><br />{{ mdl.sfkPhase }}</td>
                                     <td>{{ mdl.sfkSprint }}<br />{{ mdl.sfkVersion }}</td>
-									<td>{{ mdl.snuPriority }}</td>
-									<td>{{mdl.sfkTaskFlowCurrent}}</td>
-									<td>{{ mdl.sfkUserStart }}</td>
-									<td>{{ mdl.sfkUserResponsible }}</td>
-									<td>{{ mdl.sfkTaskType }}</td>
-									<td>{{ mdl.sfkTaskCategory }}</td>
-								</tr>
-							</table>
-						</div>
-						<br />
-					</td>
-				</tr>
-			</table>
-		</div>
-	</section>
+                                    <td>{{ mdl.snuPriority }}</td>
+                                    <td>{{mdl.sfkTaskFlowCurrent}}</td>
+                                    <td>{{ mdl.sfkUserStart }}</td>
+                                    <td>{{ mdl.sfkUserResponsible }}</td>
+                                    <td>{{ mdl.sfkTaskType }}</td>
+                                    <td>{{ mdl.sfkTaskCategory }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
     <br />
     <br />
 </div>

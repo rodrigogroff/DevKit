@@ -1,30 +1,32 @@
 ﻿angular.module('app.controllers').controller('HomeController',
-['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$window', '$scope', '$rootScope', 'AuthService', '$state', 'Api', 'ngSelects',
+function ($window, $scope, $rootScope, AuthService, $state, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
-
-	$scope.windowWidth = 900; var w = angular.element($window);
-	$scope.$watch( function () { return $window.innerWidth; },
-	  function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1630; else $scope.windowWidth = 900; },
-	  true ); w.bind('resize', function () { $scope.$apply();	});
-
-	$scope.viewModel = undefined;
 	
 	init();
 
-	function init()
-	{
-		$scope.loading = true;
+    function loadHomeView () {
+        $scope.loading = true;
 
-        Api.HomeView.listPage({ }, function (data)
-		{
-			$scope.viewModel = data;
-			$scope.loading = false;
-		});
-	}
+        Api.HomeView.listPage({}, function (data) {
+            $scope.viewModel = data;
+            $scope.loading = false;
+        });
+    }
+
+	function init()
+    {
+        $scope.windowWidth = 900; var w = angular.element($window);
+        $scope.$watch(function () { return $window.innerWidth; },
+            function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1630; else $scope.windowWidth = 900; },
+            true); w.bind('resize', function () { $scope.$apply(); });
+
+        $scope.viewModel = undefined;
+
+        loadHomeView();
+    }    
 
 	$scope.showTask = function (mdl) {
 		$state.go('task', { id: mdl.id });
@@ -40,7 +42,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 
         Api.News.update({ id: mdl.id }, mdl, function (data)
 		{
-			init();
+            loadHomeView();
 		},
 		function (response) {
 			toastr.error(response.data.message, 'Error');
@@ -61,8 +63,9 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 
 		Api.Survey.update({ id: mdl.id }, mdl, function (data)
 		{
-			init();
-			$scope.currentOption = undefined;
+            $scope.currentOption = undefined;
+
+            loadHomeView();			
 		},
 		function (response) {
 			toastr.error(response.data.message, 'Error');

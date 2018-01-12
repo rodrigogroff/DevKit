@@ -1,18 +1,9 @@
 ﻿angular.module('app.controllers').controller('ManagementController',
-['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$window', '$scope', '$rootScope', '$state', 'Api', 'ngSelects',
+function ($window, $scope, $rootScope, $state, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
-
-	$scope.windowWidth = 900; var w = angular.element($window);
-	$scope.$watch( function () { return $window.innerWidth; },
-	  function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1630; else $scope.windowWidth = 900; },
-	  true ); w.bind('resize', function () { $scope.$apply();	});
-
-	$scope.permModel = {};	
-	$scope.permID = 108;
 
 	function CheckPermissions() {
         Api.Permission.get({ id: $scope.permID }, function (data) {
@@ -25,15 +16,10 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		function (response) { });
 	}
 
-	$scope.fkProject = 0;
-	$scope.viewModel = undefined;
-
 	$scope.$watch('fkProject', function (newState, oldState)
 	{
 		if (newState == undefined)
-		{
 			$scope.viewModel = undefined;
-		}
 		else
 			if (newState != oldState)
 				load();		
@@ -42,10 +28,20 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	init();
 
 	function init()
-	{
-		CheckPermissions();
+    {
+        $scope.windowWidth = 900; var w = angular.element($window);
+        $scope.$watch(function () { return $window.innerWidth; },
+            function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1630; else $scope.windowWidth = 900; },
+            true); w.bind('resize', function () { $scope.$apply(); });
 
-		$scope.selectProjects = ngSelects.obterConfiguracao(Api.ProjectCombo, { });
+        $scope.selectProjects = ngSelects.obterConfiguracao(Api.ProjectCombo, {});
+
+        $scope.permModel = {};
+        $scope.permID = 108;
+        $scope.fkProject = 0;
+        $scope.viewModel = undefined;
+
+		CheckPermissions();		
 	}
 	
 	function load()
@@ -53,17 +49,15 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		$scope.viewModel = undefined;
 		$scope.loading = true;
 
-        var options = { fkProject: $scope.fkProject };
+        Api.Management.listPage({ fkProject: $scope.fkProject }, function (data)
+        {
+            $scope.loading = false;
 
-		Api.Management.listPage(options, function (data)
-		{
 			if (data.fail == true)
 				$scope.viewModel = undefined;
 			else
 				$scope.viewModel = data;
 		});
-
-		$scope.loading = false;
 	}
 
 	$scope.showTask = function (id) {

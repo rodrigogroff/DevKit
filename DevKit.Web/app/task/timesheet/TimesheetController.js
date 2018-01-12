@@ -1,23 +1,10 @@
 ﻿angular.module('app.controllers').controller('TimesheetController',
-['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$window', '$scope', '$rootScope', '$state', 'Api', 'ngSelects',
+function ($window, $scope, $rootScope, $state, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
-
-	$scope.windowWidth = 900; var w = angular.element($window);
-	$scope.$watch( function () { return $window.innerWidth; },
-	  function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1630; else $scope.windowWidth = 900; },
-	  true ); w.bind('resize', function () { $scope.$apply();	});
-
-	$scope.permModel = {};
-	$scope.viewModel = undefined;
-	$scope.adminTimesheet = false;
-	$scope.permID = 109;
-	$scope.userId = 0;
-	$scope.stMessage = '';
-	
+    	
 	function CheckPermissions()
 	{
         Api.Permission.get({ id: $scope.permID }, function (data)
@@ -43,16 +30,28 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 	init();
 
 	function init()
-	{
-		CheckPermissions();
+    {
+        $scope.windowWidth = 900; var w = angular.element($window);
+        $scope.$watch(function () { return $window.innerWidth; },
+            function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1630; else $scope.windowWidth = 900; },
+            true); w.bind('resize', function () { $scope.$apply(); });
 
+        $scope.permModel = {};
+        $scope.viewModel = undefined;
+        $scope.adminTimesheet = false;
+        $scope.permID = 109;
+        $scope.userId = 0;
+        $scope.stMessage = '';
+        
 		var currentDate = new Date();
 
 		$scope.nuYear = currentDate.getFullYear();
 		$scope.nuMonth = currentDate.getMonth() + 1;
 
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, { });
-		$scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, { });
+        $scope.selectUsers = ngSelects.obterConfiguracao(Api.UserCombo, {});
+
+        CheckPermissions();
 	}
 	
 	$scope.load = function()
@@ -69,7 +68,11 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
 		{
 			$scope.loading = true;
 
-            Api.Timesheet.listPage({ nuYear: $scope.nuYear, nuMonth: $scope.nuMonth, fkUser: $scope.userId }, function (data)
+            Api.Timesheet.listPage({
+                nuYear: $scope.nuYear,
+                nuMonth: $scope.nuMonth,
+                fkUser: $scope.userId
+            }, function (data)
 			{
 				if (data.fail == true)
 				{

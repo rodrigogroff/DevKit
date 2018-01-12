@@ -16,10 +16,42 @@
 		<div class="divWebForm">
 			<table width="100%">
 				<tr>
-					<td width="15px"></td>
-					<td valign="top">
-						<ng-filtro tipo="sprint" campos="campos" template-avancado="app/configuration/sprint/_filterSprint.html" 
-								   funcao-pesquisar="search"></ng-filtro>
+					<td valign="top">						
+                        <table class="widget" style="color:white">
+                            <tr height="22px"> </tr>
+                            <tr height="36px">
+                                <td width="20px"></td>
+                                <td width="120px"><b>Sprint</b></td>
+                                <td>
+                                    <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.busca" />
+                                </td>
+                                <td width="60px"></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Projeto</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.project" data-placeholder="(Selecione)" ng-model="campos.fkProject" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Fase</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.phase" data-placeholder="(Selecione)" ng-model="campos.fkPhase" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
+                                </td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                        </table>
 					</td>
 				</tr>
 			</table>
@@ -27,14 +59,11 @@
 				<tr>
 					<td valign="top">
 						<div ng-show="list.length == 0">
-							<br />
-							<br />
 							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 							<br />
 							<br />
 						</div>
 						<div ng-show="list.length > 0">
-							<br />
 							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
 							<table class="table table-hover">

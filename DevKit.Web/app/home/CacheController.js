@@ -1,6 +1,6 @@
 ﻿angular.module('app.controllers').controller('CacheController',
-['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$window', '$scope', '$rootScope', 'AuthService', '$state', 'Api', 'ngSelects',
+function ($window, $scope, $rootScope, AuthService, $state, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
     $scope.viewModel = [];

@@ -1,14 +1,9 @@
 ﻿angular.module('app.controllers').controller('ListingClientsController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
+function ($scope, $rootScope, $state, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
-
-	$scope.loading = false;
-	$scope.campos = { };
-	$scope.itensporpagina = 15;
-	$scope.permModel = {};	
-	$scope.permID = 120;
+    $scope.loading = false;
 
 	function CheckPermissions()
 	{
@@ -18,7 +13,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 			if (!$scope.permModel.listagem)
 			{
-				toastr.error('Access denied!', 'Permission');
+				toastr.error('Acesso negado!', 'Permissão');
 				$state.go('home');
 			}				
 		},
@@ -28,11 +23,13 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	init();
 
 	function init()
-	{
-		CheckPermissions();
+    {
+        $scope.campos = {};
+        $scope.itensporpagina = 15;
+        $scope.permModel = {};
+        $scope.permID = 120;
 
-		if (ngHistoricoFiltro.filtro)
-			ngHistoricoFiltro.filtro.exibeFiltro = false;
+		CheckPermissions();
 	}
 	
 	$scope.search = function ()
@@ -45,14 +42,11 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	{
 		$scope.loading = true;
 
-        var opcoes = { skip: skip, take: take };
-
-		var filtro = ngHistoricoFiltro.filtro.filtroGerado;
-
-		if (filtro)
-			angular.extend(opcoes, filtro);
-
-		delete opcoes.selects;
+        var opcoes = {
+            skip: skip,
+            take: take,
+            busca: $scope.campos.busca
+        };
 
 		Api.Client.listPage(opcoes, function (data) {
 			$scope.list = data.results;

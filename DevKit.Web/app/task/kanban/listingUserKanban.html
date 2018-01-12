@@ -13,16 +13,143 @@
 		<div class="divWebForm" style="width:98%">
 			<table width="100%">
 				<tr>
-					<td width="15px"></td>
-					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/task/kanban/_filterUserKanban.html"
-								   funcao-pesquisar="search"></ng-filtro>
+					<td valign="top">						
+                        <table class="widget" style="color:white">
+                            <tr height="22px"> </tr>
+                            <tr height="36px">
+                                <td width="25px"></td>
+                                <td width="110px"><b>Título</b></td>
+                                <td width="220px">
+                                    <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.busca" />
+                                </td>
+                                <td width="60px"></td>
+                                <td width="110px"><b>Prioridade</b></td>
+                                <td width="220px">
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.priority" data-placeholder="(Selecione)" ng-model="campos.nuPriority" />
+                                </td>
+                                <td width="25px"></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Projeto</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.project" data-placeholder="(Selecione)" ng-model="campos.fkProject" />
+                                </td>
+                                <td></td>
+                                <td><b>Fase</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.phase" data-placeholder="(Selecione)" ng-model="campos.fkPhase" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Sprint</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.sprint" data-placeholder="(Selecione)" ng-model="campos.fkSprint" />
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Responsável</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.user" data-placeholder="(Selecione)" ng-model="campos.fkUserAssigned" />
+                                </td>
+                                <td></td>
+                                <td><b>Aberto por</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.user" data-placeholder="(Selecione)" ng-model="campos.fkUserStart" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Tipo de tarefa</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.tasktype" data-placeholder="(Selecione)" ng-model="campos.fkTaskType" />
+                                </td>
+                                <td></td>
+                                <td><b>Categoria</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="campos.selects.taskcategory" data-placeholder="(Selecione)" ng-model="campos.fkTaskCategory" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>KPA</b></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.kpa" /></td>
+                                            <td> Yes</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.kpa" /></td>
+                                            <td> No</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Expirou?</b></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.expired" /></td>
+                                            <td> Não</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.expired" /></td>
+                                            <td> Sim</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="36px">
+                                <td></td>
+                                <td><b>Situação</b></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="false" ng-model="campos.complete" /></td>
+                                            <td> Aberta</td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="true" ng-model="campos.complete" /></td>
+                                            <td> Fechada</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
+                                </td>
+                            </tr>
+                            <tr height="12px"> </tr>
+                        </table>
 					</td>
 				</tr>
 			</table>
 			<br />
 			<div ng-show="fail == true">
-				<br />
 				<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
 				<br />
 				<br />

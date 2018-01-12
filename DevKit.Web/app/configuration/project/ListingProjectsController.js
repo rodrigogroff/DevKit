@@ -1,19 +1,9 @@
 ﻿angular.module('app.controllers').controller('ListingProjectsController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$http',
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $http)
+['$scope', '$rootScope', '$state', 'Api', 'ngSelects', '$http',
+function ($scope, $rootScope, $state, Api, ngSelects, $http)
 {
 	$rootScope.exibirMenu = true;
-
-	$scope.loading = false;
-	$scope.campos = {
-		selects: {
-			user: ngSelects.obterConfiguracao(Api.UserCombo, { }),
-		}
-	};
-	$scope.itensporpagina = 15;
-
-	$scope.permModel = {};	
-	$scope.permID = 103;
+    $scope.loading = false;
 
 	function CheckPermissions()
 	{
@@ -33,11 +23,18 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	init();
 
 	function init()
-	{
-		CheckPermissions();
+    {
+        $scope.campos = {
+            selects: {
+                user: ngSelects.obterConfiguracao(Api.UserCombo, {}),
+            }
+        };
+        $scope.itensporpagina = 15;
 
-		if (ngHistoricoFiltro.filtro)
-            ngHistoricoFiltro.filtro.exibeFiltro = false;
+        $scope.permModel = {};
+        $scope.permID = 103;
+
+		CheckPermissions();
 	}
 	
 	$scope.search = function ()
@@ -50,14 +47,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 	{
 		$scope.loading = true;
 
-        var opcoes = { skip: skip, take: take };
-
-		var filtro = ngHistoricoFiltro.filtro.filtroGerado;
-
-		if (filtro)
-			angular.extend(opcoes, filtro);
-
-		delete opcoes.selects;
+        var opcoes = {
+            skip: skip,
+            take: take,
+            busca: $scope.campos.busca,
+            fkUser: $scope.campos.fkUser,
+        };
 
 		Api.Project.listPage(opcoes, function (data) {
 			$scope.list = data.results;

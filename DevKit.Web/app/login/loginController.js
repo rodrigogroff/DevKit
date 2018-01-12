@@ -31,12 +31,8 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     		AuthService.login($scope.loginData).then(function (response)
     		{
                 $scope.loginOK = true;
-
-                //Api.Startup.listPage({}, function (data) { });
-                
                 $rootScope.exibirMenu = true;
-                $rootScope.$broadcast('updateCounters');
-
+                
                 if ($scope.loginData.userName == $scope.loginData.password)
     			{
     				$location.path('/system/userChangePass/');

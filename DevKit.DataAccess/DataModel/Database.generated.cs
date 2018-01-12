@@ -119,15 +119,19 @@ namespace DataModel
 		[Column,     Nullable] public string    stContactPhone  { get; set; } // character varying(20)
 		[Column,     Nullable] public string    stContactPerson { get; set; } // character varying(200)
 		[Column,     Nullable] public string    stInfo          { get; set; } // character varying(2000)
+		[Column,     Nullable] public long?     fkEstado        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCidade        { get; set; } // bigint
 	}
 
 	[Table("ClientGroup")]
 	public partial class ClientGroup
 	{
-		[PrimaryKey, Identity] public long      id      { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtStart { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser  { get; set; } // bigint
-		[Column,     Nullable] public string    stName  { get; set; } // character varying(200)
+		[PrimaryKey, Identity] public long      id       { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtStart  { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUser   { get; set; } // bigint
+		[Column,     Nullable] public string    stName   { get; set; } // character varying(200)
+		[Column,     Nullable] public long?     fkEstado { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCidade { get; set; } // bigint
 	}
 
 	[Table("ClientGroupAssociation")]

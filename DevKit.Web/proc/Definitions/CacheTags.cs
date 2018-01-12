@@ -29,6 +29,10 @@ namespace DevKit.Web.Controllers
 
         // combos
 
+        public const string CidadeComboReport = "CidadeComboReport";
+        public const string CidadeCombo = "CidadeCombo";
+        public const string EstadoComboReport = "EstadoComboReport";
+        public const string EstadoCombo = "EstadoCombo";
         public const string ClientComboReport = "ClientComboReport";
         public const string ClientCombo = "ClientCombo";
         public const string ClientGroupComboReport = "ClientComboReport";

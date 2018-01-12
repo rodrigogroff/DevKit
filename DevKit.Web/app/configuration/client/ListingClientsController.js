@@ -24,7 +24,13 @@ function ($scope, $rootScope, $state, Api, ngSelects)
 
 	function init()
     {
-        $scope.campos = {};
+        $scope.campos = {
+            selects: {
+                estado: ngSelects.obterConfiguracao(Api.EstadoCombo, {}),
+                cidade: ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'campos.fkEstado' } }),
+            }
+        };
+
         $scope.itensporpagina = 15;
         $scope.permModel = {};
         $scope.permID = 120;
@@ -49,6 +55,8 @@ function ($scope, $rootScope, $state, Api, ngSelects)
             contato: $scope.campos.contato,
             telefone: $scope.campos.telefone,
             email: $scope.campos.email,
+            fkEstado: $scope.campos.fkEstado,
+            fkCidade: $scope.campos.fkCidade,
         };
 
 		Api.Client.listPage(opcoes, function (data) {

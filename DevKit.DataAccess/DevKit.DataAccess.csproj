@@ -69,6 +69,12 @@
     <Compile Include="DataModel\DevKit\DevKit_GetList.cs" />
     <Compile Include="DataModel\DevKit\DevKit_Get.cs" />
     <Compile Include="DataModel\DevKit\DevKit_db.cs" />
+    <Compile Include="DataModel\Domains\Configuration\Cidade\Cidade_ComboFilters.cs" />
+    <Compile Include="DataModel\Domains\Configuration\Cidade\Cidade_ComposedFilters.cs" />
+    <Compile Include="DataModel\Domains\Configuration\Cidade\Cidade_DTO.cs" />
+    <Compile Include="DataModel\Domains\Configuration\Estado\Estado_ComboFilters.cs" />
+    <Compile Include="DataModel\Domains\Configuration\Estado\Estado_ComposedFilters.cs" />
+    <Compile Include="DataModel\Domains\Configuration\Estado\Estado_DTO.cs" />
     <Compile Include="DataModel\Domains\People\Person\Person_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\People\Person\Person_ComposedFilters.cs" />
     <Compile Include="DataModel\Domains\People\Person\Person_Create.cs" />

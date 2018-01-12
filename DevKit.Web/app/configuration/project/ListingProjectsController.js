@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('ListingProjectsController',
-['$scope', '$rootScope', '$state', 'Api', 'ngSelects', '$http',
-function ($scope, $rootScope, $state, Api, ngSelects, $http)
+['$scope', '$rootScope', '$state', 'Api', 'ngSelects', 
+function ($scope, $rootScope, $state, Api, ngSelects)
 {
 	$rootScope.exibirMenu = true;
     $scope.loading = false;
@@ -30,6 +30,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, $http)
                 user: ngSelects.obterConfiguracao(Api.UserCombo, {}),
             }
         };
+
         $scope.itensporpagina = 15;
 
         $scope.permModel = {};

@@ -1,7 +1,5 @@
 ﻿'use strict';
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
 angular.module('app.services', ['ngResource'])
 
 .service('$confirmacao', ['$modal', '$rootScope', '$q', function ($modal, $rootScope, $q) {
@@ -73,6 +71,8 @@ angular.module('app.services', ['ngResource'])
         HomeView: $resource('api/homeView/:id', {}, opcoes),
         MonthCombo: $resource('api/month/:id', {}, opcoes),
         DayMonthCombo: $resource('api/daymonth/:id', {}, opcoes),		
+        EstadoCombo: $resource('api/estadocombo/:id', {}, opcoes),
+        CidadeCombo: $resource('api/cidadecombo/:id', {}, opcoes),
         ClientCombo: $resource('api/clientcombo/:id', {}, opcoes),
         ClientGroupCombo: $resource('api/clientgroupcombo/:id', {}, opcoes),
         ProfileCombo: $resource('api/profilecombo/:id', {}, opcoes),

@@ -13,7 +13,7 @@ namespace GetStarted
 		{
 			using (var db = new DevKitDB())
 			{
-                int opt = 0;
+                int opt = 1;
 
                 // carga de tabelas txt
                 switch (opt)
@@ -44,6 +44,8 @@ namespace GetStarted
                                         };
 
                                         est.id = Convert.ToInt64(db.InsertWithIdentity(est));
+
+                                        hashEstado[est.stSigla] = est.id;
                                     }
                                 }
                             }

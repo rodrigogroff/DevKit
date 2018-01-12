@@ -254,12 +254,16 @@ ALTER TABLE public."Client" ADD COLUMN if not exists "stContactEmail" character 
 ALTER TABLE public."Client" ADD COLUMN if not exists "stContactPhone" character varying(20);
 ALTER TABLE public."Client" ADD COLUMN if not exists "stContactPerson" character varying(200);
 ALTER TABLE public."Client" ADD COLUMN if not exists "stInfo" character varying(2000);
+ALTER TABLE public."Client" ADD COLUMN if not exists "fkEstado" bigint;
+ALTER TABLE public."Client" ADD COLUMN if not exists "fkCidade" bigint;
 
 CREATE TABLE IF NOT EXISTS public."ClientGroup" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."ClientGroup" OWNER to postgres;
 ALTER TABLE public."ClientGroup" ADD COLUMN if not exists "dtStart" timestamp without time zone;
 ALTER TABLE public."ClientGroup" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."ClientGroup" ADD COLUMN if not exists "stName" character varying(200);
+ALTER TABLE public."ClientGroup" ADD COLUMN if not exists "fkEstado" bigint;
+ALTER TABLE public."ClientGroup" ADD COLUMN if not exists "fkCidade" bigint;
 
 CREATE TABLE IF NOT EXISTS public."ClientGroupAssociation" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."ClientGroupAssociation" OWNER to postgres;

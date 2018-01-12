@@ -867,6 +867,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="proc\Combos\CidadeComboCtrl.cs" />
+    <Compile Include="proc\Combos\EstadoComboCtrl.cs" />
     <Compile Include="proc\Combos\ClientComboCtrl.cs" />
     <Compile Include="proc\Combos\ClientGroupComboCtrl.cs" />
     <Compile Include="proc\Combos\PhaseComboCtrl.cs" />

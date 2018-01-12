@@ -128,8 +128,8 @@
                                     <td width="20px">
                                         <span class="btn btn-xs btn-danger" ng-show="valor_fail">!</span>
                                     </td>
-                                    <td width="90px">
-                                        <input type="text" price-only class="form-control input-transparent"
+                                    <td width="130px">
+                                        <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                 ng-model="viewModel.valor" style="background-color:darkgreen;color:white"
                                                 ng-keyup="$event.keyCode == 13 && parcelar()">
                                     </td>
@@ -186,7 +186,7 @@
                                         </td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p1" ng-show="viewModel.parcelasSim >= 1"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -197,7 +197,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p2" ng-show="viewModel.parcelasSim >= 2"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -212,7 +212,7 @@
                                         </td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p3" ng-show="viewModel.parcelasSim >= 3"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -223,7 +223,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p4" ng-show="viewModel.parcelasSim >= 4"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -238,7 +238,7 @@
                                         </td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p5" ng-show="viewModel.parcelasSim >= 5"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -249,7 +249,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p6" ng-show="viewModel.parcelasSim >= 6"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -264,7 +264,7 @@
                                         </td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p7" ng-show="viewModel.parcelasSim >= 7"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -275,7 +275,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p8" ng-show="viewModel.parcelasSim >= 8"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -290,7 +290,7 @@
                                         </td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p9" ng-show="viewModel.parcelasSim >= 9"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -301,7 +301,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p10" ng-show="viewModel.parcelasSim >= 10"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -316,7 +316,7 @@
                                         </td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p11" ng-show="viewModel.parcelasSim >= 11"
                                                     style="background-color:black;color:white">
                                         </td>
@@ -327,7 +327,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <input type="text" price-only class="form-control input-transparent"
+                                            <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                     ng-model="viewModel.p12" ng-show="viewModel.parcelasSim >= 12"
                                                     style="background-color:black;color:white">
                                         </td>

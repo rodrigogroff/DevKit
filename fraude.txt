@@ -2,9 +2,13 @@
 // requisito primordial:
 // tudo em memória, nada em banco (exceto feedback externo de alertas)
 
-## Aplicativos
+## Aplicativos (3)
 
-// FNET_Database  (mantém histórico de tudo, fica maior parte do tempo sem nova versão)
+// -------------------------
+// FNET_Database  
+// -------------------------
+
+(mantém histórico de tudo, fica maior parte do tempo sem nova versão)
 	// Base de usuários (senhas md5) e perfis
 	// Base de lojistas 
 	// Base de cartões / transações (relevância em até 2 anos)
@@ -13,19 +17,32 @@
 		lido no startup, 
 		escrito a cada meia hora e em evento de shutdown / atualização.
 
-// FNET_Loader (lê diretórios de carga de cartões e lojistas, 
-	             dispara PUT no FNET_Database para inserir / alterar lojas e cartões)
+// -------------------------
+// FNET_Loader 
+// -------------------------
 
-// FNET_Ruler 	(escalável (quantas portas e máquinas forem necessárias), 
-                                    lê diretório (configurado só para ele) de transações,
-		 busca e acessa FNET_Database via GET para dados do cartão,
-		 processa todas as regras,
-		 salva alertas internamente e na base externa do cliente
-			(oracle, sql server, arquivo, etc)
+-lê da base do cliente (qualquer SGBD) as últimas versões (DBControl)
+-lê também diretórios de carga de cartões e lojistas, 
+-dispara PUT no FNET_Database para inserir / alterar lojas e cartões em lotes)
+
+// -------------------------
+// FNET_Ruler 	
+// -------------------------
+
+-escalável (quantas portas e máquinas forem necessárias)  
+-busca e acessa FNET_Database via GET para obter a próxima transação a ser processada,
+-processa todas as regras,
+-salva alertas internamente e na base externa do cliente
+(oracle, sql server, arquivo, etc)
 
 ------------------------------------------------------------
 
 ## Database
+
+DbControl
+	idUltCartao
+	idUltLoja
+	idUltTransacao
 
 Cidade
 	id

@@ -25,7 +25,7 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
 			$scope.loginData.password == '')
     	{
     		$scope.loading = false;
-    		$scope.mensagem = 'Please enter valid credentials';
+    		$scope.mensagem = 'Entre com credenciais válidas!';
     	}
     	else
     	{
@@ -37,7 +37,7 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
                 if ($scope.loginData.userName == $scope.loginData.password)
     			{
     				$location.path('/system/userChangePass/');
-    				toastr.error('Your password is no longer valid', 'Password');
+    				toastr.error('Sua senha expirou.', 'Controle de senha');
     			}
     			else
     				$location.path('/');    				

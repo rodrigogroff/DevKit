@@ -45,7 +45,10 @@ function ($scope, $rootScope, $state, Api, ngSelects)
         var opcoes = {
             skip: skip,
             take: take,
-            busca: $scope.campos.busca
+            busca: $scope.campos.busca,
+            contato: $scope.campos.contato,
+            telefone: $scope.campos.telefone,
+            email: $scope.campos.email,
         };
 
 		Api.Client.listPage(opcoes, function (data) {

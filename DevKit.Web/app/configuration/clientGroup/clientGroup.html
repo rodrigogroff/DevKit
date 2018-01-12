@@ -30,7 +30,7 @@
 							<tr height="12px"></tr>
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
-								<td>Creation Date</td>
+								<td>Data de criação</td>
 								<td></td>
 								<td>
 									<b>{{viewModel.sdtStart }}</b>
@@ -38,7 +38,7 @@
 							</tr>
 							<tr height="40px" ng-show="viewModel.id > 0">
 								<td></td>
-								<td>Created By</td>
+								<td>Criado por</td>
 								<td></td>
 								<td>
 									<b>{{viewModel.sfkUser}}</b>
@@ -46,7 +46,7 @@
 							</tr>
 							<tr height="40px">
 								<td></td>
-								<td>Client Group</td>
+								<td>Nome do grupo</td>
 								<td>
 									<button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
 								</td>
@@ -67,7 +67,7 @@
 								<td>
 									<legend style="color:white">
 										Client list
-										<button class="btn btn-info btn-xs pull-right" ng-click="addNewClient()"><i class="fa fa-plus"> </i>  Add new </button>
+										<button class="btn btn-info btn-xs pull-right" ng-click="addNewClient()"><i class="fa fa-plus"> </i> Adicionar </button>
 									</legend>
 									<div ng-show="viewModel.clients.length == 0 && addClient == false">
 										<br />

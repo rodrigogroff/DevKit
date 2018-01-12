@@ -13,6 +13,9 @@ namespace DevKit.Web.Controllers
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
+                contato = Request.GetQueryStringValue("contato")?.ToUpper(),
+                telefone = Request.GetQueryStringValue("telefone")?.ToUpper(),
+                email = Request.GetQueryStringValue("email")?.ToUpper(),
             };
 
             var parameters = filter.Parameters();

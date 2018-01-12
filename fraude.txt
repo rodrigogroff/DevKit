@@ -1,0 +1,127 @@
+
+// requisito primordial:
+// tudo em memória, nada em banco (exceto feedback externo de alertas)
+
+## Aplicativos
+
+// FNET_Database  (mantém histórico de tudo, fica maior parte do tempo sem nova versão)
+	// Base de usuários (senhas md5) e perfis
+	// Base de lojistas 
+	// Base de cartões / transações (relevância em até 2 anos)
+	// Base de alertas
+	// arquivo "database.txt", "users.txt" é:
+		lido no startup, 
+		escrito a cada meia hora e em evento de shutdown / atualização.
+
+// FNET_Loader (lê diretórios de carga de cartões e lojistas, 
+	             dispara PUT no FNET_Database para inserir / alterar lojas e cartões)
+
+// FNET_Ruler 	(escalável (quantas portas e máquinas forem necessárias), 
+                                    lê diretório (configurado só para ele) de transações,
+		 busca e acessa FNET_Database via GET para dados do cartão,
+		 processa todas as regras,
+		 salva alertas internamente e na base externa do cliente
+			(oracle, sql server, arquivo, etc)
+
+------------------------------------------------------------
+
+## Database
+
+Cidade
+	id
+	st_nome
+	fk_estado
+
+Estado
+	id
+	st_nome
+
+
+Cartao
+	id
+	st_digitos
+	st_nome
+	vr_limRotativo
+	fk_cidadeOrig
+	fk_ufOrig
+	dt_cadastro
+	dt_ultAtu
+
+	List<Transacao> transacoes;
+	List<Lojas> lojas;
+
+Loja
+	id
+	st_codLoja
+	st_nomeLoja
+	nu_lat
+	nu_long
+	fk_cidade
+	fk_uf
+	tg_lojaOnline
+	dt_cadastro
+	dt_ultAtu
+
+Transacao
+	id
+	tg_online (true = autorizado na web) 
+	fk_cartao
+	fk_loja
+	vr_valor
+	nu_parcelas
+	dt_trans
+	fk_alerta
+	fk_usuario
+	tg_historica
+
+	Cartao cart;
+	Loja loja;
+
+TipoAlerta
+	id
+	st_nome (aviso, alerta, indicio, fraude)
+
+Alerta
+	id
+	fk_tipoAlerta  
+	fk_cartao
+	fk_transacao
+	fk_loja
+	st_relevancia
+	fk_usuario
+	tg_procederFraude
+	dt_usuarioAcao
+	st_motivoAcao
+	tg_enviarCliente
+	tg_enviadoCliente
+
+Usuario
+	id
+	st_login
+	st_senha (md5)
+	fk_perfil
+		
+Perfil
+	id
+	st_nome
+	vr_inicialLimCartao
+	vr_finalLimCartao
+	vr_inicialTransacao
+	vr_finalTransacao
+	List<Estado> estados;
+	List<Cidades> cidades;
+	List<TipoAlerta> tiposAtendidos;
+
+------------------------------------------------------------
+
+## Regras  (exemplos, tudo hardcoded para máxima eficiência)
+
+(aviso) transação de alto valor (acima de 100% do ticket médio)
+(aviso) baixo valor (abaixo de 10% do ticket médio)
+(alerta) compras repetidas em mesma loja (acima de 1 por hora / mais de 2 horas)
+(indicio) muitas compras em sucessão (a cada 10min [6])
+(fraude) distância não compatível (SP => RS, 10 min, 2.450 km)
+
+
+------------------------------------------------------------
+

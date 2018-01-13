@@ -2,7 +2,13 @@
 
 namespace DataModel
 {
-	public partial class Person
+    public partial class PersonAddress
+    {
+        public string sfkEstado = "",
+                      sfkCidade = "";
+    }
+
+    public partial class Person
 	{
         public object anexedEntity;
 

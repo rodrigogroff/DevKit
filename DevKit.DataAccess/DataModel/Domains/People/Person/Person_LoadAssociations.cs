@@ -50,9 +50,17 @@ namespace DataModel
 
         List<PersonAddress> LoadEnderecos(DevKitDB db)
         {
-            return (from e in db.PersonAddress where e.fkUser == id select e).
+            var lst = (from e in db.PersonAddress where e.fkUser == id select e).
                 OrderByDescending(t => t.id).
                 ToList();
+
+            foreach (var item in lst)
+            {
+                item.sfkEstado = db.Estado.Where(y => y.id == item.fkEstado).FirstOrDefault().stNome;
+                item.sfkCidade = db.Cidade.Where(y => y.id == item.fkCidade).FirstOrDefault().stNome;
+            }
+
+            return lst;
         }
     }
 }

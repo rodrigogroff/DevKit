@@ -412,12 +412,16 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>Rua</th>
+                                                    <th>Cidade</th>
+                                                    <th>Estado</th>
+                                                    <th>Logradouro</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="mdl in viewModel.enderecos">
-                                                <td>{{ mdl.stRua }}</td>
+                                                <td>{{ mdl.sfkCidade }}</td>
+                                                <td>{{ mdl.sfkEstado }}</td>
+                                                <td>{{ mdl.stRua }}, {{ mdl.stNumero }} {{ mdl.stComplemento }} </td>
                                                 <td>
                                                     <div class="pull-right">
                                                         <a href="" role="button" ng-click="editEnd(mdl)">

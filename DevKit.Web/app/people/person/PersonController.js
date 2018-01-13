@@ -49,6 +49,8 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
         $scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
+        $scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, {});
+        $scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'newEnd.fkEstado' } });
 
 		CheckPermissions();
         loadSetup();
@@ -107,7 +109,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
-			$scope.stName_fail = invalidCheck($scope.viewModel.stName);			
+			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
 	
             if (!$scope.stName_fail)
             {
@@ -117,7 +119,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
                     Api.Person.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Cadastro atualizado!', 'Success');
+                        toastr.success('Cadastro atualizado!', 'Sucesso');
                         init();
 					},
 					function (response)
@@ -129,7 +131,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				{
                     Api.Person.add($scope.viewModel, function (data)
 					{
-                        toastr.success('Cadastro adicionado!', 'Success');
+                        toastr.success('Cadastro adicionado!', 'Sucesso');
                         $state.go('persons');
 					},
 					function (response)
@@ -153,7 +155,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		{
             Api.Person.remove({ id: id }, function (data)
 			{
-				toastr.success('Cadastro removido!', 'Success');
+                toastr.success('Cadastro removido!', 'Sucesso');
 				$scope.list();
 			},
 			function (response)
@@ -180,7 +182,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
             Api.Person.update({ id: id }, $scope.viewModel, function (data)
             {
-		        toastr.success('Telefone removido!', 'Success');
+                toastr.success('Telefone removido!', 'Sucesso');
                 init();
 		    });
 		}
@@ -227,7 +229,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 Api.Person.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newPhone = {};
-					toastr.success('Telefone salvo', 'Success');					
+                    toastr.success('Telefone salvo', 'Sucesso');					
                     init();
 				},
 				function (response) {
@@ -254,7 +256,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
             Api.Person.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Email removido', 'Success');
+                toastr.success('Email removido', 'Sucesso');
                 init();
 			});
 		}
@@ -298,7 +300,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 Api.Person.update({ id: id }, $scope.viewModel, function (data)
                 {
                     $scope.newEmail = {};
-                    toastr.success('Email salvo', 'Success');
+                    toastr.success('Email salvo', 'Sucesso');
                     init();
 				},
 				function (response) {
@@ -306,6 +308,73 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				});
 			}
 		}
-	}
+    }
+
+    // ============================================
+    // endereco
+    // ============================================
+
+    $scope.addEnd = false;
+
+    $scope.removeEnd = function (index, lista) {
+        if (!$scope.permModel.novo && !$scope.permModel.edicao)
+            toastr.error('Acesso negado!', 'Permissão');
+        else {
+            $scope.viewModel.updateCommand = "removeEnd";
+            $scope.viewModel.anexedEntity = $scope.viewModel.enderecos[index];
+
+            Api.Person.update({ id: id }, $scope.viewModel, function (data) {
+                toastr.success('Endereço removido', 'Sucesso');
+                init();
+            });
+        }
+    }
+
+    $scope.addNewEnd = function () {
+        if (!$scope.permModel.novo && !$scope.permModel.edicao)
+            toastr.error('Acesso negado!', 'Permissão');
+        else
+            $scope.addEnd = !$scope.addEnd;
+    }
+
+    $scope.newEnd = {};
+
+    $scope.editEnd = function (mdl) {
+        $scope.addEnd = true;
+        $scope.newEnd = mdl;
+    }
+
+    $scope.cancelEnd = function () {
+        $scope.addEnd = false;
+        $scope.newEnd = {};
+    }
+
+    $scope.saveNewEnd = function () {
+        if (!$scope.permModel.novo && !$scope.permModel.edicao)
+            toastr.error('Acesso negado!', 'Permissão');
+        else
+        {
+            $scope.stRua_fail = invalidCheck($scope.newEnd.stRua);
+            $scope.est_fail = $scope.newEnd.fkEstado == undefined;
+            $scope.cid_fail = $scope.newEnd.fkCidade == undefined;
+
+            if (!$scope.stRua_fail && !$scope.est_fail && !$scope.cid_fail)
+            {
+                $scope.addEnd = false;
+
+                $scope.viewModel.updateCommand = "newEnd";
+                $scope.viewModel.anexedEntity = $scope.newEnd;
+
+                Api.Person.update({ id: id }, $scope.viewModel, function (data) {
+                    $scope.newEnd = {};
+                    toastr.success('Endereço salvo', 'Sucesso');
+                    init();
+                },
+                function (response) {
+                    toastr.error(response.data.message, 'Error');
+                });
+            }
+        }
+    }
 
 }]);

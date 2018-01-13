@@ -195,7 +195,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		    $scope.viewModel.anexedEntity = $scope.viewModel.phones[index];
 
             Api.User.update({ id: id }, $scope.viewModel, function (data) {
-		        toastr.success('Phone removed', 'Success');
+                toastr.success('Phone removed', 'Sucesso');
                 init();
 		    });
 		}

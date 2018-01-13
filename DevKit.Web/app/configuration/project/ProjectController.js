@@ -94,7 +94,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 					Api.Project.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Projeto salvo!', 'Success');
+                        toastr.success('Projeto salvo!', 'Sucesso');
                         init();
 					},
 					function (response)
@@ -106,7 +106,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				{
 					Api.Project.add($scope.viewModel, function (data)
 					{
-						toastr.success('Projeto adicionado!', 'Success');
+                        toastr.success('Projeto adicionado!', 'Sucesso');
                         $state.go('projects');
 					},
 					function (response)
@@ -130,7 +130,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		{
             Api.Project.remove({ id: id }, function (data)
 			{
-				toastr.success('Projeto removido!', 'Success');
+                toastr.success('Projeto removido!', 'Sucesso');
 				$scope.list();
 			},
 			function (response) {
@@ -156,7 +156,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Usuário removido', 'Success');
+                toastr.success('Usuário removido', 'Sucesso');
                 init();
 			});
 		}
@@ -198,7 +198,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				$scope.newUser = {};
                 $scope.addUser = false;
 
-				toastr.success('Usuário adicionado', 'Success');
+                toastr.success('Usuário adicionado', 'Sucesso');
                 init();				
 
 			}, function (response)
@@ -225,7 +225,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.Project.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Fase removida', 'Success');
+                toastr.success('Fase removida', 'Sucesso');
                 init();
 			});
 		}

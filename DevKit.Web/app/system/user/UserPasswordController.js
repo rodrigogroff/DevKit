@@ -84,7 +84,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             Api.User.update({ id: id }, $scope.viewModel, function (data)
 			{			
 				$scope.viewModel.anexedEntity = undefined;
-				toastr.success('Password changed!', 'Success');
+                toastr.success('Senha trocada com sucesso!', 'Sucesso');
 			},
 			function (response) {
 				toastr.error(response.data.message, 'Error');

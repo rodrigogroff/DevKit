@@ -103,7 +103,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
                     Api.Client.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Cliente salvo!', 'Success');
+                        toastr.success('Cliente salvo!', 'Sucesso');
 						$scope.viewModel.logs = data.logs;
 					},
 					function (response)
@@ -115,7 +115,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				{
                     Api.Client.add($scope.viewModel, function (data)
 					{
-						toastr.success('Cliente salvo!', 'Success');
+                        toastr.success('Cliente salvo!', 'Sucesso');
                         $state.go('clients');
 					},
 					function (response)

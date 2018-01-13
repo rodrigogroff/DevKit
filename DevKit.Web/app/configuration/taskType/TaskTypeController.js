@@ -96,7 +96,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 					Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Tipo de tarefa salvo!', 'Success');
+                        toastr.success('Tipo de tarefa salvo!', 'Sucesso');
 						init();
 					},
 					function (response)
@@ -108,7 +108,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				{
 					Api.TaskType.add($scope.viewModel, function (data)
 					{
-						toastr.success('Tipo de tarefa adicionado!', 'Success');
+                        toastr.success('Tipo de tarefa adicionado!', 'Sucesso');
                         $state.go('taskTypes');
 					},
 					function (response)
@@ -132,7 +132,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		{
             Api.TaskType.remove({ id: id }, function (data)
 			{
-				toastr.success('Tipo de tarefa removido!', 'Success');
+                toastr.success('Tipo de tarefa removido!', 'Sucesso');
 				$scope.list();
 			},
 			function (response) {
@@ -158,7 +158,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Categoria removida', 'Success');
+                toastr.success('Categoria removida', 'Sucesso');
 				init();
 			});
 		}
@@ -197,7 +197,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 			{
 				$scope.newCategorie = {};
 				$scope.addCategorie = false;
-				toastr.success('Categoria salva', 'Success');
+                toastr.success('Categoria salva', 'Sucesso');
 				init();
 			},
             function (response)
@@ -253,7 +253,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Fluxo removido', 'Success');
+                toastr.success('Fluxo removido', 'Sucesso');
 				init();
 				$scope.loadFlows();
 			});
@@ -289,7 +289,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Fluxo salvo', 'Success');
+                toastr.success('Fluxo salvo', 'Sucesso');
 
 				$scope.newFlow = {};
 				$scope.newFlow.fkTaskCategory = tmp;
@@ -358,7 +358,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 			$scope.viewModel.anexedEntity = lista[index];
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data) {
-			    toastr.success('Acumulador removido', 'Success');
+                toastr.success('Acumulador removido', 'Sucesso');
 			    init();
 				$scope.loadAccs();
 			});
@@ -391,7 +391,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Acumulador salvo', 'Success');
+                toastr.success('Acumulador salvo', 'Sucesso');
 
 				$scope.newAcc = {};
 				$scope.newAcc.fkTaskCategory = tmp;
@@ -460,7 +460,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 			$scope.viewModel.anexedEntity = lista[index];
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data) {
-				toastr.success('Check point removido', 'Success');
+                toastr.success('Check point removido', 'Sucesso');
 				$scope.loadCCs();
 			});
 		}
@@ -487,7 +487,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.TaskType.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Check point salvo', 'Success');
+                toastr.success('Check point salvo', 'Sucesso');
 				$scope.newCC = {};
 				$scope.newCC.fkCategory = tmp;
 				init();

@@ -17,7 +17,8 @@ namespace DataModel
 
 		public List<PersonPhone> phones;
 		public List<PersonEmail> emails;
-	}
+        public List<PersonAddress> enderecos;
+    }
 
     public class PersonReport
     {

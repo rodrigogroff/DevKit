@@ -81,7 +81,30 @@ namespace DataModel
 
 						break;
 					}
-			}
+
+                case "newEnd":
+                    {
+                        var ent = JsonConvert.DeserializeObject<PersonAddress>(anexedEntity.ToString());
+
+                        ent.fkUser = id;
+
+                        if (ent.id == 0)
+                            db.Insert(ent);
+                        else
+                            db.Update(ent);
+
+                        break;
+                    }
+
+                case "removeEnd":
+                    {
+                        var ent = JsonConvert.DeserializeObject<PersonAddress>(anexedEntity.ToString());
+
+                        db.Delete(ent);
+
+                        break;
+                    }
+            }
 
             dtLastUpdate = DateTime.Now;
             fkUserLastUpdate = user.id;

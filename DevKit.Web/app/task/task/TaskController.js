@@ -119,7 +119,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 					Api.Task.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Tarefa salva!', 'Success');
+                        toastr.success('Tarefa salva!', 'Sucesso');
 						init();
 					},
 					function (response)
@@ -131,7 +131,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				{
 					Api.Task.add($scope.viewModel, function (data)
 					{
-						toastr.success('Tarefa adicionada!', 'Success');
+                        toastr.success('Tarefa adicionada!', 'Sucesso');
 						$state.go('task', { id: data.id });
 					},
 					function (response)
@@ -157,7 +157,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		{
             Api.Task.remove({ id: id }, function (data)
 			{
-				toastr.success('Tarefa removida!', 'Success');
+                toastr.success('Tarefa removida!', 'Sucesso');
 				$scope.list();
 			},
 			function (response)
@@ -182,7 +182,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 			$scope.viewModel.anexedEntity = $scope.viewModel.accs[index];
 
 			Api.Task.update({ id: id }, $scope.viewModel, function (data) {
-				toastr.success('Valor de acumulador removido', 'Success');
+                toastr.success('Valor de acumulador removido', 'Sucesso');
 				init();
 			});
 		}
@@ -238,7 +238,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				{
 					$scope.newAcc = { fkTask: id };
 
-					toastr.success('Acumulador salvo', 'Success');
+                    toastr.success('Acumulador salvo', 'Sucesso');
 					init();
 
 				}, function (response) {
@@ -255,7 +255,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 		Api.Task.update({ id: id }, $scope.viewModel, function (data)
 		{
-			toastr.success('Acumulador removido', 'Success');
+            toastr.success('Acumulador removido', 'Sucesso');
 			init();
 
 		}, function (response) {
@@ -279,7 +279,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
             Api.Task.update({ id: id }, $scope.viewModel, function (data)
             {
-	            toastr.success('Cliente removido', 'Success');
+                toastr.success('Cliente removido', 'Sucesso');
 	            init();
 	        });
 	    }
@@ -317,7 +317,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 	            Api.Task.update({ id: id }, $scope.viewModel, function (data)
 	            {
 	                $scope.newClient = {};
-	                toastr.success('Cliente adicionado', 'Success');
+                    toastr.success('Cliente adicionado', 'Sucesso');
 	                init();
 	            },
 				function (response) {
@@ -342,7 +342,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 	        $scope.viewModel.anexedEntity = entity;
 
 	        Api.Task.update({ id: id }, $scope.viewModel, function (data) {
-	            toastr.success('Grupo removido', 'Success');
+                toastr.success('Grupo removido', 'Sucesso');
 	            init();
 	        });
 	    }
@@ -379,7 +379,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 Api.Task.update({ id: id }, $scope.viewModel, function (data)
                 {
 	                $scope.newClientGroup = {};
-	                toastr.success('Grupo adicionado', 'Success');
+                    toastr.success('Grupo adicionado', 'Sucesso');
 	                init();
 	            },
 				function (response) {
@@ -406,7 +406,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.Task.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Sub-tarefa removida', 'Success');
+                toastr.success('Sub-tarefa removida', 'Sucesso');
 				init();
 			});
 		}
@@ -444,7 +444,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				Api.Task.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newSubtask = { };
-					toastr.success('Sub-tarefa salva', 'Success');
+                    toastr.success('Sub-tarefa salva', 'Sucesso');
 					init();
 				},
 				function (response) {
@@ -469,7 +469,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 	        $scope.viewModel.anexedEntity = entity;
 
 	        Api.Task.update({ id: id }, $scope.viewModel, function (data) {
-	            toastr.success('Passo customizado removido', 'Success');
+                toastr.success('Passo customizado removido', 'Sucesso');
 	            init();
 	        });
 	    }
@@ -506,7 +506,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 Api.Task.update({ id: id }, $scope.viewModel, function (data)
                 {
 	                $scope.newCustomStep = {};
-	                toastr.success('Passo customizado salvo', 'Success');
+                    toastr.success('Passo customizado salvo', 'Sucesso');
 	                init();
 	            },
 				function (response) {
@@ -524,7 +524,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
         Api.Task.update({ id: id }, $scope.viewModel, function (data)
         {
-	        toastr.success('Passo customizado salvo', 'Success');
+            toastr.success('Passo customizado salvo', 'Sucesso');
 	        init();
 	    },
 		function (response) {
@@ -544,7 +544,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
         Api.Task.update({ id: id }, $scope.viewModel, function (data)
         {
-	        toastr.success('Check point salvo!', 'Success');
+            toastr.success('Check point salvo!', 'Sucesso');
 	        init();
 	    },
 		function (response) {
@@ -569,7 +569,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.Task.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Questão removida', 'Success');
+                toastr.success('Questão removida', 'Sucesso');
 				init();
 			});
 		}
@@ -611,7 +611,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 				Api.Task.update({ id: id }, $scope.viewModel, function (data) {
 					$scope.newQuestion = {};
-					toastr.success('Questão adicionada', 'Success');
+                    toastr.success('Questão adicionada', 'Sucesso');
 					init();
 				},
 				function (response) {

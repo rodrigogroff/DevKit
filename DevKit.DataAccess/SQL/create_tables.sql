@@ -319,6 +319,18 @@ ALTER TABLE public."PersonPhone" ADD COLUMN if not exists "dtLog" timestamp with
 ALTER TABLE public."PersonPhone" ADD COLUMN if not exists "stPhone" character varying(50);
 ALTER TABLE public."PersonPhone" ADD COLUMN if not exists "stDescription" character varying(50);
 
+CREATE TABLE IF NOT EXISTS public."PersonAddress" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."PersonAddress" OWNER to postgres;
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "fkPerson" bigint;
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "fkEstado" bigint;
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "fkCidade" bigint;
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "stRua" character varying(150);
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "stNumero" character varying(50);
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "stComplemento" character varying(50);
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "stReferencia" character varying(150);
+
 CREATE TABLE IF NOT EXISTS public."PersonContact" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."PersonContact" OWNER to postgres;
 ALTER TABLE public."PersonContact" ADD COLUMN if not exists "fkPerson" bigint;

@@ -95,7 +95,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 					Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
 					{
-						toastr.success('Sprint salvo!', 'Success');
+                        toastr.success('Sprint salvo!', 'Sucesso');
                         init();
 					},
 					function (response)
@@ -107,7 +107,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				{
 					Api.Sprint.add($scope.viewModel, function (data)
 					{
-						toastr.success('Sprint adicionado!', 'Success');
+                        toastr.success('Sprint adicionado!', 'Sucesso');
                         $state.go('sprints');
 					},
 					function (response)
@@ -131,7 +131,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		{
             Api.Sprint.remove({ id: id, login: $rootScope.loginInfo }, {}, function (data)
 			{
-				toastr.success('Sprint removido!', 'Success');
+                toastr.success('Sprint removido!', 'Sucesso');
 				$scope.list();
 			},
 			function (response) {
@@ -157,7 +157,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			Api.Sprint.update({ id: id }, $scope.viewModel, function (data)
 			{
-				toastr.success('Versão removida', 'Success');
+                toastr.success('Versão removida', 'Sucesso');
                 init();
 			});
 		}

@@ -29,6 +29,7 @@ namespace DataModel
 		public ITable<Estado>                 Estado                 { get { return this.GetTable<Estado>(); } }
 		public ITable<PeopleCategory>         PeopleCategory         { get { return this.GetTable<PeopleCategory>(); } }
 		public ITable<Person>                 Person                 { get { return this.GetTable<Person>(); } }
+		public ITable<PersonAddress>          PersonAddress          { get { return this.GetTable<PersonAddress>(); } }
 		public ITable<PersonCategory>         PersonCategory         { get { return this.GetTable<PersonCategory>(); } }
 		public ITable<PersonContact>          PersonContact          { get { return this.GetTable<PersonContact>(); } }
 		public ITable<PersonEmail>            PersonEmail            { get { return this.GetTable<PersonEmail>(); } }
@@ -174,18 +175,33 @@ namespace DataModel
 	{
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkUserAdd         { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUserLastUpdate  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
 		[Column,     Nullable] public string    stName            { get; set; } // character varying(150)
 		[Column,     Nullable] public string    stAlias           { get; set; } // character varying(150)
-		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
-		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
 		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
 		[Column,     Nullable] public bool?     bDeceased         { get; set; } // boolean
+		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
+		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
 		[Column,     Nullable] public string    stCPF             { get; set; } // character varying(20)
+	}
+
+	[Table("PersonAddress")]
+	public partial class PersonAddress
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkEstado      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCidade      { get; set; } // bigint
+		[Column,     Nullable] public string    stRua         { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stNumero      { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stComplemento { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stReferencia  { get; set; } // character varying(150)
 	}
 
 	[Table("PersonCategory")]
@@ -530,13 +546,13 @@ namespace DataModel
 		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
 		[Column,     Nullable] public bool?     bActive          { get; set; } // boolean
 		[Column,     Nullable] public string    stLogin          { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stName           { get; set; } // character varying(200)
 		[Column,     Nullable] public string    stPassword       { get; set; } // character varying(30)
 		[Column,     Nullable] public long?     fkProfile        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLastLogin      { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtCreation       { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public string    stCurrentSession { get; set; } // character varying(20)
+		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
+		[Column,     Nullable] public string    stName           { get; set; } // character varying(200)
 	}
 
 	[Table("UserEmail")]
@@ -622,6 +638,12 @@ namespace DataModel
 		}
 
 		public static Person Find(this ITable<Person> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static PersonAddress Find(this ITable<PersonAddress> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

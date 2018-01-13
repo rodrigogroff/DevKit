@@ -96,7 +96,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects )
 				{
 					Api.News.add($scope.viewModel, function (data)
 					{
-						toastr.success('Notícia adicionada!', 'Success');
+                        toastr.success('Notícia adicionada!', 'Sucesso');
                         $state.go('newsListing');
 					},
 					function (response)

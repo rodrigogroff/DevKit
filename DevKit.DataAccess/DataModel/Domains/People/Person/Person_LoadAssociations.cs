@@ -29,8 +29,9 @@ namespace DataModel
 
             phones = LoadPhones(db);
 			emails = LoadEmails(db);
-		
-			return this;
+            enderecos = LoadEnderecos(db);
+
+            return this;
 		}
         
 		List<PersonPhone> LoadPhones(DevKitDB db)
@@ -46,5 +47,12 @@ namespace DataModel
 				OrderByDescending(t => t.id).
 				ToList();
 		}
-	}
+
+        List<PersonAddress> LoadEnderecos(DevKitDB db)
+        {
+            return (from e in db.PersonAddress where e.fkUser == id select e).
+                OrderByDescending(t => t.id).
+                ToList();
+        }
+    }
 }

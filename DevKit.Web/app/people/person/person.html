@@ -236,7 +236,31 @@
                                                         </a>
                                                     </div>
 
-
+                                                    <div class="modal-backdrop"
+                                                         ng-if="modalPhone == true"
+                                                         style="background: rgba(55, 55, 55, 0.5 );">
+                                                        <div class="modal-dialog" style="width:500px">
+                                                            <br />
+                                                            <br />
+                                                            <br />
+                                                            <div class="modal-content" style="color:black">
+                                                                <legend style="color:black">
+                                                                    Remoção de telefone
+                                                                    <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalPhone()"> X </button> &nbsp;
+                                                                </legend>
+                                                                Confirma remoção do item abaixo?<br /><br />
+                                                                -{{delPhone.stPhone}}<br />
+                                                                -{{delPhone.stDescription}}<br />
+                                                                <br />
+                                                                <br />
+                                                                <div class="pull-right">
+                                                                    <button class="btn btn-primary" ng-click="removerPhoneModal()"> Remover </button>
+                                                                </div>
+                                                                <br />
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                                 </td>
                                             </tr>
@@ -308,6 +332,32 @@
                                                         <a href="" role="button" ng-click="removeEmail($index, viewModel.emails)">
                                                             <i class="glyphicon glyphicon-remove" style="color:white"></i>
                                                         </a>
+
+                                                        <div class="modal-backdrop"
+                                                             ng-if="modalEmail == true"
+                                                             style="background: rgba(55, 55, 55, 0.5 );">
+                                                            <div class="modal-dialog" style="width:500px">
+                                                                <br />
+                                                                <br />
+                                                                <br />
+                                                                <div class="modal-content" style="color:black">
+                                                                    <legend style="color:black">
+                                                                        Remoção de email
+                                                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalEmail()"> X </button> &nbsp;
+                                                                    </legend>
+                                                                    Confirma remoção do item abaixo?<br /><br />
+                                                                    -{{delEmail.stEmail}}<br />
+                                                                    <br />
+                                                                    <br />
+                                                                    <div class="pull-right">
+                                                                        <button class="btn btn-primary" ng-click="removerEmailModal()"> Remover </button>
+                                                                    </div>
+                                                                    <br />
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -455,6 +505,33 @@
                                                         <a href="" role="button" ng-click="removeEnd($index, viewModel.enderecos)">
                                                             <i class="glyphicon glyphicon-remove" style="color:white"></i>
                                                         </a>
+
+                                                        <div class="modal-backdrop"
+                                                             ng-if="modalEnd == true"
+                                                             style="background: rgba(55, 55, 55, 0.5 );">
+                                                            <div class="modal-dialog" style="width:500px">
+                                                                <br />
+                                                                <br />
+                                                                <br />
+                                                                <div class="modal-content" style="color:black">
+                                                                    <legend style="color:black">
+                                                                        Remoção de email
+                                                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalEnd()"> X </button> &nbsp;
+                                                                    </legend>
+                                                                    Confirma remoção do item abaixo?<br /><br />
+                                                                    -{{delEnd.sfkCidade}} / {{delEnd.sfkEstado}}<br />
+                                                                    -{{delEnd.stRua}}, {{ delEnd.stNumero }} {{ delEnd.stComplemento }}  <br />
+                                                                    <br />
+                                                                    <br />
+                                                                    <div class="pull-right">
+                                                                        <button class="btn btn-primary" ng-click="removerEndModal()"> Remover </button>
+                                                                    </div>
+                                                                    <br />
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </td>
                                             </tr>

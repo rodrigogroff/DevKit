@@ -39,8 +39,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
     
 	init();
 
-	function init()
-    {
+    function init() {
         $scope.setupModel = { stPhoneMask: '' }
         $scope.viewModel = {};
         $scope.permModel = {};
@@ -52,9 +51,13 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, {});
         $scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'newEnd.fkEstado' } });
 
-		CheckPermissions();
+        CheckPermissions();
         loadSetup();
+        loadEntity();
+    }
 
+    function loadEntity()
+    {
 		if (id > 0)
         {
             if ($scope.loaded == undefined)
@@ -120,7 +123,6 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                     Api.Person.update({ id: id }, $scope.viewModel, function (data)
 					{
                         toastr.success('Cadastro atualizado!', 'Sucesso');
-                        init();
 					},
 					function (response)
 					{
@@ -171,21 +173,29 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 	$scope.addPhone = false;
 		
-	$scope.removePhone = function (index, lista)
-	{
-		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+    $scope.removePhone = function (index, lista)
+    {
+        if (!$scope.permModel.novo && !$scope.permModel.edicao)
             toastr.error('Acesso negado!', 'Permissão');
-		else
+        else
         {
-            $scope.viewModel.updateCommand = "removePhone";
-		    $scope.viewModel.anexedEntity = $scope.viewModel.phones[index];
+            $scope.modalPhone = true;
+            $scope.delPhone = $scope.viewModel.phones[index];
+        }
+    }
 
-            Api.Person.update({ id: id }, $scope.viewModel, function (data)
-            {
-                toastr.success('Telefone removido!', 'Sucesso');
-                init();
-		    });
-		}
+    $scope.closeModalPhone = function () {        
+        $scope.modalPhone = false;
+    }
+
+    $scope.removerPhoneModal = function ()
+    {
+        $scope.viewModel.updateCommand = "removePhone";
+        $scope.viewModel.anexedEntity = $scope.delPhone;
+
+        Api.Person.update({ id: id }, $scope.viewModel, function (data) {
+            loadEntity();
+		});
 	}
 
 	$scope.addNewPhone = function ()
@@ -229,8 +239,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 Api.Person.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newPhone = {};
-                    toastr.success('Telefone salvo', 'Sucesso');					
-                    init();
+                    loadEntity();
 				},
 				function (response) {
 					toastr.error(response.data.message, 'Error');
@@ -244,23 +253,28 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 	// ============================================
 
 	$scope.addEmail = false;
-	
-	$scope.removeEmail = function (index, lista)
-	{
-		if (!$scope.permModel.novo && !$scope.permModel.edicao)
-            toastr.error('Acesso negado!', 'Permissão');
-		else
-        {
-			$scope.viewModel.updateCommand = "removeEmail";
-			$scope.viewModel.anexedEntity = $scope.viewModel.emails[index];
 
-            Api.Person.update({ id: id }, $scope.viewModel, function (data)
-			{
-                toastr.success('Email removido', 'Sucesso');
-                init();
-			});
-		}
-	}
+    $scope.removeEmail = function (index, lista) {
+        if (!$scope.permModel.novo && !$scope.permModel.edicao)
+            toastr.error('Acesso negado!', 'Permissão');
+        else {
+            $scope.modalEmail = true;
+            $scope.delEmail = $scope.viewModel.emails[index];
+        }
+    }
+
+    $scope.closeModalEmail = function () {
+        $scope.modalEmail = false;
+    }
+
+    $scope.removerEmailModal = function () {
+        $scope.viewModel.updateCommand = "removeEmail";
+        $scope.viewModel.anexedEntity = $scope.delEmail;
+
+        Api.Person.update({ id: id }, $scope.viewModel, function (data) {
+            loadEntity();
+        });
+    }
 
 	$scope.addNewEmail = function ()
 	{
@@ -300,8 +314,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 Api.Person.update({ id: id }, $scope.viewModel, function (data)
                 {
                     $scope.newEmail = {};
-                    toastr.success('Email salvo', 'Sucesso');
-                    init();
+                    loadEntity();
 				},
 				function (response) {
 					toastr.error(response.data.message, 'Error');
@@ -320,14 +333,22 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         if (!$scope.permModel.novo && !$scope.permModel.edicao)
             toastr.error('Acesso negado!', 'Permissão');
         else {
-            $scope.viewModel.updateCommand = "removeEnd";
-            $scope.viewModel.anexedEntity = $scope.viewModel.enderecos[index];
-
-            Api.Person.update({ id: id }, $scope.viewModel, function (data) {
-                toastr.success('Endereço removido', 'Sucesso');
-                init();
-            });
+            $scope.modalEnd = true;
+            $scope.delEnd = $scope.viewModel.enderecos[index];
         }
+    }
+
+    $scope.closeModalEnd = function () {
+        $scope.modalEnd = false;
+    }
+
+    $scope.removerEndModal = function () {
+        $scope.viewModel.updateCommand = "removeEnd";
+        $scope.viewModel.anexedEntity = $scope.delEnd;
+
+        Api.Person.update({ id: id }, $scope.viewModel, function (data) {
+            loadEntity();
+        });
     }
 
     $scope.addNewEnd = function () {
@@ -367,8 +388,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
                 Api.Person.update({ id: id }, $scope.viewModel, function (data) {
                     $scope.newEnd = {};
-                    toastr.success('Endereço salvo', 'Sucesso');
-                    init();
+                    loadEntity();
                 },
                 function (response) {
                     toastr.error(response.data.message, 'Error');

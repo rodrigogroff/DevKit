@@ -1,17 +1,4 @@
 
--remover filtros de sub-páginas
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 OLD
@@ -20,8 +7,6 @@ OLD
 a fazer (prioridade)
 ------------------------------
 	
-	- contatos da pessoa
-	- country, state, city
 	- rever management, usando genérico
 	- implementar agenda da pessoa / setor da empresa / locais de reunião	
 	- pensar datas e prazos

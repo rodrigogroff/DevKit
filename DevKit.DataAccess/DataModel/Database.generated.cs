@@ -202,6 +202,8 @@ namespace DataModel
 		[Column,     Nullable] public string    stNumero      { get; set; } // character varying(50)
 		[Column,     Nullable] public string    stComplemento { get; set; } // character varying(50)
 		[Column,     Nullable] public string    stReferencia  { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stCEP         { get; set; } // character varying(50)
+		[Column,     Nullable] public bool?     bPrincipal    { get; set; } // boolean
 	}
 
 	[Table("PersonCategory")]

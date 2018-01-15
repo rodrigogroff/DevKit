@@ -1,20 +1,20 @@
 ﻿<div class="webFormPostion">
-	<section class="widgetForm" style="width:925px; height:100%">
-		<legend class="legendTop">
-			<table><tr height="12px"><td> </td></tr></table>
-			<table style="color:white; width:100%">
-				<tr>
-					<td width="20px"></td>
-					<td>
-						<span ng-show="viewModel.id == undefined">Novo </span> Cadastros \ Pessoas \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stName}}&nbsp;</span></b>
-						<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>
-					</td>
-					<td width="20px"></td>
-				</tr>
-				<tr height="12px"></tr>
-			</table>
-		</legend>
-		<div class="divWebForm">
+    <section class="widgetForm" style="width:925px; height:100%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>
+                        <span ng-show="viewModel.id == undefined">Novo </span> Cadastros \ Pessoas \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stName}}&nbsp;</span></b>
+                        <button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>
+                    </td>
+                    <td width="20px"></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm">
             <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
                 <tab heading="Cadastro">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
@@ -348,54 +348,72 @@
                                                             </td>
                                                         </tr>
                                                         <tr height="42px">
-                                                            <td >
+                                                            <td>
                                                                 Cidade
                                                             </td>
-                                                            <td >
+                                                            <td>
                                                                 <button class="btn btn-xs btn-danger" ng-show="cid_fail">!</button>
                                                             </td>
-                                                            <td >
+                                                            <td>
                                                                 <input type="hidden" style="width:100%" ui-select2="cidade" data-placeholder="(Selecione)" ng-model="newEnd.fkCidade" />
                                                             </td>
                                                         </tr>
                                                         <tr height="42px">
-                                                            <td >
+                                                            <td>
                                                                 Rua / Logradouro
                                                             </td>
-                                                            <td >
+                                                            <td>
                                                                 <button class="btn btn-xs btn-danger" ng-show="stRua_fail">!</button>
                                                             </td>
-                                                            <td >
+                                                            <td>
                                                                 <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stRua">
                                                             </td>
                                                         </tr>
                                                         <tr height="42px">
-                                                            <td >
+                                                            <td>
                                                                 Número
                                                             </td>
-                                                            <td >
+                                                            <td>
                                                                 <button class="btn btn-xs btn-danger" ng-show="stNumero_fail">!</button>
                                                             </td>
-                                                            <td >
+                                                            <td>
                                                                 <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stNumero">
                                                             </td>
                                                         </tr>
                                                         <tr height="42px">
-                                                            <td >
+                                                            <td>
                                                                 Complemento
                                                             </td>
-                                                            <td ></td>
-                                                            <td >
+                                                            <td></td>
+                                                            <td>
                                                                 <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stComplemento">
                                                             </td>
                                                         </tr>
                                                         <tr height="42px">
-                                                            <td >
+                                                            <td>
                                                                 Referência
                                                             </td>
-                                                            <td ></td>
-                                                            <td >
+                                                            <td></td>
+                                                            <td>
                                                                 <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stReferencia">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                CEP
+                                                            </td>
+                                                            <td></td>
+                                                            <td>
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stCEP">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                Principal?
+                                                            </td>
+                                                            <td></td>
+                                                            <td>
+                                                                <input type="checkbox" ng-model="newEnd.bPrincipal" /> Sim
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -415,13 +433,16 @@
                                                     <th>Cidade</th>
                                                     <th>Estado</th>
                                                     <th>Logradouro</th>
+                                                    <th>CEP</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="mdl in viewModel.enderecos">
-                                                <td>{{ mdl.sfkCidade }}</td>
+                                                <td ng-if="mdl.bPrincipal == true"><b>{{ mdl.sfkCidade }}</b></td>
+                                                <td ng-if="mdl.bPrincipal == false">{{ mdl.sfkCidade }}</td>
                                                 <td>{{ mdl.sfkEstado }}</td>
                                                 <td>{{ mdl.stRua }}, {{ mdl.stNumero }} {{ mdl.stComplemento }} </td>
+                                                <td>{{ mdl.stCEP }}</td>
                                                 <td>
                                                     <div class="pull-right">
                                                         <a href="" role="button" ng-click="editEnd(mdl)">
@@ -478,17 +499,17 @@
                     </div>
                 </tab>
             </tabset>
-			<br />
-			<br />
-			<table>
-				<tr>
-					<td><button class="btn btn-default" ng-click="list()">Cancelar</button></td>
-					<td width="34px"></td>
-					<td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
-				</tr>
-			</table>
-			<br />
-			<br />
-		</div>
-	</section>
+            <br />
+            <br />
+            <table>
+                <tr>
+                    <td><button class="btn btn-default" ng-click="list()">Cancelar</button></td>
+                    <td width="34px"></td>
+                    <td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
+                </tr>
+            </table>
+            <br />
+            <br />
+        </div>
+    </section>
 </div>

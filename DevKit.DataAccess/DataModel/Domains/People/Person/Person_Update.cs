@@ -88,6 +88,12 @@ namespace DataModel
 
                         ent.fkUser = id;
 
+                        if (ent.bPrincipal == null)
+                            ent.bPrincipal = false;
+
+                        if (!db.PersonAddress.Where(y=>y.fkPerson == id).Any())
+                            ent.bPrincipal = true;
+
                         if (ent.id == 0)
                             db.Insert(ent);
                         else
@@ -101,6 +107,15 @@ namespace DataModel
                         var ent = JsonConvert.DeserializeObject<PersonAddress>(anexedEntity.ToString());
 
                         db.Delete(ent);
+
+                        if (db.PersonAddress.Where(y => y.fkPerson == id).Count() == 1)
+                        {
+                            var pa = db.PersonAddress.Where(y => y.fkPerson == id).FirstOrDefault();
+
+                            pa.bPrincipal = true;
+
+                            db.Update(pa);
+                        }
 
                         break;
                     }

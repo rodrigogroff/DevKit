@@ -330,6 +330,8 @@ ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "stRua" character va
 ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "stNumero" character varying(50);
 ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "stComplemento" character varying(50);
 ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "stReferencia" character varying(150);
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "stCEP" character varying(50);
+ALTER TABLE public."PersonAddress" ADD COLUMN if not exists "bPrincipal" boolean;
 
 CREATE TABLE IF NOT EXISTS public."PersonContact" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."PersonContact" OWNER to postgres;

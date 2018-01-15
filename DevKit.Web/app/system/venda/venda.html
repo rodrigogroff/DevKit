@@ -27,7 +27,7 @@
                     </td>
                     <td width="75px">
                         <input type="text" focus="true" numeric-only maxlength="6" class="form-control input-transparent" 
-                               ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800" 
+                               ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800"
                                ng-keyup="$event.keyCode == 13 && conferirCartao()">
                     </td>                 
                     <td width="10px"></td>
@@ -36,7 +36,7 @@
                     </td>
                     <td width="75px">
                         <input type="text" numeric-only maxlength="6" class="form-control input-transparent" 
-                               ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800"
+                               ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800" ng-maxlength="6" auto-next tabindex="2"
                                ng-keyup="$event.keyCode == 13 && conferirCartao()">
                     </td>
                     <td width="10px"></td>
@@ -45,7 +45,7 @@
                     </td>
                     <td width="60px">
                         <input type="text" numeric-only maxlength="4" class="form-control input-transparent" 
-                               ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" 
+                               ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" ng-maxlength="4" auto-next tabindex="3"
                                ng-keyup="$event.keyCode == 13 && conferirCartao()">
                     </td>                 
                     <td width="10px"></td>
@@ -54,7 +54,7 @@
                     </td>
                     <td width="60px">
                         <input type="text" numeric-only maxlength="4" class="form-control input-transparent" 
-                               ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800"
+                               ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800" ng-maxlength="4" auto-next tabindex="4"
                                ng-keyup="$event.keyCode == 13 && conferirCartao()" >
                     </td>
                     <td width="10px"></td>

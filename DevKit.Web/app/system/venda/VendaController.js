@@ -115,6 +115,11 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.viewModel.p10 = ''; $scope.viewModel.p11 = ''; $scope.viewModel.p12 = '';
         }
 
+        if ($scope.viewModel.parcelas.length == 2) 
+            if ($scope.viewModel.parcelas != 10)
+                if ($scope.viewModel.parcelas[0] == '0')
+                    $scope.viewModel.parcelas = $scope.viewModel.parcelas[1];
+
         Api.SimulaParcelada.listPage(
         {
             cartao: $scope.viewModel.data.id,

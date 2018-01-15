@@ -15,8 +15,16 @@ namespace DataModel
 			{
 				case "entity":
 					{
-						
-						break;
+                        new AuditLog
+                        {
+                            fkUser = user.id,
+                            fkActionLog = EnumAuditAction.PersonUpdate,
+                            nuType = EnumAuditType.Person,
+                            fkTarget = this.id
+                        }.
+                        Create(db, "", "");
+
+                        break;
 					}
 									
 				case "newPhone":
@@ -35,9 +43,34 @@ namespace DataModel
 							}
 
 							db.Insert(ent);
-						}
+
+                            new AuditLog
+                            {
+                                fkUser = user.id,
+                                fkActionLog = EnumAuditAction.PersonAddPhone,
+                                nuType = EnumAuditType.Person,
+                                fkTarget = this.id
+                            }.
+                            Create(db, ent.stPhone, "");
+
+                        }
 						else
-							db.Update(ent);
+                        {
+                            var oldPhone = db.PersonPhone.
+                                            Where(y => y.id == ent.id).
+                                            FirstOrDefault();
+                                                        
+                            new AuditLog
+                            {
+                                fkUser = user.id,
+                                fkActionLog = EnumAuditAction.PersonEditPhone,
+                                nuType = EnumAuditType.Person,
+                                fkTarget = this.id
+                            }.
+                            Create(db, oldPhone.stPhone + " => " + ent.stPhone, "");
+
+                            db.Update(ent);
+                        }							
 
 						break;
 					}
@@ -46,7 +79,16 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<PersonPhone>(anexedEntity.ToString());
 
-						db.Delete(ent);
+                        new AuditLog
+                        {
+                            fkUser = user.id,
+                            fkActionLog = EnumAuditAction.PersonRemovePhone,
+                            nuType = EnumAuditType.Person,
+                            fkTarget = this.id
+                        }.
+                        Create(db, ent.stPhone, "");
+
+                        db.Delete(ent);
 
 						break;
 					}
@@ -66,9 +108,35 @@ namespace DataModel
 							}
 
 							db.Insert(ent);
-						}
-						else
-							db.Update(ent);
+
+                            new AuditLog
+                            {
+                                fkUser = user.id,
+                                fkActionLog = EnumAuditAction.PersonAddEmail,
+                                nuType = EnumAuditType.Person,
+                                fkTarget = this.id
+                            }.
+                            Create(db, ent.stEmail, "");
+
+                        }
+                        else
+                        {
+                            var oldEmail = db.PersonEmail.
+                                            Where(y => y.id == ent.id).
+                                            FirstOrDefault();
+
+                            if (oldEmail != null)
+                            new AuditLog
+                            {
+                                fkUser = user.id,
+                                fkActionLog = EnumAuditAction.PersonAddEmail,
+                                nuType = EnumAuditType.Person,
+                                fkTarget = this.id
+                            }.
+                            Create(db, oldEmail.stEmail + " => " + ent.stEmail, "");
+
+                            db.Update(ent);
+                        }							
 
                         break;
 					}
@@ -77,7 +145,16 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<PersonEmail>(anexedEntity.ToString());
 
-						db.Delete(ent); 
+                        new AuditLog
+                        {
+                            fkUser = user.id,
+                            fkActionLog = EnumAuditAction.PersonRemoveEmail,
+                            nuType = EnumAuditType.Person,
+                            fkTarget = this.id
+                        }.
+                        Create(db, ent.stEmail, "");
+
+                        db.Delete(ent); 
 
 						break;
 					}
@@ -95,9 +172,37 @@ namespace DataModel
                             ent.bPrincipal = true;
 
                         if (ent.id == 0)
+                        {
+                            new AuditLog
+                            {
+                                fkUser = user.id,
+                                fkActionLog = EnumAuditAction.PersonAddAddress,
+                                nuType = EnumAuditType.Person,
+                                fkTarget = this.id
+                            }.
+                            Create(db, ent.stRua + " "+ ent.stNumero + " " + ent.stReferencia, "");
+
                             db.Insert(ent);
+                        }                            
                         else
+                        {
+                            var oldEnd = db.PersonAddress.
+                                            Where(y => y.id == ent.id).
+                                            FirstOrDefault();
+
+                            if (oldEnd != null)
+                            new AuditLog
+                            {
+                                fkUser = user.id,
+                                fkActionLog = EnumAuditAction.PersonEditAddress,
+                                nuType = EnumAuditType.Person,
+                                fkTarget = this.id
+                            }.
+                            Create(db, oldEnd.stRua + " " + oldEnd.stNumero + " " + oldEnd.stReferencia + " => " +
+                                       ent.stRua + " " + ent.stNumero + " " + ent.stReferencia, "");
+
                             db.Update(ent);
+                        }                            
 
                         break;
                     }
@@ -105,6 +210,15 @@ namespace DataModel
                 case "removeEnd":
                     {
                         var ent = JsonConvert.DeserializeObject<PersonAddress>(anexedEntity.ToString());
+
+                        new AuditLog
+                        {
+                            fkUser = user.id,
+                            fkActionLog = EnumAuditAction.PersonRemoveAddress,
+                            nuType = EnumAuditType.Person,
+                            fkTarget = this.id
+                        }.
+                        Create(db, ent.stRua + " " + ent.stNumero + " " + ent.stReferencia, "");
 
                         db.Delete(ent);
 
@@ -125,6 +239,8 @@ namespace DataModel
             fkUserLastUpdate = user.id;
 
             db.Update(this);
+
+            
 
             return true;
 		}

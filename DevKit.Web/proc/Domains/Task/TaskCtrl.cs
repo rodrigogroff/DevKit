@@ -28,8 +28,7 @@ namespace DevKit.Web.Controllers
                 fkClient = Request.GetQueryStringValue<long?>("fkClient", null),
                 fkClientGroup = Request.GetQueryStringValue<long?>("fkClientGroup", null),
             };
-
-
+            
             var parameters = filter.Parameters();
 
             var hshReport = SetupCacheReport(CacheTags.TaskReport);

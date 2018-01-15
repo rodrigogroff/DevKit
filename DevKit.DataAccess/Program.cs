@@ -1,6 +1,7 @@
 ﻿using DataModel;
 using LinqToDB;
 using System;
+using System.Linq;
 using System.Collections;
 using System.IO;
 using System.Text;
@@ -22,55 +23,65 @@ namespace GetStarted
                         {
                             Console.WriteLine("Carga de base.");
 
-                            // carga de estado e cidade
-                            var hashEstado = new Hashtable();
-
-                            using (var sr = new StreamReader("c:\\carga\\log_faixa_uf.txt", Encoding.Default, false))
+                            if (!db.Estado.Any())
                             {
-                                Console.WriteLine("Carga de base [ESTADO].");
+                                #region - carga de estado e cidade - 
 
-                                while (!sr.EndOfStream)
+                                var hashEstado = new Hashtable();
+
+                                using (var sr = new StreamReader("c:\\carga\\log_faixa_uf.txt", Encoding.Default, false))
                                 {
-                                    var line = sr.ReadLine();
+                                    Console.WriteLine("Carga de base [ESTADO].");
 
-                                    if (line != "")
+                                    while (!sr.EndOfStream)
                                     {
-                                        var ar = line.Replace("\"", "").Split(';');
+                                        var line = sr.ReadLine();
 
-                                        var est = new Estado
+                                        if (line != "")
                                         {
-                                            stNome = ar[1],
-                                            stSigla = ar[0]
-                                        };
+                                            var ar = line.Replace("\"", "").Split(';');
 
-                                        est.id = Convert.ToInt64(db.InsertWithIdentity(est));
+                                            var est = new Estado
+                                            {
+                                                stNome = ar[1],
+                                                stSigla = ar[0]
+                                            };
 
-                                        hashEstado[est.stSigla] = est.id;
+                                            est.id = Convert.ToInt64(db.InsertWithIdentity(est));
+
+                                            hashEstado[est.stSigla] = est.id;
+                                        }
                                     }
                                 }
-                            }
 
-                            using (var sr = new StreamReader("c:\\carga\\log_localidade.txt", Encoding.Default, false))
-                            {
-                                Console.WriteLine("Carga de base [CIDADE].");
+                                #endregion
 
-                                while (!sr.EndOfStream)
+                                #region - carga de cidades -
+
+                                using (var sr = new StreamReader("c:\\carga\\log_localidade.txt", Encoding.Default, false))
                                 {
-                                    var line = sr.ReadLine();
+                                    Console.WriteLine("Carga de base [CIDADE].");
 
-                                    if (line != "")
+                                    while (!sr.EndOfStream)
                                     {
-                                        var ar = line.Replace("\"", "").Split(';');
+                                        var line = sr.ReadLine();
 
-                                        var cid = new Cidade
+                                        if (line != "")
                                         {
-                                            fkEstado = hashEstado[ar[4]] as long?,
-                                            stNome = ar[1]
-                                        };
+                                            var ar = line.Replace("\"", "").Split(';');
 
-                                        cid.id = Convert.ToInt64(db.InsertWithIdentity(cid));
+                                            var cid = new Cidade
+                                            {
+                                                fkEstado = hashEstado[ar[4]] as long?,
+                                                stNome = ar[1]
+                                            };
+
+                                            cid.id = Convert.ToInt64(db.InsertWithIdentity(cid));
+                                        }
                                     }
                                 }
+
+                                #endregion
                             }
 
                             Console.WriteLine("Carga de base executada com sucesso.");

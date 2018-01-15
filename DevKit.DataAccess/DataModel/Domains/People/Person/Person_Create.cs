@@ -33,8 +33,17 @@ namespace DataModel
             fkUserAdd = user.id;
 
             id = Convert.ToInt64(db.InsertWithIdentity(this));
-            		
-			return true;
+
+            new AuditLog
+            {
+                fkUser = user.id,
+                fkActionLog = EnumAuditAction.PersonCreate,
+                nuType = EnumAuditType.Person,
+                fkTarget = this.id
+            }.
+            Create(db, "", "");
+
+            return true;
 		}
 	}
 }

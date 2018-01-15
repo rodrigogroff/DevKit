@@ -131,8 +131,8 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				{
                     Api.Person.add($scope.viewModel, function (data)
 					{
-                        toastr.success('Cadastro adicionado!', 'Sucesso');
-                        $state.go('persons');
+                        toastr.success('Cadastro adicionado!', 'Sucesso');                       
+                        $state.go('person', { id: data.id });
 					},
 					function (response)
 					{

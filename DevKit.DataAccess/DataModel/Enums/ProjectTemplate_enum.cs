@@ -20,14 +20,12 @@ namespace DataModel
 		public List<ProjectTemplate> lst = new List<ProjectTemplate>();
 
 		public const long Custom = 1,
-						  CMMI2 = 2,
 						  SoftwareMaintenance = 3;
 
 		public EnumProjectTemplate()
 		{
 			lst.Add(new ProjectTemplate() { id = Custom, stName = "Customizado" });
-			lst.Add(new ProjectTemplate() { id = CMMI2, stName = "CMMI-2" });
-			lst.Add(new ProjectTemplate() { id = SoftwareMaintenance, stName = "Software Maintenance" });
+			lst.Add(new ProjectTemplate() { id = SoftwareMaintenance, stName = "Software" });
 		}
 
 		public ProjectTemplate Get(long? _id)

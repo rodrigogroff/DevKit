@@ -1,5 +1,6 @@
 
-
+-traduzir enumerações
+-modais de conf
 
 OLD
 

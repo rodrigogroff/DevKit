@@ -67,7 +67,7 @@ namespace DevKit.Web.Controllers
             CleanCache(db, CacheTags.Person, null);
             StoreCache(CacheTags.Person, mdl.id, mdl);
 
-            return Ok();			
+            return Ok(mdl);			
 		}
 
 		public IHttpActionResult Put(long id, Person mdl)

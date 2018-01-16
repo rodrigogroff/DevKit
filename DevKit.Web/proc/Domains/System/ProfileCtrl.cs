@@ -8,8 +8,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new ProfileFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
@@ -22,9 +26,6 @@ namespace DevKit.Web.Controllers
             var hshReport = SetupCacheReport(CacheTags.ProfileReport);
             if (hshReport[parameters] is ProfileReport report)
                 return Ok(report);
-
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
 
             var ret = new Profile().ComposedFilters(db, filter);
             

@@ -8,6 +8,9 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new PersonFilter
             {
                 fkEmpresa = db.currentUser.fkEmpresa,
@@ -24,9 +27,6 @@ namespace DevKit.Web.Controllers
             var hshReport = SetupCacheReport(CacheTags.PersonReport);
             if (hshReport[parameters] is PersonReport report)
                 return Ok(report);
-
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
 
             var ret = new Person().ComposedFilters(db, filter);
             

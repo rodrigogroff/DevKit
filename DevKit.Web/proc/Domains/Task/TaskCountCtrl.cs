@@ -12,6 +12,7 @@ namespace DevKit.Web.Controllers
 
             var filter = new TaskFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 complete = false,
                 kpa = false,
                 lstProjects = db.GetCurrentUserProjects()

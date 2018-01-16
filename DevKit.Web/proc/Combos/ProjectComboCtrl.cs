@@ -9,20 +9,21 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new ProjectFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 busca = Request.GetQueryStringValue("busca","").ToUpper(),
             };
                         
-            var parameters = filter.busca + userLoggedName;
+            var parameters = filter.Parameters();
 
             var hshReport = SetupCacheReport(CacheTags.ProjectComboReport);
             if (hshReport[parameters] is ComboReport report)
                 return Ok(report);
-
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
+            
             var ret = new Project().ComboFilters(db, filter);
 
             hshReport[parameters] = ret;

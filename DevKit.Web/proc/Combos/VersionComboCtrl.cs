@@ -9,23 +9,21 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new ProjectSprintVersionFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 busca = Request.GetQueryStringValue("busca","").ToUpper(),
                 fkSprint = Request.GetQueryStringValue<long?>("fkSprint", null),
             };
 
-            var parameters = filter.busca;
-
-            if (filter.fkSprint != null)
-                parameters += "," + filter.fkSprint;
+            var parameters = filter.Parameters();
 
             var hshReport = SetupCacheReport(CacheTags.VersionComboReport);
             if (hshReport[parameters] is ComboReport report)
                 return Ok(report);
-
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
 
             var ret = new ProjectSprintVersion().ComboFilters(db, filter);
 

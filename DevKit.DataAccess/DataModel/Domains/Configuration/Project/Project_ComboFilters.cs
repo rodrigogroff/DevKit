@@ -9,7 +9,9 @@ namespace DataModel
         {
             var lstUserProjects = db.GetCurrentUserProjects();
 
-            var query = from e in db.Project select e;
+            var query = from e in db.Project
+                        where e.fkEmpresa == filter.fkEmpresa
+                        select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;

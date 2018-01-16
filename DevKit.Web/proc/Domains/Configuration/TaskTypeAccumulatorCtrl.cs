@@ -22,8 +22,8 @@ namespace DevKit.Web.Controllers
 
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.SurveyReport);
-            if (hshReport[parameters] is SurveyReport report)
+            var hshReport = SetupCacheReport(CacheTags.TaskTypeAccumulatorReport );
+            if (hshReport[parameters] is TaskTypeAccumulatorReport report)
                 return Ok(report);
 
             var ret = new TaskTypeAccumulator().ComposedFilters(db, filter);

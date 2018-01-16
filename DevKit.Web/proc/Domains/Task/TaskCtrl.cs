@@ -8,8 +8,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new TaskFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
@@ -39,9 +43,6 @@ namespace DevKit.Web.Controllers
                     return Ok(report);
             }
             
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
             var ret = new Task().ComposedFilters(db, filter, new loaderOptionsTask
             {
                 bLoadTaskCategory = true,

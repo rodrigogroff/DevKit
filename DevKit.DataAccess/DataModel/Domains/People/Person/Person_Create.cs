@@ -29,10 +29,11 @@ namespace DataModel
 				return false;
 			}
 
-            dtStart = DateTime.Now;
-            fkUserAdd = user.id;
             fkEmpresa = user.fkEmpresa;
 
+            dtStart = DateTime.Now;
+            fkUserAdd = user.id;
+            
             id = Convert.ToInt64(db.InsertWithIdentity(this));
 
             new AuditLog

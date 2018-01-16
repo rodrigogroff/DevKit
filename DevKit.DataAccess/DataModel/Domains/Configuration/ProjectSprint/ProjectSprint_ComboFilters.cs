@@ -7,7 +7,10 @@ namespace DataModel
 	{
         public ComboReport ComboFilters(DevKitDB db, ProjectSprintFilter filter)
         {
-            var query = from e in db.ProjectSprint select e;
+            var query = from e in db.ProjectSprint
+                        join proj in db.Project on e.fkProject equals proj.id
+                        where proj.fkEmpresa == filter.fkEmpresa
+                        select e;
 
             if (filter.busca != "")
                 query = from e in query

@@ -9,29 +9,22 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new TaskFlowFilter
             {
+                fkEmpresa =  db.currentUser.fkEmpresa,
                 busca = Request.GetQueryStringValue("busca","").ToUpper(),
                 fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null),
                 fkTaskCategory = Request.GetQueryStringValue<long?>("fkTaskCategory", null),
             };
 
-            var parameters = filter.busca;
-
-            if (filter.fkTaskType != null)
-                parameters += "," + filter.fkTaskType;
-            else
-                parameters += ",";
-
-            if (filter.fkTaskType != null)
-                parameters += "," + filter.fkTaskType;
+            var parameters = filter.Parameters();
 
             var hshReport = SetupCacheReport(CacheTags.TaskFlowComboReport);
             if (hshReport[parameters] is ComboReport report)
                 return Ok(report);
-
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
 
             var ret = new TaskFlow().ComboFilters(db, filter);
 

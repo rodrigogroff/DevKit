@@ -37,7 +37,8 @@ namespace DataModel
 			}
 
 			var setup = db.GetSetup();
-			
+
+            fkEmpresa = user.fkEmpresa;
 			dtCreation = DateTime.Now;
 			fkUser = user.id;
 			

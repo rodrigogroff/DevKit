@@ -22,6 +22,7 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
             ret.Append(stPermission + ",");
 
             if (fkUser != null)
@@ -35,7 +36,9 @@ namespace DataModel
 	{
 		public ProfileReport ComposedFilters(DevKitDB db, ProfileFilter filter)
 		{
-			var query = from e in db.Profile select e;
+			var query = from e in db.Profile
+                        where e.fkEmpresa == filter.fkEmpresa
+                        select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;

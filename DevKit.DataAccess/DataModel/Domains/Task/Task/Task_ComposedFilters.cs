@@ -37,6 +37,7 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
 
             // customs
             if (complete != null)
@@ -102,7 +103,9 @@ namespace DataModel
 	{
 		public TaskReport ComposedFilters(DevKitDB db, TaskFilter filter, loaderOptionsTask options )
 		{
-			var query = from e in db.Task select e;
+            var query = from e in db.Task
+                        where e.fkEmpresa == filter.fkEmpresa
+                        select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
             {

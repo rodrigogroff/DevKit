@@ -32,6 +32,8 @@ namespace DataModel
 				return false;
 			}
 
+            fkEmpresa = user.fkEmpresa;
+
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 
 			new AuditLog {

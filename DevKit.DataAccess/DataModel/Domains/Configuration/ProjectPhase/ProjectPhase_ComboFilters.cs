@@ -5,19 +5,22 @@ namespace DataModel
 {
     public partial class ProjectPhase
     {
-        public ComboReport ComboFilters(DevKitDB db, string searchItem, long? _fkProject)
+        public ComboReport ComboFilters(DevKitDB db, ProjectPhaseFilter filter )
         {
-            var query = from e in db.ProjectPhase select e;
-
-            if (searchItem != "")
-                query = from e in query
-                        where e.stName.ToUpper().Contains(searchItem)
+            var query = from e in db.ProjectPhase
+                        join proj in db.Project on e.fkProject equals proj.id
+                        where proj.fkEmpresa == filter.fkEmpresa
                         select e;
 
-            if (_fkProject != null)
+            if (filter.busca != "")
+                query = from e in query
+                        where e.stName.ToUpper().Contains(filter.busca)
+                        select e;
+
+            if (filter.fkProject != null)
             {
                 query = from e in query
-                        where e.fkProject == _fkProject
+                        where e.fkProject == filter.fkProject
                         select e;
             }
 

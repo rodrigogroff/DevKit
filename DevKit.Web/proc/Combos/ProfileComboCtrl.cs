@@ -9,16 +9,22 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
-            var parameters = Request.GetQueryStringValue("busca","").ToUpper();
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var filter = new ProfileFilter
+            {
+                fkEmpresa = db.currentUser.fkEmpresa,
+                busca = Request.GetQueryStringValue("busca", "").ToUpper(),
+            };
+
+            var parameters = filter.Parameters();
             
             var hshReport = SetupCacheReport(CacheTags.ProfileComboReport);
             if (hshReport[parameters] is ComboReport report)
                 return Ok(report);
 
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
-            var ret = new Profile().ComboFilters(db, parameters);
+            var ret = new Profile().ComboFilters(db, filter);
 
             hshReport[parameters] = ret;
 

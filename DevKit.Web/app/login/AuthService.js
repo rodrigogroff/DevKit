@@ -10,6 +10,7 @@ function ($http, $q)
     var _authentication = {
         isAuth: false,
         nameUser: null,
+        nuEmpresa: null,
     };
 
     var _login = function (loginData)
@@ -24,6 +25,7 @@ function ($http, $q)
                 JSON.stringify({
                     token: response.access_token,
                     nameUser: response.nameUser,
+                    nuEmpresa: response.nuEmpresa,
                 }));
 
             _authentication.isAuth = true;
@@ -42,9 +44,10 @@ function ($http, $q)
     var _logOut = function ()
     {
         localStorage.removeItem('authorizationData');
-
+        
         _authentication.isAuth = false;
         _authentication.nameUser = null;
+        _authentication.nuEmpresa = null;
         _authentication.idProfile = null;
     };
 
@@ -55,6 +58,7 @@ function ($http, $q)
         {
             _authentication.isAuth = true;
             _authentication.nameUser = authData.nameUser;
+            _authentication.nuEmpresa = authData.nuEmpresa;
         }
     }
 	

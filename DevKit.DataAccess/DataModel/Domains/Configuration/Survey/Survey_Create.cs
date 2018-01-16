@@ -32,6 +32,7 @@ namespace DataModel
 				return false;
 			}
 
+            fkEmpresa = user.fkEmpresa;
 			fkUser = user.id;
 			dtLog = DateTime.Now;
 

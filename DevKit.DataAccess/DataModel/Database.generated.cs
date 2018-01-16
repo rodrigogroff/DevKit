@@ -19,52 +19,55 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<AuditLog>               AuditLog               { get { return this.GetTable<AuditLog>(); } }
-		public ITable<CacheControl>           CacheControl           { get { return this.GetTable<CacheControl>(); } }
-		public ITable<Cidade>                 Cidade                 { get { return this.GetTable<Cidade>(); } }
-		public ITable<Client>                 Client                 { get { return this.GetTable<Client>(); } }
-		public ITable<ClientGroup>            ClientGroup            { get { return this.GetTable<ClientGroup>(); } }
-		public ITable<ClientGroupAssociation> ClientGroupAssociation { get { return this.GetTable<ClientGroupAssociation>(); } }
-		public ITable<CompanyNews>            CompanyNews            { get { return this.GetTable<CompanyNews>(); } }
-		public ITable<Estado>                 Estado                 { get { return this.GetTable<Estado>(); } }
-		public ITable<PeopleCategory>         PeopleCategory         { get { return this.GetTable<PeopleCategory>(); } }
-		public ITable<Person>                 Person                 { get { return this.GetTable<Person>(); } }
-		public ITable<PersonAddress>          PersonAddress          { get { return this.GetTable<PersonAddress>(); } }
-		public ITable<PersonCategory>         PersonCategory         { get { return this.GetTable<PersonCategory>(); } }
-		public ITable<PersonContact>          PersonContact          { get { return this.GetTable<PersonContact>(); } }
-		public ITable<PersonEmail>            PersonEmail            { get { return this.GetTable<PersonEmail>(); } }
-		public ITable<PersonMessage>          PersonMessage          { get { return this.GetTable<PersonMessage>(); } }
-		public ITable<PersonPhone>            PersonPhone            { get { return this.GetTable<PersonPhone>(); } }
-		public ITable<Profile>                Profile                { get { return this.GetTable<Profile>(); } }
-		public ITable<Project>                Project                { get { return this.GetTable<Project>(); } }
-		public ITable<ProjectPhase>           ProjectPhase           { get { return this.GetTable<ProjectPhase>(); } }
-		public ITable<ProjectSprint>          ProjectSprint          { get { return this.GetTable<ProjectSprint>(); } }
-		public ITable<ProjectSprintVersion>   ProjectSprintVersion   { get { return this.GetTable<ProjectSprintVersion>(); } }
-		public ITable<ProjectUser>            ProjectUser            { get { return this.GetTable<ProjectUser>(); } }
-		public ITable<Setup>                  Setup                  { get { return this.GetTable<Setup>(); } }
-		public ITable<Survey>                 Survey                 { get { return this.GetTable<Survey>(); } }
-		public ITable<SurveyOption>           SurveyOption           { get { return this.GetTable<SurveyOption>(); } }
-		public ITable<SurveyUserOption>       SurveyUserOption       { get { return this.GetTable<SurveyUserOption>(); } }
-		public ITable<Task>                   Task                   { get { return this.GetTable<Task>(); } }
-		public ITable<TaskAccumulatorValue>   TaskAccumulatorValue   { get { return this.GetTable<TaskAccumulatorValue>(); } }
-		public ITable<TaskCategory>           TaskCategory           { get { return this.GetTable<TaskCategory>(); } }
-		public ITable<TaskCheckPoint>         TaskCheckPoint         { get { return this.GetTable<TaskCheckPoint>(); } }
-		public ITable<TaskCheckPointMark>     TaskCheckPointMark     { get { return this.GetTable<TaskCheckPointMark>(); } }
-		public ITable<TaskClient>             TaskClient             { get { return this.GetTable<TaskClient>(); } }
-		public ITable<TaskClientGroup>        TaskClientGroup        { get { return this.GetTable<TaskClientGroup>(); } }
-		public ITable<TaskCustomStep>         TaskCustomStep         { get { return this.GetTable<TaskCustomStep>(); } }
-		public ITable<TaskDependency>         TaskDependency         { get { return this.GetTable<TaskDependency>(); } }
-		public ITable<TaskFlow>               TaskFlow               { get { return this.GetTable<TaskFlow>(); } }
-		public ITable<TaskFlowChange>         TaskFlowChange         { get { return this.GetTable<TaskFlowChange>(); } }
-		public ITable<TaskMessage>            TaskMessage            { get { return this.GetTable<TaskMessage>(); } }
-		public ITable<TaskProgress>           TaskProgress           { get { return this.GetTable<TaskProgress>(); } }
-		public ITable<TaskQuestion>           TaskQuestion           { get { return this.GetTable<TaskQuestion>(); } }
-		public ITable<TaskType>               TaskType               { get { return this.GetTable<TaskType>(); } }
-		public ITable<TaskTypeAccumulator>    TaskTypeAccumulator    { get { return this.GetTable<TaskTypeAccumulator>(); } }
-		public ITable<User>                   User                   { get { return this.GetTable<User>(); } }
-		public ITable<UserEmail>              UserEmail              { get { return this.GetTable<UserEmail>(); } }
-		public ITable<UserNewsRead>           UserNewsRead           { get { return this.GetTable<UserNewsRead>(); } }
-		public ITable<UserPhone>              UserPhone              { get { return this.GetTable<UserPhone>(); } }
+		public ITable<AuditLog>             AuditLog             { get { return this.GetTable<AuditLog>(); } }
+		public ITable<Autorizacao>          Autorizacao          { get { return this.GetTable<Autorizacao>(); } }
+		public ITable<CacheControl>         CacheControl         { get { return this.GetTable<CacheControl>(); } }
+		public ITable<Cidade>               Cidade               { get { return this.GetTable<Cidade>(); } }
+		public ITable<CompanyNews>          CompanyNews          { get { return this.GetTable<CompanyNews>(); } }
+		public ITable<Empresa>              Empresa              { get { return this.GetTable<Empresa>(); } }
+		public ITable<Estado>               Estado               { get { return this.GetTable<Estado>(); } }
+		public ITable<Fechamento>           Fechamento           { get { return this.GetTable<Fechamento>(); } }
+		public ITable<Medico>               Medico               { get { return this.GetTable<Medico>(); } }
+		public ITable<MedicoAddress>        MedicoAddress        { get { return this.GetTable<MedicoAddress>(); } }
+		public ITable<MedicoEmail>          MedicoEmail          { get { return this.GetTable<MedicoEmail>(); } }
+		public ITable<MedicoPhone>          MedicoPhone          { get { return this.GetTable<MedicoPhone>(); } }
+		public ITable<PeopleCategory>       PeopleCategory       { get { return this.GetTable<PeopleCategory>(); } }
+		public ITable<Person>               Person               { get { return this.GetTable<Person>(); } }
+		public ITable<PersonAddress>        PersonAddress        { get { return this.GetTable<PersonAddress>(); } }
+		public ITable<PersonCategory>       PersonCategory       { get { return this.GetTable<PersonCategory>(); } }
+		public ITable<PersonContact>        PersonContact        { get { return this.GetTable<PersonContact>(); } }
+		public ITable<PersonEmail>          PersonEmail          { get { return this.GetTable<PersonEmail>(); } }
+		public ITable<PersonMessage>        PersonMessage        { get { return this.GetTable<PersonMessage>(); } }
+		public ITable<PersonPhone>          PersonPhone          { get { return this.GetTable<PersonPhone>(); } }
+		public ITable<Procedimento>         Procedimento         { get { return this.GetTable<Procedimento>(); } }
+		public ITable<Profile>              Profile              { get { return this.GetTable<Profile>(); } }
+		public ITable<Project>              Project              { get { return this.GetTable<Project>(); } }
+		public ITable<ProjectPhase>         ProjectPhase         { get { return this.GetTable<ProjectPhase>(); } }
+		public ITable<ProjectSprint>        ProjectSprint        { get { return this.GetTable<ProjectSprint>(); } }
+		public ITable<ProjectSprintVersion> ProjectSprintVersion { get { return this.GetTable<ProjectSprintVersion>(); } }
+		public ITable<ProjectUser>          ProjectUser          { get { return this.GetTable<ProjectUser>(); } }
+		public ITable<Setup>                Setup                { get { return this.GetTable<Setup>(); } }
+		public ITable<Survey>               Survey               { get { return this.GetTable<Survey>(); } }
+		public ITable<SurveyOption>         SurveyOption         { get { return this.GetTable<SurveyOption>(); } }
+		public ITable<SurveyUserOption>     SurveyUserOption     { get { return this.GetTable<SurveyUserOption>(); } }
+		public ITable<Task>                 Task                 { get { return this.GetTable<Task>(); } }
+		public ITable<TaskAccumulatorValue> TaskAccumulatorValue { get { return this.GetTable<TaskAccumulatorValue>(); } }
+		public ITable<TaskCategory>         TaskCategory         { get { return this.GetTable<TaskCategory>(); } }
+		public ITable<TaskCheckPoint>       TaskCheckPoint       { get { return this.GetTable<TaskCheckPoint>(); } }
+		public ITable<TaskCheckPointMark>   TaskCheckPointMark   { get { return this.GetTable<TaskCheckPointMark>(); } }
+		public ITable<TaskCustomStep>       TaskCustomStep       { get { return this.GetTable<TaskCustomStep>(); } }
+		public ITable<TaskDependency>       TaskDependency       { get { return this.GetTable<TaskDependency>(); } }
+		public ITable<TaskFlow>             TaskFlow             { get { return this.GetTable<TaskFlow>(); } }
+		public ITable<TaskFlowChange>       TaskFlowChange       { get { return this.GetTable<TaskFlowChange>(); } }
+		public ITable<TaskMessage>          TaskMessage          { get { return this.GetTable<TaskMessage>(); } }
+		public ITable<TaskProgress>         TaskProgress         { get { return this.GetTable<TaskProgress>(); } }
+		public ITable<TaskQuestion>         TaskQuestion         { get { return this.GetTable<TaskQuestion>(); } }
+		public ITable<TaskType>             TaskType             { get { return this.GetTable<TaskType>(); } }
+		public ITable<TaskTypeAccumulator>  TaskTypeAccumulator  { get { return this.GetTable<TaskTypeAccumulator>(); } }
+		public ITable<User>                 User                 { get { return this.GetTable<User>(); } }
+		public ITable<UserEmail>            UserEmail            { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserNewsRead>         UserNewsRead         { get { return this.GetTable<UserNewsRead>(); } }
+		public ITable<UserPhone>            UserPhone            { get { return this.GetTable<UserPhone>(); } }
 
 		public DevKitDB()
 		{
@@ -91,6 +94,18 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkTarget    { get; set; } // bigint
 		[Column,     Nullable] public string    stLog       { get; set; } // character varying(999)
 		[Column,     Nullable] public string    stDetailLog { get; set; } // character varying(3999)
+		[Column,     Nullable] public long?     fkEmpresa   { get; set; } // bigint
+	}
+
+	[Table("Autorizacao")]
+	public partial class Autorizacao
+	{
+		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtSolicitacao  { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkPerson       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkMedico       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkProcedimento { get; set; } // bigint
+		[Column,     Nullable] public long?     tgSituacao     { get; set; } // bigint
 	}
 
 	[Table("CacheControl")]
@@ -109,40 +124,6 @@ namespace DataModel
 		[Column,     Nullable] public string stNome   { get; set; } // character varying(200)
 	}
 
-	[Table("Client")]
-	public partial class Client
-	{
-		[PrimaryKey, Identity] public long      id              { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtStart         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser          { get; set; } // bigint
-		[Column,     Nullable] public string    stName          { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stContactEmail  { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stContactPhone  { get; set; } // character varying(20)
-		[Column,     Nullable] public string    stContactPerson { get; set; } // character varying(200)
-		[Column,     Nullable] public string    stInfo          { get; set; } // character varying(2000)
-		[Column,     Nullable] public long?     fkEstado        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkCidade        { get; set; } // bigint
-	}
-
-	[Table("ClientGroup")]
-	public partial class ClientGroup
-	{
-		[PrimaryKey, Identity] public long      id       { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtStart  { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUser   { get; set; } // bigint
-		[Column,     Nullable] public string    stName   { get; set; } // character varying(200)
-		[Column,     Nullable] public long?     fkEstado { get; set; } // bigint
-		[Column,     Nullable] public long?     fkCidade { get; set; } // bigint
-	}
-
-	[Table("ClientGroupAssociation")]
-	public partial class ClientGroupAssociation
-	{
-		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
-		[Column,     Nullable] public long? fkClient      { get; set; } // bigint
-		[Column,     Nullable] public long? fkClientGroup { get; set; } // bigint
-	}
-
 	[Table("CompanyNews")]
 	public partial class CompanyNews
 	{
@@ -153,6 +134,17 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
 		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
+		[Column,     Nullable] public long?     fkEmpresa { get; set; } // bigint
+	}
+
+	[Table("Empresa")]
+	public partial class Empresa
+	{
+		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
+		[Column,     Nullable] public long?  nuEmpresa { get; set; } // bigint
+		[Column,     Nullable] public long?  nuDiaFech { get; set; } // bigint
+		[Column,     Nullable] public string stSigla   { get; set; } // character varying(20)
+		[Column,     Nullable] public string stNome    { get; set; } // character varying(200)
 	}
 
 	[Table("Estado")]
@@ -161,6 +153,72 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id      { get; set; } // bigint
 		[Column,     Nullable] public string stSigla { get; set; } // character varying(20)
 		[Column,     Nullable] public string stNome  { get; set; } // character varying(200)
+	}
+
+	[Table("Fechamento")]
+	public partial class Fechamento
+	{
+		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
+		[Column,     Nullable] public long? fkAutorizacao { get; set; } // bigint
+		[Column,     Nullable] public long? nuMes         { get; set; } // bigint
+		[Column,     Nullable] public long? nuAno         { get; set; } // bigint
+	}
+
+	[Table("Medico")]
+	public partial class Medico
+	{
+		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
+		[Column,     Nullable] public long?     nuCodigo          { get; set; } // bigint
+		[Column,     Nullable] public string    stNome            { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stCnpj            { get; set; } // character varying(20)
+		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUserAdd         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserLastUpdate  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
+		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
+		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
+		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
+	}
+
+	[Table("MedicoAddress")]
+	public partial class MedicoAddress
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkMedico      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkEstado      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCidade      { get; set; } // bigint
+		[Column,     Nullable] public string    stRua         { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stNumero      { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stComplemento { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stReferencia  { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stCEP         { get; set; } // character varying(50)
+		[Column,     Nullable] public bool?     bPrincipal    { get; set; } // boolean
+	}
+
+	[Table("MedicoEmail")]
+	public partial class MedicoEmail
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkMedico  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stEmail   { get; set; } // character varying(250)
+		[Column,     Nullable] public string    stContato { get; set; } // character varying(250)
+	}
+
+	[Table("MedicoPhone")]
+	public partial class MedicoPhone
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkMedico      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
 	}
 
 	[Table("PeopleCategory")]
@@ -187,6 +245,12 @@ namespace DataModel
 		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
 		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
 		[Column,     Nullable] public string    stCPF             { get; set; } // character varying(20)
+		[Column,     Nullable] public long?     nuMatricula       { get; set; } // bigint
+		[Column,     Nullable] public long?     stVencCartao      { get; set; } // bigint
+		[Column,     Nullable] public long?     nuViaCartao       { get; set; } // bigint
+		[Column,     Nullable] public long?     stCodAcessoCartao { get; set; } // bigint
+		[Column,     Nullable] public bool?     bHomem            { get; set; } // boolean
+		[Column,     Nullable] public long?     fkEmpresa         { get; set; } // bigint
 	}
 
 	[Table("PersonAddress")]
@@ -258,12 +322,23 @@ namespace DataModel
 		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
 	}
 
+	[Table("Procedimento")]
+	public partial class Procedimento
+	{
+		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
+		[Column,     Nullable] public long?  nuTUSS         { get; set; } // bigint
+		[Column,     Nullable] public string stProcedimento { get; set; } // character varying(150)
+		[Column,     Nullable] public string stDescGP       { get; set; } // character varying(150)
+		[Column,     Nullable] public string stDescSubGP    { get; set; } // character varying(150)
+	}
+
 	[Table("Profile")]
 	public partial class Profile
 	{
 		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
 		[Column,     Nullable] public string stName        { get; set; } // character varying(200)
 		[Column,     Nullable] public string stPermissions { get; set; } // character varying(9999)
+		[Column,     Nullable] public long?  fkEmpresa     { get; set; } // bigint
 	}
 
 	[Table("Project")]
@@ -274,6 +349,7 @@ namespace DataModel
 		[Column,     Nullable] public string    stName            { get; set; } // character varying(99)
 		[Column,     Nullable] public long?     fkProjectTemplate { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtCreation        { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkEmpresa         { get; set; } // bigint
 	}
 
 	[Table("ProjectPhase")]
@@ -332,6 +408,7 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
 		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
+		[Column,     Nullable] public long?     fkEmpresa { get; set; } // bigint
 	}
 
 	[Table("SurveyOption")]
@@ -376,6 +453,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkReleaseVersion  { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUserResponsible { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtExpired         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkEmpresa         { get; set; } // bigint
 	}
 
 	[Table("TaskAccumulatorValue")]
@@ -422,22 +500,6 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkTask       { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUser       { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLog        { get; set; } // timestamp (6) without time zone
-	}
-
-	[Table("TaskClient")]
-	public partial class TaskClient
-	{
-		[PrimaryKey, Identity] public long  id       { get; set; } // bigint
-		[Column,     Nullable] public long? fkTask   { get; set; } // bigint
-		[Column,     Nullable] public long? fkClient { get; set; } // bigint
-	}
-
-	[Table("TaskClientGroup")]
-	public partial class TaskClientGroup
-	{
-		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
-		[Column,     Nullable] public long? fkTask        { get; set; } // bigint
-		[Column,     Nullable] public long? fkClientGroup { get; set; } // bigint
 	}
 
 	[Table("TaskCustomStep")]
@@ -528,6 +590,7 @@ namespace DataModel
 		[Column,     Nullable] public bool?  bKPA           { get; set; } // boolean
 		[Column,     Nullable] public string stName         { get; set; } // character varying(200)
 		[Column,     Nullable] public long?  fkProject      { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa      { get; set; } // bigint
 	}
 
 	[Table("TaskTypeAccumulator")]
@@ -555,6 +618,7 @@ namespace DataModel
 		[Column,     Nullable] public string    stCurrentSession { get; set; } // character varying(20)
 		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
 		[Column,     Nullable] public string    stName           { get; set; } // character varying(200)
+		[Column,     Nullable] public long?     fkEmpresa        { get; set; } // bigint
 	}
 
 	[Table("UserEmail")]
@@ -591,6 +655,12 @@ namespace DataModel
 				t.id == id);
 		}
 
+		public static Autorizacao Find(this ITable<Autorizacao> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
 		public static CacheControl Find(this ITable<CacheControl> table, long id)
 		{
 			return table.FirstOrDefault(t =>
@@ -603,31 +673,49 @@ namespace DataModel
 				t.id == id);
 		}
 
-		public static Client Find(this ITable<Client> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static ClientGroup Find(this ITable<ClientGroup> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static ClientGroupAssociation Find(this ITable<ClientGroupAssociation> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
 		public static CompanyNews Find(this ITable<CompanyNews> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);
 		}
 
+		public static Empresa Find(this ITable<Empresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
 		public static Estado Find(this ITable<Estado> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Fechamento Find(this ITable<Fechamento> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Medico Find(this ITable<Medico> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static MedicoAddress Find(this ITable<MedicoAddress> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static MedicoEmail Find(this ITable<MedicoEmail> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static MedicoPhone Find(this ITable<MedicoPhone> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);
@@ -676,6 +764,12 @@ namespace DataModel
 		}
 
 		public static PersonPhone Find(this ITable<PersonPhone> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Procedimento Find(this ITable<Procedimento> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);
@@ -766,18 +860,6 @@ namespace DataModel
 		}
 
 		public static TaskCheckPointMark Find(this ITable<TaskCheckPointMark> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static TaskClient Find(this ITable<TaskClient> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static TaskClientGroup Find(this ITable<TaskClientGroup> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

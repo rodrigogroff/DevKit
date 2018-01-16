@@ -8,8 +8,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new TaskTypeFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
@@ -25,9 +29,6 @@ namespace DevKit.Web.Controllers
             if (hshReport[parameters] is TaskTypeReport report)
                 return Ok(report);
 
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
             var ret = new TaskType().ComposedFilters(db, filter, new loaderOptionsTaskType
             {
                 bLoadProject = true,
@@ -41,7 +42,7 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
 		{
-            if (RestoreCache(CacheTags.TaskType, id) is Client obj)
+            if (RestoreCache(CacheTags.TaskType, id) is TaskType obj)
                 return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())

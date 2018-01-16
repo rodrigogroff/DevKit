@@ -21,15 +21,21 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     {
     	$scope.loading = true;
 
-    	if ($scope.loginData.userName == '' ||
+        if ($scope.loginData.nuEmpresa == '' ||
+            $scope.loginData.userName == '' ||
 			$scope.loginData.password == '')
     	{
     		$scope.loading = false;
     		$scope.mensagem = 'Entre com credenciais válidas!';
     	}
     	else
-    	{
-    		AuthService.login($scope.loginData).then(function (response)
+        {
+            var lData = {
+                userName: $scope.loginData.nuEmpresa + ":" + $scope.loginData.userName,
+                password: $scope.loginData.password,
+            }
+
+            AuthService.login(lData).then(function (response)
     		{
                 $scope.loginOK = true;
                 $rootScope.exibirMenu = true;

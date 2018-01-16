@@ -12,6 +12,7 @@ namespace DataModel
 						resetPassword = "";
 
 		public Profile profile;
+        public Empresa empresa;
         
 		public List<UserPhone> phones;
 		public List<UserEmail> emails;

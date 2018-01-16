@@ -8,8 +8,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new TaskCheckPointFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
@@ -21,10 +25,7 @@ namespace DevKit.Web.Controllers
             var hshReport = SetupCacheReport(CacheTags.TaskCheckPointReport);
             if (hshReport[parameters] is TaskCheckPointReport report)
                 return Ok(report);
-
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
+            
             var ret = new TaskCheckPoint().ComposedFilters ( db, filter );
             
             hshReport[parameters] = ret;
@@ -34,7 +35,7 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
 		{
-            if (RestoreCache(CacheTags.TaskCheckPoint, id) is Client obj)
+            if (RestoreCache(CacheTags.TaskCheckPoint, id) is TaskCheckPoint obj)
                 return Ok(obj);
 
             if (!StartDatabaseAndAuthorize())

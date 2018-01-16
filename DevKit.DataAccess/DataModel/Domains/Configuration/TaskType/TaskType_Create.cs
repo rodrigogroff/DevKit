@@ -31,6 +31,8 @@ namespace DataModel
 				resp = "Tipo de tarefa já criado";
 				return false;
 			}
+
+            fkEmpresa = user.fkEmpresa;
 			
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 

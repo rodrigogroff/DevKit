@@ -6,9 +6,9 @@ namespace DataModel
 {
 	public class PersonFilter : BaseFilter
     {
-		public string email,
-                      cpf,
-                      phone;
+		public string   email,
+                        cpf,
+                        phone;
         
         public string Parameters()
         {
@@ -20,9 +20,12 @@ namespace DataModel
             var ret = new StringBuilder();
 
             // base
+            ret.Append(fkEmpresa + ",");
             ret.Append(skip + ",");
-            ret.Append(take + ",");
+            ret.Append(take + ",");            
             ret.Append(busca + ",");
+
+            // adv
             ret.Append(email + ",");
             ret.Append(cpf + ",");
             ret.Append(phone + ",");
@@ -35,7 +38,9 @@ namespace DataModel
 	{
 		public PersonReport ComposedFilters(DevKitDB db, PersonFilter filter)
 		{
-			var query = from e in db.Person select e;
+            var query = from e in db.Person
+                        where e.fkEmpresa == db.currentUser.fkEmpresa
+                        select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query

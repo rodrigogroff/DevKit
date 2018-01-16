@@ -21,8 +21,6 @@ namespace DataModel
                     bLoadDependencies = false,
                     bLoadCheckpoints = false,
                     bLoadQuestions = false,
-                    bLoadClients = false,
-                    bLoadClientGroups = false,
                     bLoadCustomSteps = false,
                     bLoadLogs = false;
     }

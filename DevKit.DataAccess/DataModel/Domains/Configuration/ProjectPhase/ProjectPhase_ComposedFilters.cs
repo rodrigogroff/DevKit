@@ -21,6 +21,7 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
 
             if (fkProject != null)
                 ret.Append(fkProject);
@@ -34,7 +35,10 @@ namespace DataModel
 	{
 		public ProjectPhaseReport ComposedFilters(DevKitDB db, ProjectPhaseFilter filter)
 		{
-			var query = from e in db.ProjectPhase select e;
+			var query = from e in db.ProjectPhase
+                        join proj in db.Project on e.fkProject equals proj.id
+                        where proj.fkEmpresa == filter.fkEmpresa
+                        select e;
 
 			if (filter.fkProject != null)
 				query = from e in query where e.fkProject == filter.fkProject select e;

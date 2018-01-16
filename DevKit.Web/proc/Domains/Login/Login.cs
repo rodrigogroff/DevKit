@@ -19,12 +19,10 @@ namespace DevKit.Web
         public override System.Threading.Tasks.Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
             string nameUser = context.Identity.Claims.Where(x => x.Type == ClaimTypes.Name).Select(x => x.Value).FirstOrDefault();
-            //string IdUser = context.Identity.Claims.Where(x => x.Type == "IdUser").Select(x => x.Value).FirstOrDefault();
-            //string Session = context.Identity.Claims.Where(x => x.Type == "Session").Select(x => x.Value).FirstOrDefault();
+            string nuEmpresa = context.Identity.Claims.Where(x => x.Type == "nuEmpresa").Select(x => x.Value).FirstOrDefault();            
 
             context.AdditionalResponseParameters.Add("nameUser", nameUser);
-            //context.AdditionalResponseParameters.Add("idUser", IdUser);
-            //context.AdditionalResponseParameters.Add("session", Session);
+            context.AdditionalResponseParameters.Add("nuEmpresa", nuEmpresa);
 
             return System.Threading.Tasks.Task.FromResult<object>(null);
         }
@@ -33,20 +31,24 @@ namespace DevKit.Web
 		{
 			using (var db = new DevKitDB())
 			{
-				var usuario = new User().Login(db, context.UserName, context.Password);
+                var incoming = context.UserName.Split(':');
+                var emp = incoming[0];
+                var login = incoming[1];
+
+                var usuario = new User();
+
+                usuario = usuario.Login(db, emp, login, context.Password);
 
 				if (usuario != null)
 				{
 					usuario.dtLastLogin = DateTime.Now;
-                 //   usuario.stCurrentSession = usuario.GetRandomString(16);
-
+                 
                     db.Update(usuario);
 
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
 					identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
-					//identity.AddClaim(new Claim("IdUser", usuario.id.ToString()));
-                    //identity.AddClaim(new Claim("Session", usuario.stCurrentSession.ToString()));
+                    identity.AddClaim(new Claim("nuEmpresa", "(" + usuario.empresa.nuEmpresa + ") " + usuario.empresa.stSigla));
 
                     var ticket = new AuthenticationTicket(identity, null);
 					context.Validated(ticket);                    

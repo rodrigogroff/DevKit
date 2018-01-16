@@ -41,6 +41,11 @@ namespace DevKit.Web.Controllers
                 if (db.currentUser == null)
                     return false;
 
+                db.currentUser.empresa = (from e in db.Empresa
+                                          where e.id == db.currentUser.fkEmpresa
+                                          select e).
+                                          FirstOrDefault();
+                
                 BackupCacheNoHit(tagName, db.currentUser);
             }
 

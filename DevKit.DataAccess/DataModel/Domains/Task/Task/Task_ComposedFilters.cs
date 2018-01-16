@@ -159,26 +159,6 @@ namespace DataModel
                 query = from e in query where queryAux.Contains((long)e.fkTaskType) select e;
             }
 
-            if (filter.fkClient != null)
-            {
-                var queryAux = from e in db.TaskClient
-                                where filter.fkClient == e.fkClient
-                                select e.fkTask;
-
-                query = from e in query where queryAux.Contains(e.id) select e;
-            }
-
-            if (filter.fkClientGroup != null)
-            {
-                var queryAux = from e in db.TaskClientGroup
-                                where filter.fkClientGroup == e.fkClientGroup
-                                select e.fkTask;
-
-                query = from e in query
-                        where queryAux.Contains(e.id)
-                        select e;
-            }            
-
 			var count = query.Count();
 
 			query = query.OrderBy(y => y.nuPriority).

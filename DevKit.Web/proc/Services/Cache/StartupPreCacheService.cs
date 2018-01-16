@@ -100,22 +100,6 @@ namespace DevKit.Web.Services
                     hshReport[filter.Parameters()] = new Profile().ComposedFilters(db, filter);
                 }
 
-                // client
-                {
-                    var hshReport = cache.SetupCacheReport(CacheTags.ClientReport);
-                    
-                    var filter = new ClientFilter { skip = 0, take = 15 };                    
-                    hshReport[filter.Parameters()] = new Client().ComposedFilters(db, filter, false);
-                }
-
-                // client groups
-                {
-                    var hshReport = cache.SetupCacheReport(CacheTags.ClientGroupReport);
-
-                    var filter = new ClientGroupFilter { skip = 0, take = 15 };                    
-                    hshReport[filter.Parameters()] = new ClientGroup().ComposedFilters(db, filter, false);
-                }
-
                 // task type
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.TaskTypeReport);
@@ -175,32 +159,6 @@ namespace DevKit.Web.Services
                         }
                 }
 
-                // client
-                {
-                    var q = (from e in db.Client select e);
-                    if (q.Count() < maxRowsToCache)
-                        foreach (var item in q.ToList())
-                        {
-                            item.LoadAssociations(db);
-
-                            cache.currentCacheTag = CacheTags.Client + item.id;
-                            cache.BackupCache(item);
-                        }                            
-                }
-
-                // client groups
-                {
-                    var q = (from e in db.ClientGroup select e);
-                    if (q.Count() < maxRowsToCache)
-                        foreach (var item in q.ToList())
-                        {
-                            item.LoadAssociations(db);
-
-                            cache.currentCacheTag = CacheTags.ClientGroup + item.id;
-                            cache.BackupCache(item);
-                        }                            
-                }
-
                 // task type
                 {
                     var q = (from e in db.TaskType select e);
@@ -242,8 +200,6 @@ namespace DevKit.Web.Services
                         bLoadDependencies = true,
                         bLoadCheckpoints = true,
                         bLoadQuestions = true,
-                        bLoadClients = true,
-                        bLoadClientGroups = true,
                         bLoadCustomSteps = true,
                         bLoadLogs = true
                     };

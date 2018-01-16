@@ -14,8 +14,9 @@ namespace DataModel
 
 			ret += "Skip: " + skip + " ";
 			ret += "take: " + take + " ";
+            ret += "fkEmpresa: " + fkEmpresa + " ";
 
-			if (fkProject != null)
+            if (fkProject != null)
 				ret += "fkProject: " + fkProject + " ";
 
 			return ret;
@@ -50,7 +51,9 @@ namespace DataModel
 			var user = db.currentUser;
 			var lstUserProjects = db.GetCurrentUserProjects();
 
-			var query = from e in db.Survey select e;
+            var query = from e in db.Survey
+                        where e.fkEmpresa == filter.fkEmpresa
+                        select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query

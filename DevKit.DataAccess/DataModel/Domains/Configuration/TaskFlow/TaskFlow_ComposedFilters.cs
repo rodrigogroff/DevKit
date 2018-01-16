@@ -22,6 +22,7 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
 
             if (fkTaskType != null)
                 ret.Append(fkTaskType + ",");
@@ -39,7 +40,10 @@ namespace DataModel
 	{
 		public TaskFlowReport ComposedFilters(DevKitDB db, TaskFlowFilter filter)
 		{
-			var query = from e in db.TaskFlow select e;
+            var query = from e in db.TaskFlow
+                        join ttype in db.TaskType on e.fkTaskType equals ttype.id
+                        where ttype.fkEmpresa == filter.fkEmpresa
+                        select e;
 
 			if (filter.fkTaskType != null)
 				query = from e in query where e.fkTaskType == filter.fkTaskType select e;

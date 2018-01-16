@@ -25,6 +25,7 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
 
             if (fkProject != null)
                 ret.Append(fkProject);
@@ -51,7 +52,9 @@ namespace DataModel
 		{
 			var lstUserProjetcs = db.GetCurrentUserProjects();
 
-			var query = from e in db.TaskType select e;
+            var query = from e in db.TaskType
+                        where e.fkEmpresa == filter.fkEmpresa
+                        select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;

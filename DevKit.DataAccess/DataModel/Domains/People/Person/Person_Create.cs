@@ -31,6 +31,7 @@ namespace DataModel
 
             dtStart = DateTime.Now;
             fkUserAdd = user.id;
+            fkEmpresa = user.fkEmpresa;
 
             id = Convert.ToInt64(db.InsertWithIdentity(this));
 

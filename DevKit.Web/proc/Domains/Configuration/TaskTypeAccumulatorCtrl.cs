@@ -8,8 +8,12 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new TaskTypeAccumulatorFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
@@ -21,9 +25,6 @@ namespace DevKit.Web.Controllers
             var hshReport = SetupCacheReport(CacheTags.SurveyReport);
             if (hshReport[parameters] is SurveyReport report)
                 return Ok(report);
-
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
 
             var ret = new TaskTypeAccumulator().ComposedFilters(db, filter);
             

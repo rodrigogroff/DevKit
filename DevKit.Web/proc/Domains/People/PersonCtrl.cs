@@ -10,6 +10,7 @@ namespace DevKit.Web.Controllers
 		{
             var filter = new PersonFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),

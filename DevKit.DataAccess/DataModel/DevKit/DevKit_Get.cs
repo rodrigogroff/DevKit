@@ -58,14 +58,6 @@ namespace DataModel
 			return ret;
 		}
 
-		public Client GetClient(long? id)
-		{
-			if (id == null) return null;
-			var tag = "Client" + id; var ret = Cache[tag] as Client;
-			if (ret == null) { ret = Client.Find((long)id); Cache[tag] = ret; }
-			return ret;
-		}
-
         public CompanyNews GetCompanyNews(long? id)
         {
             if (id == null) return null;
@@ -73,14 +65,6 @@ namespace DataModel
             if (ret == null) { ret = CompanyNews.Find((long)id); Cache[tag] = ret; }
             return ret;
         }
-
-        public ClientGroup GetClientGroup(long? id)
-		{
-			if (id == null) return null;
-			var tag = "ClientGroup" + id; var ret = Cache[tag] as ClientGroup;
-			if (ret == null) { ret = ClientGroup.Find((long)id); Cache[tag] = ret; }
-			return ret;
-		}
 
 		public CompanyNews GetNews(long? id)
 		{

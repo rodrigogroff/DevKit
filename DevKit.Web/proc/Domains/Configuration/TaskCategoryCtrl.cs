@@ -9,25 +9,23 @@ namespace DevKit.Web.Controllers
 	{
 		public IHttpActionResult Get()
 		{
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
             var filter = new TaskCategoryFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,                
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
                 fkTaskType = Request.GetQueryStringValue<long?>("fkTaskType", null)
             };
 
-            var parameters = filter.busca;
-
-            if (filter.fkTaskType != null)
-                parameters += "," + filter.fkTaskType;
+            var parameters = filter.Parameters();
             
             var hshReport = SetupCacheReport(CacheTags.TaskCategoryComboReport);
             if (hshReport[parameters] is TaskCategoryReport report)
                 return Ok(report);
-
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest(); 
 
             var ret = new TaskCategory().ComposedFilters(db, filter);
 

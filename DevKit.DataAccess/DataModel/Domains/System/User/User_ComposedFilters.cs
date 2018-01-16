@@ -25,6 +25,8 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
+
             ret.Append(email + ",");
             ret.Append(phone + ",");
 
@@ -44,7 +46,9 @@ namespace DataModel
 	{
 		public UserReport ComposedFilters(DevKitDB db, UserFilter filter)
 		{
-			var query = from e in db.User select e;
+            var query = from e in db.User
+                        where e.fkEmpresa == filter.fkEmpresa
+                        select e;
 
 			if (filter.ativo != null)
 				query = from e in query where e.bActive == filter.ativo select e;

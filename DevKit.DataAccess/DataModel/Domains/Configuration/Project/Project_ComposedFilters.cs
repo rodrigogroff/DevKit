@@ -12,11 +12,12 @@ namespace DataModel
 		{
 			var ret = "";
 
-			ret += "Skip: " + skip + " ";
-			ret += "take: " + take + " ";
+			ret += "Skip: " + skip + ";";
+			ret += "take: " + take + ";";
+            ret += "empresa: " + fkEmpresa + ";";
 
-			if (fkUser!= null)
-				ret += "fkUser: " + fkUser + " ";
+            if (fkUser!= null)
+				ret += "fkUser: " + fkUser + ";";
 
 			return ret;
 		}
@@ -50,7 +51,9 @@ namespace DataModel
             var user = db.currentUser;
             var lstUserProjects = db.GetCurrentUserProjects();
 
-            var query = from e in db.Project select e;
+            var query = from e in db.Project
+                        where e.fkEmpresa == filter.fkEmpresa
+                        select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query where e.stName.ToUpper().Contains(filter.busca) select e;

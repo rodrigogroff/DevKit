@@ -21,6 +21,7 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
 
             if (fkSprint != null)
                 ret.Append(fkSprint);
@@ -34,7 +35,11 @@ namespace DataModel
 	{
 		public ProjectSprintVersionReport ComposedFilters(DevKitDB db, ProjectSprintVersionFilter filter)
 		{
-			var query = from e in db.ProjectSprintVersion select e;
+            var query = from e in db.ProjectSprintVersion
+                        join spr in db.ProjectSprint on e.fkSprint equals spr.id
+                        join pro in db.Project on spr.fkProject equals pro.id
+                        where pro.fkEmpresa == filter.fkEmpresa
+                        select e;
 
 			if (filter.fkSprint != null)
 				query = from e in query where e.fkSprint == filter.fkSprint select e;

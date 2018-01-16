@@ -35,6 +35,7 @@ namespace DataModel
 			var user = db.currentUser;
 			var category = db.GetTaskCategory(this.fkTaskCategory);
 
+            fkEmpresa = user.fkEmpresa;
 			bComplete = false;
 			dtStart = DateTime.Now;
 			fkUserStart = user.id;

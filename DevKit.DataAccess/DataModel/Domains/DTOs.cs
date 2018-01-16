@@ -4,6 +4,7 @@ namespace DataModel
 {
     public class BaseFilter
     {
+        public long? fkEmpresa;
         public int skip, take;
         public string busca;
     }

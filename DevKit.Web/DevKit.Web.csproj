@@ -237,18 +237,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
-    <Content Include="app\configuration\clientGroup\clientGroup.html" />
-    <Content Include="app\configuration\clientGroup\ClientGroupController.js" />
-    <Content Include="app\configuration\clientGroup\listingClientGroups.html" />
-    <Content Include="app\configuration\clientGroup\ListingClientGroupsController.js" />
     <Content Include="app\configuration\news\listingNews.html" />
     <Content Include="app\configuration\news\ListingNewsController.js" />
     <Content Include="app\configuration\news\news.html" />
     <Content Include="app\configuration\news\NewsController.js" />
-    <Content Include="app\configuration\client\listingClients.html" />
-    <Content Include="app\configuration\client\ListingClientsController.js" />
-    <Content Include="app\configuration\client\client.html" />
-    <Content Include="app\configuration\client\ClientController.js" />
     <Content Include="app\configuration\surveys\listingSurveys.html" />
     <Content Include="app\configuration\surveys\ListingSurveysController.js" />
     <Content Include="app\configuration\surveys\survey.html" />
@@ -869,8 +861,6 @@
   <ItemGroup>
     <Compile Include="proc\Combos\CidadeComboCtrl.cs" />
     <Compile Include="proc\Combos\EstadoComboCtrl.cs" />
-    <Compile Include="proc\Combos\ClientComboCtrl.cs" />
-    <Compile Include="proc\Combos\ClientGroupComboCtrl.cs" />
     <Compile Include="proc\Combos\PhaseComboCtrl.cs" />
     <Compile Include="proc\Combos\VersionComboCtrl.cs" />
     <Compile Include="proc\Combos\SprintComboCtrl.cs" />
@@ -890,8 +880,6 @@
     <Compile Include="proc\Services\Cache\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />
     <Compile Include="proc\Infrastructure\Base\Cache\MemCacheController.cs" />
-    <Compile Include="proc\Domains\Configuration\ClientGroupCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\ClientCtrl.cs" />
     <Compile Include="proc\Domains\Configuration\SurveyCtrl.cs" />
     <Compile Include="proc\Domains\Configuration\NewsCtrl.cs" />
     <Compile Include="proc\Domains\Configuration\TaskCheckPointCtrl.cs" />

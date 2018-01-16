@@ -89,8 +89,6 @@ namespace DevKit.Web.Controllers
                 bLoadDependencies = true,
                 bLoadCheckpoints = true,
                 bLoadQuestions = true,
-                bLoadClients = true,
-                bLoadClientGroups = true,
                 bLoadCustomSteps = true,
                 bLoadLogs = true
             });
@@ -125,8 +123,6 @@ namespace DevKit.Web.Controllers
                 bLoadDependencies = true,
                 bLoadCheckpoints = true,
                 bLoadQuestions = true,
-                bLoadClients = true,
-                bLoadClientGroups = true,
                 bLoadCustomSteps = true,
                 bLoadLogs = true
             });
@@ -162,8 +158,6 @@ namespace DevKit.Web.Controllers
                 bLoadDependencies = true,
                 bLoadCheckpoints = true,
                 bLoadQuestions = true,
-                bLoadClients = true,
-                bLoadClientGroups = true,
                 bLoadCustomSteps = true,
                 bLoadLogs = true
             });

@@ -45,8 +45,6 @@ angular.module('app.services', ['ngResource'])
 		Profile: $resource('api/profile/:id', {}, opcoes),
 		Permission: $resource('api/permission/:id', {}, opcoes),
 		Project: $resource('api/project/:id', {}, opcoes),
-		Client: $resource('api/client/:id', {}, opcoes),
-		ClientGroup: $resource('api/clientGroup/:id', {}, opcoes),
 		Phase: $resource('api/phase/:id', {}, opcoes),
 		Version: $resource('api/version/:id', {}, opcoes),
 		Sprint: $resource('api/sprint/:id', {}, opcoes),

@@ -58,6 +58,7 @@ namespace DataModel
 				dto.multiUser = true;
 
 				var lstUsers = (from e in db.User
+                                where e.fkEmpresa == db.currentUser.fkEmpresa
 								where e.bActive == true
 								select e).
 								ToList();

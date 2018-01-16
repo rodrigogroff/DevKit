@@ -21,6 +21,7 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
 
             if (fkProject != null)
                 ret.Append(fkProject);
@@ -36,7 +37,9 @@ namespace DataModel
 		{
 			var user = db.currentUser;
             
-			var query = from e in db.CompanyNews select e;
+			var query = from e in db.CompanyNews
+                        where e.fkEmpresa == filter.fkEmpresa
+                        select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query

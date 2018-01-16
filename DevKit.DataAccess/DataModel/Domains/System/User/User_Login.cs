@@ -4,9 +4,18 @@ namespace DataModel
 {
 	public partial class User
 	{
-		public User Login(DevKitDB db, string login, string password)
+		public User Login(DevKitDB db, string emp, string login, string password)
 		{
+            empresa = (from e in db.Empresa
+                            where e.nuEmpresa.ToString() == emp
+                            select e).
+                            FirstOrDefault();
+
+            if (empresa == null)
+                return null;
+            
 			var user = (from e in db.User
+                        where e.fkEmpresa == empresa.id
 						where e.stLogin.ToUpper() == login.ToUpper()
 						where e.stPassword.ToUpper() == password.ToUpper()
 						where e.bActive == true
@@ -15,6 +24,8 @@ namespace DataModel
 
 			if (user != null)
 			{
+                user.empresa = empresa;
+
 				new AuditLog
 				{
 					fkUser = user.id,

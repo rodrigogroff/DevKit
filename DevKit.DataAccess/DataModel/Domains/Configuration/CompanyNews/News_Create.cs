@@ -27,6 +27,7 @@ namespace DataModel
 		{
 			var user = db.currentUser;
 
+            fkEmpresa = user.fkEmpresa;
 			fkUser = user.id;
 			dtLog = DateTime.Now;
 

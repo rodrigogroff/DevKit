@@ -21,6 +21,7 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
 
             if (fkCategory != null)
                 ret.Append(busca);           
@@ -33,7 +34,10 @@ namespace DataModel
 	{
 		public TaskCheckPointReport ComposedFilters(DevKitDB db, TaskCheckPointFilter filter)
 		{
-			var query = from e in db.TaskCheckPoint select e;
+            var query = from e in db.TaskCheckPoint
+                        join ttype in db.Task on e.fkCategory equals ttype.id
+                        where ttype.fkEmpresa == filter.fkEmpresa
+                        select e;
 
 			if (filter.fkCategory != null)
 				query = from e in query where e.fkCategory == filter.fkCategory select e;

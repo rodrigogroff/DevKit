@@ -41,10 +41,10 @@ namespace DataModel
 				return false;
 			}
 
+            fkEmpresa = user.fkEmpresa;
 			stPassword = stLogin;
-
 			dtCreation = DateTime.Now;
-
+            
 			id = Convert.ToInt64(db.InsertWithIdentity(this));
 
 			new AuditLog {

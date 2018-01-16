@@ -66,8 +66,9 @@
 			<div class="navbar" style="height:38px; padding-left:175px;padding-top:-4px;">
 				<table width="100%">
 					<tr>
-						<td width="200px">
-							<span style="color:black">Bem-vindo, <b>{{authentication.nameUser}}</b> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<td width="600px" valign="top">
+                            <h4>{{authentication.nuEmpresa}}</h4>
+                            <span style="color:black">Bem-vindo, <b>{{authentication.nameUser}}</b></span>
 						</td>
 						<td align="right" valign="top">
 							<span style="color:white">Sair</span> &nbsp;&nbsp;<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
@@ -93,8 +94,6 @@
 						<a class="accordion-toggle " data-toggle="collapse"
 						   data-parent="#side-nav" href="#forms-collapseSetup"><span class="name">Configuração</span></a>
 						<ul id="forms-collapseSetup" class="panel-collapse collapse">
-							<li><a ui-sref="clients"><span>Clientes</span></a></li>
-							<li><a ui-sref="clientgroups"><span>Grupos</span></a></li>
 							<li><a ui-sref="projects"><span>Projetos</span></a></li>
 							<li><a ui-sref="taskTypes"><span>Tipos Tarefa</span></a></li>
 							<li><a ui-sref="newsListing"><span>Notícias</span></a></li>

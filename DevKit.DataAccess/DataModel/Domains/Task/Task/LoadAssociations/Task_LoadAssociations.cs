@@ -58,12 +58,6 @@ namespace DataModel
             if (options.bLoadQuestions)
 	            questions = LoadQuestions(db);
 
-            if (options.bLoadClients)
-	            clients = LoadClients(db);
-
-            if (options.bLoadClientGroups)
-                clientGroups = LoadClientGroups(db);
-
             if (options.bLoadCustomSteps)
                 customSteps = LoadCustomSteps(db);
 

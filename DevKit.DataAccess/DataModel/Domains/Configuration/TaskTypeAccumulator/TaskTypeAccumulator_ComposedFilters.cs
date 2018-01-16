@@ -21,6 +21,7 @@ namespace DataModel
             ret.Append(skip + ",");
             ret.Append(take + ",");
             ret.Append(busca + ",");
+            ret.Append(fkEmpresa + ",");
 
             if (fkTaskCategory != null)
                 ret.Append(fkTaskCategory);
@@ -33,7 +34,10 @@ namespace DataModel
 	{
 		public TaskTypeAccumulatorReport ComposedFilters(DevKitDB db, TaskTypeAccumulatorFilter filter)
 		{
-			var query = from e in db.TaskTypeAccumulator select e;
+			var query = from e in db.TaskTypeAccumulator
+                        join ttype in db.TaskType on e.fkTaskType equals ttype.id
+                        where ttype.fkEmpresa == filter.fkEmpresa
+                        select e;
 
 			if (filter.fkTaskCategory != null)
 				query = from e in query where e.fkTaskCategory == filter.fkTaskCategory select e;

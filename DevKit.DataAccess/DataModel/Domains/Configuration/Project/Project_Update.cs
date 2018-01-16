@@ -49,8 +49,8 @@ namespace DataModel
 						
 							ent.fkProject = id;
 							ent.dtJoin = DateTime.Now;
-
-							db.Insert(ent);
+                            
+                            db.Insert(ent);
 
 							new AuditLog {
 								fkUser = user.id,
@@ -107,7 +107,7 @@ namespace DataModel
 							}
 							
 							ent.fkProject = id;
-
+                            
 							db.Insert(ent);
 
 							new AuditLog {

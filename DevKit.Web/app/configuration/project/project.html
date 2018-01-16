@@ -128,17 +128,43 @@
 												<td>{{ mdl.stUser }}</td>
 												<td>{{ mdl.stRole }}</td>
 												<td>{{ mdl.sdtJoin }}</td>
-												<td>
-													<div class="pull-right">
-														<a href="" role="button" ng-click="editUser(mdl)">
-															<i class="glyphicon glyphicon-edit" style="color:white"></i>
-														</a>
-														&nbsp;&nbsp;
-														<a href="" role="button" ng-click="removeUser($index, viewModel.users)">
-															<i class="glyphicon glyphicon-remove" style="color:white"></i>
-														</a>
-													</div>													
-												</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="editUser(mdl)">
+                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="" role="button" ng-click="removeUser($index, viewModel.users)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="modal-backdrop"
+                                                         ng-if="modalUser == true"
+                                                         style="background: rgba(55, 55, 55, 0.5 );">
+                                                        <div class="modal-dialog" style="width:500px">
+                                                            <br />
+                                                            <br />
+                                                            <br />
+                                                            <div class="modal-content" style="color:black">
+                                                                <legend style="color:black">
+                                                                    Remoção de usuário
+                                                                    <button class="btn btn-transparent pull-right" ng-click="closeModalUser()"> X </button> &nbsp;
+                                                                </legend>
+                                                                Confirma remoção do usuário?<br /><br />
+                                                                -{{delUser.stUser}}<br />
+                                                                <br />
+                                                                <br />
+                                                                <div class="pull-right">
+                                                                    <button class="btn btn-primary" ng-click="removerUserModal()"> Remover </button>
+                                                                </div>
+                                                                <br />
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
 											</tr>
 										</table>
 									</div>
@@ -193,17 +219,43 @@
 											</thead>
 											<tr data-ng-repeat="mdl in viewModel.phases">
 												<td>{{ mdl.stName }}</td>
-												<td>
-													<div class="pull-right">
-														<a href="" role="button" ng-click="editPhase(mdl)">
-															<i class="glyphicon glyphicon-edit" style="color:white"></i>
-														</a>
-														&nbsp;&nbsp;
-														<a href="" role="button" ng-click="removePhase($index, viewModel.phases)">
-															<i class="glyphicon glyphicon-remove" style="color:white"></i>
-														</a>
-													</div>
-												</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="editPhase(mdl)">
+                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="" role="button" ng-click="removePhase($index, viewModel.phases)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="modal-backdrop"
+                                                         ng-if="modalPhase == true"
+                                                         style="background: rgba(55, 55, 55, 0.5 );">
+                                                        <div class="modal-dialog" style="width:500px">
+                                                            <br />
+                                                            <br />
+                                                            <br />
+                                                            <div class="modal-content" style="color:black">
+                                                                <legend style="color:black">
+                                                                    Remoção de fase
+                                                                    <button class="btn btn-transparent pull-right" ng-click="closeModalPhase()"> X </button> &nbsp;
+                                                                </legend>
+                                                                Confirma remoção de fase?<br /><br />
+                                                                -{{delPhase.stName}}<br />
+                                                                <br />
+                                                                <br />
+                                                                <div class="pull-right">
+                                                                    <button class="btn btn-primary" ng-click="removerPhaseModal()"> Remover </button>
+                                                                </div>
+                                                                <br />
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
 											</tr>
 										</table>
 									</div>
@@ -270,19 +322,45 @@
 												<td>{{ mdl.sfkPhase }}</td>
 												<td>{{ mdl.stName }}</td>
 												<td>
-													<div class="pull-right">
-														<a href="" role="button" ng-click="goSprint(mdl)">
-															<i class="glyphicon glyphicon-share" style="color:white"></i>
-														</a>
-														&nbsp;&nbsp;
-														<a href="" role="button" ng-click="editSprint(mdl)">
-															<i class="glyphicon glyphicon-edit" style="color:white"></i>
-														</a>
-														&nbsp;&nbsp;
-														<a href="" role="button" ng-click="removeSprint($index, viewModel.sprints)">
-															<i class="glyphicon glyphicon-remove" style="color:white"></i>
-														</a>
-													</div>													
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="goSprint(mdl)">
+                                                            <i class="glyphicon glyphicon-share" style="color:white"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="" role="button" ng-click="editSprint(mdl)">
+                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="" role="button" ng-click="removeSprint($index, viewModel.sprints)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+
+                                                        <div class="modal-backdrop"
+                                                             ng-if="modalSprint == true"
+                                                             style="background: rgba(55, 55, 55, 0.5 );">
+                                                            <div class="modal-dialog" style="width:500px">
+                                                                <br />
+                                                                <br />
+                                                                <br />
+                                                                <div class="modal-content" style="color:black">
+                                                                    <legend style="color:black">
+                                                                        Remoção de sprint
+                                                                        <button class="btn btn-transparent pull-right" ng-click="closeModalSprint()"> X </button> &nbsp;
+                                                                    </legend>
+                                                                    Confirma remoção de sprint?<br /><br />
+                                                                    -{{delSprint.stName}}<br />
+                                                                    <br />
+                                                                    <br />
+                                                                    <div class="pull-right">
+                                                                        <button class="btn btn-primary" ng-click="removerSprintModal()"> Remover </button>
+                                                                    </div>
+                                                                    <br />
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>													
 												</td>
 											</tr>
 										</table>

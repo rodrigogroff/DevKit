@@ -63,62 +63,75 @@
 			</a>
 		</div>
 		<header class="page-header">
-			<div class="navbar" style="height:38px; padding-left:175px;padding-top:-4px;">
-				<table width="100%">
-					<tr>
-						<td width="600px" valign="top">
+            <div class="navbar" style="height:38px; padding-left:195px;padding-top:-4px;">
+                <table width="100%">
+                    <tr>
+                        <td width="600px" valign="top">
                             <h4>{{authentication.nuEmpresa}}</h4>
                             <span style="color:black">Bem-vindo, <b>{{authentication.nameUser}}</b></span>
-						</td>
-						<td align="right" valign="top">
-							<span style="color:white">Sair</span> &nbsp;&nbsp;<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
-						<td>
-					</tr>
-				</table>
-			</div>
+                        </td>
+                        <td align="right" valign="top">
+                            <span style="color:white">Sair</span> &nbsp;&nbsp;<a href="login" ng-click="logOut()"><i style="font-size:16px" class="glyphicon glyphicon-off"></i></a>
+                        <td>
+                    </tr>
+                </table>
+            </div>
 		</header>
 		<nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:60px;padding-left:-200px">
 			<section class="widget" style="height:100%;font-size:11px">
-				<ul id="side-nav" class="side-nav" style="color:black">
-					<li class="panel">
-						<a class="accordion-toggle " data-toggle="collapse"
-						   data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Sistema</span></a>
-						<ul id="forms-collapseSystem" class="panel-collapse collapse">
-							<li><a ui-sref="userChangePass"><span>Trocar senha</span></a></li>
-							@*<li><a ui-sref="setup"><span>Configuração</span></a></li>*@
-							<li><a ui-sref="users"><span>Usuários</span></a></li>
-							<li><a ui-sref="profiles"><span>Perfis</span></a></li>
-                        </ul>
-					</li>
-					<li class="panel">
-						<a class="accordion-toggle " data-toggle="collapse"
-						   data-parent="#side-nav" href="#forms-collapseSetup"><span class="name">Configuração</span></a>
-						<ul id="forms-collapseSetup" class="panel-collapse collapse">
-							<li><a ui-sref="projects"><span>Projetos</span></a></li>
-							<li><a ui-sref="taskTypes"><span>Tipos Tarefa</span></a></li>
-							<li><a ui-sref="newsListing"><span>Notícias</span></a></li>
-							<li><a ui-sref="surveysListing"><span>Pesquisas</span></a></li>
-						</ul>
-					</li>
-					<li class="panel">
-						<a class="accordion-toggle " data-toggle="collapse"
-						   data-parent="#side-nav" href="#forms-collapseTask"><span class="name">Tarefas</span></a>
-						<ul id="forms-collapseTask" class="panel-collapse collapse">
-							<li><a ui-sref="task-new"><span>Nova</span></a></li>
-							<li><a ui-sref="tasks"><span>Listagem</span></a></li>
-							<li><a ui-sref="userKanban"><span>Kanban</span></a></li>
-							<li><a ui-sref="management"><span>Gerência</span></a></li>
-							<li><a ui-sref="timesheet"><span>Timesheet</span></a></li>
-						</ul>
-					</li>
+                <ul id="side-nav" class="side-nav" style="color:black">
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
-                           data-parent="#side-nav" href="#forms-collapsePeople"><span class="name">Pessoas</span></a>
+                           data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Sistema</span></a>
+                        <ul id="forms-collapseSystem" class="panel-collapse collapse">
+                            <li><a ui-sref="userChangePass"><span>Trocar senha</span></a></li>
+                            @*<li><a ui-sref="setup"><span>Configuração</span></a></li>*@
+                            <li><a ui-sref="users"><span>Usuários</span></a></li>
+                            <li><a ui-sref="profiles"><span>Perfis</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseSetup"><span class="name">Configuração</span></a>
+                        <ul id="forms-collapseSetup" class="panel-collapse collapse">
+                            <li><a ui-sref="projects"><span>Projetos</span></a></li>
+                            <li><a ui-sref="taskTypes"><span>Tipos Tarefa</span></a></li>
+                            <li><a ui-sref="newsListing"><span>Notícias</span></a></li>
+                            <li><a ui-sref="surveysListing"><span>Pesquisas</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseTask"><span class="name">Tarefas</span></a>
+                        <ul id="forms-collapseTask" class="panel-collapse collapse">
+                            <li><a ui-sref="task-new"><span>Nova</span></a></li>
+                            <li><a ui-sref="tasks"><span>Listagem</span></a></li>
+                            <li><a ui-sref="userKanban"><span>Kanban</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseSoftware"><span class="name">Software</span></a>
+                        <ul id="forms-collapseSoftware" class="panel-collapse collapse">
+                            <li><a ui-sref="management"><span>Gerência projeto</span></a></li>
+                            <li><a ui-sref="timesheet"><span>Timesheet</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapsePeople"><span class="name">Associados</span></a>
                         <ul id="forms-collapsePeople" class="panel-collapse collapse">
                             <li><a ui-sref="persons"><span>Listagem</span></a></li>
                         </ul>
                     </li>
-				</ul>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseMedico"><span class="name">Médicos</span></a>
+                        <ul id="forms-collapseMedico" class="panel-collapse collapse">
+                            <li><a><span>Listagem</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
 				<ul><li>&nbsp;</li></ul>
 				<ul><li>&nbsp;</li></ul>
 				<ul>

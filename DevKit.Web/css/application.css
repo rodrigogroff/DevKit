@@ -22274,7 +22274,7 @@ a.text-gray-lighter:focus {
 /**********************************/
 .sidebar {
   position: absolute;
-  width: 160px;
+  width: 190px;
   padding: 6px 0;
   top: 0;
   color: #ffffff;
@@ -23041,7 +23041,7 @@ a.text-gray-lighter:focus {
 /**********************************/
 .page-header {
   border: none;
-  margin: 25px 2.5641% 0;
+  margin: 8px 2.5641% 0;
   padding: 0;
   position: relative;
   border-radius: 3px;
@@ -26218,7 +26218,7 @@ table.table thead .sorting_desc_disabled {
 }
 
 .webFormPostion {
-	padding-left:195px;
+	padding-left:225px;
 	padding-top:5px;
 	width:1100px;
 }

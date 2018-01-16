@@ -1,6 +1,8 @@
 
 -traduzir enumerações
--modais de conf
+-modais de conf: usuário / tipo tarefa / sprint
+-kit startup
+-carga de associados
 
 OLD
 

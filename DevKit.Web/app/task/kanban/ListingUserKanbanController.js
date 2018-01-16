@@ -27,6 +27,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
         $scope.campos = {
             complete: 'false',
+            expired: 'false',
             selects: {
                 user: ngSelects.obterConfiguracao(Api.UserCombo, {}),
                 priority: ngSelects.obterConfiguracao(Api.Priority, {}),

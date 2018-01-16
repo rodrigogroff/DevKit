@@ -41,10 +41,13 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 	init();
 
-	function init()
-	{
-		CheckPermissions();
+    function init() {
+        CheckPermissions();
+        loadEntity();
+    }
 
+    function loadEntity()
+    {
 		if (id > 0)
         {
             if ($scope.loaded == undefined)
@@ -145,22 +148,27 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 	$scope.addUser = false;
 
-	$scope.removeUser = function (index, lista)
-	{
-		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+    $scope.removeUser = function (index, lista) {
+        if (!$scope.permModel.novo && !$scope.permModel.edicao)
             toastr.error('Acesso negado!', 'Permissão');
-		else
-        {
-			$scope.viewModel.updateCommand = "removeUser";
-			$scope.viewModel.anexedEntity = lista[index];
+        else {
+            $scope.modalUser = true;
+            $scope.delUser = $scope.viewModel.users[index];
+        }
+    }
 
-			Api.Project.update({ id: id }, $scope.viewModel, function (data)
-			{
-                toastr.success('Usuário removido', 'Sucesso');
-                init();
-			});
-		}
-	}
+    $scope.closeModalUser = function () {
+        $scope.modalUser = false;
+    }
+
+    $scope.removerUserModal = function () {
+        $scope.viewModel.updateCommand = "removeUser";
+        $scope.viewModel.anexedEntity = $scope.delUser;
+
+        Api.Project.update({ id: id }, $scope.viewModel, function (data) {
+            loadEntity();
+        });
+    }
 
 	$scope.addNewUser = function ()
 	{
@@ -199,7 +207,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 $scope.addUser = false;
 
                 toastr.success('Usuário adicionado', 'Sucesso');
-                init();				
+                loadEntity();
 
 			}, function (response)
 			{
@@ -214,22 +222,27 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 	$scope.addPhase = false;
 
-	$scope.removePhase = function (index, lista)
-	{
-		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+    $scope.removePhase = function (index, lista) {
+        if (!$scope.permModel.novo && !$scope.permModel.edicao)
             toastr.error('Acesso negado!', 'Permissão');
-		else
-        {
-			$scope.viewModel.updateCommand = "removePhase";
-			$scope.viewModel.anexedEntity = lista[index];
+        else {
+            $scope.modalPhase = true;
+            $scope.delPhase = $scope.viewModel.phases[index];
+        }
+    }
 
-			Api.Project.update({ id: id }, $scope.viewModel, function (data)
-			{
-                toastr.success('Fase removida', 'Sucesso');
-                init();
-			});
-		}
-	}
+    $scope.closeModalPhase = function () {
+        $scope.modalPhase = false;
+    }
+
+    $scope.removerPhaseModal = function () {
+        $scope.viewModel.updateCommand = "removePhase";
+        $scope.viewModel.anexedEntity = $scope.delPhase;
+
+        Api.Project.update({ id: id }, $scope.viewModel, function (data) {
+            loadEntity();
+        });
+    }
 
 	$scope.addNewPhase = function ()
 	{
@@ -266,7 +279,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				$scope.newPhase = { bComplete: false };
 
 				toastr.success('Fase adicionada', 'Sucesso');
-                init();
+                loadEntity();
 
             }, function (response)
             {
@@ -281,22 +294,27 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 	$scope.addSprint = false;
 
-	$scope.removeSprint = function (index, lista)
-	{
-		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+    $scope.removeSprint = function (index, lista) {
+        if (!$scope.permModel.novo && !$scope.permModel.edicao)
             toastr.error('Acesso negado!', 'Permissão');
-        else
-        {
-			$scope.viewModel.updateCommand = "removeSprint";
-			$scope.viewModel.anexedEntity = lista[index];
+        else {
+            $scope.modalSprint = true;
+            $scope.delSprint = $scope.viewModel.sprints[index];
+        }
+    }
 
-            Api.Project.update({ id: id }, $scope.viewModel, function (data)
-            {
-				toastr.success('Sprint removido', 'Sucesso');
-                init();
-			});
-		}
-	}
+    $scope.closeModalSprint = function () {
+        $scope.modalSprint = false;
+    }
+
+    $scope.removerSprintModal = function () {
+        $scope.viewModel.updateCommand = "removeSprint";
+        $scope.viewModel.anexedEntity = $scope.delSprint;
+
+        Api.Project.update({ id: id }, $scope.viewModel, function (data) {
+            loadEntity();
+        });
+    }
 
 	$scope.addNewSprint = function () {
 		if (!$scope.permModel.novo && !$scope.permModel.edicao)
@@ -340,7 +358,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 				toastr.success('Sprint salvo', 'Sucesso');
 
-                init();			
+                loadEntity();
 
 			}, function (response) {
 				toastr.error(response.data.message, 'Error');

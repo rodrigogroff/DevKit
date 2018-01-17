@@ -235,12 +235,13 @@ namespace DataModel
                     }
             }
 
+            if (stVencCartao.StartsWith("("))
+                stVencCartao = "";
+            
             dtLastUpdate = DateTime.Now;
             fkUserLastUpdate = user.id;
 
             db.Update(this);
-
-            
 
             return true;
 		}

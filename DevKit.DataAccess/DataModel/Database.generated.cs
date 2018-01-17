@@ -26,6 +26,8 @@ namespace DataModel
 		public ITable<Empresa>              Empresa              { get { return this.GetTable<Empresa>(); } }
 		public ITable<Estado>               Estado               { get { return this.GetTable<Estado>(); } }
 		public ITable<Fechamento>           Fechamento           { get { return this.GetTable<Fechamento>(); } }
+		public ITable<LoteGrafica>          LoteGrafica          { get { return this.GetTable<LoteGrafica>(); } }
+		public ITable<LoteGraficaCartao>    LoteGraficaCartao    { get { return this.GetTable<LoteGraficaCartao>(); } }
 		public ITable<Medico>               Medico               { get { return this.GetTable<Medico>(); } }
 		public ITable<MedicoAddress>        MedicoAddress        { get { return this.GetTable<MedicoAddress>(); } }
 		public ITable<MedicoEmail>          MedicoEmail          { get { return this.GetTable<MedicoEmail>(); } }
@@ -155,6 +157,26 @@ namespace DataModel
 		[Column,     Nullable] public long? nuAno         { get; set; } // bigint
 	}
 
+	[Table("LoteGrafica")]
+	public partial class LoteGrafica
+	{
+		[PrimaryKey, Identity] public long      id       { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog    { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     nuCodigo { get; set; } // bigint
+		[Column,     Nullable] public long?     tgAtivo  { get; set; } // bigint
+	}
+
+	[Table("LoteGraficaCartao")]
+	public partial class LoteGraficaCartao
+	{
+		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
+		[Column,     Nullable] public long? fkLoteGrafica { get; set; } // bigint
+		[Column,     Nullable] public long? fkAssociado   { get; set; } // bigint
+		[Column,     Nullable] public long? fkEmpresa     { get; set; } // bigint
+		[Column,     Nullable] public long? nuVia         { get; set; } // bigint
+		[Column,     Nullable] public long? nuTit         { get; set; } // bigint
+	}
+
 	[Table("Medico")]
 	public partial class Medico
 	{
@@ -225,6 +247,7 @@ namespace DataModel
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
 		[Column,     Nullable] public long?     fkEmpresa         { get; set; } // bigint
 		[Column,     Nullable] public long?     nuMatricula       { get; set; } // bigint
+		[Column,     Nullable] public string    stVencCartao      { get; set; } // character varying(4)
 		[Column,     Nullable] public long?     nuViaCartao       { get; set; } // bigint
 		[Column,     Nullable] public long?     stCodAcessoCartao { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
@@ -243,7 +266,6 @@ namespace DataModel
 		[Column,     Nullable] public string    stCPF             { get; set; } // character varying(20)
 		[Column,     Nullable] public long?     tgStatus          { get; set; } // bigint
 		[Column,     Nullable] public long?     tgExpedicao       { get; set; } // bigint
-		[Column,     Nullable] public string    stVencCartao      { get; set; } // character varying(4)
 	}
 
 	[Table("PersonAddress")]
@@ -679,6 +701,18 @@ namespace DataModel
 		}
 
 		public static Fechamento Find(this ITable<Fechamento> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static LoteGrafica Find(this ITable<LoteGrafica> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static LoteGraficaCartao Find(this ITable<LoteGraficaCartao> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

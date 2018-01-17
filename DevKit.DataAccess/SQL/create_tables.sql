@@ -414,3 +414,17 @@ ALTER TABLE public."Fechamento" OWNER to postgres;
 ALTER TABLE public."Fechamento" ADD COLUMN if not exists "fkAutorizacao" bigint;
 ALTER TABLE public."Fechamento" ADD COLUMN if not exists "nuMes" bigint;
 ALTER TABLE public."Fechamento" ADD COLUMN if not exists "nuAno" bigint;
+
+CREATE TABLE IF NOT EXISTS public."LoteGrafica" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."LoteGrafica" OWNER to postgres;
+ALTER TABLE public."LoteGrafica" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."LoteGrafica" ADD COLUMN if not exists "nuCodigo" bigint;
+ALTER TABLE public."LoteGrafica" ADD COLUMN if not exists "tgAtivo" bigint;
+
+CREATE TABLE IF NOT EXISTS public."LoteGraficaCartao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."LoteGraficaCartao" OWNER to postgres;
+ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "fkLoteGrafica" bigint;
+ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "fkAssociado" bigint;
+ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "nuVia" bigint;
+ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "nuTit" bigint;

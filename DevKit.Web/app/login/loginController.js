@@ -17,6 +17,13 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
 			password: ""
 		};
 
+    init();
+
+    function init() {
+        if ($rootScope.tipo == undefined)
+            $rootScope.tipo = $location.search().tipo;
+    }
+
     $scope.login = function ()
     {
     	$scope.loading = true;
@@ -30,9 +37,18 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     	}
     	else
         {
+            if ($rootScope.tipo == undefined)
+                $rootScope.tipo = 4;
+
             var lData = {
-                userName: $scope.loginData.nuEmpresa + ":" + $scope.loginData.userName,
                 password: $scope.loginData.password,
+            }
+
+            if ($rootScope.tipo == 4) {
+                lData.userName = $rootScope.tipo + ":" + $scope.loginData.nuEmpresa + ":" + $scope.loginData.userName;
+            }
+            else if ($rootScope.tipo == 5) {
+                lData.userName = $rootScope.tipo + ":" + $scope.loginData.userName;
             }
 
             AuthService.login(lData).then(function (response)

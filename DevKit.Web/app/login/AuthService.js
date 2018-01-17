@@ -9,8 +9,9 @@ function ($http, $q)
 
     var _authentication = {
         isAuth: false,
-        nameUser: null,
+        nameUser: '',
         nuEmpresa: null,
+        tipo: ''
     };
 
     var _login = function (loginData)
@@ -26,10 +27,13 @@ function ($http, $q)
                     token: response.access_token,
                     nameUser: response.nameUser,
                     nuEmpresa: response.nuEmpresa,
+                    tipo: response.tipo
                 }));
 
             _authentication.isAuth = true;
             _authentication.nameUser = response.nameUser;
+            _authentication.nuEmpresa = response.nuEmpresa;
+            _authentication.tipo = response.tipo;
 
             deferred.resolve(response);
 
@@ -48,7 +52,7 @@ function ($http, $q)
         _authentication.isAuth = false;
         _authentication.nameUser = null;
         _authentication.nuEmpresa = null;
-        _authentication.idProfile = null;
+        _authentication.tipo = null;
     };
 
     var _fillAuthData = function ()
@@ -59,6 +63,7 @@ function ($http, $q)
             _authentication.isAuth = true;
             _authentication.nameUser = authData.nameUser;
             _authentication.nuEmpresa = authData.nuEmpresa;
+            _authentication.tipo = authData.tipo;
         }
     }
 	

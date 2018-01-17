@@ -56,13 +56,13 @@
     @Scripts.Render("~/bundles/scripts")
 </head>
 <body class="background" ng-cloak>
-	<div class="header" ng-show="exibirMenu" ng-controller="MenuController">
-		<div class="logo" style="padding-top:-4px; padding-left:-60px">
-			<a ng-click="goHome()">
-				<img src='../../images/logo.png' height="112px" />
-			</a>
-		</div>
-		<header class="page-header">
+    <div class="header" ng-show="exibirMenu" ng-controller="MenuController">
+        <div class="logo" style="padding-top:-4px; padding-left:-60px">
+            <a ng-click="goHome()">
+                <img src='../../images/logo.png' height="112px" />
+            </a>
+        </div>
+        <header class="page-header">
             <div class="navbar" style="height:38px; padding-left:195px;padding-top:-4px;">
                 <table width="100%">
                     <tr>
@@ -76,9 +76,10 @@
                     </tr>
                 </table>
             </div>
-		</header>
-		<nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:60px;padding-left:-200px">
-			<section class="widget" style="height:100%;font-size:11px">
+        </header>
+
+        <nav ng-if="tipo == 4" id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:60px;padding-left:-200px">
+            <section class="widget" style="height:100%;font-size:11px">
                 <ul id="side-nav" class="side-nav" style="color:black">
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
@@ -132,17 +133,55 @@
                         </ul>
                     </li>
                 </ul>
-				<ul><li>&nbsp;</li></ul>
-				<ul><li>&nbsp;</li></ul>
-				<ul>
-					<li>
-						<span style="color:grey;text-align:center;padding-left:20px">Version {{version}}</span>
-					</li>
-				</ul>
-				<ul><li></li></ul>
-			</section>			
-		</nav>
-	</div>
+                <ul><li>&nbsp;</li></ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul>
+                    <li>
+                        <span style="color:grey;text-align:center;padding-left:20px">Version {{version}}</span>
+                    </li>
+                </ul>
+                <ul><li></li></ul>
+            </section>
+        </nav>
+
+        <nav ng-if="tipo == 5" id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:60px;padding-left:-200px">
+            <section class="widget" style="height:100%;font-size:11px">
+                <ul id="side-nav" class="side-nav" style="color:black">
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseDBAConfig"><span class="name">Configuração</span></a>
+                        <ul id="forms-collapseDBAConfig" class="panel-collapse collapse">
+                            <li><a><span>Empresas</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseDBACartoes"><span class="name">Cartões</span></a>
+                        <ul id="forms-collapseDBACartoes" class="panel-collapse collapse">
+                            <li><a><span>Listagem</span></a></li>
+                            <li><a><span>Lote gráfica</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseDBARel"><span class="name">Relatórios</span></a>
+                        <ul id="forms-collapseDBARel" class="panel-collapse collapse">
+                            <li><a><span>Opções</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul>
+                    <li>
+                        <span style="color:grey;text-align:center;padding-left:20px">Version {{version}}</span>
+                    </li>
+                </ul>
+                <ul><li></li></ul>
+            </section>
+        </nav>
+
+    </div>
 	<table align="left" style="width:100%">
 		<tr>
 			<td>

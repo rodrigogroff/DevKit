@@ -10,7 +10,7 @@ namespace DataModel
                             where e.nuEmpresa.ToString() == emp
                             select e).
                             FirstOrDefault();
-
+            
             if (empresa == null)
                 return null;
             

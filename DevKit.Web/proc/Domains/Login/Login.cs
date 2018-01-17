@@ -19,10 +19,12 @@ namespace DevKit.Web
         public override System.Threading.Tasks.Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
             string nameUser = context.Identity.Claims.Where(x => x.Type == ClaimTypes.Name).Select(x => x.Value).FirstOrDefault();
-            string nuEmpresa = context.Identity.Claims.Where(x => x.Type == "nuEmpresa").Select(x => x.Value).FirstOrDefault();            
+            string nuEmpresa = context.Identity.Claims.Where(x => x.Type == "nuEmpresa").Select(x => x.Value).FirstOrDefault();
+            string tipo = context.Identity.Claims.Where(x => x.Type == "tipo").Select(x => x.Value).FirstOrDefault();
 
             context.AdditionalResponseParameters.Add("nameUser", nameUser);
             context.AdditionalResponseParameters.Add("nuEmpresa", nuEmpresa);
+            context.AdditionalResponseParameters.Add("tipo", tipo);
 
             return System.Threading.Tasks.Task.FromResult<object>(null);
         }
@@ -32,33 +34,68 @@ namespace DevKit.Web
 			using (var db = new DevKitDB())
 			{
                 var incoming = context.UserName.Split(':');
-                var emp = incoming[0];
-                var login = incoming[1];
+                var tipo = incoming[0];
 
-                var usuario = new User();
+                if (tipo == "4")
+                {
+                    #region - emissora - 
 
-                usuario = usuario.Login(db, emp, login, context.Password);
+                    var emp = incoming[1];
+                    var login = incoming[2];
 
-				if (usuario != null)
-				{
-					usuario.dtLastLogin = DateTime.Now;
-                 
-                    db.Update(usuario);
+                    var usuario = new User();
 
-                    var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                    usuario = usuario.Login(db, emp, login, context.Password);
 
-					identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
-                    identity.AddClaim(new Claim("nuEmpresa", "(" + usuario.empresa.nuEmpresa + ") " + usuario.empresa.stSigla));
+                    if (usuario != null)
+                    {
+                        usuario.dtLastLogin = DateTime.Now;
 
-                    var ticket = new AuthenticationTicket(identity, null);
-					context.Validated(ticket);                    
+                        db.Update(usuario);
+
+                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+
+                        identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
+                        identity.AddClaim(new Claim("nuEmpresa", "(" + usuario.empresa.nuEmpresa + ") " + usuario.empresa.stSigla));
+                        identity.AddClaim(new Claim("tipo", "4"));
+
+                        var ticket = new AuthenticationTicket(identity, null);
+                        context.Validated(ticket);
+                    }
+                    else
+                    {
+                        context.SetError("invalid_grant", "Login ou senha inválida!");
+                        return;
+                    }
+
+                    #endregion
                 }
-				else
-				{
-					context.SetError("invalid_grant", "Login ou senha inválida!");
-					return;
-				}
+                else if (tipo == "5")
+                {
+                    #region - dba - 
 
+                    var login = incoming[1];
+
+                    if (login == "dba" && context.Password =="superdba")
+                    {
+                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+
+                        identity.AddClaim(new Claim(ClaimTypes.Name, login));
+                        identity.AddClaim(new Claim("nuEmpresa", "(Super Usuário Administrador)"));
+                        identity.AddClaim(new Claim("tipo", "5"));
+
+                        var ticket = new AuthenticationTicket(identity, null);
+                        context.Validated(ticket);
+                    }
+                    else
+                    {
+                        context.SetError("invalid_grant", "Login ou senha inválida!");
+                        return;
+                    }
+
+                    #endregion
+                }
+                
 				await System.Threading.Tasks.Task.FromResult(0);
 			}
 		}

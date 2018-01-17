@@ -63,6 +63,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('person', { url: '/people/person/:id', templateUrl: 'app/people/person/person.html', controller: 'PersonController' })
 
     .state('lotesgrafica', { url: '/dba/lotes', templateUrl: 'app/dba/listingLotes.html', controller: 'ListingLotesController' })
+    .state('novolote', { url: '/dba/lotes/novo', templateUrl: 'app/dba/novoLote.html', controller: 'NovoLoteController' })
     
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 

@@ -1,0 +1,46 @@
+﻿<div class="webFormPostion" style="width:90%">
+    <section class="widgetForm" style="width:100%">
+        <legend class="legendTop" style="width:100%">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Novo <b>lote para à gráfica</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebFormListing" style="padding-left:35px;width:{{windowWidth}}px">
+            <br />
+            <h3>Lista de empresas com cartões requeridos</h3>
+            <table width="95%">
+                <tr>
+                    <td valign="top">
+                        <div ng-show="list.length == 0">
+                            <div class="btn btn-info btn-lg">Nenhum cartão requerido.</div>
+                            <br />
+                            <br />
+                        </div>
+                        <div ng-show="list.length > 0">
+                            <br />
+                            <table class="table table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th width="120px">Empresa</th>
+                                        <th width="90px">Cartões</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td><input type="checkbox" ng-checked="mdl.selecionado" /><</td>
+                                    <td>{{ mdl.empresa }}</td>
+                                    <td>{{ mdl.qtdCartoes }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</div>

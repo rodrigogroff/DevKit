@@ -255,6 +255,8 @@
     <Content Include="app\configuration\sprint\SprintController.js" />
     <Content Include="app\dba\listingLotes.html" />
     <Content Include="app\dba\ListingLotesController.js" />
+    <Content Include="app\dba\novoLote.html" />
+    <Content Include="app\dba\NovoLoteController.js" />
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />

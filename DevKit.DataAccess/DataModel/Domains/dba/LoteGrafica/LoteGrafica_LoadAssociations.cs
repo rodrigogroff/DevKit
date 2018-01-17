@@ -14,7 +14,8 @@ namespace DataModel
 
             sqtdCartoes = db.LoteGraficaCartao.
                             Where(y => y.fkLoteGrafica == id).
-                                Count().ToString();
+                                Count().
+                                ToString();
 
             var lstEmpresas = db.LoteGraficaCartao.
                             Where(y => y.fkLoteGrafica == id).

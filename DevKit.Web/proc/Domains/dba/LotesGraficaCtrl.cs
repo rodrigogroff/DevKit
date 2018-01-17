@@ -13,16 +13,24 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var filter = new LoteGraficaFilter
-            {
-                skip = Request.GetQueryStringValue("skip", 0),
-                take = Request.GetQueryStringValue("take", 15),
-                nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
-            };
+            var novoLote = Request.GetQueryStringValue<bool?>("novoLote", null);
 
-            var ret = new LoteGrafica().ComposedFilters(db, filter);
-            
-            return Ok(ret);
+            if (novoLote == null)
+            {
+                var filter = new LoteGraficaFilter
+                {
+                    skip = Request.GetQueryStringValue("skip", 0),
+                    take = Request.GetQueryStringValue("take", 15),
+                    nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
+                };
+
+                return Ok(new LoteGrafica().ComposedFilters(db, filter));
+            }
+            else 
+            {
+                // pesquisa para novo lote
+                return Ok(new LoteGrafica().NovoLoteQuery(db));
+            }            
         }
 
         public IHttpActionResult Get(long id)

@@ -18,4 +18,18 @@ namespace DataModel
         public int count = 0;
         public List<LoteGrafica> results = new List<LoteGrafica>();
     }
+
+    // ------------
+
+    public partial class NovoLoteGraficaDTO
+    {
+        public string empresa, qtdCartoes;
+        public bool selecionado;
+    }
+
+    public class NovoLoteGraficaReport
+    {
+        public int count = 0;
+        public List<NovoLoteGraficaDTO> results = new List<NovoLoteGraficaDTO>();
+    }
 }

@@ -84,6 +84,70 @@ namespace GetStarted
                                 #endregion
                             }
 
+                            if (!db.Person.Where (y=> y.fkEmpresa == 1).Any())
+                            {
+                                using (var sr = new StreamReader("c:\\carga\\cartoes_1801.csv", Encoding.Default, false))
+                                {
+                                    Console.WriteLine("Carga de base [CARTÕES 1801].");
+
+                                    while (!sr.EndOfStream)
+                                    {
+                                        var line = sr.ReadLine();
+
+                                        if (line == ";;;")
+                                            continue;
+
+                                        if (line != "")
+                                        {
+                                            var ar = line.Split(';');
+
+                                            db.Insert(new Person()
+                                            {
+                                                dtStart = DateTime.Now,
+                                                fkEmpresa = 1,
+                                                fkUserAdd = 1,
+                                                nuMatricula = Convert.ToInt64(ar[0]),
+                                                nuViaCartao = 1,
+                                                stName = ar[1],
+                                                stCPF = ar[2]
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                                                        
+                            if (!db.Person.Where(y => y.fkEmpresa == 2).Any())
+                            {
+                                using (var sr = new StreamReader("c:\\carga\\cartoes_1802.csv", Encoding.Default, false))
+                                {
+                                    Console.WriteLine("Carga de base [CARTÕES 1802].");
+
+                                    while (!sr.EndOfStream)
+                                    {
+                                        var line = sr.ReadLine();
+
+                                        if (line == ";;;")
+                                            continue;
+
+                                        if (line != "")
+                                        {
+                                            var ar = line.Split(';');
+
+                                            db.Insert(new Person()
+                                            {
+                                                dtStart = DateTime.Now,
+                                                fkEmpresa = 2,
+                                                fkUserAdd = 1,
+                                                nuMatricula = Convert.ToInt64(ar[0]),
+                                                nuViaCartao = 1,
+                                                stName = ar[1],
+                                                stCPF = ar[2]
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+
                             Console.WriteLine("Carga de base executada com sucesso.");
 
                             break;

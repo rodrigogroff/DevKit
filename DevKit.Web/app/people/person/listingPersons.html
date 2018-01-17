@@ -83,7 +83,7 @@
                                     </tr>
                                 </thead>
                                 <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                    <td>{{ mdl.stName }} <i>'{{ mdl.stAlias }}'</i></td>
+                                    <td>{{ mdl.stName }} <i ng-if="mdl.stAlias">'{{ mdl.stAlias }}'</i></td>
                                     <td><div data-ng-repeat="m in mdl.phones">{{ m.stPhone }}</div></td>
                                     <td><div data-ng-repeat="m in mdl.emails">{{ m.stEmail }}</div></td>
                                     <td>{{ mdl.sdtStart }}</td>

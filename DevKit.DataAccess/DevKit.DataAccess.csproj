@@ -75,6 +75,12 @@
     <Compile Include="DataModel\Domains\Configuration\Estado\Estado_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Estado\Estado_ComposedFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Estado\Estado_DTO.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteGrafica\LoteGrafica_ComposedFilters.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteGrafica\LoteGrafica_Create.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteGrafica\LoteGrafica_DTO.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteGrafica\LoteGrafica_LoadAssociations.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteGrafica\LoteGrafica_Loader.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteGrafica\LoteGrafica_Update.cs" />
     <Compile Include="DataModel\Domains\People\Person\Person_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\People\Person\Person_ComposedFilters.cs" />
     <Compile Include="DataModel\Domains\People\Person\Person_Create.cs" />

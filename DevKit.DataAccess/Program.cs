@@ -109,7 +109,9 @@ namespace GetStarted
                                                 nuMatricula = Convert.ToInt64(ar[0]),
                                                 nuViaCartao = 1,
                                                 stName = ar[1],
-                                                stCPF = ar[2]
+                                                stCPF = ar[2],
+                                                tgExpedicao = 0,
+                                                tgStatus = 0,
                                             });
                                         }
                                     }
@@ -141,7 +143,9 @@ namespace GetStarted
                                                 nuMatricula = Convert.ToInt64(ar[0]),
                                                 nuViaCartao = 1,
                                                 stName = ar[1],
-                                                stCPF = ar[2]
+                                                stCPF = ar[2],
+                                                tgExpedicao = 0,
+                                                tgStatus = 0,
                                             });
                                         }
                                     }

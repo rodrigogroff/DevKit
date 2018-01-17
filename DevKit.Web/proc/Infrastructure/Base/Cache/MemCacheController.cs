@@ -168,12 +168,7 @@ namespace DevKit.Web.Controllers
             
             if (!IsSingleMachine) 
             {
-                // propagate cleanup
-                db.Insert(new CacheControl
-                {
-                    fkTarget = id,
-                    stEntity = tag
-                });
+                
             }
         }
 

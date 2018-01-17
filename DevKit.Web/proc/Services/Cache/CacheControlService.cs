@@ -23,6 +23,7 @@ namespace DevKit.Web.Services
                 {
                     if (lastId == 0)
                     {
+                        /*
                         var cc = (from e in db.CacheControl
                                   orderby e.id descending
                                   select e).
@@ -33,10 +34,12 @@ namespace DevKit.Web.Services
                             lastId = cc.id;
 
                             cleaner.Clean(cc.stEntity, cc.fkTarget);
-                        }                            
+                        } 
+                        */
                     }
                     else
                     {
+                        /*
                         var lst = (from e in db.CacheControl
                                    where e.id > lastId
                                    orderby e.id
@@ -48,6 +51,7 @@ namespace DevKit.Web.Services
                             cleaner.Clean(item.stEntity, item.fkTarget);
                             lastId = item.id;
                         }
+                        */
                     }                    
                 }
 

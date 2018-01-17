@@ -19,7 +19,9 @@ namespace DataModel
                       sfkUserAdd = "",
                       sdtStart = "",
                       snuAge = "",
-					  updateCommand = "";
+                      stgStatus = "",
+                      stgExpedicao = "",
+                      updateCommand = "";
 
 		public List<PersonPhone> phones;
 		public List<PersonEmail> emails;

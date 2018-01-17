@@ -27,6 +27,22 @@ namespace DataModel
             if (nuYearBirth != null)
                 snuAge = (DateTime.Now.Year - nuYearBirth).ToString();
 
+            if (string.IsNullOrEmpty(stVencCartao))
+                stVencCartao = "(Aguardando produção)";
+
+            switch (this.tgExpedicao)
+            {
+                case 0: stgExpedicao = "Requerido"; break;
+                case 1: stgExpedicao = "Em produção"; break;
+                case 2: stgExpedicao = "Entregue"; break;
+            }
+
+            switch (this.tgStatus)
+            {
+                case 0: stgStatus = "Habilitado"; break;
+                case 1: stgStatus = "Bloqueado"; break;
+            }
+
             phones = LoadPhones(db);
 			emails = LoadEmails(db);
             enderecos = LoadEnderecos(db);

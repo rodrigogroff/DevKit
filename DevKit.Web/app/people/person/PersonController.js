@@ -113,6 +113,8 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		else
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
+            $scope.mat_fail = invalidCheck($scope.viewModel.nuMatricula);
+            $scope.cpf_fail = invalidCheck($scope.viewModel.stCPF);
 	
             if (!$scope.stName_fail)
             {

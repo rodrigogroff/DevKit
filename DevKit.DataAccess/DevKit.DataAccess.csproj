@@ -266,6 +266,7 @@
     <Content Include="SQL\reset.sql" />
     <Content Include="SQL\start.sql" />
     <Content Include="SQL\create_tables.sql" />
+    <None Include="SQL\cartoes_1801.csv" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataModel\Database.tt">

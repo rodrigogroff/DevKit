@@ -90,9 +90,11 @@ namespace DevKit.Web.Controllers
                         var dt = DateTime.Now.AddYears(5);
 
                         assoc.stVencCartao = dt.Month.ToString().PadLeft(2, '0') + dt.Year.ToString().Substring(2);
-
-                        db.Update(assoc);
                     }
+
+                    assoc.tgExpedicao = 1;
+
+                    db.Update(assoc);
 
                     line += assoc.stVencCartao.Substring(0, 2) + "/" + assoc.stVencCartao.Substring(2, 2) + ",";
 

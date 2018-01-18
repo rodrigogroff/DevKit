@@ -69,7 +69,25 @@ function ($scope, $rootScope, $state, Api, ngSelects )
                 $scope.search();
             });
         }
-	}
+    }
+
+    $scope.exportarLote = function ()
+    {
+        var lote = '';
+
+        for (var i = 0; i < $scope.list.length; ++i) {
+            if ($scope.list[i].selecionado == true) {
+                lote = $scope.list[i].id;
+                break;
+            }                
+        }
+
+        if (lote == '') {
+            toastr.error('Escolha algum lote para exportação', 'Exportar lote');
+        }
+        else
+            window.location.href = "/api/lotesgrafica/exportar?" + $.param({ idLote: lote });
+    }
 
 	$scope.new = function ()
 	{

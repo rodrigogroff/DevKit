@@ -6,8 +6,9 @@ namespace DataModel
     {
         public object anexedEntity;
 
-		public string sdtLog = "",
-                      sqtdCartoes = "",
+		public string   sdtLog = "",
+                        sqtdCartoes = "",
+                        stgAtivo = "",
 						updateCommand = "";
 
         public List<Empresa> empresas = new List<Empresa>();
@@ -23,7 +24,7 @@ namespace DataModel
 
     public partial class NovoLoteGraficaDTO
     {
-        public string empresa, qtdCartoes;
+        public string id,empresa, qtdCartoes;
         public bool selecionado;
     }
 

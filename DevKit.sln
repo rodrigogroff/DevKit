@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevKit.DataAccess", "DevKit.DataAccess\DevKit.DataAccess.csproj", "{12E2CE82-0027-4152-ABDF-FCEBE99AE4F7}"
 EndProject
@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{31992D7E-A656-4D93-82E6-259739B034FF}"
 	ProjectSection(SolutionItems) = preProject
 		DevKit_Standard_v01.00.docx = DevKit_Standard_v01.00.docx
+		iniciar.txt = iniciar.txt
 		Listings.txt = Listings.txt
 		management.txt = management.txt
 		todo.txt = todo.txt
@@ -42,5 +43,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89A62669-0E93-4D85-B3E0-C6F913ED2949}
 	EndGlobalSection
 EndGlobal

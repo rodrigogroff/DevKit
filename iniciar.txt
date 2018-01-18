@@ -1,0 +1,8 @@
+
+1) criar / derrubar "DevKit" no postgres
+2) rodar "create_tables.sql"
+3) rodar "start.sql"
+4) copiar "cartoes_1801.csv", "cartoes_1802.csv", "log_*.txt" para "c:\carga"
+5) Setar "DevKit.DataAccess" como projeto padrão e rodar processo de carga
+6) Setar "DevKit.Web" como projeto padrão e rodar
+

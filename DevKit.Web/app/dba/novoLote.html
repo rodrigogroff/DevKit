@@ -11,32 +11,48 @@
             </table>
         </legend>
         <div class="divWebFormListing" style="padding-left:35px;width:{{windowWidth}}px">
-            <br />
-            <h3>Lista de empresas com cartões requeridos</h3>
+            
             <table width="95%">
                 <tr>
                     <td valign="top">
                         <div ng-show="list.length == 0">
+                            <br />
+                            <br />
                             <div class="btn btn-info btn-lg">Nenhum cartão requerido.</div>
                             <br />
                             <br />
                         </div>
                         <div ng-show="list.length > 0">
+                            <h4>Lista de empresas com cartões requeridos</h4>
                             <br />
-                            <table class="table table-hover" style="width:100%">
+                            <table class="table table-hover" style="width:600px">
                                 <thead>
                                     <tr>
-                                        <th width="120px">Empresa</th>
-                                        <th width="90px">Cartões</th>
+                                        <th width="30px"></th>
+                                        <th width="320px">Empresa</th>
+                                        <th width="120px">Cartões</th>
                                     </tr>
                                 </thead>
                                 <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                    <td><input type="checkbox" ng-checked="mdl.selecionado" /><</td>
+                                    <td><input type="checkbox" ng-checked="mdl.selecionado" ng-click="ativar(mdl)" /></td>
                                     <td>{{ mdl.empresa }}</td>
                                     <td>{{ mdl.qtdCartoes }}</td>
                                 </tr>
                             </table>
                         </div>
+                        <br />
+                        <br />
+                        <table>
+                            <tr>
+                                <td><button class="btn btn-default" ng-click="cancelar()">Cancelar</button></td>
+                                <td width="34px"></td>
+                                <td ng-show="list.length > 0"><button class="btn btn-primary" ng-click="criarLote()">Criar lote</button></td>
+                            </tr>
+                        </table>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
                         <br />
                     </td>
                 </tr>

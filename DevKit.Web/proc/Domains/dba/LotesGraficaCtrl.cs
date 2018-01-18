@@ -13,9 +13,31 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var novoLote = Request.GetQueryStringValue<bool?>("novoLote", null);
+            var pesqInicialNovoLote = Request.GetQueryStringValue<bool?>("novoLote", null);
+            var criarLote = Request.GetQueryStringValue<bool?>("criarLote", null);
+            var ativarLote = Request.GetQueryStringValue<bool?>("ativarLote", null);
 
-            if (novoLote == null)
+            var lg = new LoteGrafica();
+
+            if (pesqInicialNovoLote == true)
+            {
+                return Ok(lg.NovoLoteQuery(db));
+            }
+            else if (criarLote == true)
+            {
+                var empresas = Request.GetQueryStringValue("empresas");
+                                
+                return Ok(new { codigo = lg.Create(db, empresas) } );
+            }
+            else if (ativarLote == true)
+            {
+                var lotes = Request.GetQueryStringValue("lotes");
+
+                lg.Ativar(db, lotes);
+
+                return Ok();
+            }
+            else 
             {
                 var filter = new LoteGraficaFilter
                 {
@@ -24,12 +46,7 @@ namespace DevKit.Web.Controllers
                     nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
                 };
 
-                return Ok(new LoteGrafica().ComposedFilters(db, filter));
-            }
-            else 
-            {
-                // pesquisa para novo lote
-                return Ok(new LoteGrafica().NovoLoteQuery(db));
+                return Ok(lg.ComposedFilters(db, filter));
             }            
         }
 
@@ -47,19 +64,6 @@ namespace DevKit.Web.Controllers
 
             return Ok(mdl);
         }
-
-		public IHttpActionResult Post(LoteGrafica mdl)
-		{
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
-            if (!mdl.Create(db, ref apiError))
-				return BadRequest(apiError);
-
-            mdl.LoadAssociations(db);
-
-            return Ok();
-		}
 
 		public IHttpActionResult Put(long id, LoteGrafica mdl)
 		{

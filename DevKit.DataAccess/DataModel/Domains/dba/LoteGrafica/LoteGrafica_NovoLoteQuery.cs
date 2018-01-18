@@ -14,19 +14,22 @@ namespace DataModel
                                  where e.tgExpedicao == 0
                                  where e.tgStatus == 0
                                  select emp).
+                                 Distinct().
                                  ToList();
 
             var res = new List<NovoLoteGraficaDTO>();
 
-            foreach (var item in queryEmpresas)
+            foreach (var empresa in queryEmpresas)
             {
                 res.Add(new NovoLoteGraficaDTO
                 {
-                    empresa = item.nuEmpresa + " - " + item.stNome,
+                    selecionado = false,
+                    id = empresa.id.ToString(),
+                    empresa = empresa.nuEmpresa + " - " + empresa.stNome,
                     qtdCartoes = (from e in db.Person
                                   where e.tgExpedicao == 0
                                   where e.tgStatus == 0
-                                  where e.fkEmpresa == item.id
+                                  where e.fkEmpresa == empresa.id
                                   select e).
                                   Count().
                                   ToString()

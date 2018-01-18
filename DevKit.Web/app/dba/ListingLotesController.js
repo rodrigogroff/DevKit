@@ -41,14 +41,34 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 		});
 	}
 
-	$scope.show = function (mdl)
+    $scope.ativar = function (mdl) {
+        mdl.selecionado = !mdl.selecionado;
+    }
+
+    $scope.ativarTodos = function ()
     {
-        /*
-		if (!$scope.permModel.visualizar) 
-            toastr.error('Acesso negado!', 'Permissão');
-		else
-			$state.go('person', { id: mdl.id });
-        */
+        var lotes = '';
+
+        for (var i = 0; i < $scope.list.length; ++i) {
+            if ($scope.list[i].selecionado == true)
+                lotes += $scope.list[i].id + ',';
+        }
+
+        if (lotes == '') {
+            toastr.error('Escolha algum lote para ativação', 'Ativar lote');
+        }
+        else 
+        {
+            var opcoes = {
+                ativarLote: true,
+                lotes: lotes,
+            };
+
+            Api.LotesGrafica.listPage(opcoes, function (data) {
+                toastr.success('Lote(s) ativados com sucesso!', 'Ativar lote');
+                $scope.search();
+            });
+        }
 	}
 
 	$scope.new = function ()

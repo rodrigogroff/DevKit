@@ -12,6 +12,8 @@ namespace DataModel
 
             sdtLog = dtLog?.ToString(setup.stDateFormat);
 
+            if (tgAtivo == 0) stgAtivo = "Não"; else stgAtivo = "Sim";
+
             sqtdCartoes = db.LoteGraficaCartao.
                             Where(y => y.fkLoteGrafica == id).
                                 Count().

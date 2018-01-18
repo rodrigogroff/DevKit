@@ -50,24 +50,41 @@
                         <div ng-show="list.length > 0">
                             <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
                             <br />
-                            <table class="table table-hover" style="width:100%">
+                            <table class="table table-hover" style="width:750px">
                                 <thead>
                                     <tr>
+                                        <th width="30px"></th>
                                         <th width="120px">Data</th>
                                         <th width="120px">Código</th>
+                                        <th width="90px">Ativo</th>
                                         <th width="120px">Cartões</th>
                                         <th width="250px">Empresas</th>
-                                        <th width="90px">Ativo</th>
+
                                     </tr>
                                 </thead>
                                 <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td><input type="checkbox" ng-checked="mdl.selecionado" ng-click="ativar(mdl)" /></td>
                                     <td>{{ mdl.sdtLog }}</td>
                                     <td>{{ mdl.nuCodigo }}</td>
+                                    <td>{{ mdl.stgAtivo }}</td>
                                     <td>{{ mdl.sqtdCartoes }}</td>
                                     <td><div data-ng-repeat="m in mdl.empresas">{{ m.stSigla }}</div></td>
-                                    <td>{{ mdl.stgAtivo }}</td>
                                 </tr>
                             </table>
+                            <br />
+                            <br />
+                            <table>
+                                <tr>
+                                    <td><button class="btn btn-primary" ng-click="ativarTodos()">Ativar</button></td>
+                                    <td width="34px"></td>
+                                    <td><button class="btn btn-primary" ng-click="exportarLote()">Exportar Lote</button></td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
                         </div>
                         <br />
                     </td>

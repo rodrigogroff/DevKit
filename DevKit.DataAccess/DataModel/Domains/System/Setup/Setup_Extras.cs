@@ -13,6 +13,16 @@ namespace DataModel
 			return random.Next(min, max);
 		}
 
+        public string RandomString(int totalChars)
+        {
+            var ret = "";
+
+            for (int i = 0; i < totalChars; i++)
+                ret += RandomNumber(0, 9).ToString();
+
+            return ret;
+        }
+
 		public string GetProtocol()
 		{
 			var ret = "";

@@ -247,9 +247,8 @@ namespace DataModel
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
 		[Column,     Nullable] public long?     fkEmpresa         { get; set; } // bigint
 		[Column,     Nullable] public long?     nuMatricula       { get; set; } // bigint
-		[Column,     Nullable] public string    stVencCartao      { get; set; } // character varying(4)
+		[Column,     Nullable] public long?     nuTitularidade    { get; set; } // bigint
 		[Column,     Nullable] public long?     nuViaCartao       { get; set; } // bigint
-		[Column,     Nullable] public long?     stCodAcessoCartao { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
@@ -266,6 +265,8 @@ namespace DataModel
 		[Column,     Nullable] public string    stCPF             { get; set; } // character varying(20)
 		[Column,     Nullable] public long?     tgStatus          { get; set; } // bigint
 		[Column,     Nullable] public long?     tgExpedicao       { get; set; } // bigint
+		[Column,     Nullable] public long?     tgFaltaEnd        { get; set; } // bigint
+		[Column,     Nullable] public long?     tgFaltaTelefone   { get; set; } // bigint
 	}
 
 	[Table("PersonAddress")]

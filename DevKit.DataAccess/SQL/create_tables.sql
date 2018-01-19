@@ -274,9 +274,8 @@ CREATE TABLE IF NOT EXISTS public."Person" ( id bigserial NOT NULL, PRIMARY KEY 
 ALTER TABLE public."Person" OWNER to postgres;
 ALTER TABLE public."Person" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "nuMatricula" bigint;
-ALTER TABLE public."Person" ADD COLUMN if not exists "stVencCartao" character varying(4);
+ALTER TABLE public."Person" ADD COLUMN if not exists "nuTitularidade" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "nuViaCartao" bigint;
-ALTER TABLE public."Person" ADD COLUMN if not exists "stCodAcessoCartao" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "dtStart" timestamp without time zone;
 ALTER TABLE public."Person" ADD COLUMN if not exists "dtLastUpdate" timestamp without time zone;
 ALTER TABLE public."Person" ADD COLUMN if not exists "dtLastContact" timestamp without time zone;
@@ -293,6 +292,8 @@ ALTER TABLE public."Person" ADD COLUMN if not exists "bHomem" boolean;
 ALTER TABLE public."Person" ADD COLUMN if not exists "stCPF" character varying(20);
 ALTER TABLE public."Person" ADD COLUMN if not exists "tgStatus" bigint;
 ALTER TABLE public."Person" ADD COLUMN if not exists "tgExpedicao" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "tgFaltaEnd" bigint;
+ALTER TABLE public."Person" ADD COLUMN if not exists "tgFaltaTelefone" bigint;
 
 CREATE TABLE IF NOT EXISTS public."PersonEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."PersonEmail" OWNER to postgres;

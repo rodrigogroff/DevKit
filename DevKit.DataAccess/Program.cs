@@ -101,18 +101,28 @@ namespace GetStarted
                                         {
                                             var ar = line.Split(';');
 
-                                            db.Insert(new Person()
+                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Person()
                                             {
                                                 dtStart = DateTime.Now,
                                                 fkEmpresa = 1,
                                                 fkUserAdd = 1,
                                                 nuMatricula = Convert.ToInt64(ar[0]),
                                                 nuViaCartao = 1,
+                                                nuTitularidade = 1,
                                                 stName = ar[1],
                                                 stCPF = ar[2],
                                                 tgExpedicao = 0,
                                                 tgStatus = 0,
-                                            });
+                                            }));
+
+                                            new AuditLog
+                                            {
+                                                fkUser = 1,
+                                                fkActionLog = EnumAuditAction.PersonCreate,
+                                                nuType = EnumAuditType.Person,
+                                                fkTarget = new_id
+                                            }.
+                                            Create(db, "Importação", "");
                                         }
                                     }
                                 }
@@ -135,18 +145,28 @@ namespace GetStarted
                                         {
                                             var ar = line.Split(';');
 
-                                            db.Insert(new Person()
+                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Person()
                                             {
                                                 dtStart = DateTime.Now,
                                                 fkEmpresa = 2,
                                                 fkUserAdd = 1,
                                                 nuMatricula = Convert.ToInt64(ar[0]),
                                                 nuViaCartao = 1,
+                                                nuTitularidade = 1,
                                                 stName = ar[1],
                                                 stCPF = ar[2],
                                                 tgExpedicao = 0,
                                                 tgStatus = 0,
-                                            });
+                                            }));
+
+                                            new AuditLog
+                                            {
+                                                fkUser = 1,
+                                                fkActionLog = EnumAuditAction.PersonCreate,
+                                                nuType = EnumAuditType.Person,
+                                                fkTarget = new_id
+                                            }.
+                                            Create(db, "Importação", "");
                                         }
                                     }
                                 }

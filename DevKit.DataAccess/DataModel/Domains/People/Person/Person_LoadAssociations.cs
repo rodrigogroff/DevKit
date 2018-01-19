@@ -27,9 +27,6 @@ namespace DataModel
             if (nuYearBirth != null)
                 snuAge = (DateTime.Now.Year - nuYearBirth).ToString();
 
-            if (string.IsNullOrEmpty(stVencCartao))
-                stVencCartao = "(Aguardando produção)";
-
             switch (this.tgExpedicao)
             {
                 case 0: stgExpedicao = "Requerido"; break;

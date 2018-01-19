@@ -1,16 +1,16 @@
 
--ao inves de vencimento do cartão, usar: via(2) + tit (2)
--mudar calculo do codigo de acesso [digitos do cpf (3,4)]
+-ao inves de vencimento do cartão, usar: tit (2) + via(2) 
 -cartão com senha
--bloq e desbloq
 -segunda-via
 -cadastro de dependentes
+-bloq e desbloq
+
+-carga e combo da tabela tuss
 
 -carga de medicos
 -autorizador normal / mobile
--senha mobile
--tela de autorização 
--carga e combo da tabela tuss
+-senha 
+-tela de autorização
 
 -processo batch de fechamento
 -relatório de fechamento

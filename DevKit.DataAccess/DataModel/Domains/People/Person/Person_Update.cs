@@ -234,9 +234,6 @@ namespace DataModel
                         break;
                     }
             }
-
-            if (stVencCartao.StartsWith("("))
-                stVencCartao = "";
             
             dtLastUpdate = DateTime.Now;
             fkUserLastUpdate = user.id;

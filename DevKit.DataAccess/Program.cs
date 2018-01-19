@@ -23,7 +23,10 @@ namespace GetStarted
                 {
                     case 1:
                         {
+                            Console.WriteLine("-----------------------------------------");
                             Console.WriteLine("CARGA DE BASE");
+                            Console.WriteLine("-----------------------------------------");
+                            Console.WriteLine("");
 
                             if (!db.Estado.Any())
                             {

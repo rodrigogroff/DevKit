@@ -442,5 +442,3 @@ ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "fkAssociado" bi
 ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "nuVia" bigint;
 ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "nuTit" bigint;
-
-

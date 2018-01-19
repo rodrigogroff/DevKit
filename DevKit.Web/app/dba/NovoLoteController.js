@@ -64,7 +64,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects )
                 };
 
                 Api.LotesGrafica.listPage(opcoes, function (data) {
-                    toastr.error('Lote ' + data.codigo + ' criado com sucesso!', 'Novo lote');
+                    toastr.success('Lote ' + data.codigo + ' criado com sucesso!', 'Novo lote');
                     $state.go('lotesgrafica');
                 });
             }

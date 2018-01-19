@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace GetStarted
 {
@@ -15,13 +16,14 @@ namespace GetStarted
 			using (var db = new DevKitDB())
 			{
                 int opt = 1;
+                var setup = new Setup();
 
                 // carga de tabelas txt
                 switch (opt)
                 {
                     case 1:
                         {
-                            Console.WriteLine("Carga de base.");
+                            Console.WriteLine("CARGA DE BASE");
 
                             if (!db.Estado.Any())
                             {
@@ -86,6 +88,8 @@ namespace GetStarted
 
                             if (!db.Person.Where (y=> y.fkEmpresa == 1).Any())
                             {
+                                #region - carga 1801 - 
+
                                 using (var sr = new StreamReader("c:\\carga\\cartoes_1801.csv", Encoding.Default, false))
                                 {
                                     Console.WriteLine("Carga de base [CARTÕES 1801].");
@@ -126,10 +130,14 @@ namespace GetStarted
                                         }
                                     }
                                 }
+
+                                #endregion
                             }
                                                         
                             if (!db.Person.Where(y => y.fkEmpresa == 2).Any())
                             {
+                                #region - carga 1802 - 
+
                                 using (var sr = new StreamReader("c:\\carga\\cartoes_1802.csv", Encoding.Default, false))
                                 {
                                     Console.WriteLine("Carga de base [CARTÕES 1802].");
@@ -170,13 +178,20 @@ namespace GetStarted
                                         }
                                     }
                                 }
+
+                                #endregion
                             }
 
-                            if (!db.Medico.Where(y => y.fkEmpresa == 1).Any())
+                            if (!db.Medico.Any())
                             {
+                                #region - carga de médicos - 
+
                                 using (var sr = new StreamReader("c:\\carga\\medicos_1801.txt", Encoding.UTF8, false))
                                 {
-                                    Console.WriteLine("Carga de médicos [1801/1802].");
+                                    Console.WriteLine("Carga de médicos");
+
+                                    // pula a primeira linha
+                                    sr.ReadLine();
 
                                     while (!sr.EndOfStream)
                                     {
@@ -197,21 +212,70 @@ namespace GetStarted
 
                                             //CELSO JOSÉ BERTOLETI RACIC;CARDIOLOGISTA;H;Av. Emancipação, 1441, Centro;3158-1095
 
+                                            if (!db.Especialidade.Any (y=> y.stNome == espec))
+                                            {
+                                                db.Insert(new Especialidade
+                                                {
+                                                    stNome = espec
+                                                });
+                                            }
+
+                                            var codDisp = setup.RandomInt(4);
+
+                                            while (db.Medico.Any (y=>y.nuCodigo == codDisp))
+                                            {
+                                                Thread.Sleep(1);
+                                                codDisp = setup.RandomInt(4);
+                                            }
+
                                             var new_id = Convert.ToInt64(db.InsertWithIdentity(new Medico()
                                             {
                                                 dtStart = DateTime.Now,
-                                                fkEmpresa = 1,
                                                 fkUserAdd = 1,
-                                                
+                                                fkEspecialidade = db.Especialidade.FirstOrDefault(y=>y.stNome == espec).id,
+                                                stNome = nome,
+                                                tgMasculino = homem == "H" ? true : false,
+                                                nuCodigo = codDisp,
                                             }));
 
-                                            
+                                            db.Insert(new MedicoAddress
+                                            {
+                                                stRua = end,
+                                                fkMedico = new_id
+                                            });
+
+                                            foreach (var tel in tels)
+                                            {
+                                                db.Insert(new MedicoEmail
+                                                {
+                                                    stEmail = tel,
+                                                    fkMedico = new_id
+                                                });
+                                            }
+
+                                            db.Insert(new MedicoEmpresa
+                                            {
+                                                fkMedico = new_id,
+                                                fkEmpresa = 1
+                                            });
+
+                                            db.Insert(new MedicoEmpresa
+                                            {
+                                                fkMedico = new_id,
+                                                fkEmpresa = 2
+                                            });
                                         }
                                     }
                                 }
+
+                                #endregion
                             }
 
-                            Console.WriteLine("Carga de base executada com sucesso.");
+                            Console.WriteLine("");
+                            Console.WriteLine("-----------------------------------------");
+                            Console.WriteLine("Carga de base finalizada.");
+                            Console.WriteLine("-----------------------------------------");
+                            Console.WriteLine("");
 
                             break;
                         }

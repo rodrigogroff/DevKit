@@ -23,7 +23,17 @@ namespace DataModel
             return ret;
         }
 
-		public string GetProtocol()
+        public int RandomInt(int totalChars)
+        {
+            var ret = "";
+
+            for (int i = 0; i < totalChars; i++)
+                ret += RandomNumber(0, 9).ToString();
+
+            return Convert.ToInt32(ret);
+        }
+
+        public string GetProtocol()
 		{
 			var ret = "";
 

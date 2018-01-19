@@ -350,6 +350,10 @@ ALTER TABLE public."PersonCategory" ADD COLUMN if not exists "fkPeopleCategory" 
 ALTER TABLE public."PersonCategory" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."PersonCategory" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 
+CREATE TABLE IF NOT EXISTS public."Especialidade" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."Especialidade" OWNER to postgres;
+ALTER TABLE public."Especialidade" ADD COLUMN if not exists "stNome" character varying(150);
+
 CREATE TABLE IF NOT EXISTS public."Medico" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Medico" OWNER to postgres;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuCodigo" bigint;
@@ -364,8 +368,13 @@ ALTER TABLE public."Medico" ADD COLUMN if not exists "fkUserLastContact" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuMonthAniversary" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuDayAniversary" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuYearBirth" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "fkEspecialidade" bigint;
+ALTER TABLE public."Medico" ADD COLUMN if not exists "tgMasculino" boolean;
+
+CREATE TABLE IF NOT EXISTS public."MedicoEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."MedicoEmpresa" OWNER to postgres;
+ALTER TABLE public."MedicoEmpresa" ADD COLUMN if not exists "fkMedico" bigint;
+ALTER TABLE public."MedicoEmpresa" ADD COLUMN if not exists "fkEmpresa" bigint;
 
 CREATE TABLE IF NOT EXISTS public."MedicoEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."MedicoEmail" OWNER to postgres;
@@ -403,10 +412,6 @@ ALTER TABLE public."Procedimento" ADD COLUMN if not exists "nuTUSS" bigint;
 ALTER TABLE public."Procedimento" ADD COLUMN if not exists "stProcedimento" character varying(150);
 ALTER TABLE public."Procedimento" ADD COLUMN if not exists "stDescGP" character varying(150);
 ALTER TABLE public."Procedimento" ADD COLUMN if not exists "stDescSubGP" character varying(150);
-
-CREATE TABLE IF NOT EXISTS public."Especialidade" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."Especialidade" OWNER to postgres;
-ALTER TABLE public."Especialidade" ADD COLUMN if not exists "stNome" character varying(150);
 
 CREATE TABLE IF NOT EXISTS public."Autorizacao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Autorizacao" OWNER to postgres;

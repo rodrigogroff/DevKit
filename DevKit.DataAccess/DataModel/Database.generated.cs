@@ -24,6 +24,7 @@ namespace DataModel
 		public ITable<Cidade>               Cidade               { get { return this.GetTable<Cidade>(); } }
 		public ITable<CompanyNews>          CompanyNews          { get { return this.GetTable<CompanyNews>(); } }
 		public ITable<Empresa>              Empresa              { get { return this.GetTable<Empresa>(); } }
+		public ITable<Especialidade>        Especialidade        { get { return this.GetTable<Especialidade>(); } }
 		public ITable<Estado>               Estado               { get { return this.GetTable<Estado>(); } }
 		public ITable<Fechamento>           Fechamento           { get { return this.GetTable<Fechamento>(); } }
 		public ITable<LoteGrafica>          LoteGrafica          { get { return this.GetTable<LoteGrafica>(); } }
@@ -107,6 +108,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkMedico       { get; set; } // bigint
 		[Column,     Nullable] public long?     fkProcedimento { get; set; } // bigint
 		[Column,     Nullable] public long?     tgSituacao     { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEmpresa      { get; set; } // bigint
 	}
 
 	[Table("Cidade")]
@@ -140,6 +142,13 @@ namespace DataModel
 		[Column,     Nullable] public string stNome    { get; set; } // character varying(200)
 	}
 
+	[Table("Especialidade")]
+	public partial class Especialidade
+	{
+		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
+		[Column,     Nullable] public string stNome { get; set; } // character varying(150)
+	}
+
 	[Table("Estado")]
 	public partial class Estado
 	{
@@ -155,6 +164,7 @@ namespace DataModel
 		[Column,     Nullable] public long? fkAutorizacao { get; set; } // bigint
 		[Column,     Nullable] public long? nuMes         { get; set; } // bigint
 		[Column,     Nullable] public long? nuAno         { get; set; } // bigint
+		[Column,     Nullable] public long? fkEmpresa     { get; set; } // bigint
 	}
 
 	[Table("LoteGrafica")]
@@ -193,6 +203,8 @@ namespace DataModel
 		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
 		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
 		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEspecialidade   { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEmpresa         { get; set; } // bigint
 	}
 
 	[Table("MedicoAddress")]
@@ -690,6 +702,12 @@ namespace DataModel
 		}
 
 		public static Empresa Find(this ITable<Empresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Especialidade Find(this ITable<Especialidade> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

@@ -1,5 +1,4 @@
 
--ao inves de vencimento do cartão, usar: tit (2) + via(2) 
 -cartão com senha
 -segunda-via
 -cadastro de dependentes

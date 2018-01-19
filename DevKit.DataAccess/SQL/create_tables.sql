@@ -364,6 +364,8 @@ ALTER TABLE public."Medico" ADD COLUMN if not exists "fkUserLastContact" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuMonthAniversary" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuDayAniversary" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuYearBirth" bigint;
+ALTER TABLE public."Medico" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."Medico" ADD COLUMN if not exists "fkEspecialidade" bigint;
 
 CREATE TABLE IF NOT EXISTS public."MedicoEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."MedicoEmail" OWNER to postgres;
@@ -402,17 +404,23 @@ ALTER TABLE public."Procedimento" ADD COLUMN if not exists "stProcedimento" char
 ALTER TABLE public."Procedimento" ADD COLUMN if not exists "stDescGP" character varying(150);
 ALTER TABLE public."Procedimento" ADD COLUMN if not exists "stDescSubGP" character varying(150);
 
+CREATE TABLE IF NOT EXISTS public."Especialidade" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."Especialidade" OWNER to postgres;
+ALTER TABLE public."Especialidade" ADD COLUMN if not exists "stNome" character varying(150);
+
 CREATE TABLE IF NOT EXISTS public."Autorizacao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Autorizacao" OWNER to postgres;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "dtSolicitacao" timestamp without time zone;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkPerson" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkMedico" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkProcedimento" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "tgSituacao" bigint;
 
 CREATE TABLE IF NOT EXISTS public."Fechamento" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Fechamento" OWNER to postgres;
 ALTER TABLE public."Fechamento" ADD COLUMN if not exists "fkAutorizacao" bigint;
+ALTER TABLE public."Fechamento" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."Fechamento" ADD COLUMN if not exists "nuMes" bigint;
 ALTER TABLE public."Fechamento" ADD COLUMN if not exists "nuAno" bigint;
 
@@ -429,3 +437,5 @@ ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "fkAssociado" bi
 ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "nuVia" bigint;
 ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "nuTit" bigint;
+
+

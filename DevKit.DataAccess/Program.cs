@@ -172,6 +172,45 @@ namespace GetStarted
                                 }
                             }
 
+                            if (!db.Medico.Where(y => y.fkEmpresa == 1).Any())
+                            {
+                                using (var sr = new StreamReader("c:\\carga\\medicos_1801.txt", Encoding.UTF8, false))
+                                {
+                                    Console.WriteLine("Carga de médicos [1801/1802].");
+
+                                    while (!sr.EndOfStream)
+                                    {
+                                        var line = sr.ReadLine().ToUpper();
+
+                                        if (line == ";;;")
+                                            continue;
+
+                                        if (line != "")
+                                        {
+                                            var ar = line.Split(';');
+
+                                            var nome = ar[0].Trim();
+                                            var espec = ar[1].Trim();
+                                            var homem = ar[2].Trim();
+                                            var end = ar[3].Trim();
+                                            var tels = ar[4].Replace("-", "").Replace(" ", "").Split(',');
+
+                                            //CELSO JOSÉ BERTOLETI RACIC;CARDIOLOGISTA;H;Av. Emancipação, 1441, Centro;3158-1095
+
+                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Medico()
+                                            {
+                                                dtStart = DateTime.Now,
+                                                fkEmpresa = 1,
+                                                fkUserAdd = 1,
+                                                
+                                            }));
+
+                                            
+                                        }
+                                    }
+                                }
+                            }
+
                             Console.WriteLine("Carga de base executada com sucesso.");
 
                             break;

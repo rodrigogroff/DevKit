@@ -270,6 +270,7 @@
     <None Include="LinqToDB.Templates\Validation.ttinclude" />
     <None Include="packages.config" />
     <None Include="README.md" />
+    <Content Include="Carga\medicos_1801.txt" />
     <Content Include="LinqToDB.Templates\CopyMe.PostgreSQL.tt.txt" />
     <Content Include="Carga\log_faixa_uf.txt" />
     <Content Include="Carga\log_localidade.txt" />

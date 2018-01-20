@@ -34,11 +34,11 @@ namespace DataModel
             return ret;
         }
 
-        public Person GetPerson(long? id)
+        public Associado GetAssociado(long? id)
         {
             if (id == null) return null;
-            var tag = "Person" + id; var ret = Cache[tag] as Person;
-            if (ret == null) { ret = Person.Find((long)id); Cache[tag] = ret; }
+            var tag = "Associado" + id; var ret = Cache[tag] as Associado;
+            if (ret == null) { ret = Associado.Find((long)id); Cache[tag] = ret; }
             return ret;
         }
 

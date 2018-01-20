@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace DataModel
 {
-	public partial class Person
+	public partial class Associado
 	{
         public ComboReport ComboFilters(DevKitDB db, string searchItem)
         {
-            var query = from e in db.Person select e;
+            var query = from e in db.Associado select e;
 
             if (searchItem != "")
                 query = from e in query

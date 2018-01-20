@@ -2,8 +2,8 @@
 
 namespace DataModel
 {
-	public partial class Person
-	{		
+	public partial class Associado
+    {		
 		public string GetMaskedValue(DevKitDB db, string stPhone)
 		{
 			var pref = db.GetSetup().stPhoneMask;

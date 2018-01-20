@@ -9,7 +9,7 @@ namespace DataModel
     {
         public NovoLoteGraficaReport NovoLoteQuery(DevKitDB db)
         {
-            var queryEmpresas = (from e in db.Person
+            var queryEmpresas = (from e in db.Associado
                                  join emp in db.Empresa on e.fkEmpresa equals emp.id
                                  where e.tgExpedicao == 0
                                  where e.tgStatus == 0
@@ -26,7 +26,7 @@ namespace DataModel
                     selecionado = false,
                     id = empresa.id.ToString(),
                     empresa = empresa.nuEmpresa + " - " + empresa.stNome,
-                    qtdCartoes = (from e in db.Person
+                    qtdCartoes = (from e in db.Associado
                                   where e.tgExpedicao == 0
                                   where e.tgStatus == 0
                                   where e.fkEmpresa == empresa.id

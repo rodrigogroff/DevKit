@@ -10,7 +10,7 @@ namespace DataModel
 		{
             var setup = db.GetSetup();
 
-            sqtdCartoes = db.Person.
+            sqtdCartoes = db.Associado.
                             Where(y => y.fkEmpresa == id).
                                 Count().
                                 ToString();

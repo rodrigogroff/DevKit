@@ -5,9 +5,9 @@ using System;
 
 namespace DataModel
 {
-	public partial class Person
-	{
-		public Person LoadAssociations(DevKitDB db)
+	public partial class Associado
+    {
+		public Associado LoadAssociations(DevKitDB db)
 		{
 			var setup = db.GetSetup();
 
@@ -47,23 +47,23 @@ namespace DataModel
             return this;
 		}
         
-		List<PersonPhone> LoadPhones(DevKitDB db)
+		List<AssociadoTelefone> LoadPhones(DevKitDB db)
 		{
-			return (from e in db.PersonPhone where e.fkUser == id select e).
+			return (from e in db.AssociadoTelefone where e.fkUser == id select e).
 				OrderBy(t => t.stPhone).
 				ToList();
 		}
 
-		List<PersonEmail> LoadEmails(DevKitDB db)
+		List<AssociadoEmail> LoadEmails(DevKitDB db)
 		{
-			return (from e in db.PersonEmail where e.fkUser == id select e).
+			return (from e in db.AssociadoEmail where e.fkUser == id select e).
 				OrderByDescending(t => t.id).
 				ToList();
 		}
 
-        List<PersonAddress> LoadEnderecos(DevKitDB db)
+        List<AssociadoEndereco> LoadEnderecos(DevKitDB db)
         {
-            var lst = (from e in db.PersonAddress where e.fkUser == id select e).
+            var lst = (from e in db.AssociadoEndereco where e.fkUser == id select e).
                 OrderByDescending(t => t.id).
                 ToList();
 

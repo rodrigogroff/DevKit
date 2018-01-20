@@ -89,7 +89,7 @@ namespace GetStarted
                                 #endregion
                             }
 
-                            if (!db.Person.Where (y=> y.fkEmpresa == 1).Any())
+                            if (!db.Associado.Where (y=> y.fkEmpresa == 1).Any())
                             {
                                 #region - carga 1801 - 
 
@@ -108,7 +108,7 @@ namespace GetStarted
                                         {
                                             var ar = line.Split(';');
 
-                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Person()
+                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Associado()
                                             {
                                                 dtStart = DateTime.Now,
                                                 fkEmpresa = 1,
@@ -137,7 +137,7 @@ namespace GetStarted
                                 #endregion
                             }
                                                         
-                            if (!db.Person.Where(y => y.fkEmpresa == 2).Any())
+                            if (!db.Associado.Where(y => y.fkEmpresa == 2).Any())
                             {
                                 #region - carga 1802 - 
 
@@ -156,7 +156,7 @@ namespace GetStarted
                                         {
                                             var ar = line.Split(';');
 
-                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Person()
+                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Associado()
                                             {
                                                 dtStart = DateTime.Now,
                                                 fkEmpresa = 2,

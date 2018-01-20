@@ -33,7 +33,7 @@ namespace DataModel
 
             foreach (var emp in lstIds)
             {
-                foreach (var cart in (from e in db.Person
+                foreach (var cart in (from e in db.Associado
                                       where e.tgExpedicao == 0
                                       where e.tgStatus == 0
                                       where e.fkEmpresa.ToString() == emp
@@ -49,7 +49,7 @@ namespace DataModel
                         nuVia = cart.nuViaCartao
                     });
 
-                    var cartUpd = db.Person.Where(y => y.id == cart.id).FirstOrDefault();
+                    var cartUpd = db.Associado.Where(y => y.id == cart.id).FirstOrDefault();
 
                     cartUpd.tgExpedicao = 1;
 

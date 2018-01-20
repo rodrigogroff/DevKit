@@ -25,7 +25,7 @@ namespace DataModel
                             select e;
 
                 var lstAssoc = (from e in query
-                                join assoc in db.Person on e.fkAssociado equals assoc.id
+                                join assoc in db.Associado on e.fkAssociado equals assoc.id
                                 select assoc).
                                 ToList();
 

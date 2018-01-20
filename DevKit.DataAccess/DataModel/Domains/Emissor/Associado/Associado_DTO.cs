@@ -2,14 +2,14 @@
 
 namespace DataModel
 {
-    public partial class PersonAddress
+    public partial class AssociadoEndereco
     {
         public string sfkEstado = "",
                       sfkCidade = "";
     }
 
-    public partial class Person
-	{
+    public partial class Associado
+    {
         public object anexedEntity;
 
 		public string sdtLastContact = "",
@@ -23,14 +23,14 @@ namespace DataModel
                       stgExpedicao = "",
                       updateCommand = "";
 
-		public List<PersonPhone> phones;
-		public List<PersonEmail> emails;
-        public List<PersonAddress> enderecos;
+		public List<AssociadoTelefone> phones;
+		public List<AssociadoEmail> emails;
+        public List<AssociadoEndereco> enderecos;
     }
 
-    public class PersonReport
+    public class AssociadoReport
     {
         public int count = 0;
-        public List<Person> results = new List<Person>();
+        public List<Associado> results = new List<Associado>();
     }
 }

@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace DataModel
 {
-	public partial class Person
-	{
-		bool CheckDuplicate(Person item, DevKitDB db)
+	public partial class Associado
+    {
+		bool CheckDuplicate(Associado item, DevKitDB db)
 		{
-			var query = from e in db.Person select e;
+			var query = from e in db.Associado select e;
 
 			if (item.stName != null)
 				query = from e in query where e.stName.ToUpper().Contains(item.stName) select e;

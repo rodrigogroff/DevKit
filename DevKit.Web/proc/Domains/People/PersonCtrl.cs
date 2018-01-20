@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var filter = new PersonFilter
+            var filter = new AssociadoFilter
             {
                 fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -24,11 +24,11 @@ namespace DevKit.Web.Controllers
 
             var parameters = filter.Parameters();
 
-            var hshReport = SetupCacheReport(CacheTags.PersonReport);
-            if (hshReport[parameters] is PersonReport report)
+            var hshReport = SetupCacheReport(CacheTags.AssociadoReport);
+            if (hshReport[parameters] is AssociadoReport report)
                 return Ok(report);
 
-            var ret = new Person().ComposedFilters(db, filter);
+            var ret = new Associado().ComposedFilters(db, filter);
             
             hshReport[parameters] = ret;
 
@@ -37,13 +37,13 @@ namespace DevKit.Web.Controllers
         
         public IHttpActionResult Get(long id)
 		{
-            if (RestoreCache(CacheTags.Person, id) is Person obj)
+            if (RestoreCache(CacheTags.Associado, id) is Associado obj)
                 return Ok(obj);
             
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.GetPerson(id);
+            var mdl = db.GetAssociado(id);
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
@@ -55,7 +55,7 @@ namespace DevKit.Web.Controllers
             return Ok(mdl);
 		}
 
-		public IHttpActionResult Post(Person mdl)
+		public IHttpActionResult Post(Associado mdl)
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -65,13 +65,13 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db);
 
-            CleanCache(db, CacheTags.Person, null);
-            StoreCache(CacheTags.Person, mdl.id, mdl);
+            CleanCache(db, CacheTags.Associado, null);
+            StoreCache(CacheTags.Associado, mdl.id, mdl);
 
             return Ok(mdl);			
 		}
 
-		public IHttpActionResult Put(long id, Person mdl)
+		public IHttpActionResult Put(long id, Associado mdl)
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -81,8 +81,8 @@ namespace DevKit.Web.Controllers
 
             mdl.LoadAssociations(db);
                         
-            CleanCache(db, CacheTags.Person, null);
-            StoreCache(CacheTags.Person, mdl.id, mdl);
+            CleanCache(db, CacheTags.Associado, null);
+            StoreCache(CacheTags.Associado, mdl.id, mdl);
 
             return Ok();			
 		}
@@ -92,7 +92,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.GetPerson(id);
+            var mdl = db.GetAssociado(id);
 
 			if (mdl == null)
 				return StatusCode(HttpStatusCode.NotFound);
@@ -102,7 +102,7 @@ namespace DevKit.Web.Controllers
 
 			mdl.Delete(db);
 
-            CleanCache(db, CacheTags.Person, null);
+            CleanCache(db, CacheTags.Associado, null);
 
             return Ok();
 		}

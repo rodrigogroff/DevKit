@@ -29,7 +29,7 @@ namespace DataModel
                                       select e.fkAssociado).
                                       ToList())
                 {
-                    var personUpd = db.Person.
+                    var personUpd = db.Associado.
                                     Where(y => y.id == cart).
                                     FirstOrDefault();
 

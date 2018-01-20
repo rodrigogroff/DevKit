@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataModel
 {
-	public class PersonFilter : BaseFilter
+	public class AssociadoFilter : BaseFilter
     {
 		public string   email,
                         cpf,
@@ -34,11 +34,11 @@ namespace DataModel
         }
     }
 
-	public partial class Person
-	{
-		public PersonReport ComposedFilters(DevKitDB db, PersonFilter filter)
+	public partial class Associado
+    {
+		public AssociadoReport ComposedFilters(DevKitDB db, AssociadoFilter filter)
 		{
-            var query = from e in db.Person
+            var query = from e in db.Associado
                         where e.fkEmpresa == db.currentUser.fkEmpresa
                         select e;
 
@@ -53,7 +53,7 @@ namespace DataModel
             if (filter.email != null)
 			{
 				query = from e in query
-						join eMail in db.PersonEmail on e.id equals eMail.fkUser
+						join eMail in db.AssociadoEmail on e.id equals eMail.fkUser
 						where e.id == eMail.fkUser
 						where eMail.stEmail.ToUpper().Contains (filter.email)
 						select e;
@@ -62,7 +62,7 @@ namespace DataModel
 			if (filter.phone != null)
 			{
 				query = from e in query
-						join ePhone in db.PersonPhone on e.id equals ePhone.fkUser
+						join ePhone in db.AssociadoTelefone on e.id equals ePhone.fkUser
 						where e.id == ePhone.fkUser
 						where ePhone.stPhone.ToUpper().Contains(filter.phone)
 						select e;
@@ -72,7 +72,7 @@ namespace DataModel
 
 			query = query.OrderBy(y => y.stName);
 
-            return new PersonReport
+            return new AssociadoReport
             {
                 count = count,
                 results = Loader(db, (query.Skip(filter.skip).Take(filter.take)).ToList())

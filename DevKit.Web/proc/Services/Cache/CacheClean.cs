@@ -17,12 +17,12 @@ namespace DevKit.Web.Controllers
                     CleanCacheReport(CacheTags.UserComboReport);
                     break;
 
-                case CacheTags.Person:
+                case CacheTags.Associado:
                     if (id != null)
                     {
-                        StoreCache(CacheTags.Person, id, null);
+                        StoreCache(CacheTags.Associado, id, null);
                     }
-                    CleanCacheReport(CacheTags.PersonReport);                    
+                    CleanCacheReport(CacheTags.AssociadoReport);                    
                     break;
 
                 case CacheTags.Profile:

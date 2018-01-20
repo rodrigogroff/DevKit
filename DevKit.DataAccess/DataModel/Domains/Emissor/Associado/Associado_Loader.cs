@@ -2,9 +2,9 @@
 
 namespace DataModel
 {
-	public partial class Person
-	{
-		public List<Person> Loader(DevKitDB db, List<Person> results)
+	public partial class Associado
+    {
+		public List<Associado> Loader(DevKitDB db, List<Associado> results)
         {
             results.ForEach(y => { y = y.LoadAssociations(db); });
 

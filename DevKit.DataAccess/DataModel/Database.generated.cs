@@ -19,6 +19,13 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
+		public ITable<Associado>            Associado            { get { return this.GetTable<Associado>(); } }
+		public ITable<AssociadoCategoria>   AssociadoCategoria   { get { return this.GetTable<AssociadoCategoria>(); } }
+		public ITable<AssociadoContato>     AssociadoContato     { get { return this.GetTable<AssociadoContato>(); } }
+		public ITable<AssociadoEmail>       AssociadoEmail       { get { return this.GetTable<AssociadoEmail>(); } }
+		public ITable<AssociadoEndereco>    AssociadoEndereco    { get { return this.GetTable<AssociadoEndereco>(); } }
+		public ITable<AssociadoMensagem>    AssociadoMensagem    { get { return this.GetTable<AssociadoMensagem>(); } }
+		public ITable<AssociadoTelefone>    AssociadoTelefone    { get { return this.GetTable<AssociadoTelefone>(); } }
 		public ITable<AuditLog>             AuditLog             { get { return this.GetTable<AuditLog>(); } }
 		public ITable<Autorizacao>          Autorizacao          { get { return this.GetTable<Autorizacao>(); } }
 		public ITable<Cidade>               Cidade               { get { return this.GetTable<Cidade>(); } }
@@ -35,13 +42,6 @@ namespace DataModel
 		public ITable<MedicoEmpresa>        MedicoEmpresa        { get { return this.GetTable<MedicoEmpresa>(); } }
 		public ITable<MedicoPhone>          MedicoPhone          { get { return this.GetTable<MedicoPhone>(); } }
 		public ITable<PeopleCategory>       PeopleCategory       { get { return this.GetTable<PeopleCategory>(); } }
-		public ITable<Person>               Person               { get { return this.GetTable<Person>(); } }
-		public ITable<PersonAddress>        PersonAddress        { get { return this.GetTable<PersonAddress>(); } }
-		public ITable<PersonCategory>       PersonCategory       { get { return this.GetTable<PersonCategory>(); } }
-		public ITable<PersonContact>        PersonContact        { get { return this.GetTable<PersonContact>(); } }
-		public ITable<PersonEmail>          PersonEmail          { get { return this.GetTable<PersonEmail>(); } }
-		public ITable<PersonMessage>        PersonMessage        { get { return this.GetTable<PersonMessage>(); } }
-		public ITable<PersonPhone>          PersonPhone          { get { return this.GetTable<PersonPhone>(); } }
 		public ITable<Procedimento>         Procedimento         { get { return this.GetTable<Procedimento>(); } }
 		public ITable<Profile>              Profile              { get { return this.GetTable<Profile>(); } }
 		public ITable<Project>              Project              { get { return this.GetTable<Project>(); } }
@@ -84,6 +84,103 @@ namespace DataModel
 		}
 
 		partial void InitDataContext();
+	}
+
+	[Table("Associado")]
+	public partial class Associado
+	{
+		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEmpresa         { get; set; } // bigint
+		[Column,     Nullable] public long?     nuMatricula       { get; set; } // bigint
+		[Column,     Nullable] public long?     nuTitularidade    { get; set; } // bigint
+		[Column,     Nullable] public long?     nuViaCartao       { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUserAdd         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserLastUpdate  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
+		[Column,     Nullable] public string    stName            { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stAlias           { get; set; } // character varying(150)
+		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
+		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
+		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
+		[Column,     Nullable] public bool?     bDeceased         { get; set; } // boolean
+		[Column,     Nullable] public bool?     bHomem            { get; set; } // boolean
+		[Column,     Nullable] public string    stCPF             { get; set; } // character varying(20)
+		[Column,     Nullable] public long?     tgStatus          { get; set; } // bigint
+		[Column,     Nullable] public long?     tgExpedicao       { get; set; } // bigint
+		[Column,     Nullable] public long?     tgFaltaEnd        { get; set; } // bigint
+		[Column,     Nullable] public long?     tgFaltaTelefone   { get; set; } // bigint
+	}
+
+	[Table("AssociadoCategoria")]
+	public partial class AssociadoCategoria
+	{
+		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPeopleCategory { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser           { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog            { get; set; } // timestamp (6) without time zone
+	}
+
+	[Table("AssociadoContato")]
+	public partial class AssociadoContato
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkContactForm { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(1500)
+	}
+
+	[Table("AssociadoEmail")]
+	public partial class AssociadoEmail
+	{
+		[PrimaryKey, Identity] public long      id       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser   { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog    { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stEmail  { get; set; } // character varying(250)
+	}
+
+	[Table("AssociadoEndereco")]
+	public partial class AssociadoEndereco
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkEstado      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCidade      { get; set; } // bigint
+		[Column,     Nullable] public string    stRua         { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stNumero      { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stComplemento { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stReferencia  { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stCEP         { get; set; } // character varying(50)
+		[Column,     Nullable] public bool?     bPrincipal    { get; set; } // boolean
+	}
+
+	[Table("AssociadoMensagem")]
+	public partial class AssociadoMensagem
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserTo  { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stMessage { get; set; } // character varying(1500)
+	}
+
+	[Table("AssociadoTelefone")]
+	public partial class AssociadoTelefone
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
 	}
 
 	[Table("AuditLog")]
@@ -260,103 +357,6 @@ namespace DataModel
 	{
 		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
 		[Column,     Nullable] public string stName { get; set; } // character varying(150)
-	}
-
-	[Table("Person")]
-	public partial class Person
-	{
-		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
-		[Column,     Nullable] public long?     fkEmpresa         { get; set; } // bigint
-		[Column,     Nullable] public long?     nuMatricula       { get; set; } // bigint
-		[Column,     Nullable] public long?     nuTitularidade    { get; set; } // bigint
-		[Column,     Nullable] public long?     nuViaCartao       { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUserAdd         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserLastUpdate  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
-		[Column,     Nullable] public string    stName            { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stAlias           { get; set; } // character varying(150)
-		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
-		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
-		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
-		[Column,     Nullable] public bool?     bDeceased         { get; set; } // boolean
-		[Column,     Nullable] public bool?     bHomem            { get; set; } // boolean
-		[Column,     Nullable] public string    stCPF             { get; set; } // character varying(20)
-		[Column,     Nullable] public long?     tgStatus          { get; set; } // bigint
-		[Column,     Nullable] public long?     tgExpedicao       { get; set; } // bigint
-		[Column,     Nullable] public long?     tgFaltaEnd        { get; set; } // bigint
-		[Column,     Nullable] public long?     tgFaltaTelefone   { get; set; } // bigint
-	}
-
-	[Table("PersonAddress")]
-	public partial class PersonAddress
-	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkEstado      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkCidade      { get; set; } // bigint
-		[Column,     Nullable] public string    stRua         { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stNumero      { get; set; } // character varying(50)
-		[Column,     Nullable] public string    stComplemento { get; set; } // character varying(50)
-		[Column,     Nullable] public string    stReferencia  { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stCEP         { get; set; } // character varying(50)
-		[Column,     Nullable] public bool?     bPrincipal    { get; set; } // boolean
-	}
-
-	[Table("PersonCategory")]
-	public partial class PersonCategory
-	{
-		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPeopleCategory { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser           { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog            { get; set; } // timestamp (6) without time zone
-	}
-
-	[Table("PersonContact")]
-	public partial class PersonContact
-	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkContactForm { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(1500)
-	}
-
-	[Table("PersonEmail")]
-	public partial class PersonEmail
-	{
-		[PrimaryKey, Identity] public long      id       { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser   { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog    { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stEmail  { get; set; } // character varying(250)
-	}
-
-	[Table("PersonMessage")]
-	public partial class PersonMessage
-	{
-		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserTo  { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stMessage { get; set; } // character varying(1500)
-	}
-
-	[Table("PersonPhone")]
-	public partial class PersonPhone
-	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
-		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
 	}
 
 	[Table("Procedimento")]
@@ -686,6 +686,48 @@ namespace DataModel
 
 	public static partial class TableExtensions
 	{
+		public static Associado Find(this ITable<Associado> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static AssociadoCategoria Find(this ITable<AssociadoCategoria> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static AssociadoContato Find(this ITable<AssociadoContato> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static AssociadoEmail Find(this ITable<AssociadoEmail> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static AssociadoEndereco Find(this ITable<AssociadoEndereco> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static AssociadoMensagem Find(this ITable<AssociadoMensagem> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static AssociadoTelefone Find(this ITable<AssociadoTelefone> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
 		public static AuditLog Find(this ITable<AuditLog> table, long id)
 		{
 			return table.FirstOrDefault(t =>
@@ -777,48 +819,6 @@ namespace DataModel
 		}
 
 		public static PeopleCategory Find(this ITable<PeopleCategory> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static Person Find(this ITable<Person> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static PersonAddress Find(this ITable<PersonAddress> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static PersonCategory Find(this ITable<PersonCategory> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static PersonContact Find(this ITable<PersonContact> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static PersonEmail Find(this ITable<PersonEmail> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static PersonMessage Find(this ITable<PersonMessage> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static PersonPhone Find(this ITable<PersonPhone> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

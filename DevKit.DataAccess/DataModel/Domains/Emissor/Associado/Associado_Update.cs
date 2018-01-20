@@ -5,8 +5,8 @@ using System.Linq;
 
 namespace DataModel
 {
-	public partial class Person
-	{
+	public partial class Associado
+    {
 		public bool Update(DevKitDB db, ref string resp)
 		{
 			var user = db.currentUser;
@@ -29,14 +29,14 @@ namespace DataModel
 									
 				case "newPhone":
 					{
-						var ent = JsonConvert.DeserializeObject<PersonPhone>(anexedEntity.ToString());
+						var ent = JsonConvert.DeserializeObject<AssociadoTelefone>(anexedEntity.ToString());
 
 						ent.stPhone = GetMaskedValue(db, ent.stPhone);
 						ent.fkUser = id;
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.PersonPhone where ne.stPhone == ent.stPhone select ne).Any())
+							if ((from ne in db.AssociadoTelefone where ne.stPhone == ent.stPhone select ne).Any())
 							{
 								resp = "Telefone já utilizado!";
 								return false;
@@ -56,7 +56,7 @@ namespace DataModel
                         }
 						else
                         {
-                            var oldPhone = db.PersonPhone.
+                            var oldPhone = db.AssociadoTelefone.
                                             Where(y => y.id == ent.id).
                                             FirstOrDefault();
                                                         
@@ -77,7 +77,7 @@ namespace DataModel
 
 				case "removePhone":
 					{
-						var ent = JsonConvert.DeserializeObject<PersonPhone>(anexedEntity.ToString());
+						var ent = JsonConvert.DeserializeObject<AssociadoTelefone>(anexedEntity.ToString());
 
                         new AuditLog
                         {
@@ -95,13 +95,13 @@ namespace DataModel
 
 				case "newEmail":
 					{
-						var ent = JsonConvert.DeserializeObject<PersonEmail>(anexedEntity.ToString());
+						var ent = JsonConvert.DeserializeObject<AssociadoEmail>(anexedEntity.ToString());
 
 						ent.fkUser = id;
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.PersonEmail where ne.stEmail == ent.stEmail select ne).Any())
+							if ((from ne in db.AssociadoEmail where ne.stEmail == ent.stEmail select ne).Any())
 							{
 								resp = "Email já utilizado!";
 								return false;
@@ -121,7 +121,7 @@ namespace DataModel
                         }
                         else
                         {
-                            var oldEmail = db.PersonEmail.
+                            var oldEmail = db.AssociadoEmail.
                                             Where(y => y.id == ent.id).
                                             FirstOrDefault();
 
@@ -143,7 +143,7 @@ namespace DataModel
 
 				case "removeEmail":
 					{
-						var ent = JsonConvert.DeserializeObject<PersonEmail>(anexedEntity.ToString());
+						var ent = JsonConvert.DeserializeObject<AssociadoEmail>(anexedEntity.ToString());
 
                         new AuditLog
                         {
@@ -161,14 +161,14 @@ namespace DataModel
 
                 case "newEnd":
                     {
-                        var ent = JsonConvert.DeserializeObject<PersonAddress>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<AssociadoEndereco>(anexedEntity.ToString());
 
                         ent.fkUser = id;
 
                         if (ent.bPrincipal == null)
                             ent.bPrincipal = false;
 
-                        if (!db.PersonAddress.Where(y=>y.fkPerson == id).Any())
+                        if (!db.AssociadoEndereco.Where(y=>y.fkPerson == id).Any())
                             ent.bPrincipal = true;
 
                         if (ent.id == 0)
@@ -186,7 +186,7 @@ namespace DataModel
                         }                            
                         else
                         {
-                            var oldEnd = db.PersonAddress.
+                            var oldEnd = db.AssociadoEndereco.
                                             Where(y => y.id == ent.id).
                                             FirstOrDefault();
 
@@ -209,7 +209,7 @@ namespace DataModel
 
                 case "removeEnd":
                     {
-                        var ent = JsonConvert.DeserializeObject<PersonAddress>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<AssociadoEndereco>(anexedEntity.ToString());
 
                         new AuditLog
                         {
@@ -222,9 +222,9 @@ namespace DataModel
 
                         db.Delete(ent);
 
-                        if (db.PersonAddress.Where(y => y.fkPerson == id).Count() == 1)
+                        if (db.AssociadoEndereco.Where(y => y.fkPerson == id).Count() == 1)
                         {
-                            var pa = db.PersonAddress.Where(y => y.fkPerson == id).FirstOrDefault();
+                            var pa = db.AssociadoEndereco.Where(y => y.fkPerson == id).FirstOrDefault();
 
                             pa.bPrincipal = true;
 

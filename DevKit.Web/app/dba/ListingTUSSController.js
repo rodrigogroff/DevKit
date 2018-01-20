@@ -30,6 +30,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         var opcoes = {
             skip: skip,
             take: take,
+            codigo: $scope.campos.codigo,
+            procedimento: $scope.campos.procedimento,
         };
 
 		Api.TUSS.listPage(opcoes, function (data)

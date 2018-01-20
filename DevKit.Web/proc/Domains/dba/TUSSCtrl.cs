@@ -20,6 +20,9 @@ namespace DevKit.Web.Controllers
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
+                busca = Request.GetQueryStringValue("busca"),
+                codigo = Request.GetQueryStringValue("codigo"),
+                procedimento = Request.GetQueryStringValue("procedimento"),
             };
 
             return Ok(new TUSS().ComposedFilters(db, filter));                        

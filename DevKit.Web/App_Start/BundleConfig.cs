@@ -117,6 +117,7 @@ namespace DevKit.Web
 				"~/app/configuration/taskType/ListingTaskTypesController.js",
                 "~/app/dba/ListingLotesController.js",
                 "~/app/dba/ListingEmpresasController.js",
+                "~/app/dba/ListingTUSSController.js",
                 "~/app/dba/ListingEspecialidadesController.js",
                 "~/app/dba/ListingMedicosController.js",
                 "~/app/dba/NovoLoteController.js",

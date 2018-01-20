@@ -6,6 +6,7 @@ using System.Collections;
 using System.IO;
 using System.Text;
 using System.Threading;
+using ClosedXML.Excel;
 
 namespace GetStarted
 {
@@ -274,6 +275,54 @@ namespace GetStarted
                                 #endregion
                             }
 
+                            if (!db.TUSS.Any())
+                            {
+                                #region - carga tuss - 
+
+                                Console.WriteLine("Carga de tuss");
+                                
+                                var excel = new XLWorkbook("C:\\carga\\tb_tuss.xlsx");
+                                var sheet = excel.Worksheets.FirstOrDefault();
+
+                                // pula header
+                                int currentRow = 2;
+
+                                for(; ;currentRow++ )
+                                {
+                                    if (sheet.Cell(currentRow, 1).Value.ToString() == "")
+                                        break;
+                                    
+                                    var codTuss = sheet.Cell(currentRow, 2).Value.ToString();
+                                    var descgp = sheet.Cell(currentRow, 3).Value.ToString();
+                                    var descsbp = sheet.Cell(currentRow, 4).Value.ToString();
+                                    var proc = sheet.Cell(currentRow, 5).Value.ToString();
+
+                                    var tableTuss = db.TUSS.Where(y => y.nuCodTUSS.ToString() == codTuss).FirstOrDefault();
+                                    
+                                    if (tableTuss == null)
+                                    {
+                                        tableTuss = new TUSS();
+
+                                        tableTuss.nuCodTUSS = Convert.ToInt64(codTuss);
+                                        tableTuss.stDescricaoGP = descgp;
+                                        tableTuss.stDescricaoSubGP = descsbp;
+                                        tableTuss.stProcedimento = proc;
+
+                                        db.Insert(tableTuss);
+                                    }
+                                    else
+                                    {
+                                        tableTuss.stDescricaoGP = descgp;
+                                        tableTuss.stDescricaoSubGP = descsbp;
+                                        tableTuss.stProcedimento = proc;
+
+                                        db.Update(tableTuss);
+                                    }
+                                }
+
+                                #endregion
+                            }
+                            
                             Console.WriteLine("");
                             Console.WriteLine("-----------------------------------------");
                             Console.WriteLine("Carga de base finalizada.");

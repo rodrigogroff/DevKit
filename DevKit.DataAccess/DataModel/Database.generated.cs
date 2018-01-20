@@ -67,6 +67,7 @@ namespace DataModel
 		public ITable<TaskQuestion>         TaskQuestion         { get { return this.GetTable<TaskQuestion>(); } }
 		public ITable<TaskType>             TaskType             { get { return this.GetTable<TaskType>(); } }
 		public ITable<TaskTypeAccumulator>  TaskTypeAccumulator  { get { return this.GetTable<TaskTypeAccumulator>(); } }
+		public ITable<TUSS>                 TUSS                 { get { return this.GetTable<TUSS>(); } }
 		public ITable<User>                 User                 { get { return this.GetTable<User>(); } }
 		public ITable<UserEmail>            UserEmail            { get { return this.GetTable<UserEmail>(); } }
 		public ITable<UserNewsRead>         UserNewsRead         { get { return this.GetTable<UserNewsRead>(); } }
@@ -642,6 +643,16 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
 	}
 
+	[Table("TUSS")]
+	public partial class TUSS
+	{
+		[PrimaryKey, Identity] public long   id               { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCodTUSS        { get; set; } // bigint
+		[Column,     Nullable] public string stDescricaoGP    { get; set; } // character varying(800)
+		[Column,     Nullable] public string stDescricaoSubGP { get; set; } // character varying(800)
+		[Column,     Nullable] public string stProcedimento   { get; set; } // character varying(2000)
+	}
+
 	[Table("User")]
 	public partial class User
 	{
@@ -969,6 +980,12 @@ namespace DataModel
 		}
 
 		public static TaskTypeAccumulator Find(this ITable<TaskTypeAccumulator> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TUSS Find(this ITable<TUSS> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

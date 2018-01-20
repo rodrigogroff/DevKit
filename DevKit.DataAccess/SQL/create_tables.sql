@@ -442,3 +442,13 @@ ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "fkAssociado" bi
 ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "nuVia" bigint;
 ALTER TABLE public."LoteGraficaCartao" ADD COLUMN if not exists "nuTit" bigint;
+
+CREATE TABLE IF NOT EXISTS public."TUSS" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."TUSS" OWNER to postgres;
+ALTER TABLE public."TUSS" ADD COLUMN if not exists "nuCodTUSS" bigint;
+ALTER TABLE public."TUSS" ADD COLUMN if not exists "stDescricaoGP" character varying(800);
+ALTER TABLE public."TUSS" ADD COLUMN if not exists "stDescricaoSubGP" character varying(800);
+ALTER TABLE public."TUSS" ADD COLUMN if not exists "stProcedimento" character varying(2000);
+
+
+

@@ -44,6 +44,7 @@ angular.module('app.services', ['ngResource'])
         Empresa: $resource('api/empresa/:id', {}, opcoes),
         Medico: $resource('api/medico/:id', {}, opcoes),
         Especialidade: $resource('api/especialidade/:id', {}, opcoes),
+        TUSS: $resource('api/tuss/:id', {}, opcoes),
 		Profile: $resource('api/profile/:id', {}, opcoes),
 		Permission: $resource('api/permission/:id', {}, opcoes),
 		Project: $resource('api/project/:id', {}, opcoes),

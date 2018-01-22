@@ -38,13 +38,16 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     	else
         {
             if ($rootScope.tipo == undefined)
-                $rootScope.tipo = 4;
+                $rootScope.tipo = 1;
 
             var lData = {
                 password: $scope.loginData.password,
             }
 
-            if ($rootScope.tipo == 4) {
+            if ($rootScope.tipo == 1) {
+                lData.userName = $rootScope.tipo + ":" + $scope.loginData.nuMedico;
+            }
+            else if ($rootScope.tipo == 4) {
                 lData.userName = $rootScope.tipo + ":" + $scope.loginData.nuEmpresa + ":" + $scope.loginData.userName;
             }
             else if ($rootScope.tipo == 5) {
@@ -55,14 +58,18 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     		{
                 $scope.loginOK = true;
                 $rootScope.exibirMenu = true;
-                
-                if ($scope.loginData.userName == $scope.loginData.password)
-    			{
-    				$location.path('/system/userChangePass/');
-    				toastr.error('Sua senha expirou.', 'Controle de senha');
-    			}
-    			else
-    				$location.path('/');    				
+
+                if ($rootScope.tipo == 1) {
+                    $location.path('/');
+                }
+                else {
+                    if ($scope.loginData.userName == $scope.loginData.password) {
+                        $location.path('/system/userChangePass/');
+                        toastr.error('Sua senha expirou.', 'Controle de senha');
+                    }
+                    else
+                        $location.path('/');
+                }
     		},
 			function (err)
 			{

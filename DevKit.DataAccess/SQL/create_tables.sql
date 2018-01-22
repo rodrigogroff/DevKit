@@ -294,6 +294,7 @@ ALTER TABLE public."Associado" ADD COLUMN if not exists "tgStatus" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "tgExpedicao" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "tgFaltaEnd" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "tgFaltaTelefone" bigint;
+ALTER TABLE public."Associado" ADD COLUMN if not exists "stSenha" character varying(4);
 
 CREATE TABLE IF NOT EXISTS public."AssociadoEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."AssociadoEmail" OWNER to postgres;
@@ -339,10 +340,6 @@ ALTER TABLE public."AssociadoMensagem" ADD COLUMN if not exists "fkUserTo" bigin
 ALTER TABLE public."AssociadoMensagem" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 ALTER TABLE public."AssociadoMensagem" ADD COLUMN if not exists "stMessage" character varying(1500);
 
-CREATE TABLE IF NOT EXISTS public."PeopleCategory" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."PeopleCategory" OWNER to postgres;
-ALTER TABLE public."PeopleCategory" ADD COLUMN if not exists "stName" character varying(150);
-
 CREATE TABLE IF NOT EXISTS public."AssociadoCategoria" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."AssociadoCategoria" OWNER to postgres;
 ALTER TABLE public."AssociadoCategoria" ADD COLUMN if not exists "fkPerson" bigint;
@@ -370,6 +367,7 @@ ALTER TABLE public."Medico" ADD COLUMN if not exists "nuDayAniversary" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuYearBirth" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "fkEspecialidade" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "tgMasculino" boolean;
+ALTER TABLE public."Medico" ADD COLUMN if not exists "stSenha" character varying(4);
 
 CREATE TABLE IF NOT EXISTS public."MedicoEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."MedicoEmpresa" OWNER to postgres;

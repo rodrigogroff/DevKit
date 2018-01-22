@@ -36,7 +36,43 @@ namespace DevKit.Web
                 var incoming = context.UserName.Split(':');
                 var tipo = incoming[0];
 
-                if (tipo == "4")
+                if (tipo == "1")
+                {
+                    #region - médico - 
+
+                    var codMedico = Convert.ToInt64(incoming[1]);
+
+                    var medico = db.Medico.
+                                    Where(y => y.nuCodigo == codMedico).
+                                    FirstOrDefault();
+
+                    if (medico == null)
+                    {
+                        context.SetError("invalid_grant", "Código ou senha inválida!");
+                        return;
+                    }
+                    else
+                    {
+                        if (medico.stSenha != "")
+                            if (medico.stSenha != context.Password)
+                            {
+                                context.SetError("invalid_grant", "Código ou senha inválida!");
+                                return;
+                            }
+
+                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+
+                        identity.AddClaim(new Claim(ClaimTypes.Name, medico.stNome));
+                        identity.AddClaim(new Claim("nuEmpresa", codMedico.ToString()));
+                        identity.AddClaim(new Claim("tipo", "1"));
+
+                        var ticket = new AuthenticationTicket(identity, null);
+                        context.Validated(ticket);
+                    }
+
+                    #endregion
+                }
+                else if (tipo == "4")
                 {
                     #region - emissora - 
 

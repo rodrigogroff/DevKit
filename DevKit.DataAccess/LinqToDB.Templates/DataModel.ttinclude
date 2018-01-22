@@ -29,7 +29,7 @@ string   OneToManyAssociationType      = "IEnumerable<{0}>";
 bool     GenerateDatabaseName          = false;
 bool     GenerateConstructors          = true;
 string   DefaultConfiguration          = null;
-bool     GenerateAssociations          = true;
+bool     GenerateAssociations          = false;
 bool     GenerateBackReferences        = true;
 bool     GenerateAssociationExtensions = false;
 bool     ReplaceSimilarTables          = true;
@@ -39,10 +39,10 @@ Class    DataContextObject;
 
 bool PluralizeClassNames                 = false;
 bool SingularizeClassNames               = true;
-bool PluralizeDataContextPropertyNames   = true;
+bool PluralizeDataContextPropertyNames   = false;
 bool SingularizeDataContextPropertyNames = false;
 
-bool NormalizeNames                      = true;
+bool NormalizeNames                      = false;
 
 private Func<string, bool, string> _toValidName;
 Func<string, bool, string> ToValidName

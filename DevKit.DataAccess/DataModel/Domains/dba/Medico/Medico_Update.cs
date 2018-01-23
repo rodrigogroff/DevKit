@@ -25,14 +25,14 @@ namespace DataModel
                             medico.stSenha = ent.stNewPassword;
 
                             db.Update(medico);
+
+                            return true;
                         }
                         else
                         {
                             resp = "Senha não confere.";
                             return false;
                         }                        
-
-                        break;
                     }
 			}
 

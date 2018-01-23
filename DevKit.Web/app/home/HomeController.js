@@ -1,20 +1,26 @@
 ﻿
 angular.module('app.controllers').controller('HomeController',
-['$window', '$scope', '$rootScope', '$state', 'Api', 'ngSelects',
-function ($window, $scope, $rootScope, $state, Api, ngSelects)
+    ['$window', '$scope', '$rootScope', '$state', 'Api', 'ngSelects', 'AuthService',
+        function ($window, $scope, $rootScope, $state, Api, ngSelects, AuthService)
 {
 	$rootScope.exibirMenu = true;
 	$scope.loading = false;
 	
 	init();
 
-    function loadHomeView () {
-        $scope.loading = true;
+    function loadHomeView()
+    {
+        AuthService.fillAuthData();
+        $scope.authentication = AuthService.authentication;
 
-        Api.HomeView.listPage({}, function (data) {
-            $scope.viewModel = data;
-            $scope.loading = false;
-        });
+        if ($scope.authentication.tipo >= 4) {
+            $scope.loading = true;
+
+            Api.HomeView.listPage({}, function (data) {
+                $scope.viewModel = data;
+                $scope.loading = false;
+            });
+        }        
     }
 
 	function init()

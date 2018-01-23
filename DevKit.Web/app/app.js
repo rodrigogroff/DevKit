@@ -69,7 +69,9 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('medicos', { url: '/dba/medicos', templateUrl: 'app/dba/listingMedicos.html', controller: 'ListingMedicosController' })
     .state('tuss', { url: '/dba/tuss', templateUrl: 'app/dba/listingTUSS.html', controller: 'ListingTUSSController' })
     .state('especialidades', { url: '/dba/especialidades', templateUrl: 'app/dba/listingEspecialidades.html', controller: 'ListingEspecialidadesController' })
-    
+
+    .state('medicopass', { url: '/medico/medicoTrocaSenha/:id', templateUrl: 'app/medico/medicoPassword.html', controller: 'MedicoPasswordController' })
+
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);

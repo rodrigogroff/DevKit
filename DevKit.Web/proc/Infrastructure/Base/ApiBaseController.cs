@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace DevKit.Web.Controllers
 {
@@ -25,6 +26,32 @@ namespace DevKit.Web.Controllers
             }
         }
 
+        public string userLoggedType
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+                return identity.Claims.
+                    Where(c => c.Type == "tipo").
+                    Select(c => c.Value).
+                    SingleOrDefault();
+            }
+        }
+
+        public string userLoggedCodigo
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+                return identity.Claims.
+                    Where(c => c.Type == "nuEmpresa").
+                    Select(c => c.Value).
+                    SingleOrDefault();
+            }
+        }
+        
         public HttpResponseMessage TransferirConteudo(string fileName)
         {
             byte[] fileData = File.ReadAllBytes(fileName);
@@ -44,28 +71,63 @@ namespace DevKit.Web.Controllers
         {
             db = new DevKitDB();
 
-            var userCurrentName = userLoggedName;
-            var tagName = CacheTags.User + userCurrentName;
-
-            db.currentUser = RestoreCacheNoHit(tagName) as User;
-            
-            if (db.currentUser == null)
+            switch (userLoggedType)
             {
-                db.currentUser = (from ne in db.User
-                                  where ne.stLogin.ToUpper() == userCurrentName
-                                  select ne).
-                                  FirstOrDefault();
+                case "1": // medico
+                    {
+                        var userCurrentName = userLoggedName;
+                        var tagName = CacheTags.Medico + userLoggedCodigo;
 
-                if (db.currentUser == null)
-                    return false;
+                        db.currentMedico = RestoreCacheNoHit(tagName) as Medico;
 
-                db.currentUser.empresa = (from e in db.Empresa
-                                          where e.id == db.currentUser.fkEmpresa
-                                          select e).
-                                          FirstOrDefault();
-                
-                BackupCacheNoHit(tagName, db.currentUser);
+                        if (db.currentMedico == null)
+                        {
+                            db.currentMedico = (from ne in db.Medico
+                                                where ne.nuCodigo.ToString() == userLoggedCodigo
+                                                select ne).
+                                                FirstOrDefault();
+
+                            if (db.currentMedico == null)
+                                return false;
+
+                            BackupCacheNoHit(tagName, db.currentMedico);
+                        }
+
+                        break;
+                    }
+
+                case "4": // emissor
+                case "5": // dba
+                    {
+                        var userCurrentName = userLoggedName;
+                        var tagName = CacheTags.User + userCurrentName;
+
+                        db.currentUser = RestoreCacheNoHit(tagName) as User;
+
+                        if (db.currentUser == null)
+                        {
+                            db.currentUser = (from ne in db.User
+                                              where ne.stLogin.ToUpper() == userCurrentName
+                                              select ne).
+                                              FirstOrDefault();
+
+                            if (db.currentUser == null)
+                                return false;
+
+                            db.currentUser.empresa = (from e in db.Empresa
+                                                      where e.id == db.currentUser.fkEmpresa
+                                                      select e).
+                                                      FirstOrDefault();
+
+                            BackupCacheNoHit(tagName, db.currentUser);
+                        }
+
+                        break;
+                    }
+                    
             }
+
+            
 
             if (myApplication["start"] == null)
             {

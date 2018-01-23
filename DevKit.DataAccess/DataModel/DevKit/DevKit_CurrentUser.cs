@@ -7,8 +7,9 @@ namespace DataModel
 	public partial class DevKitDB
 	{				
 		public User currentUser = null;
+        public Medico currentMedico = null;
 
-		public List<long?> GetCurrentUserProjects()
+        public List<long?> GetCurrentUserProjects()
 		{
 			return (from e in ProjectUser
 					where e.fkUser == currentUser.id

@@ -53,12 +53,22 @@ namespace DevKit.Web
                     }
                     else
                     {
-                        if (medico.stSenha != "")
+                        if (medico.stSenha == null)
+                        {
+                            if (context.Password != medico.nuCodigo.ToString())
+                            {
+                                context.SetError("invalid_grant", "Código ou senha inválida!");
+                                return;
+                            }
+                        }
+                        else
+                        {
                             if (medico.stSenha != context.Password)
                             {
                                 context.SetError("invalid_grant", "Código ou senha inválida!");
                                 return;
                             }
+                        }
 
                         var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
@@ -67,6 +77,7 @@ namespace DevKit.Web
                         identity.AddClaim(new Claim("tipo", "1"));
 
                         var ticket = new AuthenticationTicket(identity, null);
+
                         context.Validated(ticket);
                     }
 

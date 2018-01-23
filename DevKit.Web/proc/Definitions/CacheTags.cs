@@ -63,6 +63,10 @@ namespace DevKit.Web.Controllers
         public const string AssociadoReport = "PersonReport";
         public const string User = "User";
         public const string UserReport = "UserReport";
+
+        public const string Medico = "Medico";
+        public const string MedicoReport = "MedicoReport";
+
         public const string Client = "Client";
         public const string ClientReport = "ClientReport";        
         public const string ClientGroup = "ClientGroup";

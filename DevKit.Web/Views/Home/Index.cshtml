@@ -64,7 +64,7 @@
         </div>
         <header class="page-header">
             <div class="navbar" style="height:38px; padding-left:195px;padding-top:-4px;">
-                <table width="100%">
+                <table width="100%" >
                     <tr>
                         <td width="600px" valign="top">
                             <h4>{{authentication.nuEmpresa}}</h4>
@@ -78,6 +78,35 @@
                 </table>
             </div>
         </header>
+
+        <nav ng-if="tipo == 1" id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:60px;padding-left:-200px">
+            <section class="widget" style="height:100%;font-size:11px">
+                <ul id="side-nav" class="side-nav" style="color:black">
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseMSystem"><span class="name">Sistema</span></a>
+                        <ul id="forms-collapseMSystem" class="panel-collapse collapse">
+                            <li><a ui-sref="medicopass"><span>Trocar senha</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel">
+                        <a class="accordion-toggle " data-toggle="collapse"
+                           data-parent="#side-nav" href="#forms-collapseProcedimentos"><span class="name">Procedimentos</span></a>
+                        <ul id="forms-collapseProcedimentos" class="panel-collapse collapse">
+                            <li><a @*ui-sref="autprocs"*@><span>Autorização</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul><li>&nbsp;</li></ul>
+                <ul>
+                    <li>
+                        <span style="color:grey;text-align:center;padding-left:20px">Version {{version}}</span>
+                    </li>
+                </ul>
+                <ul><li></li></ul>
+            </section>
+        </nav>
 
         <nav ng-if="tipo == 4" id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:60px;padding-left:-200px">
             <section class="widget" style="height:100%;font-size:11px">

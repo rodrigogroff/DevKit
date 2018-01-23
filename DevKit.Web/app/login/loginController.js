@@ -28,9 +28,7 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
     {
     	$scope.loading = true;
 
-        if ($scope.loginData.nuEmpresa == '' ||
-            $scope.loginData.userName == '' ||
-			$scope.loginData.password == '')
+        if ($scope.loginData.password == '')
     	{
     		$scope.loading = false;
     		$scope.mensagem = 'Entre com credenciais válidas!';
@@ -59,11 +57,20 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
                 $scope.loginOK = true;
                 $rootScope.exibirMenu = true;
 
-                if ($rootScope.tipo == 1) {
-                    $location.path('/');
+                if ($rootScope.tipo == 1)
+                {
+                    if ($scope.loginData.nuMedico == $scope.loginData.password)
+                    {
+                        $location.path('/medico/medicoTrocaSenha/');
+                        toastr.error('Sua senha expirou.', 'Controle de senha');
+                    }
+                    else
+                        $location.path('/');
                 }
-                else {
-                    if ($scope.loginData.userName == $scope.loginData.password) {
+                else
+                {
+                    if ($scope.loginData.userName == $scope.loginData.password)
+                    {
                         $location.path('/system/userChangePass/');
                         toastr.error('Sua senha expirou.', 'Controle de senha');
                     }

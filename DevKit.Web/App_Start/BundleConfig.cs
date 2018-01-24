@@ -122,6 +122,7 @@ namespace DevKit.Web
                 "~/app/dba/ListingMedicosController.js",
                 "~/app/dba/NovoLoteController.js",
                 "~/app/medico/MedicoPasswordController.js",
+                "~/app/medico/AutorizacaoProcController.js",
                 "~/app/task/task/TaskController.js",
 				"~/app/task/task/ListingTasksController.js",
 				"~/app/task/kanban/ListingUserKanbanController.js",

@@ -267,6 +267,8 @@
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
+    <Content Include="app\medico\autorizacaoProc.html" />
+    <Content Include="app\medico\autorizacaoProcController.js" />
     <Content Include="app\medico\medicoPassword.html" />
     <Content Include="app\medico\MedicoPasswordController.js" />
     <Content Include="app\people\person\listingPersons.html" />

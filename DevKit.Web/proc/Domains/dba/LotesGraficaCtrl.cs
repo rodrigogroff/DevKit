@@ -15,8 +15,6 @@ namespace DevKit.Web.Controllers
 		{
             try
             {
-
-
                 if (!StartDatabaseAndAuthorize())
                     return BadRequest();
 

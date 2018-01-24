@@ -69,6 +69,7 @@ angular.module('app.services', ['ngResource'])
         Survey: $resource('api/survey/:id', {}, opcoes),
         Person: $resource('api/person/:id', {}, opcoes),
         LotesGrafica: $resource('api/lotesgrafica/:id', {}, opcoes),
+        Cartao: $resource('api/cartao/:id', {}, opcoes),
         Cache: $resource('api/cache/:id', {}, opcoes),
         HomeView: $resource('api/homeView/:id', {}, opcoes),
         MonthCombo: $resource('api/month/:id', {}, opcoes),

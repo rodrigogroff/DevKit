@@ -23,7 +23,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 		$scope.load(0, $scope.itensporpagina);
 		$scope.paginador.reiniciar();
 	}
-
+    
 	$scope.load = function (skip, take)
 	{
 		$scope.loading = true;
@@ -61,6 +61,24 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             $scope.selecionouProc = mdl.nuCodTUSS;
         else
             $scope.selecionouProc = null;
-	}
+    }
+
+    $scope.buscarCartao = function ()
+    {
+        $scope.loading = true;
+        $scope.associado = undefined;
+
+        var opcoes = {
+            emp: $scope.campos.cartEmp,
+            mat: $scope.campos.cartMat,
+            ca: $scope.campos.cartCA,
+            titVia: $scope.campos.cartTitVia,
+        };
+
+        Api.Cartao.listPage(opcoes, function (data) {
+            $scope.associado = data;
+            $scope.loading = false;
+        });
+    }
 
 }]);

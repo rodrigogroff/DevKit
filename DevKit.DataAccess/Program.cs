@@ -257,12 +257,8 @@ namespace GetStarted
                                             var ar = line.Split(';');
 
                                             var nome = ar[0].Trim();
+                                            var cpfCnpj = ar[1].Trim();
                                             var espec = ar[1].Trim();
-                                            var homem = ar[2].Trim();
-                                            var end = ar[3].Trim();
-                                            var tels = ar[4].Replace("-", "").Replace(" ", "").Split(',');
-
-                                            //CELSO JOSÉ BERTOLETI RACIC;CARDIOLOGISTA;H;Av. Emancipação, 1441, Centro;3158-1095
 
                                             if (!db.Especialidade.Any (y=> y.stNome == espec))
                                             {
@@ -286,24 +282,9 @@ namespace GetStarted
                                                 fkUserAdd = 1,
                                                 fkEspecialidade = db.Especialidade.FirstOrDefault(y=>y.stNome == espec).id,
                                                 stNome = nome,
-                                                tgMasculino = homem == "H" ? true : false,
-                                                nuCodigo = codDisp,
+                                                stCnpj = cpfCnpj,
+                                                nuCodigo = cpfCnpj.Length > 14 ? 2 : 1,
                                             }));
-
-                                            db.Insert(new MedicoAddress
-                                            {
-                                                stRua = end,
-                                                fkMedico = new_id
-                                            });
-
-                                            foreach (var tel in tels)
-                                            {
-                                                db.Insert(new MedicoEmail
-                                                {
-                                                    stEmail = tel,
-                                                    fkMedico = new_id
-                                                });
-                                            }
 
                                             db.Insert(new MedicoEmpresa
                                             {
@@ -315,6 +296,12 @@ namespace GetStarted
                                             {
                                                 fkMedico = new_id,
                                                 fkEmpresa = 2
+                                            });
+
+                                            db.Insert(new MedicoEmpresa
+                                            {
+                                                fkMedico = new_id,
+                                                fkEmpresa = 3
                                             });
                                         }
                                     }

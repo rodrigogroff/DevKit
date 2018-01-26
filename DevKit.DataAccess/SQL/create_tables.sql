@@ -355,7 +355,7 @@ CREATE TABLE IF NOT EXISTS public."Medico" ( id bigserial NOT NULL, PRIMARY KEY 
 ALTER TABLE public."Medico" OWNER to postgres;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuCodigo" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "stNome" character varying(150);
-ALTER TABLE public."Medico" ADD COLUMN if not exists "stCnpj" character varying(20);
+ALTER TABLE public."Medico" ADD COLUMN if not exists "stCnpj" character varying(30);
 ALTER TABLE public."Medico" ADD COLUMN if not exists "dtStart" timestamp without time zone;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "dtLastUpdate" timestamp without time zone;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "dtLastContact" timestamp without time zone;
@@ -367,7 +367,8 @@ ALTER TABLE public."Medico" ADD COLUMN if not exists "nuDayAniversary" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "nuYearBirth" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "fkEspecialidade" bigint;
 ALTER TABLE public."Medico" ADD COLUMN if not exists "tgMasculino" boolean;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "stSenha" character varying(4);
+ALTER TABLE public."Medico" ADD COLUMN if not exists "nuTipo" bigint;
+ALTER TABLE public."Medico" ADD COLUMN if not exists "stSenha" character varying(20);
 
 CREATE TABLE IF NOT EXISTS public."MedicoEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."MedicoEmpresa" OWNER to postgres;

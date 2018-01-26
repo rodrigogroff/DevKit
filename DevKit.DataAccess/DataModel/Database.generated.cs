@@ -41,7 +41,6 @@ namespace DataModel
 		public ITable<MedicoEmail>          MedicoEmail          { get { return this.GetTable<MedicoEmail>(); } }
 		public ITable<MedicoEmpresa>        MedicoEmpresa        { get { return this.GetTable<MedicoEmpresa>(); } }
 		public ITable<MedicoPhone>          MedicoPhone          { get { return this.GetTable<MedicoPhone>(); } }
-		public ITable<PeopleCategory>       PeopleCategory       { get { return this.GetTable<PeopleCategory>(); } }
 		public ITable<Procedimento>         Procedimento         { get { return this.GetTable<Procedimento>(); } }
 		public ITable<Profile>              Profile              { get { return this.GetTable<Profile>(); } }
 		public ITable<Project>              Project              { get { return this.GetTable<Project>(); } }
@@ -293,7 +292,7 @@ namespace DataModel
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
 		[Column,     Nullable] public long?     nuCodigo          { get; set; } // bigint
 		[Column,     Nullable] public string    stNome            { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stCnpj            { get; set; } // character varying(20)
+		[Column,     Nullable] public string    stCnpj            { get; set; } // character varying
 		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
@@ -305,7 +304,8 @@ namespace DataModel
 		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
 		[Column,     Nullable] public long?     fkEspecialidade   { get; set; } // bigint
 		[Column,     Nullable] public bool?     tgMasculino       { get; set; } // boolean
-		[Column,     Nullable] public string    stSenha           { get; set; } // character varying(4)
+		[Column,     Nullable] public string    stSenha           { get; set; } // character varying
+		[Column,     Nullable] public long?     nuTipo            { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="MedicoAddress")]
@@ -353,13 +353,6 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
 		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
-	}
-
-	[Table(Schema="public", Name="PeopleCategory")]
-	public partial class PeopleCategory
-	{
-		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
-		[Column,     Nullable] public string stName { get; set; } // character varying(150)
 	}
 
 	[Table(Schema="public", Name="Procedimento")]
@@ -826,12 +819,6 @@ namespace DataModel
 		}
 
 		public static MedicoPhone Find(this ITable<MedicoPhone> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static PeopleCategory Find(this ITable<PeopleCategory> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

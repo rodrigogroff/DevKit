@@ -275,6 +275,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Carga\cartoes_1803.csv" />
     <None Include="Carga\medicos.xlsx" />
     <None Include="Carga\Tb_tuss.xlsx" />
     <None Include="LinqToDB.Templates\DataAnnotations.ttinclude" />

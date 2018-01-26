@@ -186,6 +186,54 @@ namespace GetStarted
                                 #endregion
                             }
 
+                            if (!db.Associado.Where(y => y.fkEmpresa == 3).Any())
+                            {
+                                #region - carga 1803 - 
+
+                                using (var sr = new StreamReader("c:\\carga\\cartoes_1803.csv", Encoding.Default, false))
+                                {
+                                    Console.WriteLine("Carga de base [CARTÕES 1803].");
+
+                                    while (!sr.EndOfStream)
+                                    {
+                                        var line = sr.ReadLine();
+
+                                        if (line == ";;;")
+                                            continue;
+
+                                        if (line != "")
+                                        {
+                                            var ar = line.Split(';');
+
+                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Associado()
+                                            {
+                                                dtStart = DateTime.Now,
+                                                fkEmpresa = 3,
+                                                fkUserAdd = 1,
+                                                nuMatricula = Convert.ToInt64(ar[0]),
+                                                nuViaCartao = 1,
+                                                nuTitularidade = 1,
+                                                stName = ar[1],
+                                                stCPF = ar[2],
+                                                tgExpedicao = 0,
+                                                tgStatus = 0,
+                                            }));
+
+                                            new AuditLog
+                                            {
+                                                fkUser = 1,
+                                                fkActionLog = EnumAuditAction.PersonCreate,
+                                                nuType = EnumAuditType.Person,
+                                                fkTarget = new_id
+                                            }.
+                                            Create(db, "Importação", "");
+                                        }
+                                    }
+                                }
+
+                                #endregion
+                            }
+
                             if (!db.Medico.Any())
                             {
                                 #region - carga de médicos - 

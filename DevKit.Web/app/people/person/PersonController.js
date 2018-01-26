@@ -250,6 +250,59 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		}
 	}
 
+    // ============================================
+	// dependentes
+	// ============================================
+
+	$scope.addDep = false;
+
+	$scope.addNewDep = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+            toastr.error('Acesso negado!', 'Permissão');
+		else
+            $scope.addDep = !$scope.addDep;
+	}
+
+	$scope.newDep = { };
+
+	$scope.editDep = function (mdl) {
+		$scope.addDep = true;
+		$scope.newDep = mdl;
+	}
+
+	$scope.cancelDep = function () {
+		$scope.addDep = false;
+		$scope.newDep = {};
+	}
+
+	$scope.saveNewDep = function ()
+	{
+		if (!$scope.permModel.novo && !$scope.permModel.edicao)
+            toastr.error('Acesso negado!', 'Permissão');
+		else
+		{
+            $scope.stNomeDep_fail = invalidCheck($scope.newDep.stNome) ;
+
+            if (!$scope.stNomeDep_fail)
+			{
+				$scope.addDep = false;
+                
+				$scope.viewModel.updateCommand = "newDep";
+                $scope.viewModel.anexedEntity = $scope.newDep;
+
+                Api.Person.update({ id: id }, $scope.viewModel, function (data)
+                {
+                    $scope.newDep = {};
+                    loadEntity();
+				},
+				function (response) {
+					toastr.error(response.data.message, 'Error');
+				});
+			}
+		}
+    }
+
 	// ============================================
 	// email 
 	// ============================================

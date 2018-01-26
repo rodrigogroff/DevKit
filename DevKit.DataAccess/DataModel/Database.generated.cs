@@ -22,6 +22,7 @@ namespace DataModel
 		public ITable<Associado>            Associado            { get { return this.GetTable<Associado>(); } }
 		public ITable<AssociadoCategoria>   AssociadoCategoria   { get { return this.GetTable<AssociadoCategoria>(); } }
 		public ITable<AssociadoContato>     AssociadoContato     { get { return this.GetTable<AssociadoContato>(); } }
+		public ITable<AssociadoDependente>  AssociadoDependente  { get { return this.GetTable<AssociadoDependente>(); } }
 		public ITable<AssociadoEmail>       AssociadoEmail       { get { return this.GetTable<AssociadoEmail>(); } }
 		public ITable<AssociadoEndereco>    AssociadoEndereco    { get { return this.GetTable<AssociadoEndereco>(); } }
 		public ITable<AssociadoMensagem>    AssociadoMensagem    { get { return this.GetTable<AssociadoMensagem>(); } }
@@ -134,6 +135,17 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkContactForm { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(1500)
+	}
+
+	[Table(Schema="public", Name="AssociadoDependente")]
+	public partial class AssociadoDependente
+	{
+		[PrimaryKey, Identity] public long   id          { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa   { get; set; } // bigint
+		[Column,     Nullable] public long?  fkAssociado { get; set; } // bigint
+		[Column,     Nullable] public string stNome      { get; set; } // character varying(35)
+		[Column,     Nullable] public string stCPF       { get; set; } // character varying(30)
+		[Column,     Nullable] public long?  fkCartao    { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="AssociadoEmail")]
@@ -705,6 +717,12 @@ namespace DataModel
 		}
 
 		public static AssociadoContato Find(this ITable<AssociadoContato> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static AssociadoDependente Find(this ITable<AssociadoDependente> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

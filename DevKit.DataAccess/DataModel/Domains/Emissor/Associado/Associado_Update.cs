@@ -26,8 +26,61 @@ namespace DataModel
 
                         break;
 					}
-									
-				case "newPhone":
+
+                case "newDep":
+                    {
+                        var ent = JsonConvert.DeserializeObject<AssociadoDependente>(anexedEntity.ToString());
+
+                        ent.fkEmpresa = this.fkEmpresa;
+                        ent.fkAssociado = this.id;
+                        ent.stNome = ent.stNome.ToUpper().TrimEnd();
+
+                        if (ent.id == 0)
+                        {
+                            if ((from ne in db.AssociadoDependente where ne.stNome == ent.stNome select ne).Any())
+                            {
+                                resp = "Dependente já utilizado!";
+                                return false;
+                            }
+
+                            ent.fkCartao = Convert.ToInt64 (
+                                db.InsertWithIdentity(new Associado
+                                {
+                                    fkEmpresa = this.fkEmpresa,
+                                    fkUserAdd = user.id,
+                                    nuMatricula = this.nuMatricula,
+                                    tgStatus = 0,
+                                    tgExpedicao = 0,
+                                    stSenha = this.stSenha,
+                                    stName = ent.stNome,
+                                    stCPF = ent.stCPF,
+                                    nuTitularidade = db.AssociadoDependente.Where (y=> y.fkAssociado == id).Count() + 2,
+                                    nuViaCartao = 1,
+                                    dtStart = DateTime.Now,
+                                }) );
+
+                            db.Insert(ent);
+                        }
+                        else
+                        {
+                            var cart = db.Associado.Where(y => y.id == ent.fkCartao).FirstOrDefault();
+
+                            if (cart.tgExpedicao == 0)
+                            {
+                                cart.stName = ent.stNome;
+                                cart.stCPF = ent.stCPF;
+
+                                db.Update(cart);
+                            }                                
+
+                            db.Update(ent);
+                        }
+
+                        break;
+                    }
+
+
+                case "newPhone":
 					{
 						var ent = JsonConvert.DeserializeObject<AssociadoTelefone>(anexedEntity.ToString());
 

@@ -43,27 +43,44 @@ namespace DataModel
             phones = LoadPhones(db);
 			emails = LoadEmails(db);
             enderecos = LoadEnderecos(db);
+            dependentes = LoadDependentes(db);
 
             return this;
 		}
-        
-		List<AssociadoTelefone> LoadPhones(DevKitDB db)
+
+        List<AssociadoDependente> LoadDependentes(DevKitDB db)
+        {
+            var tmpLst = (from e in db.AssociadoDependente where e.fkAssociado == id select e).
+                OrderBy(t => t.id).
+                ToList();
+
+            foreach (var item in tmpLst)
+                item.snuTit = db.Associado.
+                                Where(y => y.id == item.fkCartao).
+                                FirstOrDefault().
+                                nuTitularidade.
+                                ToString();
+            
+            return tmpLst;
+        }
+
+        List<AssociadoTelefone> LoadPhones(DevKitDB db)
 		{
-			return (from e in db.AssociadoTelefone where e.fkUser == id select e).
+			return (from e in db.AssociadoTelefone where e.fkPerson == id select e).
 				OrderBy(t => t.stPhone).
 				ToList();
 		}
 
 		List<AssociadoEmail> LoadEmails(DevKitDB db)
 		{
-			return (from e in db.AssociadoEmail where e.fkUser == id select e).
+			return (from e in db.AssociadoEmail where e.fkPerson == id select e).
 				OrderByDescending(t => t.id).
 				ToList();
 		}
 
         List<AssociadoEndereco> LoadEnderecos(DevKitDB db)
         {
-            var lst = (from e in db.AssociadoEndereco where e.fkUser == id select e).
+            var lst = (from e in db.AssociadoEndereco where e.fkPerson == id select e).
                 OrderByDescending(t => t.id).
                 ToList();
 

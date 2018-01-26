@@ -31,6 +31,13 @@ namespace DataModel
 
             fkEmpresa = user.fkEmpresa;
 
+            stName = stName.ToUpper().Trim();
+
+            nuTitularidade = 1;
+            nuViaCartao = 1;
+            tgStatus = 0;
+            tgExpedicao = 0;
+            stSenha = "1111";
             dtStart = DateTime.Now;
             fkUserAdd = user.id;
             

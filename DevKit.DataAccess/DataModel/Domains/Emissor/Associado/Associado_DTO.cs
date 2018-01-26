@@ -8,6 +8,11 @@ namespace DataModel
                       sfkCidade = "";
     }
 
+    public partial class AssociadoDependente
+    {
+        public string snuTit = "";
+    }
+
     public partial class Associado
     {
         public object anexedEntity;
@@ -26,6 +31,7 @@ namespace DataModel
 		public List<AssociadoTelefone> phones;
 		public List<AssociadoEmail> emails;
         public List<AssociadoEndereco> enderecos;
+        public List<AssociadoDependente> dependentes;
     }
 
     public class AssociadoReport

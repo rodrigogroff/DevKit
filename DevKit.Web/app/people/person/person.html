@@ -173,7 +173,7 @@
                         </table>
                     </div>
                 </tab>
-                
+
                 <tab heading="Cartão">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table>
@@ -232,6 +232,89 @@
                                 <td></td>
                             </tr>
                             <tr height="46px"></tr>
+                        </table>
+                    </div>
+                </tab>
+
+                <tab heading="Dependentes [{{viewModel.emails.length}}]" ng-if="viewModel.id != undefined">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="12px"></tr>
+                            <tr>
+                                <td width="20px"></td>
+                                <td>
+                                    <legend style="color:white">
+                                        Lista de dependentes
+                                        <button class="btn btn-info btn-xs pull-right" ng-if="addEmail == false" ng-click="addNewDep()"><i class="fa fa-plus"> </i> Adicionar </button>
+                                    </legend>
+                                    <div ng-show="viewModel.dependentes.length == 0 && addDependente == false">
+                                        <br />
+                                        <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    </div>
+                                    <div ng-if="addDep == true">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr height="42px">
+                                                            <td width="120px">
+                                                                <b>Novo dependente</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="stNomeDep_fail">!</button>
+                                                            </td>
+                                                            <td width="200px">
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newDep.stNome">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td width="120px">
+                                                                <b>CPF</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                
+                                                            </td>
+                                                            <td width="200px">
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newDep.stCPF">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                        <button class="btn btn-default" ng-click="cancelDep()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewDep()">Salvar </button>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div ng-show="viewModel.dependentes.length > 0">
+                                        <br />
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Titularidade</th>
+                                                    <th>Nome do dependente</th>
+                                                    <th>CPF</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="mdl in viewModel.dependentes">
+                                                <td>{{ mdl.snuTit }}</td>
+                                                <td>{{ mdl.stNome }}</td>
+                                                <td>{{ mdl.stCPF }}</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="editDep(mdl)">
+                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
                         </table>
                     </div>
                 </tab>

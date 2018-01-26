@@ -347,6 +347,14 @@ ALTER TABLE public."AssociadoCategoria" ADD COLUMN if not exists "fkPeopleCatego
 ALTER TABLE public."AssociadoCategoria" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."AssociadoCategoria" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 
+CREATE TABLE IF NOT EXISTS public."AssociadoDependente" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."AssociadoDependente" OWNER to postgres;
+ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "fkAssociado" bigint;
+ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "fkCartao" bigint;
+ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "stNome" character varying(35);
+ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "stCPF" character varying(30);
+
 CREATE TABLE IF NOT EXISTS public."Especialidade" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Especialidade" OWNER to postgres;
 ALTER TABLE public."Especialidade" ADD COLUMN if not exists "stNome" character varying(150);

@@ -13,44 +13,51 @@ namespace DevKit.Web.Controllers
 	{
         public IHttpActionResult Get()
 		{
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
-            var pesqInicialNovoLote = Request.GetQueryStringValue<bool?>("novoLote", null);
-            var criarLote = Request.GetQueryStringValue<bool?>("criarLote", null);
-            var ativarLote = Request.GetQueryStringValue<bool?>("ativarLote", null);
-
-            var lg = new LoteGrafica();
-
-            if (pesqInicialNovoLote == true)
+            try
             {
-                return Ok(lg.NovoLoteQuery(db));
-            }
-            else if (criarLote == true)
-            {
-                var empresas = Request.GetQueryStringValue("empresas");
-                                
-                return Ok(new { codigo = lg.Create(db, empresas) } );
-            }
-            else if (ativarLote == true)
-            {
-                var lotes = Request.GetQueryStringValue("lotes");
+                if (!StartDatabaseAndAuthorize())
+                    return BadRequest();
 
-                lg.Ativar(db, lotes);
+                var pesqInicialNovoLote = Request.GetQueryStringValue<bool?>("novoLote", null);
+                var criarLote = Request.GetQueryStringValue<bool?>("criarLote", null);
+                var ativarLote = Request.GetQueryStringValue<bool?>("ativarLote", null);
 
-                return Ok();
-            }
-            else 
-            {
-                var filter = new LoteGraficaFilter
+                var lg = new LoteGrafica();
+
+                if (pesqInicialNovoLote == true)
                 {
-                    skip = Request.GetQueryStringValue("skip", 0),
-                    take = Request.GetQueryStringValue("take", 15),
-                    nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
-                };
+                    return Ok(lg.NovoLoteQuery(db));
+                }
+                else if (criarLote == true)
+                {
+                    var empresas = Request.GetQueryStringValue("empresas");
 
-                return Ok(lg.ComposedFilters(db, filter));
-            }            
+                    return Ok(new { codigo = lg.Create(db, empresas) });
+                }
+                else if (ativarLote == true)
+                {
+                    var lotes = Request.GetQueryStringValue("lotes");
+
+                    lg.Ativar(db, lotes);
+
+                    return Ok();
+                }
+                else
+                {
+                    var filter = new LoteGraficaFilter
+                    {
+                        skip = Request.GetQueryStringValue("skip", 0),
+                        take = Request.GetQueryStringValue("take", 15),
+                        nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
+                    };
+
+                    return Ok(lg.ComposedFilters(db, filter));
+                }
+            }
+            catch (SystemException ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
         
         [HttpGet]

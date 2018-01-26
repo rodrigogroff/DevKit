@@ -55,7 +55,7 @@ namespace DataModel
 
                     db.Update(assoc);
                     
-                    line += tit + "/" + via;
+                    line += tit + "/" + via + ",";
                     line += util.calculaCodigoAcesso ( empresa,
                                                        mat,
                                                        item.nuTit.ToString(),

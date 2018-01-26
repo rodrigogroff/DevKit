@@ -267,6 +267,8 @@
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
+    <Content Include="app\medico\autorizacaoProc.html" />
+    <Content Include="app\medico\autorizacaoProcController.js" />
     <Content Include="app\medico\medicoPassword.html" />
     <Content Include="app\medico\MedicoPasswordController.js" />
     <Content Include="app\people\person\listingPersons.html" />
@@ -889,11 +891,12 @@
     <Compile Include="proc\Domains\dba\EspecialidadeCtrl.cs" />
     <Compile Include="proc\Domains\dba\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\dba\LotesGraficaCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\CartaoCtrl.cs" />
     <Compile Include="proc\Domains\Enums\ContactFormCtrl.cs" />
     <Compile Include="proc\Domains\Enums\DayMonthCtrl.cs" />
     <Compile Include="proc\Domains\Login\StartupCtrl.cs" />
     <Compile Include="proc\Domains\medico\MedicoCtrl.cs" />
-    <Compile Include="proc\Domains\People\PersonCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\PersonCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />

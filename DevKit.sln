@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevKit.DataAccess", "DevKit.DataAccess\DevKit.DataAccess.csproj", "{12E2CE82-0027-4152-ABDF-FCEBE99AE4F7}"
 EndProject
@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		iniciar.txt = iniciar.txt
 		Listings.txt = Listings.txt
 		management.txt = management.txt
+		ProjetoPortalSaúde.doc = ProjetoPortalSaúde.doc
 		todo.txt = todo.txt
 	EndProjectSection
 EndProject

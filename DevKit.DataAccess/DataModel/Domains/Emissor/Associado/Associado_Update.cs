@@ -27,6 +27,13 @@ namespace DataModel
                         break;
 					}
 
+                case "altSenha":
+                    {
+                        this.stSenha = anexedEntity.ToString();
+
+                        break;
+                    }
+
                 case "newDep":
                     {
                         var ent = JsonConvert.DeserializeObject<AssociadoDependente>(anexedEntity.ToString());

@@ -266,6 +266,10 @@
     <Content Include="app\dba\NovoLoteController.js" />
     <Content Include="app\emissora\altSenha.html" />
     <Content Include="app\emissora\EmissoraAltSenha.js" />
+    <Content Include="app\emissora\listagemAssociados.html" />
+    <Content Include="app\emissora\ListagemAssociadosController.js" />
+    <Content Include="app\emissora\associado.html" />
+    <Content Include="app\emissora\AssociadoController.js" />
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
@@ -273,10 +277,6 @@
     <Content Include="app\medico\autorizacaoProcController.js" />
     <Content Include="app\medico\medicoPassword.html" />
     <Content Include="app\medico\MedicoPasswordController.js" />
-    <Content Include="app\people\person\listingPersons.html" />
-    <Content Include="app\people\person\ListingPersonsController.js" />
-    <Content Include="app\people\person\person.html" />
-    <Content Include="app\people\person\PersonController.js" />
     <Content Include="app\system\profile\listingProfiles.html" />
     <Content Include="app\system\profile\ListingProfilesController.js" />
     <Content Include="app\system\profile\profile.html" />

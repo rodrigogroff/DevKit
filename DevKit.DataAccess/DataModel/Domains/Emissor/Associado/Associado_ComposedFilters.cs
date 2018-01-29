@@ -6,7 +6,8 @@ namespace DataModel
 {
 	public class AssociadoFilter : BaseFilter
     {
-		public string   email,
+		public string   matricula,
+                        email,
                         cpf,
                         phone;
         
@@ -18,14 +19,13 @@ namespace DataModel
         string Export()
         {
             var ret = new StringBuilder();
-
-            // base            
+            
             ret.Append(skip + ",");
             ret.Append(take + ",");            
             ret.Append(busca + ",");
             ret.Append(fkEmpresa + ",");
 
-            // adv
+            ret.Append(matricula + ",");
             ret.Append(email + ",");
             ret.Append(cpf + ",");
             ret.Append(phone + ",");
@@ -51,24 +51,25 @@ namespace DataModel
                 query = from e in query where e.stCPF.Equals(filter.cpf) select e;
 
             if (filter.email != null)
-			{
 				query = from e in query
 						join eMail in db.AssociadoEmail on e.id equals eMail.fkUser
 						where e.id == eMail.fkUser
 						where eMail.stEmail.ToUpper().Contains (filter.email)
 						select e;
-			}
 
 			if (filter.phone != null)
-			{
 				query = from e in query
 						join ePhone in db.AssociadoTelefone on e.id equals ePhone.fkUser
 						where e.id == ePhone.fkUser
 						where ePhone.stPhone.ToUpper().Contains(filter.phone)
 						select e;
-			}
 
-			var count = query.Count();
+            if (!string.IsNullOrEmpty(filter.matricula))
+                query = from e in query
+                        where e.nuMatricula.ToString() == filter.matricula
+                        select e;
+
+            var count = query.Count();
 
 			query = query.OrderBy(y => y.stName);
 

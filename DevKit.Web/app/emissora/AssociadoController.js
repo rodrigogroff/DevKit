@@ -1,5 +1,5 @@
 ﻿
-angular.module('app.controllers').controller('PersonController',
+angular.module('app.controllers').controller('AssociadoController',
 ['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects', 
 function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
@@ -39,7 +39,8 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
     
 	init();
 
-    function init() {
+    function init()
+    {
         $scope.setupModel = { stPhoneMask: '' }
         $scope.viewModel = {};
         $scope.permModel = {};

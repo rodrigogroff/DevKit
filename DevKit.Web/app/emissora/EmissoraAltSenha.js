@@ -35,12 +35,14 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         {
             $scope.loading = true;
 
-            var opcoes = { matricula: $scope.campos.mat };
+            var opcoes = {
+                matricula: $scope.campos.mat
+            };
 
             Api.Associado.listPage(opcoes, function (data)
             {
                 if (data.results.length > 0) {
-                    $scope.campos.nomeCartao = data.results[0].associado;
+                    $scope.campos.nomeCartao = data.results[0].stName;
                     $scope.campos.id = data.results[0].id;
                 }
                 else
@@ -74,8 +76,8 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 
             var opcoes = {
                 id: $scope.campos.id,
-                modo: 'altSenha',
-                valor: $scope.campos.novaSenha
+                updateCommand: 'altSenha',
+                anexedEntity: $scope.campos.novaSenha
             };
 
             $scope.modal = false;

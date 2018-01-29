@@ -58,9 +58,9 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('clientgroup-new', { url: '/configuration/clientgroup/new', templateUrl: 'app/configuration/clientgroup/clientGroup.html', controller: 'ClientGroupController' })
     .state('clientgroup', { url: '/configuration/clientgroup/:id', templateUrl: 'app/configuration/clientgroup/clientGroup.html', controller: 'ClientGroupController' })
 
-    .state('persons', { url: '/people/persons', templateUrl: 'app/people/person/listingPersons.html', controller: 'ListingPersonsController' })
-    .state('person-new', { url: '/people/person/new', templateUrl: 'app/people/person/person.html', controller: 'PersonController' })
-    .state('person', { url: '/people/person/:id', templateUrl: 'app/people/person/person.html', controller: 'PersonController' })
+    .state('persons', { url: '/emissora/associados', templateUrl: 'app/emissora/listagemAssociados.html', controller: 'ListagemAssociadosController' })
+    .state('person-new', { url: '/emissora/associados/new', templateUrl: 'app/emissora/associado.html', controller: 'AssociadoController' })
+    .state('person', { url: '/emissora/associados/:id', templateUrl: 'app/emissora/associado.html', controller: 'AssociadoController' })
 
     .state('lotesgrafica', { url: '/dba/lotes', templateUrl: 'app/dba/listingLotes.html', controller: 'ListingLotesController' })
     .state('novolote', { url: '/dba/lotes/novo', templateUrl: 'app/dba/novoLote.html', controller: 'NovoLoteController' })

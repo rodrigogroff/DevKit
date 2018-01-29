@@ -97,7 +97,8 @@ namespace DataModel
                             PersonRemoveEmail = 206,
                             PersonAddAddress = 207,
                             PersonEditAddress = 208,
-                            PersonRemoveAddress = 209;
+                            PersonRemoveAddress = 209,
+                            PersonTrocaSenha = 210;
 
 
         public EnumAuditAction()
@@ -173,6 +174,7 @@ namespace DataModel
             lst.Add(new AuditAction() { id = PersonAddAddress, stName = "Pessoa \\ Adicionar endereço" });
             lst.Add(new AuditAction() { id = PersonEditAddress, stName = "Pessoa \\ Editar endereço" });
             lst.Add(new AuditAction() { id = PersonRemoveAddress, stName = "Pessoa \\ Remover endereço" });
+            lst.Add(new AuditAction() { id = PersonTrocaSenha, stName = "Pessoa \\ Troca de senha" });
 
             lst.OrderBy(y => y.stName);
 		}

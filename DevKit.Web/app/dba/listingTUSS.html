@@ -1,6 +1,6 @@
-﻿<div class="webFormPostion" style="width:90%">
-    <section class="widgetForm" style="width:100%">
-        <legend class="legendTop" style="width:100%">
+﻿<div class="webFormPostion" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
             <table><tr height="12px"><td> </td></tr></table>
             <table style="color:white; width:100%">
                 <tr>
@@ -13,9 +13,9 @@
                 <tr height="12px"></tr>
             </table>
         </legend>
-        <div class="divWebFormListing" style="padding-left:35px;width:{{windowWidth}}px">
-            <table>
-                <tr>                    
+        <div class="divWebFormListing" style="padding-left:35px;">
+            <table style="color:white">
+                <tr>
                     <td valign="top">
                         <table class="widget" style="color:white">
                             <tr height="22px"> </tr>
@@ -44,43 +44,44 @@
                     </td>
                 </tr>
             </table>
-            <table width="95%">
-                <tr>
-                    <td valign="top">
-                        <div ng-show="list.length == 0">
-                            <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
-                            <br />
-                            <br />
-                        </div>
-                        <div ng-show="list.length > 0">
-                            <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
-                            <br />
-                            <table class="table table-hover" style="width:95%">
-                                <thead>
-                                    <tr>
-                                        <th width="120px">Código TUSS</th>
-                                        <th width="200px">Desc. Grupo</th>
-                                        <th width="300px">Desc. Sub-Grupo </th>
-                                        <th width="600px">Procedimento</th>                                        
+            <div style="overflow-x:scroll;overflow:auto;">
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div ng-show="list.length == 0">
+                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="list.length > 0">
+                                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                                <br />
+                                <table class="table table-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="min-width:120px">Código TUSS</th>
+                                            <th style="min-width:240px">Desc. Grupo</th>
+                                            <th style="min-width:300px">Desc. Sub-Grupo </th>
+                                            <th style="min-width:500px">Procedimento</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                        <td>{{ mdl.nuCodTUSS }}</td>
+                                        <td>{{ mdl.stDescricaoGP }}</td>
+                                        <td>{{ mdl.stDescricaoSubGP }}</td>
+                                        <td>{{ mdl.stProcedimento }}</td>
                                     </tr>
-                                </thead>
-                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                    <td>{{ mdl.nuCodTUSS }}</td>
-                                    <td>{{ mdl.stDescricaoGP }}</td>
-                                    <td>{{ mdl.stDescricaoSubGP }}</td>
-                                    <td>{{ mdl.stProcedimento }}</td>
-                                </tr>
-                            </table>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                        </div>
-                        <br />
-                    </td>
-                </tr>
-            </table>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </section>
 </div>
+<br />
+<br />
+<br />
+<br />
+<br />

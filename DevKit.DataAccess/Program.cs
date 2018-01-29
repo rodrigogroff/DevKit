@@ -258,7 +258,7 @@ namespace GetStarted
 
                                             var nome = ar[0].Trim();
                                             var cpfCnpj = ar[1].Trim();
-                                            var espec = ar[1].Trim();
+                                            var espec = ar[2].Trim();
 
                                             if (!db.Especialidade.Any (y=> y.stNome == espec))
                                             {

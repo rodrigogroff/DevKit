@@ -63,7 +63,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             if ($scope.loaded == undefined)
                 $scope.loading = true;
 
-            Api.Person.get({ id: id }, function (data)
+            Api.Associado.get({ id: id }, function (data)
 			{
 				$scope.viewModel = data;
                 $scope.loading = false;
@@ -122,7 +122,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 {
 					$scope.viewModel.updateCommand = "entity";
 
-                    Api.Person.update({ id: id }, $scope.viewModel, function (data)
+                    Api.Associado.update({ id: id }, $scope.viewModel, function (data)
 					{
                         toastr.success('Cadastro atualizado!', 'Sucesso');
 					},
@@ -133,7 +133,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				}
 				else
 				{
-                    Api.Person.add($scope.viewModel, function (data)
+                    Api.Associado.add($scope.viewModel, function (data)
 					{
                         toastr.success('Cadastro adicionado!', 'Sucesso');                       
                         $state.go('person', { id: data.id });
@@ -157,7 +157,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
-            Api.Person.remove({ id: id }, function (data)
+            Api.Associado.remove({ id: id }, function (data)
 			{
                 toastr.success('Cadastro removido!', 'Sucesso');
 				$scope.list();
@@ -195,7 +195,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $scope.viewModel.updateCommand = "removePhone";
         $scope.viewModel.anexedEntity = $scope.delPhone;
 
-        Api.Person.update({ id: id }, $scope.viewModel, function (data) {
+        Api.Associado.update({ id: id }, $scope.viewModel, function (data) {
             loadEntity();
 		});
 	}
@@ -238,7 +238,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				$scope.viewModel.updateCommand = "newPhone";
 				$scope.viewModel.anexedEntity = $scope.newPhone;
 
-                Api.Person.update({ id: id }, $scope.viewModel, function (data)
+                Api.Associado.update({ id: id }, $scope.viewModel, function (data)
 				{
 					$scope.newPhone = {};
                     loadEntity();
@@ -291,7 +291,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				$scope.viewModel.updateCommand = "newDep";
                 $scope.viewModel.anexedEntity = $scope.newDep;
 
-                Api.Person.update({ id: id }, $scope.viewModel, function (data)
+                Api.Associado.update({ id: id }, $scope.viewModel, function (data)
                 {
                     $scope.newDep = {};
                     loadEntity();
@@ -326,7 +326,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $scope.viewModel.updateCommand = "removeEmail";
         $scope.viewModel.anexedEntity = $scope.delEmail;
 
-        Api.Person.update({ id: id }, $scope.viewModel, function (data) {
+        Api.Associado.update({ id: id }, $scope.viewModel, function (data) {
             loadEntity();
         });
     }
@@ -366,7 +366,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				$scope.viewModel.updateCommand = "newEmail";
 				$scope.viewModel.anexedEntity = $scope.newEmail;
 
-                Api.Person.update({ id: id }, $scope.viewModel, function (data)
+                Api.Associado.update({ id: id }, $scope.viewModel, function (data)
                 {
                     $scope.newEmail = {};
                     loadEntity();
@@ -401,7 +401,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $scope.viewModel.updateCommand = "removeEnd";
         $scope.viewModel.anexedEntity = $scope.delEnd;
 
-        Api.Person.update({ id: id }, $scope.viewModel, function (data) {
+        Api.Associado.update({ id: id }, $scope.viewModel, function (data) {
             loadEntity();
         });
     }
@@ -441,7 +441,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 $scope.viewModel.updateCommand = "newEnd";
                 $scope.viewModel.anexedEntity = $scope.newEnd;
 
-                Api.Person.update({ id: id }, $scope.viewModel, function (data) {
+                Api.Associado.update({ id: id }, $scope.viewModel, function (data) {
                     $scope.newEnd = {};
                     loadEntity();
                 },

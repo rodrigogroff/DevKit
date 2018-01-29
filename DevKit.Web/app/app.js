@@ -71,6 +71,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('especialidades', { url: '/dba/especialidades', templateUrl: 'app/dba/listingEspecialidades.html', controller: 'ListingEspecialidadesController' })
 
     .state('medicopass', { url: '/medico/medicoTrocaSenha/:id', templateUrl: 'app/medico/medicoPassword.html', controller: 'MedicoPasswordController' })
+    .state('altSenha', { url: '/emissora/altSenha/:id', templateUrl: 'app/emissora/altSenha.html', controller: 'EmissoraAltSenhaController' })
     .state('autorizacaoProc', { url: '/medico/autorizacaoProc/:id', templateUrl: 'app/medico/autorizacaoProc.html', controller: 'AutorizacaoProcController' })
 
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });

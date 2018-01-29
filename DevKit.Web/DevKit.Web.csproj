@@ -264,6 +264,8 @@
     <Content Include="app\dba\ListingLotesController.js" />
     <Content Include="app\dba\novoLote.html" />
     <Content Include="app\dba\NovoLoteController.js" />
+    <Content Include="app\emissora\altSenha.html" />
+    <Content Include="app\emissora\EmissoraAltSenha.js" />
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
@@ -896,7 +898,7 @@
     <Compile Include="proc\Domains\Enums\DayMonthCtrl.cs" />
     <Compile Include="proc\Domains\Login\StartupCtrl.cs" />
     <Compile Include="proc\Domains\medico\MedicoCtrl.cs" />
-    <Compile Include="proc\Domains\emissor\PersonCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />

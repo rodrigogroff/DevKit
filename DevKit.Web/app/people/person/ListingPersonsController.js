@@ -55,7 +55,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             phone: $scope.campos.phone,
         };
 
-		Api.Person.listPage(opcoes, function (data)
+		Api.Associado.listPage(opcoes, function (data)
 		{
 			$scope.list = data.results;
 			$scope.total = data.count;

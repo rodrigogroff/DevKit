@@ -4,7 +4,7 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class PersonController : ApiControllerBase
+	public class AssociadoController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{

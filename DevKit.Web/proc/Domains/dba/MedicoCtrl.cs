@@ -30,7 +30,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.Empresa.Where(y => y.id == id).FirstOrDefault();
+            var mdl = db.Medico.Where(y => y.id == id).FirstOrDefault();
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);

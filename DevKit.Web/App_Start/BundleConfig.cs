@@ -113,6 +113,7 @@ namespace DevKit.Web
                 "~/app/dba/ListingEspecialidadesController.js",
                 "~/app/dba/ListingMedicosController.js",
                 "~/app/dba/NovoLoteController.js",
+                "~/app/dba/MedicoController.js",
                 "~/app/emissora/ListagemAssociadosController.js",
                 "~/app/emissora/AssociadoController.js",
                 "~/app/emissora/EmissoraAltSenha.js",

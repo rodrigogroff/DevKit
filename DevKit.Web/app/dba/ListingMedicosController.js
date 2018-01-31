@@ -38,10 +38,16 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 			$scope.total = data.count;
 			$scope.loading = false;
 		});
-	}
+    }
+
+    $scope.show = function (mdl) {
+       // if (!$scope.permModel.visualizar)
+         //   toastr.error('Acesso negado!', 'Permissão');
+        //else
+            $state.go('medico', { id: mdl.id });
+    }
         
-	$scope.new = function ()
-	{
+	$scope.new = function () {
 		$state.go('novomedico');
 	}
 

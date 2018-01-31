@@ -13,7 +13,9 @@ namespace DataModel
 
 			switch (updateCommand)
 			{
-				case "entity":
+                default: return false;
+
+                case "entity":
 					{
                         new AuditLog
                         {
@@ -30,8 +32,7 @@ namespace DataModel
                 case "altSenha":
                     {
                         this.stSenha = anexedEntity.ToString();
-
-                        break;
+                        return true;
                     }
 
                 case "newDep":
@@ -83,20 +84,19 @@ namespace DataModel
                             db.Update(ent);
                         }
 
-                        break;
+                        return true;
                     }
-
 
                 case "newPhone":
 					{
 						var ent = JsonConvert.DeserializeObject<AssociadoTelefone>(anexedEntity.ToString());
 
 						ent.stPhone = GetMaskedValue(db, ent.stPhone);
-						ent.fkUser = id;
+						ent.fkPerson = id;
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.AssociadoTelefone where ne.stPhone == ent.stPhone select ne).Any())
+							if ((from ne in db.AssociadoTelefone where ne.fkPerson == id && ne.stPhone == ent.stPhone select ne).Any())
 							{
 								resp = "Telefone já utilizado!";
 								return false;
@@ -130,10 +130,10 @@ namespace DataModel
                             Create(db, oldPhone.stPhone + " => " + ent.stPhone, "");
 
                             db.Update(ent);
-                        }							
+                        }
 
-						break;
-					}
+                        return true;
+                    }
 
 				case "removePhone":
 					{
@@ -150,18 +150,18 @@ namespace DataModel
 
                         db.Delete(ent);
 
-						break;
-					}
+                        return true;
+                    }
 
 				case "newEmail":
 					{
 						var ent = JsonConvert.DeserializeObject<AssociadoEmail>(anexedEntity.ToString());
 
-						ent.fkUser = id;
+                        ent.fkPerson = id;
 
-						if (ent.id == 0)
+                        if (ent.id == 0)
 						{
-							if ((from ne in db.AssociadoEmail where ne.stEmail == ent.stEmail select ne).Any())
+							if ((from ne in db.AssociadoEmail where ne.fkPerson == id && ne.stEmail == ent.stEmail select ne).Any())
 							{
 								resp = "Email já utilizado!";
 								return false;
@@ -196,10 +196,10 @@ namespace DataModel
                             Create(db, oldEmail.stEmail + " => " + ent.stEmail, "");
 
                             db.Update(ent);
-                        }							
+                        }
 
-                        break;
-					}
+                        return true;
+                    }
 
 				case "removeEmail":
 					{
@@ -214,16 +214,16 @@ namespace DataModel
                         }.
                         Create(db, ent.stEmail, "");
 
-                        db.Delete(ent); 
+                        db.Delete(ent);
 
-						break;
-					}
+                        return true;
+                    }
 
                 case "newEnd":
                     {
                         var ent = JsonConvert.DeserializeObject<AssociadoEndereco>(anexedEntity.ToString());
 
-                        ent.fkUser = id;
+                        ent.fkPerson = id;
 
                         if (ent.bPrincipal == null)
                             ent.bPrincipal = false;
@@ -262,9 +262,9 @@ namespace DataModel
                                        ent.stRua + " " + ent.stNumero + " " + ent.stReferencia, "");
 
                             db.Update(ent);
-                        }                            
+                        }
 
-                        break;
+                        return true;
                     }
 
                 case "removeEnd":
@@ -291,7 +291,7 @@ namespace DataModel
                             db.Update(pa);
                         }
 
-                        break;
+                        return true;
                     }
             }
             

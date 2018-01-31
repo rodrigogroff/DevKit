@@ -4,24 +4,26 @@ angular.module('app.controllers').controller('LoginController',
 ['$scope', '$rootScope', '$location', 'AuthService', 'version','Api',
 function ($scope, $rootScope, $location, AuthService, version, Api)
 {
-	$rootScope.exibirMenu = false;
-
-	$scope.version = version;	
-	$scope.loading = false;
-	$scope.loginOK = false;
-	$scope.mensagem = "";
-
-	$scope.loginData =
-		{
-			userName: "",
-			password: ""
-		};
+    $rootScope.exibirMenu = false;
 
     init();
 
-    function init() {
-        if ($rootScope.tipo == undefined)
-            $rootScope.tipo = $location.search().tipo;
+    function init()
+    {
+        $scope.version = version;
+        $scope.loading = false;
+        $scope.loginOK = false;
+        $scope.mensagem = "";
+
+        $scope.loginData =
+            {
+                userName: "",
+                password: ""
+            };
+    }
+
+    $scope.redirLogin = function (tiporedir) {
+        $rootScope.tipo = tiporedir;
     }
 
     $scope.login = function ()

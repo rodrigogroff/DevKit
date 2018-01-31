@@ -22,10 +22,39 @@
 <body class="background-white" >
     <div align="center" style="padding-top:150px;">
 
-        <div ng-if="tipo == 1 || tipo == undefined" align="center" style="width:400px;height:530px;background-color:#e0e0e0;" ng-show="!loginOK">
+        <div ng-if="tipo == undefined" align="center" style="width:500px;height:590px;background-color:#e0e0e0;" ng-show="!loginOK">
             <form id="validate" style="width:300px;">
                 <fieldset>
-                    <br /><br />
+                    <br />
+                    <h3>Portal Saúde ConveyNET</h3>
+                    <br />
+                    <div style="padding-left:90px">
+                        <img src='../../images/logo.png' height="120px" /><br />
+                    </div>
+                    <br />
+                    Selecione seu login nas opções abaixo:<br />
+                    <br />
+                    <br />
+                    <a style="width:200px" class="btn btn-primary" ng-click="redirLogin(1)">Médicos</a><br />
+                    <br />
+                    <a style="width:200px" class="btn btn-primary" ng-click="redirLogin(4)">Associações</a><br />
+                    <br />
+                    <a style="width:200px" class="btn btn-primary" ng-click="redirLogin(2)">Associados</a><br />
+                    <br />
+                    <br />
+                    <a style="width:200px" class="btn btn-default" ng-click="redirLogin(5)">Administração</a><br />
+                    <br />
+                    <br />
+                </fieldset>
+                <span style="color:grey;text-align:center">Versão {{version}}</span>
+            </form>
+        </div>
+        
+        <div ng-if="tipo == 1" align="center" style="width:400px;height:530px;background-color:#e0e0e0;" ng-show="!loginOK">
+            <form id="validate" style="width:300px;">
+                <fieldset>
+                    <br /><h3>Portal Saúde ConveyNET</h3>
+                    Médicos<br />
                     <br />
                     <div style="padding-left:90px">
                         <img src='../../images/logo.png' height="120px" /><br />
@@ -77,10 +106,11 @@
             </form>
         </div>
 
-        <div ng-if="tipo == 4" align="center" style="width:400px;height:530px;background-color:#e0e0e0;" ng-show="!loginOK">
+        <div ng-if="tipo == 4" align="center" style="width:400px;height:600px;background-color:#e0e0e0;" ng-show="!loginOK">
             <form id="validate" style="width:300px;">
                 <fieldset>
-                    <br /><br />
+                    <br /><h3>Portal Saúde ConveyNET</h3>
+                    Associações<br />
                     <br />
                     <div style="padding-left:90px">
                         <img src='../../images/logo.png' height="120px" /><br />
@@ -144,10 +174,12 @@
             </form>
         </div>
 
-        <div ng-if="tipo == 5" align="center" style="width:400px;height:460px;background-color:#e0e0e0;" ng-show="!loginOK">
+        <div ng-if="tipo == 5" align="center" style="width:400px;height:560px;background-color:#e0e0e0;" ng-show="!loginOK">
             <form id="validate" style="width:300px;">
                 <fieldset>
-                    <br /><br />
+                    <br /><h3>Portal Saúde ConveyNET</h3>
+                    Administração<br />
+                    <br />
                     <br />
                     <div style="padding-left:90px">
                         <img src='../../images/logo.png' height="120px" /><br />

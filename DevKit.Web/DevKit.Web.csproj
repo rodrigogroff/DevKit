@@ -252,6 +252,8 @@
     <Content Include="app\configuration\sprint\ListingSprintsController.js" />
     <Content Include="app\configuration\sprint\sprint.html" />
     <Content Include="app\configuration\sprint\SprintController.js" />
+    <Content Include="app\dba\medico.html" />
+    <Content Include="app\dba\MedicoController.js" />
     <Content Include="app\dba\listingTUSS.html" />
     <Content Include="app\dba\ListingTUSSController.js" />
     <Content Include="app\dba\listingMedicos.html" />
@@ -897,7 +899,7 @@
     <Compile Include="proc\Domains\Enums\ContactFormCtrl.cs" />
     <Compile Include="proc\Domains\Enums\DayMonthCtrl.cs" />
     <Compile Include="proc\Domains\Login\StartupCtrl.cs" />
-    <Compile Include="proc\Domains\medico\MedicoCtrl.cs" />
+    <Compile Include="proc\Domains\dba\MedicoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
@@ -947,7 +949,9 @@
     <Compile Include="proc\Services\Cache\CacheControlService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="proc\Domains\medico\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>

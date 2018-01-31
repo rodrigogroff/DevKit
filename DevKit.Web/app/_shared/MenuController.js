@@ -12,7 +12,9 @@ function ($scope, $rootScope, $location, AuthService, Api, version, $state)
             $state.go('home');
         }
 
-        $scope.logOut = function () {
+        $scope.logOut = function ()
+        {
+            $rootScope.tipo = undefined;
             AuthService.logOut();
             $location.path('/login');
         };
@@ -20,6 +22,7 @@ function ($scope, $rootScope, $location, AuthService, Api, version, $state)
         $scope.version = version;
 
         AuthService.fillAuthData();        
+
 		$scope.authentication = AuthService.authentication;
 
 		if (!AuthService.authentication.isAuth)

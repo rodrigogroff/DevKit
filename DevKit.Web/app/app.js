@@ -67,6 +67,14 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 
     .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/listingEmpresas.html', controller: 'ListingEmpresasController' })
     .state('medicos', { url: '/dba/medicos', templateUrl: 'app/dba/listingMedicos.html', controller: 'ListingMedicosController' })
+
+    .state('medico',
+    {
+        url: '/dba/medico/:id',
+        templateUrl: 'app/dba/medico.html',
+        controller: 'MedicoController'
+    })
+
     .state('tuss', { url: '/dba/tuss', templateUrl: 'app/dba/listingTUSS.html', controller: 'ListingTUSSController' })
     .state('especialidades', { url: '/dba/especialidades', templateUrl: 'app/dba/listingEspecialidades.html', controller: 'ListingEspecialidadesController' })
 

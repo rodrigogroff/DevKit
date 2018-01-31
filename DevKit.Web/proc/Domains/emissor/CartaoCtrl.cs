@@ -21,6 +21,9 @@ namespace DevKit.Web.Controllers
             var ca = Request.GetQueryStringValue("ca");
             var titVia = Request.GetQueryStringValue("titVia")?.PadLeft(4,'0');
 
+            var nuTit = Convert.ToInt32(titVia.Substring(0, 2));
+            var nuVia = Convert.ToInt32(titVia.Substring(2, 2));
+
             var empTb = (from e in db.Empresa
                        where e.nuEmpresa == emp
                        select e).
@@ -32,26 +35,22 @@ namespace DevKit.Web.Controllers
             var associado = (from e in db.Associado
                              where e.fkEmpresa == empTb.id
                              where e.nuMatricula == mat
+                             where e.nuTitularidade == nuTit
+                             where e.nuViaCartao == nuVia
                              select e).
                              FirstOrDefault();
-
+            
             if (associado == null)
                 return BadRequest("Matrícula inválida");
 
-            if (associado.nuTitularidade != Convert.ToInt32(titVia.Substring(0,2)))
-                return BadRequest("Cartão inválido");
-
-            if (associado.nuViaCartao != Convert.ToInt32(titVia.Substring(2, 2)))
-                return BadRequest("Cartão inválido");
-
-            if (ca != util.calculaCodigoAcesso(emp.ToString().PadLeft(6, '0'),
+            var caCalc = util.calculaCodigoAcesso(emp.ToString().PadLeft(6, '0'),
                                                mat.ToString().PadLeft(6, '0'),
                                                associado.nuTitularidade.ToString(),
                                                associado.nuViaCartao.ToString(),
-                                               associado.stCPF))
-            {
-                return BadRequest("Cartão inválido");
-            }
+                                               associado.stCPF);
+
+            if (ca != caCalc)
+                return BadRequest("Cartão inválido >> " + caCalc);
 
             return Ok( associado );
         }

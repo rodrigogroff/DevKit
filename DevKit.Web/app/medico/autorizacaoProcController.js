@@ -40,7 +40,10 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 			$scope.list = data.results;
 			$scope.total = data.count;
 			$scope.loading = false;
-		});
+        },
+            function (response) {
+                $scope.loading = false;
+            });
 	}
         
 	$scope.marcar = function (mdl)
@@ -78,6 +81,10 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         Api.Cartao.listPage(opcoes, function (data) {
             $scope.associado = data;
             $scope.loading = false;
+        },
+            function (response) {
+                $scope.loading = false;
+                toastr.error('Cartão inválido!', 'Verificação');
         });
     }
 

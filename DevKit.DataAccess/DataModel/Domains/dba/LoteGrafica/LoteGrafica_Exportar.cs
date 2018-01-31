@@ -56,15 +56,9 @@ namespace DataModel
                     db.Update(assoc);
                     
                     line += tit + "/" + via + ",";
-                    line += util.calculaCodigoAcesso ( empresa,
-                                                       mat,
-                                                       item.nuTit.ToString(),
-                                                       item.nuVia.ToString(),
-                                                       assoc.stCPF );
-
+                    line += util.calculaCodigoAcesso ( empresa, mat, tit, via, assoc.stCPF );
                     line += ",";
                     line += nome + ",";
-
                     line += "|";
 
                     line += "826766" + 

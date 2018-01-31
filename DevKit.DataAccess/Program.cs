@@ -283,7 +283,8 @@ namespace GetStarted
                                                 fkEspecialidade = db.Especialidade.FirstOrDefault(y=>y.stNome == espec).id,
                                                 stNome = nome,
                                                 stCnpj = cpfCnpj,
-                                                nuCodigo = cpfCnpj.Length > 14 ? 2 : 1,
+                                                nuCodigo = codDisp,
+                                                nuTipo = cpfCnpj.Length > 14 ? 2 : 1,
                                             }));
 
                                             db.Insert(new MedicoEmpresa
@@ -363,6 +364,7 @@ namespace GetStarted
                             Console.WriteLine("Carga de base finalizada.");
                             Console.WriteLine("-----------------------------------------");
                             Console.WriteLine("");
+                            Console.ReadLine();
 
                             break;
                         }

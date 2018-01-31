@@ -457,5 +457,8 @@ ALTER TABLE public."TUSS" ADD COLUMN if not exists "stDescricaoGP" character var
 ALTER TABLE public."TUSS" ADD COLUMN if not exists "stDescricaoSubGP" character varying(800);
 ALTER TABLE public."TUSS" ADD COLUMN if not exists "stProcedimento" character varying(2000);
 
-
-
+CREATE TABLE IF NOT EXISTS public."MedicoEmpresaTuss" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."MedicoEmpresaTuss" OWNER to postgres;
+ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "fkMedico" bigint;
+ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "nuTUSS" bigint;

@@ -148,7 +148,79 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
     $scope.list = function ()
     {
 		$state.go('medicos');
-	}
+    }
+
+    // ============================================
+    // empresa 
+    // ============================================
+
+    $scope.addEmpresa = false;
+
+    $scope.removeEmpresa = function (index, lista) {
+        //if (!$scope.permModel.novo && !$scope.permModel.edicao)
+        //  toastr.error('Acesso negado!', 'Permissão');
+        //else
+        {
+            $scope.modalEmpresa = true;
+            $scope.delEmpresa = $scope.viewModel.empresas[index];
+        }
+    }
+
+    $scope.closeModalEmpresa = function () {
+        $scope.modalEmpresa = false;
+    }
+
+    $scope.removerEmpresaModal = function () {
+        $scope.viewModel.updateCommand = "removeEmpresa";
+        $scope.viewModel.anexedEntity = $scope.delEmpresa;
+
+        Api.Medico.update({ id: id }, $scope.viewModel, function (data) {
+            loadEntity();
+        });
+    }
+
+    $scope.addNewEmpresa = function () {
+        //if (!$scope.permModel.novo && !$scope.permModel.edicao)
+        //  toastr.error('Acesso negado!', 'Permissão');
+        //else
+        $scope.addEmpresa = !$scope.addEmpresa;
+    }
+
+    $scope.newEmpresa = {};
+
+    $scope.editEmpresa = function (mdl) {
+        $scope.addEmpresa = true;
+        $scope.newEmpresa = mdl;
+    }
+
+    $scope.cancelEmpresa = function () {
+        $scope.addEmpresa = false;
+        $scope.newEmpresa = {};
+    }
+
+    $scope.saveNewEmpresa = function () {
+        //if (!$scope.permModel.novo && !$scope.permModel.edicao)
+        //  toastr.error('Acesso negado!', 'Permissão');
+        //else
+        {
+            //if (!$scope.stPhone_fail &&
+              //  !$scope.stDescription_fail)
+            {
+                $scope.addEmpresa = false;
+
+                $scope.viewModel.updateCommand = "newEmpresa";
+                $scope.viewModel.anexedEntity = $scope.newEmpresa;
+
+                Api.Medico.update({ id: id }, $scope.viewModel, function (data) {
+                    $scope.newPhone = {};
+                    loadEntity();
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Error');
+                    });
+            }
+        }
+    }
     
 	// ============================================
 	// phone 

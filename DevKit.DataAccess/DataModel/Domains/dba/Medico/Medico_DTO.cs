@@ -8,6 +8,11 @@ namespace DataModel
                       sfkCidade = "";
     }
 
+    public partial class MedicoEmpresa
+    {
+        public string sfkEmpresa = "";
+    }
+
     public partial class Medico
     {
         public object anexedEntity;
@@ -15,9 +20,11 @@ namespace DataModel
         public string   sfkEspecialidade,
                         updateCommand = "";
 
+        public List<MedicoEmpresa> empresas;
+
         public List<MedicoPhone> phones;
         public List<MedicoEmail> emails;
-        public List<MedicoAddress> enderecos;
+        public List<MedicoAddress> enderecos;        
     }
 
     public class MedicoReport
@@ -25,5 +32,4 @@ namespace DataModel
         public int count = 0;
         public List<Medico> results = new List<Medico>();
     }
-
 }

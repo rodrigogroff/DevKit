@@ -41,6 +41,7 @@ namespace DataModel
 		public ITable<MedicoAddress>        MedicoAddress        { get { return this.GetTable<MedicoAddress>(); } }
 		public ITable<MedicoEmail>          MedicoEmail          { get { return this.GetTable<MedicoEmail>(); } }
 		public ITable<MedicoEmpresa>        MedicoEmpresa        { get { return this.GetTable<MedicoEmpresa>(); } }
+		public ITable<MedicoEmpresaTuss>    MedicoEmpresaTuss    { get { return this.GetTable<MedicoEmpresaTuss>(); } }
 		public ITable<MedicoPhone>          MedicoPhone          { get { return this.GetTable<MedicoPhone>(); } }
 		public ITable<Procedimento>         Procedimento         { get { return this.GetTable<Procedimento>(); } }
 		public ITable<Profile>              Profile              { get { return this.GetTable<Profile>(); } }
@@ -354,6 +355,15 @@ namespace DataModel
 		[PrimaryKey, Identity] public long  id        { get; set; } // bigint
 		[Column,     Nullable] public long? fkMedico  { get; set; } // bigint
 		[Column,     Nullable] public long? fkEmpresa { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="MedicoEmpresaTuss")]
+	public partial class MedicoEmpresaTuss
+	{
+		[PrimaryKey, Identity] public long  id        { get; set; } // bigint
+		[Column,     Nullable] public long? fkMedico  { get; set; } // bigint
+		[Column,     Nullable] public long? fkEmpresa { get; set; } // bigint
+		[Column,     Nullable] public long? nuTUSS    { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="MedicoPhone")]
@@ -831,6 +841,12 @@ namespace DataModel
 		}
 
 		public static MedicoEmpresa Find(this ITable<MedicoEmpresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static MedicoEmpresaTuss Find(this ITable<MedicoEmpresaTuss> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

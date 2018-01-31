@@ -13,12 +13,26 @@ namespace DataModel
                                     FirstOrDefault().
                                     stNome;
 
+            empresas = LoadEmpresas(db);
             phones = LoadPhones(db);
             emails = LoadEmails(db);
             enderecos = LoadEnderecos(db);
 
             return this;
 		}
+
+        List<MedicoEmpresa> LoadEmpresas(DevKitDB db)
+        {
+            var lst = (from e in db.MedicoEmpresa where e.fkMedico == id select e).
+                ToList();
+
+            foreach (var item in lst)
+            {
+                item.sfkEmpresa = db.Empresa.Where(y => y.id == item.fkEmpresa).FirstOrDefault().stNome;
+            }
+
+            return lst;
+        }
 
         List<MedicoPhone> LoadPhones(DevKitDB db)
         {

@@ -62,6 +62,104 @@
                         </table>
                     </div>
                 </tab>
+                <tab heading="Empresas [{{viewModel.empresas.length}}]" ng-if="viewModel.id != undefined">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="12px"></tr>
+                            <tr>
+                                <td width="20px"></td>
+                                <td>
+                                    <legend style="color:white">
+                                        Lista de empresas
+                                        <button class="btn btn-info btn-xs pull-right" ng-click="addNewEmpresa()"><i class="fa fa-plus"> </i> Adicionar </button>
+                                    </legend>
+                                    <div ng-show="viewModel.empresas.length == 0 && addEmpresa == false">
+                                        <br />
+                                        <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    </div>
+                                    <div ng-if="addEmpresa == true">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr height="42px">
+                                                            <td width="120px">
+                                                                <b>Nome empresa</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="stPhone_fail">!</button>
+                                                            </td>
+                                                            <td width="200px">
+                                                                select
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                        <button class="btn btn-default" ng-click="cancelEmpresa()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewEmpresa()">Salvar </button>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div ng-show="viewModel.empresas.length > 0">
+                                        <br />
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nome empresa</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="mdl in viewModel.empresas">
+                                                <td>{{ mdl.sfkEmpresa }}</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="editEmpresa(mdl)">
+                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="" role="button" ng-click="removeEmpresa($index, viewModel.empresas)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="modal-backdrop"
+                                                         ng-if="modalEmpresa == true"
+                                                         style="background: rgba(55, 55, 55, 0.5 );">
+                                                        <div class="modal-dialog" style="width:500px">
+                                                            <br />
+                                                            <br />
+                                                            <br />
+                                                            <div class="modal-content" style="color:black">
+                                                                <legend style="color:black">
+                                                                    Remoção de empresa
+                                                                    <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalEmpresa()"> X </button> &nbsp;
+                                                                </legend>
+                                                                Confirma remoção da empresa abaixo?<br /><br />
+                                                                -{{delEmpresa.sfkEmpresa}}<br />
+                                                                
+                                                                <br />
+                                                                <br />
+                                                                <div class="pull-right">
+                                                                    <button class="btn btn-primary" ng-click="removerEmpresaModal()"> Remover </button>
+                                                                </div>
+                                                                <br />
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
                 <tab heading="Telefones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">

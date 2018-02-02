@@ -16,6 +16,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
         $scope.itensporpagina = 15;
         $scope.selecionouProc = null;
+
+        $scope.pedirSenha = false;
 	}
 
 	$scope.search = function ()
@@ -84,7 +86,36 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         },
             function (response) {
                 $scope.loading = false;
-                toastr.error('Cartão inválido!', 'Verificação');
+                toastr.error(response.message, 'Verificação');
+        });
+    }
+
+    $scope.abreSenha = function ()
+    {
+        $scope.pedirSenha = true;
+    }
+
+    $scope.closeModalSenha = function () {
+        $scope.pedirSenha = false;
+    }
+
+    $scope.autorizar = function ()
+    {
+        var opcoes = {
+            emp: $scope.campos.cartEmp,
+            mat: $scope.campos.cartMat,
+            ca: $scope.campos.cartCA,            
+            titVia: $scope.campos.cartTitVia,
+            senha: $scope.campos.senha,
+            tuss: $scope.selecionouProc,
+        };
+        
+        Api.AutorizaProc.listPage(opcoes, function (data)
+        {
+            $scope.closeModalSenha();
+        },
+        function (response) {
+            toastr.error(response.message, 'Autorização');
         });
     }
 

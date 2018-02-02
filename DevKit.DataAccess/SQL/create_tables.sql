@@ -423,10 +423,10 @@ ALTER TABLE public."Procedimento" ADD COLUMN if not exists "stDescSubGP" charact
 CREATE TABLE IF NOT EXISTS public."Autorizacao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Autorizacao" OWNER to postgres;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "dtSolicitacao" timestamp without time zone;
-ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkPerson" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkMedico" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkProcedimento" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAssociado" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "tgSituacao" bigint;
 
 CREATE TABLE IF NOT EXISTS public."Fechamento" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);

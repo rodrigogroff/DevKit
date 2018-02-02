@@ -146,9 +146,50 @@
                         </table>
 
                         <br />
-                        <button ng-if="associado != undefined && selecionouProc != undefined" 
-                                type="submit" class="btn btn-lg btn-success" 
-                                ng-click="autorizar()">Autorizar Procedimento</button>
+                        <button ng-if="associado != undefined && selecionouProc != undefined"
+                                type="submit" class="btn btn-lg btn-success"
+                                ng-click="abreSenha()">
+                            Autorizar Procedimento
+                        </button>
+
+
+                        <div class="modal-backdrop"
+                             ng-if="pedirSenha == true"
+                             style="background: rgba(55, 55, 55, 0.5 );">
+                            <div class="modal-dialog" style="width:500px">
+                                <br />
+                                <br />
+                                <br />
+                                <div class="modal-content" style="color:black">
+                                    <legend style="color:black">
+                                        Senha do associado
+                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalSenha()"> X </button> &nbsp;
+                                    </legend>
+
+                                    <br />
+                                    <table class="widget">
+                                        <tr height="22px"></tr>
+                                        <tr>
+                                            <td width="20px"></td>
+                                            <td width="120px">Senha</td>
+                                            <td width="90px">
+                                                <input type="password" ng-model="campos.senhaCartao" />
+                                            </td>
+                                            <td width="20px"></td>
+                                        </tr>
+                                        <tr height="22px"></tr>
+                                    </table>
+                                    <br />
+                                    
+                                    <div class="pull-right">
+                                        <button class="btn btn-default" ng-click="closeModalSenha()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-success" ng-disabled="campos.senhaCartao.length != 4" ng-click="autorizar()"> Autorizar </button>
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
 
                         <br />
                         <br />

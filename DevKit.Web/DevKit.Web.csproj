@@ -895,10 +895,11 @@
     <Compile Include="proc\Domains\dba\EspecialidadeCtrl.cs" />
     <Compile Include="proc\Domains\dba\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\dba\LotesGraficaCtrl.cs" />
-    <Compile Include="proc\Domains\emissor\CartaoCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\ContactFormCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\DayMonthCtrl.cs" />
-    <Compile Include="proc\Domains\Login\StartupCtrl.cs" />
+    <Compile Include="proc\Domains\medico\AutorizaProcCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\CartaoCtrl.cs" />
+    <Compile Include="proc\Enums\ContactFormCtrl.cs" />
+    <Compile Include="proc\Enums\DayMonthCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\StartupCtrl.cs" />
     <Compile Include="proc\Domains\dba\MedicoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
@@ -907,32 +908,32 @@
     <Compile Include="proc\Services\Cache\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />
     <Compile Include="proc\Infrastructure\Base\Cache\MemCacheController.cs" />
-    <Compile Include="proc\Domains\Configuration\SurveyCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\NewsCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskCheckPointCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\AccumulatorTypeCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskTypeAccumulatorCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskCategoryCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskFlowCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\VersionCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\PhaseCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\TaskTypeCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\SprintCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\MonthCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\VersionStateCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\ProjectTemplateCtrl.cs" />
-    <Compile Include="proc\Domains\Home\HomeController.cs" />
-    <Compile Include="proc\Domains\Reports\HomeViewCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\SurveyCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\NewsCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\TaskCheckPointCtrl.cs" />
+    <Compile Include="proc\Enums\AccumulatorTypeCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\TaskTypeAccumulatorCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\TaskCategoryCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\TaskFlowCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\VersionCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\PhaseCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\TaskTypeCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\SprintCtrl.cs" />
+    <Compile Include="proc\Enums\MonthCtrl.cs" />
+    <Compile Include="proc\Enums\VersionStateCtrl.cs" />
+    <Compile Include="proc\Enums\ProjectTemplateCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Home\HomeController.cs" />
+    <Compile Include="proc\Domains\Misc\Reports\HomeViewCtrl.cs" />
     <Compile Include="proc\Domains\System\SetupCtrl.cs" />
     <Compile Include="proc\Domains\System\ProfileCtrl.cs" />
     <Compile Include="proc\Domains\System\PermissionCtrl.cs" />
-    <Compile Include="proc\Domains\Configuration\ProjectCtrl.cs" />
-    <Compile Include="proc\Domains\Enums\PriorityCtrl.cs" />
-    <Compile Include="proc\Domains\Reports\Tasks\TimesheetViewCtrl.cs" />
-    <Compile Include="proc\Domains\Task\TaskCountCtrl.cs" />
-    <Compile Include="proc\Domains\Reports\Tasks\ManagementViewCtrl.cs" />
-    <Compile Include="proc\Domains\Reports\Tasks\UserKanbanViewCtrl.cs" />
-    <Compile Include="proc\Domains\Task\TaskCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Configuration\ProjectCtrl.cs" />
+    <Compile Include="proc\Enums\PriorityCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Reports\Tasks\TimesheetViewCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Task\TaskCountCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Reports\Tasks\ManagementViewCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Reports\Tasks\UserKanbanViewCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\Task\TaskCtrl.cs" />
     <Compile Include="proc\Infrastructure\GlobalExtensions.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -945,13 +946,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="proc\Domains\Login\Login.cs" />
+    <Compile Include="proc\Domains\Misc\Login.cs" />
     <Compile Include="proc\Services\Cache\CacheControlService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="proc\Domains\medico\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>

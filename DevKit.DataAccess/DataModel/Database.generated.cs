@@ -144,9 +144,9 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id          { get; set; } // bigint
 		[Column,     Nullable] public long?  fkEmpresa   { get; set; } // bigint
 		[Column,     Nullable] public long?  fkAssociado { get; set; } // bigint
+		[Column,     Nullable] public long?  fkCartao    { get; set; } // bigint
 		[Column,     Nullable] public string stNome      { get; set; } // character varying(35)
 		[Column,     Nullable] public string stCPF       { get; set; } // character varying(30)
-		[Column,     Nullable] public long?  fkCartao    { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="AssociadoEmail")]
@@ -221,6 +221,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkEmpresa      { get; set; } // bigint
 		[Column,     Nullable] public long?     fkProcedimento { get; set; } // bigint
 		[Column,     Nullable] public long?     tgSituacao     { get; set; } // bigint
+		[Column,     Nullable] public long?     fkAssociado    { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Cidade")]
@@ -305,7 +306,7 @@ namespace DataModel
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
 		[Column,     Nullable] public long?     nuCodigo          { get; set; } // bigint
 		[Column,     Nullable] public string    stNome            { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stCnpj            { get; set; } // character varying
+		[Column,     Nullable] public string    stCnpj            { get; set; } // character varying(30)
 		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
@@ -317,8 +318,8 @@ namespace DataModel
 		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
 		[Column,     Nullable] public long?     fkEspecialidade   { get; set; } // bigint
 		[Column,     Nullable] public bool?     tgMasculino       { get; set; } // boolean
-		[Column,     Nullable] public string    stSenha           { get; set; } // character varying
 		[Column,     Nullable] public long?     nuTipo            { get; set; } // bigint
+		[Column,     Nullable] public string    stSenha           { get; set; } // character varying(20)
 	}
 
 	[Table(Schema="public", Name="MedicoAddress")]

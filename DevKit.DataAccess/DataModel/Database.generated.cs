@@ -222,6 +222,8 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkProcedimento { get; set; } // bigint
 		[Column,     Nullable] public long?     tgSituacao     { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAssociado    { get; set; } // bigint
+		[Column,     Nullable] public long?     nuMes          { get; set; } // bigint
+		[Column,     Nullable] public long?     nuAno          { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Cidade")]

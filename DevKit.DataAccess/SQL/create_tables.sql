@@ -427,6 +427,8 @@ ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkMedico" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkProcedimento" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAssociado" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuMes" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuAno" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "tgSituacao" bigint;
 
 CREATE TABLE IF NOT EXISTS public."Fechamento" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);

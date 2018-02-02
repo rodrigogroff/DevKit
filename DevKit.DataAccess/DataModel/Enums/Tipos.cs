@@ -12,6 +12,14 @@ namespace DevKit.DataAccess
                          Bloqueado = 1;
     }
 
+    public class TipoSitAutorizacao
+    {
+        public const int Autorizado = 1,
+                         Confirmado = 2,
+                         Glosado = 3,
+                         Rejeitado = 4;
+    }
+
     public class TipoExpedicao
     {
         public const int Requerido = 0,

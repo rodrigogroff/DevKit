@@ -31,23 +31,23 @@ namespace DevKit.Web
 			);
             
            // while (true)
-            {
-                using (var db = new AutorizadorCNDB())
-                {
-                    var dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day );
-                    var dt_fim = dt.AddDays(1);
+            //{
+            //    using (var db = new AutorizadorCNDB())
+            //    {
+            //        var dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day );
+            //        var dt_fim = dt.AddDays(1);
                     
-                    foreach (var log in db.LOG_Transacoes.
-                                        Where(y => y.dt_transacao > dt && y.dt_transacao < dt_fim && y.tg_confirmada.ToString() == "0").
-                                        ToList())
-                    {
-                        log.tg_confirmada = '1';
-                        db.Update(log);
-                    }
+            //        foreach (var log in db.LOG_Transacoes.
+            //                            Where(y => y.dt_transacao > dt && y.dt_transacao < dt_fim && y.tg_confirmada.ToString() == "0").
+            //                            ToList())
+            //        {
+            //            log.tg_confirmada = '1';
+            //            db.Update(log);
+            //        }
 
-                    //Thread.Sleep(60000);
-                }
-            }
+            //        //Thread.Sleep(60000);
+            //    }
+            //}
         }
 	}
 }

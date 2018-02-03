@@ -43,7 +43,6 @@ namespace DataModel
 		public ITable<MedicoEmpresa>        MedicoEmpresa        { get { return this.GetTable<MedicoEmpresa>(); } }
 		public ITable<MedicoEmpresaTuss>    MedicoEmpresaTuss    { get { return this.GetTable<MedicoEmpresaTuss>(); } }
 		public ITable<MedicoPhone>          MedicoPhone          { get { return this.GetTable<MedicoPhone>(); } }
-		public ITable<Procedimento>         Procedimento         { get { return this.GetTable<Procedimento>(); } }
 		public ITable<Profile>              Profile              { get { return this.GetTable<Profile>(); } }
 		public ITable<Project>              Project              { get { return this.GetTable<Project>(); } }
 		public ITable<ProjectPhase>         ProjectPhase         { get { return this.GetTable<ProjectPhase>(); } }
@@ -378,16 +377,6 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
 		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
-	}
-
-	[Table(Schema="public", Name="Procedimento")]
-	public partial class Procedimento
-	{
-		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
-		[Column,     Nullable] public long?  nuTUSS         { get; set; } // bigint
-		[Column,     Nullable] public string stProcedimento { get; set; } // character varying(150)
-		[Column,     Nullable] public string stDescGP       { get; set; } // character varying(150)
-		[Column,     Nullable] public string stDescSubGP    { get; set; } // character varying(150)
 	}
 
 	[Table(Schema="public", Name="Profile")]
@@ -856,12 +845,6 @@ namespace DataModel
 		}
 
 		public static MedicoPhone Find(this ITable<MedicoPhone> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static Procedimento Find(this ITable<Procedimento> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

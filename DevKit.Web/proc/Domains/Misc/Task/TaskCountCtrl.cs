@@ -9,7 +9,7 @@ namespace DevKit.Web.Controllers
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-
+            /*
             var filter = new TaskFilter
             {
                 fkEmpresa = db.currentUser.fkEmpresa,
@@ -40,7 +40,10 @@ namespace DevKit.Web.Controllers
             var user = new Task().ComposedFilters(db, filter, options );
 
             return Ok(new { count_project_tasks = proj.count,
-							count_user_tasks = user.count });			
+							count_user_tasks = user.count });	
+                            */
+
+            return BadRequest();
 		}
 	}
 }

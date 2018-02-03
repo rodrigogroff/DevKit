@@ -135,11 +135,11 @@ namespace DevKit.Web.Controllers
 
                 StartCache();
 
-                if (IsPrecacheEnabled)
-                    System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApplication, db.currentUser); });
+           //     if (IsPrecacheEnabled)
+         //           System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApplication, db.currentUser); });
 
-                if (!IsSingleMachine)
-                    System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
+             //   if (!IsSingleMachine)
+               //     System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
             }
 
             return true;

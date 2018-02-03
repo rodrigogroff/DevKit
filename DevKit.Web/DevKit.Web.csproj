@@ -277,6 +277,8 @@
     <Content Include="app\home\HomeController.js" />
     <Content Include="app\medico\autorizacaoProc.html" />
     <Content Include="app\medico\autorizacaoProcController.js" />
+    <Content Include="app\medico\listagemMedicoProcedimentos.html" />
+    <Content Include="app\medico\ListagemMedicoProcedimentosController.js" />
     <Content Include="app\medico\medicoPassword.html" />
     <Content Include="app\medico\MedicoPasswordController.js" />
     <Content Include="app\system\profile\listingProfiles.html" />
@@ -895,6 +897,7 @@
     <Compile Include="proc\Domains\dba\EspecialidadeCtrl.cs" />
     <Compile Include="proc\Domains\dba\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\dba\LotesGraficaCtrl.cs" />
+    <Compile Include="proc\Domains\medico\MedicoListagemAutorizacaoCtrl.cs" />
     <Compile Include="proc\Domains\medico\AutorizaProcCtrl.cs" />
     <Compile Include="proc\Domains\Misc\CartaoCtrl.cs" />
     <Compile Include="proc\Enums\ContactFormCtrl.cs" />

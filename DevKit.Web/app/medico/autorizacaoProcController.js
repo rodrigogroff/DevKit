@@ -106,16 +106,17 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             mat: $scope.campos.cartMat,
             ca: $scope.campos.cartCA,            
             titVia: $scope.campos.cartTitVia,
-            senha: $scope.campos.senha,
+            senha: $scope.campos.senhaCartao,
             tuss: $scope.selecionouProc,
         };
         
         Api.AutorizaProc.listPage(opcoes, function (data)
         {
             $scope.closeModalSenha();
+            toastr.success('Procedimento autorizado com sucesso!', 'Autorização');
         },
         function (response) {
-            toastr.error(response.message, 'Autorização');
+            toastr.error(response.data.message, 'Autorização');
         });
     }
 

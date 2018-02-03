@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('LoginController',
-['$scope', '$rootScope', '$location', 'AuthService', 'version','Api',
-function ($scope, $rootScope, $location, AuthService, version, Api)
+['$scope', '$rootScope', '$location', 'AuthService', 'version','Api', '$state',
+function ($scope, $rootScope, $location, AuthService, version, Api, $state)
 {
     $rootScope.exibirMenu = false;
 
@@ -63,7 +63,7 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
                 {
                     if ($scope.loginData.nuMedico == $scope.loginData.password)
                     {
-                        $location.path('/medico/medicoTrocaSenha/');
+                        $state.go('medicopass');
                         toastr.error('Sua senha expirou.', 'Controle de senha');
                     }
                     else
@@ -73,7 +73,7 @@ function ($scope, $rootScope, $location, AuthService, version, Api)
                 {
                     if ($scope.loginData.userName == $scope.loginData.password)
                     {
-                        $location.path('/system/userChangePass/');
+                        $state.go('userChangePass');
                         toastr.error('Sua senha expirou.', 'Controle de senha');
                     }
                     else

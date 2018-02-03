@@ -12,13 +12,18 @@ namespace DataModel
 		{
             var proc = db.TUSS.Where(y => y.id == fkProcedimento).FirstOrDefault();
             var assoc = db.Associado.Where(y => y.id == fkAssociado).FirstOrDefault();
+            var medico = db.Medico.Where(y => y.id == fkMedico).FirstOrDefault();
 
             sdtSolicitacao = Convert.ToDateTime(dtSolicitacao).ToString("dd/MM/yyyy HH:mm");
 
-            sfkMedico = db.Medico.Where (y=>y.id == fkMedico).FirstOrDefault().stNome;
             sfkEmpresa = db.Empresa.Where(y => y.id == fkEmpresa).FirstOrDefault().stSigla;
             sfkProcedimento = proc.nuCodTUSS + " - " + proc.stProcedimento;
-            sfkAssociado = assoc.nuMatricula + " - " + assoc.stName;
+
+            sfkAssociado = assoc.stName;
+            snuMattriculaAssociado = assoc.nuMatricula.ToString();
+
+            snuCodigoMedico = medico.nuCodigo.ToString();
+            sfkMedico = medico.stNome;
 
             switch (tgSituacao)
             {

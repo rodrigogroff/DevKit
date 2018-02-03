@@ -10,8 +10,10 @@ namespace DataModel
         public string   sdtSolicitacao, 
                         stgSituacao,
                         sfkMedico,
+                        snuCodigoMedico,
                         sfkEmpresa,
-                        sfkProcedimento, 
+                        sfkProcedimento,
+                        snuMattriculaAssociado,
                         sfkAssociado;
     }
 }

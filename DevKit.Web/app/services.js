@@ -89,5 +89,6 @@ angular.module('app.services', ['ngResource'])
         VersionCombo: $resource('api/versioncombo/:id', {}, opcoes),
         AutorizaProc: $resource('api/autorizaproc/:id', {}, opcoes),
         MedicoListagemAutorizacao: $resource('api/medicolistagemautorizacao/:id', {}, opcoes),
+        EmissorListagemAutorizacao: $resource('api/emissorlistagemautorizacao/:id', {}, opcoes),
 	};
 }]);

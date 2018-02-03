@@ -78,8 +78,10 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('tuss', { url: '/dba/tuss', templateUrl: 'app/dba/listingTUSS.html', controller: 'ListingTUSSController' })
     .state('especialidades', { url: '/dba/especialidades', templateUrl: 'app/dba/listingEspecialidades.html', controller: 'ListingEspecialidadesController' })
 
-    .state('medicopass', { url: '/medico/medicoTrocaSenha', templateUrl: 'app/medico/medicoPassword.html', controller: 'MedicoPasswordController' })
     .state('altSenha', { url: '/emissora/altSenha', templateUrl: 'app/emissora/altSenha.html', controller: 'EmissoraAltSenhaController' })
+    .state('emissorprocs', { url: '/emissora/listprocs', templateUrl: 'app/emissora/listagemEmissorProcedimentos.html', controller: 'ListagemEmissorProcedimentosController' })
+
+    .state('medicopass', { url: '/medico/medicoTrocaSenha', templateUrl: 'app/medico/medicoPassword.html', controller: 'MedicoPasswordController' })    
     .state('autorizacaoProc', { url: '/medico/autorizacaoProc', templateUrl: 'app/medico/autorizacaoProc.html', controller: 'AutorizacaoProcController' })
     .state('medicoprocs', { url: '/medico/procs', templateUrl: 'app/medico/listagemMedicoProcedimentos.html', controller: 'ListagemMedicoProcedimentosController' })
 

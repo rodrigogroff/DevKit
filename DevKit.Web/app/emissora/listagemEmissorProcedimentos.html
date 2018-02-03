@@ -55,8 +55,9 @@
                                             <th style="min-width:150px">Data Solicitação</th>
                                             <th style="min-width:150px">Situação</th>
                                             <th style="min-width:200px">TUSS - Procedimento</th>
-                                            <th style="min-width:150px">Empresa</th>
-                                            <th style="min-width:120px">Matrícula</th>
+                                            <th style="min-width:200px">Código Médico</th>
+                                            <th style="min-width:200px">Nome Médico</th>
+                                            <th style="min-width:200px">Matrícula</th>
                                             <th style="min-width:200px">Associado</th>
                                         </tr>
                                     </thead>
@@ -64,7 +65,8 @@
                                         <td>{{ mdl.sdtSolicitacao }}</td>
                                         <td>{{ mdl.stgSituacao }}</td>
                                         <td>{{ mdl.sfkProcedimento }}</td>
-                                        <td>{{ mdl.sfkEmpresa }}</td>
+                                        <td>{{ mdl.snuCodigoMedico }}</td>
+                                        <td>{{ mdl.sfkMedico }}</td>
                                         <td>{{ mdl.snuMattriculaAssociado }}</td>
                                         <td>{{ mdl.sfkAssociado }}</td>
                                     </tr>

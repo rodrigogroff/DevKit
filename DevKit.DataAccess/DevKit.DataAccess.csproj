@@ -125,6 +125,7 @@
     <Compile Include="DataModel\Domains\Emissor\Associado\Associado_Loader.cs" />
     <Compile Include="DataModel\Domains\Emissor\Associado\Associado_TrackChanges.cs" />
     <Compile Include="DataModel\Domains\Emissor\Associado\Associado_Update.cs" />
+    <Compile Include="DataModel\Domains\Emissor\Procedimento\Emissor_ListagemAutorizacao.cs" />
     <Compile Include="DataModel\Domains\Medico\Autorização\Autorizacao_DTO.cs" />
     <Compile Include="DataModel\Domains\Medico\Autorização\Autorizacao_LoadAssociations.cs" />
     <Compile Include="DataModel\Domains\Medico\Autorização\Medico_ListagemAutorizacao.cs" />

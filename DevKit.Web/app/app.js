@@ -59,15 +59,15 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('clientgroup', { url: '/configuration/clientgroup/:id', templateUrl: 'app/configuration/clientgroup/clientGroup.html', controller: 'ClientGroupController' })
 
     .state('persons', { url: '/emissora/associados', templateUrl: 'app/emissora/listagemAssociados.html', controller: 'ListagemAssociadosController' })
-    .state('person-new', { url: '/emissora/associados/new', templateUrl: 'app/emissora/associado.html', controller: 'AssociadoController' })
     .state('person', { url: '/emissora/associados/:id', templateUrl: 'app/emissora/associado.html', controller: 'AssociadoController' })
+    .state('person-new', { url: '/emissora/associados/new', templateUrl: 'app/emissora/associado.html', controller: 'AssociadoController' })
 
     .state('lotesgrafica', { url: '/dba/lotes', templateUrl: 'app/dba/listingLotes.html', controller: 'ListingLotesController' })
     .state('novolote', { url: '/dba/lotes/novo', templateUrl: 'app/dba/novoLote.html', controller: 'NovoLoteController' })
 
     .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/listingEmpresas.html', controller: 'ListingEmpresasController' })
     .state('medicos', { url: '/dba/medicos', templateUrl: 'app/dba/listingMedicos.html', controller: 'ListingMedicosController' })
-
+        
     .state('medico',
     {
         url: '/dba/medico/:id',
@@ -84,6 +84,15 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('medicopass', { url: '/medico/medicoTrocaSenha', templateUrl: 'app/medico/medicoPassword.html', controller: 'MedicoPasswordController' })    
     .state('autorizacaoProc', { url: '/medico/autorizacaoProc', templateUrl: 'app/medico/autorizacaoProc.html', controller: 'AutorizacaoProcController' })
     .state('medicoprocs', { url: '/medico/procs', templateUrl: 'app/medico/listagemMedicoProcedimentos.html', controller: 'ListagemMedicoProcedimentosController' })
+
+    .state('listemissormedicos', { url: '/emissora/medicos', templateUrl: 'app/emissora/listagemMedicos.html', controller: 'ListagemEmissorMedicosController' })
+
+    .state('emissormedico',
+    {
+        url: '/emissora/medico/:id',
+        templateUrl: 'app/emissora/medico.html',
+        controller: 'EmissorMedicoController'
+    })
 
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 

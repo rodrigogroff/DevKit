@@ -40,7 +40,7 @@ namespace DataModel
             {
                 query = from e in query
                         join assoc in db.Associado on e.fkAssociado equals assoc.id
-                        where assoc.stName.Contains (filter.nomeAssociado)
+                        where assoc.stName.ToUpper().Contains (filter.nomeAssociado.ToUpper())
                         select e;
             }
 

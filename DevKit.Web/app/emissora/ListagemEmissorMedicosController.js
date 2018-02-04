@@ -1,5 +1,5 @@
 ﻿
-angular.module('app.controllers').controller('ListingMedicosController',
+angular.module('app.controllers').controller('ListagemEmissorMedicosController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects', 
 function ($scope, $rootScope, $state, Api, ngSelects )
 {
@@ -32,9 +32,10 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             take: take,
             codigo: $scope.campos.codigo,
             nome: $scope.campos.nome,
+            especialidade: $scope.campos.especialidade,
         };
 
-		Api.Medico.listPage(opcoes, function (data)
+        Api.EmissorListagemMedico.listPage(opcoes, function (data)
 		{
 			$scope.list = data.results;
 			$scope.total = data.count;

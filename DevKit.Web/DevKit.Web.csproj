@@ -274,6 +274,10 @@
     <Content Include="app\emissora\AssociadoController.js" />
     <Content Include="app\emissora\listagemEmissorProcedimentos.html" />
     <Content Include="app\emissora\ListagemEmissorProcedimentosController.js" />
+    <Content Include="app\emissora\listagemMedicos.html" />
+    <Content Include="app\emissora\ListagemEmissorMedicosController.js" />
+    <Content Include="app\emissora\medico.html" />
+    <Content Include="app\emissora\EmissorMedicoController.js" />
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
@@ -900,6 +904,7 @@
     <Compile Include="proc\Domains\dba\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\dba\LotesGraficaCtrl.cs" />
     <Compile Include="proc\Domains\emissor\EmissorListagemAutorizacaoCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\EmissorListagemMedicoCtrl.cs" />
     <Compile Include="proc\Domains\medico\MedicoListagemAutorizacaoCtrl.cs" />
     <Compile Include="proc\Domains\medico\AutorizaProcCtrl.cs" />
     <Compile Include="proc\Domains\Misc\CartaoCtrl.cs" />

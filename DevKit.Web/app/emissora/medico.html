@@ -1,0 +1,560 @@
+﻿<div class="webFormPostion">
+    <section class="widgetForm" style="width:925px; height:100%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>
+                        <span ng-show="viewModel.id == undefined">Novo </span> Cadastros \ Medico \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stNome}}&nbsp;</span></b>
+                    </td>
+                    <td width="20px"></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm">
+            <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
+                <tab heading="Cadastro">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="20px"></th>
+                                    <th width="140px"></th>
+                                    <th width="20px"></th>
+                                    <th width="480px"></th>
+                                    <th width="20px"></th>
+                                </tr>
+                            </thead>
+                            <tr height="22px"></tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Nome</b>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="stNome_fail">!</button>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="50"
+                                           ng-disabled="!permModel.edicao" ng-model="viewModel.stNome">
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>CPF</b>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
+                                </td>
+                                <td ng-if="viewModel.id == 0">
+                                    <input type="text" class="form-control input-transparent" name="cnpj" id="cpf" ng-model="viewModel.stCnpj"
+                                           maxlength="14" ui-mask="999.999.999-99" ui-mask-placeholder ui-mask-placeholder-char="_">
+                                </td>
+                                <td ng-if="viewModel.id > 0">
+                                    {{viewModel.stCnpj}}
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="46px"></tr>
+                        </table>
+                    </div>
+                </tab>
+                <tab heading="Empresas [{{viewModel.empresas.length}}]" ng-if="viewModel.id != undefined">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="12px"></tr>
+                            <tr>
+                                <td width="20px"></td>
+                                <td>
+                                    <legend style="color:white">
+                                        Lista de empresas
+                                        <button class="btn btn-info btn-xs pull-right" ng-click="addNewEmpresa()"><i class="fa fa-plus"> </i> Adicionar </button>
+                                    </legend>
+                                    <div ng-show="viewModel.empresas.length == 0 && addEmpresa == false">
+                                        <br />
+                                        <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    </div>
+                                    <div ng-if="addEmpresa == true">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr height="42px">
+                                                            <td width="120px">
+                                                                <b>Nome empresa</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="stPhone_fail">!</button>
+                                                            </td>
+                                                            <td width="200px">
+                                                                select
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                        <button class="btn btn-default" ng-click="cancelEmpresa()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewEmpresa()">Salvar </button>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div ng-show="viewModel.empresas.length > 0">
+                                        <br />
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nome empresa</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="mdl in viewModel.empresas">
+                                                <td>{{ mdl.sfkEmpresa }}</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="editEmpresa(mdl)">
+                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="" role="button" ng-click="removeEmpresa($index, viewModel.empresas)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="modal-backdrop"
+                                                         ng-if="modalEmpresa == true"
+                                                         style="background: rgba(55, 55, 55, 0.5 );">
+                                                        <div class="modal-dialog" style="width:500px">
+                                                            <br />
+                                                            <br />
+                                                            <br />
+                                                            <div class="modal-content" style="color:black">
+                                                                <legend style="color:black">
+                                                                    Remoção de empresa
+                                                                    <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalEmpresa()"> X </button> &nbsp;
+                                                                </legend>
+                                                                Confirma remoção da empresa abaixo?<br /><br />
+                                                                -{{delEmpresa.sfkEmpresa}}<br />
+                                                                
+                                                                <br />
+                                                                <br />
+                                                                <div class="pull-right">
+                                                                    <button class="btn btn-primary" ng-click="removerEmpresaModal()"> Remover </button>
+                                                                </div>
+                                                                <br />
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+                <tab heading="Telefones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="12px"></tr>
+                            <tr>
+                                <td width="20px"></td>
+                                <td>
+                                    <legend style="color:white">
+                                        Lista de telefones
+                                        <button class="btn btn-info btn-xs pull-right" ng-click="addNewPhone()"><i class="fa fa-plus"> </i> Adicionar </button>
+                                    </legend>
+                                    <div ng-show="viewModel.phones.length == 0 && addPhone == false">
+                                        <br />
+                                        <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    </div>
+                                    <div ng-if="addPhone == true">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr height="42px">
+                                                            <td width="120px">
+                                                                <b>Novo telephone</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="stPhone_fail">!</button>
+                                                            </td>
+                                                            <td width="200px">
+                                                                <input type="text" class="form-control input-transparent" ng-model="newPhone.stPhone" maxlength="14"
+                                                                       ui-mask="{{ setupModel.stPhoneMask }}" ui-mask-placeholder ui-mask-placeholder-char="_">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                <b>Descrição</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="stDescription_fail">!</button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newPhone.stDescription">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                        <button class="btn btn-default" ng-click="cancelPhone()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewPhone()">Salvar </button>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div ng-show="viewModel.phones.length > 0">
+                                        <br />
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Telefone</th>
+                                                    <th>Local</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="mdl in viewModel.phones">
+                                                <td>{{ mdl.stPhone }}</td>
+                                                <td>{{ mdl.stDescription }}</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="editPhone(mdl)">
+                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="" role="button" ng-click="removePhone($index, viewModel.phones)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="modal-backdrop"
+                                                         ng-if="modalPhone == true"
+                                                         style="background: rgba(55, 55, 55, 0.5 );">
+                                                        <div class="modal-dialog" style="width:500px">
+                                                            <br />
+                                                            <br />
+                                                            <br />
+                                                            <div class="modal-content" style="color:black">
+                                                                <legend style="color:black">
+                                                                    Remoção de telefone
+                                                                    <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalPhone()"> X </button> &nbsp;
+                                                                </legend>
+                                                                Confirma remoção do item abaixo?<br /><br />
+                                                                -{{delPhone.stPhone}}<br />
+                                                                -{{delPhone.stDescription}}<br />
+                                                                <br />
+                                                                <br />
+                                                                <div class="pull-right">
+                                                                    <button class="btn btn-primary" ng-click="removerPhoneModal()"> Remover </button>
+                                                                </div>
+                                                                <br />
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+                <tab heading="Emails [{{viewModel.emails.length}}]" ng-if="viewModel.id != undefined">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="12px"></tr>
+                            <tr>
+                                <td width="20px"></td>
+                                <td>
+                                    <legend style="color:white">
+                                        Lista de emails
+                                        <button class="btn btn-info btn-xs pull-right" ng-if="addEmail == false" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Adicionar </button>
+                                    </legend>
+                                    <div ng-show="viewModel.emails.length == 0 && addEmail == false">
+                                        <br />
+                                        <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    </div>
+                                    <div ng-if="addEmail == true">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr height="42px">
+                                                            <td width="120px">
+                                                                <b>Novo email</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="stEmail_fail">!</button>
+                                                            </td>
+                                                            <td width="200px">
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEmail.stEmail">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                        <button class="btn btn-default" ng-click="cancelEmail()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewEmail()">Salvar </button>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div ng-show="viewModel.emails.length > 0">
+                                        <br />
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="mdl in viewModel.emails">
+                                                <td>{{ mdl.stEmail }}</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="editEmail(mdl)">
+                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="" role="button" ng-click="removeEmail($index, viewModel.emails)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+
+                                                        <div class="modal-backdrop"
+                                                             ng-if="modalEmail == true"
+                                                             style="background: rgba(55, 55, 55, 0.5 );">
+                                                            <div class="modal-dialog" style="width:500px">
+                                                                <br />
+                                                                <br />
+                                                                <br />
+                                                                <div class="modal-content" style="color:black">
+                                                                    <legend style="color:black">
+                                                                        Remoção de email
+                                                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalEmail()"> X </button> &nbsp;
+                                                                    </legend>
+                                                                    Confirma remoção do item abaixo?<br /><br />
+                                                                    -{{delEmail.stEmail}}<br />
+                                                                    <br />
+                                                                    <br />
+                                                                    <div class="pull-right">
+                                                                        <button class="btn btn-primary" ng-click="removerEmailModal()"> Remover </button>
+                                                                    </div>
+                                                                    <br />
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+                <tab heading="Endereços [{{viewModel.enderecos.length}}]" ng-if="viewModel.id != undefined">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="12px"></tr>
+                            <tr>
+                                <td width="20px"></td>
+                                <td>
+                                    <legend style="color:white">
+                                        Lista de endereços
+                                        <button class="btn btn-info btn-xs pull-right" ng-if="addEnd == false" ng-click="addNewEnd()"><i class="fa fa-plus"> </i> Adicionar </button>
+                                    </legend>
+                                    <div ng-show="viewModel.enderecos.length == 0 && addEnd == false">
+                                        <br />
+                                        <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    </div>
+                                    <div ng-if="addEnd == true">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr height="42px">
+                                                            <td width="120px">
+                                                                <b>Estado</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="est_fail">!</button>
+                                                            </td>
+                                                            <td width="200px">
+                                                                <input type="hidden" style="width:100%" ui-select2="estado" data-placeholder="(Selecione)" ng-model="newEnd.fkEstado" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                <b>Cidade</b>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-xs btn-danger" ng-show="cid_fail">!</button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="hidden" style="width:100%" ui-select2="cidade" data-placeholder="(Selecione)" ng-model="newEnd.fkCidade" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                <b>Rua / Logradouro</b>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-xs btn-danger" ng-show="stRua_fail">!</button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stRua">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                <b>Número</b>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-xs btn-danger" ng-show="stNumero_fail">!</button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stNumero">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                <b>Complemento</b>
+                                                            </td>
+                                                            <td></td>
+                                                            <td>
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stComplemento">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                <b>Referência</b>
+                                                            </td>
+                                                            <td></td>
+                                                            <td>
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stReferencia">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                <b>CEP</b>
+                                                            </td>
+                                                            <td></td>
+                                                            <td>
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEnd.stCEP">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td>
+                                                                <b>Principal?</b>
+                                                            </td>
+                                                            <td></td>
+                                                            <td>
+                                                                <input type="checkbox" ng-model="newEnd.bPrincipal" /> Sim
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                        <button class="btn btn-default" ng-click="cancelEnd()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewEnd()">Salvar </button>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div ng-show="viewModel.enderecos.length > 0">
+                                        <br />
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cidade</th>
+                                                    <th>Estado</th>
+                                                    <th>Logradouro</th>
+                                                    <th>CEP</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="mdl in viewModel.enderecos">
+                                                <td ng-if="mdl.bPrincipal == true"><b>{{ mdl.sfkCidade }}</b></td>
+                                                <td ng-if="mdl.bPrincipal == false">{{ mdl.sfkCidade }}</td>
+                                                <td>{{ mdl.sfkEstado }}</td>
+                                                <td>{{ mdl.stRua }}, {{ mdl.stNumero }} {{ mdl.stComplemento }} </td>
+                                                <td>{{ mdl.stCEP }}</td>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a href="" role="button" ng-click="editEnd(mdl)">
+                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="" role="button" ng-click="removeEnd($index, viewModel.enderecos)">
+                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                                        </a>
+
+                                                        <div class="modal-backdrop"
+                                                             ng-if="modalEnd == true"
+                                                             style="background: rgba(55, 55, 55, 0.5 );">
+                                                            <div class="modal-dialog" style="width:500px">
+                                                                <br />
+                                                                <br />
+                                                                <br />
+                                                                <div class="modal-content" style="color:black">
+                                                                    <legend style="color:black">
+                                                                        Remoção de email
+                                                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalEnd()"> X </button> &nbsp;
+                                                                    </legend>
+                                                                    Confirma remoção do item abaixo?<br /><br />
+                                                                    -{{delEnd.sfkCidade}} / {{delEnd.sfkEstado}}<br />
+                                                                    -{{delEnd.stRua}}, {{ delEnd.stNumero }} {{ delEnd.stComplemento }}  <br />
+                                                                    <br />
+                                                                    <br />
+                                                                    <div class="pull-right">
+                                                                        <button class="btn btn-primary" ng-click="removerEndModal()"> Remover </button>
+                                                                    </div>
+                                                                    <br />
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+            </tabset>
+            <br />
+            <br />
+            <table>
+                <tr>
+                    <td><button class="btn btn-default" ng-click="list()">Cancelar</button></td>
+                    <td width="34px"></td>
+                    <td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
+                </tr>
+            </table>
+            <br />
+            <br />
+        </div>
+    </section>
+</div>

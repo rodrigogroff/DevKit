@@ -7,6 +7,7 @@ namespace DataModel
 	public class MedicoFilter : BaseFilter
     {
 		public long? nuCodigo;
+        public string nome, especialidade;
     }
 
     public partial class Medico
@@ -15,6 +16,36 @@ namespace DataModel
         {
             var query = from e in db.Medico
                         select e;
+
+            if (filter.fkEmpresa != null)
+            {
+                query = from e in query
+                        join emiMedic in db.MedicoEmpresa on e.id equals emiMedic.fkMedico
+                        where emiMedic.fkEmpresa == filter.fkEmpresa
+                        select e;
+            }
+
+            if (filter.nuCodigo != null)
+            {
+                query = from e in query
+                        where e.nuCodigo == filter.nuCodigo
+                        select e;
+            }
+
+            if (filter.nome != null)
+            {
+                query = from e in query
+                        where e.stNome.ToUpper().Contains(filter.nome.ToUpper())
+                        select e;
+            }
+
+            if (filter.especialidade != null)
+            {
+                query = from e in query
+                        join espec in db.Especialidade on e.fkEspecialidade equals espec.id
+                        where espec.stNome.ToUpper().Contains (filter.especialidade.ToUpper())
+                        select e;
+            }
 
             var count = query.Count();
 

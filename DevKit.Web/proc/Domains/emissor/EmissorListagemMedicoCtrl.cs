@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class MedicoController : ApiControllerBase
+	public class EmissorListagemMedicoController : ApiControllerBase
 	{
         public IHttpActionResult Get()
 		{
@@ -18,10 +18,11 @@ namespace DevKit.Web.Controllers
 
             var filter = new MedicoFilter
             {
+                fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 nome = Request.GetQueryStringValue("nome"),
-                nuCodigo = Request.GetQueryStringValue("codigo",0),
+                nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
                 especialidade = Request.GetQueryStringValue("especialidade"),
             };
 

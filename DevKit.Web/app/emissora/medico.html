@@ -6,7 +6,7 @@
                 <tr>
                     <td width="20px"></td>
                     <td>
-                        Cadastros \ Medico \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stNome}}&nbsp;</span></b>
+                        Cadastros \ Médico \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stNome}}&nbsp;</span></b>
                     </td>
                     <td width="20px"></td>
                 </tr>
@@ -63,10 +63,10 @@
                                 <td width="20px"></td>
                                 <td>
                                     <legend style="color:white">
-                                        Lista de procedimentos TUSS
+                                        Procedimentos TUSS disponíveis
                                         <button class="btn btn-info btn-xs pull-right" ng-click="addNewProcedimento()"><i class="fa fa-plus"> </i> Adicionar </button>
                                     </legend>
-                                    <div ng-show="viewModel.procedimentos.length == 0">
+                                    <div ng-show="viewModel.procedimentos.length == 0 && addProcedimento == false">
                                         <br />
                                         <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
                                     </div>
@@ -83,9 +83,17 @@
                                                                 <button class="btn btn-xs btn-danger" ng-show="tuss_fail">!</button>
                                                             </td>
                                                             <td width="200px">
-                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newProcedimento.nuCodTUSS">
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newProcedimento.nuTUSS">
+                                                            </td>
+                                                            <td width="20px"></td>
+                                                            <td width="120px">
+                                                                <button class="btn btn-primary" ng-click="buscaTUSS()">Buscar</button>
                                                             </td>
                                                         </tr>
+                                                        <tr>
+                                                            <td colspan="5">{{nomeTuss}}</td>
+                                                        </tr>
+                                                        <tr height="22px"></tr>
                                                     </table>
                                                 </td>
                                             </tr>
@@ -101,11 +109,12 @@
                                             <thead>
                                                 <tr>
                                                     <th>TUSS</th>
+                                                    <th>Descrição do procedimento</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="mdl in viewModel.procedimentos">
-                                                <td>{{ mdl.nuCodTUSS }}</td>
+                                                <td>{{ mdl.nuTUSS }}</td>
                                                 <td>{{ mdl.stProcedimento }}</td>
                                                 <td>
                                                     <div class="pull-right">

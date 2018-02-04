@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -7,7 +8,10 @@ namespace DataModel
 	public class TUSSFilter : BaseFilter
     {
         public string   codigo, 
-                        procedimento;
+                        procedimento,
+                        emp;
+
+        public bool? aut;
     }
 
     public partial class TUSS
@@ -38,6 +42,29 @@ namespace DataModel
                 query = from e in query
                         where e.stProcedimento.Contains(filter.procedimento)
                         select e;
+            }
+
+            if (filter.aut != null && filter.aut == true)
+            {
+                if (db.currentMedico != null)
+                {
+                    var empTb = db.Empresa.
+                                    Where(y => y.nuEmpresa == Convert.ToInt32(filter.emp)).
+                                    FirstOrDefault();
+                    
+                    if (empTb != null)
+                    {
+                        var lst = db.MedicoEmpresaTuss.
+                                Where(y => y.fkEmpresa == empTb.id &&
+                                           y.fkMedico == db.currentMedico.id).
+                                Select(y => y.nuTUSS).
+                                ToList();
+
+                        query = from e in query
+                                where lst.Contains(e.nuCodTUSS)
+                                select e;
+                    }                    
+                }
             }
 
             var count = query.Count();

@@ -21,6 +21,8 @@ namespace DevKit.Web.Controllers
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca"),
+                emp = Request.GetQueryStringValue("emp"),
+                aut = Request.GetQueryStringValue<bool?>("aut",null),
                 codigo = Request.GetQueryStringValue("codigo"),
                 procedimento = Request.GetQueryStringValue("procedimento"),
             };

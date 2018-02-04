@@ -11,7 +11,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 	function init()
     {
         $scope.campos = {
-            codigo: ''
+            codigo: '',
+            aut:true
         };
 
         $scope.itensporpagina = 15;
@@ -33,6 +34,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         var opcoes = {
             skip: skip,
             take: take,
+            aut: $scope.campos.aut,
+            emp: $scope.campos.cartEmp,
             codigo: $scope.campos.codigo,
             procedimento: $scope.campos.procedimento,
         };

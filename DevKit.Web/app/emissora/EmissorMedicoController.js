@@ -47,10 +47,12 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         //$scope.permID = 102;
         //$scope.auditLogPerm = 112;
 
-        $scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
-        $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
-        $scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, {});
-        $scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'newEnd.fkEstado' } });
+        $scope.nomeTuss = '';
+
+        //$scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
+        //$scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
+        //$scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, {});
+        //$scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'newEnd.fkEstado' } });
 
         //CheckPermissions();
         //loadSetup();
@@ -97,55 +99,59 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $state.go('listemissormedicos');
     }
 
+    $scope.buscaTUSS = function ()
+    {
+        Api.TUSS.listPage({ codigo: $scope.newProcedimento.nuCodTUSS }, function (data)
+        {
+            if (data.results.length > 0)
+                $scope.nomeTuss = data.results[0].stProcedimento;
+        });
+    }
+
     // ============================================
     // procedimentos
     // ============================================
 
-    $scope.addEmpresa = false;
+    $scope.addProcedimento = false;
 
-    $scope.removeEmpresa = function (index, lista) {
+    $scope.removeProcedimento = function (index, lista) {
         //if (!$scope.permModel.novo && !$scope.permModel.edicao)
         //  toastr.error('Acesso negado!', 'Permissão');
         //else
         {
-            $scope.modalEmpresa = true;
-            $scope.delEmpresa = $scope.viewModel.empresas[index];
+            $scope.modalProcedimento = true;
+            $scope.delProcedimento = $scope.viewModel.procedimentos[index];
         }
     }
 
-    $scope.closeModalEmpresa = function () {
-        $scope.modalEmpresa = false;
+    $scope.closeModalProcedimento = function () {
+        $scope.modalProcedimento = false;
     }
 
-    $scope.removerEmpresaModal = function () {
-        $scope.viewModel.updateCommand = "removeEmpresa";
-        $scope.viewModel.anexedEntity = $scope.delEmpresa;
+    $scope.removerProcedimentoModal = function () {
+        $scope.viewModel.updateCommand = "removeProcedimentoViaEmissor";
+        $scope.viewModel.anexedEntity = $scope.delProcedimento;
 
         Api.Medico.update({ id: id }, $scope.viewModel, function (data) {
             loadEntity();
         });
     }
 
-    $scope.addNewEmpresa = function () {
+    $scope.addNewProcedimento = function () {
         //if (!$scope.permModel.novo && !$scope.permModel.edicao)
         //  toastr.error('Acesso negado!', 'Permissão');
         //else
-        $scope.addEmpresa = !$scope.addEmpresa;
+        $scope.addProcedimento = !$scope.addProcedimento;
     }
 
-    $scope.newEmpresa = {};
+    $scope.newProcedimento = {};
 
-    $scope.editEmpresa = function (mdl) {
-        $scope.addEmpresa = true;
-        $scope.newEmpresa = mdl;
+    $scope.cancelProcedimento = function () {
+        $scope.addProcedimento = false;
+        $scope.newProcedimento = {};
     }
 
-    $scope.cancelEmpresa = function () {
-        $scope.addEmpresa = false;
-        $scope.newEmpresa = {};
-    }
-
-    $scope.saveNewEmpresa = function () {
+    $scope.saveNewProcedimento = function () {
         //if (!$scope.permModel.novo && !$scope.permModel.edicao)
         //  toastr.error('Acesso negado!', 'Permissão');
         //else
@@ -153,18 +159,18 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             //if (!$scope.stPhone_fail &&
               //  !$scope.stDescription_fail)
             {
-                $scope.addEmpresa = false;
+                $scope.addProcedimento = false;
 
-                $scope.viewModel.updateCommand = "newEmpresa";
-                $scope.viewModel.anexedEntity = $scope.newEmpresa;
+                $scope.viewModel.updateCommand = "newProcedimentoViaEmissor";
+                $scope.viewModel.anexedEntity = $scope.newProcedimento;
 
                 Api.Medico.update({ id: id }, $scope.viewModel, function (data) {
                     $scope.newPhone = {};
                     loadEntity();
                 },
-                    function (response) {
-                        toastr.error(response.data.message, 'Error');
-                    });
+                function (response) {
+                    toastr.error(response.data.message, 'Error');
+                });
             }
         }
     }

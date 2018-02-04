@@ -13,6 +13,7 @@ namespace DataModel
                                   FirstOrDefault().
                                   stNome;
 
+            procedimentos = LoadProcedimentos(db);
             empresas = LoadEmpresas(db);
             phones = LoadPhones(db);
             emails = LoadEmails(db);

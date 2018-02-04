@@ -11,6 +11,27 @@ namespace DataModel
 		{            
 			switch (updateCommand)
 			{
+                case "newProcedimentoViaEmissor":
+                    {
+                        var ent = JsonConvert.DeserializeObject<MedicoEmpresaTuss>(anexedEntity.ToString());
+
+                        ent.fkEmpresa = db.currentUser.fkEmpresa;
+                        ent.fkMedico = this.id;
+
+                        db.Insert(ent);
+
+                        return true;
+                    }
+
+                case "removeProcedimentoViaEmissor":
+                    {
+                        var ent = JsonConvert.DeserializeObject<MedicoEmpresaTuss>(anexedEntity.ToString());
+
+                        db.Delete(ent);
+
+                        return true;
+                    }
+
                 case "changePassword":
                     {
                         var ent = JsonConvert.DeserializeObject<UserPasswordChange>(anexedEntity.ToString());

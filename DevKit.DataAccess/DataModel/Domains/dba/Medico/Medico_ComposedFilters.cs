@@ -25,21 +25,21 @@ namespace DataModel
                         select e;
             }
 
-            if (filter.nuCodigo != null)
+            if (filter.nuCodigo != null && filter.nuCodigo > 0)
             {
                 query = from e in query
                         where e.nuCodigo == filter.nuCodigo
                         select e;
             }
 
-            if (filter.nome != null)
+            if (!string.IsNullOrEmpty(filter.nome))
             {
                 query = from e in query
                         where e.stNome.ToUpper().Contains(filter.nome.ToUpper())
                         select e;
             }
 
-            if (filter.especialidade != null)
+            if (!string.IsNullOrEmpty(filter.especialidade))
             {
                 query = from e in query
                         join espec in db.Especialidade on e.fkEspecialidade equals espec.id

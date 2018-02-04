@@ -47,7 +47,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
        // if (!$scope.permModel.visualizar)
          //   toastr.error('Acesso negado!', 'Permissão');
         //else
-            $state.go('medico', { id: mdl.id });
+        $state.go('emissormedico', { id: mdl.id });
     }
         
 	$scope.new = function () {

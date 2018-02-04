@@ -8,10 +8,10 @@ namespace DataModel
     {
 		public Medico LoadAssociations(DevKitDB db)
 		{
-            this.sfkEspecialidade = db.Especialidade.
-                                    Where(y => y.id == this.fkEspecialidade).
-                                    FirstOrDefault().
-                                    stNome;
+            sfkEspecialidade = db.Especialidade.
+                                  Where(y => y.id == fkEspecialidade).
+                                  FirstOrDefault().
+                                  stNome;
 
             empresas = LoadEmpresas(db);
             phones = LoadPhones(db);
@@ -20,6 +20,31 @@ namespace DataModel
 
             return this;
 		}
+
+        List<MedicoEmpresaTuss> LoadProcedimentos(DevKitDB db)
+        {
+            var query = (from e in db.MedicoEmpresaTuss
+                         where e.fkMedico == id
+                         select e);
+
+            if (db.currentUser != null)
+            {
+                query = from e in query
+                        where e.fkEmpresa == db.currentUser.fkEmpresa
+                        select e;
+            }
+
+            var lst = query.ToList();
+
+            foreach (var item in lst)
+            {
+                item.stProcedimento = db.TUSS.Where(y => y.nuCodTUSS == item.nuTUSS).
+                                        FirstOrDefault().
+                                        stProcedimento;
+            }
+
+            return lst;
+        }
 
         List<MedicoEmpresa> LoadEmpresas(DevKitDB db)
         {

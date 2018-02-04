@@ -20,8 +20,8 @@ namespace DataModel
         public string   sfkEspecialidade,
                         updateCommand = "";
 
+        public List<MedicoEmpresaTuss> procedimentos;
         public List<MedicoEmpresa> empresas;
-
         public List<MedicoPhone> phones;
         public List<MedicoEmail> emails;
         public List<MedicoAddress> enderecos;        

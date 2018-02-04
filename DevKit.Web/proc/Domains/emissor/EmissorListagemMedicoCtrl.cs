@@ -43,20 +43,7 @@ namespace DevKit.Web.Controllers
 
             return Ok(mdl);
         }
-
-        public IHttpActionResult Post(Medico mdl)
-        {
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
-            if (!mdl.Create(db, ref apiError))
-                return BadRequest(apiError);
-
-            mdl.LoadAssociations(db);
-
-            return Ok(mdl);
-        }
-
+        
         public IHttpActionResult Put(long id, Medico mdl)
 		{
             if (!StartDatabaseAndAuthorize())

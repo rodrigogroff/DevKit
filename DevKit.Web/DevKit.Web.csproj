@@ -416,6 +416,7 @@
     <Content Include="images\icon-paste.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\logoC.png" />
+    <Content Include="images\logoCmenu.png" />
     <Content Include="images\progressbar.gif" />
     <Content Include="images\user.png" />
     <Content Include="img\error.png" />

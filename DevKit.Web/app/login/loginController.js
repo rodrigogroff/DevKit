@@ -26,6 +26,10 @@ function ($scope, $rootScope, $location, AuthService, version, Api, $state)
         $rootScope.tipo = tiporedir;
     }
 
+    $scope.voltar = function () {
+        $rootScope.tipo = undefined;
+    }
+
     $scope.login = function ()
     {
     	$scope.loading = true;
@@ -67,9 +71,9 @@ function ($scope, $rootScope, $location, AuthService, version, Api, $state)
                         toastr.error('Sua senha expirou.', 'Controle de senha');
                     }
                     else
-                        $location.path('/');
+                        $state.go('autorizacaoProc');
                 }
-                else
+                else if ($rootScope.tipo == 4)
                 {
                     if ($scope.loginData.userName == $scope.loginData.password)
                     {
@@ -79,6 +83,8 @@ function ($scope, $rootScope, $location, AuthService, version, Api, $state)
                     else
                         $location.path('/');
                 }
+                else
+                    $location.path('/');
     		},
 			function (err)
 			{

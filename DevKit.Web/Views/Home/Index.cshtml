@@ -59,16 +59,33 @@
     <div class="header" ng-show="exibirMenu" ng-controller="MenuController">
         <div class="logo" style="padding-top:-4px; padding-left:-60px">
             <a ng-click="goHome()">
-                <img src='../../images/logo.png' height="112px" />
+                <img src='../../images/logoCmenu.png' height="62px" />
             </a>
         </div>
         <header class="page-header">
-            <div class="navbar" style="height:38px; padding-left:195px;padding-top:-4px;">
+            <div class="navbar" style="height:38px;padding-left:195px;">
                 <table width="100%" >
                     <tr>
                         <td width="600px" valign="top">
-                            <h4>{{authentication.nuEmpresa}}</h4>
-                            <span style="color:black">Bem-vindo, <b>{{authentication.nameUser}}</b></span>
+
+                            <div ng-if="authentication.tipo == 5" style="padding-top:12px">
+                                <b>PORTAL SAÚDE</b> – GESTÃO DE PLANOS DE SAÚDE CONVEYNET<br />
+                                {{authentication.nuEmpresa}}<br />
+                                <b>{{authentication.nameUser}}</b>
+                            </div>
+
+                            <div ng-if="authentication.tipo == 4" style="padding-top:12px">
+                                <b>PORTAL SAÚDE</b> – GESTÃO DE PLANOS DE SAÚDE CONVEYNET<br />
+                                Empresa emissora: {{authentication.nuEmpresa}}<br />
+                                Usuário: <b>{{authentication.nameUser}}</b>
+                            </div>
+
+                            <div ng-if="authentication.tipo == 1" style="padding-top:12px">
+                                <b>PORTAL SAÚDE</b> – GESTÃO DE PLANOS DE SAÚDE CONVEYNET<br />
+                                Credenciado código: <b>{{authentication.nuEmpresa}}</b>
+                                <b>{{authentication.nameUser}}</b>
+                            </div>
+
                         </td>
                         <td align="right" valign="top">
                             <br />
@@ -79,7 +96,7 @@
             </div>
         </header>
 
-        <nav ng-if="tipo == 1" id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:60px;padding-left:-200px">
+        <nav ng-if="tipo == 1" id="sidebar" class="sidebar nav-collapse collapse">
             <section class="widget" style="height:100%;font-size:11px">
                 <ul id="side-nav" class="side-nav" style="color:black">
                     <li class="panel">
@@ -91,9 +108,9 @@
                     </li>
                     <li class="panel">
                         <a class="accordion-toggle " data-toggle="collapse"
-                           data-parent="#side-nav" href="#forms-collapseProcedimentos"><span class="name">Procedimentos</span></a>
+                           data-parent="#side-nav" href="#forms-collapseProcedimentos"><span class="name">Operações</span></a>
                         <ul id="forms-collapseProcedimentos" class="panel-collapse collapse">
-                            <li><a ui-sref="medicoprocs"><span>Listagem</span></a></li>
+                            <li><a ui-sref="medicoprocs"><span>Demonstrativo</span></a></li>
                             <li><a ui-sref="autorizacaoProc"><span>Autorização</span></a></li>
                         </ul>
                     </li>
@@ -109,7 +126,7 @@
             </section>
         </nav>
 
-        <nav ng-if="tipo == 4" id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:60px;padding-left:-200px">
+        <nav ng-if="tipo == 4" id="sidebar" class="sidebar nav-collapse collapse">
             <section class="widget" style="height:100%;font-size:11px">
                 <ul id="side-nav" class="side-nav" style="color:black">
                     <li class="panel">
@@ -183,7 +200,7 @@
             </section>
         </nav>
 
-        <nav ng-if="tipo == 5" id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:60px;padding-left:-200px">
+        <nav ng-if="tipo == 5" id="sidebar" class="sidebar nav-collapse collapse">
             <section class="widget" style="height:100%;font-size:11px">
                 <ul id="side-nav" class="side-nav" style="color:black">
                     <li class="panel">

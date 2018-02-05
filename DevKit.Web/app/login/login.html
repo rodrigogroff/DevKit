@@ -26,11 +26,8 @@
             <form id="validate" style="width:300px;">
                 <fieldset>
                     <br />
-                    <h3>Portal Saúde ConveyNET</h3>
-                    <br />
-                    <div style="padding-left:90px">
-                        <img src='../../images/logo.png' height="120px" /><br />
-                    </div>
+                    <h3>Portal Saúde</h3>
+                    <img src='../../images/logoC.png' height="120px" /><br />
                     <br />
                     Selecione seu login nas opções abaixo:<br />
                     <br />
@@ -39,7 +36,7 @@
                     <br />
                     <a style="width:200px" class="btn btn-primary" ng-click="redirLogin(4)">Associações</a><br />
                     <br />
-                    <a style="width:200px" class="btn btn-primary" ng-click="redirLogin(2)">Associados</a><br />
+                    <a style="width:200px" class="btn btn-primary" ng-disabled="true">Associados</a><br />
                     <br />
                     <br />
                     <a style="width:200px" class="btn btn-default" ng-click="redirLogin(5)">Administração</a><br />
@@ -50,20 +47,18 @@
             </form>
         </div>
         
-        <div ng-if="tipo == 1" align="center" style="width:400px;height:530px;background-color:#e0e0e0;" ng-show="!loginOK">
+        <div ng-if="tipo == 1" align="center" style="width:400px;height:560px;background-color:#e0e0e0;" ng-show="!loginOK">
             <form id="validate" style="width:300px;">
                 <fieldset>
-                    <br /><h3>Portal Saúde ConveyNET</h3>
-                    Médicos<br />
                     <br />
-                    <div style="padding-left:90px">
-                        <img src='../../images/logo.png' height="120px" /><br />
-                    </div>
+                    <h3>Portal Saúde</h3>
+                    Médicos<br />
+                    <img src='../../images/logoC.png' height="120px" /><br />
                     <table>
                         <tr height="24px"></tr>
                         <tr height="48px">
                             <td width="90px">
-                                <p for="login" style="color: black">Cód. Médico</p>
+                                <p for="login" style="color: black">Credenciado</p>
                             </td>
                             <td width="210px">
                                 <div class="input-group input-group-lg">
@@ -102,19 +97,19 @@
                         </tr>
                     </table>
                 </fieldset>
+                <a class="btn btn-default" ng-click="voltar()">Voltar</a><br />
+                <br />
                 <span style="color:grey;text-align:center">Versão {{version}}</span>
             </form>
         </div>
 
-        <div ng-if="tipo == 4" align="center" style="width:400px;height:600px;background-color:#e0e0e0;" ng-show="!loginOK">
+        <div ng-if="tipo == 4" align="center" style="width:400px;height:640px;background-color:#e0e0e0;" ng-show="!loginOK">
             <form id="validate" style="width:300px;">
                 <fieldset>
-                    <br /><h3>Portal Saúde ConveyNET</h3>
-                    Associações<br />
                     <br />
-                    <div style="padding-left:90px">
-                        <img src='../../images/logo.png' height="120px" /><br />
-                    </div>
+                    <h3>Portal Saúde</h3>
+                    Associações<br />
+                    <img src='../../images/logoC.png' height="120px" /><br />
                     <table>
                         <tr height="24px"></tr>
                         <tr height="48px">
@@ -170,20 +165,19 @@
                         </tr>
                     </table>
                 </fieldset>
+                <a class="btn btn-default" ng-click="voltar()">Voltar</a><br />
+                <br />
                 <span style="color:grey;text-align:center">Versão {{version}}</span>
             </form>
         </div>
 
-        <div ng-if="tipo == 5" align="center" style="width:400px;height:560px;background-color:#e0e0e0;" ng-show="!loginOK">
+        <div ng-if="tipo == 5" align="center" style="width:400px;height:600px;background-color:#e0e0e0;" ng-show="!loginOK">
             <form id="validate" style="width:300px;">
                 <fieldset>
-                    <br /><h3>Portal Saúde ConveyNET</h3>
-                    Administração<br />
                     <br />
-                    <br />
-                    <div style="padding-left:90px">
-                        <img src='../../images/logo.png' height="120px" /><br />
-                    </div>
+                    <h3>Portal Saúde</h3>
+                    Administração
+                    <img src='../../images/logoC.png' height="120px" /><br />                    
                     <table>
                         <tr height="24px"></tr>
                         <tr height="48px">
@@ -227,6 +221,8 @@
                         </tr>
                     </table>
                 </fieldset>
+                <a class="btn btn-default" ng-click="voltar()">Voltar</a><br />
+                <br />
                 <span style="color:grey;text-align:center">Versão {{version}}</span>
             </form>
         </div>

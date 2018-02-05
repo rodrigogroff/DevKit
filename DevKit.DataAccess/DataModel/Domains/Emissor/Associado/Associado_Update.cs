@@ -31,7 +31,12 @@ namespace DataModel
 
                 case "altSenha":
                     {
-                        this.stSenha = anexedEntity.ToString();
+                        var dbAssoc = db.Associado.Where(y => y.id == this.id).FirstOrDefault();
+
+                        dbAssoc.stSenha = anexedEntity.ToString();
+
+                        db.Update(dbAssoc);
+
                         return true;
                     }
 

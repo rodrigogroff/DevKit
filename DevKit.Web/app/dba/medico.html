@@ -28,6 +28,17 @@
                                 </tr>
                             </thead>
                             <tr height="22px"></tr>
+                            <tr height="40px" ng-if="viewModel.id > 0">
+                                <td></td>
+                                <td>
+                                    <b>Código</b>
+                                </td>
+                                <td>                                    
+                                </td>
+                                <td>
+                                    {{viewModel.nuCodigo}}
+                                </td>
+                            </tr>
                             <tr height="40px">
                                 <td></td>
                                 <td>
@@ -37,8 +48,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="stNome_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="50"
-                                           ng-disabled="!permModel.edicao" ng-model="viewModel.stNome">
+                                    <input type="text" class="form-control input-transparent" maxlength="50" ng-model="viewModel.stNome">
                                 </td>
                             </tr>
                             <tr height="40px">

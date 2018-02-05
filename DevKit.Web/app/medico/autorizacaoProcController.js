@@ -17,9 +17,31 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
         $scope.itensporpagina = 15;
         $scope.selecionouProc = null;
-
+        $scope.associado = undefined;
         $scope.pedirSenha = false;
 	}
+
+    $scope.buscarCartao = function () {
+        $scope.loading = true;
+        $scope.associado = undefined;
+
+        var opcoes = {
+            emp: $scope.campos.cartEmp,
+            mat: $scope.campos.cartMat,
+            ca: $scope.campos.cartCA,
+            titVia: $scope.campos.cartTitVia,
+        };
+
+        Api.Cartao.listPage(opcoes, function (data) {
+            $scope.associado = data;
+            $scope.loading = false;
+        },
+            function (response) {
+                $scope.associado = undefined;
+                $scope.loading = false;
+                toastr.error(response.message, 'Verificação');
+            });
+    }
 
 	$scope.search = function ()
 	{
@@ -46,9 +68,9 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 			$scope.total = data.count;
 			$scope.loading = false;
         },
-            function (response) {
-                $scope.loading = false;
-            });
+        function (response) {
+            $scope.loading = false;
+        });
 	}
         
 	$scope.marcar = function (mdl)
@@ -71,27 +93,6 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             $scope.selecionouProc = null;
     }
 
-    $scope.buscarCartao = function ()
-    {
-        $scope.loading = true;
-        $scope.associado = undefined;
-
-        var opcoes = {
-            emp: $scope.campos.cartEmp,
-            mat: $scope.campos.cartMat,
-            ca: $scope.campos.cartCA,
-            titVia: $scope.campos.cartTitVia,
-        };
-
-        Api.Cartao.listPage(opcoes, function (data) {
-            $scope.associado = data;
-            $scope.loading = false;
-        },
-            function (response) {
-                $scope.loading = false;
-                toastr.error(response.message, 'Verificação');
-        });
-    }
 
     $scope.abreSenha = function ()
     {

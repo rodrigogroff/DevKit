@@ -252,6 +252,8 @@
     <Content Include="app\configuration\sprint\ListingSprintsController.js" />
     <Content Include="app\configuration\sprint\sprint.html" />
     <Content Include="app\configuration\sprint\SprintController.js" />
+    <Content Include="app\dba\listingExpAutorizacao.html" />
+    <Content Include="app\dba\ListingExpAutorizacaoController.js" />
     <Content Include="app\dba\medico.html" />
     <Content Include="app\dba\MedicoController.js" />
     <Content Include="app\dba\listingTUSS.html" />
@@ -891,6 +893,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="proc\Combos\CidadeComboCtrl.cs" />
+    <Compile Include="proc\Combos\EmpresaComboCtrl.cs" />
     <Compile Include="proc\Combos\EstadoComboCtrl.cs" />
     <Compile Include="proc\Combos\PhaseComboCtrl.cs" />
     <Compile Include="proc\Combos\VersionComboCtrl.cs" />

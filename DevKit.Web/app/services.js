@@ -87,6 +87,7 @@ angular.module('app.services', ['ngResource'])
         TaskFlowCombo: $resource('api/taskflowcombo/:id', {}, opcoes),
         SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),        
         VersionCombo: $resource('api/versioncombo/:id', {}, opcoes),
+        EmpresaCombo: $resource('api/empresacombo/:id', {}, opcoes),
         AutorizaProc: $resource('api/autorizaproc/:id', {}, opcoes),
         MedicoListagemAutorizacao: $resource('api/medicolistagemautorizacao/:id', {}, opcoes),
         EmissorListagemAutorizacao: $resource('api/emissorlistagemautorizacao/:id', {}, opcoes),

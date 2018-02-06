@@ -94,6 +94,8 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
         controller: 'EmissorMedicoController'
     })
 
+    .state('exportaut', { url: '/dba/exportaut', templateUrl: 'app/dba/listingExpAutorizacao.html', controller: 'ListingExpAutorizacaoController' })
+
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 
     $locationProvider.html5Mode(true);

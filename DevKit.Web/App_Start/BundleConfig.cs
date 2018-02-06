@@ -109,6 +109,7 @@ namespace DevKit.Web
 				"~/app/system/profile/ListingProfilesController.js",
                 "~/app/dba/ListingLotesController.js",
                 "~/app/dba/ListingEmpresasController.js",
+                "~/app/dba/ListingExpAutorizacaoController.js",
                 "~/app/dba/ListingTUSSController.js",
                 "~/app/dba/ListingEspecialidadesController.js",
                 "~/app/dba/ListingMedicosController.js",

@@ -1,0 +1,72 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+
+namespace DataModel
+{
+    public partial class LoteExpAutorizacao
+    {
+        public string Exportar(DevKitDB db, long? fkEmpresa, long? nuMes, long? nuAno)
+        {
+            var emp = db.Empresa.Where(y => y.id == fkEmpresa).FirstOrDefault();
+
+            string tag = emp.nuEmpresa.ToString().PadLeft(6, '0') +
+                         nuMes.ToString().PadLeft(2, '0') +
+                         nuAno.ToString();
+
+            var util = new Util();
+
+            string dir = "c:\\lotes_grafica\\";
+            string file = dir + "LoteExpAuto_" + tag + ".txt";
+            string ext = ".txt";
+
+            var lstId = new List<long?>();
+
+            using (var sw = new StreamWriter(file, false, Encoding.Default))
+            {
+                var lstAutorizacoes = db.Autorizacao.
+                                        Where(y => y.fkEmpresa == fkEmpresa &&
+                                                   y.nuMes == nuMes &&
+                                                   y.nuAno == nuAno).
+                                        OrderBy(y => y.dtSolicitacao).
+                                        ToList();
+
+                // header
+                sw.WriteLine("empresa;mês;ano;data solicitação;associado;matricula;cpfCnpj medico;tuss;");
+                
+                lstId = lstAutorizacoes.Select(a => a.fkAssociado).Distinct().ToList();
+
+                var lstAssoc = db.Associado.Where(y => lstId.Contains(y.id)).ToList();
+
+                lstId = lstAutorizacoes.Select(a => a.fkMedico).Distinct().ToList();
+
+                var lstMed = db.Medico.Where(y => lstId.Contains(y.id)).ToList();
+
+                lstId = lstAutorizacoes.Select(a => a.fkProcedimento).Distinct().ToList();
+
+                var lstProc = db.TUSS.Where(y => lstId.Contains(y.id)).ToList();
+
+                foreach (var item in lstAutorizacoes)
+                {
+                    var line = emp.nuEmpresa.ToString() + ";" + nuMes + ";" + nuAno + ";";
+
+                    var assoc = lstAssoc.Where(y => y.id == item.fkAssociado).FirstOrDefault();
+                    var med = lstMed.Where (y=>y.id == item.fkMedico).FirstOrDefault();
+                    var proc = lstProc.Where(y => y.id == item.fkProcedimento).FirstOrDefault();
+
+                    line += Convert.ToDateTime(item.dtSolicitacao).ToString("dd/MM/yyyy HH:mm") + ";";
+                    line += assoc.stName + ";";
+                    line += assoc.nuMatricula + ";";
+                    line += med.stCnpj + ";";
+                    line += proc.nuCodTUSS + ";";
+
+                    sw.WriteLine(line);
+                }
+            }
+
+            return file;
+        }
+    }
+}

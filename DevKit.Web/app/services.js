@@ -92,5 +92,6 @@ angular.module('app.services', ['ngResource'])
         MedicoListagemAutorizacao: $resource('api/medicolistagemautorizacao/:id', {}, opcoes),
         EmissorListagemAutorizacao: $resource('api/emissorlistagemautorizacao/:id', {}, opcoes),
         EmissorListagemMedico: $resource('api/emissorlistagemmedico/:id', {}, opcoes),
+        LotesExpAutorizacao: $resource('api/lotesexpautorizacao/:id', {}, opcoes),
 	};
 }]);

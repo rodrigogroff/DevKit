@@ -95,6 +95,10 @@
     <Compile Include="DataModel\Domains\dba\Especialidade\Especialidade_LoadAssociations.cs" />
     <Compile Include="DataModel\Domains\dba\Especialidade\Especialidade_Loader.cs" />
     <Compile Include="DataModel\Domains\dba\Especialidade\Especialidade_Update.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteExpAutorizacao\LoteExpAutorizacao_ComposedFilters.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteExpAutorizacao\LoteExpAutorizacao_Loader.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteExpAutorizacao\LoteExpAutorizacao_DTO.cs" />
+    <Compile Include="DataModel\Domains\dba\LoteExpAutorizacao\LoteExpAutorizacao_Exportar.cs" />
     <Compile Include="DataModel\Domains\dba\LoteGrafica\LoteGrafica_Exportar.cs" />
     <Compile Include="DataModel\Domains\dba\LoteGrafica\LoteGrafica_Ativar.cs" />
     <Compile Include="DataModel\Domains\dba\LoteGrafica\LoteGrafica_NovoLoteQuery.cs" />

@@ -15,6 +15,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.campos = {
             mes: '',
             ano: '',
+            fkEmpresa: undefined,
         };
 
         $scope.itensporpagina = 15;
@@ -31,12 +32,12 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 		$scope.loading = true;
 
         var opcoes = {
-            skip: skip,
-            take: take,
-            codigo: $scope.campos.codigo,
+            fkEmpresa: $scope.campos.fkEmpresa,
+            nuMes: $scope.campos.nuMes,
+            nuAno: $scope.campos.nuAno,
         };
 
-		Api.LotesGrafica.listPage(opcoes, function (data)
+		Api.LotesExpAutorizacao.listPage(opcoes, function (data)
 		{
 			$scope.list = data.results;
 			$scope.total = data.count;
@@ -47,54 +48,28 @@ function ($scope, $rootScope, $state, Api, ngSelects )
     $scope.ativar = function (mdl) {
         mdl.selecionado = !mdl.selecionado;
     }
-
-    $scope.ativarTodos = function ()
-    {
-        var lotes = '';
-
-        for (var i = 0; i < $scope.list.length; ++i) {
-            if ($scope.list[i].selecionado == true)
-                lotes += $scope.list[i].id + ',';
-        }
-
-        if (lotes == '') {
-            toastr.error('Escolha algum lote para ativação', 'Ativar lote');
-        }
-        else 
-        {
-            var opcoes = {
-                ativarLote: true,
-                lotes: lotes,
-            };
-
-            Api.LotesGrafica.listPage(opcoes, function (data) {
-                toastr.success('Lote(s) ativados com sucesso!', 'Ativar lote');
-                $scope.search();
-            });
-        }
-    }
-
+    
     $scope.exportarLote = function ()
     {
-        var lote = '';
+        var lote = undefined;
 
         for (var i = 0; i < $scope.list.length; ++i) {
             if ($scope.list[i].selecionado == true) {
-                lote = $scope.list[i].id;
+                lote = $scope.list[i];
                 break;
             }                
         }
 
-        if (lote == '') {
+        if (lote == undefined) {
             toastr.error('Escolha algum lote para exportação', 'Exportar lote');
         }
         else
-            window.location.href = "/api/lotesgrafica/exportar?" + $.param({ idLote: lote });
+            window.location.href = "/api/lotesexpautorizacao/exportar?" + $.param(
+                {
+                    fkEmpresa: lote.fkEmpresa,
+                    nuMes: lote.nuMes,
+                    nuAno: lote.nuAno,
+                });
     }
-
-	$scope.new = function ()
-	{
-		$state.go('novolote');
-	}
 
 }]);

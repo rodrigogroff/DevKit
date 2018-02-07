@@ -904,6 +904,7 @@
     <Compile Include="proc\Combos\ProfileComboCtrl.cs" />
     <Compile Include="proc\Combos\UserComboCtrl.cs" />
     <Compile Include="proc\Combos\ProjectComboCtrl.cs" />
+    <Compile Include="proc\Domains\dba\LotesExpAutorizacaoCtrl.cs" />
     <Compile Include="proc\Domains\dba\TUSSCtrl.cs" />
     <Compile Include="proc\Domains\dba\EspecialidadeCtrl.cs" />
     <Compile Include="proc\Domains\dba\EmpresaCtrl.cs" />

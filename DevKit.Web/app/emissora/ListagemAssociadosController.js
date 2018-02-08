@@ -50,6 +50,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             take: take,
             busca: $scope.campos.busca,
             cpf: $scope.campos.cpf,
+            matricula: $scope.campos.matricula,
             ativo: $scope.campos.ativo,
             email: $scope.campos.email,
             phone: $scope.campos.phone,

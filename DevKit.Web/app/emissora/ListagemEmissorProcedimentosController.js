@@ -32,6 +32,11 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             take: take,
             tuss: $scope.campos.tuss,
             nomeAssociado: $scope.campos.nomeAssociado,
+            nomeCredenciado: $scope.campos.nomeCredenciado,
+            codMedico: $scope.campos.codMedico,
+            matricula: $scope.campos.matricula,
+            dtInicial: $scope.campos.dtInicial,
+            dtFim: $scope.campos.dtFim,
         };
 
 		Api.EmissorListagemAutorizacao.listPage(opcoes, function (data)

@@ -8,8 +8,17 @@ namespace DataModel
 {
     public class ListagemEmissorAutorizacaoFilter
     {
-        public int skip, take, situacao;
-        public string tuss, nomeAssociado;
+        public int skip, 
+                   take,
+                   situacao;
+
+        public string   tuss, 
+                        nomeAssociado, 
+                        nomeCredenciado, 
+                        codMedico, 
+                        matricula, 
+                        dtInicial, 
+                        dtFim;
     }
 
     public class EmissorAutorizacaoReport
@@ -40,8 +49,74 @@ namespace DataModel
             {
                 query = from e in query
                         join assoc in db.Associado on e.fkAssociado equals assoc.id
-                        where assoc.stName.Contains (filter.nomeAssociado)
+                        where assoc.stName.ToUpper().Contains (filter.nomeAssociado.ToUpper())
                         select e;
+            }
+
+            if (!string.IsNullOrEmpty(filter.nomeCredenciado))
+            {
+                query = from e in query
+                        join med in db.Medico on e.fkMedico equals med.id
+                        where med.stNome.ToUpper().Contains(filter.nomeCredenciado.ToUpper())
+                        select e;
+            }
+
+            if (!string.IsNullOrEmpty(filter.codMedico))
+            {
+                query = from e in query
+                        join med in db.Medico on e.fkMedico equals med.id
+                        where med.nuCodigo.ToString() == filter.codMedico
+                        select e;
+            }
+
+            if (!string.IsNullOrEmpty(filter.matricula))
+            {
+                query = from e in query
+                        join assoc in db.Associado on e.fkAssociado equals assoc.id
+                        where assoc.nuMatricula.ToString() == filter.matricula
+                        select e;
+            }
+
+            if (!string.IsNullOrEmpty(filter.dtInicial) && filter.dtInicial.Length==10)
+            {
+                #region - code -
+
+                int nu_dia = Convert.ToInt32(filter.dtInicial.Substring(0, 2)),
+                    nu_mes = Convert.ToInt32(filter.dtInicial.Substring(2, 2)),
+                    nu_ano = Convert.ToInt32(filter.dtInicial.Substring(4, 4));
+
+                try
+                {
+                    var dtInicial = new DateTime(nu_ano, nu_mes, nu_dia);
+
+                    query = from e in query
+                            where e.dtSolicitacao > dtInicial
+                            select e;
+                }
+                catch (System.Exception ex) { }
+
+                #endregion
+            }
+
+            if (!string.IsNullOrEmpty(filter.dtFim) && filter.dtFim.Length == 10)
+            {
+                #region - code -
+
+                int nu_dia = Convert.ToInt32(filter.dtFim.Substring(0, 2)),
+                    nu_mes = Convert.ToInt32(filter.dtFim.Substring(2, 2)),
+                    nu_ano = Convert.ToInt32(filter.dtFim.Substring(4, 4));
+
+                try
+                {
+                    var dtFim = new DateTime(nu_ano, nu_mes, nu_dia).AddDays(1);
+
+                    query = from e in query
+                            where e.dtSolicitacao < dtFim
+                            select e;
+                }
+                catch (System.Exception ex) { }
+
+                #endregion
             }
 
             var count = query.Count();

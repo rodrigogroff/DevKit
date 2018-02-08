@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using SyCrafEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,11 +38,17 @@ namespace DataModel
 
             var lst = query.ToList();
 
+            var mon = new money();
+            
+            // associations
             foreach (var item in lst)
             {
                 item.stProcedimento = db.TUSS.Where(y => y.nuCodTUSS == item.nuTUSS).
                                         FirstOrDefault().
                                         stProcedimento;
+
+                item.svrCoPart = mon.setMoneyFormat((long)item.vrCoPart);
+                item.svrProcedimento = mon.setMoneyFormat((long)item.vrProcedimento);
             }
 
             return lst;

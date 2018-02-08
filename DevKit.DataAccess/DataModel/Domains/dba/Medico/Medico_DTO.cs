@@ -13,6 +13,13 @@ namespace DataModel
         public string sfkEmpresa = "";
     }
 
+    public partial class MedicoEmpresaTuss
+    {
+        public string stProcedimento, 
+                      svrCoPart,
+                      svrProcedimento;
+    }
+
     public partial class Medico
     {
         public object anexedEntity;

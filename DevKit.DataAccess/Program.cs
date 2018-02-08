@@ -247,84 +247,7 @@ namespace GetStarted
 
                                 #endregion
                             }
-
-                            //if (!db.Medico.Any())
-                            //{
-                            //    #region - carga de médicos - 
-
-                            //    using (var sr = new StreamReader("c:\\carga\\medicos_1801.txt", Encoding.UTF8, false))
-                            //    {
-                            //        Console.WriteLine("Carga de médicos");
-
-                            //        // pula a primeira linha
-                            //        sr.ReadLine();
-
-                            //        while (!sr.EndOfStream)
-                            //        {
-                            //            var line = sr.ReadLine().ToUpper();
-
-                            //            if (line == ";;;")
-                            //                continue;
-
-                            //            if (line != "")
-                            //            {
-                            //                var ar = line.Split(';');
-
-                            //                var nome = ar[0].Trim();
-                            //                var cpfCnpj = ar[1].Trim();
-                            //                var espec = ar[2].Trim();
-
-                            //                if (!db.Especialidade.Any (y=> y.stNome == espec))
-                            //                {
-                            //                    db.Insert(new Especialidade
-                            //                    {
-                            //                        stNome = espec
-                            //                    });
-                            //                }
-
-                            //                var codDisp = setup.RandomInt(4);
-
-                            //                while (db.Medico.Any (y=>y.nuCodigo == codDisp))
-                            //                {
-                            //                    Thread.Sleep(1);
-                            //                    codDisp = setup.RandomInt(4);
-                            //                }
-
-                            //                var new_id = Convert.ToInt64(db.InsertWithIdentity(new Medico()
-                            //                {
-                            //                    dtStart = DateTime.Now,
-                            //                    fkUserAdd = 1,
-                            //                    fkEspecialidade = db.Especialidade.FirstOrDefault(y=>y.stNome == espec).id,
-                            //                    stNome = nome,
-                            //                    stCnpj = cpfCnpj,
-                            //                    nuCodigo = codDisp,
-                            //                    nuTipo = cpfCnpj.Length > 14 ? 2 : 1,
-                            //                }));
-
-                            //                db.Insert(new MedicoEmpresa
-                            //                {
-                            //                    fkMedico = new_id,
-                            //                    fkEmpresa = 1
-                            //                });
-
-                            //                db.Insert(new MedicoEmpresa
-                            //                {
-                            //                    fkMedico = new_id,
-                            //                    fkEmpresa = 2
-                            //                });
-
-                            //                db.Insert(new MedicoEmpresa
-                            //                {
-                            //                    fkMedico = new_id,
-                            //                    fkEmpresa = 3
-                            //                });
-                            //            }
-                            //        }
-                            //    }
-
-                            //    #endregion
-                            //}
-
+                            
                             if (!db.TUSS.Any())
                             {
                                 #region - carga tuss - 
@@ -373,11 +296,10 @@ namespace GetStarted
                                 #endregion
                             }
 
-                            if (!db.MedicoEmpresaTuss.Any())
                             {
                                 #region - carga especialidade x médico - 
 
-                                Console.WriteLine("Carga de especialidade x médico");
+                                Console.WriteLine("Atualizando especialidade x médico");
 
                                 var excel = new XLWorkbook("C:\\carga\\medico_especialidade.xlsx");
                                 var sheet = excel.Worksheets.FirstOrDefault();
@@ -389,23 +311,36 @@ namespace GetStarted
 
                                 for (; ; currentRow++)
                                 {
-                                    var nomeMedico = sheet.Cell(currentRow, 1).Value.ToString().Trim();
-
+                                    var nomeMedico = sheet.Cell(currentRow, 1).Value.ToString().ToUpper().Trim();
+                                    
                                     if (nomeMedico == "FIM")
                                         break;
                                     else
                                     {
                                         if (!string.IsNullOrEmpty(nomeMedico))
                                         {
-                                            if (nomeMedico.Length > 1)
-                                                curMedico = db.Medico.Where(y => y.stNome.ToUpper() == nomeMedico.ToUpper()).FirstOrDefault();
+                                            var stCnpj = sheet.Cell(currentRow, 4).Value.ToString().Trim();
+                                            var especialidade = sheet.Cell(currentRow, 2).Value.ToString().ToUpper().Trim();
+                                            
+                                            var especTb = db.Especialidade.
+                                                            Where(y => y.stNome == especialidade).
+                                                            FirstOrDefault();
+
+                                            if (especTb == null)
+                                            {
+                                                especTb = new Especialidade
+                                                {
+                                                    stNome = especialidade
+                                                };
+
+                                                especTb.id = Convert.ToInt64(db.InsertWithIdentity(especTb));
+                                            }
+
+                                            curMedico = db.Medico.Where(y => y.stCnpj == stCnpj).FirstOrDefault();
 
                                             if (curMedico == null)
-                                            {
-                                                var stCnpj = sheet.Cell(currentRow, 4).Value.ToString();
+                                            {                                                
                                                 var codDisp = setup.RandomInt(4);
-
-                                                //var espec 
 
                                                 while (db.Medico.Any (y=>y.nuCodigo == codDisp))
                                                 {
@@ -417,30 +352,21 @@ namespace GetStarted
                                                 {
                                                     dtStart = DateTime.Now,
                                                     fkUserAdd = 1,
-                                                    fkEspecialidade = db.Especialidade.FirstOrDefault(y => y.stNome == espec).id,
+                                                    fkEspecialidade = especTb.id,
                                                     stNome = nomeMedico,
                                                     stCnpj = stCnpj,
                                                     nuCodigo = codDisp,
                                                     nuTipo = stCnpj.Length > 11 ? 2 : 1,
                                                 }));
 
-                                                db.Insert(new MedicoEmpresa
-                                                {
-                                                    fkMedico = new_id,
-                                                    fkEmpresa = 1
-                                                });
+                                                for (int t=1; t <=3; ++t)
+                                                    db.Insert(new MedicoEmpresa
+                                                    {
+                                                        fkMedico = new_id,
+                                                        fkEmpresa = t
+                                                    });
 
-                                                db.Insert(new MedicoEmpresa
-                                                {
-                                                    fkMedico = new_id,
-                                                    fkEmpresa = 2
-                                                });
-
-                                                db.Insert(new MedicoEmpresa
-                                                {
-                                                    fkMedico = new_id,
-                                                    fkEmpresa = 3
-                                                });
+                                                curMedico = db.Medico.Where(y => y.id == new_id).FirstOrDefault();
                                             }
                                         }
                                         else if (curMedico != null)
@@ -448,24 +374,64 @@ namespace GetStarted
                                             // guarda procedimento!
 
                                             var cod_tuss = sheet.Cell(currentRow, 2).Value.ToString();
+                                            var st_tuss = sheet.Cell(currentRow, 3).Value.ToString();
+
                                             var vr_proc = GetNumberFromReal(sheet.Cell(currentRow, 4).Value.ToString());
                                             var vr_cop = GetNumberFromReal(sheet.Cell(currentRow, 6).Value.ToString());
                                             var nu_q_mes = sheet.Cell(currentRow, 7).Value.ToString().ToUpper();
                                             var nu_q_ano = sheet.Cell(currentRow, 8).Value.ToString().ToUpper();
                                             var nu_parc = sheet.Cell(currentRow, 9).Value.ToString().ToUpper();
-                                            
-                                            for (int t=1; t <= 3; t++)
-                                                db.Insert(new MedicoEmpresaTuss
+
+                                            var curTuss = db.TUSS.
+                                                            Where(y => y.nuCodTUSS.ToString() == cod_tuss).
+                                                            FirstOrDefault();
+
+                                            if (curTuss == null)
+                                            {
+                                                db.Insert( new TUSS
                                                 {
-                                                    fkEmpresa = t,
-                                                    fkMedico = curMedico.id,
-                                                    nuMaxAno = Convert.ToInt64(nu_q_ano),
-                                                    nuMaxMes = Convert.ToInt64(nu_q_ano),
-                                                    nuParcelas = Convert.ToInt64(nu_parc),
-                                                    nuTUSS = Convert.ToInt64(cod_tuss),
-                                                    vrCoPart = Convert.ToInt64(vr_cop),
-                                                    vrProcedimento = Convert.ToInt64(vr_proc),
+                                                    nuCodTUSS = Convert.ToInt64(cod_tuss),
+                                                    stProcedimento = st_tuss
                                                 });
+                                            }
+
+                                            var lstCurProc = db.MedicoEmpresaTuss.
+                                                                Where(y => y.fkMedico == curMedico.id && 
+                                                                           y.nuTUSS == Convert.ToInt64(cod_tuss)).
+                                                                ToList();
+
+                                            if (lstCurProc.Any())
+                                            {
+                                                // ataaliza
+                                                foreach (var item in lstCurProc)
+                                                {
+                                                    var itemDb = db.MedicoEmpresaTuss.Where(y => y.id == item.id).FirstOrDefault();
+
+                                                    itemDb.nuMaxAno = Convert.ToInt64(nu_q_ano);
+                                                    itemDb.nuMaxMes = Convert.ToInt64(nu_q_ano);
+                                                    itemDb.nuParcelas = Convert.ToInt64(nu_parc);
+                                                    itemDb.vrCoPart = Convert.ToInt64(vr_cop);
+                                                    itemDb.vrProcedimento = Convert.ToInt64(vr_proc);
+
+                                                    db.Update(itemDb);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // cria
+                                                for (int t = 1; t <= 3; t++)
+                                                    db.Insert(new MedicoEmpresaTuss
+                                                    {
+                                                        fkEmpresa = t,
+                                                        fkMedico = curMedico.id,
+                                                        nuMaxAno = Convert.ToInt64(nu_q_ano),
+                                                        nuMaxMes = Convert.ToInt64(nu_q_ano),
+                                                        nuParcelas = Convert.ToInt64(nu_parc),
+                                                        nuTUSS = Convert.ToInt64(cod_tuss),
+                                                        vrCoPart = Convert.ToInt64(vr_cop),
+                                                        vrProcedimento = Convert.ToInt64(vr_proc),
+                                                    });
+                                            }                                                
                                         }                                        
                                     }
                                 }

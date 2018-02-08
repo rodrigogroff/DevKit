@@ -35,6 +35,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClientEngine">
+      <HintPath>..\DevKit.Web\bin\ClientEngine.dll</HintPath>
+    </Reference>
     <Reference Include="ClosedXML, Version=0.90.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.90.0\lib\net452\ClosedXML.dll</HintPath>
     </Reference>
@@ -318,7 +321,6 @@
     <None Include="LinqToDB.Templates\Validation.ttinclude" />
     <None Include="packages.config" />
     <None Include="README.md" />
-    <Content Include="Carga\medicos_1801.txt" />
     <Content Include="Carga\log_faixa_uf.txt" />
     <Content Include="Carga\log_localidade.txt" />
     <Content Include="LinqToDB.Templates\CopyMe.PostgreSQL.tt.txt" />

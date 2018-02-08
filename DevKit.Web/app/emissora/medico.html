@@ -116,15 +116,22 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>TUSS</th>
-                                                    <th>Descrição do procedimento</th>
-                                                    <th></th>
+                                                    <th>TUSS</th>                                                    
+                                                    <th>R$ Valor</th>
+                                                    <th>R$ Co-part.</th>
+                                                    <th>Máx. Mês</th>
+                                                    <th>Máx. Ano</th>
+                                                    <th>Parcs.</th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="mdl in viewModel.procedimentos">
                                                 <td>{{ mdl.nuTUSS }}</td>
-                                                <td>{{ mdl.stProcedimento }}</td>
-                                                <td>
+                                                <td>{{ mdl.svrProcedimento }}</td>
+                                                <td>{{ mdl.svrCoPart }}</td>
+                                                <td>{{ mdl.nuMaxMes }}</td>
+                                                <td>{{ mdl.nuMaxAno }}</td>
+                                                <td>{{ mdl.nuParcelas }}</td>
+                                                <!--<td>
                                                     <div class="pull-right">
                                                         <a href="" role="button" ng-click="removeProcedimento($index, viewModel.procedimentos)">
                                                             <i class="glyphicon glyphicon-remove" style="color:white"></i>
@@ -155,7 +162,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td>
+                                                </td>-->
                                             </tr>
                                         </table>
                                     </div>

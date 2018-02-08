@@ -8,12 +8,7 @@ namespace DataModel
 
         public string updateCommand = "";
 	}
-
-    public partial class MedicoEmpresaTuss
-    {
-        public string stProcedimento;
-    }
-
+    
     public class TUSSReport
     {
         public int count = 0;

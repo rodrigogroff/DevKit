@@ -13,6 +13,7 @@ namespace DataModel
                    situacao;
 
         public string   tuss, 
+                        espec,
                         nomeAssociado, 
                         nomeCredenciado, 
                         codMedico, 
@@ -77,7 +78,7 @@ namespace DataModel
                         select e;
             }
 
-            if (!string.IsNullOrEmpty(filter.dtInicial) && filter.dtInicial.Length==10)
+            if (!string.IsNullOrEmpty(filter.dtInicial) && filter.dtInicial.Length==8)
             {
                 #region - code -
 
@@ -98,7 +99,7 @@ namespace DataModel
                 #endregion
             }
 
-            if (!string.IsNullOrEmpty(filter.dtFim) && filter.dtFim.Length == 10)
+            if (!string.IsNullOrEmpty(filter.dtFim) && filter.dtFim.Length == 8)
             {
                 #region - code -
 
@@ -117,6 +118,15 @@ namespace DataModel
                 catch (System.Exception ex) { }
 
                 #endregion
+            }
+
+            if (!string.IsNullOrEmpty(filter.espec))
+            {
+                query = from e in query
+                        join med in db.Medico on e.fkMedico equals med.id
+                        join espec in db.Especialidade on med.fkEspecialidade equals espec.id
+                        where espec.stNome.ToUpper() == filter.espec.ToUpper()
+                        select e;
             }
 
             var count = query.Count();

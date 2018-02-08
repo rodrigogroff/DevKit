@@ -11,6 +11,7 @@ namespace DataModel
                         stgSituacao,
                         sfkMedico,
                         snuCodigoMedico,
+                        sfkEspecialidade,
                         sfkEmpresa,
                         sfkProcedimento,
                         snuMattriculaAssociado,

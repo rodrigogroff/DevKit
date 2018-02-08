@@ -13,6 +13,7 @@ namespace DataModel
             var proc = db.TUSS.Where(y => y.id == fkProcedimento).FirstOrDefault();
             var assoc = db.Associado.Where(y => y.id == fkAssociado).FirstOrDefault();
             var medico = db.Medico.Where(y => y.id == fkMedico).FirstOrDefault();
+            var espec = db.Especialidade.Where(y => y.id == medico.fkEspecialidade).FirstOrDefault();
 
             sdtSolicitacao = Convert.ToDateTime(dtSolicitacao).ToString("dd/MM/yyyy HH:mm");
 
@@ -24,6 +25,8 @@ namespace DataModel
 
             snuCodigoMedico = medico.nuCodigo.ToString();
             sfkMedico = medico.stNome;
+
+            sfkEspecialidade = espec.stNome;
 
             switch (tgSituacao)
             {

@@ -10,20 +10,19 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var m = new Empresa().ListagemAutorizacao(db, new ListagemEmissorAutorizacaoFilter
+            return Ok(new Empresa().ListagemAutorizacao(db, new ListagemEmissorAutorizacaoFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 0),
                 tuss = Request.GetQueryStringValue("tuss"),
+                espec = Request.GetQueryStringValue("espec"),
                 nomeAssociado = Request.GetQueryStringValue("nomeAssociado"),
                 nomeCredenciado = Request.GetQueryStringValue("nomeCredenciado"),
                 codMedico = Request.GetQueryStringValue("codMedico"),
                 matricula = Request.GetQueryStringValue("matricula"),
                 dtInicial = Request.GetQueryStringValue("dtInicial"),
                 dtFim = Request.GetQueryStringValue("dtFim"),
-            });
-
-            return Ok(m);
+            }));
         }
     }
 }

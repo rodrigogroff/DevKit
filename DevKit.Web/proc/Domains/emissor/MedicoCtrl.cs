@@ -16,16 +16,14 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var filter = new MedicoFilter
+            return Ok(new Medico().ComposedFilters(db, new MedicoFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 nome = Request.GetQueryStringValue("nome"),
-                nuCodigo = Request.GetQueryStringValue("codigo",0),
+                nuCodigo = Request.GetQueryStringValue("codigo", 0),
                 especialidade = Request.GetQueryStringValue("especialidade"),
-            };
-
-            return Ok(new Medico().ComposedFilters(db, filter));                        
+            }));                        
         }
             
         public IHttpActionResult Get(long id)

@@ -34,7 +34,7 @@ namespace DataModel
                                         ToList();
 
                 // header
-                sw.WriteLine("empresa;mês;ano;data solicitação;associado;matricula;cpfCnpj medico;tuss;");
+                sw.WriteLine("empresa;mês;ano;data solicitação;portador;cpf portador;matricula;cpfCnpj medico;tuss;");
                 
                 lstId = lstAutorizacoes.Select(a => a.fkAssociado).Distinct().ToList();
 
@@ -58,6 +58,7 @@ namespace DataModel
 
                     line += Convert.ToDateTime(item.dtSolicitacao).ToString("dd/MM/yyyy HH:mm") + ";";
                     line += assoc.stName + ";";
+                    line += assoc.stCPF + ";";
                     line += assoc.nuMatricula + ";";
                     line += med.stCnpj + ";";
                     line += proc.nuCodTUSS + ";";

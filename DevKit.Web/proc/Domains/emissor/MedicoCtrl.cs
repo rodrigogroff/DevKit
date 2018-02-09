@@ -33,6 +33,10 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.Medico.Where(y => y.id == id).FirstOrDefault();
 
+            if (!db.MedicoEmpresa.Any ( y=> y.id == mdl.id && 
+                                            y.fkEmpresa == db.currentUser.fkEmpresa))
+                return BadRequest("Credenciado inválido");
+
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
             

@@ -79,6 +79,8 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('especialidades', { url: '/dba/especialidades', templateUrl: 'app/dba/listingEspecialidades.html', controller: 'ListingEspecialidadesController' })
 
     .state('altSenha', { url: '/emissora/altSenha', templateUrl: 'app/emissora/altSenha.html', controller: 'EmissoraAltSenhaController' })
+    .state('segvia', { url: '/emissora/segVia', templateUrl: 'app/emissora/segVia.html', controller: 'EmissoraSegViaController' })
+
     .state('emissorprocs', { url: '/emissora/listprocs', templateUrl: 'app/emissora/listagemEmissorProcedimentos.html', controller: 'ListagemEmissorProcedimentosController' })
 
     .state('medicopass', { url: '/medico/medicoTrocaSenha', templateUrl: 'app/medico/medicoPassword.html', controller: 'MedicoPasswordController' })    

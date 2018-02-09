@@ -46,6 +46,9 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.GetAssociado(id);
 
+            if (mdl.fkEmpresa != db.currentUser.fkEmpresa)
+                return BadRequest("Associado inválido");
+
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 

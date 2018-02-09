@@ -51,6 +51,9 @@ namespace DataModel
             if (_params.senha != associado.stSenha)
                 return "Senha inválida!";
 
+            if (associado.tgStatus == TipoSituacaoCartao.Bloqueado)
+                return "Cartão bloqueado!";
+
             if (!db.MedicoEmpresa.Any(y => y.fkMedico == db.currentMedico.id &&
                                            y.fkEmpresa == empTb.id))
                 return "Médico não conveniado à empresa " + _params.emp;

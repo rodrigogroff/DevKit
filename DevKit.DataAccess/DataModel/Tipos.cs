@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DevKit.DataAccess
 {
-    public class TipoSituacao
+    public class TipoSituacaoCartao
     {
         public const int Habilitado = 0,
                          Bloqueado = 1;
@@ -20,20 +20,20 @@ namespace DevKit.DataAccess
                          Rejeitado = 4;
     }
 
-    public class TipoExpedicao
+    public class TipoExpedicaoCartao
     {
         public const int Requerido = 0,
                          EmProducao = 1,
                          Entregue = 2;
     }
 
-    public class TipoMedico
+    public class TipoCredenciado
     {
         public const int Medico = 0,
                          Clinica = 1;
     }
 
-    public class TipoSituacaoConsulta
+    public class TipoSituacaoConsultaCredenciado
     {
         public const int Solicitada = 1,
                          Confirmada = 2,

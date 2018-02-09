@@ -146,7 +146,7 @@
     <Compile Include="DataModel\Enums\ContactForm_enum.cs" />
     <Compile Include="DataModel\Enums\DayMonth_enum.cs" />
     <Compile Include="DataModel\Enums\Month_enum.cs" />
-    <Compile Include="DataModel\Enums\Tipos.cs" />
+    <Compile Include="DataModel\Tipos.cs" />
     <Compile Include="DataModel\Enums\VersionState_enum.cs" />
     <Compile Include="DataModel\Enums\ProjectTemplate_enum.cs" />
     <Compile Include="DataModel\Domains\Configuration\ProjectPhase\ProjectPhase_ComboFilters.cs" />

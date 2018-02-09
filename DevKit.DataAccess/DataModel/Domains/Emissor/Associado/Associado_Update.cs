@@ -1,4 +1,5 @@
-﻿using LinqToDB;
+﻿using DevKit.DataAccess;
+using LinqToDB;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -40,6 +41,40 @@ namespace DataModel
                         return true;
                     }
 
+                case "novaVia":
+                    {
+                        var dbAssoc = db.Associado.Where(y => y.id == this.id).FirstOrDefault();
+
+                        dbAssoc.nuViaCartao++;
+                        dbAssoc.tgExpedicao = TipoExpedicaoCartao.Requerido;
+
+                        db.Update(dbAssoc);
+
+                        return true;
+                    }
+
+                case "bloqueio":
+                    {
+                        var dbAssoc = db.Associado.Where(y => y.id == this.id).FirstOrDefault();
+
+                        dbAssoc.tgStatus = TipoSituacaoCartao.Bloqueado;
+
+                        db.Update(dbAssoc);
+
+                        return true;
+                    }
+
+                case "desbloqueio":
+                    {
+                        var dbAssoc = db.Associado.Where(y => y.id == this.id).FirstOrDefault();
+
+                        dbAssoc.tgStatus = TipoSituacaoCartao.Habilitado;
+
+                        db.Update(dbAssoc);
+
+                        return true;
+                    }
+
                 case "newDep":
                     {
                         var ent = JsonConvert.DeserializeObject<AssociadoDependente>(anexedEntity.ToString());
@@ -62,8 +97,8 @@ namespace DataModel
                                     fkEmpresa = this.fkEmpresa,
                                     fkUserAdd = user.id,
                                     nuMatricula = this.nuMatricula,
-                                    tgStatus = 0,
-                                    tgExpedicao = 0,
+                                    tgStatus =  TipoSituacaoCartao.Habilitado,
+                                    tgExpedicao = TipoExpedicaoCartao.Requerido,
                                     stSenha = this.stSenha,
                                     stName = ent.stNome,
                                     stCPF = ent.stCPF,

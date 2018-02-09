@@ -35,8 +35,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClientEngine">
-      <HintPath>..\DevKit.Web\bin\ClientEngine.dll</HintPath>
+    <Reference Include="ClientEngine, Version=1.0.3239.19952, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\ClientEngine.dll</HintPath>
     </Reference>
     <Reference Include="ClosedXML, Version=0.90.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.90.0\lib\net452\ClosedXML.dll</HintPath>
@@ -323,6 +324,7 @@
     <None Include="README.md" />
     <Content Include="Carga\log_faixa_uf.txt" />
     <Content Include="Carga\log_localidade.txt" />
+    <Content Include="ClientEngine.dll" />
     <Content Include="LinqToDB.Templates\CopyMe.PostgreSQL.tt.txt" />
     <Content Include="SQL\reset.sql" />
     <Content Include="SQL\start.sql" />

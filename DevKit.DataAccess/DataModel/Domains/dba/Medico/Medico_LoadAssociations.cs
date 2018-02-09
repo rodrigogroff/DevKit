@@ -9,10 +9,11 @@ namespace DataModel
     {
 		public Medico LoadAssociations(DevKitDB db)
 		{
-            sfkEspecialidade = db.Especialidade.
-                                  Where(y => y.id == fkEspecialidade).
-                                  FirstOrDefault().
-                                  stNome;
+            if (fkEspecialidade != null)
+                sfkEspecialidade = db.Especialidade.
+                                      Where(y => y.id == fkEspecialidade).
+                                      FirstOrDefault().
+                                      stNome;
 
             procedimentos = LoadProcedimentos(db);
             empresas = LoadEmpresas(db);

@@ -31,6 +31,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             skip: skip,
             take: take,
             tuss: $scope.campos.tuss,
+            espec: $scope.campos.espec,
             nomeAssociado: $scope.campos.nomeAssociado,
             nomeCredenciado: $scope.campos.nomeCredenciado,
             codMedico: $scope.campos.codMedico,

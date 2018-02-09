@@ -24,11 +24,11 @@ namespace DevKit.Web.Services
                 // ----------------------------------------------------------------------------------------------------
 
                 foreach (var item in new EnumAccumulatorType().lst) cache.StoreCache(CacheTags.EnumAccumulatorType, item.id, item);
-                foreach (var item in new EnumDayMonth().lst) cache.StoreCache(CacheTags.EnumDayMonth, item.id, item);
-                foreach (var item in new EnumMonth().lst) cache.StoreCache(CacheTags.EnumMonth, item.id, item);
-                foreach (var item in new EnumContactForm().lst) cache.StoreCache(CacheTags.EnumContactForm, item.id, item);
-                foreach (var item in new EnumPriority().lst) cache.StoreCache(CacheTags.EnumPriority, item.id, item);
-                foreach (var item in new EnumProjectTemplate().lst) cache.StoreCache(CacheTags.EnumProjectTemplate, item.id, item);
+                foreach (var item in new EnumDayMonth().itens) cache.StoreCache(CacheTags.EnumDayMonth, item.id, item);
+                foreach (var item in new EnumMonth().itens) cache.StoreCache(CacheTags.EnumMonth, item.id, item);
+                foreach (var item in new EnumContactForm().itens) cache.StoreCache(CacheTags.EnumContactForm, item.id, item);
+                foreach (var item in new EnumPriority().itens) cache.StoreCache(CacheTags.EnumPriority, item.id, item);
+                foreach (var item in new EnumProjectTemplate().itens) cache.StoreCache(CacheTags.EnumProjectTemplate, item.id, item);
                 foreach (var item in new EnumVersionState().lst) cache.StoreCache(CacheTags.EnumVersionState, item.id, item);
 
                 // ----------------------------------------------------------------------------------------------------
@@ -42,35 +42,35 @@ namespace DevKit.Web.Services
 
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.EnumDayMonthReport);
-                    var query = (from e in new EnumDayMonth().lst select e);
+                    var query = (from e in new EnumDayMonth().itens select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.EnumMonthReport);
-                    var query = (from e in new EnumMonth().lst select e);
+                    var query = (from e in new EnumMonth().itens select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.EnumContactFormReport);
-                    var query = (from e in new EnumContactForm().lst select e);
+                    var query = (from e in new EnumContactForm().itens select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.EnumPriorityReport);
-                    var query = (from e in new EnumPriority().lst select e);
+                    var query = (from e in new EnumPriority().itens select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }
 
                 {
                     var hshReport = cache.SetupCacheReport(CacheTags.EnumProjectTemplateReport);
-                    var query = (from e in new EnumProjectTemplate().lst select e);
+                    var query = (from e in new EnumProjectTemplate().itens select e);
                     var ret = new { count = query.Count(), results = query.ToList() };
                     hshReport[""] = ret;
                 }

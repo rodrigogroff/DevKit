@@ -6,10 +6,23 @@ using System.Threading.Tasks;
 
 namespace DevKit.DataAccess
 {
+    public class ComboItem
+    {
+        public long id { get; set; }
+        public string stName { get; set; }
+    }
+
     public class TipoSituacaoCartao
     {
         public const int Habilitado = 0,
                          Bloqueado = 1;
+    }
+
+    public class TipoExpedicaoCartao
+    {
+        public const int Requerido = 0,
+                         EmProducao = 1,
+                         Entregue = 2;
     }
 
     public class TipoSitAutorizacao
@@ -20,12 +33,7 @@ namespace DevKit.DataAccess
                          Rejeitado = 4;
     }
 
-    public class TipoExpedicaoCartao
-    {
-        public const int Requerido = 0,
-                         EmProducao = 1,
-                         Entregue = 2;
-    }
+    
 
     public class TipoCredenciado
     {

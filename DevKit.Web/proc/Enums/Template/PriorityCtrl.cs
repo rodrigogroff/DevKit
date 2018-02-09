@@ -1,26 +1,28 @@
-﻿using DataModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Http;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
-	public class ContactFormController : ApiControllerBase
+	public class PriorityController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
             string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
-            var hshReport = SetupCacheReport(CacheTags.EnumContactFormReport);
-            if (hshReport[busca] is ContactFormReport report)
+            var hshReport = SetupCacheReport(CacheTags.EnumPriorityReport);
+            if (hshReport[busca] is PriorityReport report)
                 return Ok(report);
-            
-            var query = (from e in new EnumContactForm().lst select e);
+
+            var _enum = new EnumPriority();
+
+            var query = (from e in _enum.itens select e);
 
 			if (busca != "")
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 
-            var ret = new ContactFormReport
+            var ret = new PriorityReport
             {
                 count = query.Count(),
                 results = query.ToList()
@@ -29,22 +31,22 @@ namespace DevKit.Web.Controllers
             hshReport[busca] = ret;
 
             return Ok(ret);
-		}
+        }
 
-		public IHttpActionResult Get(long id)
-		{
-            var obj = RestoreCache(CacheTags.EnumContactForm, id);
+        public IHttpActionResult Get(long id)
+        {
+            var obj = RestoreCache(CacheTags.EnumPriority, id);
             if (obj != null)
                 return Ok(obj);
 
-            var mdl = new EnumContactForm().Get(id);
+            var mdl = new EnumPriority().Get(id);
 
-			if (mdl == null)
+            if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
             BackupCache(mdl);
 
             return Ok(mdl);
-		}
-	}
+        }
+    }
 }

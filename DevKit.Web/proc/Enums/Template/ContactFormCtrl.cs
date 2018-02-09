@@ -5,22 +5,22 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class MonthController : ApiControllerBase
+	public class ContactFormController : ApiControllerBase
 	{
 		public IHttpActionResult Get()
 		{
             string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
-            var hshReport = SetupCacheReport(CacheTags.EnumMonthReport);
-            if (hshReport[busca] is MonthReport report)
+            var hshReport = SetupCacheReport(CacheTags.EnumContactFormReport);
+            if (hshReport[busca] is ContactFormReport report)
                 return Ok(report);
             
-            var query = (from e in new EnumMonth().lst select e);
+            var query = (from e in new EnumContactForm().itens select e);
 
 			if (busca != "")
 				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
 
-            var ret = new MonthReport
+            var ret = new ContactFormReport
             {
                 count = query.Count(),
                 results = query.ToList()
@@ -33,11 +33,11 @@ namespace DevKit.Web.Controllers
 
 		public IHttpActionResult Get(long id)
 		{
-            var obj = RestoreCache(CacheTags.EnumMonth, id);
+            var obj = RestoreCache(CacheTags.EnumContactForm, id);
             if (obj != null)
                 return Ok(obj);
 
-            var mdl = new EnumMonth().Get(id);
+            var mdl = new EnumContactForm().Get(id);
 
 			if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);

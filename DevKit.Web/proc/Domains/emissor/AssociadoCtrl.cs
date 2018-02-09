@@ -21,6 +21,8 @@ namespace DevKit.Web.Controllers
                 email = Request.GetQueryStringValue("email")?.ToUpper(),
                 cpf = Request.GetQueryStringValue("cpf"),
                 phone = Request.GetQueryStringValue("phone")?.ToUpper(),
+                tgSituacao = Request.GetQueryStringValue("tgSituacao")?.ToUpper(),
+                tgExpedicao = Request.GetQueryStringValue("tgExpedicao")?.ToUpper(),
             };
 
             var parameters = filter.Parameters();

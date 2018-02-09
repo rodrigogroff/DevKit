@@ -14,7 +14,9 @@ namespace DevKit.Web.Controllers
             var query = (from e in new EnumTipoExpedicao().itens select e);
 
 			if (busca != "")
-				query = from e in query where e.stName.ToUpper().Contains(busca) select e;
+				query = from e in query
+                        where e.stName.ToUpper().Contains(busca)
+                        select e;
 
             var ret = new ComboReport
             {

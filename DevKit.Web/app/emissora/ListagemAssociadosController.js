@@ -27,6 +27,9 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.campos = {
             ativo: 'true',
         };
+                
+        $scope.selectTipoSituacao = ngSelects.obterConfiguracao(Api.TipoSituacaoCombo, {});
+        $scope.selectTipoExpedicao = ngSelects.obterConfiguracao(Api.TipoExpedicaoCombo, {});
 
         $scope.itensporpagina = 15;
         $scope.permModel = {};
@@ -54,6 +57,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             ativo: $scope.campos.ativo,
             email: $scope.campos.email,
             phone: $scope.campos.phone,
+            tgSituacao: $scope.campos.tgSituacao,
+            tgExpedicao: $scope.campos.tgExpedicao,
         };
 
 		Api.Associado.listPage(opcoes, function (data)

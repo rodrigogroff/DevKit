@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -6,10 +7,12 @@ namespace DataModel
 {
 	public class AssociadoFilter : BaseFilter
     {
-		public string   matricula,
+        public string matricula,
                         email,
                         cpf,
-                        phone;
+                        phone,
+                        tgSituacao,
+                        tgExpedicao;
         
         public string Parameters()
         {
@@ -24,11 +27,12 @@ namespace DataModel
             ret.Append(take + ",");            
             ret.Append(busca + ",");
             ret.Append(fkEmpresa + ",");
-
             ret.Append(matricula + ",");
             ret.Append(email + ",");
             ret.Append(cpf + ",");
             ret.Append(phone + ",");
+            ret.Append(tgSituacao + ",");
+            ret.Append(tgExpedicao + ",");
 
             return ret.ToString();
         }
@@ -67,6 +71,16 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.matricula))
                 query = from e in query
                         where e.nuMatricula.ToString() == filter.matricula
+                        select e;
+            
+            if (filter.tgSituacao != null)
+                query = from e in query
+                        where e.tgStatus == Convert.ToInt32(filter.tgSituacao) - 1
+                        select e;
+
+            if (filter.tgExpedicao != null)
+                query = from e in query
+                        where e.tgExpedicao == Convert.ToInt32(filter.tgExpedicao) - 1
                         select e;
 
             var count = query.Count();

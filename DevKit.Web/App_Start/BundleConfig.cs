@@ -119,6 +119,8 @@ namespace DevKit.Web
                 "~/app/emissora/AssociadoController.js",
                 "~/app/emissora/EmissoraAltSenha.js",
                 "~/app/emissora/EmissoraSegVia.js",
+                "~/app/emissora/EmissoraBloqueio.js",
+                "~/app/emissora/EmissoraDesbloqueio.js",
                 "~/app/emissora/ListagemEmissorProcedimentosController.js",
                 "~/app/emissora/ListagemEmissorMedicosController.js",
                 "~/app/emissora/EmissorMedicoController.js",

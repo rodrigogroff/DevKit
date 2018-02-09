@@ -268,7 +268,11 @@
     <Content Include="app\dba\ListingLotesController.js" />
     <Content Include="app\dba\novoLote.html" />
     <Content Include="app\dba\NovoLoteController.js" />
+    <Content Include="app\emissora\desbloq.html" />
+    <Content Include="app\emissora\EmissoraDesbloqueio.js" />
+    <Content Include="app\emissora\EmissoraBloqueio.js" />
     <Content Include="app\emissora\EmissoraSegVia.js" />
+    <Content Include="app\emissora\bloq.html" />
     <Content Include="app\emissora\segVia.html" />
     <Content Include="app\emissora\altSenha.html" />
     <Content Include="app\emissora\EmissoraAltSenha.js" />

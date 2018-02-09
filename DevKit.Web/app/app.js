@@ -80,6 +80,8 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 
     .state('altSenha', { url: '/emissora/altSenha', templateUrl: 'app/emissora/altSenha.html', controller: 'EmissoraAltSenhaController' })
     .state('segvia', { url: '/emissora/segVia', templateUrl: 'app/emissora/segVia.html', controller: 'EmissoraSegViaController' })
+    .state('bloqueio', { url: '/emissora/bloqueio', templateUrl: 'app/emissora/bloqueio.html', controller: 'EmissoraBloqueioController' })
+    .state('desbloqueio', { url: '/emissora/desbloqueio', templateUrl: 'app/emissora/desbloqueio.html', controller: 'EmissoraDesbloqueioController' })
 
     .state('emissorprocs', { url: '/emissora/listprocs', templateUrl: 'app/emissora/listagemEmissorProcedimentos.html', controller: 'ListagemEmissorProcedimentosController' })
 

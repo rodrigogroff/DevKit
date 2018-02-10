@@ -32,13 +32,12 @@ namespace DevKit.DataAccess
                          Glosado = 3,
                          Rejeitado = 4;
     }
-
     
-
     public class TipoCredenciado
     {
-        public const int Medico = 0,
-                         Clinica = 1;
+        public const int Medico = 1,
+                         Clinica = 2,
+                         Laboratorio = 3;
     }
 
     public class TipoSituacaoConsultaCredenciado
@@ -46,7 +45,7 @@ namespace DevKit.DataAccess
         public const int Solicitada = 1,
                          Confirmada = 2,
                          CanceladaEmissor = 3,
-                         CanceladaMedico = 4,
+                         CanceladaCredenciado = 4,
                          Executada = 5;
     }
 }

@@ -9,7 +9,7 @@ namespace DataModel
 	// functions
 	// --------------------------
 
-	public partial class Medico
+	public partial class Credenciado
     {
 		public bool Create(DevKitDB db, ref string apiError)
 		{

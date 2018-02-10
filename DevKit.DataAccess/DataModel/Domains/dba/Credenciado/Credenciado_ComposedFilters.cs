@@ -4,23 +4,23 @@ using System.Text;
 
 namespace DataModel
 {
-	public class MedicoFilter : BaseFilter
+	public class CredenciadoFilter : BaseFilter
     {
 		public long? nuCodigo;
         public string nome, especialidade;
     }
 
-    public partial class Medico
+    public partial class Credenciado
     {
-        public MedicoReport ComposedFilters(DevKitDB db, MedicoFilter filter)
+        public CredenciadoReport ComposedFilters(DevKitDB db, CredenciadoFilter filter)
         {
-            var query = from e in db.Medico
+            var query = from e in db.Credenciado
                         select e;
 
             if (filter.fkEmpresa != null)
             {
                 query = from e in query
-                        join emiMedic in db.MedicoEmpresa on e.id equals emiMedic.fkMedico
+                        join emiMedic in db.CredenciadoEmpresa on e.id equals emiMedic.fkCredenciado
                         where emiMedic.fkEmpresa == filter.fkEmpresa
                         select e;
             }
@@ -51,7 +51,7 @@ namespace DataModel
 
             query = query.OrderBy(y => y.stNome);
 
-            return new MedicoReport
+            return new CredenciadoReport
             {
                 count = count,
                 results = Loader(db, (query.Skip(filter.skip).Take(filter.take)).ToList())

@@ -19,60 +19,56 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<Associado>            Associado            { get { return this.GetTable<Associado>(); } }
-		public ITable<AssociadoCategoria>   AssociadoCategoria   { get { return this.GetTable<AssociadoCategoria>(); } }
-		public ITable<AssociadoContato>     AssociadoContato     { get { return this.GetTable<AssociadoContato>(); } }
-		public ITable<AssociadoDependente>  AssociadoDependente  { get { return this.GetTable<AssociadoDependente>(); } }
-		public ITable<AssociadoEmail>       AssociadoEmail       { get { return this.GetTable<AssociadoEmail>(); } }
-		public ITable<AssociadoEndereco>    AssociadoEndereco    { get { return this.GetTable<AssociadoEndereco>(); } }
-		public ITable<AssociadoMensagem>    AssociadoMensagem    { get { return this.GetTable<AssociadoMensagem>(); } }
-		public ITable<AssociadoTelefone>    AssociadoTelefone    { get { return this.GetTable<AssociadoTelefone>(); } }
-		public ITable<AuditLog>             AuditLog             { get { return this.GetTable<AuditLog>(); } }
-		public ITable<Autorizacao>          Autorizacao          { get { return this.GetTable<Autorizacao>(); } }
-		public ITable<Cidade>               Cidade               { get { return this.GetTable<Cidade>(); } }
-		public ITable<CompanyNews>          CompanyNews          { get { return this.GetTable<CompanyNews>(); } }
-		public ITable<Empresa>              Empresa              { get { return this.GetTable<Empresa>(); } }
-		public ITable<Especialidade>        Especialidade        { get { return this.GetTable<Especialidade>(); } }
-		public ITable<Estado>               Estado               { get { return this.GetTable<Estado>(); } }
-		public ITable<Fechamento>           Fechamento           { get { return this.GetTable<Fechamento>(); } }
-		public ITable<LoteGrafica>          LoteGrafica          { get { return this.GetTable<LoteGrafica>(); } }
-		public ITable<LoteGraficaCartao>    LoteGraficaCartao    { get { return this.GetTable<LoteGraficaCartao>(); } }
-		public ITable<Medico>               Medico               { get { return this.GetTable<Medico>(); } }
-		public ITable<MedicoAddress>        MedicoAddress        { get { return this.GetTable<MedicoAddress>(); } }
-		public ITable<MedicoEmail>          MedicoEmail          { get { return this.GetTable<MedicoEmail>(); } }
-		public ITable<MedicoEmpresa>        MedicoEmpresa        { get { return this.GetTable<MedicoEmpresa>(); } }
-		public ITable<MedicoEmpresaTuss>    MedicoEmpresaTuss    { get { return this.GetTable<MedicoEmpresaTuss>(); } }
-		public ITable<MedicoPhone>          MedicoPhone          { get { return this.GetTable<MedicoPhone>(); } }
-		public ITable<Procedimento>         Procedimento         { get { return this.GetTable<Procedimento>(); } }
-		public ITable<Profile>              Profile              { get { return this.GetTable<Profile>(); } }
-		public ITable<Project>              Project              { get { return this.GetTable<Project>(); } }
-		public ITable<ProjectPhase>         ProjectPhase         { get { return this.GetTable<ProjectPhase>(); } }
-		public ITable<ProjectSprint>        ProjectSprint        { get { return this.GetTable<ProjectSprint>(); } }
-		public ITable<ProjectSprintVersion> ProjectSprintVersion { get { return this.GetTable<ProjectSprintVersion>(); } }
-		public ITable<ProjectUser>          ProjectUser          { get { return this.GetTable<ProjectUser>(); } }
-		public ITable<Setup>                Setup                { get { return this.GetTable<Setup>(); } }
-		public ITable<Survey>               Survey               { get { return this.GetTable<Survey>(); } }
-		public ITable<SurveyOption>         SurveyOption         { get { return this.GetTable<SurveyOption>(); } }
-		public ITable<SurveyUserOption>     SurveyUserOption     { get { return this.GetTable<SurveyUserOption>(); } }
-		public ITable<Task>                 Task                 { get { return this.GetTable<Task>(); } }
-		public ITable<TaskAccumulatorValue> TaskAccumulatorValue { get { return this.GetTable<TaskAccumulatorValue>(); } }
-		public ITable<TaskCategory>         TaskCategory         { get { return this.GetTable<TaskCategory>(); } }
-		public ITable<TaskCheckPoint>       TaskCheckPoint       { get { return this.GetTable<TaskCheckPoint>(); } }
-		public ITable<TaskCheckPointMark>   TaskCheckPointMark   { get { return this.GetTable<TaskCheckPointMark>(); } }
-		public ITable<TaskCustomStep>       TaskCustomStep       { get { return this.GetTable<TaskCustomStep>(); } }
-		public ITable<TaskDependency>       TaskDependency       { get { return this.GetTable<TaskDependency>(); } }
-		public ITable<TaskFlow>             TaskFlow             { get { return this.GetTable<TaskFlow>(); } }
-		public ITable<TaskFlowChange>       TaskFlowChange       { get { return this.GetTable<TaskFlowChange>(); } }
-		public ITable<TaskMessage>          TaskMessage          { get { return this.GetTable<TaskMessage>(); } }
-		public ITable<TaskProgress>         TaskProgress         { get { return this.GetTable<TaskProgress>(); } }
-		public ITable<TaskQuestion>         TaskQuestion         { get { return this.GetTable<TaskQuestion>(); } }
-		public ITable<TaskType>             TaskType             { get { return this.GetTable<TaskType>(); } }
-		public ITable<TaskTypeAccumulator>  TaskTypeAccumulator  { get { return this.GetTable<TaskTypeAccumulator>(); } }
-		public ITable<TUSS>                 TUSS                 { get { return this.GetTable<TUSS>(); } }
-		public ITable<User>                 User                 { get { return this.GetTable<User>(); } }
-		public ITable<UserEmail>            UserEmail            { get { return this.GetTable<UserEmail>(); } }
-		public ITable<UserNewsRead>         UserNewsRead         { get { return this.GetTable<UserNewsRead>(); } }
-		public ITable<UserPhone>            UserPhone            { get { return this.GetTable<UserPhone>(); } }
+		public ITable<Associado>              Associado              { get { return this.GetTable<Associado>(); } }
+		public ITable<AssociadoDependente>    AssociadoDependente    { get { return this.GetTable<AssociadoDependente>(); } }
+		public ITable<AssociadoEmail>         AssociadoEmail         { get { return this.GetTable<AssociadoEmail>(); } }
+		public ITable<AssociadoEndereco>      AssociadoEndereco      { get { return this.GetTable<AssociadoEndereco>(); } }
+		public ITable<AssociadoTelefone>      AssociadoTelefone      { get { return this.GetTable<AssociadoTelefone>(); } }
+		public ITable<AuditLog>               AuditLog               { get { return this.GetTable<AuditLog>(); } }
+		public ITable<Autorizacao>            Autorizacao            { get { return this.GetTable<Autorizacao>(); } }
+		public ITable<Cidade>                 Cidade                 { get { return this.GetTable<Cidade>(); } }
+		public ITable<CompanyNews>            CompanyNews            { get { return this.GetTable<CompanyNews>(); } }
+		public ITable<Credenciado>            Credenciado            { get { return this.GetTable<Credenciado>(); } }
+		public ITable<CredenciadoEmail>       CredenciadoEmail       { get { return this.GetTable<CredenciadoEmail>(); } }
+		public ITable<CredenciadoEmpresa>     CredenciadoEmpresa     { get { return this.GetTable<CredenciadoEmpresa>(); } }
+		public ITable<CredenciadoEmpresaTuss> CredenciadoEmpresaTuss { get { return this.GetTable<CredenciadoEmpresaTuss>(); } }
+		public ITable<CredenciadoEndereco>    CredenciadoEndereco    { get { return this.GetTable<CredenciadoEndereco>(); } }
+		public ITable<CredenciadoTelefone>    CredenciadoTelefone    { get { return this.GetTable<CredenciadoTelefone>(); } }
+		public ITable<Empresa>                Empresa                { get { return this.GetTable<Empresa>(); } }
+		public ITable<Especialidade>          Especialidade          { get { return this.GetTable<Especialidade>(); } }
+		public ITable<Estado>                 Estado                 { get { return this.GetTable<Estado>(); } }
+		public ITable<Fechamento>             Fechamento             { get { return this.GetTable<Fechamento>(); } }
+		public ITable<LoteGrafica>            LoteGrafica            { get { return this.GetTable<LoteGrafica>(); } }
+		public ITable<LoteGraficaCartao>      LoteGraficaCartao      { get { return this.GetTable<LoteGraficaCartao>(); } }
+		public ITable<Profile>                Profile                { get { return this.GetTable<Profile>(); } }
+		public ITable<Project>                Project                { get { return this.GetTable<Project>(); } }
+		public ITable<ProjectPhase>           ProjectPhase           { get { return this.GetTable<ProjectPhase>(); } }
+		public ITable<ProjectSprint>          ProjectSprint          { get { return this.GetTable<ProjectSprint>(); } }
+		public ITable<ProjectSprintVersion>   ProjectSprintVersion   { get { return this.GetTable<ProjectSprintVersion>(); } }
+		public ITable<ProjectUser>            ProjectUser            { get { return this.GetTable<ProjectUser>(); } }
+		public ITable<Setup>                  Setup                  { get { return this.GetTable<Setup>(); } }
+		public ITable<Survey>                 Survey                 { get { return this.GetTable<Survey>(); } }
+		public ITable<SurveyOption>           SurveyOption           { get { return this.GetTable<SurveyOption>(); } }
+		public ITable<SurveyUserOption>       SurveyUserOption       { get { return this.GetTable<SurveyUserOption>(); } }
+		public ITable<Task>                   Task                   { get { return this.GetTable<Task>(); } }
+		public ITable<TaskAccumulatorValue>   TaskAccumulatorValue   { get { return this.GetTable<TaskAccumulatorValue>(); } }
+		public ITable<TaskCategory>           TaskCategory           { get { return this.GetTable<TaskCategory>(); } }
+		public ITable<TaskCheckPoint>         TaskCheckPoint         { get { return this.GetTable<TaskCheckPoint>(); } }
+		public ITable<TaskCheckPointMark>     TaskCheckPointMark     { get { return this.GetTable<TaskCheckPointMark>(); } }
+		public ITable<TaskCustomStep>         TaskCustomStep         { get { return this.GetTable<TaskCustomStep>(); } }
+		public ITable<TaskDependency>         TaskDependency         { get { return this.GetTable<TaskDependency>(); } }
+		public ITable<TaskFlow>               TaskFlow               { get { return this.GetTable<TaskFlow>(); } }
+		public ITable<TaskFlowChange>         TaskFlowChange         { get { return this.GetTable<TaskFlowChange>(); } }
+		public ITable<TaskMessage>            TaskMessage            { get { return this.GetTable<TaskMessage>(); } }
+		public ITable<TaskProgress>           TaskProgress           { get { return this.GetTable<TaskProgress>(); } }
+		public ITable<TaskQuestion>           TaskQuestion           { get { return this.GetTable<TaskQuestion>(); } }
+		public ITable<TaskType>               TaskType               { get { return this.GetTable<TaskType>(); } }
+		public ITable<TaskTypeAccumulator>    TaskTypeAccumulator    { get { return this.GetTable<TaskTypeAccumulator>(); } }
+		public ITable<TUSS>                   TUSS                   { get { return this.GetTable<TUSS>(); } }
+		public ITable<User>                   User                   { get { return this.GetTable<User>(); } }
+		public ITable<UserEmail>              UserEmail              { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserNewsRead>           UserNewsRead           { get { return this.GetTable<UserNewsRead>(); } }
+		public ITable<UserPhone>              UserPhone              { get { return this.GetTable<UserPhone>(); } }
 
 		public DevKitDB()
 		{
@@ -117,27 +113,6 @@ namespace DataModel
 		[Column,     Nullable] public string    stSenha           { get; set; } // character varying(4)
 	}
 
-	[Table(Schema="public", Name="AssociadoCategoria")]
-	public partial class AssociadoCategoria
-	{
-		[PrimaryKey, Identity] public long      id               { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPeopleCategory { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser           { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog            { get; set; } // timestamp (6) without time zone
-	}
-
-	[Table(Schema="public", Name="AssociadoContato")]
-	public partial class AssociadoContato
-	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkContactForm { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stMessage     { get; set; } // character varying(1500)
-	}
-
 	[Table(Schema="public", Name="AssociadoDependente")]
 	public partial class AssociadoDependente
 	{
@@ -146,24 +121,23 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkAssociado { get; set; } // bigint
 		[Column,     Nullable] public string stNome      { get; set; } // character varying(35)
 		[Column,     Nullable] public string stCPF       { get; set; } // character varying(30)
-		[Column,     Nullable] public long?  fkCartao    { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="AssociadoEmail")]
 	public partial class AssociadoEmail
 	{
-		[PrimaryKey, Identity] public long      id       { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser   { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog    { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stEmail  { get; set; } // character varying(250)
+		[PrimaryKey, Identity] public long      id          { get; set; } // bigint
+		[Column,     Nullable] public long?     fkAssociado { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser      { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog       { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stEmail     { get; set; } // character varying(250)
 	}
 
 	[Table(Schema="public", Name="AssociadoEndereco")]
 	public partial class AssociadoEndereco
 	{
 		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkAssociado   { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkEstado      { get; set; } // bigint
@@ -176,21 +150,11 @@ namespace DataModel
 		[Column,     Nullable] public bool?     bPrincipal    { get; set; } // boolean
 	}
 
-	[Table(Schema="public", Name="AssociadoMensagem")]
-	public partial class AssociadoMensagem
-	{
-		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserTo  { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stMessage { get; set; } // character varying(1500)
-	}
-
 	[Table(Schema="public", Name="AssociadoTelefone")]
 	public partial class AssociadoTelefone
 	{
 		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkPerson      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkAssociado   { get; set; } // bigint
 		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
@@ -217,7 +181,7 @@ namespace DataModel
 		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtSolicitacao  { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkPerson       { get; set; } // bigint
-		[Column,     Nullable] public long?     fkMedico       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCredenciado  { get; set; } // bigint
 		[Column,     Nullable] public long?     fkEmpresa      { get; set; } // bigint
 		[Column,     Nullable] public long?     fkProcedimento { get; set; } // bigint
 		[Column,     Nullable] public long?     tgSituacao     { get; set; } // bigint
@@ -245,6 +209,89 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
 		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
 		[Column,     Nullable] public bool?     bActive   { get; set; } // boolean
+	}
+
+	[Table(Schema="public", Name="Credenciado")]
+	public partial class Credenciado
+	{
+		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
+		[Column,     Nullable] public long?     nuCodigo          { get; set; } // bigint
+		[Column,     Nullable] public string    stNome            { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stCnpj            { get; set; } // character varying(30)
+		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkUserAdd         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserLastUpdate  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
+		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
+		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
+		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEspecialidade   { get; set; } // bigint
+		[Column,     Nullable] public bool?     tgMasculino       { get; set; } // boolean
+		[Column,     Nullable] public long?     nuTipo            { get; set; } // bigint
+		[Column,     Nullable] public string    stSenha           { get; set; } // character varying(20)
+	}
+
+	[Table(Schema="public", Name="CredenciadoEmail")]
+	public partial class CredenciadoEmail
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCredenciado { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stEmail       { get; set; } // character varying(250)
+		[Column,     Nullable] public string    stContato     { get; set; } // character varying(250)
+	}
+
+	[Table(Schema="public", Name="CredenciadoEmpresa")]
+	public partial class CredenciadoEmpresa
+	{
+		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
+		[Column,     Nullable] public long? fkCredenciado { get; set; } // bigint
+		[Column,     Nullable] public long? fkEmpresa     { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="CredenciadoEmpresaTuss")]
+	public partial class CredenciadoEmpresaTuss
+	{
+		[PrimaryKey, Identity] public long  id             { get; set; } // bigint
+		[Column,     Nullable] public long? fkCredenciado  { get; set; } // bigint
+		[Column,     Nullable] public long? fkEmpresa      { get; set; } // bigint
+		[Column,     Nullable] public long? nuTUSS         { get; set; } // bigint
+		[Column,     Nullable] public long? vrProcedimento { get; set; } // bigint
+		[Column,     Nullable] public long? vrCoPart       { get; set; } // bigint
+		[Column,     Nullable] public long? nuMaxMes       { get; set; } // bigint
+		[Column,     Nullable] public long? nuMaxAno       { get; set; } // bigint
+		[Column,     Nullable] public long? nuParcelas     { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="CredenciadoEndereco")]
+	public partial class CredenciadoEndereco
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCredenciado { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkEstado      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCidade      { get; set; } // bigint
+		[Column,     Nullable] public string    stRua         { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stNumero      { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stComplemento { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stReferencia  { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stCEP         { get; set; } // character varying(50)
+		[Column,     Nullable] public bool?     bPrincipal    { get; set; } // boolean
+	}
+
+	[Table(Schema="public", Name="CredenciadoTelefone")]
+	public partial class CredenciadoTelefone
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCredenciado { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
 	}
 
 	[Table(Schema="public", Name="Empresa")]
@@ -300,99 +347,6 @@ namespace DataModel
 		[Column,     Nullable] public long? fkEmpresa     { get; set; } // bigint
 		[Column,     Nullable] public long? nuVia         { get; set; } // bigint
 		[Column,     Nullable] public long? nuTit         { get; set; } // bigint
-	}
-
-	[Table(Schema="public", Name="Medico")]
-	public partial class Medico
-	{
-		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
-		[Column,     Nullable] public long?     nuCodigo          { get; set; } // bigint
-		[Column,     Nullable] public string    stNome            { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stCnpj            { get; set; } // character varying
-		[Column,     Nullable] public DateTime? dtStart           { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastUpdate      { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public DateTime? dtLastContact     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkUserAdd         { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserLastUpdate  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUserLastContact { get; set; } // bigint
-		[Column,     Nullable] public long?     nuMonthAniversary { get; set; } // bigint
-		[Column,     Nullable] public long?     nuDayAniversary   { get; set; } // bigint
-		[Column,     Nullable] public long?     nuYearBirth       { get; set; } // bigint
-		[Column,     Nullable] public long?     fkEspecialidade   { get; set; } // bigint
-		[Column,     Nullable] public bool?     tgMasculino       { get; set; } // boolean
-		[Column,     Nullable] public string    stSenha           { get; set; } // character varying
-		[Column,     Nullable] public long?     nuTipo            { get; set; } // bigint
-	}
-
-	[Table(Schema="public", Name="MedicoAddress")]
-	public partial class MedicoAddress
-	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkMedico      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkEstado      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkCidade      { get; set; } // bigint
-		[Column,     Nullable] public string    stRua         { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stNumero      { get; set; } // character varying(50)
-		[Column,     Nullable] public string    stComplemento { get; set; } // character varying(50)
-		[Column,     Nullable] public string    stReferencia  { get; set; } // character varying(150)
-		[Column,     Nullable] public string    stCEP         { get; set; } // character varying(50)
-		[Column,     Nullable] public bool?     bPrincipal    { get; set; } // boolean
-	}
-
-	[Table(Schema="public", Name="MedicoEmail")]
-	public partial class MedicoEmail
-	{
-		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
-		[Column,     Nullable] public long?     fkMedico  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stEmail   { get; set; } // character varying(250)
-		[Column,     Nullable] public string    stContato { get; set; } // character varying(250)
-	}
-
-	[Table(Schema="public", Name="MedicoEmpresa")]
-	public partial class MedicoEmpresa
-	{
-		[PrimaryKey, Identity] public long  id        { get; set; } // bigint
-		[Column,     Nullable] public long? fkMedico  { get; set; } // bigint
-		[Column,     Nullable] public long? fkEmpresa { get; set; } // bigint
-	}
-
-	[Table(Schema="public", Name="MedicoEmpresaTuss")]
-	public partial class MedicoEmpresaTuss
-	{
-		[PrimaryKey, Identity] public long  id             { get; set; } // bigint
-		[Column,     Nullable] public long? fkMedico       { get; set; } // bigint
-		[Column,     Nullable] public long? fkEmpresa      { get; set; } // bigint
-		[Column,     Nullable] public long? nuTUSS         { get; set; } // bigint
-		[Column,     Nullable] public long? vrProcedimento { get; set; } // bigint
-		[Column,     Nullable] public long? vrCoPart       { get; set; } // bigint
-		[Column,     Nullable] public long? nuMaxMes       { get; set; } // bigint
-		[Column,     Nullable] public long? nuMaxAno       { get; set; } // bigint
-		[Column,     Nullable] public long? nuParcelas     { get; set; } // bigint
-	}
-
-	[Table(Schema="public", Name="MedicoPhone")]
-	public partial class MedicoPhone
-	{
-		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
-		[Column,     Nullable] public long?     fkMedico      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public string    stPhone       { get; set; } // character varying(50)
-		[Column,     Nullable] public string    stDescription { get; set; } // character varying(50)
-	}
-
-	[Table(Schema="public", Name="Procedimento")]
-	public partial class Procedimento
-	{
-		[PrimaryKey, Identity] public long   id             { get; set; } // bigint
-		[Column,     Nullable] public long?  nuTUSS         { get; set; } // bigint
-		[Column,     Nullable] public string stProcedimento { get; set; } // character varying(150)
-		[Column,     Nullable] public string stDescGP       { get; set; } // character varying(150)
-		[Column,     Nullable] public string stDescSubGP    { get; set; } // character varying(150)
 	}
 
 	[Table(Schema="public", Name="Profile")]
@@ -728,18 +682,6 @@ namespace DataModel
 				t.id == id);
 		}
 
-		public static AssociadoCategoria Find(this ITable<AssociadoCategoria> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static AssociadoContato Find(this ITable<AssociadoContato> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
 		public static AssociadoDependente Find(this ITable<AssociadoDependente> table, long id)
 		{
 			return table.FirstOrDefault(t =>
@@ -753,12 +695,6 @@ namespace DataModel
 		}
 
 		public static AssociadoEndereco Find(this ITable<AssociadoEndereco> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static AssociadoMensagem Find(this ITable<AssociadoMensagem> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);
@@ -789,6 +725,42 @@ namespace DataModel
 		}
 
 		public static CompanyNews Find(this ITable<CompanyNews> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static Credenciado Find(this ITable<Credenciado> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static CredenciadoEmail Find(this ITable<CredenciadoEmail> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static CredenciadoEmpresa Find(this ITable<CredenciadoEmpresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static CredenciadoEmpresaTuss Find(this ITable<CredenciadoEmpresaTuss> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static CredenciadoEndereco Find(this ITable<CredenciadoEndereco> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static CredenciadoTelefone Find(this ITable<CredenciadoTelefone> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);
@@ -825,48 +797,6 @@ namespace DataModel
 		}
 
 		public static LoteGraficaCartao Find(this ITable<LoteGraficaCartao> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static Medico Find(this ITable<Medico> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static MedicoAddress Find(this ITable<MedicoAddress> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static MedicoEmail Find(this ITable<MedicoEmail> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static MedicoEmpresa Find(this ITable<MedicoEmpresa> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static MedicoEmpresaTuss Find(this ITable<MedicoEmpresaTuss> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static MedicoPhone Find(this ITable<MedicoPhone> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static Procedimento Find(this ITable<Procedimento> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

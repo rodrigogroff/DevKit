@@ -1,13 +1,14 @@
-﻿using LinqToDB;
+﻿using DevKit.DataAccess;
+using LinqToDB;
 using SyCrafEngine;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DataModel
 {
-	public partial class Medico
+	public partial class Credenciado
     {
-		public Medico LoadAssociations(DevKitDB db)
+		public Credenciado LoadAssociations(DevKitDB db)
 		{
             if (fkEspecialidade != null)
                 sfkEspecialidade = db.Especialidade.
@@ -15,6 +16,13 @@ namespace DataModel
                                       FirstOrDefault().
                                       stNome;
 
+            switch (nuTipo)
+            {
+                case TipoCredenciado.Medico: snuTipo = "Médico"; break;
+                case TipoCredenciado.Clinica: snuTipo = "Clínica"; break;
+                case TipoCredenciado.Laboratorio: snuTipo = "Laboratorio"; break;
+            }
+            
             procedimentos = LoadProcedimentos(db);
             empresas = LoadEmpresas(db);
             phones = LoadPhones(db);
@@ -24,10 +32,10 @@ namespace DataModel
             return this;
 		}
 
-        List<MedicoEmpresaTuss> LoadProcedimentos(DevKitDB db)
+        List<CredenciadoEmpresaTuss> LoadProcedimentos(DevKitDB db)
         {
-            var query = (from e in db.MedicoEmpresaTuss
-                         where e.fkMedico == id
+            var query = (from e in db.CredenciadoEmpresaTuss
+                         where e.fkCredenciado == id
                          select e);
 
             if (db.currentUser != null)
@@ -48,16 +56,19 @@ namespace DataModel
                                         FirstOrDefault().
                                         stProcedimento;
 
-                item.svrCoPart = mon.setMoneyFormat((long)item.vrCoPart);
-                item.svrProcedimento = mon.setMoneyFormat((long)item.vrProcedimento);
+                if (item.vrCoPart != null)
+                    item.svrCoPart = mon.setMoneyFormat((long)item.vrCoPart);
+
+                if (item.vrProcedimento != null)
+                    item.svrProcedimento = mon.setMoneyFormat((long)item.vrProcedimento);
             }
 
             return lst;
         }
 
-        List<MedicoEmpresa> LoadEmpresas(DevKitDB db)
+        List<CredenciadoEmpresa> LoadEmpresas(DevKitDB db)
         {
-            var lst = (from e in db.MedicoEmpresa where e.fkMedico == id select e).
+            var lst = (from e in db.CredenciadoEmpresa where e.fkCredenciado == id select e).
                 ToList();
 
             foreach (var item in lst)
@@ -68,23 +79,23 @@ namespace DataModel
             return lst;
         }
 
-        List<MedicoPhone> LoadPhones(DevKitDB db)
+        List<CredenciadoTelefone> LoadPhones(DevKitDB db)
         {
-            return (from e in db.MedicoPhone where e.fkMedico == id select e).
+            return (from e in db.CredenciadoTelefone where e.fkCredenciado == id select e).
                 OrderBy(t => t.stPhone).
                 ToList();
         }
 
-        List<MedicoEmail> LoadEmails(DevKitDB db)
+        List<CredenciadoEmail> LoadEmails(DevKitDB db)
         {
-            return (from e in db.MedicoEmail where e.fkMedico == id select e).
+            return (from e in db.CredenciadoEmail where e.fkCredenciado == id select e).
                 OrderByDescending(t => t.id).
                 ToList();
         }
 
-        List<MedicoAddress> LoadEnderecos(DevKitDB db)
+        List<CredenciadoEndereco> LoadEnderecos(DevKitDB db)
         {
-            var lst = (from e in db.MedicoAddress where e.fkMedico == id select e).
+            var lst = (from e in db.CredenciadoEndereco where e.fkCredenciado == id select e).
                 OrderByDescending(t => t.id).
                 ToList();
 

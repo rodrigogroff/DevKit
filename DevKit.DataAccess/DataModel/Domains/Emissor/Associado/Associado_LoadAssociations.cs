@@ -56,7 +56,7 @@ namespace DataModel
 
             foreach (var item in tmpLst)
                 item.snuTit = db.Associado.
-                                Where(y => y.id == item.fkCartao).
+                                Where(y => y.id == item.fkAssociado).
                                 FirstOrDefault().
                                 nuTitularidade.
                                 ToString();
@@ -66,21 +66,21 @@ namespace DataModel
 
         List<AssociadoTelefone> LoadPhones(DevKitDB db)
 		{
-			return (from e in db.AssociadoTelefone where e.fkPerson == id select e).
+			return (from e in db.AssociadoTelefone where e.fkAssociado == id select e).
 				OrderBy(t => t.stPhone).
 				ToList();
 		}
 
 		List<AssociadoEmail> LoadEmails(DevKitDB db)
 		{
-			return (from e in db.AssociadoEmail where e.fkPerson == id select e).
+			return (from e in db.AssociadoEmail where e.fkAssociado == id select e).
 				OrderByDescending(t => t.id).
 				ToList();
 		}
 
         List<AssociadoEndereco> LoadEnderecos(DevKitDB db)
         {
-            var lst = (from e in db.AssociadoEndereco where e.fkPerson == id select e).
+            var lst = (from e in db.AssociadoEndereco where e.fkAssociado == id select e).
                 OrderByDescending(t => t.id).
                 ToList();
 

@@ -6,26 +6,26 @@ using System.Linq;
 
 namespace DataModel
 {
-    public class ListagemMedicoAutorizacaoFilter
+    public class ListagemCredenciadoAutorizacaoFilter
     {
         public int skip, take, situacao;
         public string tuss, nomeAssociado;
     }
 
-    public class MedicoAutorizacaoReport
+    public class CredenciadoAutorizacaoReport
     {
         public int count = 0;
         public List<Autorizacao> results = new List<Autorizacao>();
     }
 
-    public partial class Medico
+    public partial class Credenciado
     {
-		public MedicoAutorizacaoReport ListagemAutorizacao ( DevKitDB db, ListagemMedicoAutorizacaoFilter filter )
+		public CredenciadoAutorizacaoReport ListagemAutorizacao ( DevKitDB db, ListagemCredenciadoAutorizacaoFilter filter )
 		{
-            var ret = new MedicoAutorizacaoReport();
+            var ret = new CredenciadoAutorizacaoReport();
 
             var query = from e in db.Autorizacao
-                        where e.fkMedico == db.currentMedico.id
+                        where e.fkCredenciado == db.currentCredenciado.id
                         select e;
 
             if (!string.IsNullOrEmpty(filter.tuss))
@@ -48,7 +48,7 @@ namespace DataModel
 
             query = query.OrderByDescending(y => y.dtSolicitacao);
 
-            return new MedicoAutorizacaoReport
+            return new CredenciadoAutorizacaoReport
             {
                 count = count,
                 results = LoaderAutorizacao(db, (query.Skip(filter.skip).Take(filter.take)).ToList())

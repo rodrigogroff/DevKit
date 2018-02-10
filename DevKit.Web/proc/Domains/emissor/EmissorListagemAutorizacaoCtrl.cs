@@ -18,7 +18,7 @@ namespace DevKit.Web.Controllers
                 espec = Request.GetQueryStringValue("espec"),
                 nomeAssociado = Request.GetQueryStringValue("nomeAssociado"),
                 nomeCredenciado = Request.GetQueryStringValue("nomeCredenciado"),
-                codMedico = Request.GetQueryStringValue("codMedico"),
+                codCredenciado = Request.GetQueryStringValue("codCredenciado"),
                 matricula = Request.GetQueryStringValue("matricula"),
                 dtInicial = Request.GetQueryStringValue("dtInicial"),
                 dtFim = Request.GetQueryStringValue("dtFim"),

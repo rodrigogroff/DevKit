@@ -11,7 +11,7 @@ namespace DataModel
         public long emp, mat, tuss;
     }
 
-    public partial class Medico
+    public partial class Credenciado
     {
 		public string AutorizaProcedimento ( DevKitDB db, AutorizaProcedimentoParams _params )
 		{
@@ -54,9 +54,9 @@ namespace DataModel
             if (associado.tgStatus == TipoSituacaoCartao.Bloqueado)
                 return "Cartão bloqueado!";
 
-            if (!db.MedicoEmpresa.Any(y => y.fkMedico == db.currentMedico.id &&
+            if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == db.currentCredenciado.id &&
                                            y.fkEmpresa == empTb.id))
-                return "Médico não conveniado à empresa " + _params.emp;
+                return "Credenciado não conveniado à empresa " + _params.emp;
 
             var proc = db.TUSS.
                             Where(y => y.nuCodTUSS == _params.tuss).
@@ -64,17 +64,6 @@ namespace DataModel
 
             if (proc == null)
                 return "Procedimento " + _params.tuss + " inválido!";
-
-            //var dtHoje = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            //var dtHojeFim = dtHoje.AddDays(1);
-
-            //if (db.Autorizacao.Any (y=> y.fkMedico == db.currentMedico.id && 
-            //                            y.fkAssociado == associado.id && 
-            //                            y.dtSolicitacao > dtHoje && y.dtSolicitacao < dtHojeFim))
-            //{
-            //return BadRequest("Procedimento " + tuss + " em duplicidade!");
-            //}
-            //else
 
             DateTime dt = DateTime.Now;
 
@@ -85,7 +74,7 @@ namespace DataModel
             {
                 dtSolicitacao = DateTime.Now,
                 fkAssociado = associado.id,
-                fkMedico = db.currentMedico.id,
+                fkCredenciado = db.currentCredenciado.id,
                 fkEmpresa = associado.fkEmpresa,
                 fkProcedimento = proc.id,
                 nuAno = dt.Year,

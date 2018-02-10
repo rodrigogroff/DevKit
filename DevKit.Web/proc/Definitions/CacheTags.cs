@@ -64,8 +64,8 @@ namespace DevKit.Web.Controllers
         public const string User = "User";
         public const string UserReport = "UserReport";
 
-        public const string Medico = "Medico";
-        public const string MedicoReport = "MedicoReport";
+        public const string Credenciado = "Credenciado";
+        public const string CredenciadoReport = "CredenciadoReport";
 
         public const string Client = "Client";
         public const string ClientReport = "ClientReport";        

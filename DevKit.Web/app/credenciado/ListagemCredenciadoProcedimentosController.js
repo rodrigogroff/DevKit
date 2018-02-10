@@ -1,17 +1,17 @@
 ﻿
-angular.module('app.controllers').controller('ListingMedicosController',
+angular.module('app.controllers').controller('ListagemCredenciadoProcedimentosController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects', 
 function ($scope, $rootScope, $state, Api, ngSelects )
 {
 	$rootScope.exibirMenu = true;
 	$scope.loading = false;
-
+    
 	init();
 
 	function init()
     {
         $scope.campos = {
-            codigo: ''
+            ativo: 'true',
         };
 
         $scope.itensporpagina = 15;
@@ -30,27 +30,16 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         var opcoes = {
             skip: skip,
             take: take,
-            codigo: $scope.campos.codigo,
-            nome: $scope.campos.nome,
+            tuss: $scope.campos.tuss,
+            nomeAssociado: $scope.campos.nomeAssociado,
         };
 
-		Api.Medico.listPage(opcoes, function (data)
+		Api.CredenciadoListagemAutorizacao.listPage(opcoes, function (data)
 		{
 			$scope.list = data.results;
 			$scope.total = data.count;
 			$scope.loading = false;
 		});
-    }
-
-    $scope.show = function (mdl) {
-       // if (!$scope.permModel.visualizar)
-         //   toastr.error('Acesso negado!', 'Permissão');
-        //else
-            $state.go('medico', { id: mdl.id });
-    }
-        
-	$scope.new = function () {
-		$state.go('novomedico');
 	}
 
 }]);

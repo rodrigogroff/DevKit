@@ -6,7 +6,7 @@ namespace DataModel
     {
         public object anexedEntity;
 
-        public string   sqtdMedicos = "",
+        public string   sqtdCredenciados = "",
                         updateCommand = "";
 	}
 

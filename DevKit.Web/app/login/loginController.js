@@ -49,7 +49,7 @@ function ($scope, $rootScope, $location, AuthService, version, Api, $state)
             }
 
             if ($rootScope.tipo == 1) {
-                lData.userName = $rootScope.tipo + ":" + $scope.loginData.nuMedico;
+                lData.userName = $rootScope.tipo + ":" + $scope.loginData.nuCredenciado;
             }
             else if ($rootScope.tipo == 4) {
                 lData.userName = $rootScope.tipo + ":" + $scope.loginData.nuEmpresa + ":" + $scope.loginData.userName;
@@ -65,9 +65,9 @@ function ($scope, $rootScope, $location, AuthService, version, Api, $state)
 
                 if ($rootScope.tipo == 1)
                 {
-                    if ($scope.loginData.nuMedico == $scope.loginData.password)
+                    if ($scope.loginData.nuCredenciado == $scope.loginData.password)
                     {
-                        $state.go('medicopass');
+                        $state.go('credenciadopass');
                         toastr.error('Sua senha expirou.', 'Controle de senha');
                     }
                     else

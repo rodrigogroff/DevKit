@@ -1,5 +1,5 @@
 ﻿
-angular.module('app.controllers').controller('MedicoPasswordController',
+angular.module('app.controllers').controller('CredenciadoPasswordController',
     ['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects', 'AuthService',
         function ($scope, $state, $stateParams, $rootScope, Api, ngSelects, AuthService)
 {
@@ -52,7 +52,7 @@ angular.module('app.controllers').controller('MedicoPasswordController',
             $scope.viewModel.updateCommand = "changePassword";
 			$scope.viewModel.anexedEntity = $scope.changePassModel;
 
-            Api.Medico.update({ id: 0 }, $scope.viewModel, function (data)
+            Api.Credenciado.update({ id: 0 }, $scope.viewModel, function (data)
 			{			
 				$scope.viewModel.anexedEntity = undefined;
                 toastr.success('Senha trocada com sucesso!', 'Sucesso');

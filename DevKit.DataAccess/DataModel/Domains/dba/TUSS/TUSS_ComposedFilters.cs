@@ -46,7 +46,7 @@ namespace DataModel
 
             if (filter.aut != null && filter.aut == true)
             {
-                if (db.currentMedico != null)
+                if (db.currentCredenciado != null)
                 {
                     var empTb = db.Empresa.
                                     Where(y => y.nuEmpresa == Convert.ToInt32(filter.emp)).
@@ -54,9 +54,9 @@ namespace DataModel
                     
                     if (empTb != null)
                     {
-                        var lst = db.MedicoEmpresaTuss.
+                        var lst = db.CredenciadoEmpresaTuss.
                                 Where(y => y.fkEmpresa == empTb.id &&
-                                           y.fkMedico == db.currentMedico.id).
+                                           y.fkCredenciado == db.currentCredenciado.id).
                                 Select(y => y.nuTUSS).
                                 ToList();
 

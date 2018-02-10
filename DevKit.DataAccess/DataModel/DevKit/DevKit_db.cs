@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataModel
 {
@@ -7,5 +9,16 @@ namespace DataModel
 		public Hashtable Cache = new Hashtable();
 
         Setup _setup = null;
+
+        public User currentUser = null;
+        public Credenciado currentCredenciado = null;
+
+        public List<long?> GetCurrentUserProjects()
+        {
+            return (from e in ProjectUser
+                    where e.fkUser == currentUser.id
+                    select e.fkProject).
+                ToList();
+        }
     }
 }

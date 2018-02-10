@@ -5,7 +5,7 @@
             <table style="color:white; width:100%">
                 <tr>
                     <td width="20px"></td>
-                    <td>Listagem de <b>Médicos</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td>Listagem de <b>Credenciados</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
                     <td width="80px"></td>
                     <td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
                     <td width="20px"></td>
@@ -59,12 +59,14 @@
                                 <thead>
                                     <tr>
                                         <th width="120px">Código</th>
+                                        <th width="120px">Tipo</th>
                                         <th width="250px">Nome</th>
                                         <th width="250px">Especialidade</th>
                                     </tr>
                                 </thead>
                                 <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                                     <td>{{ mdl.nuCodigo }}</td>
+                                    <td>{{ mdl.snuTipo }}</td>
                                     <td>{{ mdl.stNome }}</td>
                                     <td>{{ mdl.sfkEspecialidade }}</td>
                                 </tr>

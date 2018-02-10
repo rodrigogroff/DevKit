@@ -1,5 +1,5 @@
 ﻿
-angular.module('app.controllers').controller('EmissorMedicoController',
+angular.module('app.controllers').controller('EmissorCredenciadoController',
 ['$scope', '$state', '$stateParams', '$rootScope', 'Api', 'ngSelects', 
 function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 {
@@ -66,7 +66,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             if ($scope.loaded == undefined)
                 $scope.loading = true;
 
-            Api.Medico.get({ id: id }, function (data)
+            Api.Credenciado.get({ id: id }, function (data)
 			{
 				$scope.viewModel = data;
                 $scope.loading = false;
@@ -96,7 +96,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
     $scope.list = function ()
     {
-        $state.go('listemissormedicos');
+        $state.go('listemissorcredenciados');
     }
 
     $scope.buscaTUSS = function ()
@@ -132,7 +132,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $scope.viewModel.updateCommand = "removeProcedimentoViaEmissor";
         $scope.viewModel.anexedEntity = $scope.delProcedimento;
 
-        Api.Medico.update({ id: id }, $scope.viewModel, function (data) {
+        Api.Credenciado.update({ id: id }, $scope.viewModel, function (data) {
             loadEntity();
         });
     }
@@ -164,7 +164,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 $scope.viewModel.updateCommand = "newProcedimentoViaEmissor";
                 $scope.viewModel.anexedEntity = $scope.newProcedimento;
 
-                Api.Medico.update({ id: id }, $scope.viewModel, function (data) {
+                Api.Credenciado.update({ id: id }, $scope.viewModel, function (data) {
                     $scope.newPhone = {};
                     loadEntity();
                 },

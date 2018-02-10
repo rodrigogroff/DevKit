@@ -296,6 +296,7 @@ namespace GetStarted
                                 #endregion
                             }
 
+                            if (!db.Credenciado.Any())
                             {
                                 #region - carga especialidade x médico - 
 
@@ -307,17 +308,17 @@ namespace GetStarted
                                 // pula header
                                 int currentRow = 2;
 
-                                Medico curMedico = null;
+                                Credenciado curCred = null;
 
                                 for (; ; currentRow++)
                                 {
-                                    var nomeMedico = sheet.Cell(currentRow, 1).Value.ToString().ToUpper().Trim();
+                                    var nomeCredenciado = sheet.Cell(currentRow, 1).Value.ToString().ToUpper().Trim();
                                     
-                                    if (nomeMedico == "FIM")
+                                    if (nomeCredenciado == "FIM")
                                         break;
                                     else
                                     {
-                                        if (!string.IsNullOrEmpty(nomeMedico))
+                                        if (!string.IsNullOrEmpty(nomeCredenciado))
                                         {
                                             var stCnpj = sheet.Cell(currentRow, 4).Value.ToString().Trim();
                                             var especialidade = sheet.Cell(currentRow, 2).Value.ToString().ToUpper().Trim();
@@ -336,40 +337,40 @@ namespace GetStarted
                                                 especTb.id = Convert.ToInt64(db.InsertWithIdentity(especTb));
                                             }
 
-                                            curMedico = db.Medico.Where(y => y.stCnpj == stCnpj).FirstOrDefault();
+                                            curCred = db.Credenciado.Where(y => y.stCnpj == stCnpj).FirstOrDefault();
 
-                                            if (curMedico == null)
+                                            if (curCred == null)
                                             {                                                
                                                 var codDisp = setup.RandomInt(4);
 
-                                                while (db.Medico.Any (y=>y.nuCodigo == codDisp))
+                                                while (db.Credenciado.Any (y=>y.nuCodigo == codDisp))
                                                 {
                                                     Thread.Sleep(1);
                                                     codDisp = setup.RandomInt(4);
                                                 }
 
-                                                var new_id = Convert.ToInt64(db.InsertWithIdentity(new Medico()
+                                                var new_id = Convert.ToInt64(db.InsertWithIdentity(new Credenciado()
                                                 {
                                                     dtStart = DateTime.Now,
                                                     fkUserAdd = 1,
                                                     fkEspecialidade = especTb.id,
-                                                    stNome = nomeMedico,
+                                                    stNome = nomeCredenciado,
                                                     stCnpj = stCnpj,
                                                     nuCodigo = codDisp,
                                                     nuTipo = stCnpj.Length > 11 ? 2 : 1,
                                                 }));
 
                                                 for (int t=1; t <=3; ++t)
-                                                    db.Insert(new MedicoEmpresa
+                                                    db.Insert(new CredenciadoEmpresa
                                                     {
-                                                        fkMedico = new_id,
+                                                        fkCredenciado = new_id,
                                                         fkEmpresa = t
                                                     });
 
-                                                curMedico = db.Medico.Where(y => y.id == new_id).FirstOrDefault();
+                                                curCred = db.Credenciado.Where(y => y.id == new_id).FirstOrDefault();
                                             }
                                         }
-                                        else if (curMedico != null)
+                                        else if (curCred != null)
                                         {
                                             // guarda procedimento!
 
@@ -395,8 +396,8 @@ namespace GetStarted
                                                 });
                                             }
 
-                                            var lstCurProc = db.MedicoEmpresaTuss.
-                                                                Where(y => y.fkMedico == curMedico.id && 
+                                            var lstCurProc = db.CredenciadoEmpresaTuss.
+                                                                Where(y => y.fkCredenciado == curCred.id && 
                                                                            y.nuTUSS == Convert.ToInt64(cod_tuss)).
                                                                 ToList();
 
@@ -405,7 +406,7 @@ namespace GetStarted
                                                 // ataaliza
                                                 foreach (var item in lstCurProc)
                                                 {
-                                                    var itemDb = db.MedicoEmpresaTuss.Where(y => y.id == item.id).FirstOrDefault();
+                                                    var itemDb = db.CredenciadoEmpresaTuss.Where(y => y.id == item.id).FirstOrDefault();
 
                                                     itemDb.nuMaxAno = Convert.ToInt64(nu_q_ano);
                                                     itemDb.nuMaxMes = Convert.ToInt64(nu_q_ano);
@@ -420,10 +421,10 @@ namespace GetStarted
                                             {
                                                 // cria
                                                 for (int t = 1; t <= 3; t++)
-                                                    db.Insert(new MedicoEmpresaTuss
+                                                    db.Insert(new CredenciadoEmpresaTuss
                                                     {
                                                         fkEmpresa = t,
-                                                        fkMedico = curMedico.id,
+                                                        fkCredenciado = curCred.id,
                                                         nuMaxAno = Convert.ToInt64(nu_q_ano),
                                                         nuMaxMes = Convert.ToInt64(nu_q_ano),
                                                         nuParcelas = Convert.ToInt64(nu_parc),

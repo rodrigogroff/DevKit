@@ -9,12 +9,12 @@ namespace DataModel
     {
         public string   sdtSolicitacao, 
                         stgSituacao,
-                        sfkMedico,
-                        snuCodigoMedico,
+                        sfkCredenciado,
+                        snuCodigoCredenciado,
                         sfkEspecialidade,
                         sfkEmpresa,
                         sfkProcedimento,
-                        snuMattriculaAssociado,
+                        snuMatriculaAssociado,
                         sfkAssociado;
     }
 }

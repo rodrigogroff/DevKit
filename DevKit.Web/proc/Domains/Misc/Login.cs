@@ -38,24 +38,24 @@ namespace DevKit.Web
 
                 if (tipo == "1")
                 {
-                    #region - médico - 
+                    #region - credenciado - 
 
-                    var codMedico = Convert.ToInt64(incoming[1]);
+                    var codCred = Convert.ToInt64(incoming[1]);
 
-                    var medico = db.Medico.
-                                    Where(y => y.nuCodigo == codMedico).
+                    var credenciado = db.Credenciado.
+                                    Where(y => y.nuCodigo == codCred).
                                     FirstOrDefault();
 
-                    if (medico == null)
+                    if (credenciado == null)
                     {
                         context.SetError("invalid_grant", "Código ou senha inválida!");
                         return;
                     }
                     else
                     {
-                        if (medico.stSenha == null)
+                        if (credenciado.stSenha == null)
                         {
-                            if (context.Password != medico.nuCodigo.ToString())
+                            if (context.Password != credenciado.nuCodigo.ToString())
                             {
                                 context.SetError("invalid_grant", "Código ou senha inválida!");
                                 return;
@@ -63,7 +63,7 @@ namespace DevKit.Web
                         }
                         else
                         {
-                            if (medico.stSenha != context.Password)
+                            if (credenciado.stSenha != context.Password)
                             {
                                 context.SetError("invalid_grant", "Código ou senha inválida!");
                                 return;
@@ -72,8 +72,8 @@ namespace DevKit.Web
 
                         var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
-                        identity.AddClaim(new Claim(ClaimTypes.Name, medico.stNome));
-                        identity.AddClaim(new Claim("nuEmpresa", codMedico.ToString()));
+                        identity.AddClaim(new Claim(ClaimTypes.Name, credenciado.stNome));
+                        identity.AddClaim(new Claim("nuEmpresa", codCred.ToString()));
                         identity.AddClaim(new Claim("tipo", "1"));
 
                         var ticket = new AuthenticationTicket(identity, null);

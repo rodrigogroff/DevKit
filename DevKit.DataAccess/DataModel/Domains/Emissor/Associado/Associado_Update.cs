@@ -91,7 +91,7 @@ namespace DataModel
                                 return false;
                             }
 
-                            ent.fkCartao = Convert.ToInt64 (
+                            ent.fkAssociado = Convert.ToInt64 (
                                 db.InsertWithIdentity(new Associado
                                 {
                                     fkEmpresa = this.fkEmpresa,
@@ -111,7 +111,7 @@ namespace DataModel
                         }
                         else
                         {
-                            var cart = db.Associado.Where(y => y.id == ent.fkCartao).FirstOrDefault();
+                            var cart = db.Associado.Where(y => y.id == ent.fkAssociado).FirstOrDefault();
 
                             if (cart.tgExpedicao == 0)
                             {
@@ -132,11 +132,11 @@ namespace DataModel
 						var ent = JsonConvert.DeserializeObject<AssociadoTelefone>(anexedEntity.ToString());
 
 						ent.stPhone = GetMaskedValue(db, ent.stPhone);
-						ent.fkPerson = id;
+						ent.fkAssociado = id;
 
 						if (ent.id == 0)
 						{
-							if ((from ne in db.AssociadoTelefone where ne.fkPerson == id && ne.stPhone == ent.stPhone select ne).Any())
+							if ((from ne in db.AssociadoTelefone where ne.fkAssociado == id && ne.stPhone == ent.stPhone select ne).Any())
 							{
 								resp = "Telefone já utilizado!";
 								return false;
@@ -197,11 +197,11 @@ namespace DataModel
 					{
 						var ent = JsonConvert.DeserializeObject<AssociadoEmail>(anexedEntity.ToString());
 
-                        ent.fkPerson = id;
+                        ent.fkAssociado = id;
 
                         if (ent.id == 0)
 						{
-							if ((from ne in db.AssociadoEmail where ne.fkPerson == id && ne.stEmail == ent.stEmail select ne).Any())
+							if ((from ne in db.AssociadoEmail where ne.fkAssociado == id && ne.stEmail == ent.stEmail select ne).Any())
 							{
 								resp = "Email já utilizado!";
 								return false;
@@ -263,12 +263,12 @@ namespace DataModel
                     {
                         var ent = JsonConvert.DeserializeObject<AssociadoEndereco>(anexedEntity.ToString());
 
-                        ent.fkPerson = id;
+                        ent.fkAssociado = id;
 
                         if (ent.bPrincipal == null)
                             ent.bPrincipal = false;
 
-                        if (!db.AssociadoEndereco.Where(y=>y.fkPerson == id).Any())
+                        if (!db.AssociadoEndereco.Where(y=>y.fkAssociado == id).Any())
                             ent.bPrincipal = true;
 
                         if (ent.id == 0)
@@ -322,9 +322,9 @@ namespace DataModel
 
                         db.Delete(ent);
 
-                        if (db.AssociadoEndereco.Where(y => y.fkPerson == id).Count() == 1)
+                        if (db.AssociadoEndereco.Where(y => y.fkAssociado == id).Count() == 1)
                         {
-                            var pa = db.AssociadoEndereco.Where(y => y.fkPerson == id).FirstOrDefault();
+                            var pa = db.AssociadoEndereco.Where(y => y.fkAssociado == id).FirstOrDefault();
 
                             pa.bPrincipal = true;
 

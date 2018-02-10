@@ -34,15 +34,15 @@ namespace DataModel
                                         ToList();
 
                 // header
-                sw.WriteLine("empresa;mês;ano;data solicitação;portador;cpf portador;matricula;cpfCnpj medico;tuss;");
+                sw.WriteLine("empresa;mês;ano;data solicitação;portador;cpf portador;matricula;cpfCnpj credenciado;tuss;");
                 
                 lstId = lstAutorizacoes.Select(a => a.fkAssociado).Distinct().ToList();
 
                 var lstAssoc = db.Associado.Where(y => lstId.Contains(y.id)).ToList();
 
-                lstId = lstAutorizacoes.Select(a => a.fkMedico).Distinct().ToList();
+                lstId = lstAutorizacoes.Select(a => a.fkCredenciado).Distinct().ToList();
 
-                var lstMed = db.Medico.Where(y => lstId.Contains(y.id)).ToList();
+                var lstCreds = db.Credenciado.Where(y => lstId.Contains(y.id)).ToList();
 
                 lstId = lstAutorizacoes.Select(a => a.fkProcedimento).Distinct().ToList();
 
@@ -53,14 +53,14 @@ namespace DataModel
                     var line = emp.nuEmpresa.ToString() + ";" + nuMes + ";" + nuAno + ";";
 
                     var assoc = lstAssoc.Where(y => y.id == item.fkAssociado).FirstOrDefault();
-                    var med = lstMed.Where (y=>y.id == item.fkMedico).FirstOrDefault();
+                    var cred = lstCreds.Where (y=>y.id == item.fkCredenciado).FirstOrDefault();
                     var proc = lstProc.Where(y => y.id == item.fkProcedimento).FirstOrDefault();
 
                     line += Convert.ToDateTime(item.dtSolicitacao).ToString("dd/MM/yyyy HH:mm") + ";";
                     line += assoc.stName + ";";
                     line += assoc.stCPF + ";";
                     line += assoc.nuMatricula + ";";
-                    line += med.stCnpj + ";";
+                    line += cred.stCnpj + ";";
                     line += proc.nuCodTUSS + ";";
 
                     sw.WriteLine(line);

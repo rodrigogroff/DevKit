@@ -12,10 +12,10 @@ namespace DataModel
 
 		public void Delete(DevKitDB db)
 		{
-			foreach (var item in (from e in db.AssociadoTelefone where e.fkPerson == id select e))
+			foreach (var item in (from e in db.AssociadoTelefone where e.fkAssociado == id select e))
 				db.Delete(item);
 
-			foreach (var item in (from e in db.AssociadoEmail where e.fkPerson == id select e))
+			foreach (var item in (from e in db.AssociadoEmail where e.fkAssociado == id select e))
 				db.Delete(item);
 
 			db.Delete(this);

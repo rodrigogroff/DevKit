@@ -52,12 +52,12 @@ namespace DevKit.Web.Controllers
             if (ca != caCalc)
                 return BadRequest("Cartão inválido >> " + caCalc);
 
-            if (db.currentMedico != null)
+            if (db.currentCredenciado != null)
             {
-                if (!db.MedicoEmpresa.Any(y => y.fkMedico == db.currentMedico.id &&
+                if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == db.currentCredenciado.id &&
                                            y.fkEmpresa == empTb.id))
                 {
-                    return BadRequest("Médico não conveniado à empresa " + emp);
+                    return BadRequest("Credenciado não conveniado à empresa " + emp);
                 }
             }
             

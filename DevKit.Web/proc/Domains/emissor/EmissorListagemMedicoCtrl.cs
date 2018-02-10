@@ -9,14 +9,14 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class EmissorListagemMedicoController : ApiControllerBase
+	public class EmissorListagemCredenciadoController : ApiControllerBase
 	{
         public IHttpActionResult Get()
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var filter = new MedicoFilter
+            var filter = new CredenciadoFilter
             {
                 fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -26,7 +26,7 @@ namespace DevKit.Web.Controllers
                 especialidade = Request.GetQueryStringValue("especialidade"),
             };
 
-            return Ok(new Medico().ComposedFilters(db, filter));                        
+            return Ok(new Credenciado().ComposedFilters(db, filter));                        
         }
             
         public IHttpActionResult Get(long id)
@@ -34,7 +34,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.Medico.Where(y => y.id == id).FirstOrDefault();
+            var mdl = db.Credenciado.Where(y => y.id == id).FirstOrDefault();
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
@@ -44,7 +44,7 @@ namespace DevKit.Web.Controllers
             return Ok(mdl);
         }
         
-        public IHttpActionResult Put(long id, Medico mdl)
+        public IHttpActionResult Put(long id, Credenciado mdl)
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();

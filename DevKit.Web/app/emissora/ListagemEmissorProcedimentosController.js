@@ -34,7 +34,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             espec: $scope.campos.espec,
             nomeAssociado: $scope.campos.nomeAssociado,
             nomeCredenciado: $scope.campos.nomeCredenciado,
-            codMedico: $scope.campos.codMedico,
+            codCredenciado: $scope.campos.codCredenciado,
             matricula: $scope.campos.matricula,
             dtInicial: $scope.campos.dtInicial,
             dtFim: $scope.campos.dtFim,

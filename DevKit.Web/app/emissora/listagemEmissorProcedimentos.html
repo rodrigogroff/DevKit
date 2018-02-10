@@ -41,9 +41,9 @@
                 </tr>
                 <tr height="36px">
                     <td></td>
-                    <td><b>Cód. Médico</b></td>
+                    <td><b>Cód. Credenciado</b></td>
                     <td>
-                        <input type="text" class="form-control input-transparent" ng-model="campos.codMedico" />
+                        <input type="text" class="form-control input-transparent" ng-model="campos.codCredenciado" />
                     </td>
                     <td></td>
                     <td><b>Matrícula</b></td>
@@ -95,7 +95,7 @@
                                             <th style="min-width:150px">Data Solicitação</th>
                                             <th style="min-width:90px">Situação</th>
                                             <th style="min-width:200px">Associado</th>
-                                            <th style="min-width:200px">Médico</th>
+                                            <th style="min-width:200px">Credenciado</th>
                                             <th style="min-width:150px">Especialidade</th>
                                             <th style="min-width:200px">TUSS - Procedimento</th>
                                         </tr>
@@ -103,8 +103,8 @@
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                                         <td>{{ mdl.sdtSolicitacao }}</td>
                                         <td>{{ mdl.stgSituacao }}</td>
-                                        <td>{{ mdl.snuMattriculaAssociado }} - {{ mdl.sfkAssociado }}</td>
-                                        <td>{{ mdl.snuCodigoMedico }} - {{ mdl.sfkMedico }}</td>
+                                        <td>{{ mdl.snuMatriculaAssociado }} - {{ mdl.sfkAssociado }}</td>
+                                        <td>{{ mdl.snuCodigoCredenciado }} - {{ mdl.sfkCredenciado }}</td>
                                         <td>{{ mdl.sfkEspecialidade }}</td>
                                         <td>{{ mdl.sfkProcedimento }}</td>
                                     </tr>

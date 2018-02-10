@@ -10,7 +10,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var resp = new Medico().AutorizaProcedimento(db, new AutorizaProcedimentoParams
+            var resp = new Credenciado().AutorizaProcedimento(db, new AutorizaProcedimentoParams
             {
                 emp = Request.GetQueryStringValue("emp", 0),
                 mat = Request.GetQueryStringValue("mat", 0),

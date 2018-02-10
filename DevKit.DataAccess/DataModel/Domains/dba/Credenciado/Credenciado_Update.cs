@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DataModel
 {
-	public partial class Medico
+	public partial class Credenciado
     {
 		public bool Update(DevKitDB db, ref string resp)
 		{            
@@ -13,10 +13,10 @@ namespace DataModel
 			{
                 case "newProcedimentoViaEmissor":
                     {
-                        var ent = JsonConvert.DeserializeObject<MedicoEmpresaTuss>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<CredenciadoEmpresaTuss>(anexedEntity.ToString());
 
                         ent.fkEmpresa = db.currentUser.fkEmpresa;
-                        ent.fkMedico = this.id;
+                        ent.fkCredenciado = this.id;
 
                         db.Insert(ent);
 
@@ -25,7 +25,7 @@ namespace DataModel
 
                 case "removeProcedimentoViaEmissor":
                     {
-                        var ent = JsonConvert.DeserializeObject<MedicoEmpresaTuss>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<CredenciadoEmpresaTuss>(anexedEntity.ToString());
 
                         db.Delete(ent);
 
@@ -36,16 +36,16 @@ namespace DataModel
                     {
                         var ent = JsonConvert.DeserializeObject<UserPasswordChange>(anexedEntity.ToString());
 
-                        var medico = db.currentMedico;
+                        var cred = db.currentCredenciado;
 
-                        if (medico.stSenha == null)
-                            medico.stSenha = medico.nuCodigo.ToString();
+                        if (cred.stSenha == null)
+                            cred.stSenha = cred.nuCodigo.ToString();
 
-                        if (medico.stSenha == ent.stCurrentPassword )
+                        if (cred.stSenha == ent.stCurrentPassword )
                         {
-                            medico.stSenha = ent.stNewPassword;
+                            cred.stSenha = ent.stNewPassword;
 
-                            db.Update(medico);
+                            db.Update(cred);
 
                             return true;
                         }
@@ -58,13 +58,13 @@ namespace DataModel
 
                 case "newPhone":
                     {
-                        var ent = JsonConvert.DeserializeObject<MedicoPhone>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<CredenciadoTelefone>(anexedEntity.ToString());
 
-                        ent.fkMedico = id;
+                        ent.fkCredenciado = id;
 
                         if (ent.id == 0)
                         {
-                            if ((from ne in db.MedicoPhone where ne.fkMedico == id && ne.stPhone == ent.stPhone select ne).Any())
+                            if ((from ne in db.CredenciadoTelefone where ne.fkCredenciado == id && ne.stPhone == ent.stPhone select ne).Any())
                             {
                                 resp = "Telefone já utilizado!";
                                 return false;
@@ -74,7 +74,7 @@ namespace DataModel
                         }
                         else
                         {
-                            var oldPhone = db.MedicoPhone.
+                            var oldPhone = db.CredenciadoTelefone.
                                             Where(y => y.id == ent.id).
                                             FirstOrDefault();
 
@@ -86,7 +86,7 @@ namespace DataModel
 
                 case "removePhone":
                     {
-                        var ent = JsonConvert.DeserializeObject<MedicoPhone>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<CredenciadoTelefone>(anexedEntity.ToString());
 
                         db.Delete(ent);
 
@@ -95,13 +95,13 @@ namespace DataModel
 
                 case "newEmail":
                     {
-                        var ent = JsonConvert.DeserializeObject<MedicoEmail>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<CredenciadoEmail>(anexedEntity.ToString());
 
-                        ent.fkMedico = id;
+                        ent.fkCredenciado = id;
 
                         if (ent.id == 0)
                         {
-                            if ((from ne in db.MedicoEmail where ne.fkMedico == id && ne.stEmail == ent.stEmail select ne).Any())
+                            if ((from ne in db.CredenciadoEmail where ne.fkCredenciado == id && ne.stEmail == ent.stEmail select ne).Any())
                             {
                                 resp = "Email já utilizado!";
                                 return false;
@@ -111,7 +111,7 @@ namespace DataModel
                         }
                         else
                         {
-                            var oldEmail = db.MedicoEmail.
+                            var oldEmail = db.CredenciadoEmail.
                                             Where(y => y.id == ent.id).
                                             FirstOrDefault();
                             
@@ -123,7 +123,7 @@ namespace DataModel
 
                 case "removeEmail":
                     {
-                        var ent = JsonConvert.DeserializeObject<MedicoEmail>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<CredenciadoEmail>(anexedEntity.ToString());
 
                         db.Delete(ent);
 
@@ -132,14 +132,14 @@ namespace DataModel
 
                 case "newEnd":
                     {
-                        var ent = JsonConvert.DeserializeObject<MedicoAddress>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<CredenciadoEndereco>(anexedEntity.ToString());
 
-                        ent.fkMedico = id;
+                        ent.fkCredenciado = id;
 
                         if (ent.bPrincipal == null)
                             ent.bPrincipal = false;
 
-                        if (!db.MedicoAddress.Where(y => y.fkMedico == id).Any())
+                        if (!db.CredenciadoEndereco.Where(y => y.fkCredenciado == id).Any())
                             ent.bPrincipal = true;
 
                         if (ent.id == 0)
@@ -148,7 +148,7 @@ namespace DataModel
                         }
                         else
                         {
-                            var oldEnd = db.MedicoAddress.
+                            var oldEnd = db.CredenciadoEndereco.
                                             Where(y => y.id == ent.id).
                                             FirstOrDefault();
 
@@ -160,13 +160,13 @@ namespace DataModel
 
                 case "removeEnd":
                     {
-                        var ent = JsonConvert.DeserializeObject<MedicoAddress>(anexedEntity.ToString());
+                        var ent = JsonConvert.DeserializeObject<CredenciadoEndereco>(anexedEntity.ToString());
 
                         db.Delete(ent);
 
-                        if (db.MedicoAddress.Where(y => y.fkMedico == id).Count() == 1)
+                        if (db.CredenciadoEndereco.Where(y => y.fkCredenciado == id).Count() == 1)
                         {
-                            var pa = db.MedicoAddress.Where(y => y.fkMedico == id).FirstOrDefault();
+                            var pa = db.CredenciadoEndereco.Where(y => y.fkCredenciado == id).FirstOrDefault();
 
                             pa.bPrincipal = true;
 

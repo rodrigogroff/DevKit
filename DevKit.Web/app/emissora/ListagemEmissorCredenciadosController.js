@@ -1,5 +1,5 @@
 ﻿
-angular.module('app.controllers').controller('ListagemEmissorMedicosController',
+angular.module('app.controllers').controller('ListagemEmissorCredenciadosController',
 ['$scope', '$rootScope', '$state', 'Api', 'ngSelects', 
 function ($scope, $rootScope, $state, Api, ngSelects )
 {
@@ -35,7 +35,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             especialidade: $scope.campos.especialidade,
         };
 
-        Api.EmissorListagemMedico.listPage(opcoes, function (data)
+        Api.EmissorListagemCredenciado.listPage(opcoes, function (data)
 		{
 			$scope.list = data.results;
 			$scope.total = data.count;
@@ -47,11 +47,11 @@ function ($scope, $rootScope, $state, Api, ngSelects )
        // if (!$scope.permModel.visualizar)
          //   toastr.error('Acesso negado!', 'Permissão');
         //else
-        $state.go('emissormedico', { id: mdl.id });
+        $state.go('emissorcredenciado', { id: mdl.id });
     }
         
 	$scope.new = function () {
-		$state.go('novomedico');
+		$state.go('novocredenciado');
 	}
 
 }]);

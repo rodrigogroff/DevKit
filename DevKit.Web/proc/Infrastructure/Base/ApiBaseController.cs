@@ -76,21 +76,21 @@ namespace DevKit.Web.Controllers
                 case "1": // medico
                     {
                         var userCurrentName = userLoggedName;
-                        var tagName = CacheTags.Medico + userLoggedCodigo;
+                        var tagName = CacheTags.Credenciado + userLoggedCodigo;
 
-                        db.currentMedico = RestoreCacheNoHit(tagName) as Medico;
+                        db.currentCredenciado = RestoreCacheNoHit(tagName) as Credenciado;
 
-                        if (db.currentMedico == null)
+                        if (db.currentCredenciado == null)
                         {
-                            db.currentMedico = (from ne in db.Medico
-                                                where ne.nuCodigo.ToString() == userLoggedCodigo
+                            db.currentCredenciado = (from ne in db.Credenciado
+                                                     where ne.nuCodigo.ToString() == userLoggedCodigo
                                                 select ne).
                                                 FirstOrDefault();
 
-                            if (db.currentMedico == null)
+                            if (db.currentCredenciado == null)
                                 return false;
 
-                            BackupCacheNoHit(tagName, db.currentMedico);
+                            BackupCacheNoHit(tagName, db.currentCredenciado);
                         }
 
                         break;

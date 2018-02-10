@@ -10,7 +10,7 @@ namespace DataModel
 		{
             var setup = db.GetSetup();
 
-            sqtdMedicos = db.Medico.Count(y => y.fkEspecialidade == this.id).ToString();
+            sqtdCredenciados = db.Credenciado.Count(y => y.fkEspecialidade == this.id).ToString();
 
             return this;
 		}

@@ -12,21 +12,26 @@ namespace DataModel
 		{
             var proc = db.TUSS.Where(y => y.id == fkProcedimento).FirstOrDefault();
             var assoc = db.Associado.Where(y => y.id == fkAssociado).FirstOrDefault();
-            var medico = db.Medico.Where(y => y.id == fkMedico).FirstOrDefault();
-            var espec = db.Especialidade.Where(y => y.id == medico.fkEspecialidade).FirstOrDefault();
+            var cred = db.Credenciado.Where(y => y.id == fkCredenciado).FirstOrDefault();
+
+            if (cred != null )
+            {
+                var espec = db.Especialidade.Where(y => y.id == cred.fkEspecialidade).FirstOrDefault();
+                sfkEspecialidade = espec.stNome;
+
+                snuCodigoCredenciado = cred.nuCodigo.ToString();
+                sfkCredenciado = cred.stNome;
+            }
 
             sdtSolicitacao = Convert.ToDateTime(dtSolicitacao).ToString("dd/MM/yyyy HH:mm");
 
             sfkEmpresa = db.Empresa.Where(y => y.id == fkEmpresa).FirstOrDefault().stSigla;
-            sfkProcedimento = proc.nuCodTUSS + " - " + proc.stProcedimento;
+
+            if (proc != null)
+                sfkProcedimento = proc.nuCodTUSS + " - " + proc.stProcedimento;
 
             sfkAssociado = assoc.stName;
-            snuMattriculaAssociado = assoc.nuMatricula.ToString();
-
-            snuCodigoMedico = medico.nuCodigo.ToString();
-            sfkMedico = medico.stNome;
-
-            sfkEspecialidade = espec.stNome;
+            snuMatriculaAssociado = assoc.nuMatricula.ToString();
 
             switch (tgSituacao)
             {

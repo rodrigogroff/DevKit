@@ -66,13 +66,13 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('novolote', { url: '/dba/lotes/novo', templateUrl: 'app/dba/novoLote.html', controller: 'NovoLoteController' })
 
     .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/listingEmpresas.html', controller: 'ListingEmpresasController' })
-    .state('medicos', { url: '/dba/medicos', templateUrl: 'app/dba/listingMedicos.html', controller: 'ListingMedicosController' })
+    .state('credenciados', { url: '/dba/credenciados', templateUrl: 'app/dba/listingCredenciados.html', controller: 'ListingCredenciadosController' })
         
-    .state('medico',
+    .state('credenciado',
     {
-        url: '/dba/medico/:id',
-        templateUrl: 'app/dba/medico.html',
-        controller: 'MedicoController'
+        url: '/dba/credenciado/:id',
+        templateUrl: 'app/dba/credenciado.html',
+        controller: 'CredenciadoController'
     })
 
     .state('tuss', { url: '/dba/tuss', templateUrl: 'app/dba/listingTUSS.html', controller: 'ListingTUSSController' })
@@ -85,17 +85,17 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 
     .state('emissorprocs', { url: '/emissora/listprocs', templateUrl: 'app/emissora/listagemEmissorProcedimentos.html', controller: 'ListagemEmissorProcedimentosController' })
 
-    .state('medicopass', { url: '/medico/medicoTrocaSenha', templateUrl: 'app/medico/medicoPassword.html', controller: 'MedicoPasswordController' })    
-    .state('autorizacaoProc', { url: '/medico/autorizacaoProc', templateUrl: 'app/medico/autorizacaoProc.html', controller: 'AutorizacaoProcController' })
-    .state('medicoprocs', { url: '/medico/procs', templateUrl: 'app/medico/listagemMedicoProcedimentos.html', controller: 'ListagemMedicoProcedimentosController' })
+    .state('credenciadopass', { url: '/credenciado/credenciadoTrocaSenha', templateUrl: 'app/credenciado/credenciadoPassword.html', controller: 'CredenciadoPasswordController' })    
+    .state('autorizacaoProc', { url: '/credenciado/autorizacaoProc', templateUrl: 'app/credenciado/autorizacaoProc.html', controller: 'AutorizacaoProcController' })
+        .state('credenciadoprocs', { url: '/credenciado/procs', templateUrl: 'app/credenciado/listagemCredenciadoProcedimentos.html', controller: 'ListagemCredenciadoProcedimentosController' })
 
-    .state('listemissormedicos', { url: '/emissora/medicos', templateUrl: 'app/emissora/listagemMedicos.html', controller: 'ListagemEmissorMedicosController' })
+    .state('listemissorcredenciados', { url: '/emissora/credenciados', templateUrl: 'app/emissora/listagemCredenciados.html', controller: 'ListagemEmissorCredenciadosController' })
 
-    .state('emissormedico',
+    .state('emissorcredenciado',
     {
-        url: '/emissora/medico/:id',
-        templateUrl: 'app/emissora/medico.html',
-        controller: 'EmissorMedicoController'
+        url: '/emissora/credenciado/:id',
+        templateUrl: 'app/emissora/credenciado.html',
+        controller: 'EmissorCredenciadoController'
     })
 
     .state('exportaut', { url: '/dba/exportaut', templateUrl: 'app/dba/listingExpAutorizacao.html', controller: 'ListingExpAutorizacaoController' })

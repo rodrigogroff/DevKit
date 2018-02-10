@@ -9,14 +9,14 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class MedicoController : ApiControllerBase
+	public class CredenciadoController : ApiControllerBase
 	{
         public IHttpActionResult Get()
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            return Ok(new Medico().ComposedFilters(db, new MedicoFilter
+            return Ok(new Credenciado().ComposedFilters(db, new CredenciadoFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
@@ -31,9 +31,9 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = db.Medico.Where(y => y.id == id).FirstOrDefault();
+            var mdl = db.Credenciado.Where(y => y.id == id).FirstOrDefault();
 
-            if (!db.MedicoEmpresa.Any ( y=> y.id == mdl.id && 
+            if (!db.CredenciadoEmpresa.Any ( y=> y.id == mdl.id && 
                                             y.fkEmpresa == db.currentUser.fkEmpresa))
                 return BadRequest("Credenciado inválido");
 
@@ -45,7 +45,7 @@ namespace DevKit.Web.Controllers
             return Ok(mdl);
         }
 
-        public IHttpActionResult Post(Medico mdl)
+        public IHttpActionResult Post(Credenciado mdl)
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -58,7 +58,7 @@ namespace DevKit.Web.Controllers
             return Ok(mdl);
         }
 
-        public IHttpActionResult Put(long id, Medico mdl)
+        public IHttpActionResult Put(long id, Credenciado mdl)
 		{
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();

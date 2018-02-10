@@ -16,7 +16,7 @@ namespace DataModel
                         espec,
                         nomeAssociado, 
                         nomeCredenciado, 
-                        codMedico, 
+                        codCredenciado, 
                         matricula, 
                         dtInicial, 
                         dtFim;
@@ -57,16 +57,16 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.nomeCredenciado))
             {
                 query = from e in query
-                        join med in db.Medico on e.fkMedico equals med.id
+                        join med in db.Credenciado on e.fkCredenciado equals med.id
                         where med.stNome.ToUpper().Contains(filter.nomeCredenciado.ToUpper())
                         select e;
             }
 
-            if (!string.IsNullOrEmpty(filter.codMedico))
+            if (!string.IsNullOrEmpty(filter.codCredenciado))
             {
                 query = from e in query
-                        join med in db.Medico on e.fkMedico equals med.id
-                        where med.nuCodigo.ToString() == filter.codMedico
+                        join med in db.Credenciado on e.fkCredenciado equals med.id
+                        where med.nuCodigo.ToString() == filter.codCredenciado
                         select e;
             }
 
@@ -123,7 +123,7 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.espec))
             {
                 query = from e in query
-                        join med in db.Medico on e.fkMedico equals med.id
+                        join med in db.Credenciado on e.fkCredenciado equals med.id
                         join espec in db.Especialidade on med.fkEspecialidade equals espec.id
                         where espec.stNome.ToUpper() == filter.espec.ToUpper()
                         select e;

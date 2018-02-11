@@ -119,7 +119,8 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id          { get; set; } // bigint
 		[Column,     Nullable] public long?  fkEmpresa   { get; set; } // bigint
 		[Column,     Nullable] public long?  fkAssociado { get; set; } // bigint
-		[Column,     Nullable] public string stNome      { get; set; } // character varying(35)
+        [Column, Nullable] public long? fkCartao { get; set; } // bigint
+        [Column,     Nullable] public string stNome      { get; set; } // character varying(35)
 		[Column,     Nullable] public string stCPF       { get; set; } // character varying(30)
 	}
 

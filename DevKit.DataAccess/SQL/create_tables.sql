@@ -261,7 +261,12 @@ ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "stName" character 
 ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 
--- Novas tabelas
+
+
+
+---------------------------------
+-- portal saude
+---------------------------------
 
 CREATE TABLE IF NOT EXISTS public."Empresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Empresa" OWNER to postgres;
@@ -434,7 +439,9 @@ ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "nuMaxMes" bigin
 ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "nuMaxAno" bigint;
 ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "nuParcelas" bigint;
 
+---------------------------------
 -- 10/02/2018
+---------------------------------
 
 DROP TABLE IF EXISTS public."AssociadoContato";
 DROP TABLE IF EXISTS public."AssociadoMensagem";
@@ -450,8 +457,6 @@ ALTER TABLE public."MedicoAddress" RENAME TO "CredenciadoEndereco";
 ALTER TABLE public."AssociadoEmail" RENAME "fkPerson" TO "fkAssociado";
 ALTER TABLE public."AssociadoTelefone" RENAME "fkPerson" TO "fkAssociado";
 ALTER TABLE public."AssociadoEndereco" RENAME "fkPerson" TO "fkAssociado";
-
-ALTER TABLE public."AssociadoDependente" DROP COLUMN "fkCartao";
 
 ALTER TABLE public."CredenciadoEmpresa" RENAME "fkMedico" TO "fkCredenciado";
 ALTER TABLE public."CredenciadoEmail" RENAME "fkMedico" TO "fkCredenciado";

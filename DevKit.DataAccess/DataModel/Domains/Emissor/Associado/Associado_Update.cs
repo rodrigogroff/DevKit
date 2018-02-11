@@ -91,7 +91,7 @@ namespace DataModel
                                 return false;
                             }
 
-                            ent.fkAssociado = Convert.ToInt64 (
+                            ent.fkCartao = Convert.ToInt64 (
                                 db.InsertWithIdentity(new Associado
                                 {
                                     fkEmpresa = this.fkEmpresa,
@@ -111,7 +111,7 @@ namespace DataModel
                         }
                         else
                         {
-                            var cart = db.Associado.Where(y => y.id == ent.fkAssociado).FirstOrDefault();
+                            var cart = db.Associado.Where(y => y.id == ent.fkCartao).FirstOrDefault();
 
                             if (cart.tgExpedicao == 0)
                             {

@@ -20,8 +20,7 @@ namespace DataModel
 
             string dir = "c:\\lotes_grafica\\";
             string file = dir + "LoteExpAuto_" + tag + ".txt";
-            string ext = ".txt";
-
+            
             var lstId = new List<long?>();
 
             using (var sw = new StreamWriter(file, false, Encoding.Default))

@@ -94,7 +94,10 @@ namespace DataModel
                             where e.dtSolicitacao > dtInicial
                             select e;
                 }
-                catch (System.Exception ex) { }
+                catch (System.Exception ex)
+                {
+                    ex.ToString();
+                }
 
                 #endregion
             }
@@ -115,7 +118,10 @@ namespace DataModel
                             where e.dtSolicitacao < dtFim
                             select e;
                 }
-                catch (System.Exception ex) { }
+                catch (System.Exception ex)
+                {
+                    ex.ToString();
+                }
 
                 #endregion
             }

@@ -16,8 +16,7 @@ namespace DataModel
 
             string dir = "c:\\lotes_grafica\\";
             string file = dir + "Lote_" + idLote + ".txt";
-            string ext = ".txt";
-
+            
             using (var sw = new StreamWriter(file, false, Encoding.Default))
             {
                 var query = from e in db.LoteGraficaCartao

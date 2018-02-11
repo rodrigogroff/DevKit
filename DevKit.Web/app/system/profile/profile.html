@@ -85,210 +85,50 @@
 								<td width="400px">
 									<legend style="color:white">Catálogo de permissões</legend>
 									<br />
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												<th width="250px"><b>Sistema</b></th>
-												<th width="70px">Listagem</th>
-												<th width="70px">Visão</th>
-												<th width="70px">Edição</th>
-												<th width="70px">Criação</th>
-												<th width="70px">Remover</th>
-											</tr>
-										</thead>
-										<tr>
-											<td><b>[200]</b> Troca de senha pelo usuário</td>
-											<td><input name="tg2001" type="checkbox" ng-model="viewModel.tg2001" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[201]</b> Limpa Password</td>
-											<td><input name="tg2011" type="checkbox" ng-model="viewModel.tg2011" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<!--<tr>
-											<td><b>[100]</b> Configuração sistema</td>
-											<td></td>
-											<td><input name="tg1002" type="checkbox" ng-model="viewModel.tg1002" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1003" type="checkbox" ng-model="viewModel.tg1003" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-										</tr>-->
-										<tr>
-											<td><b>[101]</b> Perfis de usuários</td>
-											<td><input name="tg1011" type="checkbox" ng-model="viewModel.tg1011" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1012" type="checkbox" ng-model="viewModel.tg1012" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1013" type="checkbox" ng-model="viewModel.tg1013" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1014" type="checkbox" ng-model="viewModel.tg1014" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1015" type="checkbox" ng-model="viewModel.tg1015" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<tr>
-											<td><b>[102]</b> Manutenção de usuários</td>
-											<td><input name="tg1021" type="checkbox" ng-model="viewModel.tg1021" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1022" type="checkbox" ng-model="viewModel.tg1022" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1023" type="checkbox" ng-model="viewModel.tg1023" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1024" type="checkbox" ng-model="viewModel.tg1024" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1025" type="checkbox" ng-model="viewModel.tg1025" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<!--<tr>
-											<td><b>[120]</b> Manutenção de clientes</td>
-											<td><input name="tg1201" type="checkbox" ng-model="viewModel.tg1201" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1202" type="checkbox" ng-model="viewModel.tg1202" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1203" type="checkbox" ng-model="viewModel.tg1203" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1204" type="checkbox" ng-model="viewModel.tg1204" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1205" type="checkbox" ng-model="viewModel.tg1205" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<tr>
-											<td><b>[121]</b> Manutenção de grupos</td>
-											<td><input name="tg1211" type="checkbox" ng-model="viewModel.tg1211" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1212" type="checkbox" ng-model="viewModel.tg1212" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1213" type="checkbox" ng-model="viewModel.tg1213" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1214" type="checkbox" ng-model="viewModel.tg1214" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1215" type="checkbox" ng-model="viewModel.tg1215" ng-disabled="!permModel.edicao"></td>
-										</tr>-->
-										<tr>
-											<td><b>[103]</b> Manutenção de Projetos</td>
-											<td><input name="tg1031" type="checkbox" ng-model="viewModel.tg1031" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1032" type="checkbox" ng-model="viewModel.tg1032" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1033" type="checkbox" ng-model="viewModel.tg1033" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1034" type="checkbox" ng-model="viewModel.tg1034" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1035" type="checkbox" ng-model="viewModel.tg1035" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<tr>
-											<td><b>[104]</b> Manutenção de Sprints</td>
-											<td><input name="tg1041" type="checkbox" ng-model="viewModel.tg1041" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1042" type="checkbox" ng-model="viewModel.tg1042" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1043" type="checkbox" ng-model="viewModel.tg1043" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1044" type="checkbox" ng-model="viewModel.tg1044" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1045" type="checkbox" ng-model="viewModel.tg1045" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<tr>
-											<td><b>[105]</b> Manutenção de tipos de tarefas</td>
-											<td><input name="tg1051" type="checkbox" ng-model="viewModel.tg1051" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1052" type="checkbox" ng-model="viewModel.tg1052" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1053" type="checkbox" ng-model="viewModel.tg1053" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1054" type="checkbox" ng-model="viewModel.tg1054" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1055" type="checkbox" ng-model="viewModel.tg1055" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<tr>
-											<td><b>[106]</b> Manutenção de tarefas</td>
-											<td><input name="tg1061" type="checkbox" ng-model="viewModel.tg1061" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1062" type="checkbox" ng-model="viewModel.tg1062" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1063" type="checkbox" ng-model="viewModel.tg1063" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1064" type="checkbox" ng-model="viewModel.tg1064" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1065" type="checkbox" ng-model="viewModel.tg1065" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<tr>
-											<td><b>[118]</b> Notícias</td>
-											<td><input name="tg1181" type="checkbox" ng-model="viewModel.tg1181" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1182" type="checkbox" ng-model="viewModel.tg1182" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1183" type="checkbox" ng-model="viewModel.tg1183" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1184" type="checkbox" ng-model="viewModel.tg1184" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1185" type="checkbox" ng-model="viewModel.tg1185" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<tr>
-											<td><b>[119]</b> Pesquisas</td>
-											<td><input name="tg1191" type="checkbox" ng-model="viewModel.tg1191" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1192" type="checkbox" ng-model="viewModel.tg1192" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1193" type="checkbox" ng-model="viewModel.tg1193" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1194" type="checkbox" ng-model="viewModel.tg1194" ng-disabled="!permModel.edicao"></td>
-											<td><input name="tg1195" type="checkbox" ng-model="viewModel.tg1195" ng-disabled="!permModel.edicao"></td>
-										</tr>
-										<tr>
-											<td><b>[107]</b> Visão Kanban</td>
-											<td><input name="tg1071" type="checkbox" ng-model="viewModel.tg1071" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[108]</b> Visão gerência</td>
-											<td><input name="tg1081" type="checkbox" ng-model="viewModel.tg1081" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[109]</b> Timesheet</td>
-											<td><input name="tg1091" type="checkbox" ng-model="viewModel.tg1091" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[110]</b> Admin. Timesheet</td>
-											<td><input name="tg1101" type="checkbox" ng-model="viewModel.tg1101" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[111]</b> Auditoria (projeto)</td>
-											<td><input name="tg1111" type="checkbox" ng-model="viewModel.tg1111" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[112]</b> Auditoria (usuário)</td>
-											<td><input name="tg1121" type="checkbox" ng-model="viewModel.tg1121" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[113]</b> Auditoria (tipo tarefa)</td>
-											<td><input name="tg1131" type="checkbox" ng-model="viewModel.tg1131" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[114]</b> Auditoria (configuração)</td>
-											<td><input name="tg1141" type="checkbox" ng-model="viewModel.tg1141" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[115]</b> Auditoria (tarefa)</td>
-											<td><input name="tg1151" type="checkbox" ng-model="viewModel.tg1151" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[116]</b> Auditoria (perfil)</td>
-											<td><input name="tg1161" type="checkbox" ng-model="viewModel.tg1161" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td><b>[117]</b> Auditoria (sprint)</td>
-											<td><input name="tg1171" type="checkbox" ng-model="viewModel.tg1171" ng-disabled="!permModel.edicao"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-									</table>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="250px"><b>Sistema</b></th>
+                                                <th width="70px">Listagem</th>
+                                                <th width="70px">Visão</th>
+                                                <th width="70px">Edição</th>
+                                                <th width="70px">Criação</th>
+                                                <th width="70px">Remover</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td><b>[101]</b> Perfis de usuários</td>
+                                            <td><input name="tg1011" type="checkbox" ng-model="viewModel.tg1011" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg1012" type="checkbox" ng-model="viewModel.tg1012" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg1013" type="checkbox" ng-model="viewModel.tg1013" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg1014" type="checkbox" ng-model="viewModel.tg1014" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg1015" type="checkbox" ng-model="viewModel.tg1015" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[102]</b> Manutenção de usuários</td>
+                                            <td><input name="tg1021" type="checkbox" ng-model="viewModel.tg1021" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg1022" type="checkbox" ng-model="viewModel.tg1022" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg1023" type="checkbox" ng-model="viewModel.tg1023" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg1024" type="checkbox" ng-model="viewModel.tg1024" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg1025" type="checkbox" ng-model="viewModel.tg1025" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[200]</b> Troca de senha pelo usuário</td>
+                                            <td><input name="tg2001" type="checkbox" ng-model="viewModel.tg2001" ng-disabled="!permModel.edicao"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[201]</b> Limpa Password</td>
+                                            <td><input name="tg2011" type="checkbox" ng-model="viewModel.tg2011" ng-disabled="!permModel.edicao"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
 								</td>
 								<td width="20px"></td>
 							</tr>

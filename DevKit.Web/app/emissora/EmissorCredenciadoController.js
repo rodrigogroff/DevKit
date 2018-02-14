@@ -14,7 +14,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
 			if (!$scope.permModel.visualizar)
 			{
-                toastr.error('Acesso negado!', 'Permissão');
+                toastr.error('Acesso negado para visualização de credenciado!', 'Permissão');
 				$state.go('home');
 			}
 		},
@@ -26,14 +26,6 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		},
 		function (response) { });
 	}
-
-	//function loadSetup()
-	//{
- //       Api.Setup.get({ id: 1 }, function (data)
-	//	{
-	//		$scope.setupModel = data;
-	//	});
-	//}
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
     
@@ -41,21 +33,13 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
     function init()
     {
-        //$scope.setupModel = { stPhoneMask: '' }
         $scope.viewModel = {};
-        //$scope.permModel = {};
-        //$scope.permID = 102;
-        //$scope.auditLogPerm = 112;
-
+        $scope.permModel = {};
+        $scope.permID = 500;
+        
         $scope.nomeTuss = '';
 
-        //$scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
-        //$scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
-        //$scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, {});
-        //$scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'newEnd.fkEstado' } });
-
-        //CheckPermissions();
-        //loadSetup();
+        CheckPermissions();
         loadEntity();
     }
 

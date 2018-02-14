@@ -89,20 +89,62 @@
                                         <thead>
                                             <tr>
                                                 <th width="250px"><b>Sistema</b></th>
-                                                <th width="70px">Listagem</th>
+                                                <th width="70px">Consulta</th>
                                                 <th width="70px">Visão</th>
                                                 <th width="70px">Edição</th>
                                                 <th width="70px">Criação</th>
-                                                <th width="70px">Remover</th>
                                             </tr>
                                         </thead>
+                                        <tr>
+                                            <td><b>[301]</b> Manutenção de associados</td>
+                                            <td><input name="tg3011" type="checkbox" ng-model="viewModel.tg3011" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg3012" type="checkbox" ng-model="viewModel.tg3012" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg3013" type="checkbox" ng-model="viewModel.tg3013" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg3014" type="checkbox" ng-model="viewModel.tg3014" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[401]</b> Troca de senha associado</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><input name="tg4014" type="checkbox" ng-model="viewModel.tg4014" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[402]</b> Segunda-via associado</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><input name="tg4024" type="checkbox" ng-model="viewModel.tg4024" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[403]</b> Bloqueio associado</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><input name="tg4034" type="checkbox" ng-model="viewModel.tg4034" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[404]</b> Desbloqueio associado</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><input name="tg4044" type="checkbox" ng-model="viewModel.tg4044" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[501]</b> Consulta de credenciados</td>
+                                            <td><input name="tg5011" type="checkbox" ng-model="viewModel.tg5011" ng-disabled="!permModel.edicao"></td>
+                                            <td><input name="tg5012" type="checkbox" ng-model="viewModel.tg5012" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[601]</b> Relatórios / Autorização</td>
+                                            <td><input name="tg6011" type="checkbox" ng-model="viewModel.tg6011" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>[602]</b> Relatórios / Autorização</td>
+                                            <td><input name="tg6021" type="checkbox" ng-model="viewModel.tg6021" ng-disabled="!permModel.edicao"></td>
+                                        </tr>
                                         <tr>
                                             <td><b>[101]</b> Perfis de usuários</td>
                                             <td><input name="tg1011" type="checkbox" ng-model="viewModel.tg1011" ng-disabled="!permModel.edicao"></td>
                                             <td><input name="tg1012" type="checkbox" ng-model="viewModel.tg1012" ng-disabled="!permModel.edicao"></td>
                                             <td><input name="tg1013" type="checkbox" ng-model="viewModel.tg1013" ng-disabled="!permModel.edicao"></td>
                                             <td><input name="tg1014" type="checkbox" ng-model="viewModel.tg1014" ng-disabled="!permModel.edicao"></td>
-                                            <td><input name="tg1015" type="checkbox" ng-model="viewModel.tg1015" ng-disabled="!permModel.edicao"></td>
                                         </tr>
                                         <tr>
                                             <td><b>[102]</b> Manutenção de usuários</td>
@@ -110,23 +152,14 @@
                                             <td><input name="tg1022" type="checkbox" ng-model="viewModel.tg1022" ng-disabled="!permModel.edicao"></td>
                                             <td><input name="tg1023" type="checkbox" ng-model="viewModel.tg1023" ng-disabled="!permModel.edicao"></td>
                                             <td><input name="tg1024" type="checkbox" ng-model="viewModel.tg1024" ng-disabled="!permModel.edicao"></td>
-                                            <td><input name="tg1025" type="checkbox" ng-model="viewModel.tg1025" ng-disabled="!permModel.edicao"></td>
                                         </tr>
                                         <tr>
                                             <td><b>[200]</b> Troca de senha pelo usuário</td>
                                             <td><input name="tg2001" type="checkbox" ng-model="viewModel.tg2001" ng-disabled="!permModel.edicao"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td><b>[201]</b> Limpa Password</td>
+                                            <td><b>[201]</b> Limpa Senha</td>
                                             <td><input name="tg2011" type="checkbox" ng-model="viewModel.tg2011" ng-disabled="!permModel.edicao"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                     </table>
 								</td>

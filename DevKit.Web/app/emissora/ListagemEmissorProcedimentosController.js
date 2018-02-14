@@ -4,7 +4,19 @@ angular.module('app.controllers').controller('ListagemEmissorProcedimentosContro
 function ($scope, $rootScope, $state, Api, ngSelects )
 {
 	$rootScope.exibirMenu = true;
-	$scope.loading = false;
+    $scope.loading = false;
+
+    function CheckPermissions() {
+        Api.Permission.get({ id: $scope.permID }, function (data) {
+            $scope.permModel = data;
+
+            if (!$scope.permModel.listagem) {
+                toastr.error('Acesso negado para relatório de autorizações!', 'Permissão');
+                $state.go('home');
+            }
+        },
+            function (response) { });
+    }
     
 	init();
 
@@ -15,6 +27,10 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         };
 
         $scope.itensporpagina = 15;
+        $scope.permModel = {};
+        $scope.permID = 602;
+
+        CheckPermissions();
 	}
 
 	$scope.search = function ()

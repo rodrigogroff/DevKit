@@ -13,10 +13,30 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         return false;
     }
 
+    function CheckPermissions() {
+        Api.Permission.get({ id: $scope.permID }, function (data) {
+            $scope.permModel = data;
+
+            if (!$scope.permModel.edicao) {
+                toastr.error('Acesso negado para desbloqueio de cartão!', 'Permissão');
+                $state.go('home');
+            }
+        },
+            function (response) { });
+    }
+
     $rootScope.exibirMenu = true;
     $scope.loading = false;
-
     $scope.modal = false;
+
+    init();
+
+    function init() {
+        $scope.permModel = {};
+        $scope.permID = 404;
+
+        CheckPermissions();
+    }
 
     $scope.campos = {
         mat: '',

@@ -4,7 +4,7 @@ namespace DataModel
 {
 	public partial class Profile
 	{
-		public string TrackChanges(DevKitDB db, ref bool bNameChanged)
+		public string TrackChanges(DevKitDB db)
 		{
 			var ret = "";
 
@@ -13,7 +13,6 @@ namespace DataModel
 			if (oldEntity.stName != this.stName )
 			{
                 ret += "Nome: " + oldEntity.stName + " => " + this.stName + "; ";
-                bNameChanged = true;
             }
 			
 			Hashtable hshOldPerms = new Hashtable(),

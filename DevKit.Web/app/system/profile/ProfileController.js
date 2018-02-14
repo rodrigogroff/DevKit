@@ -37,6 +37,11 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
         $scope.viewModel =
             {
+                tg3011: false, tg3012: false, tg3013: false, tg3014: false,
+                tg4014: false, tg4024: false, tg4034: false, tg4044: false,
+                tg5001: false, tg5002: false, 
+                tg6011: false, tg6021: false,
+
                 tg1011: false, tg1012: false, tg1013: false, tg1014: false, tg1015: false,
                 tg1021: false, tg1022: false, tg1023: false, tg1024: false, tg1025: false,
                 tg2001: false,
@@ -55,6 +60,32 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 $scope.loaded = true;
 
                 console.log(data.stPermissions);
+
+                // associados
+                if (data.stPermissions.indexOf('|3011|') >= 0) data.tg3011 = true; else data.tg3011 = false;
+                if (data.stPermissions.indexOf('|3012|') >= 0) data.tg3012 = true; else data.tg3012 = false;
+                if (data.stPermissions.indexOf('|3013|') >= 0) data.tg3013 = true; else data.tg3013 = false;
+                if (data.stPermissions.indexOf('|3014|') >= 0) data.tg3014 = true; else data.tg3014 = false;
+
+                // troca senha
+                if (data.stPermissions.indexOf('|4014|') >= 0) data.tg4014 = true; else data.tg4014 = false;
+
+                // segunda via
+                if (data.stPermissions.indexOf('|4024|') >= 0) data.tg4024 = true; else data.tg4024 = false;
+
+                // bloq
+                if (data.stPermissions.indexOf('|4034|') >= 0) data.tg4034 = true; else data.tg4034 = false;
+
+                // desbloq
+                if (data.stPermissions.indexOf('|4044|') >= 0) data.tg4044 = true; else data.tg4044 = false;
+
+                // credenciados
+                if (data.stPermissions.indexOf('|5001|') >= 0) data.tg5001 = true; else data.tg5001 = false;
+                if (data.stPermissions.indexOf('|5002|') >= 0) data.tg5002 = true; else data.tg5002 = false;
+
+                // relatorios
+                if (data.stPermissions.indexOf('|6011|') >= 0) data.tg6011 = true; else data.tg6011 = false;
+                if (data.stPermissions.indexOf('|6021|') >= 0) data.tg6021 = true; else data.tg6021 = false;
 
 				// profiles
 				if (data.stPermissions.indexOf('|1011|') >= 0) data.tg1011 = true; else data.tg1011 = false;
@@ -111,9 +142,34 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 			{
 				var perms = ''; var _mdl = $scope.viewModel;
 
+                // associados
+                if (_mdl.tg3011 == true) perms += '|3011|'; if (_mdl.tg3012 == true) perms += '|3012|'; if (_mdl.tg3013 == true) perms += '|3013|';
+                if (_mdl.tg3014 == true) perms += '|3014|'; 
+
+                // troca senha
+                if (_mdl.tg4001 == true) perms += '|4001|'; 
+
+                // segunda via
+                if (_mdl.tg4002 == true) perms += '|4002|'; 
+
+                // bloq
+                if (_mdl.tg4003 == true) perms += '|4003|'; 
+
+                // desbloq
+                if (_mdl.tg4004 == true) perms += '|4004|'; 
+
+                // credenciados
+                if (_mdl.tg5001 == true) perms += '|5001|'; if (_mdl.tg5002 == true) perms += '|5002|';
+
+                // rel / aut
+                if (_mdl.tg6011 == true) perms += '|6011|'; 
+
+                // rel / fech
+                if (_mdl.tg6021 == true) perms += '|6021|'; 
+
 				// profiles
 				if (_mdl.tg1011 == true) perms += '|1011|'; if (_mdl.tg1012 == true) perms += '|1012|'; if (_mdl.tg1013 == true) perms += '|1013|';
-				if (_mdl.tg1014 == true) perms += '|1014|'; if (_mdl.tg1015 == true) perms += '|1015|';
+				if (_mdl.tg1014 == true) perms += '|1014|'; 
 				// users
 				if (_mdl.tg1021 == true) perms += '|1021|'; if (_mdl.tg1022 == true) perms += '|1022|'; if (_mdl.tg1023 == true) perms += '|1023|';
 				if (_mdl.tg1024 == true) perms += '|1024|'; if (_mdl.tg1025 == true) perms += '|1025|';

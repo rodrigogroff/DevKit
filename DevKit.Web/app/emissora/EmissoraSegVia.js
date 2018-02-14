@@ -13,6 +13,18 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         return false;
     }
 
+    function CheckPermissions() {
+        Api.Permission.get({ id: $scope.permID }, function (data) {
+            $scope.permModel = data;
+
+            if (!$scope.permModel.edicao) {
+                toastr.error('Acesso negado para segunda via!', 'Permissão');
+                $state.go('home');
+            }
+        },
+            function (response) { });
+    }
+
     $rootScope.exibirMenu = true;
     $scope.loading = false;
 
@@ -24,6 +36,15 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         id: 0,
         novaSenha: ''
     };
+
+    init();
+
+    function init() {
+        $scope.permModel = {};
+        $scope.permID = 402;
+
+        CheckPermissions();
+    }
 
     $scope.ativar = function (mdl)
     {

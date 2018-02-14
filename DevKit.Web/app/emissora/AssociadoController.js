@@ -19,33 +19,17 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 			}
 		},
 		function (response) { });
-
-        Api.Permission.get({ id: $scope.auditLogPerm }, function (data)
-        {
-			$scope.auditLogView = $scope.permModel.visualizar;
-		},
-		function (response) { });
 	}
 
-	function loadSetup()
-	{
-        Api.Setup.get({ id: 1 }, function (data)
-		{
-			$scope.setupModel = data;
-		});
-	}
-	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
     
 	init();
 
     function init()
     {
-        $scope.setupModel = { stPhoneMask: '' }
         $scope.viewModel = {};
         $scope.permModel = {};
-        $scope.permID = 102;
-        $scope.auditLogPerm = 112;
+        $scope.permID = 301;
 
         $scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
@@ -151,25 +135,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 	$scope.list = function () {
 		$state.go('persons');
 	}
-
-	$scope.remove = function ()
-	{
-		if (!$scope.permModel.remover)
-            toastr.error('Acesso negado!', 'Permissão');
-		else
-		{
-            Api.Associado.remove({ id: id }, function (data)
-			{
-                toastr.success('Cadastro removido!', 'Sucesso');
-				$scope.list();
-			},
-			function (response)
-			{
-				toastr.error(response.data.message, 'Permission');
-			});
-		}			
-	}
-
+    	
 	// ============================================
 	// phone 
 	// ============================================

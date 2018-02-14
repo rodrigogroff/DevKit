@@ -33,11 +33,14 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             tipo: $scope.campos.tipo,
             modo: $scope.campos.modo,
         };
-
+        
 		Api.EmissorListagemFechamento.listPage(opcoes, function (data)
 		{
 			$scope.list = data.results;
-			$scope.total = data.count;
+            $scope.result = data;
+            $scope.tipoSel = $scope.campos.tipo;
+            $scope.modoSel = $scope.campos.modo;
+
 			$scope.loading = false;
 		});
 	}

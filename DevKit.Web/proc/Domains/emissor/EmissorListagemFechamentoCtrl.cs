@@ -27,7 +27,11 @@ namespace DevKit.Web.Controllers
 
             switch(filter.tipo)
             {
-                case 1:
+                // ==================
+                // credenciado
+                // ==================
+
+                case 1: 
 
                     switch (filter.modo)
                     {
@@ -35,9 +39,22 @@ namespace DevKit.Web.Controllers
                     }
 
                     break;
+
+                // ==================
+                // Associado
+                // ==================
+
+                case 2: // Associado
+
+                    switch (filter.modo)
+                    {
+                        case 1: return Ok(new Empresa().ListagemFechamento_AssocSint(db, filter));
+                    }
+
+                    break;
             }
 
-            return BadRequest("Tipo / modo inválidos");
+            return BadRequest("Critérios de fechamento inválidos");
         }
 	}
 }

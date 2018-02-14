@@ -19,18 +19,26 @@ namespace DataModel
 
     public class FechCredSint
     {
-        public string serial, 
-                        cpfcnpj, 
-                        codigoCred, 
+        public string serial,
+                        cpfcnpj,
+                        codigoCred,
                         nomeCred,
                         qtdAutos,
-                        vlrAutos, 
-                        vlrCoPart;
+                        vlrAutos,
+                        vlrCoPart,
+                        ncads;
     }
 
     public class EmissorFechamentoCredSintReport
     {
-        public int count = 0;
+        public long totCreds = 0,
+                    totVlr = 0,
+                    totCoPart = 0,
+                    totAssociados = 0,
+                    procsNCad = 0;
+
+        public string stotVlr, stotCoPart;
+
         public List<FechCredSint> results = new List<FechCredSint>();
     }
 
@@ -39,25 +47,23 @@ namespace DataModel
 		public EmissorFechamentoCredSintReport ListagemFechamento_CredSint ( DevKitDB db, ListagemFechamentoFilter filter )
 		{
             var ret = new EmissorFechamentoCredSintReport();
-
+            
             var query = from e in db.Credenciado
                         join ce in db.CredenciadoEmpresa on e.id equals ce.fkCredenciado
                         where ce.fkEmpresa == db.currentUser.fkEmpresa
+                        orderby e.stNome
                         select e;
+
+            LoaderCredSint(db, query.ToList(), filter, ref ret );
             
-            return new EmissorFechamentoCredSintReport
-            {
-                count = query.Count(),
-                results = LoaderCredSint(db, query.ToList(), filter)
-            };
+            return ret;
 		}
 
-        public List<FechCredSint> LoaderCredSint ( DevKitDB db, 
-                                                   List<Credenciado> lst,
-                                                   ListagemFechamentoFilter filter)
+        public void LoaderCredSint ( DevKitDB db, 
+                                     List<Credenciado> lst,
+                                     ListagemFechamentoFilter filter,
+                                     ref EmissorFechamentoCredSintReport resultado )
         {
-            var results = new List<FechCredSint>();
-
             var auts = db.Autorizacao.
                         Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
                         Where(y => y.nuMes == filter.mes).
@@ -68,11 +74,16 @@ namespace DataModel
                                     Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
                                     ToList();
 
-            var procsTuus = db.TUSS.ToList();
+            var procsTuus = db.TUSS.
+                                ToList();
 
             int serial = 1;
 
             var mon = new money();
+
+            resultado.totAssociados = auts.Select(y => y.fkAssociado).Distinct().Count();
+
+            resultado.results = new List<FechCredSint>();
 
             foreach (var cred in lst)
             {
@@ -86,6 +97,8 @@ namespace DataModel
                 };
 
                 long totVlr = 0, totCoPart = 0;
+
+                item.ncads = "";
 
                 foreach (var aut in auts.
                                     Where (y=> y.fkCredenciado == cred.id ).
@@ -102,22 +115,34 @@ namespace DataModel
                                         Where(y => y.nuTUSS == fkProc.nuCodTUSS).
                                         FirstOrDefault();
 
+                        item.ncads += fkProc.nuCodTUSS + ", ";
+
                         if (cfgTuss != null)
                         {
                             totVlr += (long)cfgTuss.vrProcedimento;
                             totCoPart += (long)cfgTuss.vrCoPart;
-                        }                        
-                    }                    
+                        }
+                        else
+                            resultado.procsNCad++;
+                    }
+
+                    resultado.totCreds++;
                 }
+
+                item.ncads = item.ncads.Trim().TrimEnd(',');
+
+                resultado.totVlr += totVlr;
+                resultado.totCoPart += totCoPart;
 
                 item.vlrAutos = mon.setMoneyFormat(totVlr);
                 item.vlrCoPart = mon.setMoneyFormat(totCoPart);
 
-                results.Add(item);
+                resultado.results.Add(item);
                 serial++;
             }
 
-            return results;
+            resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);
+            resultado.stotCoPart = mon.setMoneyFormat(resultado.totCoPart);
         }
     }
 }

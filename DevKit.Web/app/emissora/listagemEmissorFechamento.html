@@ -83,7 +83,7 @@
             <div style="overflow-x:scroll;overflow:auto;">
 
                 <!--credenciado / sintético-->
-                <table ng-if="campos.tipo == 1 && campos.modo == 1">
+                <table ng-if="tipoSel == 1 && modoSel == 1">
                     <tr>
                         <td valign="top">
                             <div ng-show="list.length == 0">
@@ -92,7 +92,12 @@
                                 <br />
                             </div>
                             <div ng-show="list.length > 0">
-                                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                                <br />
+                                Credenciados ativos: <b>{{result.totCreds}}</b><br />
+                                Associados ativos: <b>{{result.totAssociados}}</b><br />
+                                Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
+                                Total valor: R$ <b>{{result.stotVlr}}</b><br />
+                                Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
                                 <br />
                                 <table class="table table-hover" style="width:100%">
                                     <thead>
@@ -102,8 +107,9 @@
                                             <th>Código</th>
                                             <th width="300px">Credenciado</th>
                                             <th>Autorizações</th>
-                                            <th>Total</th>
-                                            <th>Co-part.</th>
+                                            <th>Total R$</th>
+                                            <th>Co-part. R$</th>
+                                            <th>Não cadastrados</th>
                                         </tr>
                                     </thead>
                                     <tr data-ng-repeat="mdl in list">
@@ -114,6 +120,7 @@
                                         <td>{{ mdl.qtdAutos }}</td>
                                         <td>{{ mdl.vlrAutos }}</td>
                                         <td>{{ mdl.vlrCoPart }}</td>
+                                        <td>{{ mdl.ncads }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -122,7 +129,7 @@
                 </table>
 
                 <!--credenciado / analítico-->
-                <table ng-if="campos.tipo == 1 && campos.modo == 2">
+                <table ng-if="tipoSel == 1 && modoSel == 2">
                     <tr>
                         <td valign="top">
                             <div ng-show="list.length == 0">
@@ -131,35 +138,14 @@
                                 <br />
                             </div>
                             <div ng-show="list.length > 0">
-                                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
-                                <br />
-                                <table class="table table-hover" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th style="min-width:150px">Data Solicitação</th>
-                                            <th style="min-width:90px">Situação</th>
-                                            <th style="min-width:200px">Associado</th>
-                                            <th style="min-width:200px">Credenciado</th>
-                                            <th style="min-width:150px">Especialidade</th>
-                                            <th style="min-width:200px">TUSS - Procedimento</th>
-                                        </tr>
-                                    </thead>
-                                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                        <td>{{ mdl.sdtSolicitacao }}</td>
-                                        <td>{{ mdl.stgSituacao }}</td>
-                                        <td>{{ mdl.snuMatriculaAssociado }} - {{ mdl.sfkAssociado }}</td>
-                                        <td>{{ mdl.snuCodigoCredenciado }} - {{ mdl.sfkCredenciado }}</td>
-                                        <td>{{ mdl.sfkEspecialidade }}</td>
-                                        <td>{{ mdl.sfkProcedimento }}</td>
-                                    </tr>
-                                </table>
+                                
                             </div>
                         </td>
                     </tr>
                 </table>
 
                 <!--associado / sintético-->
-                <table ng-if="campos.tipo == 2 && campos.modo == 1">
+                <table ng-if="tipoSel == 2 && modoSel == 1">
                     <tr>
                         <td valign="top">
                             <div ng-show="list.length == 0">
@@ -168,26 +154,33 @@
                                 <br />
                             </div>
                             <div ng-show="list.length > 0">
-                                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                                <br />
+                                Associados ativos: <b>{{result.totAssocs}}</b><br />
+                                Credenciados ativos: <b>{{result.totCreds}}</b><br />
+                                Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
+                                Total valor: R$ <b>{{result.stotVlr}}</b><br />
+                                Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
                                 <br />
                                 <table class="table table-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="min-width:150px">Data Solicitação</th>
-                                            <th style="min-width:90px">Situação</th>
-                                            <th style="min-width:200px">Associado</th>
-                                            <th style="min-width:200px">Credenciado</th>
-                                            <th style="min-width:150px">Especialidade</th>
-                                            <th style="min-width:200px">TUSS - Procedimento</th>
+                                            <th>Serial</th>
+                                            <th>Matrícula</th>
+                                            <th width="300px">Nome Associado</th>
+                                            <th>Autorizações</th>
+                                            <th>Total R$</th>
+                                            <th>Co-part. R$</th>
+                                            <th>Não cadastrados</th>
                                         </tr>
                                     </thead>
-                                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                        <td>{{ mdl.sdtSolicitacao }}</td>
-                                        <td>{{ mdl.stgSituacao }}</td>
-                                        <td>{{ mdl.snuMatriculaAssociado }} - {{ mdl.sfkAssociado }}</td>
-                                        <td>{{ mdl.snuCodigoCredenciado }} - {{ mdl.sfkCredenciado }}</td>
-                                        <td>{{ mdl.sfkEspecialidade }}</td>
-                                        <td>{{ mdl.sfkProcedimento }}</td>
+                                    <tr data-ng-repeat="mdl in list">
+                                        <td>{{ mdl.serial }}</td>
+                                        <td>{{ mdl.matricula }}</td>
+                                        <td>{{ mdl.associado }}</td>
+                                        <td>{{ mdl.qtdAutos }}</td>
+                                        <td>{{ mdl.vlrAutos }}</td>
+                                        <td>{{ mdl.vlrCoPart }}</td>
+                                        <td>{{ mdl.ncads }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -196,7 +189,7 @@
                 </table>
 
                 <!--associado / analítico-->
-                <table ng-if="campos.tipo == 2 && campos.modo == 2">
+                <table ng-if="tipoSel == 2 && modoSel == 2">
                     <tr>
                         <td valign="top">
                             <div ng-show="list.length == 0">
@@ -205,28 +198,7 @@
                                 <br />
                             </div>
                             <div ng-show="list.length > 0">
-                                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
-                                <br />
-                                <table class="table table-hover" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th style="min-width:150px">Data Solicitação</th>
-                                            <th style="min-width:90px">Situação</th>
-                                            <th style="min-width:200px">Associado</th>
-                                            <th style="min-width:200px">Credenciado</th>
-                                            <th style="min-width:150px">Especialidade</th>
-                                            <th style="min-width:200px">TUSS - Procedimento</th>
-                                        </tr>
-                                    </thead>
-                                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                        <td>{{ mdl.sdtSolicitacao }}</td>
-                                        <td>{{ mdl.stgSituacao }}</td>
-                                        <td>{{ mdl.snuMatriculaAssociado }} - {{ mdl.sfkAssociado }}</td>
-                                        <td>{{ mdl.snuCodigoCredenciado }} - {{ mdl.sfkCredenciado }}</td>
-                                        <td>{{ mdl.sfkEspecialidade }}</td>
-                                        <td>{{ mdl.sfkProcedimento }}</td>
-                                    </tr>
-                                </table>
+                                
                             </div>
                         </td>
                     </tr>

@@ -97,10 +97,14 @@ namespace DataModel
 
                 item.ncads = "";
 
+                bool found = false;
+
                 foreach (var aut in auts.
                                     Where (y=> tLstTitDeps.Contains((long)y.fkAssociado)).
                                     ToList())
                 {
+                    found = true;
+
                     var fkProc = procsTuus.
                                     Where(y => y.id == aut.fkProcedimento).
                                     FirstOrDefault();
@@ -124,16 +128,19 @@ namespace DataModel
                     }
                 }
 
-                item.ncads = item.ncads.Trim().TrimEnd(',');
+                if (found)
+                {
+                    item.ncads = item.ncads.Trim().TrimEnd(',');
 
-                resultado.totVlr += totVlr;
-                resultado.totCoPart += totCoPart;
+                    resultado.totVlr += totVlr;
+                    resultado.totCoPart += totCoPart;
 
-                item.vlrAutos = mon.setMoneyFormat(totVlr);
-                item.vlrCoPart = mon.setMoneyFormat(totCoPart);
+                    item.vlrAutos = mon.setMoneyFormat(totVlr);
+                    item.vlrCoPart = mon.setMoneyFormat(totCoPart);
 
-                resultado.results.Add(item);
-                serial++;
+                    resultado.results.Add(item);
+                    serial++;
+                }                
             }
 
             resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);

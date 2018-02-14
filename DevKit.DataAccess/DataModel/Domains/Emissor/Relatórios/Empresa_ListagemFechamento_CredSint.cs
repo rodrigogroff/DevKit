@@ -23,6 +23,7 @@ namespace DataModel
                         cpfcnpj,
                         codigoCred,
                         nomeCred,
+                        especialidade,
                         qtdAutos,
                         vlrAutos,
                         vlrCoPart,
@@ -74,8 +75,9 @@ namespace DataModel
                                     Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
                                     ToList();
 
-            var procsTuus = db.TUSS.
-                                ToList();
+            var procsTuus = db.TUSS.ToList();
+
+            var lstEspecs = db.Especialidade.ToList();
 
             int serial = 1;
 
@@ -93,10 +95,13 @@ namespace DataModel
                     cpfcnpj = cred.stCnpj,
                     codigoCred = cred.nuCodigo.ToString(),
                     nomeCred = cred.stNome,
+                    especialidade = lstEspecs.Where (y=> y.id == cred.fkEspecialidade).FirstOrDefault().stNome,
                     qtdAutos = auts.Where(y => y.fkCredenciado == cred.id).Count().ToString()
                 };
 
                 long totVlr = 0, totCoPart = 0;
+
+                bool found = false;
 
                 item.ncads = "";
 
@@ -104,6 +109,8 @@ namespace DataModel
                                     Where (y=> y.fkCredenciado == cred.id ).
                                     ToList())
                 {
+                    found = true;
+
                     var fkProc = procsTuus.
                                     Where(y => y.id == aut.fkProcedimento).
                                     FirstOrDefault();
@@ -129,16 +136,19 @@ namespace DataModel
                     resultado.totCreds++;
                 }
 
-                item.ncads = item.ncads.Trim().TrimEnd(',');
+                if (found)
+                {
+                    item.ncads = item.ncads.Trim().TrimEnd(',');
 
-                resultado.totVlr += totVlr;
-                resultado.totCoPart += totCoPart;
+                    resultado.totVlr += totVlr;
+                    resultado.totCoPart += totCoPart;
 
-                item.vlrAutos = mon.setMoneyFormat(totVlr);
-                item.vlrCoPart = mon.setMoneyFormat(totCoPart);
+                    item.vlrAutos = mon.setMoneyFormat(totVlr);
+                    item.vlrCoPart = mon.setMoneyFormat(totCoPart);
 
-                resultado.results.Add(item);
-                serial++;
+                    resultado.results.Add(item);
+                    serial++;
+                }
             }
 
             resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);

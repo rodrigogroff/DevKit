@@ -133,9 +133,9 @@
     <Compile Include="DataModel\Domains\Emissor\Associado\Associado_Loader.cs" />
     <Compile Include="DataModel\Domains\Emissor\Associado\Associado_TrackChanges.cs" />
     <Compile Include="DataModel\Domains\Emissor\Associado\Associado_Update.cs" />
-    <Compile Include="DataModel\Domains\Emissor\Procedimento\Empresa_ListagemFechamento_AssocSint.cs" />
-    <Compile Include="DataModel\Domains\Emissor\Procedimento\Empresa_ListagemFechamento_CredSint.cs" />
-    <Compile Include="DataModel\Domains\Emissor\Procedimento\Empresa_ListagemAutorizacao.cs" />
+    <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemFechamento_AssocSint.cs" />
+    <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemFechamento_CredSint.cs" />
+    <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemAutorizacao.cs" />
     <Compile Include="DataModel\Domains\Credenciado\Autorização\Autorizacao_DTO.cs" />
     <Compile Include="DataModel\Domains\Credenciado\Autorização\Autorizacao_LoadAssociations.cs" />
     <Compile Include="DataModel\Domains\Credenciado\Autorização\Credenciado_ListagemAutorizacao.cs" />

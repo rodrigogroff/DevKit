@@ -84,10 +84,11 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('desbloqueio', { url: '/emissora/desbloqueio', templateUrl: 'app/emissora/desbloqueio.html', controller: 'EmissoraDesbloqueioController' })
 
     .state('emissorprocs', { url: '/emissora/listprocs', templateUrl: 'app/emissora/listagemEmissorProcedimentos.html', controller: 'ListagemEmissorProcedimentosController' })
+    .state('emissorfech', { url: '/emissora/listfech', templateUrl: 'app/emissora/listagemEmissorFechamento.html', controller: 'ListagemEmissorFechamentoController' })
 
     .state('credenciadopass', { url: '/credenciado/credenciadoTrocaSenha', templateUrl: 'app/credenciado/credenciadoPassword.html', controller: 'CredenciadoPasswordController' })    
     .state('autorizacaoProc', { url: '/credenciado/autorizacaoProc', templateUrl: 'app/credenciado/autorizacaoProc.html', controller: 'AutorizacaoProcController' })
-        .state('credenciadoprocs', { url: '/credenciado/procs', templateUrl: 'app/credenciado/listagemCredenciadoProcedimentos.html', controller: 'ListagemCredenciadoProcedimentosController' })
+    .state('credenciadoprocs', { url: '/credenciado/procs', templateUrl: 'app/credenciado/listagemCredenciadoProcedimentos.html', controller: 'ListagemCredenciadoProcedimentosController' })
 
     .state('listemissorcredenciados', { url: '/emissora/credenciados', templateUrl: 'app/emissora/listagemCredenciados.html', controller: 'ListagemEmissorCredenciadosController' })
 

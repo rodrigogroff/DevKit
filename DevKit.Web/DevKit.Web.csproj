@@ -273,6 +273,8 @@
     <Content Include="app\emissora\EmissoraBloqueio.js" />
     <Content Include="app\emissora\EmissoraSegVia.js" />
     <Content Include="app\emissora\bloqueio.html" />
+    <Content Include="app\emissora\listagemEmissorFechamento.html" />
+    <Content Include="app\emissora\ListagemEmissorFechamento.js" />
     <Content Include="app\emissora\segVia.html" />
     <Content Include="app\emissora\altSenha.html" />
     <Content Include="app\emissora\EmissoraAltSenha.js" />
@@ -916,6 +918,7 @@
     <Compile Include="proc\Domains\dba\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\dba\LotesGraficaCtrl.cs" />
     <Compile Include="proc\Domains\emissor\EmissorListagemAutorizacaoCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\EmissorListagemFechamentoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\EmissorListagemMedicoCtrl.cs" />
     <Compile Include="proc\Domains\medico\MedicoListagemAutorizacaoCtrl.cs" />
     <Compile Include="proc\Domains\medico\AutorizaProcCtrl.cs" />

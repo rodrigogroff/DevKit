@@ -112,11 +112,10 @@ namespace DataModel
 
                 bool found = false;
 
+                item.pcads = "";
                 item.ncads = "";
-
-                foreach (var aut in auts.
-                                    Where (y=> y.fkCredenciado == cred.id ).
-                                    ToList())
+                
+                foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id).ToList())
                 {
                     found = true;
 
@@ -126,22 +125,24 @@ namespace DataModel
 
                     if (fkProc != null)
                     {
+                        var strTUSs = fkProc.nuCodTUSS.ToString();
+
                         var cfgTuss = procsCredTuus.
                                         Where(y => y.fkCredenciado == cred.id).
-                                        Where(y => y.nuTUSS == fkProc.nuCodTUSS).
+                                        Where(y => y.nuTUSS.ToString() == strTUSs).
                                         FirstOrDefault();
 
                         if (cfgTuss != null)
                         {
-                            if (!item.pcads.Contains(fkProc.nuCodTUSS.ToString()))
-                                item.pcads += fkProc.nuCodTUSS + ", ";
+                            if (!item.pcads.Contains(strTUSs))
+                                item.pcads += strTUSs + ", ";
                             totVlr += (long)cfgTuss.vrProcedimento;
                             totCoPart += (long)cfgTuss.vrCoPart;
                         }
                         else
                         {
-                            if (!item.ncads.Contains(fkProc.nuCodTUSS.ToString()))
-                                item.ncads += fkProc.nuCodTUSS + ", ";
+                            if (!item.ncads.Contains(strTUSs))
+                                item.ncads += strTUSs + ", ";
                             resultado.procsNCad++;
                         }                            
                     }

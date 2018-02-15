@@ -30,6 +30,7 @@ namespace DevKit.Web.Controllers
                     switch (filter.modo)
                     {
                         case 1: return Ok(new Empresa().ListagemFechamento_CredSint(db, filter));
+                        case 2: return Ok(new Empresa().ListagemFechamento_CredAnalitico(db, filter));
                     }
 
                     break;

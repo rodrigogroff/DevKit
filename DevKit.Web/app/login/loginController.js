@@ -1,8 +1,7 @@
-﻿'use strict';
-
+﻿
 angular.module('app.controllers').controller('LoginController',
-['$scope', '$rootScope', '$location', 'AuthService', 'version', 'Api', '$state', '$stateParams',
-function ($scope, $rootScope, $location, AuthService, version, Api, $state, $stateParams)
+['$scope', '$rootScope', '$location', 'AuthService', 'version', 'Api', '$state',
+function ($scope, $rootScope, $location, AuthService, version, Api, $state)
 {
     $rootScope.exibirMenu = false;
 
@@ -21,11 +20,9 @@ function ($scope, $rootScope, $location, AuthService, version, Api, $state, $sta
                 password: ""
             };
 
-        var tipoId = 5;//($stateParams.tipo) ? parseInt($stateParams.tipo) : 0;
+        var tipoId = $location.search().tipo;
 
-        console.log($stateParams);
-
-        if (tipoId != 0)
+        if (tipoId != undefined)
             $rootScope.tipo = tipoId;
     }
 

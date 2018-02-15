@@ -36,8 +36,8 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(long id)
 		{
-            if (RestoreCache(CacheTags.Profile, id) is Profile obj)
-                return Ok(obj);
+            //if (RestoreCache(CacheTags.Profile, id) is Profile obj)
+              //  return Ok(obj);
             
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -49,7 +49,7 @@ namespace DevKit.Web.Controllers
             
             mdl.LoadAssociations(db);
 
-            BackupCache(mdl);
+            //BackupCache(mdl);
 
             return Ok(mdl);
         }

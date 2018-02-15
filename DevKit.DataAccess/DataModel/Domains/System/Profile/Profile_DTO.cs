@@ -6,8 +6,8 @@ namespace DataModel
 	{
         public int qttyPermissions = 0;
 
-		public List<User> users;
-		public List<ProfileLog> logs;
+        public List<User> users = new List<User>();
+		public List<ProfileLog> logs = new List<ProfileLog>();
 	}
 
     public class ProfileReport

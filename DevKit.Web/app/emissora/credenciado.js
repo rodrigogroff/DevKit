@@ -35,7 +35,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
     {
         $scope.viewModel = {};
         $scope.permModel = {};
-        $scope.permID = 500;
+        $scope.permID = 501;
         
         $scope.nomeTuss = '';
 

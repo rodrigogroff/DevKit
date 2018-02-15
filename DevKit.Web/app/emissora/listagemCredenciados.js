@@ -28,7 +28,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
         $scope.itensporpagina = 15;
         $scope.permModel = {};
-        $scope.permID = 500;
+        $scope.permID = 501;
 
         CheckPermissions();
 	}

@@ -39,9 +39,8 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             {
                 tg3011: false, tg3012: false, tg3013: false, tg3014: false,
                 tg4014: false, tg4024: false, tg4034: false, tg4044: false,
-                tg5001: false, tg5002: false, 
+                tg5011: false, tg5012: false, 
                 tg6011: false, tg6021: false,
-
                 tg1011: false, tg1012: false, tg1013: false, tg1014: false, tg1015: false,
                 tg1021: false, tg1022: false, tg1023: false, tg1024: false, tg1025: false,
                 tg2001: false,
@@ -80,8 +79,8 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 if (data.stPermissions.indexOf('|4044|') >= 0) data.tg4044 = true; else data.tg4044 = false;
 
                 // credenciados
-                if (data.stPermissions.indexOf('|5001|') >= 0) data.tg5001 = true; else data.tg5001 = false;
-                if (data.stPermissions.indexOf('|5002|') >= 0) data.tg5002 = true; else data.tg5002 = false;
+                if (data.stPermissions.indexOf('|5011|') >= 0) data.tg5011 = true; else data.tg5011 = false;
+                if (data.stPermissions.indexOf('|5012|') >= 0) data.tg5012 = true; else data.tg5012 = false;                
 
                 // relatorios
                 if (data.stPermissions.indexOf('|6011|') >= 0) data.tg6011 = true; else data.tg6011 = false;
@@ -147,19 +146,19 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 if (_mdl.tg3014 == true) perms += '|3014|'; 
 
                 // troca senha
-                if (_mdl.tg4001 == true) perms += '|4001|'; 
+                if (_mdl.tg4014 == true) perms += '|4014|'; 
 
                 // segunda via
-                if (_mdl.tg4002 == true) perms += '|4002|'; 
+                if (_mdl.tg4024 == true) perms += '|4024|'; 
 
                 // bloq
-                if (_mdl.tg4003 == true) perms += '|4003|'; 
+                if (_mdl.tg4034 == true) perms += '|4034|'; 
 
                 // desbloq
-                if (_mdl.tg4004 == true) perms += '|4004|'; 
+                if (_mdl.tg4044 == true) perms += '|4044|'; 
 
                 // credenciados
-                if (_mdl.tg5001 == true) perms += '|5001|'; if (_mdl.tg5002 == true) perms += '|5002|';
+                if (_mdl.tg5011 == true) perms += '|5011|'; if (_mdl.tg5012 == true) perms += '|5012|';
 
                 // rel / aut
                 if (_mdl.tg6011 == true) perms += '|6011|'; 

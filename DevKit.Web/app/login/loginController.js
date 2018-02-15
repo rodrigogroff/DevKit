@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('LoginController',
-['$scope', '$rootScope', '$location', 'AuthService', 'version','Api', '$state',
-function ($scope, $rootScope, $location, AuthService, version, Api, $state)
+['$scope', '$rootScope', '$location', 'AuthService', 'version', 'Api', '$state', '$stateParams',
+function ($scope, $rootScope, $location, AuthService, version, Api, $state, $stateParams)
 {
     $rootScope.exibirMenu = false;
 
@@ -20,6 +20,13 @@ function ($scope, $rootScope, $location, AuthService, version, Api, $state)
                 userName: "",
                 password: ""
             };
+
+        var tipoId = 5;//($stateParams.tipo) ? parseInt($stateParams.tipo) : 0;
+
+        console.log($stateParams);
+
+        if (tipoId != 0)
+            $rootScope.tipo = tipoId;
     }
 
     $scope.redirLogin = function (tiporedir) {

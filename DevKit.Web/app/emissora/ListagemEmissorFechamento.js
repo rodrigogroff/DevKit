@@ -40,7 +40,9 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 	}
 
 	$scope.load = function (skip, take)
-	{
+    {
+        if ($scope.campos.mes > 0 && $scope.campos.ano > 2000 && $scope.campos.tipo > 0 && $scope.campos.modo > 0)
+
 		$scope.loading = true;
 
         var opcoes = {

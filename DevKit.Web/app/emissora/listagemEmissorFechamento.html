@@ -86,8 +86,8 @@
                 <table ng-if="tipoSel == 1 && modoSel == 1">
                     <tr>
                         <td valign="top">
-                            <div ng-show="list.length == 0">
-                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <div ng-show="result.failed == true">
+                                <div class="btn btn-info btn-lg">Nenhum movimento encontrado.</div>
                                 <br />
                                 <br />
                             </div>
@@ -102,15 +102,16 @@
                                 <table class="table table-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Serial</th>
-                                            <th>CPF/CNPJ</th>
-                                            <th>Código</th>
+                                            <th width="70px">Serial</th>
+                                            <th width="120px">CPF/CNPJ</th>
+                                            <th width="90px">Código</th>
                                             <th width="300px">Credenciado</th>
-                                            <th>Especialidade</th>
-                                            <th>Autorizações</th>
-                                            <th>Total R$</th>
-                                            <th>Co-part. R$</th>
-                                            <th>Não cadastrados</th>
+                                            <th width="150px">Especialidade</th>
+                                            <th width="99px">Autorizações</th>
+                                            <th width="99px">Total R$</th>
+                                            <th width="99px">Co-part. R$</th>
+                                            <th width="200px">TUSS PROCEDIMENTO</th>
+                                            <th width="150px">TUSS NOK</th>
                                         </tr>
                                     </thead>
                                     <tr data-ng-repeat="mdl in list">
@@ -122,6 +123,7 @@
                                         <td>{{ mdl.qtdAutos }}</td>
                                         <td>{{ mdl.vlrAutos }}</td>
                                         <td>{{ mdl.vlrCoPart }}</td>
+                                        <td>{{ mdl.pcads }}</td>
                                         <td>{{ mdl.ncads }}</td>
                                     </tr>
                                 </table>
@@ -134,8 +136,8 @@
                 <table ng-if="tipoSel == 1 && modoSel == 2">
                     <tr>
                         <td valign="top">
-                            <div ng-show="list.length == 0">
-                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <div ng-show="result.failed == true">
+                                <div class="btn btn-info btn-lg">Nenhum movimento encontrado.</div>
                                 <br />
                                 <br />
                             </div>
@@ -150,8 +152,8 @@
                 <table ng-if="tipoSel == 2 && modoSel == 1">
                     <tr>
                         <td valign="top">
-                            <div ng-show="list.length == 0">
-                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <div ng-show="result.failed == true">
+                                <div class="btn btn-info btn-lg">Nenhum movimento encontrado.</div>
                                 <br />
                                 <br />
                             </div>
@@ -194,8 +196,8 @@
                 <table ng-if="tipoSel == 2 && modoSel == 2">
                     <tr>
                         <td valign="top">
-                            <div ng-show="list.length == 0">
-                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <div ng-show="result.failed == true">
+                                <div class="btn btn-info btn-lg">Nenhum movimento encontrado.</div>
                                 <br />
                                 <br />
                             </div>

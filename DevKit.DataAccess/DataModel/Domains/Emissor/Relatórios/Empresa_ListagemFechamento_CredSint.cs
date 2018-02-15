@@ -27,11 +27,14 @@ namespace DataModel
                         qtdAutos,
                         vlrAutos,
                         vlrCoPart,
+                        pcads,
                         ncads;
     }
 
     public class EmissorFechamentoCredSintReport
     {
+        public bool failed = false;
+
         public long totCreds = 0,
                     totVlr = 0,
                     totCoPart = 0,
@@ -71,6 +74,11 @@ namespace DataModel
                         Where(y => y.nuAno == filter.ano).
                         ToList();
 
+            resultado.failed = !auts.Any();
+
+            if (resultado.failed)
+                return;
+
             var procsCredTuus = db.CredenciadoEmpresaTuss.
                                     Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
                                     ToList();
@@ -83,6 +91,7 @@ namespace DataModel
 
             var mon = new money();
 
+            resultado.totCreds = auts.Select(y => y.fkCredenciado).Distinct().Count();
             resultado.totAssociados = auts.Select(y => y.fkAssociado).Distinct().Count();
 
             resultado.results = new List<FechCredSint>();
@@ -122,22 +131,25 @@ namespace DataModel
                                         Where(y => y.nuTUSS == fkProc.nuCodTUSS).
                                         FirstOrDefault();
 
-                        item.ncads += fkProc.nuCodTUSS + ", ";
-
                         if (cfgTuss != null)
                         {
+                            if (!item.pcads.Contains(fkProc.nuCodTUSS.ToString()))
+                                item.pcads += fkProc.nuCodTUSS + ", ";
                             totVlr += (long)cfgTuss.vrProcedimento;
                             totCoPart += (long)cfgTuss.vrCoPart;
                         }
                         else
+                        {
+                            if (!item.ncads.Contains(fkProc.nuCodTUSS.ToString()))
+                                item.ncads += fkProc.nuCodTUSS + ", ";
                             resultado.procsNCad++;
+                        }                            
                     }
-
-                    resultado.totCreds++;
                 }
 
                 if (found)
                 {
+                    item.pcads = item.pcads.Trim().TrimEnd(',');
                     item.ncads = item.ncads.Trim().TrimEnd(',');
 
                     resultado.totVlr += totVlr;

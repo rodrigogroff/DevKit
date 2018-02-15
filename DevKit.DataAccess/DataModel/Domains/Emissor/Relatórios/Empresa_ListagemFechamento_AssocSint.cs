@@ -1,7 +1,5 @@
-﻿using DevKit.DataAccess;
-using LinqToDB;
+﻿using LinqToDB;
 using SyCrafEngine;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,6 +18,8 @@ namespace DataModel
 
     public class EmissorFechamentoAssocSintReport
     {
+        public bool failed = false;
+
         public long totCreds = 0,
                     totAssocs = 0,
                     totVlr = 0,
@@ -58,6 +58,11 @@ namespace DataModel
                         Where(y => y.nuMes == filter.mes).
                         Where(y => y.nuAno == filter.ano).
                         ToList();
+
+            resultado.failed = !auts.Any();
+
+            if (resultado.failed)
+                return;
 
             var lstTitDeps = db.Associado.
                                 Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).

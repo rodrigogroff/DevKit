@@ -19,12 +19,6 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 			}
 		},
 		function (response) { });
-
-        Api.Permission.get({ id: $scope.auditLogPerm }, function (data)
-        {
-			$scope.auditLogView = $scope.permModel.visualizar;
-		},
-		function (response) { });
 	}
 	
 	var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;

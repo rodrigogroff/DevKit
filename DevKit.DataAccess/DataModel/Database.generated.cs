@@ -37,7 +37,6 @@ namespace DataModel
 		public ITable<Empresa>                Empresa                { get { return this.GetTable<Empresa>(); } }
 		public ITable<Especialidade>          Especialidade          { get { return this.GetTable<Especialidade>(); } }
 		public ITable<Estado>                 Estado                 { get { return this.GetTable<Estado>(); } }
-		public ITable<Fechamento>             Fechamento             { get { return this.GetTable<Fechamento>(); } }
 		public ITable<LoteGrafica>            LoteGrafica            { get { return this.GetTable<LoteGrafica>(); } }
 		public ITable<LoteGraficaCartao>      LoteGraficaCartao      { get { return this.GetTable<LoteGraficaCartao>(); } }
 		public ITable<Profile>                Profile                { get { return this.GetTable<Profile>(); } }
@@ -119,8 +118,8 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id          { get; set; } // bigint
 		[Column,     Nullable] public long?  fkEmpresa   { get; set; } // bigint
 		[Column,     Nullable] public long?  fkAssociado { get; set; } // bigint
-        [Column, Nullable] public long? fkCartao { get; set; } // bigint
-        [Column,     Nullable] public string stNome      { get; set; } // character varying(35)
+		[Column,     Nullable] public long?  fkCartao    { get; set; } // bigint
+		[Column,     Nullable] public string stNome      { get; set; } // character varying(35)
 		[Column,     Nullable] public string stCPF       { get; set; } // character varying(30)
 	}
 
@@ -181,14 +180,13 @@ namespace DataModel
 	{
 		[PrimaryKey, Identity] public long      id             { get; set; } // bigint
 		[Column,     Nullable] public DateTime? dtSolicitacao  { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkPerson       { get; set; } // bigint
 		[Column,     Nullable] public long?     fkCredenciado  { get; set; } // bigint
 		[Column,     Nullable] public long?     fkEmpresa      { get; set; } // bigint
 		[Column,     Nullable] public long?     fkProcedimento { get; set; } // bigint
-		[Column,     Nullable] public long?     tgSituacao     { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAssociado    { get; set; } // bigint
 		[Column,     Nullable] public long?     nuMes          { get; set; } // bigint
 		[Column,     Nullable] public long?     nuAno          { get; set; } // bigint
+		[Column,     Nullable] public long?     tgSituacao     { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Cidade")]
@@ -318,16 +316,6 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id      { get; set; } // bigint
 		[Column,     Nullable] public string stSigla { get; set; } // character varying(20)
 		[Column,     Nullable] public string stNome  { get; set; } // character varying(200)
-	}
-
-	[Table(Schema="public", Name="Fechamento")]
-	public partial class Fechamento
-	{
-		[PrimaryKey, Identity] public long  id            { get; set; } // bigint
-		[Column,     Nullable] public long? fkAutorizacao { get; set; } // bigint
-		[Column,     Nullable] public long? fkEmpresa     { get; set; } // bigint
-		[Column,     Nullable] public long? nuMes         { get; set; } // bigint
-		[Column,     Nullable] public long? nuAno         { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="LoteGrafica")]
@@ -780,12 +768,6 @@ namespace DataModel
 		}
 
 		public static Estado Find(this ITable<Estado> table, long id)
-		{
-			return table.FirstOrDefault(t =>
-				t.id == id);
-		}
-
-		public static Fechamento Find(this ITable<Fechamento> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

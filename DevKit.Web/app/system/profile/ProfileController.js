@@ -38,7 +38,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $scope.viewModel =
             {
                 tg3011: false, tg3012: false, tg3013: false, tg3014: false,
-                tg4014: false, tg4024: false, tg4034: false, tg4044: false,
+                tg4013: false, tg4023: false, tg4033: false, tg4043: false,
                 tg5011: false, tg5012: false, 
                 tg6011: false, tg6021: false,
                 tg1011: false, tg1012: false, tg1013: false, tg1014: false, tg1015: false,
@@ -67,16 +67,16 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 if (data.stPermissions.indexOf('|3014|') >= 0) data.tg3014 = true; else data.tg3014 = false;
 
                 // troca senha
-                if (data.stPermissions.indexOf('|4014|') >= 0) data.tg4014 = true; else data.tg4014 = false;
+                if (data.stPermissions.indexOf('|4013|') >= 0) data.tg4013 = true; else data.tg4013 = false;
 
                 // segunda via
-                if (data.stPermissions.indexOf('|4024|') >= 0) data.tg4024 = true; else data.tg4024 = false;
+                if (data.stPermissions.indexOf('|4023|') >= 0) data.tg4023 = true; else data.tg4023 = false;
 
                 // bloq
-                if (data.stPermissions.indexOf('|4034|') >= 0) data.tg4034 = true; else data.tg4034 = false;
+                if (data.stPermissions.indexOf('|4033|') >= 0) data.tg4033 = true; else data.tg4033 = false;
 
                 // desbloq
-                if (data.stPermissions.indexOf('|4044|') >= 0) data.tg4044 = true; else data.tg4044 = false;
+                if (data.stPermissions.indexOf('|4043|') >= 0) data.tg4043 = true; else data.tg4043 = false;
 
                 // credenciados
                 if (data.stPermissions.indexOf('|5011|') >= 0) data.tg5011 = true; else data.tg5011 = false;
@@ -146,16 +146,16 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                 if (_mdl.tg3014 == true) perms += '|3014|'; 
 
                 // troca senha
-                if (_mdl.tg4014 == true) perms += '|4014|'; 
+                if (_mdl.tg4013 == true) perms += '|4013|'; 
 
                 // segunda via
-                if (_mdl.tg4024 == true) perms += '|4024|'; 
+                if (_mdl.tg4023 == true) perms += '|4023|'; 
 
                 // bloq
-                if (_mdl.tg4034 == true) perms += '|4034|'; 
+                if (_mdl.tg4033 == true) perms += '|4033|'; 
 
                 // desbloq
-                if (_mdl.tg4044 == true) perms += '|4044|'; 
+                if (_mdl.tg4043 == true) perms += '|4043|'; 
 
                 // credenciados
                 if (_mdl.tg5011 == true) perms += '|5011|'; if (_mdl.tg5012 == true) perms += '|5012|';

@@ -261,9 +261,6 @@ ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "stName" character 
 ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."TaskCustomStep" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 
-
-
-
 ---------------------------------
 -- portal saude
 ---------------------------------
@@ -303,14 +300,14 @@ ALTER TABLE public."Associado" ADD COLUMN if not exists "stSenha" character vary
 
 CREATE TABLE IF NOT EXISTS public."AssociadoEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."AssociadoEmail" OWNER to postgres;
-ALTER TABLE public."AssociadoEmail" ADD COLUMN if not exists "fkPerson" bigint;
+ALTER TABLE public."AssociadoEmail" ADD COLUMN if not exists "fkAssociado" bigint;
 ALTER TABLE public."AssociadoEmail" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."AssociadoEmail" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 ALTER TABLE public."AssociadoEmail" ADD COLUMN if not exists "stEmail" character varying(250);
 
 CREATE TABLE IF NOT EXISTS public."AssociadoTelefone" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."AssociadoTelefone" OWNER to postgres;
-ALTER TABLE public."AssociadoTelefone" ADD COLUMN if not exists "fkPerson" bigint;
+ALTER TABLE public."AssociadoTelefone" ADD COLUMN if not exists "fkAssociado" bigint;
 ALTER TABLE public."AssociadoTelefone" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."AssociadoTelefone" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 ALTER TABLE public."AssociadoTelefone" ADD COLUMN if not exists "stPhone" character varying(50);
@@ -318,7 +315,7 @@ ALTER TABLE public."AssociadoTelefone" ADD COLUMN if not exists "stDescription" 
 
 CREATE TABLE IF NOT EXISTS public."AssociadoEndereco" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."AssociadoEndereco" OWNER to postgres;
-ALTER TABLE public."AssociadoEndereco" ADD COLUMN if not exists "fkPerson" bigint;
+ALTER TABLE public."AssociadoEndereco" ADD COLUMN if not exists "fkAssociado" bigint;
 ALTER TABLE public."AssociadoEndereco" ADD COLUMN if not exists "fkUser" bigint;
 ALTER TABLE public."AssociadoEndereco" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 ALTER TABLE public."AssociadoEndereco" ADD COLUMN if not exists "fkEstado" bigint;
@@ -342,64 +339,64 @@ CREATE TABLE IF NOT EXISTS public."Especialidade" ( id bigserial NOT NULL, PRIMA
 ALTER TABLE public."Especialidade" OWNER to postgres;
 ALTER TABLE public."Especialidade" ADD COLUMN if not exists "stNome" character varying(150);
 
-CREATE TABLE IF NOT EXISTS public."Medico" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."Medico" OWNER to postgres;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "nuCodigo" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "stNome" character varying(150);
-ALTER TABLE public."Medico" ADD COLUMN if not exists "stCnpj" character varying(30);
-ALTER TABLE public."Medico" ADD COLUMN if not exists "dtStart" timestamp without time zone;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "dtLastUpdate" timestamp without time zone;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "dtLastContact" timestamp without time zone;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "fkUserAdd" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "fkUserLastUpdate" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "fkUserLastContact" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "nuMonthAniversary" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "nuDayAniversary" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "nuYearBirth" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "fkEspecialidade" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "tgMasculino" boolean;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "nuTipo" bigint;
-ALTER TABLE public."Medico" ADD COLUMN if not exists "stSenha" character varying(20);
+CREATE TABLE IF NOT EXISTS public."Credenciado" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."Credenciado" OWNER to postgres;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "nuCodigo" bigint;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "stNome" character varying(150);
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "stCnpj" character varying(30);
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "dtStart" timestamp without time zone;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "dtLastUpdate" timestamp without time zone;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "dtLastContact" timestamp without time zone;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "fkUserAdd" bigint;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "fkUserLastUpdate" bigint;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "fkUserLastContact" bigint;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "nuMonthAniversary" bigint;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "nuDayAniversary" bigint;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "nuYearBirth" bigint;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "fkEspecialidade" bigint;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "tgMasculino" boolean;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "nuTipo" bigint;
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "stSenha" character varying(20);
 
-CREATE TABLE IF NOT EXISTS public."MedicoEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."MedicoEmpresa" OWNER to postgres;
-ALTER TABLE public."MedicoEmpresa" ADD COLUMN if not exists "fkMedico" bigint;
-ALTER TABLE public."MedicoEmpresa" ADD COLUMN if not exists "fkEmpresa" bigint;
+CREATE TABLE IF NOT EXISTS public."CredenciadoEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."CredenciadoEmpresa" OWNER to postgres;
+ALTER TABLE public."CredenciadoEmpresa" ADD COLUMN if not exists "fkCredenciado" bigint;
+ALTER TABLE public."CredenciadoEmpresa" ADD COLUMN if not exists "fkEmpresa" bigint;
 
-CREATE TABLE IF NOT EXISTS public."MedicoEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."MedicoEmail" OWNER to postgres;
-ALTER TABLE public."MedicoEmail" ADD COLUMN if not exists "fkMedico" bigint;
-ALTER TABLE public."MedicoEmail" ADD COLUMN if not exists "fkUser" bigint;
-ALTER TABLE public."MedicoEmail" ADD COLUMN if not exists "dtLog" timestamp without time zone;
-ALTER TABLE public."MedicoEmail" ADD COLUMN if not exists "stEmail" character varying(250);
-ALTER TABLE public."MedicoEmail" ADD COLUMN if not exists "stContato" character varying(250);
+CREATE TABLE IF NOT EXISTS public."CredenciadoEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."CredenciadoEmail" OWNER to postgres;
+ALTER TABLE public."CredenciadoEmail" ADD COLUMN if not exists "fkCredenciado" bigint;
+ALTER TABLE public."CredenciadoEmail" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."CredenciadoEmail" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."CredenciadoEmail" ADD COLUMN if not exists "stEmail" character varying(250);
+ALTER TABLE public."CredenciadoEmail" ADD COLUMN if not exists "stContato" character varying(250);
 
-CREATE TABLE IF NOT EXISTS public."MedicoPhone" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."MedicoPhone" OWNER to postgres;
-ALTER TABLE public."MedicoPhone" ADD COLUMN if not exists "fkMedico" bigint;
-ALTER TABLE public."MedicoPhone" ADD COLUMN if not exists "fkUser" bigint;
-ALTER TABLE public."MedicoPhone" ADD COLUMN if not exists "dtLog" timestamp without time zone;
-ALTER TABLE public."MedicoPhone" ADD COLUMN if not exists "stPhone" character varying(50);
-ALTER TABLE public."MedicoPhone" ADD COLUMN if not exists "stDescription" character varying(50);
+CREATE TABLE IF NOT EXISTS public."CredenciadoTelefone" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."CredenciadoTelefone" OWNER to postgres;
+ALTER TABLE public."CredenciadoTelefone" ADD COLUMN if not exists "fkCredenciado" bigint;
+ALTER TABLE public."CredenciadoTelefone" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."CredenciadoTelefone" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."CredenciadoTelefone" ADD COLUMN if not exists "stPhone" character varying(50);
+ALTER TABLE public."CredenciadoTelefone" ADD COLUMN if not exists "stDescription" character varying(50);
 
-CREATE TABLE IF NOT EXISTS public."MedicoAddress" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."MedicoAddress" OWNER to postgres;
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "fkMedico" bigint;
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "fkUser" bigint;
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "dtLog" timestamp without time zone;
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "fkEstado" bigint;
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "fkCidade" bigint;
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "stRua" character varying(150);
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "stNumero" character varying(50);
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "stComplemento" character varying(50);
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "stReferencia" character varying(150);
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "stCEP" character varying(50);
-ALTER TABLE public."MedicoAddress" ADD COLUMN if not exists "bPrincipal" boolean;
+CREATE TABLE IF NOT EXISTS public."CredenciadoEndereco" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."CredenciadoEndereco" OWNER to postgres;
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "fkCredenciado" bigint;
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "fkEstado" bigint;
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "fkCidade" bigint;
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "stRua" character varying(150);
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "stNumero" character varying(50);
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "stComplemento" character varying(50);
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "stReferencia" character varying(150);
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "stCEP" character varying(50);
+ALTER TABLE public."CredenciadoEndereco" ADD COLUMN if not exists "bPrincipal" boolean;
 
 CREATE TABLE IF NOT EXISTS public."Autorizacao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Autorizacao" OWNER to postgres;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "dtSolicitacao" timestamp without time zone;
-ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkMedico" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkCredenciado" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkProcedimento" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAssociado" bigint;
@@ -428,43 +425,43 @@ ALTER TABLE public."TUSS" ADD COLUMN if not exists "stDescricaoGP" character var
 ALTER TABLE public."TUSS" ADD COLUMN if not exists "stDescricaoSubGP" character varying(800);
 ALTER TABLE public."TUSS" ADD COLUMN if not exists "stProcedimento" character varying(2000);
 
-CREATE TABLE IF NOT EXISTS public."MedicoEmpresaTuss" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."MedicoEmpresaTuss" OWNER to postgres;
-ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "fkMedico" bigint;
-ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "fkEmpresa" bigint;
-ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "nuTUSS" bigint;
-ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "vrProcedimento" bigint;
-ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "vrCoPart" bigint;
-ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "nuMaxMes" bigint;
-ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "nuMaxAno" bigint;
-ALTER TABLE public."MedicoEmpresaTuss" ADD COLUMN if not exists "nuParcelas" bigint;
+CREATE TABLE IF NOT EXISTS public."CredenciadoEmpresaTuss" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."CredenciadoEmpresaTuss" OWNER to postgres;
+ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "fkCredenciado" bigint;
+ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuTUSS" bigint;
+ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "vrProcedimento" bigint;
+ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "vrCoPart" bigint;
+ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuMaxMes" bigint;
+ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuMaxAno" bigint;
+ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuParcelas" bigint;
 
 ---------------------------------
 -- 10/02/2018
 ---------------------------------
 
-DROP TABLE IF EXISTS public."AssociadoContato";
-DROP TABLE IF EXISTS public."AssociadoMensagem";
-DROP TABLE IF EXISTS public."AssociadoCategoria";
-DROP TABLE IF EXISTS public."Procedimento";
+--DROP TABLE IF EXISTS public."AssociadoContato";
+--DROP TABLE IF EXISTS public."AssociadoMensagem";
+--DROP TABLE IF EXISTS public."AssociadoCategoria";
+--DROP TABLE IF EXISTS public."Procedimento";
 
-ALTER TABLE public."Medico" RENAME TO "Credenciado";
-ALTER TABLE public."MedicoEmpresa" RENAME TO "CredenciadoEmpresa";
-ALTER TABLE public."MedicoEmail" RENAME TO "CredenciadoEmail";
-ALTER TABLE public."MedicoPhone" RENAME TO "CredenciadoTelefone";
-ALTER TABLE public."MedicoAddress" RENAME TO "CredenciadoEndereco";
+--ALTER TABLE public."Medico" RENAME TO "Credenciado";
+--ALTER TABLE public."MedicoEmpresa" RENAME TO "CredenciadoEmpresa";
+--ALTER TABLE public."MedicoEmail" RENAME TO "CredenciadoEmail";
+--ALTER TABLE public."MedicoPhone" RENAME TO "CredenciadoTelefone";
+--ALTER TABLE public."MedicoAddress" RENAME TO "CredenciadoEndereco";
 
-ALTER TABLE public."AssociadoEmail" RENAME "fkPerson" TO "fkAssociado";
-ALTER TABLE public."AssociadoTelefone" RENAME "fkPerson" TO "fkAssociado";
-ALTER TABLE public."AssociadoEndereco" RENAME "fkPerson" TO "fkAssociado";
+--ALTER TABLE public."AssociadoEmail" RENAME "fkPerson" TO "fkAssociado";
+--ALTER TABLE public."AssociadoTelefone" RENAME "fkPerson" TO "fkAssociado";
+--ALTER TABLE public."AssociadoEndereco" RENAME "fkPerson" TO "fkAssociado";
 
-ALTER TABLE public."CredenciadoEmpresa" RENAME "fkMedico" TO "fkCredenciado";
-ALTER TABLE public."CredenciadoEmail" RENAME "fkMedico" TO "fkCredenciado";
-ALTER TABLE public."CredenciadoTelefone" RENAME "fkMedico" TO "fkCredenciado";
-ALTER TABLE public."CredenciadoEndereco" RENAME "fkMedico" TO "fkCredenciado";
-ALTER TABLE public."Autorizacao" RENAME "fkMedico" TO "fkCredenciado";
+--ALTER TABLE public."CredenciadoEmpresa" RENAME "fkMedico" TO "fkCredenciado";
+--ALTER TABLE public."CredenciadoEmail" RENAME "fkMedico" TO "fkCredenciado";
+--ALTER TABLE public."CredenciadoTelefone" RENAME "fkMedico" TO "fkCredenciado";
+--ALTER TABLE public."CredenciadoEndereco" RENAME "fkMedico" TO "fkCredenciado";
+--ALTER TABLE public."Autorizacao" RENAME "fkMedico" TO "fkCredenciado";
 
-ALTER TABLE public."MedicoEmpresaTuss" RENAME TO "CredenciadoEmpresaTuss";
-ALTER TABLE public."CredenciadoEmpresaTuss" RENAME "fkMedico" TO "fkCredenciado";
+--ALTER TABLE public."MedicoEmpresaTuss" RENAME TO "CredenciadoEmpresaTuss";
+--ALTER TABLE public."CredenciadoEmpresaTuss" RENAME "fkMedico" TO "fkCredenciado";
 
 

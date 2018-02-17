@@ -926,7 +926,7 @@
     <Compile Include="proc\Enums\Template\ContactFormCtrl.cs" />
     <Compile Include="proc\Enums\Template\DayMonthCtrl.cs" />
     <Compile Include="proc\Domains\Misc\StartupCtrl.cs" />
-    <Compile Include="proc\Domains\emissor\MedicoCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\CredenciadoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />

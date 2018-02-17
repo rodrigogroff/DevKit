@@ -40,6 +40,8 @@ namespace DevKit.Web.Controllers
 
                     lg.Ativar(db, lotes);
 
+                    CleanCache(db, CacheTags.Associado, null);
+
                     return Ok();
                 }
                 else

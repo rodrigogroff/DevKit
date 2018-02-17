@@ -37,7 +37,6 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'newEnd.fkEstado' } });
 
         CheckPermissions();
-        loadSetup();
         loadEntity();
     }
 

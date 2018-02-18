@@ -38,7 +38,7 @@ namespace DataModel
 
                         db.Update(dbAssoc);
 
-                        return true;
+                        break;
                     }
 
                 case "novaVia":

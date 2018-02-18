@@ -63,8 +63,9 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
             Api.Associado.listPage(opcoes, function (data)
             {
                 if (data.results.length > 0) {
+                    $scope.campos.mdl = data.results[0];
                     $scope.campos.nomeCartao = data.results[0].stName;
-                    $scope.campos.id = data.results[0].id;
+                    $scope.campos.id = data.results[0].id;                    
                 }
                 else
                     toastr.error('matrícula inválida', 'Erro');
@@ -95,11 +96,10 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         {
             $scope.loading = true;
 
-            var opcoes = {
-                id: $scope.campos.id,
-                updateCommand: 'altSenha',
-                anexedEntity: $scope.campos.novaSenha
-            };
+            var opcoes = $scope.campos.mdl;
+
+            opcoes.updateCommand = 'altSenha';
+            opcoes.anexedEntity = $scope.campos.novaSenha;
 
             $scope.modal = false;
 

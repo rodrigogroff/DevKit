@@ -25,7 +25,7 @@ namespace DataModel
 
             sdtSolicitacao = Convert.ToDateTime(dtSolicitacao).ToString("dd/MM/yyyy HH:mm");
 
-            sfkEmpresa = db.Empresa.Where(y => y.id == fkEmpresa).FirstOrDefault().stSigla;
+            sfkEmpresa = db.EmpresaSecao.Where(y => y.id == assoc.fkSecao).Select (y=> y.nuEmpresa + " - " + y.stDesc).FirstOrDefault();
 
             if (proc != null)
                 sfkProcedimento = proc.nuCodTUSS + " - " + proc.stProcedimento;

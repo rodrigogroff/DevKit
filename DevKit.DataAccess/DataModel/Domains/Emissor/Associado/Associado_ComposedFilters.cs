@@ -8,7 +8,7 @@ namespace DataModel
 	public class AssociadoFilter : BaseFilter
     {
         public string matricula,
-                        secao,
+                        fkSecao,
                         email,
                         cpf,
                         phone,
@@ -28,6 +28,7 @@ namespace DataModel
             ret.Append(take + ",");            
             ret.Append(busca + ",");
             ret.Append(fkEmpresa + ",");
+            ret.Append(fkSecao + ",");
             ret.Append(matricula + ",");
             ret.Append(email + ",");
             ret.Append(cpf + ",");
@@ -50,6 +51,11 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.busca))
                 query = from e in query
                         where e.stName.ToUpper().Contains(filter.busca) || e.stCPF.Equals(filter.busca)
+                        select e;
+
+            if (!string.IsNullOrEmpty(filter.fkSecao))
+                query = from e in query
+                        where e.fkSecao.ToString() == filter.fkSecao
                         select e;
 
             if (!string.IsNullOrEmpty(filter.cpf))

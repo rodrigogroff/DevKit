@@ -14,6 +14,14 @@
             <table class="widget" style="color:white">
                 <tr height="22px"> </tr>
                 <tr height="36px">
+                    <td></td>
+                    <td><b>Seção</b></td>
+                    <td>
+                        <input type="hidden" style="width:100%" ui-select2="selectSecao" data-placeholder="(Selecione)"
+                               ng-model="campos.fkSecao" />
+                    </td>
+                </tr>
+                <tr height="36px">
                     <td width="25px"></td>
                     <td width="150px"><b>Código TUSS</b></td>
                     <td width="220px">
@@ -97,7 +105,7 @@
                                             <th style="min-width:200px">Associado</th>
                                             <th style="min-width:200px">Credenciado</th>
                                             <th style="min-width:150px">Especialidade</th>
-                                            <th style="min-width:200px">TUSS - Procedimento</th>
+                                            <th style="min-width:300px">TUSS - Procedimento</th>
                                         </tr>
                                     </thead>
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">

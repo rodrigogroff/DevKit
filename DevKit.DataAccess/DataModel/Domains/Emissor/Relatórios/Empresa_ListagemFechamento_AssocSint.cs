@@ -8,6 +8,7 @@ namespace DataModel
     public class FechAssocSint
     {
         public string serial,
+                        secao,
                         matricula,
                         associado,
                         qtdAutos,
@@ -93,6 +94,7 @@ namespace DataModel
                 var item = new FechAssocSint
                 {
                     serial = serial.ToString(),
+                    secao = db.EmpresaSecao.Where (y=>y.id == assoc.fkSecao).Select(y=> y.nuEmpresa + " - " + y.stDesc ).FirstOrDefault(),
                     matricula = assoc.nuMatricula.ToString(),
                     associado = assoc.stName,
                     qtdAutos = auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString()

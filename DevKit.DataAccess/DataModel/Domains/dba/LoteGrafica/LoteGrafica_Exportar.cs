@@ -39,7 +39,7 @@ namespace DataModel
                     var emp = lstEmp.Where(y => y.id == item.fkEmpresa).FirstOrDefault();
 
                     var secao = db.EmpresaSecao.Where (y=> y.id == assoc.fkSecao).FirstOrDefault();
-                    var empresa = emp.nuEmpresa.ToString().PadLeft(6, '0');
+                    var empresa = secao.nuEmpresa.ToString().PadLeft(6, '0');
                     var mat = assoc.nuMatricula.ToString().PadLeft(6, '0');
                     var nome = assoc.stName.PadRight(35, ' ').Substring(0, 35).TrimEnd();
                     var tit = assoc.nuTitularidade.ToString().PadLeft(2, '0');
@@ -56,7 +56,7 @@ namespace DataModel
                     db.Update(assoc);
                     
                     line += tit + "/" + via + ",";
-                    line += util.calculaCodigoAcesso ( empresa, mat, tit, via, assoc.stCPF );
+                    line += util.calculaCodigoAcesso (empresa, mat, assoc.nuTitularidade.ToString(), assoc.nuViaCartao.ToString(), assoc.stCPF );
                     line += ",";
                     line += nome + ",";
                     line += "|";

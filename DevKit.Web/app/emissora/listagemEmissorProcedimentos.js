@@ -30,6 +30,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.permModel = {};
         $scope.permID = 602;
 
+        $scope.selectSecao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
+
         CheckPermissions();
 	}
 
@@ -46,6 +48,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         var opcoes = {
             skip: skip,
             take: take,
+            fkSecao: $scope.campos.fkSecao,
             tuss: $scope.campos.tuss,
             espec: $scope.campos.espec,
             nomeAssociado: $scope.campos.nomeAssociado,

@@ -16,7 +16,7 @@ namespace DevKit.Web.Controllers
                 fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
-                secao = Request.GetQueryStringValue("secao"),
+                fkSecao = Request.GetQueryStringValue("fkSecao"),
                 matricula = Request.GetQueryStringValue("matricula"),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
                 email = Request.GetQueryStringValue("email")?.ToUpper(),

@@ -24,10 +24,12 @@ namespace DevKit.Web.Controllers
             var nuTit = Convert.ToInt32(titVia.Substring(0, 2));
             var nuVia = Convert.ToInt32(titVia.Substring(2, 2));
 
-            var empTb = (from e in db.Empresa
-                       where e.nuEmpresa == emp
-                       select e).
+            var secao = (from e in db.EmpresaSecao
+                         where e.nuEmpresa == emp
+                         select e).
                        FirstOrDefault();
+
+            var empTb = (from e in db.Empresa where e.id == secao.fkEmpresa select e).FirstOrDefault();
 
             if (empTb == null)
                 return BadRequest("Empresa inválida");
@@ -43,11 +45,11 @@ namespace DevKit.Web.Controllers
             if (associado == null)
                 return BadRequest("Matrícula inválida");
 
-            var caCalc = util.calculaCodigoAcesso(emp.ToString().PadLeft(6, '0'),
-                                               mat.ToString().PadLeft(6, '0'),
-                                               associado.nuTitularidade.ToString(),
-                                               associado.nuViaCartao.ToString(),
-                                               associado.stCPF);
+            var caCalc = util.calculaCodigoAcesso ( secao.nuEmpresa.ToString().PadLeft(6, '0'),
+                                                    mat.ToString().PadLeft(6, '0'),
+                                                    associado.nuTitularidade.ToString(),
+                                                    associado.nuViaCartao.ToString(),
+                                                    associado.stCPF );
 
             if (ca != caCalc)
                 return BadRequest("Cartão inválido >> " + caCalc);

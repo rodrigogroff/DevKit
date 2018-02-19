@@ -25,7 +25,7 @@ namespace DataModel
                            select new BaseComboResponse
                            {
                                id = e.id,
-                               stName = e.nuEmpresa.ToString()
+                               stName = e.nuEmpresa.ToString() + " - " + e.stDesc
                            }).
                     ToList()
             };

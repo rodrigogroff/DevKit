@@ -20,16 +20,18 @@ namespace DataModel
             var nuTit = Convert.ToInt32(_params.titVia.Substring(0, 2));
             var nuVia = Convert.ToInt32(_params.titVia.Substring(2, 2));
 
-            var empTb = (from e in db.Empresa
-                         where e.nuEmpresa == _params.emp
-                         select e).
-                         FirstOrDefault();
+            var secaoTb = (from e in db.EmpresaSecao
+                           where e.nuEmpresa == _params.emp
+                           select e).
+                           FirstOrDefault();
 
-            if (empTb == null)
+            if (secaoTb == null)
                 return "Empresa inválida";
 
+            var empTb = (from e in db.Empresa where e.id == secaoTb.fkEmpresa select e).FirstOrDefault();
+
             var associado = (from e in db.Associado
-                             where e.fkEmpresa == empTb.id
+                             where e.fkEmpresa == secaoTb.fkEmpresa
                              where e.nuMatricula == _params.mat
                              where e.nuTitularidade == nuTit
                              where e.nuViaCartao == nuVia
@@ -39,17 +41,17 @@ namespace DataModel
             if (associado == null)
                 return "Matrícula inválida";
 
-            var caCalc = util.calculaCodigoAcesso(_params.emp.ToString().PadLeft(6, '0'),
+            var caCalc = util.calculaCodigoAcesso ( secaoTb.nuEmpresa.ToString().PadLeft(6, '0'),
                                                     _params.mat.ToString().PadLeft(6, '0'),
                                                     associado.nuTitularidade.ToString(),
                                                     associado.nuViaCartao.ToString(),
-                                                    associado.stCPF);
+                                                    associado.stCPF );
 
             if (_params.ca != caCalc)
                 return "Dados do cartão inválidos!";
 
             var associadoTit = (from e in db.Associado
-                                where e.fkEmpresa == empTb.id
+                                where e.fkEmpresa == secaoTb.fkEmpresa
                                 where e.nuMatricula == _params.mat
                                 where e.nuTitularidade == 1
                                 select e).
@@ -62,7 +64,7 @@ namespace DataModel
                 return "Cartão bloqueado!";
 
             if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == db.currentCredenciado.id &&
-                                           y.fkEmpresa == empTb.id))
+                                           y.fkEmpresa == secaoTb.fkEmpresa))
                 return "Credenciado não conveniado à empresa " + _params.emp;
 
             var proc = db.TUSS.

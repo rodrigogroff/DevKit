@@ -42,6 +42,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
                 
         $scope.selectTipoSituacao = ngSelects.obterConfiguracao(Api.TipoSituacaoCombo, {});
         $scope.selectTipoExpedicao = ngSelects.obterConfiguracao(Api.TipoExpedicaoCombo, {});
+        $scope.selectSecao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
 
         $scope.itensporpagina = 15;
         $scope.permModel = {};
@@ -64,6 +65,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             skip: skip,
             take: take,
             busca: $scope.campos.busca,
+            fkSecao: $scope.campos.fkSecao,
             cpf: $scope.campos.cpf,
             matricula: $scope.campos.matricula,
             ativo: $scope.campos.ativo,

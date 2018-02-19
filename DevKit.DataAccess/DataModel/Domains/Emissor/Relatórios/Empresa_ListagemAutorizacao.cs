@@ -10,6 +10,7 @@ namespace DataModel
     {
         public int skip, 
                    take,
+                   fkSecao,
                    situacao;
 
         public string   tuss, 
@@ -43,6 +44,14 @@ namespace DataModel
                 query = from e in query
                         join proc in db.TUSS on e.fkProcedimento equals proc.id
                         where proc.nuCodTUSS.ToString() == filter.tuss
+                        select e;
+            }
+
+            if (filter.fkSecao > 0)
+            {
+                query = from e in query
+                        join assoc in db.Associado on e.fkAssociado equals assoc.id
+                        where assoc.fkSecao == filter.fkSecao
                         select e;
             }
 

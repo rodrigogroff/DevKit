@@ -308,9 +308,10 @@ namespace DataModel
 	[Table(Schema="public", Name="EmpresaSecao")]
 	public partial class EmpresaSecao
 	{
-		[PrimaryKey, Identity] public long  id        { get; set; } // bigint
-		[Column,     Nullable] public long? fkEmpresa { get; set; } // bigint
-		[Column,     Nullable] public long? nuEmpresa { get; set; } // bigint
+		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa { get; set; } // bigint
+		[Column,     Nullable] public long?  nuEmpresa { get; set; } // bigint
+		[Column,     Nullable] public string stDesc    { get; set; } // character varying(150)
 	}
 
 	[Table(Schema="public", Name="Especialidade")]

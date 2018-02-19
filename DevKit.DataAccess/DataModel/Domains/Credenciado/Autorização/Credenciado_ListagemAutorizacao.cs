@@ -8,7 +8,7 @@ namespace DataModel
 {
     public class ListagemCredenciadoAutorizacaoFilter
     {
-        public int skip, take, situacao;
+        public int skip, take, situacao, fkSecao;
         public string tuss, nomeAssociado;
     }
 
@@ -27,7 +27,7 @@ namespace DataModel
             var query = from e in db.Autorizacao
                         where e.fkCredenciado == db.currentCredenciado.id
                         select e;
-
+            
             if (!string.IsNullOrEmpty(filter.tuss))
             {
                 query = from e in query

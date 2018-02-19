@@ -27,9 +27,8 @@ namespace DataModel
             if (fkSecao != null)
                 sfkSecao = db.EmpresaSecao.
                                 Where(y => y.id == fkSecao).
-                                FirstOrDefault().
-                                nuEmpresa.
-                                ToString();
+                                Select (y=> y.nuEmpresa.ToString() + " - " + y.stDesc).
+                                FirstOrDefault();
 
             if (nuYearBirth != null)
                 snuAge = (DateTime.Now.Year - nuYearBirth).ToString();

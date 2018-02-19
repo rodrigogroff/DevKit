@@ -32,7 +32,7 @@ namespace GetStarted
 
         static void Main(string[] args)
 		{
-			using (var db = new DevKitDB())
+            using (var db = new DevKitDB())
 			{
                 int opt = 1;
                 var setup = new Setup();
@@ -116,7 +116,8 @@ namespace GetStarted
                                 db.Insert(new EmpresaSecao
                                 {
                                     fkEmpresa = 1,
-                                    nuEmpresa = 1801
+                                    nuEmpresa = 1801,
+                                    stDesc = "Fumam Ativos"
                                 });
 
                                 while (!sr.EndOfStream)
@@ -159,7 +160,8 @@ namespace GetStarted
                                 db.Insert(new EmpresaSecao
                                 {
                                     fkEmpresa = 1,
-                                    nuEmpresa = 1802
+                                    nuEmpresa = 1802,
+                                    stDesc = "Fumam Inativos"
                                 });
 
                                 while (!sr.EndOfStream)
@@ -176,7 +178,7 @@ namespace GetStarted
                                         var new_id = Convert.ToInt64(db.InsertWithIdentity(new Associado
                                         {
                                             dtStart = DateTime.Now,
-                                            fkEmpresa = 2,
+                                            fkEmpresa = 1,
                                             fkSecao = 2,
                                             fkUserAdd = 1,
                                             nuMatricula = Convert.ToInt64(ar[0]),
@@ -202,7 +204,8 @@ namespace GetStarted
                                 db.Insert(new EmpresaSecao
                                 {
                                     fkEmpresa = 1,
-                                    nuEmpresa = 1803
+                                    nuEmpresa = 1803,
+                                    stDesc = "Fumam Vereadores"
                                 });
 
                                 while (!sr.EndOfStream)
@@ -219,7 +222,7 @@ namespace GetStarted
                                         var new_id = Convert.ToInt64(db.InsertWithIdentity(new Associado
                                         {
                                             dtStart = DateTime.Now,
-                                            fkEmpresa = 3,
+                                            fkEmpresa = 1,
                                             fkSecao = 3,
                                             fkUserAdd = 1,
                                             nuMatricula = Convert.ToInt64(ar[0]),

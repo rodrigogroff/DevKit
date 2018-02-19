@@ -36,6 +36,8 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         $scope.permModel = {};
         $scope.permID = 401;
 
+        $scope.selectSecao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
+
         CheckPermissions();
     }
 
@@ -51,12 +53,14 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
         $scope.campos.id = 0;
 
         $scope.mat_fail = invalidCheck($scope.campos.mat);
+        $scope.secao_fail = $scope.campos.fkSecao == undefined;
 
-        if (!$scope.mat_fail)
+        if (!$scope.mat_fail && !$scope.secao_fail)
         {
             $scope.loading = true;
 
             var opcoes = {
+                fkSecao: $scope.campos.fkSecao,
                 matricula: $scope.campos.mat
             };
 

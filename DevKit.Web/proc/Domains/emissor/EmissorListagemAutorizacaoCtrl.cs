@@ -14,6 +14,7 @@ namespace DevKit.Web.Controllers
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 0),
+                fkSecao = Request.GetQueryStringValue("fkSecao", 0),
                 tuss = Request.GetQueryStringValue("tuss"),
                 espec = Request.GetQueryStringValue("espec"),
                 nomeAssociado = Request.GetQueryStringValue("nomeAssociado"),

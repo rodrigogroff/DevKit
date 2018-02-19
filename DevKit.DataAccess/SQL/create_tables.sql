@@ -441,33 +441,4 @@ CREATE TABLE IF NOT EXISTS public."EmpresaSecao" ( id bigserial NOT NULL, PRIMAR
 ALTER TABLE public."EmpresaSecao" OWNER to postgres;
 ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "nuEmpresa" bigint;
-
----------------------------------
--- 10/02/2018
----------------------------------
-
---DROP TABLE IF EXISTS public."AssociadoContato";
---DROP TABLE IF EXISTS public."AssociadoMensagem";
---DROP TABLE IF EXISTS public."AssociadoCategoria";
---DROP TABLE IF EXISTS public."Procedimento";
-
---ALTER TABLE public."Medico" RENAME TO "Credenciado";
---ALTER TABLE public."MedicoEmpresa" RENAME TO "CredenciadoEmpresa";
---ALTER TABLE public."MedicoEmail" RENAME TO "CredenciadoEmail";
---ALTER TABLE public."MedicoPhone" RENAME TO "CredenciadoTelefone";
---ALTER TABLE public."MedicoAddress" RENAME TO "CredenciadoEndereco";
-
---ALTER TABLE public."AssociadoEmail" RENAME "fkPerson" TO "fkAssociado";
---ALTER TABLE public."AssociadoTelefone" RENAME "fkPerson" TO "fkAssociado";
---ALTER TABLE public."AssociadoEndereco" RENAME "fkPerson" TO "fkAssociado";
-
---ALTER TABLE public."CredenciadoEmpresa" RENAME "fkMedico" TO "fkCredenciado";
---ALTER TABLE public."CredenciadoEmail" RENAME "fkMedico" TO "fkCredenciado";
---ALTER TABLE public."CredenciadoTelefone" RENAME "fkMedico" TO "fkCredenciado";
---ALTER TABLE public."CredenciadoEndereco" RENAME "fkMedico" TO "fkCredenciado";
---ALTER TABLE public."Autorizacao" RENAME "fkMedico" TO "fkCredenciado";
-
---ALTER TABLE public."MedicoEmpresaTuss" RENAME TO "CredenciadoEmpresaTuss";
---ALTER TABLE public."CredenciadoEmpresaTuss" RENAME "fkMedico" TO "fkCredenciado";
-
-
+ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "stDesc" character varying(150);

@@ -48,14 +48,14 @@ namespace DataModel
             {
                 if (db.currentCredenciado != null)
                 {
-                    var empTb = db.Empresa.
+                    var secTb = db.EmpresaSecao.
                                     Where(y => y.nuEmpresa == Convert.ToInt32(filter.emp)).
                                     FirstOrDefault();
                     
-                    if (empTb != null)
+                    if (secTb != null)
                     {
                         var lst = db.CredenciadoEmpresaTuss.
-                                Where(y => y.fkEmpresa == empTb.id &&
+                                Where(y => y.fkEmpresa == secTb.fkEmpresa &&
                                            y.fkCredenciado == db.currentCredenciado.id).
                                 Select(y => y.nuTUSS).
                                 ToList();

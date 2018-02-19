@@ -23,8 +23,10 @@
                         <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.busca" />
                     </td>
                     <td width="60px"></td>
-                    <td width="110px"></td>
-                    <td width="220px"></td>
+                    <td width="110px"><b>Seção</b></td>
+                    <td width="220px">
+                        <input type="hidden" style="width:100%" ui-select2="selectSecao" data-placeholder="(Selecione)" ng-model="campos.fkSecao" />
+                    </td>
                     <td width="25px"></td>
                 </tr>
                 <tr height="36px">
@@ -41,6 +43,7 @@
                     </td>
                     <td></td>
                 </tr>
+
                 <tr height="36px">
                     <td></td>
                     <td><b>Email</b></td>
@@ -92,6 +95,7 @@
                                 <table class="table table-hover" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th style="min-width:180px">Seção</th>
                                             <th style="min-width:300px">Nome</th>
                                             <th style="min-width:140px">Matrícula</th>
                                             <th style="min-width:80px">Tit.</th>
@@ -107,6 +111,7 @@
                                         </tr>
                                     </thead>
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                        <td>{{ mdl.sfkSecao }}</td>
                                         <td>{{ mdl.stName }}</td>
                                         <td>{{ mdl.nuMatricula }}</td>
                                         <td>{{ mdl.nuTitularidade }}</td>

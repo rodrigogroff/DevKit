@@ -13,13 +13,24 @@
         <div class="divWebForm" ng-if="id == undefined">            
             <table>
                 <tr height="53px">
-                    <td width="130px">
+                    <td>
+                        <b>Seção</b>
+                    </td>
+                    <td>
+                        <button class="btn btn-xs btn-danger" ng-show="secao_fail">!</button>
+                    </td>
+                    <td>
+                        <input type="hidden" style="width:100%" ui-select2="selectSecao" data-placeholder="(Selecione)" ng-model="campos.fkSecao" />
+                    </td>
+                </tr>
+                <tr height="53px">
+                    <td width="90px">
                         <b>Matrícula</b>
                     </td>
                     <td width="20px">
                         <button class="btn btn-xs btn-danger" ng-show="mat_fail">!</button>
                     </td>
-                    <td width="120px">
+                    <td width="200px">
                         <input type="text"
                                class="form-control input-transparent"
                                maxlength="6" numeric
@@ -30,19 +41,20 @@
                         <button class="btn btn-primary" ng-click="buscar()">Buscar</button>
                     </td>
                 </tr>
-                <tr ng-if="campos.id > 0" height="43px"> 
+                <tr ng-if="campos.id > 0" height="43px">
                     <td>
-                        <b>Associado</b></td>
+                        <b>Associado</b>
+                    </td>
                     <td></td>
-                    <td colspan="3"><b>{{campos.nomeCartao}}</b></td>                    
+                    <td colspan="3"><b>{{campos.nomeCartao}}</b></td>
                 </tr>
                 <tr ng-if="campos.id > 0" height="43px">
                     <td> <b>Nova senha</b></td>
                     <td> <button class="btn btn-xs btn-danger" ng-show="senha_fail">!</button></td>
                     <td>
                         <input type="text"
-                               class="form-control input-transparent" 
-                               maxlength="4" numeric 
+                               class="form-control input-transparent"
+                               maxlength="4" numeric
                                ng-model="campos.novaSenha" />
                     </td>
                     <td></td>

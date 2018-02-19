@@ -48,7 +48,14 @@ namespace DataModel
             if (_params.ca != caCalc)
                 return "Dados do cartão inválidos!";
 
-            if (_params.senha != associado.stSenha)
+            var associadoTit = (from e in db.Associado
+                                where e.fkEmpresa == empTb.id
+                                where e.nuMatricula == _params.mat
+                                where e.nuTitularidade == 1
+                                select e).
+                             FirstOrDefault();
+
+            if (_params.senha != associadoTit.stSenha)
                 return "Senha inválida!";
 
             if (associado.tgStatus == TipoSituacaoCartao.Bloqueado)

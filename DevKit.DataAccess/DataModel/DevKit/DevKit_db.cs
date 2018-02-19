@@ -15,10 +15,13 @@ namespace DataModel
 
         public List<long?> GetCurrentUserProjects()
         {
-            return (from e in ProjectUser
-                    where e.fkUser == currentUser.id
-                    select e.fkProject).
-                ToList();
+            if (currentUser != null)
+                return (from e in ProjectUser
+                        where e.fkUser == currentUser.id
+                        select e.fkProject).
+                    ToList();
+            else
+                return null;
         }
     }
 }

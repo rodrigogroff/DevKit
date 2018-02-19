@@ -33,6 +33,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 
         $scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
+        $scope.secao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
         $scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, {});
         $scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'newEnd.fkEstado' } });
 
@@ -99,6 +100,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
             $scope.mat_fail = invalidCheck($scope.viewModel.nuMatricula);
             $scope.cpf_fail = invalidCheck($scope.viewModel.stCPF);
+            $scope.fkSecao_fail = invalidCheck($scope.viewModel.fkSecao);
 	
             if (!$scope.stName_fail)
             {

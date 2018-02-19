@@ -96,8 +96,7 @@ namespace DevKit.Web.Controllers
                         break;
                     }
 
-                case "4": // emissor
-                case "5": // dba
+                case "4": // emissor                
                     {
                         var userCurrentName = userLoggedName;
                         var tagName = CacheTags.User + userCurrentName;
@@ -124,23 +123,24 @@ namespace DevKit.Web.Controllers
 
                         break;
                     }
-                    
-            }
 
-            
+                case "5": // dba
+                    break;
+            }            
 
-            if (myApplication["start"] == null)
-            {
-                myApplication["start"] = true;
+            if (myApplication != null)
+                if (myApplication["start"] == null)
+                {
+                    myApplication["start"] = true;
 
-                StartCache();
+                    StartCache();
 
-           //     if (IsPrecacheEnabled)
-         //           System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApplication, db.currentUser); });
+               //     if (IsPrecacheEnabled)
+             //           System.Threading.Tasks.Task.Run(() => { new StartupPreCacheService().Run(myApplication, db.currentUser); });
 
-             //   if (!IsSingleMachine)
-               //     System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
-            }
+                 //   if (!IsSingleMachine)
+                   //     System.Threading.Tasks.Task.Run(() => { new CacheControlService().Run(myApplication); });
+                }
 
             return true;
         }

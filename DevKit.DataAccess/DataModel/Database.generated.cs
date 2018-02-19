@@ -35,6 +35,7 @@ namespace DataModel
 		public ITable<CredenciadoEndereco>    CredenciadoEndereco    { get { return this.GetTable<CredenciadoEndereco>(); } }
 		public ITable<CredenciadoTelefone>    CredenciadoTelefone    { get { return this.GetTable<CredenciadoTelefone>(); } }
 		public ITable<Empresa>                Empresa                { get { return this.GetTable<Empresa>(); } }
+		public ITable<EmpresaSecao>           EmpresaSecao           { get { return this.GetTable<EmpresaSecao>(); } }
 		public ITable<Especialidade>          Especialidade          { get { return this.GetTable<Especialidade>(); } }
 		public ITable<Estado>                 Estado                 { get { return this.GetTable<Estado>(); } }
 		public ITable<LoteGrafica>            LoteGrafica            { get { return this.GetTable<LoteGrafica>(); } }
@@ -88,6 +89,7 @@ namespace DataModel
 	{
 		[PrimaryKey, Identity] public long      id                { get; set; } // bigint
 		[Column,     Nullable] public long?     fkEmpresa         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkSecao           { get; set; } // bigint
 		[Column,     Nullable] public long?     nuMatricula       { get; set; } // bigint
 		[Column,     Nullable] public long?     nuTitularidade    { get; set; } // bigint
 		[Column,     Nullable] public long?     nuViaCartao       { get; set; } // bigint
@@ -301,6 +303,14 @@ namespace DataModel
 		[Column,     Nullable] public long?  nuDiaFech { get; set; } // bigint
 		[Column,     Nullable] public string stSigla   { get; set; } // character varying(20)
 		[Column,     Nullable] public string stNome    { get; set; } // character varying(200)
+	}
+
+	[Table(Schema="public", Name="EmpresaSecao")]
+	public partial class EmpresaSecao
+	{
+		[PrimaryKey, Identity] public long  id        { get; set; } // bigint
+		[Column,     Nullable] public long? fkEmpresa { get; set; } // bigint
+		[Column,     Nullable] public long? nuEmpresa { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Especialidade")]
@@ -756,6 +766,12 @@ namespace DataModel
 		}
 
 		public static Empresa Find(this ITable<Empresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static EmpresaSecao Find(this ITable<EmpresaSecao> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

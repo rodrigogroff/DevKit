@@ -22,6 +22,7 @@ namespace DataModel
                       sfkUserLastContact = "",
                       sfkUserLastUpdate = "",
                       sfkUserAdd = "",
+                      sfkSecao = "",
                       sdtStart = "",
                       snuAge = "",
                       stgStatus = "",

@@ -20,6 +20,9 @@ namespace DataModel
 			var user = db.currentUser;
 			var projects = db.GetCurrentUserProjects();
 
+            if (projects == null)
+                return new HomeDTO();
+
             var dto = new HomeDTO()
             {
                 name = "Olá " + user.stLogin

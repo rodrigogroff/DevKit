@@ -1,10 +1,6 @@
 ﻿using DataModel;
-using LinqToDB;
-using System;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -16,7 +12,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var filter = new CredenciadoFilter
+            return Ok(new Credenciado().ComposedFilters(db, new CredenciadoFilter
             {
                 fkEmpresa = db.currentUser.fkEmpresa,
                 skip = Request.GetQueryStringValue("skip", 0),
@@ -24,9 +20,7 @@ namespace DevKit.Web.Controllers
                 nome = Request.GetQueryStringValue("nome"),
                 nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
                 especialidade = Request.GetQueryStringValue("especialidade"),
-            };
-
-            return Ok(new Credenciado().ComposedFilters(db, filter));                        
+            }));                        
         }
             
         public IHttpActionResult Get(long id)

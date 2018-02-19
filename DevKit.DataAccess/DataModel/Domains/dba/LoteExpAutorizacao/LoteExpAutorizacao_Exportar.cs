@@ -36,24 +36,25 @@ namespace DataModel
                 sw.WriteLine("empresa;mês;ano;data solicitação;portador;cpf portador;matricula;cpfCnpj credenciado;tuss;");
                 
                 lstId = lstAutorizacoes.Select(a => a.fkAssociado).Distinct().ToList();
-
                 var lstAssoc = db.Associado.Where(y => lstId.Contains(y.id)).ToList();
 
-                lstId = lstAutorizacoes.Select(a => a.fkCredenciado).Distinct().ToList();
+                lstId = lstAssoc.Select(a => a.fkSecao).Distinct().ToList();
+                var lstSecao = db.EmpresaSecao.Where(y => lstId.Contains(y.id)).ToList();
 
+                lstId = lstAutorizacoes.Select(a => a.fkCredenciado).Distinct().ToList();
                 var lstCreds = db.Credenciado.Where(y => lstId.Contains(y.id)).ToList();
 
                 lstId = lstAutorizacoes.Select(a => a.fkProcedimento).Distinct().ToList();
-
                 var lstProc = db.TUSS.Where(y => lstId.Contains(y.id)).ToList();
 
                 foreach (var item in lstAutorizacoes)
                 {
-                    var line = emp.nuEmpresa.ToString() + ";" + nuMes + ";" + nuAno + ";";
-
                     var assoc = lstAssoc.Where(y => y.id == item.fkAssociado).FirstOrDefault();
+                    var secao = lstSecao.Where(y => y.id == assoc.fkSecao).FirstOrDefault();
                     var cred = lstCreds.Where (y=>y.id == item.fkCredenciado).FirstOrDefault();
                     var proc = lstProc.Where(y => y.id == item.fkProcedimento).FirstOrDefault();
+
+                    var line = secao.nuEmpresa.ToString() + ";" + nuMes + ";" + nuAno + ";";
 
                     line += Convert.ToDateTime(item.dtSolicitacao).ToString("dd/MM/yyyy HH:mm") + ";";
                     line += assoc.stName + ";";

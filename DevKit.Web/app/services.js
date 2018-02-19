@@ -82,13 +82,14 @@ angular.module('app.services', ['ngResource'])
         ProjectCombo: $resource('api/projectcombo/:id', {}, opcoes),
         TaskTypeCombo: $resource('api/tasktypecombo/:id', {}, opcoes),
         UserCombo: $resource('api/usercombo/:id', {}, opcoes),
-        PhaseCombo: $resource('api/phasecombo/:id', {}, opcoes),        
+        PhaseCombo: $resource('api/phasecombo/:id', {}, opcoes),
         TaskCategoryCombo: $resource('api/taskcategorycombo/:id', {}, opcoes),
         TaskFlowCombo: $resource('api/taskflowcombo/:id', {}, opcoes),
-        SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),        
+        SprintCombo: $resource('api/sprintcombo/:id', {}, opcoes),
         VersionCombo: $resource('api/versioncombo/:id', {}, opcoes),
         EmpresaCombo: $resource('api/empresacombo/:id', {}, opcoes),
         AutorizaProc: $resource('api/autorizaproc/:id', {}, opcoes),
+        EmpresaSecaoCombo: $resource('api/empresasecaocombo/:id', {}, opcoes),
         CredenciadoListagemAutorizacao: $resource('api/credenciadolistagemautorizacao/:id', {}, opcoes),
         EmissorListagemAutorizacao: $resource('api/emissorlistagemautorizacao/:id', {}, opcoes),
         EmissorListagemCredenciado: $resource('api/emissorlistagemcredenciado/:id', {}, opcoes),
@@ -96,6 +97,5 @@ angular.module('app.services', ['ngResource'])
         LotesExpAutorizacao: $resource('api/lotesexpautorizacao/:id', {}, opcoes),
         TipoSituacaoCombo: $resource('api/tiposituacao/:id', {}, opcoes),
         TipoExpedicaoCombo: $resource('api/tipoexpedicao/:id', {}, opcoes)
-
 	};
 }]);

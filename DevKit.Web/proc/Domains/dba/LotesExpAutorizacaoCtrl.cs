@@ -12,23 +12,16 @@ namespace DevKit.Web.Controllers
 	public class LotesExpAutorizacaoController : ApiControllerBase
 	{
         public IHttpActionResult Get()
-		{
-            try
-            {
-                if (!StartDatabaseAndAuthorize())
-                    return BadRequest();
+	    {
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
 
-                return Ok(new LoteExpAutorizacao().ComposedFilters(db, new LoteExpAutorizacaoFilter
-                {
-                    fkEmpresa = Request.GetQueryStringValue<long?>("fkEmpresa", null),
-                    nuMes = Request.GetQueryStringValue<long?>("nuMes", null),
-                    nuAno = Request.GetQueryStringValue<long?>("nuAno", null),
-                }));                
-            }
-            catch (SystemException ex)
+            return Ok(new LoteExpAutorizacao().ComposedFilters(db, new LoteExpAutorizacaoFilter
             {
-                return BadRequest(ex.ToString());
-            }
+                fkEmpresa = Request.GetQueryStringValue<long?>("fkEmpresa", null),
+                nuMes = Request.GetQueryStringValue<long?>("nuMes", null),
+                nuAno = Request.GetQueryStringValue<long?>("nuAno", null),
+            }));                
         }
         
         [HttpGet]

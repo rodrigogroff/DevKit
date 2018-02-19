@@ -902,6 +902,7 @@
   <ItemGroup>
     <Compile Include="proc\Combos\Template\CidadeComboCtrl.cs" />
     <Compile Include="proc\Combos\Template\EmpresaComboCtrl.cs" />
+    <Compile Include="proc\Combos\Template\EmpresaSecaoComboCtrl.cs" />
     <Compile Include="proc\Combos\Template\EstadoComboCtrl.cs" />
     <Compile Include="proc\Combos\Template\PhaseComboCtrl.cs" />
     <Compile Include="proc\Combos\Template\VersionComboCtrl.cs" />

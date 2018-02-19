@@ -275,6 +275,7 @@ ALTER TABLE public."Empresa" ADD COLUMN if not exists "stNome" character varying
 CREATE TABLE IF NOT EXISTS public."Associado" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Associado" OWNER to postgres;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."Associado" ADD COLUMN if not exists "fkSecao" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "nuMatricula" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "nuTitularidade" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "nuViaCartao" bigint;
@@ -435,6 +436,11 @@ ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "vrCoPart" 
 ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuMaxMes" bigint;
 ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuMaxAno" bigint;
 ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuParcelas" bigint;
+
+CREATE TABLE IF NOT EXISTS public."EmpresaSecao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."EmpresaSecao" OWNER to postgres;
+ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "nuEmpresa" bigint;
 
 ---------------------------------
 -- 10/02/2018

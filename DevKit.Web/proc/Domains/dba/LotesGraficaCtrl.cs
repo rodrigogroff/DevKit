@@ -13,53 +13,44 @@ namespace DevKit.Web.Controllers
 	{
         public IHttpActionResult Get()
 		{
-            try
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var pesqInicialNovoLote = Request.GetQueryStringValue<bool?>("novoLote", null);
+            var criarLote = Request.GetQueryStringValue<bool?>("criarLote", null);
+            var ativarLote = Request.GetQueryStringValue<bool?>("ativarLote", null);
+
+            var lg = new LoteGrafica();
+
+            if (pesqInicialNovoLote == true)
             {
-                if (!StartDatabaseAndAuthorize())
-                    return BadRequest();
-
-                var pesqInicialNovoLote = Request.GetQueryStringValue<bool?>("novoLote", null);
-                var criarLote = Request.GetQueryStringValue<bool?>("criarLote", null);
-                var ativarLote = Request.GetQueryStringValue<bool?>("ativarLote", null);
-
-                var lg = new LoteGrafica();
-
-                if (pesqInicialNovoLote == true)
-                {
-                    return Ok(lg.NovoLoteQuery(db));
-                }
-                else if (criarLote == true)
-                {
-                    var empresas = Request.GetQueryStringValue("empresas");
-
-                    return Ok(new { codigo = lg.Create(db, empresas) });
-                }
-                else if (ativarLote == true)
-                {
-                    var lotes = Request.GetQueryStringValue("lotes");
-
-                    lg.Ativar(db, lotes);
-
-                    CleanCache(db, CacheTags.Associado, null);
-
-                    return Ok();
-                }
-                else
-                {
-                    var filter = new LoteGraficaFilter
-                    {
-                        skip = Request.GetQueryStringValue("skip", 0),
-                        take = Request.GetQueryStringValue("take", 15),
-                        nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
-                    };
-
-                    return Ok(lg.ComposedFilters(db, filter));
-                }
+                return Ok(lg.NovoLoteQuery(db));
             }
-            catch (SystemException ex)
+            else if (criarLote == true)
             {
-                return BadRequest(ex.ToString());
+                var empresas = Request.GetQueryStringValue("empresas");
+
+                return Ok(new { codigo = lg.Create(db, empresas) });
             }
+            else if (ativarLote == true)
+            {
+                var lotes = Request.GetQueryStringValue("lotes");
+
+                lg.Ativar(db, lotes);
+
+                CleanCache(db, CacheTags.Associado, null);
+
+                return Ok();
+            }
+            else
+            {
+                return Ok(lg.ComposedFilters(db, new LoteGraficaFilter
+                {
+                    skip = Request.GetQueryStringValue("skip", 0),
+                    take = Request.GetQueryStringValue("take", 15),
+                    nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
+                }));
+            }            
         }
         
         [HttpGet]

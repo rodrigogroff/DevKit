@@ -8,6 +8,7 @@ namespace DataModel
 	public class AssociadoFilter : BaseFilter
     {
         public string matricula,
+                        secao,
                         email,
                         cpf,
                         phone,

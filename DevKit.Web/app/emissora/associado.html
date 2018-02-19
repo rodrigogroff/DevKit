@@ -29,6 +29,22 @@
                                 </tr>
                             </thead>
                             <tr height="22px"></tr>
+
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Seção</b>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="fkSecao_fail">!</button>
+                                </td>
+                                <td>
+                                    <input type="hidden" style="width:100%" ui-select2="secao" data-placeholder="(Selecione)" 
+                                           ng-model="viewModel.fkSecao" ng-disabled="viewModel.id > 0" />
+                                </td>
+                                <td></td>
+                            </tr>
+
                             <tr height="40px">
                                 <td></td>
                                 <td>
@@ -37,7 +53,7 @@
                                 <td>
                                     <button class="btn btn-xs btn-danger" ng-show="stName_fail">!</button>
                                 </td>
-                                <td ng-if="viewModel.id == 0">
+                                <td ng-if="viewModel.id == undefined">
                                     <input type="text" class="form-control input-transparent" maxlength="50"
                                            ng-disabled="!permModel.edicao" ng-model="viewModel.stName">
                                 </td>
@@ -46,6 +62,7 @@
                                 </td>
                                 <td></td>
                             </tr>
+
                             <tr height="40px">
                                 <td></td>
                                 <td>
@@ -54,7 +71,7 @@
                                 <td>
                                     <button class="btn btn-xs btn-danger" ng-show="mat_fail">!</button>
                                 </td>
-                                <td ng-if="viewModel.id == 0">
+                                <td ng-if="viewModel.id == undefined">
                                     <input type="text" class="form-control input-transparent" maxlength="6" numbers-only
                                            ng-disabled="!permModel.edicao" ng-model="viewModel.nuMatricula">
                                 </td>
@@ -63,6 +80,7 @@
                                 </td>
                                 <td></td>
                             </tr>
+
                             <tr height="40px">
                                 <td></td>
                                 <td>
@@ -71,7 +89,7 @@
                                 <td>
                                     <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
                                 </td>
-                                <td ng-if="viewModel.id == 0">
+                                <td ng-if="viewModel.id == undefined">
                                     <input type="text" class="form-control input-transparent" name="cnpj" id="cpf" ng-model="viewModel.stCPF"
                                            maxlength="14" ui-mask="999.999.999-99" ui-mask-placeholder ui-mask-placeholder-char="_">
                                 </td>
@@ -114,6 +132,7 @@
                                 </td>
                                 <td></td>
                             </tr>
+
                             <tr height="40px" ng-if="viewModel.snuAge.length > 0">
                                 <td></td>
                                 <td>
@@ -125,6 +144,7 @@
                                 </td>
                                 <td></td>
                             </tr>
+
                             <tr height="40px" ng-if="viewModel.id > 0">
                                 <td></td>
                                 <td>
@@ -147,6 +167,7 @@
                                 </td>
                                 <td></td>
                             </tr>
+
                             <tr height="40px" ng-if="viewModel.id != undefined">
                                 <td></td>
                                 <td>
@@ -169,7 +190,9 @@
                                 </td>
                                 <td></td>
                             </tr>
+
                             <tr height="46px"></tr>
+
                         </table>
                     </div>
                 </tab>
@@ -192,8 +215,10 @@
                                 <td>
                                     <b>Titularidade</b>
                                 </td>
-                                <td></td>
-                                <td>
+                                <td ng-if="viewModel.id == undefined">
+                                    1
+                                </td>
+                                <td ng-if="viewModel.id > 0">
                                     {{viewModel.nuTitularidade}}
                                 </td>
                                 <td></td>
@@ -203,8 +228,10 @@
                                 <td>
                                     <b>Via do cartão</b>
                                 </td>
-                                <td></td>
-                                <td>
+                                <td ng-if="viewModel.id == undefined">
+                                    1
+                                </td>
+                                <td ng-if="viewModel.id > 0">
                                     {{viewModel.nuViaCartao}}
                                 </td>
                                 <td></td>
@@ -214,10 +241,14 @@
                                 <td>
                                     <b>Status Cartão</b>
                                 </td>
-                                <td></td>
-                                <td>
+
+                                <td ng-if="viewModel.id == undefined">
+                                    Habilitado
+                                </td>
+                                <td ng-if="viewModel.id > 0">
                                     {{viewModel.stgStatus}}
                                 </td>
+                                                                
                                 <td></td>
                             </tr>
                             <tr height="40px">
@@ -225,10 +256,14 @@
                                 <td>
                                     <b>Expedição</b>
                                 </td>
-                                <td></td>
-                                <td>
+
+                                <td ng-if="viewModel.id == undefined">
+                                    Requerido
+                                </td>
+                                <td ng-if="viewModel.id > 0">
                                     {{viewModel.stgExpedicao}}
                                 </td>
+                                                               
                                 <td></td>
                             </tr>
                             <tr height="46px"></tr>

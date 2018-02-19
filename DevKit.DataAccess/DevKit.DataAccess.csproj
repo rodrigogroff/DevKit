@@ -85,6 +85,7 @@
     <Compile Include="DataModel\Domains\Configuration\Estado\Estado_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Estado\Estado_ComposedFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Estado\Estado_DTO.cs" />
+    <Compile Include="DataModel\Domains\dba\EmpresaSecao\EmpresaSecao_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\dba\Empresa\Empresa_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\dba\Empresa\Empresa_ComposedFilters.cs" />
     <Compile Include="DataModel\Domains\dba\Empresa\Empresa_Create.cs" />

@@ -38,6 +38,7 @@ namespace DataModel
                     var assoc = lstAssoc.Where(y => y.id == item.fkAssociado).FirstOrDefault();
                     var emp = lstEmp.Where(y => y.id == item.fkEmpresa).FirstOrDefault();
 
+                    var secao = db.EmpresaSecao.Where (y=> y.id == assoc.fkSecao).FirstOrDefault();
                     var empresa = emp.nuEmpresa.ToString().PadLeft(6, '0');
                     var mat = assoc.nuMatricula.ToString().PadLeft(6, '0');
                     var nome = assoc.stName.PadRight(35, ' ').Substring(0, 35).TrimEnd();
@@ -47,7 +48,7 @@ namespace DataModel
                     string line = "+";
 
                     line += nome + ",";
-                    line += empresa + ",";
+                    line += secao.nuEmpresa + ",";
                     line += mat + ",";
 
                     assoc.tgExpedicao = 1;

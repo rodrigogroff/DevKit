@@ -24,6 +24,13 @@ namespace DataModel
             if (fkUserLastUpdate != null)
                 sfkUserLastUpdate = db.GetUser(fkUserLastUpdate).stLogin;
 
+            if (fkSecao != null)
+                sfkSecao = db.EmpresaSecao.
+                                Where(y => y.id == fkSecao).
+                                FirstOrDefault().
+                                nuEmpresa.
+                                ToString();
+
             if (nuYearBirth != null)
                 snuAge = (DateTime.Now.Year - nuYearBirth).ToString();
 

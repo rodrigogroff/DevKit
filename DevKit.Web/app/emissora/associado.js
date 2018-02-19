@@ -32,6 +32,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $scope.permID = 301;
 
         $scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
+        $scope.selectTipoCoberturaDependente = ngSelects.obterConfiguracao(Api.TipoCoberturaDependenteCombo, {});
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
         $scope.secao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
         $scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, {});

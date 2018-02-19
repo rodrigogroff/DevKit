@@ -10,7 +10,9 @@ namespace DataModel
 
     public partial class AssociadoDependente
     {
-        public string snuTit = "";
+        public string snuTit = "",
+                      sdtNasc = "",
+                      sfkTipoCoberturaDependente = "";
     }
 
     public partial class Associado

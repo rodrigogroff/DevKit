@@ -335,6 +335,8 @@ ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "fkAssociado" 
 ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "fkCartao" bigint;
 ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "stNome" character varying(35);
 ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "stCPF" character varying(30);
+ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "dtNasc" timestamp without time zone;
+ALTER TABLE public."AssociadoDependente" ADD COLUMN if not exists "fkTipoCoberturaDependente" bigint;
 
 CREATE TABLE IF NOT EXISTS public."Especialidade" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Especialidade" OWNER to postgres;
@@ -442,3 +444,8 @@ ALTER TABLE public."EmpresaSecao" OWNER to postgres;
 ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "fkEmpresa" bigint;
 ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "nuEmpresa" bigint;
 ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "stDesc" character varying(150);
+
+CREATE TABLE IF NOT EXISTS public."TipoCoberturaDependente" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."TipoCoberturaDependente" OWNER to postgres;
+ALTER TABLE public."TipoCoberturaDependente" ADD COLUMN if not exists "stDesc" character varying(150);
+

@@ -82,6 +82,7 @@
     <Compile Include="DataModel\Domains\Configuration\Cidade\Cidade_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Cidade\Cidade_ComposedFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Cidade\Cidade_DTO.cs" />
+    <Compile Include="DataModel\Domains\Configuration\TipoCoberturaDependente\TipoCoberturaDependente_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Estado\Estado_ComboFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Estado\Estado_ComposedFilters.cs" />
     <Compile Include="DataModel\Domains\Configuration\Estado\Estado_DTO.cs" />

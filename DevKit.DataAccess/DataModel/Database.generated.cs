@@ -19,56 +19,57 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<Associado>              Associado              { get { return this.GetTable<Associado>(); } }
-		public ITable<AssociadoDependente>    AssociadoDependente    { get { return this.GetTable<AssociadoDependente>(); } }
-		public ITable<AssociadoEmail>         AssociadoEmail         { get { return this.GetTable<AssociadoEmail>(); } }
-		public ITable<AssociadoEndereco>      AssociadoEndereco      { get { return this.GetTable<AssociadoEndereco>(); } }
-		public ITable<AssociadoTelefone>      AssociadoTelefone      { get { return this.GetTable<AssociadoTelefone>(); } }
-		public ITable<AuditLog>               AuditLog               { get { return this.GetTable<AuditLog>(); } }
-		public ITable<Autorizacao>            Autorizacao            { get { return this.GetTable<Autorizacao>(); } }
-		public ITable<Cidade>                 Cidade                 { get { return this.GetTable<Cidade>(); } }
-		public ITable<CompanyNews>            CompanyNews            { get { return this.GetTable<CompanyNews>(); } }
-		public ITable<Credenciado>            Credenciado            { get { return this.GetTable<Credenciado>(); } }
-		public ITable<CredenciadoEmail>       CredenciadoEmail       { get { return this.GetTable<CredenciadoEmail>(); } }
-		public ITable<CredenciadoEmpresa>     CredenciadoEmpresa     { get { return this.GetTable<CredenciadoEmpresa>(); } }
-		public ITable<CredenciadoEmpresaTuss> CredenciadoEmpresaTuss { get { return this.GetTable<CredenciadoEmpresaTuss>(); } }
-		public ITable<CredenciadoEndereco>    CredenciadoEndereco    { get { return this.GetTable<CredenciadoEndereco>(); } }
-		public ITable<CredenciadoTelefone>    CredenciadoTelefone    { get { return this.GetTable<CredenciadoTelefone>(); } }
-		public ITable<Empresa>                Empresa                { get { return this.GetTable<Empresa>(); } }
-		public ITable<EmpresaSecao>           EmpresaSecao           { get { return this.GetTable<EmpresaSecao>(); } }
-		public ITable<Especialidade>          Especialidade          { get { return this.GetTable<Especialidade>(); } }
-		public ITable<Estado>                 Estado                 { get { return this.GetTable<Estado>(); } }
-		public ITable<LoteGrafica>            LoteGrafica            { get { return this.GetTable<LoteGrafica>(); } }
-		public ITable<LoteGraficaCartao>      LoteGraficaCartao      { get { return this.GetTable<LoteGraficaCartao>(); } }
-		public ITable<Profile>                Profile                { get { return this.GetTable<Profile>(); } }
-		public ITable<Project>                Project                { get { return this.GetTable<Project>(); } }
-		public ITable<ProjectPhase>           ProjectPhase           { get { return this.GetTable<ProjectPhase>(); } }
-		public ITable<ProjectSprint>          ProjectSprint          { get { return this.GetTable<ProjectSprint>(); } }
-		public ITable<ProjectSprintVersion>   ProjectSprintVersion   { get { return this.GetTable<ProjectSprintVersion>(); } }
-		public ITable<ProjectUser>            ProjectUser            { get { return this.GetTable<ProjectUser>(); } }
-		public ITable<Setup>                  Setup                  { get { return this.GetTable<Setup>(); } }
-		public ITable<Survey>                 Survey                 { get { return this.GetTable<Survey>(); } }
-		public ITable<SurveyOption>           SurveyOption           { get { return this.GetTable<SurveyOption>(); } }
-		public ITable<SurveyUserOption>       SurveyUserOption       { get { return this.GetTable<SurveyUserOption>(); } }
-		public ITable<Task>                   Task                   { get { return this.GetTable<Task>(); } }
-		public ITable<TaskAccumulatorValue>   TaskAccumulatorValue   { get { return this.GetTable<TaskAccumulatorValue>(); } }
-		public ITable<TaskCategory>           TaskCategory           { get { return this.GetTable<TaskCategory>(); } }
-		public ITable<TaskCheckPoint>         TaskCheckPoint         { get { return this.GetTable<TaskCheckPoint>(); } }
-		public ITable<TaskCheckPointMark>     TaskCheckPointMark     { get { return this.GetTable<TaskCheckPointMark>(); } }
-		public ITable<TaskCustomStep>         TaskCustomStep         { get { return this.GetTable<TaskCustomStep>(); } }
-		public ITable<TaskDependency>         TaskDependency         { get { return this.GetTable<TaskDependency>(); } }
-		public ITable<TaskFlow>               TaskFlow               { get { return this.GetTable<TaskFlow>(); } }
-		public ITable<TaskFlowChange>         TaskFlowChange         { get { return this.GetTable<TaskFlowChange>(); } }
-		public ITable<TaskMessage>            TaskMessage            { get { return this.GetTable<TaskMessage>(); } }
-		public ITable<TaskProgress>           TaskProgress           { get { return this.GetTable<TaskProgress>(); } }
-		public ITable<TaskQuestion>           TaskQuestion           { get { return this.GetTable<TaskQuestion>(); } }
-		public ITable<TaskType>               TaskType               { get { return this.GetTable<TaskType>(); } }
-		public ITable<TaskTypeAccumulator>    TaskTypeAccumulator    { get { return this.GetTable<TaskTypeAccumulator>(); } }
-		public ITable<TUSS>                   TUSS                   { get { return this.GetTable<TUSS>(); } }
-		public ITable<User>                   User                   { get { return this.GetTable<User>(); } }
-		public ITable<UserEmail>              UserEmail              { get { return this.GetTable<UserEmail>(); } }
-		public ITable<UserNewsRead>           UserNewsRead           { get { return this.GetTable<UserNewsRead>(); } }
-		public ITable<UserPhone>              UserPhone              { get { return this.GetTable<UserPhone>(); } }
+		public ITable<Associado>               Associado               { get { return this.GetTable<Associado>(); } }
+		public ITable<AssociadoDependente>     AssociadoDependente     { get { return this.GetTable<AssociadoDependente>(); } }
+		public ITable<AssociadoEmail>          AssociadoEmail          { get { return this.GetTable<AssociadoEmail>(); } }
+		public ITable<AssociadoEndereco>       AssociadoEndereco       { get { return this.GetTable<AssociadoEndereco>(); } }
+		public ITable<AssociadoTelefone>       AssociadoTelefone       { get { return this.GetTable<AssociadoTelefone>(); } }
+		public ITable<AuditLog>                AuditLog                { get { return this.GetTable<AuditLog>(); } }
+		public ITable<Autorizacao>             Autorizacao             { get { return this.GetTable<Autorizacao>(); } }
+		public ITable<Cidade>                  Cidade                  { get { return this.GetTable<Cidade>(); } }
+		public ITable<CompanyNews>             CompanyNews             { get { return this.GetTable<CompanyNews>(); } }
+		public ITable<Credenciado>             Credenciado             { get { return this.GetTable<Credenciado>(); } }
+		public ITable<CredenciadoEmail>        CredenciadoEmail        { get { return this.GetTable<CredenciadoEmail>(); } }
+		public ITable<CredenciadoEmpresa>      CredenciadoEmpresa      { get { return this.GetTable<CredenciadoEmpresa>(); } }
+		public ITable<CredenciadoEmpresaTuss>  CredenciadoEmpresaTuss  { get { return this.GetTable<CredenciadoEmpresaTuss>(); } }
+		public ITable<CredenciadoEndereco>     CredenciadoEndereco     { get { return this.GetTable<CredenciadoEndereco>(); } }
+		public ITable<CredenciadoTelefone>     CredenciadoTelefone     { get { return this.GetTable<CredenciadoTelefone>(); } }
+		public ITable<Empresa>                 Empresa                 { get { return this.GetTable<Empresa>(); } }
+		public ITable<EmpresaSecao>            EmpresaSecao            { get { return this.GetTable<EmpresaSecao>(); } }
+		public ITable<Especialidade>           Especialidade           { get { return this.GetTable<Especialidade>(); } }
+		public ITable<Estado>                  Estado                  { get { return this.GetTable<Estado>(); } }
+		public ITable<LoteGrafica>             LoteGrafica             { get { return this.GetTable<LoteGrafica>(); } }
+		public ITable<LoteGraficaCartao>       LoteGraficaCartao       { get { return this.GetTable<LoteGraficaCartao>(); } }
+		public ITable<Profile>                 Profile                 { get { return this.GetTable<Profile>(); } }
+		public ITable<Project>                 Project                 { get { return this.GetTable<Project>(); } }
+		public ITable<ProjectPhase>            ProjectPhase            { get { return this.GetTable<ProjectPhase>(); } }
+		public ITable<ProjectSprint>           ProjectSprint           { get { return this.GetTable<ProjectSprint>(); } }
+		public ITable<ProjectSprintVersion>    ProjectSprintVersion    { get { return this.GetTable<ProjectSprintVersion>(); } }
+		public ITable<ProjectUser>             ProjectUser             { get { return this.GetTable<ProjectUser>(); } }
+		public ITable<Setup>                   Setup                   { get { return this.GetTable<Setup>(); } }
+		public ITable<Survey>                  Survey                  { get { return this.GetTable<Survey>(); } }
+		public ITable<SurveyOption>            SurveyOption            { get { return this.GetTable<SurveyOption>(); } }
+		public ITable<SurveyUserOption>        SurveyUserOption        { get { return this.GetTable<SurveyUserOption>(); } }
+		public ITable<Task>                    Task                    { get { return this.GetTable<Task>(); } }
+		public ITable<TaskAccumulatorValue>    TaskAccumulatorValue    { get { return this.GetTable<TaskAccumulatorValue>(); } }
+		public ITable<TaskCategory>            TaskCategory            { get { return this.GetTable<TaskCategory>(); } }
+		public ITable<TaskCheckPoint>          TaskCheckPoint          { get { return this.GetTable<TaskCheckPoint>(); } }
+		public ITable<TaskCheckPointMark>      TaskCheckPointMark      { get { return this.GetTable<TaskCheckPointMark>(); } }
+		public ITable<TaskCustomStep>          TaskCustomStep          { get { return this.GetTable<TaskCustomStep>(); } }
+		public ITable<TaskDependency>          TaskDependency          { get { return this.GetTable<TaskDependency>(); } }
+		public ITable<TaskFlow>                TaskFlow                { get { return this.GetTable<TaskFlow>(); } }
+		public ITable<TaskFlowChange>          TaskFlowChange          { get { return this.GetTable<TaskFlowChange>(); } }
+		public ITable<TaskMessage>             TaskMessage             { get { return this.GetTable<TaskMessage>(); } }
+		public ITable<TaskProgress>            TaskProgress            { get { return this.GetTable<TaskProgress>(); } }
+		public ITable<TaskQuestion>            TaskQuestion            { get { return this.GetTable<TaskQuestion>(); } }
+		public ITable<TaskType>                TaskType                { get { return this.GetTable<TaskType>(); } }
+		public ITable<TaskTypeAccumulator>     TaskTypeAccumulator     { get { return this.GetTable<TaskTypeAccumulator>(); } }
+		public ITable<TipoCoberturaDependente> TipoCoberturaDependente { get { return this.GetTable<TipoCoberturaDependente>(); } }
+		public ITable<TUSS>                    TUSS                    { get { return this.GetTable<TUSS>(); } }
+		public ITable<User>                    User                    { get { return this.GetTable<User>(); } }
+		public ITable<UserEmail>               UserEmail               { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserNewsRead>            UserNewsRead            { get { return this.GetTable<UserNewsRead>(); } }
+		public ITable<UserPhone>               UserPhone               { get { return this.GetTable<UserPhone>(); } }
 
 		public DevKitDB()
 		{
@@ -117,12 +118,14 @@ namespace DataModel
 	[Table(Schema="public", Name="AssociadoDependente")]
 	public partial class AssociadoDependente
 	{
-		[PrimaryKey, Identity] public long   id          { get; set; } // bigint
-		[Column,     Nullable] public long?  fkEmpresa   { get; set; } // bigint
-		[Column,     Nullable] public long?  fkAssociado { get; set; } // bigint
-		[Column,     Nullable] public long?  fkCartao    { get; set; } // bigint
-		[Column,     Nullable] public string stNome      { get; set; } // character varying(35)
-		[Column,     Nullable] public string stCPF       { get; set; } // character varying(30)
+		[PrimaryKey, Identity] public long      id                        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEmpresa                 { get; set; } // bigint
+		[Column,     Nullable] public long?     fkAssociado               { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCartao                  { get; set; } // bigint
+		[Column,     Nullable] public string    stNome                    { get; set; } // character varying(35)
+		[Column,     Nullable] public string    stCPF                     { get; set; } // character varying(30)
+		[Column,     Nullable] public DateTime? dtNasc                    { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkTipoCoberturaDependente { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="AssociadoEmail")]
@@ -622,6 +625,13 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkTaskCategory { get; set; } // bigint
 	}
 
+	[Table(Schema="public", Name="TipoCoberturaDependente")]
+	public partial class TipoCoberturaDependente
+	{
+		[PrimaryKey, Identity] public long   id     { get; set; } // bigint
+		[Column,     Nullable] public string stDesc { get; set; } // character varying(150)
+	}
+
 	[Table(Schema="public", Name="TUSS")]
 	public partial class TUSS
 	{
@@ -941,6 +951,12 @@ namespace DataModel
 		}
 
 		public static TaskTypeAccumulator Find(this ITable<TaskTypeAccumulator> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static TipoCoberturaDependente Find(this ITable<TipoCoberturaDependente> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

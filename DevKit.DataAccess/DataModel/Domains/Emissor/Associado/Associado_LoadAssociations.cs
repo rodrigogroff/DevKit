@@ -60,12 +60,25 @@ namespace DataModel
                 OrderBy(t => t.id).
                 ToList();
 
+            var tmpLstTipoCob = db.TipoCoberturaDependente.ToList();
+
             foreach (var item in tmpLst)
+            {
                 item.snuTit = db.Associado.
                                 Where(y => y.id == item.fkAssociado).
                                 FirstOrDefault().
                                 nuTitularidade.
                                 ToString();
+
+                if (item.fkTipoCoberturaDependente != null)
+                    item.sfkTipoCoberturaDependente = tmpLstTipoCob.
+                                                    Where(y => y.id == item.fkTipoCoberturaDependente).
+                                                    FirstOrDefault().
+                                                    stDesc;
+
+                if (item.dtNasc != null)
+                    item.sdtNasc = Convert.ToDateTime(item.dtNasc).ToString("dd/MM/yyyy");
+            }                
             
             return tmpLst;
         }

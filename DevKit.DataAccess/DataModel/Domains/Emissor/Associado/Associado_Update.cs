@@ -83,6 +83,10 @@ namespace DataModel
                         ent.fkAssociado = this.id;
                         ent.stNome = ent.stNome.ToUpper().TrimEnd();
 
+                        ent.dtNasc = new DateTime ( Convert.ToInt32(ent.sdtNasc.Substring(4, 4)), 
+                                                    Convert.ToInt32(ent.sdtNasc.Substring(2, 2)), 
+                                                    Convert.ToInt32(ent.sdtNasc.Substring(0, 2)) );
+
                         if (ent.id == 0)
                         {
                             if ((from ne in db.AssociadoDependente where ne.stNome == ent.stNome select ne).Any())
@@ -95,6 +99,7 @@ namespace DataModel
                                 db.InsertWithIdentity(new Associado
                                 {
                                     fkEmpresa = this.fkEmpresa,
+                                    fkSecao = this.fkSecao,
                                     fkUserAdd = user.id,
                                     nuMatricula = this.nuMatricula,
                                     tgStatus =  TipoSituacaoCartao.Habilitado,

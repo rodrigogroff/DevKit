@@ -96,6 +96,7 @@ angular.module('app.services', ['ngResource'])
         EmissorListagemFechamento: $resource('api/emissorlistagemfechamento/:id', {}, opcoes),
         LotesExpAutorizacao: $resource('api/lotesexpautorizacao/:id', {}, opcoes),
         TipoSituacaoCombo: $resource('api/tiposituacao/:id', {}, opcoes),
-        TipoExpedicaoCombo: $resource('api/tipoexpedicao/:id', {}, opcoes)
+        TipoExpedicaoCombo: $resource('api/tipoexpedicao/:id', {}, opcoes),
+        TipoCoberturaDependenteCombo: $resource('api/tipocoberturadependentecombo/:id', {}, opcoes),
 	};
 }]);

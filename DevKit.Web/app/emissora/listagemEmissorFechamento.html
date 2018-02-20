@@ -252,7 +252,52 @@
                                 <br />
                             </div>
                             <div ng-show="list.length > 0">
-                                
+                                <br />
+                                <h2>Demonstrativo de fechamento ConveyNET</h2>
+                                Período fechamento: <b>{{result.mesAno}}</b><br />
+                                Credenciados ativos: <b>{{result.totCreds}}</b><br />
+                                Associados ativos: <b>{{result.totAssociados}}</b><br />
+                                Total valor: R$ <b>{{result.stotVlr}}</b><br />
+                                Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
+                                <br />
+
+                                <div data-ng-repeat="mdl in list">
+                                    <h3>{{mdl.matricula}} - {{mdl.nome}}</h3>
+                                    CPF: <b>{{mdl.cpf}}</b><br />
+                                    Valor total procedimento: <b>{{mdl.stotVlr}}</b><br />
+                                    Valor total co-participação: <b>{{mdl.stotCoPart}}</b><br />
+                                    <br />
+
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th width="70px">Serial</th>
+                                                <th width="130px">Portador</th>
+                                                <th width="150px">Data Solicitação</th>
+                                                <th width="320px">Credenciado</th>
+                                                <th width="180px">Especialidade</th>
+                                                <th width="180px">CNPJ</th>
+                                                <th width="90px">Parcela</th>
+                                                <th width="120px">Valor</th>
+                                                <th width="120px">Co-Part.</th>
+                                                <th width="300px">PROCEDIMENTO TUSS</th>
+                                            </tr>
+                                        </thead>
+                                        <tr data-ng-repeat="m in mdl.results">
+                                            <td>{{ m.serial }}</td>
+                                            <td>{{ m.portador }}</td>
+                                            <td>{{ m.dtSolicitacao }}</td>
+                                            <td>{{ m.codCred }} - {{ m.credenciado }}</td>
+                                            <td>{{ m.especialidade }}</td>
+                                            <td>{{ m.cnpj }}</td>
+                                            <td>{{ m.parcela }}</td>
+                                            <td>{{ m.vlr }}</td>
+                                            <td>{{ m.vlrCoPart }}</td>
+                                            <td>{{ m.tuss }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
                             </div>
                         </td>
                     </tr>

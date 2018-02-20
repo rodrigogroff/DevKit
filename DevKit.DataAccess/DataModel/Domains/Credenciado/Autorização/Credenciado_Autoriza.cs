@@ -86,9 +86,9 @@ namespace DataModel
             var idAutOriginal = Convert.ToInt64(db.InsertWithIdentity(new Autorizacao
             {
                 dtSolicitacao = DateTime.Now,
-                fkAssociado = associado.id,
+                fkAssociado = associadoTit.id,
                 fkCredenciado = db.currentCredenciado.id,
-                fkEmpresa = associado.fkEmpresa,
+                fkEmpresa = associadoTit.fkEmpresa,
                 fkProcedimento = tuss.id,
                 nuAno = dt.Year,
                 nuMes = dt.Month,
@@ -100,6 +100,7 @@ namespace DataModel
                 vrParcela = proc.vrProcedimento /  proc.nuParcelas,
                 vrCoPart = proc.vrCoPart,
                 vrParcelaCoPart = proc.vrCoPart / proc.nuParcelas,
+                fkAssociadoPortador = associado.id
             }));
 
             if (proc.nuParcelas > 1)
@@ -125,6 +126,7 @@ namespace DataModel
                         vrParcela = proc.vrProcedimento / proc.nuParcelas,
                         vrCoPart = proc.vrCoPart,
                         vrParcelaCoPart = proc.vrCoPart / proc.nuParcelas,
+                        fkAssociadoPortador = associado.id
                     });
                 }
             }

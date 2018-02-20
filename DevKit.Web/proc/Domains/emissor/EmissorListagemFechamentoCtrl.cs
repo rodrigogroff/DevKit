@@ -44,6 +44,7 @@ namespace DevKit.Web.Controllers
                     switch (filter.modo)
                     {
                         case 1: return Ok(new Empresa().ListagemFechamento_AssocSint(db, filter));
+                        case 2: return Ok(new Empresa().ListagemFechamento_AssocAnalitico(db, filter));
                     }
 
                     break;

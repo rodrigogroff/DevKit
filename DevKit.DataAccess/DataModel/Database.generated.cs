@@ -183,22 +183,23 @@ namespace DataModel
 	[Table(Schema="public", Name="Autorizacao")]
 	public partial class Autorizacao
 	{
-		[PrimaryKey, Identity] public long      id              { get; set; } // bigint
-		[Column,     Nullable] public DateTime? dtSolicitacao   { get; set; } // timestamp (6) without time zone
-		[Column,     Nullable] public long?     fkCredenciado   { get; set; } // bigint
-		[Column,     Nullable] public long?     fkEmpresa       { get; set; } // bigint
-		[Column,     Nullable] public long?     fkProcedimento  { get; set; } // bigint
-		[Column,     Nullable] public long?     fkAssociado     { get; set; } // bigint
-		[Column,     Nullable] public long?     nuMes           { get; set; } // bigint
-		[Column,     Nullable] public long?     nuAno           { get; set; } // bigint
-		[Column,     Nullable] public long?     tgSituacao      { get; set; } // bigint
-		[Column,     Nullable] public long?     fkAutOriginal   { get; set; } // bigint
-		[Column,     Nullable] public long?     vrProcedimento  { get; set; } // bigint
-		[Column,     Nullable] public long?     vrParcela       { get; set; } // bigint
-		[Column,     Nullable] public long?     nuTotParcelas   { get; set; } // bigint
-		[Column,     Nullable] public long?     nuIndice        { get; set; } // bigint
-		[Column,     Nullable] public long?     vrCoPart        { get; set; } // bigint
-		[Column,     Nullable] public long?     vrParcelaCoPart { get; set; } // bigint
+		[PrimaryKey, Identity] public long      id                  { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtSolicitacao       { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkCredenciado       { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEmpresa           { get; set; } // bigint
+		[Column,     Nullable] public long?     fkProcedimento      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkAssociado         { get; set; } // bigint
+		[Column,     Nullable] public long?     nuMes               { get; set; } // bigint
+		[Column,     Nullable] public long?     nuAno               { get; set; } // bigint
+		[Column,     Nullable] public long?     tgSituacao          { get; set; } // bigint
+		[Column,     Nullable] public long?     fkAutOriginal       { get; set; } // bigint
+		[Column,     Nullable] public long?     vrProcedimento      { get; set; } // bigint
+		[Column,     Nullable] public long?     vrParcela           { get; set; } // bigint
+		[Column,     Nullable] public long?     nuTotParcelas       { get; set; } // bigint
+		[Column,     Nullable] public long?     nuIndice            { get; set; } // bigint
+		[Column,     Nullable] public long?     vrCoPart            { get; set; } // bigint
+		[Column,     Nullable] public long?     vrParcelaCoPart     { get; set; } // bigint
+		[Column,     Nullable] public long?     fkAssociadoPortador { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Cidade")]

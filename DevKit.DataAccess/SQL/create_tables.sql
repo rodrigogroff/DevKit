@@ -406,6 +406,13 @@ ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAssociado" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuMes" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuAno" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "tgSituacao" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAutOriginal" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "vrProcedimento" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "vrCoPart" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "vrParcela" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "vrParcelaCoPart" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuTotParcelas" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuIndice" bigint;
 
 CREATE TABLE IF NOT EXISTS public."LoteGrafica" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."LoteGrafica" OWNER to postgres;

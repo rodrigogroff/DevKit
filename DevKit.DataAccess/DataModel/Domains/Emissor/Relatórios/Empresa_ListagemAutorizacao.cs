@@ -15,6 +15,7 @@ namespace DataModel
 
         public string   tuss, 
                         espec,
+                        mes, ano,
                         nomeAssociado, 
                         nomeCredenciado, 
                         codCredenciado, 
@@ -84,6 +85,14 @@ namespace DataModel
                 query = from e in query
                         join assoc in db.Associado on e.fkAssociado equals assoc.id
                         where assoc.nuMatricula.ToString() == filter.matricula
+                        select e;
+            }
+
+            if (!string.IsNullOrEmpty(filter.mes) && !string.IsNullOrEmpty(filter.ano))
+            {
+                query = from e in query
+                        where e.nuMes.ToString() == filter.mes
+                        where e.nuAno.ToString() == filter.ano
                         select e;
             }
 

@@ -921,7 +921,7 @@
     <Compile Include="proc\Domains\dba\LotesGraficaCtrl.cs" />
     <Compile Include="proc\Domains\emissor\EmissorListagemAutorizacaoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\EmissorListagemFechamentoCtrl.cs" />
-    <Compile Include="proc\Domains\emissor\EmissorListagemMedicoCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\EmissorListagemCredenciadoCtrl.cs" />
     <Compile Include="proc\Domains\credenciado\CredenciadoListagemAutorizacaoCtrl.cs" />
     <Compile Include="proc\Domains\credenciado\AutorizaProcCtrl.cs" />
     <Compile Include="proc\Domains\Misc\CartaoCtrl.cs" />

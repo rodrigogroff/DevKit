@@ -22,6 +22,19 @@
                     </td>
                 </tr>
                 <tr height="36px">
+                    <td></td>
+                    <td><b>Mês</b></td>
+                    <td>
+                        <input type="hidden" style="width:100%" ui-select2="selectMonths" data-placeholder="(Selecione)" ng-model="campos.mes" />
+                    </td>
+                    <td></td>
+                    <td><b>Ano</b></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.ano" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="36px">
                     <td width="25px"></td>
                     <td width="150px"><b>Código TUSS</b></td>
                     <td width="220px">
@@ -105,6 +118,8 @@
                                             <th style="min-width:200px">Associado</th>
                                             <th style="min-width:200px">Credenciado</th>
                                             <th style="min-width:150px">Especialidade</th>
+                                            <th style="min-width:90px">Parcela</th>
+                                            <th style="min-width:90px">Mês / Ano</th>
                                             <th style="min-width:300px">TUSS - Procedimento</th>
                                         </tr>
                                     </thead>
@@ -114,6 +129,8 @@
                                         <td>{{ mdl.snuMatriculaAssociado }} - {{ mdl.sfkAssociado }}</td>
                                         <td>{{ mdl.snuCodigoCredenciado }} - {{ mdl.sfkCredenciado }}</td>
                                         <td>{{ mdl.sfkEspecialidade }}</td>
+                                        <td>{{ mdl.nuIndice }} / {{ mdl.nuTotParcelas }}</td>
+                                        <td>{{ mdl.nuMes }} / {{ mdl.nuAno }}</td>
                                         <td>{{ mdl.sfkProcedimento }}</td>
                                     </tr>
                                 </table>

@@ -41,7 +41,7 @@ namespace DataModel
                     totAssociados = 0,
                     procsNCad = 0;
 
-        public string stotVlr, stotCoPart;
+        public string stotVlr, stotCoPart, mesAno;
 
         public List<FechCredSint> results = new List<FechCredSint>();
     }
@@ -75,6 +75,8 @@ namespace DataModel
                         ToList();
 
             resultado.failed = !auts.Any();
+
+            resultado.mesAno = filter.mes.ToString().PadLeft(2, '0') + " / " + filter.ano.ToString();
 
             if (resultado.failed)
                 return;
@@ -136,8 +138,9 @@ namespace DataModel
                         {
                             if (!item.pcads.Contains(strTUSs))
                                 item.pcads += strTUSs + ", ";
-                            totVlr += (long)cfgTuss.vrProcedimento;
-                            totCoPart += (long)cfgTuss.vrCoPart;
+
+                            totVlr += (long)aut.vrParcela;
+                            totCoPart += (long)aut.vrParcelaCoPart;
                         }
                         else
                         {

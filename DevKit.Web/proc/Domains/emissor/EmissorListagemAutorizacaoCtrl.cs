@@ -17,6 +17,8 @@ namespace DevKit.Web.Controllers
                 fkSecao = Request.GetQueryStringValue("fkSecao", 0),
                 tuss = Request.GetQueryStringValue("tuss"),
                 espec = Request.GetQueryStringValue("espec"),
+                mes = Request.GetQueryStringValue("mes"),
+                ano = Request.GetQueryStringValue("ano"),
                 nomeAssociado = Request.GetQueryStringValue("nomeAssociado"),
                 nomeCredenciado = Request.GetQueryStringValue("nomeCredenciado"),
                 codCredenciado = Request.GetQueryStringValue("codCredenciado"),

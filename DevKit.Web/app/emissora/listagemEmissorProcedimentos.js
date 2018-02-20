@@ -31,6 +31,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.permID = 602;
 
         $scope.selectSecao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
+        $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
 
         CheckPermissions();
 	}
@@ -51,6 +52,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             fkSecao: $scope.campos.fkSecao,
             tuss: $scope.campos.tuss,
             espec: $scope.campos.espec,
+            mes: $scope.campos.mes,
+            ano: $scope.campos.ano,
             nomeAssociado: $scope.campos.nomeAssociado,
             nomeCredenciado: $scope.campos.nomeCredenciado,
             codCredenciado: $scope.campos.codCredenciado,

@@ -93,6 +93,8 @@
                             </div>
                             <div ng-show="list.length > 0">
                                 <br />
+                                <h2>Demonstrativo de fechamento ConveyNET</h2>
+                                Período fechamento: <b>{{result.mesAno}}</b><br />
                                 Credenciados ativos: <b>{{result.totCreds}}</b><br />
                                 Associados ativos: <b>{{result.totAssociados}}</b><br />
                                 Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
@@ -143,37 +145,52 @@
                             </div>
                             <div ng-show="list.length > 0">
                                 <br />
+                                <h2>Demonstrativo de fechamento ConveyNET</h2>
+                                Período fechamento: <b>{{result.mesAno}}</b><br />
                                 Credenciados ativos: <b>{{result.totCreds}}</b><br />
                                 Associados ativos: <b>{{result.totAssociados}}</b><br />
-                                Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
                                 Total valor: R$ <b>{{result.stotVlr}}</b><br />
                                 Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
                                 <br />
 
                                 <div data-ng-repeat="mdl in list">
-                                    
-                                    <h3>{{mdl.nomeCredenciado}}</h3>
+
+                                    <h3>{{mdl.codCredenciado}} - {{mdl.nomeCredenciado}}</h3>
+                                    CNPJ: <b>{{mdl.cnpj}}</b><br />
+                                    Valor total procedimento: <b>{{mdl.stotVlr}}</b><br />
+                                    Valor total co-participação: <b>{{mdl.stotCoPart}}</b><br />
+                                    <br />
 
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th width="70px">Serial</th>
                                                 <th width="150px">Data Solicitação</th>
+                                                <th width="180px">Empresa / Seção</th>
                                                 <th width="180px">CPF</th>
                                                 <th width="90px">Matrícula</th>
                                                 <th width="300px">Associado</th>
+                                                <th width="90px">Parcela</th>
+                                                <th width="120px">Valor</th>
+                                                <th width="120px">Co-Part.</th>
+                                                <th width="300px">PROCEDIMENTO TUSS</th>
                                             </tr>
                                         </thead>
                                         <tr data-ng-repeat="m in mdl.results">
                                             <td>{{ m.serial }}</td>
                                             <td>{{ m.dtSolicitacao }}</td>
+                                            <td>{{ m.secao }}</td>
                                             <td>{{ m.cpf }}</td>
                                             <td>{{ m.matricula }}</td>
                                             <td>{{ m.associado }}</td>
+                                            <td>{{ m.parcela }}</td>
+                                            <td>{{ m.vlr }}</td>
+                                            <td>{{ m.vlrCoPart }}</td>
+                                            <td>{{ m.tuss }}</td>
                                         </tr>
                                     </table>
                                 </div>
-                                                                
+
                             </div>
                         </td>
                     </tr>

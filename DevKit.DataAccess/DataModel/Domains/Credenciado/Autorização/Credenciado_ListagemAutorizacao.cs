@@ -26,6 +26,7 @@ namespace DataModel
 
             var query = from e in db.Autorizacao
                         where e.fkCredenciado == db.currentCredenciado.id
+                        where e.fkAutOriginal == null
                         select e;
             
             if (!string.IsNullOrEmpty(filter.tuss))

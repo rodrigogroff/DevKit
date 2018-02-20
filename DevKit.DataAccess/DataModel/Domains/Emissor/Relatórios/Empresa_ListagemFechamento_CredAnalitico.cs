@@ -1,8 +1,6 @@
-﻿using DevKit.DataAccess;
-using LinqToDB;
+﻿using LinqToDB;
 using SyCrafEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,8 +11,10 @@ namespace DataModel
         public string   serial, 
                         dtSolicitacao, 
                         cpf,
+                        secao,
                         matricula,
                         associado,
+                        parcela,
                         vlr,
                         vlrCoPart,
                         tuss;
@@ -25,9 +25,12 @@ namespace DataModel
         public long     totVlr = 0, 
                         totCoPart = 0;
 
-        public string   codCredenciado,
+        public string codCredenciado,
                         nomeCredenciado,
-                        cnpj;
+                        cnpj,
+                        stotVlr,
+                        stotCoPart, 
+                        tuss;
 
         public List<FechCredAnalDetalhe> results = new List<FechCredAnalDetalhe>();
     }
@@ -36,13 +39,14 @@ namespace DataModel
     {
         public bool failed = false;
 
-        public long     totCreds = 0,
+        public long totCreds = 0,
                         totAssociados = 0,
                         totVlr = 0,
-                        totCoPart = 0;
+                        totCoPart = 0;            
 
         public string   stotVlr, 
-                        stotCoPart;
+                        stotCoPart,
+                        mesAno;
 
         public List<FechCredAnalitico> results = new List<FechCredAnalitico>();
     }
@@ -75,8 +79,11 @@ namespace DataModel
                         Where(y => y.nuAno == filter.ano).
                         ToList();
 
-            resultado.failed = !auts.Any();
+            var secoes = db.EmpresaSecao.Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).ToList();
 
+            resultado.failed = !auts.Any();
+            resultado.mesAno = filter.mes.ToString().PadLeft(2, '0') + " / " + filter.ano.ToString();
+            
             if (resultado.failed)
                 return;
 
@@ -92,8 +99,6 @@ namespace DataModel
             var lstMats = db.Associado.Where(y => lstIdsAssocs.Contains(y.id)).Select (y=>y.nuMatricula).ToList();
             var lstAssocs = db.Associado.Where(y => lstMats.Contains(y.nuMatricula)).ToList();
 
-            
-
             resultado.totCreds = auts.Select(y => y.fkCredenciado).Distinct().Count();
             resultado.totAssociados = auts.Select(y => y.fkAssociado).Distinct().Count();
 
@@ -107,7 +112,9 @@ namespace DataModel
                     {
                         cnpj = cred.stCnpj,
                         codCredenciado = cred.nuCodigo.ToString(),
-                        nomeCredenciado = cred.stNome
+                        nomeCredenciado = cred.stNome,
+                        totCoPart = 0,
+                        totVlr = 0
                     };
 
                     foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id).
@@ -118,15 +125,33 @@ namespace DataModel
                                     Where(y => y.id == aut.fkAssociado).
                                     FirstOrDefault();
 
+                        var secao = secoes.Where(y => y.id == assoc.fkSecao).FirstOrDefault();
+                        var proc = procsTuus.Where(y => y.id == aut.fkProcedimento).FirstOrDefault();
+
                         resultCred.results.Add(new FechCredAnalDetalhe
                         {
                             serial = serial.ToString(),
                             associado = assoc.stName,
+                            cpf = assoc.stCPF,
+                            secao = secao.nuEmpresa + " - " + secao.stDesc,
+                            parcela = aut.nuIndice + " / " + aut.nuTotParcelas,
                             dtSolicitacao = Convert.ToDateTime(aut.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
-                            matricula = assoc.nuMatricula.ToString()
+                            matricula = assoc.nuMatricula.ToString(),
+                            vlr = mon.setMoneyFormat((long)aut.vrParcela),
+                            vlrCoPart = mon.setMoneyFormat((long)aut.vrParcelaCoPart),
+                            tuss = proc.nuCodTUSS + " - " + proc.stProcedimento
                         });
+
+                        resultCred.totVlr += (long)aut.vrParcela;
+                        resultCred.totCoPart += (long)aut.vrParcelaCoPart;
                     }
 
+                    resultCred.stotVlr = mon.setMoneyFormat(resultCred.totVlr);
+                    resultCred.stotCoPart = mon.setMoneyFormat(resultCred.totCoPart);
+
+                    resultado.totVlr += resultCred.totVlr;
+                    resultado.totCoPart += resultCred.totCoPart;
+                    
                     resultado.results.Add(resultCred);
                 }
             }

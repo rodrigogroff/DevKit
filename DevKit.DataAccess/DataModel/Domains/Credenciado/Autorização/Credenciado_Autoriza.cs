@@ -67,29 +67,67 @@ namespace DataModel
                                            y.fkEmpresa == secaoTb.fkEmpresa))
                 return "Credenciado não conveniado à empresa " + _params.emp;
 
-            var proc = db.TUSS.
-                            Where(y => y.nuCodTUSS == _params.tuss).
-                            FirstOrDefault();
+            var tuss = db.TUSS.Where(y => y.nuCodTUSS == _params.tuss).FirstOrDefault();
 
-            if (proc == null)
+            if (tuss == null)
                 return "Procedimento " + _params.tuss + " inválido!";
+
+            var proc = db.CredenciadoEmpresaTuss.
+                            Where(y => y.fkCredenciado == db.currentCredenciado.id).
+                            Where(y => y.fkEmpresa == associado.fkEmpresa).
+                            Where(y => y.nuTUSS == tuss.nuCodTUSS).
+                            FirstOrDefault();
 
             DateTime dt = DateTime.Now;
 
             if (dt.Day < empTb.nuDiaFech)
                 dt = dt.AddMonths(-1);
 
-            db.Insert(new Autorizacao
+            var idAutOriginal = Convert.ToInt64(db.InsertWithIdentity(new Autorizacao
             {
                 dtSolicitacao = DateTime.Now,
                 fkAssociado = associado.id,
                 fkCredenciado = db.currentCredenciado.id,
                 fkEmpresa = associado.fkEmpresa,
-                fkProcedimento = proc.id,
+                fkProcedimento = tuss.id,
                 nuAno = dt.Year,
                 nuMes = dt.Month,
                 tgSituacao = TipoSitAutorizacao.Autorizado,
-            });
+                fkAutOriginal = null,
+                nuIndice = 1,
+                nuTotParcelas = proc.nuParcelas,
+                vrProcedimento = proc.vrProcedimento,
+                vrParcela = proc.vrProcedimento /  proc.nuParcelas,
+                vrCoPart = proc.vrCoPart,
+                vrParcelaCoPart = proc.vrCoPart / proc.nuParcelas,
+            }));
+
+            if (proc.nuParcelas > 1)
+            {
+                for (int nuParc = 2; nuParc <= proc.nuParcelas; ++nuParc)
+                {
+                    dt = dt.AddMonths(1);
+
+                    db.Insert(new Autorizacao
+                    {
+                        dtSolicitacao = DateTime.Now,
+                        fkAssociado = associado.id,
+                        fkCredenciado = db.currentCredenciado.id,
+                        fkEmpresa = associado.fkEmpresa,
+                        fkProcedimento = tuss.id,
+                        nuAno = dt.Year,
+                        nuMes = dt.Month,
+                        tgSituacao = TipoSitAutorizacao.Autorizado,
+                        fkAutOriginal = idAutOriginal,
+                        nuIndice = nuParc,
+                        nuTotParcelas = proc.nuParcelas,
+                        vrProcedimento = proc.vrProcedimento,
+                        vrParcela = proc.vrProcedimento / proc.nuParcelas,
+                        vrCoPart = proc.vrCoPart,
+                        vrParcelaCoPart = proc.vrCoPart / proc.nuParcelas,
+                    });
+                }
+            }
 
             return "";
 		}

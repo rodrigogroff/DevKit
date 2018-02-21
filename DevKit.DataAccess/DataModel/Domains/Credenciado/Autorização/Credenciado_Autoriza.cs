@@ -8,7 +8,7 @@ namespace DataModel
     public class AutorizaProcedimentoParams
     {
         public string ca, senha, titVia;
-        public long emp, mat, tuss;
+        public long emp, mat, tuss, codigoCred;
     }
 
     public partial class Credenciado
@@ -63,7 +63,16 @@ namespace DataModel
             if (associado.tgStatus == TipoSituacaoCartao.Bloqueado)
                 return "Cartão bloqueado!";
 
-            if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == db.currentCredenciado.id &&
+            var curCred = db.currentCredenciado;
+
+            if (_params.codigoCred > 0)
+            {
+                curCred = db.Credenciado.
+                            Where(y => y.nuCodigo == _params.codigoCred).
+                            FirstOrDefault();
+            }
+
+            if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == curCred.id &&
                                            y.fkEmpresa == secaoTb.fkEmpresa))
                 return "Credenciado não conveniado à empresa " + _params.emp;
 
@@ -73,7 +82,7 @@ namespace DataModel
                 return "Procedimento " + _params.tuss + " inválido!";
 
             var proc = db.CredenciadoEmpresaTuss.
-                            Where(y => y.fkCredenciado == db.currentCredenciado.id).
+                            Where(y => y.fkCredenciado == curCred.id).
                             Where(y => y.fkEmpresa == associado.fkEmpresa).
                             Where(y => y.nuTUSS == tuss.nuCodTUSS).
                             FirstOrDefault();
@@ -87,7 +96,7 @@ namespace DataModel
             {
                 dtSolicitacao = DateTime.Now,
                 fkAssociado = associadoTit.id,
-                fkCredenciado = db.currentCredenciado.id,
+                fkCredenciado = curCred.id,
                 fkEmpresa = associadoTit.fkEmpresa,
                 fkProcedimento = tuss.id,
                 nuAno = dt.Year,
@@ -113,7 +122,7 @@ namespace DataModel
                     {
                         dtSolicitacao = DateTime.Now,
                         fkAssociado = associado.id,
-                        fkCredenciado = db.currentCredenciado.id,
+                        fkCredenciado = curCred.id,
                         fkEmpresa = associado.fkEmpresa,
                         fkProcedimento = tuss.id,
                         nuAno = dt.Year,

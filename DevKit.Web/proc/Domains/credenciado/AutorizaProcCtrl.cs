@@ -17,6 +17,7 @@ namespace DevKit.Web.Controllers
                 ca = Request.GetQueryStringValue("ca"),
                 senha = Request.GetQueryStringValue("senha"),
                 tuss = Request.GetQueryStringValue<long>("tuss", 0),
+                codigoCred = Request.GetQueryStringValue<long>("codigoCred", 0),
                 titVia = Request.GetQueryStringValue("titVia")?.PadLeft(4, '0'),
             });
 

@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -7,7 +8,8 @@ namespace DataModel
 {
 	public class TUSSFilter : BaseFilter
     {
-        public string   codigo, 
+        public string   codigo,
+                        codigoCred,
                         procedimento,
                         emp;
 
@@ -20,6 +22,21 @@ namespace DataModel
         {
             if (filter.procedimento != null)
                 filter.procedimento = filter.procedimento.ToUpper();
+
+            var lstTUSSCred = new List<long?>();
+
+            if (filter.codigoCred != null && (filter.aut != null && filter.aut == true))
+            {
+                var cred = db.Credenciado.
+                            Where(y => y.nuCodigo.ToString() == filter.codigoCred).
+                            FirstOrDefault();
+
+                lstTUSSCred = db.CredenciadoEmpresaTuss.
+                                Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
+                                Where(y => y.fkCredenciado == cred.id).
+                                Select(y => y.nuTUSS).
+                                ToList();
+            }
 
             var query = from e in db.TUSS select e;
 
@@ -34,6 +51,13 @@ namespace DataModel
             {
                 query = from e in query
                         where e.nuCodTUSS.ToString() == filter.codigo
+                        select e;
+            }
+
+            if (lstTUSSCred.Any())
+            {
+                query = from e in query
+                        where lstTUSSCred.Contains(e.nuCodTUSS)
                         select e;
             }
 

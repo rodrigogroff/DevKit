@@ -73,7 +73,7 @@ namespace DevKit.Web.Controllers
 
             switch (userLoggedType)
             {
-                case "1": // medico
+                case "1": // credenciado
                     {
                         var userCurrentName = userLoggedName;
                         var tagName = CacheTags.Credenciado + userLoggedCodigo;

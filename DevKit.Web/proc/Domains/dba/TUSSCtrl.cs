@@ -16,18 +16,17 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var filter = new TUSSFilter
+            return Ok(new TUSS().ComposedFilters(db, new TUSSFilter
             {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 busca = Request.GetQueryStringValue("busca"),
                 emp = Request.GetQueryStringValue("emp"),
-                aut = Request.GetQueryStringValue<bool?>("aut",null),
+                aut = Request.GetQueryStringValue<bool?>("aut", null),
                 codigo = Request.GetQueryStringValue("codigo"),
+                codigoCred = Request.GetQueryStringValue("codigoCred"),
                 procedimento = Request.GetQueryStringValue("procedimento"),
-            };
-
-            return Ok(new TUSS().ComposedFilters(db, filter));                        
+            }));                        
         }
             
         public IHttpActionResult Get(long id)

@@ -14,10 +14,15 @@
             <table>
                 <tr>
                     <td valign="top">
-                        <h3>Selecione o cartão</h3>
                         <br />
                         <table class="widget" style="color:white">
-                            <tr height="22px" />
+                            <tr height="22px">
+                                <td></td>
+                                <td colspan="6">
+                                    <h3>Selecione o cartão</h3>
+                                    <br />
+                                </td>
+                            </tr>
                             <tr height="36px">
                                 <td width="25px"></td>
                                 <td width="500px">
@@ -61,11 +66,16 @@
                         </table>
 
                         <div ng-if="associado != undefined">
-                            <h3>Selecione o credenciado</h3>
-                            <br />
+                            
                             <table class="widget" style="color:white" width="900px" >
 
-                                <tr height="22px" />
+                                <tr height="22px">
+                                    <td></td>
+                                    <td colspan="6">
+                                        <h3>Selecione o credenciado</h3>
+                                        <br />
+                                    </td>
+                                </tr>
 
                                 <tr height="36px">
                                     <td width="25px"></td>
@@ -125,38 +135,30 @@
                             </table>
 
                             <div ng-if="selecionouCred != undefined">
-
-                                <h3>Selecione o procedimento</h3>
-                                <br />
-
                                 <table class="widget" style="color:white" width="900px">
                                     <tr height="22px">
-                                        <td width="25px"></td>
-                                        <td width="90px"></td>
-                                        <td width="90px"></td>
-                                        <td width="60px"></td>
-                                        <td width="110px"></td>
-                                        <td width="130px"></td>
-                                        <td width="60px"></td>
-                                        <td width="110px"></td>
-                                        <td width="60px"></td>
+                                        <td></td>
+                                        <td colspan="6">
+                                            <h3>Selecione o procedimento</h3>
+                                            <br />
+                                        </td>
                                     </tr>
                                     <tr height="36px">
-                                        <td></td>
-                                        <td><b>Código</b></td>
-                                        <td>
+                                        <td width="25px"></td>
+                                        <td width="90px"><b>Código</b></td>
+                                        <td width="90px">
                                             <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
                                         </td>
-                                        <td></td>
-                                        <td><b>Procedimento</b></td>
-                                        <td>
+                                        <td width="60px"></td>
+                                        <td width="110px"><b>Procedimento</b></td>
+                                        <td width="130px">
                                             <input type="text" class="form-control input-transparent" ng-model="campos.procedimento" />
                                         </td>
-                                        <td></td>
-                                        <td>
+                                        <td width="60px"></td>
+                                        <td width="110px">
                                             <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
                                         </td>
-                                        <td></td>
+                                        <td width="60px"></td>
                                     </tr>
                                     <tr height="36px">
                                         <td></td>

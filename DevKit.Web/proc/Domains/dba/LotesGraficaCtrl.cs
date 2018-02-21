@@ -59,13 +59,14 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Exportar()
         {
             var idLote = Request.GetQueryStringValue("idLote");
+            var dep = Request.GetQueryStringValue("dep");
 
             db = new DevKitDB();
             var lg = new LoteGrafica();
 
             return ResponseMessage ( 
                         TransferirConteudo ( 
-                            lg.Exportar (db,idLote) ) );
+                            lg.Exportar (db,idLote,dep) ) );
         }
             
         public IHttpActionResult Get(long id)

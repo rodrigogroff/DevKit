@@ -116,12 +116,13 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>TUSS</th>                                                    
+                                                    <th>TUSS</th>
                                                     <th>R$ Valor</th>
                                                     <th>R$ Co-part.</th>
                                                     <th>Máx. Mês</th>
                                                     <th>Máx. Ano</th>
                                                     <th>Parcs.</th>
+                                                    <th>Cobertura.</th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="mdl in viewModel.procedimentos">
@@ -131,38 +132,39 @@
                                                 <td>{{ mdl.nuMaxMes }}</td>
                                                 <td>{{ mdl.nuMaxAno }}</td>
                                                 <td>{{ mdl.nuParcelas }}</td>
+                                                <td>{{ mdl.stgCob }}</td>
                                                 <!--<td>
-                                                    <div class="pull-right">
-                                                        <a href="" role="button" ng-click="removeProcedimento($index, viewModel.procedimentos)">
-                                                            <i class="glyphicon glyphicon-remove" style="color:white"></i>
-                                                        </a>
-                                                    </div>
+                                        <div class="pull-right">
+                                            <a href="" role="button" ng-click="removeProcedimento($index, viewModel.procedimentos)">
+                                                <i class="glyphicon glyphicon-remove" style="color:white"></i>
+                                            </a>
+                                        </div>
 
-                                                    <div class="modal-backdrop"
-                                                         ng-if="modalProcedimento == true"
-                                                         style="background: rgba(55, 55, 55, 0.5 );">
-                                                        <div class="modal-dialog" style="width:500px">
-                                                            <br />
-                                                            <br />
-                                                            <br />
-                                                            <div class="modal-content" style="color:black">
-                                                                <legend style="color:black">
-                                                                    Remoção de TUSS
-                                                                    <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalProcedimento()"> X </button> &nbsp;
-                                                                </legend>
-                                                                Confirma remoção do código TUSS abaixo?<br /><br />
-                                                                -{{delProcedimento.nuCodTUSS}}<br />
-                                                                <br />
-                                                                <br />
-                                                                <div class="pull-right">
-                                                                    <button class="btn btn-primary" ng-click="removerProcedimentoModal()"> Remover </button>
-                                                                </div>
-                                                                <br />
-                                                                <br />
-                                                            </div>
-                                                        </div>
+                                        <div class="modal-backdrop"
+                                             ng-if="modalProcedimento == true"
+                                             style="background: rgba(55, 55, 55, 0.5 );">
+                                            <div class="modal-dialog" style="width:500px">
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <div class="modal-content" style="color:black">
+                                                    <legend style="color:black">
+                                                        Remoção de TUSS
+                                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalProcedimento()"> X </button> &nbsp;
+                                                    </legend>
+                                                    Confirma remoção do código TUSS abaixo?<br /><br />
+                                                    -{{delProcedimento.nuCodTUSS}}<br />
+                                                    <br />
+                                                    <br />
+                                                    <div class="pull-right">
+                                                        <button class="btn btn-primary" ng-click="removerProcedimentoModal()"> Remover </button>
                                                     </div>
-                                                </td>-->
+                                                    <br />
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>-->
                                             </tr>
                                         </table>
                                     </div>
@@ -172,6 +174,67 @@
                         </table>
                     </div>
                 </tab>
+
+                <tab heading="CRM" ng-if="viewModel.id != undefined">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="22px"></tr>
+                            <tr height="42px">
+                                <td width="20px"></td>
+                                <td width="180px">
+                                    <b>Dados conselho</b>
+                                </td>
+                                <td width="20px"></td>
+                                <td width="180px">
+                                    {{viewModel.stConselho}}
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+
+                <tab heading="Dados Bancários" ng-if="viewModel.id != undefined">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table width="100%">
+                            <tr height="22px"></tr>
+                            <tr height="42px">
+                                <td width="20px"></td>
+                                <td width="180px">
+                                    <b>Banco</b>
+                                </td>
+                                <td width="20px"></td>
+                                <td width="180px">
+                                    {{viewModel.stBanco}}
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td>
+                                    <b>Agência</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    {{viewModel.stAgencia}}
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td>
+                                    <b>Conta</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    {{viewModel.stConta}}
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+
                 <tab heading="Telefones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
@@ -247,7 +310,7 @@
                                     <div ng-show="viewModel.enderecos.length == 0">
                                         <br />
                                         <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
-                                    </div>                                    
+                                    </div>
                                     <div ng-show="viewModel.enderecos.length > 0">
                                         <br />
                                         <table class="table table-hover" style="width:100%">

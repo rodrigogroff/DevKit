@@ -33,8 +33,7 @@
                                 <td>
                                     <b>Código</b>
                                 </td>
-                                <td>                                    
-                                </td>
+                                <td></td>
                                 <td>
                                     {{viewModel.nuCodigo}}
                                 </td>
@@ -72,6 +71,85 @@
                         </table>
                     </div>
                 </tab>
+
+                <tab heading="CRM" >
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="20px"></th>
+                                    <th width="140px"></th>
+                                    <th width="20px"></th>
+                                    <th width="480px"></th>
+                                    <th width="20px"></th>
+                                </tr>
+                            </thead>
+                            <tr height="22px"></tr>
+                            <tr>
+                                <td ></td>
+                                <td valign="top">
+                                    <b>Dados conselho</b>
+                                </td>
+                                <td ></td>
+                                <td valign="top">
+                                    <textarea type="text" style="width:400px" class="form-control input-transparent" maxlength="2000" rows="12" ng-model="viewModel.stConselho" />
+                                </td>
+                                <td ></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+
+                <tab heading="Dados Bancários" >
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="20px"></th>
+                                    <th width="90px"></th>
+                                    <th width="20px"></th>
+                                    <th width="180px"></th>
+                                    <th width="20px"></th>
+                                </tr>
+                            </thead>
+                            <tr height="22px"></tr>
+                            <tr height="42px">
+                                <td ></td>
+                                <td >
+                                    <b>Banco</b>
+                                </td>
+                                <td ></td>
+                                <td >
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.stBanco">
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td>
+                                    <b>Agência</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.stAgencia">
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td>
+                                    <b>Conta</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.stConta">
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+
                 <tab heading="Empresas [{{viewModel.empresas.length}}]" ng-if="viewModel.id != undefined">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
@@ -148,7 +226,7 @@
                                                                 </legend>
                                                                 Confirma remoção da empresa abaixo?<br /><br />
                                                                 -{{delEmpresa.sfkEmpresa}}<br />
-                                                                
+
                                                                 <br />
                                                                 <br />
                                                                 <div class="pull-right">

@@ -15,9 +15,10 @@ namespace DataModel
 
     public partial class CredenciadoEmpresaTuss
     {
-        public string stProcedimento, 
+        public string stProcedimento,
                       svrCoPart,
-                      svrProcedimento;
+                      svrProcedimento,
+                      stgCob;
     }
 
     public partial class Credenciado

@@ -113,6 +113,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     tgFaltaEnd        { get; set; } // bigint
 		[Column,     Nullable] public long?     tgFaltaTelefone   { get; set; } // bigint
 		[Column,     Nullable] public string    stSenha           { get; set; } // character varying(4)
+		[Column,     Nullable] public string    stPaciente        { get; set; } // character varying(4000)
 	}
 
 	[Table(Schema="public", Name="AssociadoDependente")]
@@ -243,6 +244,10 @@ namespace DataModel
 		[Column,     Nullable] public bool?     tgMasculino       { get; set; } // boolean
 		[Column,     Nullable] public long?     nuTipo            { get; set; } // bigint
 		[Column,     Nullable] public string    stSenha           { get; set; } // character varying(20)
+		[Column,     Nullable] public string    stConselho        { get; set; } // character varying(4000)
+		[Column,     Nullable] public string    stBanco           { get; set; } // character varying(20)
+		[Column,     Nullable] public string    stAgencia         { get; set; } // character varying(20)
+		[Column,     Nullable] public string    stConta           { get; set; } // character varying(20)
 	}
 
 	[Table(Schema="public", Name="CredenciadoEmail")]
@@ -276,6 +281,7 @@ namespace DataModel
 		[Column,     Nullable] public long? nuMaxMes       { get; set; } // bigint
 		[Column,     Nullable] public long? nuMaxAno       { get; set; } // bigint
 		[Column,     Nullable] public long? nuParcelas     { get; set; } // bigint
+		[Column,     Nullable] public bool? tgCob          { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="CredenciadoEndereco")]

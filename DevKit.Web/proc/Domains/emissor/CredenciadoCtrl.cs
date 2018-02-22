@@ -33,11 +33,12 @@ namespace DevKit.Web.Controllers
 
             var mdl = db.Credenciado.Where(y => y.id == id).FirstOrDefault();
 
-            if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == mdl.id &&
-                                                y.fkEmpresa == db.currentUser.fkEmpresa))
-            {
-                return BadRequest("Credenciado inválido");
-            }
+            if (db.currentUser != null)
+                if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == mdl.id &&
+                                                    y.fkEmpresa == db.currentUser.fkEmpresa))
+                {
+                    return BadRequest("Credenciado inválido");
+                }
                 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);

@@ -39,7 +39,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="fkSecao_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="hidden" style="width:100%" ui-select2="secao" data-placeholder="(Selecione)" 
+                                    <input type="hidden" style="width:100%" ui-select2="secao" data-placeholder="(Selecione)"
                                            ng-model="viewModel.fkSecao" ng-disabled="viewModel.id > 0" />
                                 </td>
                                 <td></td>
@@ -248,7 +248,7 @@
                                 <td ng-if="viewModel.id > 0">
                                     {{viewModel.stgStatus}}
                                 </td>
-                                                                
+
                                 <td></td>
                             </tr>
                             <tr height="40px">
@@ -263,10 +263,40 @@
                                 <td ng-if="viewModel.id > 0">
                                     {{viewModel.stgExpedicao}}
                                 </td>
-                                                               
+
                                 <td></td>
                             </tr>
                             <tr height="46px"></tr>
+                        </table>
+                    </div>
+                </tab>
+
+                <tab heading="Paciente">
+                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="20px"></th>
+                                    <th width="140px"></th>
+                                    <th width="20px"></th>
+                                    <th width="480px"></th>
+                                    <th width="20px"></th>
+                                </tr>
+                            </thead>
+                            <tr height="32px"></tr>
+                            <tr >
+                                <td></td>
+                                <td valign="top">
+                                    <b>Histórico médico</b>
+                                </td>
+                                <td></td>
+                                <td valign="top">
+                                    <textarea type="text" class="form-control input-transparent" maxlength="2000" rows="12"
+                                           ng-disabled="!permModel.edicao" ng-model="viewModel.stPaciente" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="22px"></tr>
                         </table>
                     </div>
                 </tab>

@@ -298,6 +298,7 @@ ALTER TABLE public."Associado" ADD COLUMN if not exists "tgExpedicao" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "tgFaltaEnd" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "tgFaltaTelefone" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "stSenha" character varying(4);
+ALTER TABLE public."Associado" ADD COLUMN if not exists "stPaciente" character varying(4000);
 
 CREATE TABLE IF NOT EXISTS public."AssociadoEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."AssociadoEmail" OWNER to postgres;
@@ -360,6 +361,10 @@ ALTER TABLE public."Credenciado" ADD COLUMN if not exists "fkEspecialidade" bigi
 ALTER TABLE public."Credenciado" ADD COLUMN if not exists "tgMasculino" boolean;
 ALTER TABLE public."Credenciado" ADD COLUMN if not exists "nuTipo" bigint;
 ALTER TABLE public."Credenciado" ADD COLUMN if not exists "stSenha" character varying(20);
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "stConselho" character varying(4000);
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "stBanco" character varying(20);
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "stAgencia" character varying(20);
+ALTER TABLE public."Credenciado" ADD COLUMN if not exists "stConta" character varying(20);
 
 CREATE TABLE IF NOT EXISTS public."CredenciadoEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."CredenciadoEmpresa" OWNER to postgres;
@@ -446,6 +451,7 @@ ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "vrCoPart" 
 ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuMaxMes" bigint;
 ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuMaxAno" bigint;
 ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuParcelas" bigint;
+ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "tgCob" boolean;
 
 CREATE TABLE IF NOT EXISTS public."EmpresaSecao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."EmpresaSecao" OWNER to postgres;

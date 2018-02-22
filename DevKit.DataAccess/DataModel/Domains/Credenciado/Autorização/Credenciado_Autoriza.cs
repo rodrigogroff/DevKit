@@ -50,6 +50,35 @@ namespace DataModel
             if (_params.ca != caCalc)
                 return "Dados do cartão inválidos!";
 
+            if (associado.nuTitularidade > 1)
+            {
+                var dadosDep = db.AssociadoDependente.Where(y => y.fkCartao == associado.id).FirstOrDefault();
+                
+                /*
+                    1)ESPOSA 
+                    2)FILHOS MENORES DE 21 ANOS
+                    3)FILHOS MAIORES DE 21 ESTUDANTES
+                    4)FILHOS MAIORES DE 21 ANOS COM DOENCA PRE EXISTENTES
+                */
+
+                var dtNascDep = Convert.ToDateTime(dadosDep.dtNasc);
+
+                switch (dadosDep.fkTipoCoberturaDependente)
+                {
+                    case 2: if (DateTime.Now > dtNascDep.AddYears(21))
+                                return "Idade do dependente excede 21!";
+                        break;
+
+                    case 3:
+                    case 4: if (DateTime.Now < dtNascDep.AddYears(21))
+                                return "Idade do dependente precisa ser maior que 21!";
+
+                        break;
+
+                    default: break;
+                }
+            }
+
             var associadoTit = (from e in db.Associado
                                 where e.fkEmpresa == secaoTb.fkEmpresa
                                 where e.nuMatricula == _params.mat

@@ -61,6 +61,11 @@ namespace DataModel
 
                 if (item.vrProcedimento != null)
                     item.svrProcedimento = mon.setMoneyFormat((long)item.vrProcedimento);
+
+                if (item.tgCob == true)
+                    item.stgCob = "Sim";
+                else if (item.tgCob == false)
+                    item.stgCob = "Não";
             }
 
             return lst;

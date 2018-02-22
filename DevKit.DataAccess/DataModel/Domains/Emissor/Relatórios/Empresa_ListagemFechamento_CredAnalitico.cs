@@ -29,7 +29,8 @@ namespace DataModel
                         nomeCredenciado,
                         cnpj,
                         stotVlr,
-                        stotCoPart, 
+                        stotCoPart,
+                        sDadosBancarios,
                         tuss;
 
         public List<FechCredAnalDetalhe> results = new List<FechCredAnalDetalhe>();
@@ -114,7 +115,8 @@ namespace DataModel
                         codCredenciado = cred.nuCodigo.ToString(),
                         nomeCredenciado = cred.stNome,
                         totCoPart = 0,
-                        totVlr = 0
+                        totVlr = 0,
+                        sDadosBancarios = "=> Banco: " + cred.stBanco + " Agência " + cred.stAgencia + " Conta " + cred.stConta
                     };
 
                     foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id).

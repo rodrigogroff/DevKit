@@ -18,13 +18,12 @@ namespace DevKit.Web
 				"~/css/bootstrap-theme.css",
 				"~/css/bootstrap-additions.min.css",
 				"~/css/perfect-scrollbar.css",
-				"~/css/application.css",
+				"~/css/application.min.css",
 				"~/css/loading-bar.min.css",
-				"~/css/toastr.css",
+				"~/css/toastr.min.css",
 				"~/css/dialogs.css",
 				"~/css/jquery.fileupload.css",
 				"~/css/jquery.fileupload-ui.css",
-				"~/css/blueimp-gallery.min.css",
 				"~/css/angular-ui-tree.min.css",
 				"~/css/angular-motion.min.css",
 				"~/css/select.css",
@@ -35,14 +34,9 @@ namespace DevKit.Web
                  "~/scripts/jquery-2.1.0.min.js",
     "~/scripts/jquery.mousewheel.js",
     "~/scripts/jquery-ui-1.10.4.min.js",
-    //"~/scripts/angular.js",
     "~/scripts/angular.min.js",
     "~/scripts/angular-resource.min.js",
     "~/scripts/i18n/angular-locale_pt-br.js",
-    "~/scripts/angular-mocks.js",
-    "~/scripts/xtform.js",
-    "~/scripts/purl.js",
-    "~/scripts/restful-ng-mock.js",
     "~/scripts/bootstrap.min.js",
     "~/scripts/ui-bootstrap-tpls-0.10.0.min.js",
     "~/scripts/angular-animate.min.js",
@@ -63,23 +57,18 @@ namespace DevKit.Web
     "~/scripts/select2.min.js",
     "~/scripts/select2_locale_pt-BR.js",
     "~/scripts/angular_select2.js",
-    "~/scripts/d3.min.js",
-    "~/scripts/moment.js",
-    "~/scripts/ng-csv.min.js",
     "~/scripts/angularjs-nvd3-directives.min.js",
     "~/scripts/angular-ui-mask.min.js",
     "~/scripts/bindonce.min.js",
     "~/scripts/load-image.min.js",
     "~/scripts/canvas-to-blob.min.js",
-    "~/scripts/jquery.blueimp-gallery.min.js",
     "~/scripts/jquery.iframe-transport.js",
     "~/scripts/jquery.fileupload.js",
     "~/scripts/jquery.fileupload-process.js",
     "~/scripts/jquery.fileupload-image.js",
     "~/scripts/jquery.fileupload-validate.js",
     "~/scripts/jquery.fileupload-angular.js",
-    "~/scripts/angular-ui-tree.min.js",
-    "~/scripts/ng-currency.js"
+    "~/scripts/angular-ui-tree.min.js"
                  ));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
@@ -101,7 +90,6 @@ namespace DevKit.Web
 				"~/app/_shared/MenuController.js",
 				"~/app/_shared/NgSelectsService.js",
 				"~/app/app.js",
-				"~/app/system/setup/SetupController.js",
 				"~/app/system/user/UserController.js",
 				"~/app/system/user/UserPasswordController.js",
 				"~/app/system/user/ListingUsersController.js",
@@ -144,8 +132,7 @@ namespace DevKit.Web
 				"~/app/configuration/news/ListingNewsController.js",
 				"~/app/configuration/surveys/SurveyController.js",
 				"~/app/configuration/surveys/ListingSurveysController.js",
-				"~/app/home/HomeController.js",
-                "~/app/home/CacheController.js"
+				"~/app/home/HomeController.js"
 
                 ));
 

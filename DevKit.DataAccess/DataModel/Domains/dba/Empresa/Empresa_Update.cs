@@ -9,55 +9,116 @@ namespace DataModel
     {
 		public bool Update(DevKitDB db, ref string resp)
 		{
-            /*
 			switch (updateCommand)
 			{
-                
-				case "newUser":
-					{
-						var ent = JsonConvert.DeserializeObject<ProjectUser>(anexedEntity.ToString());
+                case "newPhone":
+                    {
+                        var ent = JsonConvert.DeserializeObject<EmpresaTelefone>(anexedEntity.ToString());
 
-						if (ent.id == 0)
-						{
-							if ((from ne in db.ProjectUser
-								 where ne.fkUser == ent.fkUser && ne.fkProject == id
-								 select ne).Any())
-							{
-								resp = "User já acrescentado no projeto";
-								return false;
-							}
-						
-							ent.fkProject = id;
-							ent.dtJoin = DateTime.Now;
-                            
+                        ent.fkEmpresa = id;
+
+                        if (ent.id == 0)
+                        {
+                            if ((from ne in db.EmpresaTelefone where ne.fkEmpresa == id && ne.stTelefone == ent.stTelefone select ne).Any())
+                            {
+                                resp = "Telefone já utilizado!";
+                                return false;
+                            }
+
                             db.Insert(ent);
+                        }
+                        else
+                        {
+                            var oldPhone = db.EmpresaTelefone.
+                                            Where(y => y.id == ent.id).
+                                            FirstOrDefault();
 
-							new AuditLog {
-								fkUser = user.id,
-								fkActionLog = EnumAuditAction.ProjectUpdateAddUser,
-								nuType = EnumAuditType.Project,
-								fkTarget = this.id
-							}.
-							Create(db, "Novo usuario: " + db.GetUser(ent.fkUser).stLogin + ";Papel: " + ent.stRole, "");
-						}							
-						else
-						{
-							db.Update(ent);
+                            db.Update(ent);
+                        }
 
-							new AuditLog {
-								fkUser = user.id,
-								fkActionLog = EnumAuditAction.ProjectUpdateUpdateUser,
-								nuType = EnumAuditType.Project,
-								fkTarget = this.id
-							}.
-							Create(db, "Papel atualizado: " + ent.stRole, "");
-						}							
-						break;
-					}
+                        return true;
+                    }
 
+                case "removePhone":
+                    {
+                        var ent = JsonConvert.DeserializeObject<EmpresaTelefone>(anexedEntity.ToString());
+
+                        db.Delete(ent);
+
+                        return true;
+                    }
+
+                case "newEmail":
+                    {
+                        var ent = JsonConvert.DeserializeObject<EmpresaEmail>(anexedEntity.ToString());
+
+                        ent.fkEmpresa = id;
+
+                        if (ent.id == 0)
+                        {
+                            if ((from ne in db.EmpresaEmail where ne.fkEmpresa == id && ne.stEmail == ent.stEmail select ne).Any())
+                            {
+                                resp = "Email já utilizado!";
+                                return false;
+                            }
+
+                            db.Insert(ent);
+                        }
+                        else
+                        {
+                            var oldEmail = db.EmpresaEmail.
+                                            Where(y => y.id == ent.id).
+                                            FirstOrDefault();
+
+                            db.Update(ent);
+                        }
+
+                        return true;
+                    }
+
+                case "removeEmail":
+                    {
+                        var ent = JsonConvert.DeserializeObject<EmpresaEmail>(anexedEntity.ToString());
+
+                        db.Delete(ent);
+
+                        return true;
+                    }
+
+                case "newEnd":
+                    {
+                        var ent = JsonConvert.DeserializeObject<EmpresaEndereco>(anexedEntity.ToString());
+
+                        ent.fkEmpresa = id;
+                        
+                        if (ent.id == 0)
+                        {
+                            db.Insert(ent);
+                        }
+                        else
+                        {
+                            var oldEnd = db.EmpresaEndereco.
+                                            Where(y => y.id == ent.id).
+                                            FirstOrDefault();
+
+                            db.Update(ent);
+                        }
+
+                        return true;
+                    }
+
+                case "removeEnd":
+                    {
+                        var ent = JsonConvert.DeserializeObject<EmpresaEndereco>(anexedEntity.ToString());
+
+                        db.Delete(ent);
+
+                        return true;
+                    }
+
+                default: break;
 			}
-            */
-
+            
             db.Update(this);
 
             return true;

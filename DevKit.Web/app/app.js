@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', 'ngAnimate', 'ui.router', 'angularSpinner', 'perfect_scrollbar', 'ngSanitize', 'ng-currency', 'ui.select', 'ui.select2', 'pasvaz.bindonce', 'app.filters', 'app.services', 'app.directives', 'app.controllers', 'ui.sortable', 'ui.keypress', 'ui.tree', 'ui.mask' ])
+var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', 'ngAnimate', 'ui.router', 'angularSpinner', 'perfect_scrollbar', 'ngSanitize', 'ui.select', 'ui.select2', 'pasvaz.bindonce', 'app.filters', 'app.services', 'app.directives', 'app.controllers', 'ui.sortable', 'ui.keypress', 'ui.tree', 'ui.mask' ])
      
 .config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider)
 {
@@ -62,14 +62,17 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('emissorcredenciado', { url: '/emissora/credenciado/:id', templateUrl: 'app/emissora/credenciado.html', controller: 'EmissorCredenciadoController' })
     .state('emissorautorizacaoProc', { url: '/emissora/autorizacaoProc', templateUrl: 'app/emissora/autorizacaoProc.html', controller: 'EmissoraAutorizacaoProcController' })
     
+    .state('credenciados', { url: '/dba/credenciados', templateUrl: 'app/dba/listingCredenciados.html', controller: 'ListingCredenciadosController' })
     .state('credenciado', { url: '/dba/credenciado/:id', templateUrl: 'app/dba/credenciado.html', controller: 'CredenciadoController' })
     .state('tuss', { url: '/dba/tuss', templateUrl: 'app/dba/listingTUSS.html', controller: 'ListingTUSSController' })
     .state('especialidades', { url: '/dba/especialidades', templateUrl: 'app/dba/listingEspecialidades.html', controller: 'ListingEspecialidadesController' })
     .state('lotesgrafica', { url: '/dba/lotes', templateUrl: 'app/dba/listingLotes.html', controller: 'ListingLotesController' })
     .state('novolote', { url: '/dba/lotes/novo', templateUrl: 'app/dba/novoLote.html', controller: 'NovoLoteController' })
-    .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/listingEmpresas.html', controller: 'ListingEmpresasController' })
-    .state('credenciados', { url: '/dba/credenciados', templateUrl: 'app/dba/listingCredenciados.html', controller: 'ListingCredenciadosController' })
     .state('exportaut', { url: '/dba/exportaut', templateUrl: 'app/dba/listingExpAutorizacao.html', controller: 'ListingExpAutorizacaoController' })
+
+    .state('novaempresa', { url: '/dba/empresa/:id', templateUrl: 'app/dba/empresa.html', controller: 'EmpresaController' })
+    .state('empresa', { url: '/dba/empresa/:id', templateUrl: 'app/dba/empresa.html', controller: 'EmpresaController' })
+    .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/listingEmpresas.html', controller: 'ListingEmpresasController' })
 
     .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
 

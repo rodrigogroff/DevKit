@@ -35,7 +35,11 @@ namespace DataModel
 		public ITable<CredenciadoEndereco>     CredenciadoEndereco     { get { return this.GetTable<CredenciadoEndereco>(); } }
 		public ITable<CredenciadoTelefone>     CredenciadoTelefone     { get { return this.GetTable<CredenciadoTelefone>(); } }
 		public ITable<Empresa>                 Empresa                 { get { return this.GetTable<Empresa>(); } }
+		public ITable<EmpresaConsultaAno>      EmpresaConsultaAno      { get { return this.GetTable<EmpresaConsultaAno>(); } }
+		public ITable<EmpresaEmail>            EmpresaEmail            { get { return this.GetTable<EmpresaEmail>(); } }
+		public ITable<EmpresaEndereco>         EmpresaEndereco         { get { return this.GetTable<EmpresaEndereco>(); } }
 		public ITable<EmpresaSecao>            EmpresaSecao            { get { return this.GetTable<EmpresaSecao>(); } }
+		public ITable<EmpresaTelefone>         EmpresaTelefone         { get { return this.GetTable<EmpresaTelefone>(); } }
 		public ITable<Especialidade>           Especialidade           { get { return this.GetTable<Especialidade>(); } }
 		public ITable<Estado>                  Estado                  { get { return this.GetTable<Estado>(); } }
 		public ITable<LoteGrafica>             LoteGrafica             { get { return this.GetTable<LoteGrafica>(); } }
@@ -195,11 +199,11 @@ namespace DataModel
 		[Column,     Nullable] public long?     tgSituacao          { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAutOriginal       { get; set; } // bigint
 		[Column,     Nullable] public long?     vrProcedimento      { get; set; } // bigint
+		[Column,     Nullable] public long?     vrCoPart            { get; set; } // bigint
 		[Column,     Nullable] public long?     vrParcela           { get; set; } // bigint
+		[Column,     Nullable] public long?     vrParcelaCoPart     { get; set; } // bigint
 		[Column,     Nullable] public long?     nuTotParcelas       { get; set; } // bigint
 		[Column,     Nullable] public long?     nuIndice            { get; set; } // bigint
-		[Column,     Nullable] public long?     vrCoPart            { get; set; } // bigint
-		[Column,     Nullable] public long?     vrParcelaCoPart     { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAssociadoPortador { get; set; } // bigint
 	}
 
@@ -315,11 +319,51 @@ namespace DataModel
 	[Table(Schema="public", Name="Empresa")]
 	public partial class Empresa
 	{
-		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
-		[Column,     Nullable] public long?  nuEmpresa { get; set; } // bigint
-		[Column,     Nullable] public long?  nuDiaFech { get; set; } // bigint
-		[Column,     Nullable] public string stSigla   { get; set; } // character varying(20)
-		[Column,     Nullable] public string stNome    { get; set; } // character varying(200)
+		[PrimaryKey, Identity] public long   id              { get; set; } // bigint
+		[Column,     Nullable] public long?  nuEmpresa       { get; set; } // bigint
+		[Column,     Nullable] public long?  nuDiaFech       { get; set; } // bigint
+		[Column,     Nullable] public string stSigla         { get; set; } // character varying(20)
+		[Column,     Nullable] public string stNome          { get; set; } // character varying(200)
+		[Column,     Nullable] public long?  nuMaxConsultas  { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCarenciaMeses { get; set; } // bigint
+		[Column,     Nullable] public long?  vrMaxProcSemAut { get; set; } // bigint
+		[Column,     Nullable] public string stCnpj          { get; set; } // character varying(20)
+	}
+
+	[Table(Schema="public", Name="EmpresaConsultaAno")]
+	public partial class EmpresaConsultaAno
+	{
+		[PrimaryKey, Identity] public long  id        { get; set; } // bigint
+		[Column,     Nullable] public long? fkEmpresa { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco   { get; set; } // bigint
+		[Column,     Nullable] public long? nuANo     { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="EmpresaEmail")]
+	public partial class EmpresaEmail
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEmpresa { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser    { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stEmail   { get; set; } // character varying(250)
+		[Column,     Nullable] public string    stContato { get; set; } // character varying(250)
+	}
+
+	[Table(Schema="public", Name="EmpresaEndereco")]
+	public partial class EmpresaEndereco
+	{
+		[PrimaryKey, Identity] public long      id            { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEmpresa     { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog         { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkEstado      { get; set; } // bigint
+		[Column,     Nullable] public long?     fkCidade      { get; set; } // bigint
+		[Column,     Nullable] public string    stRua         { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stNumero      { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stComplemento { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stReferencia  { get; set; } // character varying(150)
+		[Column,     Nullable] public string    stCEP         { get; set; } // character varying(50)
 	}
 
 	[Table(Schema="public", Name="EmpresaSecao")]
@@ -329,6 +373,19 @@ namespace DataModel
 		[Column,     Nullable] public long?  fkEmpresa { get; set; } // bigint
 		[Column,     Nullable] public long?  nuEmpresa { get; set; } // bigint
 		[Column,     Nullable] public string stDesc    { get; set; } // character varying(150)
+	}
+
+	[Table(Schema="public", Name="EmpresaTelefone")]
+	public partial class EmpresaTelefone
+	{
+		[PrimaryKey, Identity] public long      id         { get; set; } // bigint
+		[Column,     Nullable] public long?     fkEmpresa  { get; set; } // bigint
+		[Column,     Nullable] public long?     fkUser     { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog      { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public string    stTelefone { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stContato  { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stCargo    { get; set; } // character varying(50)
+		[Column,     Nullable] public string    stDesc     { get; set; } // character varying(50)
 	}
 
 	[Table(Schema="public", Name="Especialidade")]
@@ -796,7 +853,31 @@ namespace DataModel
 				t.id == id);
 		}
 
+		public static EmpresaConsultaAno Find(this ITable<EmpresaConsultaAno> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static EmpresaEmail Find(this ITable<EmpresaEmail> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static EmpresaEndereco Find(this ITable<EmpresaEndereco> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
 		public static EmpresaSecao Find(this ITable<EmpresaSecao> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static EmpresaTelefone Find(this ITable<EmpresaTelefone> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

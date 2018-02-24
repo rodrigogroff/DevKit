@@ -271,6 +271,54 @@ ALTER TABLE public."Empresa" ADD COLUMN if not exists "nuEmpresa" bigint;
 ALTER TABLE public."Empresa" ADD COLUMN if not exists "nuDiaFech" bigint;
 ALTER TABLE public."Empresa" ADD COLUMN if not exists "stSigla" character varying(20);
 ALTER TABLE public."Empresa" ADD COLUMN if not exists "stNome" character varying(200);
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "stCnpj" character varying(20);
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "nuMaxConsultas" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "nuCarenciaMeses" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrMaxProcSemAut" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrMaxProcSemAut" bigint;
+
+CREATE TABLE IF NOT EXISTS public."EmpresaSecao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."EmpresaSecao" OWNER to postgres;
+ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "nuEmpresa" bigint;
+ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "stDesc" character varying(150);
+
+CREATE TABLE IF NOT EXISTS public."EmpresaEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."EmpresaEmail" OWNER to postgres;
+ALTER TABLE public."EmpresaEmail" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."EmpresaEmail" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."EmpresaEmail" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."EmpresaEmail" ADD COLUMN if not exists "stEmail" character varying(250);
+ALTER TABLE public."EmpresaEmail" ADD COLUMN if not exists "stContato" character varying(250);
+
+CREATE TABLE IF NOT EXISTS public."EmpresaConsultaAno" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."EmpresaConsultaAno" OWNER to postgres;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "nuANo" bigint;
+
+CREATE TABLE IF NOT EXISTS public."EmpresaTelefone" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."EmpresaTelefone" OWNER to postgres;
+ALTER TABLE public."EmpresaTelefone" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."EmpresaTelefone" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."EmpresaTelefone" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."EmpresaTelefone" ADD COLUMN if not exists "stTelefone" character varying(50);
+ALTER TABLE public."EmpresaTelefone" ADD COLUMN if not exists "stContato" character varying(50);
+ALTER TABLE public."EmpresaTelefone" ADD COLUMN if not exists "stCargo" character varying(50);
+ALTER TABLE public."EmpresaTelefone" ADD COLUMN if not exists "stDesc" character varying(50);
+
+CREATE TABLE IF NOT EXISTS public."EmpresaEndereco" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."EmpresaEndereco" OWNER to postgres;
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "fkUser" bigint;
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "fkEstado" bigint;
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "fkCidade" bigint;
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "stRua" character varying(150);
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "stNumero" character varying(50);
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "stComplemento" character varying(50);
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "stReferencia" character varying(150);
+ALTER TABLE public."EmpresaEndereco" ADD COLUMN if not exists "stCEP" character varying(50);
 
 CREATE TABLE IF NOT EXISTS public."Associado" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."Associado" OWNER to postgres;
@@ -453,13 +501,6 @@ ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuMaxAno" 
 ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "nuParcelas" bigint;
 ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "tgCob" boolean;
 
-CREATE TABLE IF NOT EXISTS public."EmpresaSecao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."EmpresaSecao" OWNER to postgres;
-ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "fkEmpresa" bigint;
-ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "nuEmpresa" bigint;
-ALTER TABLE public."EmpresaSecao" ADD COLUMN if not exists "stDesc" character varying(150);
-
 CREATE TABLE IF NOT EXISTS public."TipoCoberturaDependente" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."TipoCoberturaDependente" OWNER to postgres;
 ALTER TABLE public."TipoCoberturaDependente" ADD COLUMN if not exists "stDesc" character varying(150);
-

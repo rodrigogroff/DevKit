@@ -81,7 +81,10 @@ namespace DevKit.Web.Controllers
         public Hashtable SetupCacheReport(string tag)
         {
             if (myApplication == null)
+            {
                 myApplication = HttpContext.Current.Application;
+                StartCache();
+            }   
 
             var hsh = myApplication[tag] as Hashtable;
 

@@ -103,6 +103,7 @@ namespace DevKit.Web
                 "~/app/dba/listingCredenciados.js",
                 "~/app/dba/novoLote.js",
                 "~/app/dba/credenciado.js",
+                "~/app/dba/empresa.js",
                 "~/app/emissora/listagemAssociados.js",
                 "~/app/emissora/associado.js",
                 "~/app/emissora/altSenha.js",

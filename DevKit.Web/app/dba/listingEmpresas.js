@@ -43,6 +43,13 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 	$scope.new = function ()
 	{
 		$state.go('novaempresa');
-	}
+    }
+    
+    $scope.show = function (mdl) {
+        // if (!$scope.permModel.visualizar)
+        //   toastr.error('Acesso negado!', 'Permissão');
+        //else
+        $state.go('empresa', { id: mdl.id });
+    }
 
 }]);

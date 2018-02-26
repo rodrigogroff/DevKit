@@ -92,7 +92,7 @@
                             <thead>
                                 <tr>
                                     <th width="20px"></th>
-                                    <th width="90px"></th>
+                                    <th width="160px"></th>
                                     <th width="20px"></th>
                                     <th width="280px"></th>
                                     <th width="20px"></th>
@@ -102,53 +102,50 @@
                             <tr height="40px">
                                 <td></td>
                                 <td>
-                                    <b>Código</b>
+                                    <b>Dia fechamento</b>
                                 </td>
                                 <td>
-                                    <button class="btn btn-xs btn-danger" ng-show="nuEmpresa_fail">!</button>
+                                    <button class="btn btn-xs btn-danger" ng-show="nuFech_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="4"
-                                           ng-disabled="viewModel.id > 0"
-                                           ng-model="viewModel.nuEmpresa">
+                                    <input type="text" class="form-control input-transparent" maxlength="2" ng-model="viewModel.nuDiaFech">
                                 </td>
                             </tr>
                             <tr height="40px">
                                 <td></td>
                                 <td>
-                                    <b>Sigla</b>
+                                    <b>Max. consultas</b>
                                 </td>
                                 <td>
-                                    <button class="btn btn-xs btn-danger" ng-show="stSigla_fail">!</button>
+                                    <button class="btn btn-xs btn-danger" ng-show="nuMaxC_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="20" ng-model="viewModel.stSigla">
-                                </td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Nome</b>
-                                </td>
-                                <td>
-                                    <button class="btn btn-xs btn-danger" ng-show="stNome_fail">!</button>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="50" ng-model="viewModel.stNome">
+                                    <input type="text" class="form-control input-transparent" maxlength="2" ng-model="viewModel.nuMaxConsultas">
                                 </td>
                             </tr>
                             <tr height="40px">
                                 <td></td>
                                 <td>
-                                    <b>Cnpj</b>
+                                    <b>Meses carência</b>
                                 </td>
                                 <td>
-                                    <button class="btn btn-xs btn-danger" ng-show="cnpj_fail">!</button>
+                                    <button class="btn btn-xs btn-danger" ng-show="nuCar_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" name="cnpj" id="cpf"
-                                           ng-model="viewModel.stCnpj"
-                                           maxlength="18" ui-mask="99.999.999.9999-99" ui-mask-placeholder ui-mask-placeholder-char="_">
+                                    <input type="text" class="form-control input-transparent" maxlength="2" ng-model="viewModel.nuCarenciaMeses">
+                                </td>
+                            </tr>
+                            <tr height="52px">
+                                <td></td>
+                                <td>
+                                    <b>Valor máximo</b> <br />
+                                    (proc. sem autorização)
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="vrMax_fail">!</button>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="50" ng-model="viewModel.vrMaxProcSemAut">
                                 </td>
                                 <td></td>
                             </tr>

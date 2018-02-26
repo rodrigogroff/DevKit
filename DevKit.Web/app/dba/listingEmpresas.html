@@ -56,6 +56,7 @@
                                         <th width="120px">Código</th>
                                         <th width="200px">Sigla</th>
                                         <th width="300px">Nome</th>
+                                        <th width="300px">Seções</th>
                                         <th width="120px">Fechamento</th>
                                         <th width="120px">Cartões</th>
                                     </tr>
@@ -64,6 +65,11 @@
                                     <td>{{ mdl.nuEmpresa }}</td>
                                     <td>{{ mdl.stSigla }}</td>
                                     <td>{{ mdl.stNome }}</td>
+                                    <td>
+                                        <div data-ng-repeat="m in mdl.secoes">
+                                            {{m.nuEmpresa }} - {{m.stDesc }}
+                                        </div>
+                                    </td>
                                     <td>{{ mdl.nuDiaFech }}</td>
                                     <td>{{ mdl.sqtdCartoes }}</td>
                                 </tr>

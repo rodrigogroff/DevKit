@@ -83,11 +83,20 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             $scope.stSigla_fail = invalidCheck($scope.viewModel.stSigla);
             $scope.cnpj_fail = invalidCheck($scope.viewModel.stCnpj);
             $scope.nuEmpresa_fail = invalidCheck($scope.viewModel.nuEmpresa);
+
+            $scope.nuFech_fail = invalidCheck($scope.viewModel.nuDiaFech);
+            $scope.nuMaxC_fail = invalidCheck($scope.viewModel.nuMaxConsultas);
+            $scope.nuCar_fail = invalidCheck($scope.viewModel.nuCarenciaMeses);
+            $scope.vrMax_fail = invalidCheck($scope.viewModel.vrMaxProcSemAut);
 	
             if (!$scope.stName_fail &&
                 !$scope.stSigla_fail &&
                 !$scope.cnpj_fail &&
-                !$scope.nuEmpresa_fail)
+                !$scope.nuEmpresa_fail && 
+                !$scope.nuFech_fail && 
+                !$scope.nuMaxC_fail && 
+                !$scope.nuCar_fail && 
+                !$scope.vrMax_fail )
             {
 				if (id > 0)
                 {
@@ -119,6 +128,78 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
     $scope.list = function ()
     {
 		$state.go('empresas');
+    }
+
+    // ============================================
+    // secoes 
+    // ============================================
+
+    $scope.addSecao = false;
+
+    $scope.removeSecao = function (index, lista) {
+        //if (!$scope.permModel.novo && !$scope.permModel.edicao)
+        //  toastr.error('Acesso negado!', 'Permissão');
+        //else 
+        {
+            $scope.modalSecao = true;
+            $scope.delSecao = $scope.viewModel.secoes[index];
+        }
+    }
+
+    $scope.closeModalSecao = function () {
+        $scope.modalSecao = false;
+    }
+
+    $scope.removerSecaoModal = function () {
+        $scope.viewModel.updateCommand = "removeSecao";
+        $scope.viewModel.anexedEntity = $scope.delSecao;
+
+        Api.Empresa.update({ id: id }, $scope.viewModel, function (data) {
+            loadEntity();
+        });
+    }
+
+    $scope.addNewSecao = function () {
+        //if (!$scope.permModel.novo && !$scope.permModel.edicao)
+        //  toastr.error('Acesso negado!', 'Permissão');
+        //else
+        $scope.addSecao = !$scope.addSecao;
+    }
+
+    $scope.newSecao = {};
+
+    $scope.editSecao = function (mdl) {
+        $scope.addSecao = true;
+        $scope.newSecao = mdl;
+    }
+
+    $scope.cancelSecao = function () {
+        $scope.addSecao = false;
+        $scope.newSecao = {};
+    }
+
+    $scope.saveNewSecao = function () {
+        //if (!$scope.permModel.novo && !$scope.permModel.edicao)
+        //  toastr.error('Acesso negado!', 'Permissão');
+        //else
+        {
+            
+
+            {
+                $scope.addSecao = false;
+
+                $scope.viewModel.updateCommand = "newSecao";
+                $scope.viewModel.anexedEntity = $scope.newSecao;
+
+                Api.Empresa.update({ id: id }, $scope.viewModel, function (data) {
+                    $scope.newSecao = {};
+                    loadEntity();
+                },
+                function (response) {
+                    toastr.error(response.data.message, 'Error');
+                });
+            }
+        }
     }
         
 	// ============================================

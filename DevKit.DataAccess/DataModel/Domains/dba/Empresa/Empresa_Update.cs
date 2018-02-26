@@ -11,6 +11,45 @@ namespace DataModel
 		{
 			switch (updateCommand)
 			{
+                case "newSecao":
+                    {
+                        var ent = JsonConvert.DeserializeObject<EmpresaSecao>(anexedEntity.ToString());
+
+                        ent.fkEmpresa = id;
+
+                        if (ent.id == 0)
+                        {
+                            if ((from ne in db.EmpresaSecao where ne.fkEmpresa == id && ne.nuEmpresa == ent.nuEmpresa select ne).Any())
+                            {
+                                resp = "Número já utilizado!";
+                                return false;
+                            }
+
+                            db.Insert(ent);
+                        }
+                        else
+                        {
+                            db.Update(ent);
+                        }
+
+                        return true;
+                    }
+
+                case "removeSecao":
+                    {
+                        var ent = JsonConvert.DeserializeObject<EmpresaSecao>(anexedEntity.ToString());
+
+                        if (db.Associado.Any (y=> y.fkSecao == ent.id))
+                        {
+                            resp = "Seção possui associados!";
+                            return false;
+                        }
+                        else
+                            db.Delete(ent);
+
+                        return true;
+                    }
+
                 case "newPhone":
                     {
                         var ent = JsonConvert.DeserializeObject<EmpresaTelefone>(anexedEntity.ToString());

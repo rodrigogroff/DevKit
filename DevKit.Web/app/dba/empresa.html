@@ -108,7 +108,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="nuFech_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="2" ng-model="viewModel.nuDiaFech">
+                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="2" ng-model="viewModel.nuDiaFech">
                                 </td>
                             </tr>
                             <tr height="40px">
@@ -120,7 +120,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="nuMaxC_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="2" ng-model="viewModel.nuMaxConsultas">
+                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="2" ng-model="viewModel.nuMaxConsultas">
                                 </td>
                             </tr>
                             <tr height="40px">
@@ -132,7 +132,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="nuCar_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="2" ng-model="viewModel.nuCarenciaMeses">
+                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="2" ng-model="viewModel.nuCarenciaMeses">
                                 </td>
                             </tr>
                             <tr height="52px">
@@ -145,7 +145,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="vrMax_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="50" ng-model="viewModel.vrMaxProcSemAut">
+                                    <input type="text" class="form-control input-transparent" maxlength="50" ng-model="viewModel.vrMaxProcSemAut" onKeyUp="money(this,Valor);" maxlength="12">
                                 </td>
                                 <td></td>
                             </tr>
@@ -163,26 +163,37 @@
                                 <td>
                                     <legend style="color:white">
                                         Lista de seções
-                                        <button class="btn btn-info btn-xs pull-right" ng-if="addEmail == false" ng-click="addNewEmail()"><i class="fa fa-plus"> </i> Adicionar </button>
+                                        <button class="btn btn-info btn-xs pull-right" ng-if="addSecao == false" ng-click="addNewSecao()"><i class="fa fa-plus"> </i> Adicionar </button>
                                     </legend>
-                                    <div ng-show="viewModel.emails.length == 0 && addEmail == false">
+                                    <div ng-show="viewModel.secoes.length == 0 && addSecao == false">
                                         <br />
                                         <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
                                     </div>
-                                    <div ng-if="addEmail == true">
+                                    <div ng-if="addSecao == true">
                                         <table>
                                             <tr>
                                                 <td>
                                                     <table>
                                                         <tr height="42px">
                                                             <td width="120px">
-                                                                <b>Novo email</b>
+                                                                <b>Número Seção</b>
                                                             </td>
                                                             <td width="20px">
-                                                                <button class="btn btn-xs btn-danger" ng-show="stEmail_fail">!</button>
+                                                                <button class="btn btn-xs btn-danger" ng-show="secao_nuEmpresa_fail">!</button>
                                                             </td>
                                                             <td width="200px">
-                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newEmail.stEmail">
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newSecao.nuEmpresa">
+                                                            </td>
+                                                        </tr>
+                                                        <tr height="42px">
+                                                            <td >
+                                                                <b>Descrição</b>
+                                                            </td>
+                                                            <td >
+                                                                <button class="btn btn-xs btn-danger" ng-show="secao_stDesc_fail">!</button>
+                                                            </td>
+                                                            <td >
+                                                                <input type="text" class="form-control input-transparent" maxlength="100" ng-model="newSecao.stDesc">
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -190,33 +201,35 @@
                                             </tr>
                                         </table>
                                         <br />
-                                        <button class="btn btn-default" ng-click="cancelEmail()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewEmail()">Salvar </button>
+                                        <button class="btn btn-default" ng-click="cancelSecao()">Cancelar </button> &nbsp;<button class="btn btn-primary" ng-click="saveNewSecao()">Salvar </button>
                                         <br />
                                         <br />
                                     </div>
-                                    <div ng-show="viewModel.emails.length > 0">
+                                    <div ng-show="viewModel.secoes.length > 0">
                                         <br />
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>Email</th>
+                                                    <th width="120px">Número</th>
+                                                    <th>Descrição</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
-                                            <tr data-ng-repeat="mdl in viewModel.emails">
-                                                <td>{{ mdl.stEmail }}</td>
+                                            <tr data-ng-repeat="mdl in viewModel.secoes">
+                                                <td>{{ mdl.nuEmpresa }}</td>
+                                                <td>{{ mdl.stDesc }}</td>
                                                 <td>
                                                     <div class="pull-right">
-                                                        <a href="" role="button" ng-click="editEmail(mdl)">
+                                                        <a href="" role="button" ng-click="editSecao(mdl)">
                                                             <i class="glyphicon glyphicon-edit" style="color:white"></i>
                                                         </a>
                                                         &nbsp;&nbsp;
-                                                        <a href="" role="button" ng-click="removeEmail($index, viewModel.emails)">
+                                                        <a href="" role="button" ng-click="removeSecao($index, viewModel.secoes)">
                                                             <i class="glyphicon glyphicon-remove" style="color:white"></i>
                                                         </a>
 
                                                         <div class="modal-backdrop"
-                                                             ng-if="modalEmail == true"
+                                                             ng-if="modalSecao == true"
                                                              style="background: rgba(55, 55, 55, 0.5 );">
                                                             <div class="modal-dialog" style="width:500px">
                                                                 <br />
@@ -224,15 +237,16 @@
                                                                 <br />
                                                                 <div class="modal-content" style="color:black">
                                                                     <legend style="color:black">
-                                                                        Remoção de email
-                                                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalEmail()"> X </button> &nbsp;
+                                                                        Remoção de seção
+                                                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalSecao()"> X </button> &nbsp;
                                                                     </legend>
                                                                     Confirma remoção do item abaixo?<br /><br />
-                                                                    -{{delEmail.stEmail}}<br />
+                                                                    -{{delSecao.nuEmpresa}}<br />
+                                                                    -{{delSecao.stDesc}}<br />
                                                                     <br />
                                                                     <br />
                                                                     <div class="pull-right">
-                                                                        <button class="btn btn-primary" ng-click="removerEmailModal()"> Remover </button>
+                                                                        <button class="btn btn-primary" ng-click="removerSecaoModal()"> Remover </button>
                                                                     </div>
                                                                     <br />
                                                                     <br />

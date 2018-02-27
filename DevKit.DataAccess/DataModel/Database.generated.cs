@@ -199,11 +199,11 @@ namespace DataModel
 		[Column,     Nullable] public long?     tgSituacao          { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAutOriginal       { get; set; } // bigint
 		[Column,     Nullable] public long?     vrProcedimento      { get; set; } // bigint
-		[Column,     Nullable] public long?     vrCoPart            { get; set; } // bigint
 		[Column,     Nullable] public long?     vrParcela           { get; set; } // bigint
-		[Column,     Nullable] public long?     vrParcelaCoPart     { get; set; } // bigint
 		[Column,     Nullable] public long?     nuTotParcelas       { get; set; } // bigint
 		[Column,     Nullable] public long?     nuIndice            { get; set; } // bigint
+		[Column,     Nullable] public long?     vrCoPart            { get; set; } // bigint
+		[Column,     Nullable] public long?     vrParcelaCoPart     { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAssociadoPortador { get; set; } // bigint
 	}
 
@@ -324,10 +324,10 @@ namespace DataModel
 		[Column,     Nullable] public long?  nuDiaFech       { get; set; } // bigint
 		[Column,     Nullable] public string stSigla         { get; set; } // character varying(20)
 		[Column,     Nullable] public string stNome          { get; set; } // character varying(200)
+		[Column,     Nullable] public string stCnpj          { get; set; } // character varying(20)
 		[Column,     Nullable] public long?  nuMaxConsultas  { get; set; } // bigint
 		[Column,     Nullable] public long?  nuCarenciaMeses { get; set; } // bigint
 		[Column,     Nullable] public long?  vrMaxProcSemAut { get; set; } // bigint
-		[Column,     Nullable] public string stCnpj          { get; set; } // character varying(20)
 	}
 
 	[Table(Schema="public", Name="EmpresaConsultaAno")]
@@ -335,8 +335,16 @@ namespace DataModel
 	{
 		[PrimaryKey, Identity] public long  id        { get; set; } // bigint
 		[Column,     Nullable] public long? fkEmpresa { get; set; } // bigint
-		[Column,     Nullable] public long? vrPreco   { get; set; } // bigint
-		[Column,     Nullable] public long? nuANo     { get; set; } // bigint
+		[Column,     Nullable] public long? nuAno     { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco1  { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco2  { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco3  { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco4  { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco5  { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco6  { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco7  { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco8  { get; set; } // bigint
+		[Column,     Nullable] public long? vrPreco9  { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="EmpresaEmail")]

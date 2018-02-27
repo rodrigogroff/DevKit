@@ -294,8 +294,16 @@ ALTER TABLE public."EmpresaEmail" ADD COLUMN if not exists "stContato" character
 CREATE TABLE IF NOT EXISTS public."EmpresaConsultaAno" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."EmpresaConsultaAno" OWNER to postgres;
 ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "fkEmpresa" bigint;
-ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco" bigint;
-ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "nuANo" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "nuAno" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco1" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco2" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco3" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco4" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco5" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco6" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco7" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco8" bigint;
+ALTER TABLE public."EmpresaConsultaAno" ADD COLUMN if not exists "vrPreco9" bigint;
 
 CREATE TABLE IF NOT EXISTS public."EmpresaTelefone" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."EmpresaTelefone" OWNER to postgres;

@@ -131,6 +131,82 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
     }
 
     // ============================================
+    // consultas 
+    // ============================================
+
+    $scope.addConsulta = false;
+
+    $scope.removeConsulta = function (index, lista) {
+        //if (!$scope.permModel.novo && !$scope.permModel.edicao)
+        //  toastr.error('Acesso negado!', 'Permissão');
+        //else 
+        {
+            $scope.modalConsulta = true;
+            $scope.delConsulta = $scope.viewModel.consultas[index];
+        }
+    }
+
+    $scope.closeModalConsulta = function () {
+        $scope.modalConsulta = false;
+    }
+
+    $scope.removerConsultaModal = function () {
+        $scope.viewModel.updateCommand = "removeConsulta";
+        $scope.viewModel.anexedEntity = $scope.delConsulta;
+
+        Api.Empresa.update({ id: id }, $scope.viewModel, function (data) {
+            loadEntity();
+        });
+    }
+
+    $scope.addNewConsulta = function () {
+        //if (!$scope.permModel.novo && !$scope.permModel.edicao)
+        //  toastr.error('Acesso negado!', 'Permissão');
+        //else
+        $scope.InitNewConsulta();
+        $scope.addConsulta = !$scope.addConsulta;
+    }
+
+    $scope.InitNewConsulta = function () {
+        $scope.newConsulta = { svrPreco1: '0,00', svrPreco2: '0,00', svrPreco3: '0,00', svrPreco4: '0,00', svrPreco5: '0,00', svrPreco6: '0,00', svrPreco7: '0,00', svrPreco8: '0,00', svrPreco9: '0,00' };
+    }
+    
+    $scope.editConsulta = function (mdl) {
+        $scope.addConsulta = true;
+        $scope.newConsulta = mdl;
+    }
+
+    $scope.cancelConsulta = function () {
+        $scope.addConsulta = false;
+        $scope.newConsulta = {};
+    }
+
+    $scope.saveNewConsulta = function () {
+        //if (!$scope.permModel.novo && !$scope.permModel.edicao)
+        //  toastr.error('Acesso negado!', 'Permissão');
+        //else
+        {
+            $scope.consulta_nuAno_fail = invalidCheck($scope.newConsulta.nuAno);
+
+            if (!$scope.consulta_nuAno_fail)
+            {
+                $scope.addConsulta = false;
+
+                $scope.viewModel.updateCommand = "newConsulta";
+                $scope.viewModel.anexedEntity = $scope.newConsulta;
+
+                Api.Empresa.update({ id: id }, $scope.viewModel, function (data) {
+                    $scope.InitNewConsulta();
+                    loadEntity();
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Error');
+                    });
+            }
+        }
+    }
+
+    // ============================================
     // secoes 
     // ============================================
 

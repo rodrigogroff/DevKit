@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using Newtonsoft.Json;
+using SyCrafEngine;
 using System;
 using System.Linq;
 
@@ -11,6 +12,50 @@ namespace DataModel
 		{
 			switch (updateCommand)
 			{
+                case "newConsulta":
+                    {
+                        var mon = new money();
+                        var ent = JsonConvert.DeserializeObject<EmpresaConsultaAno>(anexedEntity.ToString());
+
+                        ent.fkEmpresa = id;
+
+                        ent.vrPreco1 = Convert.ToInt64(mon.prepareNumber(ent.svrPreco1));
+                        ent.vrPreco2 = Convert.ToInt64(mon.prepareNumber(ent.svrPreco2));
+                        ent.vrPreco3 = Convert.ToInt64(mon.prepareNumber(ent.svrPreco3));
+                        ent.vrPreco4 = Convert.ToInt64(mon.prepareNumber(ent.svrPreco4));
+                        ent.vrPreco5 = Convert.ToInt64(mon.prepareNumber(ent.svrPreco5));
+                        ent.vrPreco6 = Convert.ToInt64(mon.prepareNumber(ent.svrPreco6));
+                        ent.vrPreco7 = Convert.ToInt64(mon.prepareNumber(ent.svrPreco7));
+                        ent.vrPreco8 = Convert.ToInt64(mon.prepareNumber(ent.svrPreco8));
+                        ent.vrPreco9 = Convert.ToInt64(mon.prepareNumber(ent.svrPreco9));
+
+                        if (ent.id == 0)
+                        {
+                            if ((from ne in db.EmpresaConsultaAno where ne.fkEmpresa == id && ne.nuAno == ent.nuAno select ne).Any())
+                            {
+                                resp = "Ano já utilizado!";
+                                return false;
+                            }
+
+                            db.Insert(ent);
+                        }
+                        else
+                        {
+                            db.Update(ent);
+                        }
+
+                        return true;
+                    }
+
+                case "removeConsulta":
+                    {
+                        var ent = JsonConvert.DeserializeObject<EmpresaConsultaAno>(anexedEntity.ToString());
+
+                        db.Delete(ent);
+
+                        return true;
+                    }
+
                 case "newSecao":
                     {
                         var ent = JsonConvert.DeserializeObject<EmpresaSecao>(anexedEntity.ToString());

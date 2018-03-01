@@ -26,6 +26,7 @@ namespace DataModel
         public object anexedEntity;
 
         public string sqtdCartoes = "",
+                      svrMaxProcSemAut = "",
                       updateCommand = "";
 
         public List<EmpresaSecao> secoes;

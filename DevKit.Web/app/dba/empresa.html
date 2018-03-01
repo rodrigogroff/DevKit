@@ -15,7 +15,7 @@
         </legend>
         <div class="divWebForm">
             <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
-                <tab heading="Cadastro">
+                <tab heading="{{tabCadastro_fail}} Cadastro">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table>
                             <thead>
@@ -86,7 +86,8 @@
                     </div>
                 </tab>
 
-                <tab heading="Configuração">
+                <tab heading="{{tabConfig_fail}} Configuração">
+                    
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table>
                             <thead>
@@ -108,7 +109,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="nuFech_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="2" ng-model="viewModel.nuDiaFech">
+                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="2" ng-model="viewModel.nuDiaFech">
                                 </td>
                             </tr>
                             <tr height="40px">
@@ -120,7 +121,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="nuMaxC_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="2" ng-model="viewModel.nuMaxConsultas">
+                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="2" ng-model="viewModel.nuMaxConsultas">
                                 </td>
                             </tr>
                             <tr height="40px">
@@ -132,7 +133,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="nuCar_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="2" ng-model="viewModel.nuCarenciaMeses">
+                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="2" ng-model="viewModel.nuCarenciaMeses">
                                 </td>
                             </tr>
                             <tr height="52px">
@@ -145,7 +146,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="vrMax_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="50" ng-model="viewModel.vrMaxProcSemAut" onKeyUp="money(this,Valor);" maxlength="12">
+                                    <input type="text" class="form-control input-transparent" maxlength="50" ng-model="viewModel.svrMaxProcSemAut" onKeyUp="money(this,Valor);" maxlength="12">
                                 </td>
                                 <td></td>
                             </tr>

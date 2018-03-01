@@ -202,6 +202,11 @@ namespace DataModel
 
                 default: break;
 			}
+
+            if (!string.IsNullOrEmpty(this.svrMaxProcSemAut))
+            {
+                this.vrMaxProcSemAut = Convert.ToInt64(new money().prepareNumber(this.svrMaxProcSemAut));
+            }
             
             db.Update(this);
 

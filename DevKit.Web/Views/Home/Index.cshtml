@@ -26,9 +26,31 @@
             v_obj.value = v_fun(v_obj.value)
         }
 
+        function trimStart(character, string) {
+            var startIndex = 0;
+
+            while (string[startIndex] === character) {
+                startIndex++;
+            }
+
+            return string.substr(startIndex);
+        }
+
+        function ValorNum(v) {
+            v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
+
+            return v
+        }
+
         function Valor(v) {
             v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
 
+            v = trimStart('0', v);
+
+            if (v.length == 1) v = "0,0" + v;
+            else
+            if (v.length == 2) v = "0," + v;
+            else
             if (v.length == 3)
                 v = v.substr(0, 1) + "," + v.substr(1, 2);
             else

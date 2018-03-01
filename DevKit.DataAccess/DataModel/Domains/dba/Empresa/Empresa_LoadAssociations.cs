@@ -16,6 +16,9 @@ namespace DataModel
                                 Count().
                                 ToString();
 
+            if (vrMaxProcSemAut != null)
+                svrMaxProcSemAut = new money().setMoneyFormat((long)vrMaxProcSemAut);
+
             secoes = LoadSecoes(db);
             telefones = LoadTelefones(db);
             emails = LoadEmails(db);

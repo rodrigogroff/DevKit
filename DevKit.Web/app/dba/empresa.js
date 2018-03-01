@@ -87,41 +87,48 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             $scope.nuFech_fail = invalidCheck($scope.viewModel.nuDiaFech);
             $scope.nuMaxC_fail = invalidCheck($scope.viewModel.nuMaxConsultas);
             $scope.nuCar_fail = invalidCheck($scope.viewModel.nuCarenciaMeses);
-            $scope.vrMax_fail = invalidCheck($scope.viewModel.vrMaxProcSemAut);
+            $scope.vrMax_fail = invalidCheck($scope.viewModel.svrMaxProcSemAut);
 	
             if (!$scope.stName_fail &&
                 !$scope.stSigla_fail &&
                 !$scope.cnpj_fail &&
-                !$scope.nuEmpresa_fail && 
-                !$scope.nuFech_fail && 
-                !$scope.nuMaxC_fail && 
-                !$scope.nuCar_fail && 
-                !$scope.vrMax_fail )
-            {
-				if (id > 0)
-                {
-					$scope.viewModel.updateCommand = "entity";
+                !$scope.nuEmpresa_fail &&
+                !$scope.nuFech_fail &&
+                !$scope.nuMaxC_fail &&
+                !$scope.nuCar_fail &&
+                !$scope.vrMax_fail) {
+                if (id > 0) {
+                    $scope.viewModel.updateCommand = "entity";
 
-                    Api.Empresa.update({ id: id }, $scope.viewModel, function (data)
-					{
+                    Api.Empresa.update({ id: id }, $scope.viewModel, function (data) {
                         toastr.success('Dados atualizados!', 'Sucesso');
-					},
-					function (response) {
-						toastr.error(response.data.message, 'Error');
-					});
-				}
-				else
-				{
-                    Api.Empresa.add($scope.viewModel, function (data)
-					{
-                        toastr.success('Credenciado adicionado!', 'Sucesso');                       
+                    },
+                        function (response) {
+                            toastr.error(response.data.message, 'Error');
+                        });
+                }
+                else {
+                    Api.Empresa.add($scope.viewModel, function (data) {
+                        toastr.success('Credenciado adicionado!', 'Sucesso');
                         $state.go('credenciado', { id: data.id });
-					},
-					function (response) {
-						toastr.error(response.data.message, 'Error');
-					});
-				}
-			}
+                    },
+                        function (response) {
+                            toastr.error(response.data.message, 'Error');
+                        });
+                }
+            }
+            else
+            {
+                if ($scope.stName_fail || $scope.stSigla_fail || $scope.cnpj_fail || $scope.nuEmpresa_fail) {
+                    $scope.tabCadastro_fail = "(!)";
+                }
+
+                if ($scope.nuFech_fail || $scope.nuMaxC_fail || $scope.nuCar_fail || $scope.vrMax_fail) {
+                    $scope.tabConfig_fail = "(!)";
+                }
+
+                toastr.error('Verificar pendências de campos mandatórios', 'Error');
+            }
 		}
 	};
 

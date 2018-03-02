@@ -211,6 +211,7 @@
                                 Associados ativos: <b>{{result.totAssocs}}</b><br />
                                 Credenciados ativos: <b>{{result.totCreds}}</b><br />
                                 Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
+                                Total consulta: R$ <b>{{result.stotVlrConsulta}}</b><br />
                                 Total valor: R$ <b>{{result.stotVlr}}</b><br />
                                 Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
                                 <br />
@@ -222,6 +223,7 @@
                                             <th>Matrícula</th>
                                             <th width="300px">Nome Associado</th>
                                             <th>Autorizações</th>
+                                            <th>Consulta R$</th>
                                             <th>Total R$</th>
                                             <th>Co-part. R$</th>
                                             <th>Não cadastrados</th>
@@ -233,6 +235,7 @@
                                         <td>{{ mdl.matricula }}</td>
                                         <td>{{ mdl.associado }}</td>
                                         <td>{{ mdl.qtdAutos }}</td>
+                                        <td>{{ mdl.vlrConsulta }}</td>
                                         <td>{{ mdl.vlrAutos }}</td>
                                         <td>{{ mdl.vlrCoPart }}</td>
                                         <td>{{ mdl.ncads }}</td>
@@ -258,6 +261,7 @@
                                 Período fechamento: <b>{{result.mesAno}}</b><br />
                                 Credenciados ativos: <b>{{result.totCreds}}</b><br />
                                 Associados ativos: <b>{{result.totAssociados}}</b><br />
+                                Total consulta: R$ <b>{{result.stotVlrConsulta}}</b><br />
                                 Total valor: R$ <b>{{result.stotVlr}}</b><br />
                                 Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
                                 <br />
@@ -265,6 +269,7 @@
                                 <div data-ng-repeat="mdl in list">
                                     <h3>{{mdl.matricula}} - {{mdl.nome}}</h3>
                                     CPF: <b>{{mdl.cpf}}</b><br />
+                                    Valor total consulta: <b>{{mdl.stotVlrConsulta}}</b><br />
                                     Valor total procedimento: <b>{{mdl.stotVlr}}</b><br />
                                     Valor total co-participação: <b>{{mdl.stotCoPart}}</b><br />
                                     <br />
@@ -279,8 +284,9 @@
                                                 <th width="180px">Especialidade</th>
                                                 <th width="180px">CNPJ</th>
                                                 <th width="90px">Parcela</th>
-                                                <th width="120px">Valor</th>
-                                                <th width="120px">Co-Part.</th>
+                                                <th width="120px">Consulta R$</th>
+                                                <th width="120px">Valor R$</th>
+                                                <th width="120px">Co-Part. R$</th>
                                                 <th width="300px">PROCEDIMENTO TUSS</th>
                                             </tr>
                                         </thead>
@@ -292,6 +298,7 @@
                                             <td>{{ m.especialidade }}</td>
                                             <td>{{ m.cnpj }}</td>
                                             <td>{{ m.parcela }}</td>
+                                            <td>{{ m.vlrConsulta }}</td>
                                             <td>{{ m.vlr }}</td>
                                             <td>{{ m.vlrCoPart }}</td>
                                             <td>{{ m.tuss }}</td>

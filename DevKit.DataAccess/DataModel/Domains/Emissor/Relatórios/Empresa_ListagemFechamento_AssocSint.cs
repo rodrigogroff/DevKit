@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using SyCrafEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +13,7 @@ namespace DataModel
                         matricula,
                         associado,
                         qtdAutos,
+                        vlrConsulta,
                         vlrAutos,
                         vlrCoPart,
                         ncads;
@@ -23,11 +25,14 @@ namespace DataModel
 
         public long totCreds = 0,
                     totAssocs = 0,
+                    totVlrConsulta = 0,
                     totVlr = 0,
                     totCoPart = 0,
                     procsNCad = 0;
 
-        public string stotVlr, stotCoPart;
+        public string   stotVlrConsulta, 
+                        stotVlr, 
+                        stotCoPart;
 
         public List<FechAssocSint> results = new List<FechAssocSint>();
     }
@@ -82,6 +87,10 @@ namespace DataModel
             resultado.totCreds = auts.Select(y => y.fkCredenciado).Distinct().Count();
             resultado.totAssocs = auts.Select(y => y.fkAssociado).Distinct().Count();
 
+            var empConsultaValores = db.EmpresaConsultaAno.
+                                        Where(y => y.nuAno == filter.ano && y.fkEmpresa == db.currentUser.fkEmpresa).
+                                        FirstOrDefault();
+
             resultado.results = new List<FechAssocSint>();
 
             foreach (var assoc in lst)
@@ -100,15 +109,44 @@ namespace DataModel
                     qtdAutos = auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString()
                 };
 
-                long totVlr = 0, totCoPart = 0;
-
-                item.ncads = "";
-
                 bool found = false;
 
-                foreach (var aut in auts.
-                                    Where (y=> tLstTitDeps.Contains((long)y.fkAssociado)).
-                                    ToList())
+                long totVlrConsulta = 0, totVlr = 0, totCoPart = 0, qtConsulta = 0;
+
+                foreach (var aut in auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).ToList())
+                {
+                    var fkProc = procsTuus.
+                                   Where(y => y.id == aut.fkProcedimento).
+                                   FirstOrDefault();
+
+                    switch (fkProc.nuCodTUSS)
+                    {
+                        case 10101012: case 10101039: case 10102019: case 10103015: case 10103023: case 10103031:
+                        case 10104011: case 10104020: case 10106014: case 10106030: case 10106049: case 90000001:
+                            qtConsulta++;
+                            break;
+                    }
+                }
+
+                for (int t = 1; t <= qtConsulta; ++t)
+                {
+                    switch (t)
+                    {
+                        case 1: totVlrConsulta += (long)empConsultaValores.vrPreco1; break;
+                        case 2: totVlrConsulta += (long)empConsultaValores.vrPreco2; break;
+                        case 3: totVlrConsulta += (long)empConsultaValores.vrPreco3; break;
+                        case 4: totVlrConsulta += (long)empConsultaValores.vrPreco4; break;
+                        case 5: totVlrConsulta += (long)empConsultaValores.vrPreco5; break;
+                        case 6: totVlrConsulta += (long)empConsultaValores.vrPreco6; break;
+                        case 7: totVlrConsulta += (long)empConsultaValores.vrPreco7; break;
+                        case 8: totVlrConsulta += (long)empConsultaValores.vrPreco8; break;
+                        case 9: totVlrConsulta += (long)empConsultaValores.vrPreco9; break;
+                    }
+                }
+
+                item.ncads = "";
+                
+                foreach (var aut in auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).ToList())
                 {
                     found = true;
 
@@ -139,9 +177,11 @@ namespace DataModel
                 {
                     item.ncads = item.ncads.Trim().TrimEnd(',');
 
+                    resultado.totVlrConsulta += totVlrConsulta;
                     resultado.totVlr += totVlr;
                     resultado.totCoPart += totCoPart;
 
+                    item.vlrConsulta = mon.setMoneyFormat(totVlrConsulta);
                     item.vlrAutos = mon.setMoneyFormat(totVlr);
                     item.vlrCoPart = mon.setMoneyFormat(totCoPart);
 
@@ -150,7 +190,8 @@ namespace DataModel
                 }                
             }
 
-            resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);
+            resultado.stotVlrConsulta = mon.setMoneyFormat(resultado.totVlrConsulta);
+            resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);            
             resultado.stotCoPart = mon.setMoneyFormat(resultado.totCoPart);
         }
     }

@@ -17,13 +17,15 @@ namespace DataModel
                         cnpj,
                         parcela,
                         vlr,
+                        vlrConsulta,
                         vlrCoPart,
                         tuss;
     }
 
     public class FechAssocAnalitico
     {
-        public long     totVlr = 0, 
+        public long     totVlr = 0,
+                        totVlrConsulta = 0,
                         totCoPart = 0;
 
         public string   secao,
@@ -31,6 +33,7 @@ namespace DataModel
                         nome,
                         cpf,
                         stotVlr,
+                        stotVlrConsulta,
                         stotCoPart, 
                         tuss;
 
@@ -44,11 +47,13 @@ namespace DataModel
         public long totCreds = 0,
                     totAssociados = 0,
                     totVlr = 0,
+                    totVlrConsulta = 0,
                     totCoPart = 0;            
 
-        public string stotVlr, 
-                      stotCoPart,
-                      mesAno;
+        public string   stotVlr,
+                        stotVlrConsulta,
+                        stotCoPart,
+                        mesAno;
 
         public List<FechAssocAnalitico> results = new List<FechAssocAnalitico>();
     }
@@ -103,6 +108,10 @@ namespace DataModel
 
             var lstSecao = db.EmpresaSecao.Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).ToList();
 
+            var empConsultaValores = db.EmpresaConsultaAno.
+                                        Where(y => y.nuAno == filter.ano && y.fkEmpresa == db.currentUser.fkEmpresa).
+                                        FirstOrDefault();
+
             resultado.totCreds = lstIds.Count();
             resultado.totAssociados = lst.Count();
 
@@ -121,20 +130,44 @@ namespace DataModel
                         nome = assocTb.stName,
                         secao = secao.nuEmpresa + " - " + secao.stDesc,
                         totCoPart = 0,
-                        totVlr = 0
+                        totVlr = 0,
+                        totVlrConsulta = 0,
                     };
 
-                    foreach (var aut in auts.Where(y => y.fkAssociado == assocTb.id).
-                                             OrderBy(y => y.dtSolicitacao).
-                                             ToList())
+                    long qtConsulta = 0;
+
+                    foreach (var aut in auts.Where(y => y.fkAssociado == assocTb.id).OrderBy(y => y.dtSolicitacao).ToList())
                     {
                         var cred = lstCreds.
                                     Where(y => y.id == aut.fkCredenciado).
                                     FirstOrDefault();
                         
-                        var proc = procsTuus.Where(y => y.id == aut.fkProcedimento).FirstOrDefault();
+                        var fkProc = procsTuus.Where(y => y.id == aut.fkProcedimento).FirstOrDefault();
 
                         var portador = db.Associado.Where(y => y.id == aut.fkAssociadoPortador).FirstOrDefault();
+
+                        switch (fkProc.nuCodTUSS)
+                        {
+                            case 10101012: case 10101039: case 10102019: case 10103015: case 10103023: case 10103031:
+                            case 10104011: case 10104020: case 10106014: case 10106030: case 10106049: case 90000001:
+                                qtConsulta++;
+                                break;
+                        }
+
+                        long _vlrCons = 0;
+
+                        switch (qtConsulta)
+                        {
+                            case 1: _vlrCons = (long)empConsultaValores.vrPreco1; break;
+                            case 2: _vlrCons = (long)empConsultaValores.vrPreco2; break;
+                            case 3: _vlrCons = (long)empConsultaValores.vrPreco3; break;
+                            case 4: _vlrCons = (long)empConsultaValores.vrPreco4; break;
+                            case 5: _vlrCons = (long)empConsultaValores.vrPreco5; break;
+                            case 6: _vlrCons = (long)empConsultaValores.vrPreco6; break;
+                            case 7: _vlrCons = (long)empConsultaValores.vrPreco7; break;
+                            case 8: _vlrCons = (long)empConsultaValores.vrPreco8; break;
+                            case 9: _vlrCons = (long)empConsultaValores.vrPreco9; break;
+                        }
 
                         resultAssoc.results.Add(new FechAssocAnalDetalhe
                         {
@@ -148,17 +181,21 @@ namespace DataModel
                             dtSolicitacao = Convert.ToDateTime(aut.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),                            
                             vlr = mon.setMoneyFormat((long)aut.vrParcela),
                             vlrCoPart = mon.setMoneyFormat((long)aut.vrParcelaCoPart),
-                            tuss = proc.nuCodTUSS + " - " + proc.stProcedimento
+                            vlrConsulta = mon.setMoneyFormat(_vlrCons),
+                            tuss = fkProc.nuCodTUSS + " - " + fkProc.stProcedimento
                         });
 
                         resultAssoc.totVlr += (long)aut.vrParcela;
+                        resultAssoc.totVlrConsulta += _vlrCons;
                         resultAssoc.totCoPart += (long)aut.vrParcelaCoPart;
                     }
 
                     resultAssoc.stotVlr = mon.setMoneyFormat(resultAssoc.totVlr);
+                    resultAssoc.stotVlrConsulta = mon.setMoneyFormat(resultAssoc.totVlrConsulta);
                     resultAssoc.stotCoPart = mon.setMoneyFormat(resultAssoc.totCoPart);
 
                     resultado.totVlr += resultAssoc.totVlr;
+                    resultado.totVlrConsulta += resultAssoc.totVlrConsulta;
                     resultado.totCoPart += resultAssoc.totCoPart;
                     
                     resultado.results.Add(resultAssoc);
@@ -166,6 +203,7 @@ namespace DataModel
             }
 
             resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);
+            resultado.stotVlrConsulta = mon.setMoneyFormat(resultado.totVlrConsulta);
             resultado.stotCoPart = mon.setMoneyFormat(resultado.totCoPart);
         }
     }

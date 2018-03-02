@@ -136,17 +136,29 @@
                                     <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="2" ng-model="viewModel.nuCarenciaMeses">
                                 </td>
                             </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Dias re-consulta</b>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="nuDiasReCons_fail">!</button>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="2" ng-model="viewModel.nuDiasReconsulta">
+                                </td>
+                            </tr>
                             <tr height="52px">
                                 <td></td>
                                 <td>
-                                    <b>Valor máximo</b> <br />
+                                    <b>Valor máximo R$</b> <br />
                                     (proc. sem autorização)
                                 </td>
                                 <td>
                                     <button class="btn btn-xs btn-danger" ng-show="vrMax_fail">!</button>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="50" ng-model="viewModel.svrMaxProcSemAut" onKeyUp="money(this,Valor);" maxlength="12">
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrMaxProcSemAut" onKeyUp="money(this,Valor);" />
                                 </td>
                                 <td></td>
                             </tr>
@@ -811,7 +823,7 @@
                             <thead>
                                 <tr>
                                     <th width="20px"></th>
-                                    <th width="90px"></th>
+                                    <th width="190px"></th>
                                     <th width="20px"></th>
                                     <th width="280px"></th>
                                     <th width="20px"></th>
@@ -821,60 +833,79 @@
                             <tr height="40px">
                                 <td></td>
                                 <td>
-                                    <b>Código</b>
+                                    <b>Mensalidade Empresa R$</b>
                                 </td>
-                                <td>
-                                    <button class="btn btn-xs btn-danger" ng-show="nuEmpresa_fail">!</button>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="4"
-                                           ng-disabled="viewModel.id > 0"
-                                           ng-model="viewModel.nuEmpresa">
-                                </td>
-                            </tr>
-                            <tr height="46px"></tr>
-                        </table>
-                    </div>
-                </tab>
-
-                <tab heading="Faturamento">
-                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th width="20px"></th>
-                                    <th width="90px"></th>
-                                    <th width="20px"></th>
-                                    <th width="280px"></th>
-                                    <th width="20px"></th>
-                                </tr>
-                            </thead>
-                            <tr height="22px"></tr>
-                            <tr height="40px">
                                 <td></td>
                                 <td>
-                                    <b>Código</b>
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrCobMensalidade" onKeyUp="money(this,Valor);" />
                                 </td>
-                                <td>
-                                    <button class="btn btn-xs btn-danger" ng-show="nuEmpresa_fail">!</button>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="4"
-                                           ng-disabled="viewModel.id > 0"
-                                           ng-model="viewModel.nuEmpresa">
-                                </td>
+                                <td></td>
                             </tr>
                             <tr height="40px">
                                 <td></td>
                                 <td>
-                                    <b>Sigla</b>
+                                    <b>Cartão Base R$</b>
                                 </td>
+                                <td></td>
                                 <td>
-                                    <button class="btn btn-xs btn-danger" ng-show="stSigla_fail">!</button>
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrCobCartaoBase" onKeyUp="money(this,Valor);" />
                                 </td>
+                                <td></td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="20" ng-model="viewModel.stSigla">
+                                    <b>Cartão Ativo R$</b>
                                 </td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrCobCartaoAtivo" onKeyUp="money(this,Valor);" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Autorização R$</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrCobAutorizacao" onKeyUp="money(this,Valor);" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Emissao Cartão R$</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrCobNovoCartao" onKeyUp="money(this,Valor);" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Serv. Bloqueio R$</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrCobServBloq" onKeyUp="money(this,Valor);" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Serv. Desbloqueio R$</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrCobServBloq" onKeyUp="money(this,Valor);" />
+                                </td>
+                                <td></td>
                             </tr>
                             <tr height="46px"></tr>
                         </table>

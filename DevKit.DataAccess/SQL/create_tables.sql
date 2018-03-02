@@ -275,7 +275,14 @@ ALTER TABLE public."Empresa" ADD COLUMN if not exists "stCnpj" character varying
 ALTER TABLE public."Empresa" ADD COLUMN if not exists "nuMaxConsultas" bigint;
 ALTER TABLE public."Empresa" ADD COLUMN if not exists "nuCarenciaMeses" bigint;
 ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrMaxProcSemAut" bigint;
-ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrMaxProcSemAut" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "nuDiasReconsulta" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrCobMensalidade" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrCobCartaoBase" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrCobCartaoAtivo" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrCobAutorizacao" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrCobNovoCartao" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrCobServBloq" bigint;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "vrCobServDesbloq" bigint;
 
 CREATE TABLE IF NOT EXISTS public."EmpresaSecao" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."EmpresaSecao" OWNER to postgres;

@@ -319,15 +319,23 @@ namespace DataModel
 	[Table(Schema="public", Name="Empresa")]
 	public partial class Empresa
 	{
-		[PrimaryKey, Identity] public long   id              { get; set; } // bigint
-		[Column,     Nullable] public long?  nuEmpresa       { get; set; } // bigint
-		[Column,     Nullable] public long?  nuDiaFech       { get; set; } // bigint
-		[Column,     Nullable] public string stSigla         { get; set; } // character varying(20)
-		[Column,     Nullable] public string stNome          { get; set; } // character varying(200)
-		[Column,     Nullable] public string stCnpj          { get; set; } // character varying(20)
-		[Column,     Nullable] public long?  nuMaxConsultas  { get; set; } // bigint
-		[Column,     Nullable] public long?  nuCarenciaMeses { get; set; } // bigint
-		[Column,     Nullable] public long?  vrMaxProcSemAut { get; set; } // bigint
+		[PrimaryKey, Identity] public long   id               { get; set; } // bigint
+		[Column,     Nullable] public long?  nuEmpresa        { get; set; } // bigint
+		[Column,     Nullable] public long?  nuDiaFech        { get; set; } // bigint
+		[Column,     Nullable] public string stSigla          { get; set; } // character varying(20)
+		[Column,     Nullable] public string stNome           { get; set; } // character varying(200)
+		[Column,     Nullable] public string stCnpj           { get; set; } // character varying(20)
+		[Column,     Nullable] public long?  nuMaxConsultas   { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCarenciaMeses  { get; set; } // bigint
+		[Column,     Nullable] public long?  vrMaxProcSemAut  { get; set; } // bigint
+		[Column,     Nullable] public long?  nuDiasReconsulta { get; set; } // bigint
+		[Column,     Nullable] public long?  vrCobMensalidade { get; set; } // bigint
+		[Column,     Nullable] public long?  vrCobCartaoBase  { get; set; } // bigint
+		[Column,     Nullable] public long?  vrCobCartaoAtivo { get; set; } // bigint
+		[Column,     Nullable] public long?  vrCobAutorizacao { get; set; } // bigint
+		[Column,     Nullable] public long?  vrCobNovoCartao  { get; set; } // bigint
+		[Column,     Nullable] public long?  vrCobServBloq    { get; set; } // bigint
+		[Column,     Nullable] public long?  vrCobServDesbloq { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="EmpresaConsultaAno")]

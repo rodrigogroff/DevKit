@@ -16,8 +16,14 @@ namespace DataModel
                                 Count().
                                 ToString();
 
-            if (vrMaxProcSemAut != null)
-                svrMaxProcSemAut = new money().setMoneyFormat((long)vrMaxProcSemAut);
+            if (vrMaxProcSemAut != null)    svrMaxProcSemAut = new money().setMoneyFormat((long)vrMaxProcSemAut);
+            if (vrCobMensalidade != null)   svrCobMensalidade = new money().setMoneyFormat((long)vrCobMensalidade);
+            if (vrCobCartaoBase != null)    svrCobCartaoBase = new money().setMoneyFormat((long)vrCobCartaoBase);
+            if (vrCobCartaoAtivo != null)   svrCobCartaoAtivo = new money().setMoneyFormat((long)vrCobCartaoAtivo);
+            if (vrCobAutorizacao != null)   svrCobAutorizacao = new money().setMoneyFormat((long)vrCobAutorizacao);
+            if (vrCobNovoCartao != null)    svrCobNovoCartao = new money().setMoneyFormat((long)vrCobNovoCartao);
+            if (vrCobServBloq != null)      svrCobServBloq = new money().setMoneyFormat((long)vrCobServBloq);
+            if (vrCobServDesbloq != null)   svrCobServDesbloq = new money().setMoneyFormat((long)vrCobServDesbloq);
 
             secoes = LoadSecoes(db);
             telefones = LoadTelefones(db);

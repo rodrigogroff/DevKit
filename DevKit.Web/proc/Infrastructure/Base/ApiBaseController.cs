@@ -20,7 +20,7 @@ namespace DevKit.Web.Controllers
 	{
         public AutorizadorCNDB db;
 
-        public string   cnet_server = "54.233.109.221",
+        public string   cnet_server = "138.118.164.191",
                         apiError = "";
 
         public int cnet_port = 2000;

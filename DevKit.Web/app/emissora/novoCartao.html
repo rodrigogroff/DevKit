@@ -26,10 +26,7 @@
                             </td>
                             <td width="160px" ng-show="id > 0">{{viewModel.matricula}}</td>
                             <td width="160px" ng-show="id == undefined">
-
-                                {{id}}
-                                <input type="text" class="form-control input-transparent" maxlength="6"
-                                       ng-model="viewModel.matricula">
+                                <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="6" ng-model="viewModel.matricula">
                             </td>
                             <td width="20px"></td>
                         </tr>
@@ -46,13 +43,13 @@
                                     <tr>
                                         <td ng-if="id > 0">{{viewModel.vencMes}}</td>
                                         <td ng-if="id == undefined">
-                                            <input type="text" class="form-control input-transparent" maxlength="2" style="width:40px"
+                                            <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="2" style="width:40px"
                                                    ng-model="viewModel.vencMes">
                                         </td>
                                         <td width="20px"> &nbsp;&nbsp;/&nbsp;&nbsp; </td>
                                         <td ng-if="id > 0">{{viewModel.vencAno}}</td>
                                         <td ng-if="id == undefined">
-                                            <input type="text" class="form-control input-transparent" maxlength="2" style="width:40px"
+                                            <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="2" style="width:40px"
                                                    ng-model="viewModel.vencAno">
                                         </td>
                                     </tr>
@@ -113,6 +110,7 @@
                             <td ng-show="id > 0">{{viewModel.cpf}}</td>
                             <td ng-show="id == undefined">
                                 <input type="text" class="form-control input-transparent" maxlength="11"
+                                       onKeyUp="money(this,ValorNum);" maxlength="11"
                                        ng-model="viewModel.cpf">
                             </td>
                             <td></td>

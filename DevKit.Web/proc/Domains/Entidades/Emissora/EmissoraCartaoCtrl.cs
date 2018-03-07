@@ -437,14 +437,14 @@ namespace DevKit.Web.Controllers
             // log de auditoria
             // ----------------------------------
 
-            db.Insert(new LOG_Audit
+            /*db.Insert(new LOG_Audit
             {
                 tg_operacao = Convert.ToInt32(TipoOperacao.CadCartao),
                 fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                 dt_operacao = DateTime.Now,
                 st_observacao = "",
                 fk_generic = 0
-            });
+            });*/
 
             return Ok();
         }

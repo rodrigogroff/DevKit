@@ -235,15 +235,22 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public DateTime? ObtemData(string valor)
         {
-            if (valor == null)
-                return null;
+            try
+            {
+                if (valor == null)
+                    return null;
 
-            if (valor.Length < 10)
-                return null;
+                if (valor.Length < 10)
+                    return null;
 
-            return new DateTime(Convert.ToInt32(valor.Substring(6, 4)),
-                                            Convert.ToInt32(valor.Substring(3, 2)),
-                                            Convert.ToInt32(valor.Substring(0, 2)), 0, 0, 0);
+                return new DateTime(Convert.ToInt32(valor.Substring(6, 4)),
+                                                Convert.ToInt32(valor.Substring(3, 2)),
+                                                Convert.ToInt32(valor.Substring(0, 2)), 0, 0, 0);
+            }
+            catch (SystemException ex)
+            {
+                return null;
+            }
         }
 
         [NonAction]

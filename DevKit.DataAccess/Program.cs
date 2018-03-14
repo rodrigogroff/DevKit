@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using ClosedXML.Excel;
+using System.Collections.Generic;
 
 namespace GetStarted
 {
@@ -34,11 +35,181 @@ namespace GetStarted
         {
             using (var db = new DevKitDB())
             {
-                int opt = 1;
+                int opt = 0;
+
                 var setup = new Setup();
 
                 switch (opt)
                 {
+                    case 0:
+                        {
+                            var excel = new XLWorkbook("C:\\carga\\ValoresPacote.xlsx");
+                            var sheetMateriais = excel.Worksheets.Skip(2).Take(1).FirstOrDefault();
+                            var sheetMedicamentos = excel.Worksheets.Skip(3).Take(1).FirstOrDefault();
+
+                            // ---------------------
+                            // materiais
+                            // ---------------------
+                            {
+                                int currentRow = 5;
+
+                                var lstFinal = new List<string>();
+
+                                while (true)
+                                {
+                                    if (currentRow > 6750)
+                                        break;
+
+                                    var id = sheetMateriais.Cell(currentRow, 1).Value.ToString();
+                                    var desc = sheetMateriais.Cell(currentRow, 2).Value.ToString();
+                                    var descCom = sheetMateriais.Cell(currentRow, 3).Value.ToString();
+                                    var fabric = sheetMateriais.Cell(currentRow, 4).Value.ToString();
+                                    var facao = sheetMateriais.Cell(currentRow, 5).Value.ToString();
+                                    var facriocinar = sheetMateriais.Cell(currentRow, 6).Value.ToString();
+                                    var unidade = sheetMateriais.Cell(currentRow, 7).Value.ToString();
+                                    var valor = sheetMateriais.Cell(currentRow, 8).Value.ToString();
+
+                                    var id_next = sheetMateriais.Cell(currentRow + 1, 1).Value.ToString();
+                                    var desc_next = sheetMateriais.Cell(currentRow + 1, 2).Value.ToString();
+                                    var descCom_next = sheetMateriais.Cell(currentRow + 1, 3).Value.ToString();
+                                    var fabric_next = sheetMateriais.Cell(currentRow + 1, 4).Value.ToString();
+                                    var facao_next = sheetMateriais.Cell(currentRow + 1, 5).Value.ToString();
+                                    var facriocinar_next = sheetMateriais.Cell(currentRow + 1, 6).Value.ToString();
+                                    var unidade_next = sheetMateriais.Cell(currentRow + 1, 7).Value.ToString();
+                                    var valor_next = sheetMateriais.Cell(currentRow + 1, 8).Value.ToString();
+
+                                    if (id == "" && desc == "" && descCom == "" && fabric == "" && facao == "" && facriocinar == "" && unidade == "" && valor == "")
+                                    {
+                                        ++currentRow;
+                                    }
+                                    else if (desc == "" && desc_next == "")
+                                    {
+                                        ++currentRow;
+                                    }
+                                    else
+                                    {
+                                        if (id != "" && id_next != "")
+                                        {
+                                            lstFinal.Add(id + "¨" + desc + "¨" + descCom + "¨" + fabric + "¨" + facao + "¨" + facriocinar + "¨" + unidade + "¨" + valor);
+
+                                            ++currentRow;
+                                        }
+                                        else
+                                        {
+                                            if (id == "") id = id_next;
+
+                                            desc += " " + desc_next;
+                                            descCom += " " + descCom_next;
+                                            fabric += fabric_next;
+                                            facao += facao_next;
+                                            facriocinar += facriocinar_next;
+                                            unidade += unidade_next;
+                                            valor += valor_next;
+
+                                            lstFinal.Add(id + "¨" + desc + "¨" + descCom + "¨" + fabric + "¨" + facao + "¨" + facriocinar + "¨" + unidade + "¨" + valor);
+
+                                            currentRow += 2;
+                                        }
+                                    }
+                                }
+
+                                var strFilename = "c:\\carga\\listaMateriais.txt";
+
+                                if (File.Exists(strFilename))
+                                    File.Delete(strFilename);
+
+                                using (var sw = new StreamWriter(strFilename, false, Encoding.Default))
+                                {
+                                    foreach (var item in lstFinal)
+                                    {
+                                        sw.WriteLine(item);
+                                    }
+                                }
+                            }
+
+                            // ---------------------
+                            // medicamentos
+                            // ---------------------
+                            {
+                                int currentRow = 5;
+
+                                var lstFinal = new List<string>();
+
+                                while (true)
+                                {
+                                    if (currentRow > 14340)
+                                        break;
+
+                                    var id = sheetMedicamentos.Cell(currentRow, 1).Value.ToString();
+                                    var desc = sheetMedicamentos.Cell(currentRow, 2).Value.ToString();
+                                    var descCom = sheetMedicamentos.Cell(currentRow, 3).Value.ToString();
+                                    var fabric = sheetMedicamentos.Cell(currentRow, 4).Value.ToString();
+                                    var facao = sheetMedicamentos.Cell(currentRow, 5).Value.ToString();
+                                    var facriocinar = sheetMedicamentos.Cell(currentRow, 6).Value.ToString();
+                                    var unidade = sheetMedicamentos.Cell(currentRow, 7).Value.ToString();
+                                    var valor = sheetMedicamentos.Cell(currentRow, 8).Value.ToString();
+
+                                    var id_next = sheetMedicamentos.Cell(currentRow + 1, 1).Value.ToString();
+                                    var desc_next = sheetMedicamentos.Cell(currentRow + 1, 2).Value.ToString();
+                                    var descCom_next = sheetMedicamentos.Cell(currentRow + 1, 3).Value.ToString();
+                                    var fabric_next = sheetMedicamentos.Cell(currentRow + 1, 4).Value.ToString();
+                                    var facao_next = sheetMedicamentos.Cell(currentRow + 1, 5).Value.ToString();
+                                    var facriocinar_next = sheetMedicamentos.Cell(currentRow + 1, 6).Value.ToString();
+                                    var unidade_next = sheetMedicamentos.Cell(currentRow + 1, 7).Value.ToString();
+                                    var valor_next = sheetMedicamentos.Cell(currentRow + 1, 8).Value.ToString();
+
+                                    if (id == "" && desc == "" && descCom == "" && fabric == "" && facao == "" && facriocinar == "" && unidade == "" && valor == "")
+                                    {
+                                        ++currentRow;
+                                    }
+                                    else if (desc == "" && desc_next == "")
+                                    {
+                                        ++currentRow;
+                                    }
+                                    else
+                                    {
+                                        if (id != "" && id_next != "")
+                                        {
+                                            lstFinal.Add(id + "¨" + desc + "¨" + descCom + "¨" + fabric + "¨" + facao + "¨" + facriocinar + "¨" + unidade + "¨" + valor);
+
+                                            ++currentRow;
+                                        }
+                                        else
+                                        {
+                                            if (id == "") id = id_next;
+
+                                            desc += " " + desc_next;
+                                            descCom += " " + descCom_next;
+                                            fabric += fabric_next;
+                                            facao += facao_next;
+                                            facriocinar += facriocinar_next;
+                                            unidade += unidade_next;
+                                            valor += valor_next;
+
+                                            lstFinal.Add(id + "¨" + desc + "¨" + descCom + "¨" + fabric + "¨" + facao + "¨" + facriocinar + "¨" + unidade + "¨" + valor);
+
+                                            currentRow += 2;
+                                        }
+                                    }
+                                }
+
+                                var strFilename = "c:\\carga\\listaMedicamentos.txt";
+
+                                if (File.Exists(strFilename))
+                                    File.Delete(strFilename);
+
+                                using (var sw = new StreamWriter(strFilename, false, Encoding.Default))
+                                {
+                                    foreach (var item in lstFinal)
+                                    {
+                                        sw.WriteLine(item);
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+
                     case 1:
                         {
                             Console.WriteLine("CARGA DE BASE");

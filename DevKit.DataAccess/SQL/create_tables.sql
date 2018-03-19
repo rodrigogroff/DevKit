@@ -519,3 +519,10 @@ ALTER TABLE public."CredenciadoEmpresaTuss" ADD COLUMN if not exists "tgCob" boo
 CREATE TABLE IF NOT EXISTS public."TipoCoberturaDependente" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."TipoCoberturaDependente" OWNER to postgres;
 ALTER TABLE public."TipoCoberturaDependente" ADD COLUMN if not exists "stDesc" character varying(150);
+
+CREATE TABLE IF NOT EXISTS public."LogAutorizaProc" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."LogAutorizaProc" OWNER to postgres;
+ALTER TABLE public."LogAutorizaProc" ADD COLUMN if not exists "stLog" character varying(999);
+ALTER TABLE public."LogAutorizaProc" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."LogAutorizaProc" ADD COLUMN if not exists "tgErro" boolean;
+

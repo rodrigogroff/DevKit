@@ -42,6 +42,7 @@ namespace DataModel
 		public ITable<EmpresaTelefone>         EmpresaTelefone         { get { return this.GetTable<EmpresaTelefone>(); } }
 		public ITable<Especialidade>           Especialidade           { get { return this.GetTable<Especialidade>(); } }
 		public ITable<Estado>                  Estado                  { get { return this.GetTable<Estado>(); } }
+		public ITable<LogAutorizaProc>         LogAutorizaProc         { get { return this.GetTable<LogAutorizaProc>(); } }
 		public ITable<LoteGrafica>             LoteGrafica             { get { return this.GetTable<LoteGrafica>(); } }
 		public ITable<LoteGraficaCartao>       LoteGraficaCartao       { get { return this.GetTable<LoteGraficaCartao>(); } }
 		public ITable<Profile>                 Profile                 { get { return this.GetTable<Profile>(); } }
@@ -417,6 +418,15 @@ namespace DataModel
 		[PrimaryKey, Identity] public long   id      { get; set; } // bigint
 		[Column,     Nullable] public string stSigla { get; set; } // character varying(20)
 		[Column,     Nullable] public string stNome  { get; set; } // character varying(200)
+	}
+
+	[Table(Schema="public", Name="LogAutorizaProc")]
+	public partial class LogAutorizaProc
+	{
+		[PrimaryKey, Identity] public long      id     { get; set; } // bigint
+		[Column,     Nullable] public string    stLog  { get; set; } // character varying(999)
+		[Column,     Nullable] public DateTime? dtLog  { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public bool?     tgErro { get; set; } // boolean
 	}
 
 	[Table(Schema="public", Name="LoteGrafica")]
@@ -906,6 +916,12 @@ namespace DataModel
 		}
 
 		public static Estado Find(this ITable<Estado> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static LogAutorizaProc Find(this ITable<LogAutorizaProc> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

@@ -31,6 +31,21 @@ namespace GetStarted
 
         #endregion
 
+        static string LimpaCampo (string origem)
+        {
+            var resp = "";
+
+            foreach (var c in origem)
+            {
+                if (!Char.IsControl(c))
+                {
+                    resp += c;
+                }
+            }
+
+            return resp;
+        }
+
         static void Main(string[] args)
         {
             using (var db = new DevKitDB())
@@ -61,8 +76,8 @@ namespace GetStarted
                                         break;
 
                                     var id = sheetMateriais.Cell(currentRow, 1).Value.ToString();
-                                    var desc = sheetMateriais.Cell(currentRow, 2).Value.ToString();
-                                    var descCom = sheetMateriais.Cell(currentRow, 3).Value.ToString();
+                                    var desc = LimpaCampo ( sheetMateriais.Cell(currentRow, 2).Value.ToString() );
+                                    var descCom = LimpaCampo(sheetMateriais.Cell(currentRow, 3).Value.ToString() );
                                     var fabric = sheetMateriais.Cell(currentRow, 4).Value.ToString();
                                     var facao = sheetMateriais.Cell(currentRow, 5).Value.ToString();
                                     var facriocinar = sheetMateriais.Cell(currentRow, 6).Value.ToString();
@@ -70,8 +85,8 @@ namespace GetStarted
                                     var valor = sheetMateriais.Cell(currentRow, 8).Value.ToString();
 
                                     var id_next = sheetMateriais.Cell(currentRow + 1, 1).Value.ToString();
-                                    var desc_next = sheetMateriais.Cell(currentRow + 1, 2).Value.ToString();
-                                    var descCom_next = sheetMateriais.Cell(currentRow + 1, 3).Value.ToString();
+                                    var desc_next = LimpaCampo(sheetMateriais.Cell(currentRow + 1, 2).Value.ToString());
+                                    var descCom_next = LimpaCampo(sheetMateriais.Cell(currentRow + 1, 3).Value.ToString());
                                     var fabric_next = sheetMateriais.Cell(currentRow + 1, 4).Value.ToString();
                                     var facao_next = sheetMateriais.Cell(currentRow + 1, 5).Value.ToString();
                                     var facriocinar_next = sheetMateriais.Cell(currentRow + 1, 6).Value.ToString();
@@ -157,6 +172,11 @@ namespace GetStarted
                                     var facriocinar_next = sheetMedicamentos.Cell(currentRow + 1, 6).Value.ToString();
                                     var unidade_next = sheetMedicamentos.Cell(currentRow + 1, 7).Value.ToString();
                                     var valor_next = sheetMedicamentos.Cell(currentRow + 1, 8).Value.ToString();
+
+                                    if ( id == "70077401" )
+                                    {
+                                        var t = 9;
+                                    }
 
                                     if (id == "" && desc == "" && descCom == "" && fabric == "" && facao == "" && facriocinar == "" && unidade == "" && valor == "")
                                     {

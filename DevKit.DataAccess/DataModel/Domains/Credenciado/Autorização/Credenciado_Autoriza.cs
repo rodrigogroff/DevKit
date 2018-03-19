@@ -61,21 +61,26 @@ namespace DataModel
                     4)FILHOS MAIORES DE 21 ANOS COM DOENCA PRE EXISTENTES
                 */
 
-                var dtNascDep = Convert.ToDateTime(dadosDep.dtNasc);
-
-                switch (dadosDep.fkTipoCoberturaDependente)
+                if (dadosDep.dtNasc != null)
                 {
-                    case 2: if (DateTime.Now > dtNascDep.AddYears(21))
-                                return "Idade do dependente excede 21!";
-                        break;
+                    var dtNascDep = Convert.ToDateTime(dadosDep.dtNasc);
 
-                    case 3:
-                    case 4: if (DateTime.Now < dtNascDep.AddYears(21))
+                    switch (dadosDep.fkTipoCoberturaDependente)
+                    {
+                        case 2:
+                            if (DateTime.Now > dtNascDep.AddYears(21))
+                                return "Idade do dependente excede 21!";
+                            break;
+
+                        case 3:
+                        case 4:
+                            if (DateTime.Now < dtNascDep.AddYears(21))
                                 return "Idade do dependente precisa ser maior que 21!";
 
-                        break;
+                            break;
 
-                    default: break;
+                        default: break;
+                    }
                 }
             }
 
@@ -84,7 +89,7 @@ namespace DataModel
                                 where e.nuMatricula == _params.mat
                                 where e.nuTitularidade == 1
                                 select e).
-                             FirstOrDefault();
+                                FirstOrDefault();
 
             if (_params.senha != associadoTit.stSenha)
                 return "Senha inválida!";

@@ -12,6 +12,7 @@ namespace DataModel
 		{
             var proc = db.TUSS.Where(y => y.id == fkProcedimento).FirstOrDefault();
             var assoc = db.Associado.Where(y => y.id == fkAssociado).FirstOrDefault();
+            var assocPortador = db.Associado.Where(y => y.id == fkAssociadoPortador).FirstOrDefault();
             var cred = db.Credenciado.Where(y => y.id == fkCredenciado).FirstOrDefault();
 
             if (cred != null )
@@ -31,6 +32,15 @@ namespace DataModel
                 sfkProcedimento = proc.nuCodTUSS + " - " + proc.stProcedimento;
 
             sfkAssociado = assoc.stName;
+
+            if (assocPortador != null)
+            {
+                sfkAssociadoPortador = assocPortador.stName;
+                sfkAssociadoPortadorTit = assocPortador.nuTitularidade.ToString().PadLeft(2,'0');
+            }
+            else
+                sfkAssociadoPortadorTit = assoc.nuTitularidade.ToString().PadLeft(2, '0');
+
             snuMatriculaAssociado = assoc.nuMatricula.ToString();
 
             switch (tgSituacao)

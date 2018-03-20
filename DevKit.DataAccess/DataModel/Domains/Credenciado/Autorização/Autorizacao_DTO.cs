@@ -7,7 +7,7 @@ namespace DataModel
 {
 	public partial class Autorizacao
     {
-        public string   sdtSolicitacao, 
+        public string sdtSolicitacao,
                         stgSituacao,
                         sfkCredenciado,
                         snuCodigoCredenciado,
@@ -15,6 +15,8 @@ namespace DataModel
                         sfkEmpresa,
                         sfkProcedimento,
                         snuMatriculaAssociado,
-                        sfkAssociado;
+                        sfkAssociado,
+                        sfkAssociadoPortador,
+                        sfkAssociadoPortadorTit;
     }
 }

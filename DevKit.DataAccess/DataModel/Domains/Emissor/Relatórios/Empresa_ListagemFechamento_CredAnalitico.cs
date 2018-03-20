@@ -124,6 +124,11 @@ namespace DataModel
                                              ToList())
                     {
                         var assoc = lstAssocs.
+                                    Where(y => y.id == aut.fkAssociadoPortador).
+                                    FirstOrDefault();
+
+                        if (assoc == null)
+                            assoc = lstAssocs.
                                     Where(y => y.id == aut.fkAssociado).
                                     FirstOrDefault();
 

@@ -15,16 +15,37 @@
                 <tr height="22px"> </tr>
                 <tr height="36px">
                     <td width="25px"></td>
-                    <td width="110px"><b>Código TUSS</b></td>
+                    <td width="180px"><b>Proc. Cadastrado</b></td>
                     <td width="220px">
                         <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.tuss" />
                     </td>
-                    <td width="60px"></td>
-                    <td width="110px"><b>Associado</b></td>
-                    <td width="220px">
-                        <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.nomeAssociado" />
-                    </td>
                     <td width="25px"></td>
+                </tr>
+                <tr height="36px">
+                    <td></td>
+                    <td><b>Associado</b></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.nomeAssociado" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="36px">
+                    <td></td>
+                    <td><b>Data Inicial</b></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.dtInicial" 
+                               maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="36px">
+                    <td></td>
+                    <td><b>Data Final</b></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.dtFinal" 
+                               maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
+                    </td>
+                    <td></td>
                 </tr>
                 <tr height="12px"> </tr>
                 <tr height="42px">
@@ -64,8 +85,8 @@
                                         <td>{{ mdl.stgSituacao }}</td>
                                         <td>{{ mdl.sfkProcedimento }}</td>
                                         <td>{{ mdl.sfkEmpresa }}</td>
-                                        <td>{{ mdl.snuMatriculaAssociado }}</td>
-                                        <td>{{ mdl.sfkAssociado }}</td>
+                                        <td>{{ mdl.snuMatriculaAssociado }}.{{ mdl.sfkAssociadoPortadorTit }} </td>
+                                        <td>{{ mdl.sfkAssociadoPortador }}</td>
                                     </tr>
                                 </table>
                             </div>

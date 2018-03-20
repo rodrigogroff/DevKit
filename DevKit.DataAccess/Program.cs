@@ -173,11 +173,6 @@ namespace GetStarted
                                     var unidade_next = sheetMedicamentos.Cell(currentRow + 1, 7).Value.ToString();
                                     var valor_next = sheetMedicamentos.Cell(currentRow + 1, 8).Value.ToString();
 
-                                    if ( id == "70077401" )
-                                    {
-                                        var t = 9;
-                                    }
-
                                     if (id == "" && desc == "" && descCom == "" && fabric == "" && facao == "" && facriocinar == "" && unidade == "" && valor == "")
                                     {
                                         ++currentRow;

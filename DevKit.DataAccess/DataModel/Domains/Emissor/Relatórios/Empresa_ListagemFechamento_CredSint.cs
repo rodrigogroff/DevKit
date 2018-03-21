@@ -9,7 +9,7 @@ namespace DataModel
 {
     public class ListagemFechamentoFilter
     {
-        public long? fkEmpresa;
+        public long? fkEmpresa, fkCredenciado;
 
         public int mes, 
                    ano,

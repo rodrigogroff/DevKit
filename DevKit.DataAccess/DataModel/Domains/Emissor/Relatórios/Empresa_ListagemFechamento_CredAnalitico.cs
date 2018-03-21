@@ -60,7 +60,8 @@ namespace DataModel
             
             var query = from e in db.Credenciado
                         join ce in db.CredenciadoEmpresa on e.id equals ce.fkCredenciado
-                        where ce.fkEmpresa == db.currentUser.fkEmpresa
+                        where filter.fkEmpresa == null || (filter.fkEmpresa != null && ce.fkEmpresa == filter.fkEmpresa)
+                        where filter.fkCredenciado == null || (filter.fkCredenciado != null && e.id == filter.fkCredenciado)
                         orderby e.stNome
                         select e;
 

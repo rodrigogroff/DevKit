@@ -24,19 +24,24 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var userProfile = db.currentUser.fkProfile;
+            if (db.currentUser != null)
+            {
+                var userProfile = db.currentUser.fkProfile;
 
-            if (RestoreCache(CacheTags.Profile, userProfile) is Profile obj)
-                return Ok(Parse(obj, id));
-            
-            var mdl = db.GetProfile(userProfile);
+                if (RestoreCache(CacheTags.Profile, userProfile) is Profile obj)
+                    return Ok(Parse(obj, id));
 
-            if (mdl == null)
-				return StatusCode(HttpStatusCode.NotFound);
+                var mdl = db.GetProfile(userProfile);
 
-            BackupCache(mdl);
+                if (mdl == null)
+                    return StatusCode(HttpStatusCode.NotFound);
 
-            return Ok(Parse(mdl, id));
+                BackupCache(mdl);
+
+                return Ok(Parse(mdl, id));
+            }
+            else
+                return Ok();            
 		}
 
         [NonAction]

@@ -16,6 +16,8 @@ namespace DevKit.Web.Controllers
                 take = Request.GetQueryStringValue("take", 0),
                 tuss = Request.GetQueryStringValue("tuss"),
                 nomeAssociado = Request.GetQueryStringValue("nomeAssociado"),
+                dtInicial = Request.GetQueryStringValue("dtInicial"),
+                dtFinal = Request.GetQueryStringValue("dtFinal"),
             });
 
             return Ok(m);

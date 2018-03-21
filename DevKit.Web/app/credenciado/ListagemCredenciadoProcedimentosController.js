@@ -32,6 +32,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             take: take,
             tuss: $scope.campos.tuss,
             nomeAssociado: $scope.campos.nomeAssociado,
+            dtInicial: $scope.campos.dtInicial,
+            dtFinal: $scope.campos.dtFinal,
         };
 
 		Api.CredenciadoListagemAutorizacao.listPage(opcoes, function (data)

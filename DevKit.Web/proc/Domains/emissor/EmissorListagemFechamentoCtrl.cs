@@ -11,15 +11,20 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var filter = new ListagemFechamentoFilter
-            {
-                fkEmpresa = db.currentUser.fkEmpresa,
+            {                
                 mes = Request.GetQueryStringValue("mes", 0),
                 ano = Request.GetQueryStringValue("ano", 15),
                 tipo = Request.GetQueryStringValue("tipo", 0),
                 modo = Request.GetQueryStringValue("modo", 0),
             };
 
-            switch(filter.tipo)
+            if (db.currentCredenciado != null)
+                filter.fkCredenciado = db.currentCredenciado.id;
+
+            if (db.currentUser != null)
+                filter.fkEmpresa = db.currentUser.fkEmpresa;            
+
+            switch (filter.tipo)
             {
                 // ==================
                 // credenciado

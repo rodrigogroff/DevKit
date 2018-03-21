@@ -1,0 +1,118 @@
+﻿<div class="webFormPostion" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Relatório de <b>Fechamento</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>                    
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color:white">
+                <tr height="22px"> </tr>
+                
+                <tr height="36px">
+                    <td width="25px"></td>
+                    <td width="150px"><b>Mês</b></td>
+                    <td width="220px">
+                        <input type="hidden" style="width:100%" ui-select2="selectMonths" data-placeholder="(Selecione)" ng-model="campos.mes" />
+                    </td>
+                    <td width="60px"></td>
+                </tr>
+
+                <tr height="36px">
+                    <td></td>
+                    <td><b>Ano</b></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.ano" />
+                    </td>
+                    <td width="60px"></td>
+                </tr>
+
+                <tr height="22px"></tr>
+
+                <tr height="36px">
+                    <td width="25px"></td>
+                    <td width="150px" valign="top">
+                        <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
+                    </td>
+                </tr>
+
+                <tr height="22px"> </tr>
+            </table>
+
+            <div style="overflow-x:scroll;overflow:auto;">
+
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div ng-show="result.failed == true">
+                                <div class="btn btn-info btn-lg">Nenhum movimento encontrado.</div>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="list.length > 0">
+                                <br />
+                                <h2>Demonstrativo de fechamento ConveyNET</h2>
+                                Período fechamento: <b>{{result.mesAno}}</b><br />
+                                <br />
+
+                                <div data-ng-repeat="mdl in list">
+
+                                    <h3>{{mdl.codCredenciado}} - {{mdl.nomeCredenciado}}</h3>
+                                    CNPJ: <b>{{mdl.cnpj}}</b><br />
+                                    Valor total procedimento: <b>{{mdl.stotVlr}}</b><br />
+                                    Valor total co-participação: <b>{{mdl.stotCoPart}}</b><br />
+                                    Dados bancários: <b>{{mdl.sDadosBancarios}}</b><br />
+                                    <br />
+
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th width="70px">Serial</th>
+                                                <th width="150px">Data Solicitação</th>
+                                                <th width="180px">Empresa / Seção</th>
+                                                <th width="180px">CPF</th>
+                                                <th width="90px">Matrícula</th>
+                                                <th width="300px">Associado</th>
+                                                <th width="90px">Parcela</th>
+                                                <th width="120px">Valor</th>
+                                                <th width="120px">Co-Part.</th>
+                                                <th width="300px">PROCEDIMENTO TUSS</th>
+                                            </tr>
+                                        </thead>
+                                        <tr data-ng-repeat="m in mdl.results">
+                                            <td>{{ m.serial }}</td>
+                                            <td>{{ m.dtSolicitacao }}</td>
+                                            <td>{{ m.secao }}</td>
+                                            <td>{{ m.cpf }}</td>
+                                            <td>{{ m.matricula }}</td>
+                                            <td>{{ m.associado }}</td>
+                                            <td>{{ m.parcela }}</td>
+                                            <td>{{ m.vlr }}</td>
+                                            <td>{{ m.vlrCoPart }}</td>
+                                            <td>{{ m.tuss }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+               
+            </div>
+
+        <br />
+        <br />
+        <br />
+    </section>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

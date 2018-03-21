@@ -232,6 +232,8 @@
     <Content Include="app\configuration\sprint\ListingSprintsController.js" />
     <Content Include="app\configuration\sprint\sprint.html" />
     <Content Include="app\configuration\sprint\SprintController.js" />
+    <Content Include="app\credenciado\listagemCredFechamento.html" />
+    <Content Include="app\credenciado\ListagemCredFechamento.js" />
     <Content Include="app\dba\empresa.html" />
     <Content Include="app\dba\empresa.js" />
     <Content Include="app\dba\listingExpAutorizacao.html" />

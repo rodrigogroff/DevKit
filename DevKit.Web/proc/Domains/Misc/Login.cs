@@ -126,7 +126,7 @@ namespace DevKit.Web
 
                     var login = incoming[1];
 
-                    if (login == "dba" && context.Password =="superdba")
+                    if (login == "dba" && context.Password.ToUpper() =="SUPERDBA")
                     {
                         var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 

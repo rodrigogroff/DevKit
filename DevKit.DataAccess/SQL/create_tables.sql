@@ -526,3 +526,107 @@ ALTER TABLE public."LogAutorizaProc" ADD COLUMN if not exists "stLog" character 
 ALTER TABLE public."LogAutorizaProc" ADD COLUMN if not exists "dtLog" timestamp without time zone;
 ALTER TABLE public."LogAutorizaProc" ADD COLUMN if not exists "tgErro" boolean;
 
+CREATE TABLE IF NOT EXISTS public."SaudeUnidadeEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeUnidadeEmpresa" ADD COLUMN if not exists "stNome" character varying(99);
+ALTER TABLE public."SaudeUnidadeEmpresa" ADD COLUMN if not exists "fkEmpresa" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeFabricanteMaterialEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeFabricanteMaterialEmpresa" ADD COLUMN if not exists "stNome" character varying(99);
+ALTER TABLE public."SaudeFabricanteMaterialEmpresa" ADD COLUMN if not exists "fkEmpresa" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeFabricanteMedicamentoEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeFabricanteMedicamentoEmpresa" ADD COLUMN if not exists "stNome" character varying(99);
+ALTER TABLE public."SaudeFabricanteMedicamentoEmpresa" ADD COLUMN if not exists "fkEmpresa" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeOPMEClassificacaoEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeOPMEClassificacaoEmpresa" ADD COLUMN if not exists "stNome" character varying(99);
+ALTER TABLE public."SaudeOPMEClassificacaoEmpresa" ADD COLUMN if not exists "fkEmpresa" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeOPMEEspecialidadeEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeOPMEEspecialidadeEmpresa" ADD COLUMN if not exists "stNome" character varying(99);
+ALTER TABLE public."SaudeOPMEEspecialidadeEmpresa" ADD COLUMN if not exists "fkEmpresa" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudePorteProcedimentoEmpresa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudePorteProcedimentoEmpresa" ADD COLUMN if not exists "stNome" character varying(99);
+ALTER TABLE public."SaudePorteProcedimentoEmpresa" ADD COLUMN if not exists "fkEmpresa" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeValorDiaria" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeValorDiaria" OWNER to postgres;
+ALTER TABLE public."SaudeValorDiaria" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."SaudeValorDiaria" ADD COLUMN if not exists "nuAnoVigencia" bigint;
+ALTER TABLE public."SaudeValorDiaria" ADD COLUMN if not exists "nuCodInterno" bigint;
+ALTER TABLE public."SaudeValorDiaria" ADD COLUMN if not exists "stDesc" character varying(999);
+ALTER TABLE public."SaudeValorDiaria" ADD COLUMN if not exists "vrNivel1" bigint;
+ALTER TABLE public."SaudeValorDiaria" ADD COLUMN if not exists "vrNivel2" bigint;
+ALTER TABLE public."SaudeValorDiaria" ADD COLUMN if not exists "vrNivel3" bigint;
+ALTER TABLE public."SaudeValorDiaria" ADD COLUMN if not exists "vrNivel4" bigint;
+ALTER TABLE public."SaudeValorDiaria" ADD COLUMN if not exists "vrNivel5" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeValorMaterial" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeValorMaterial" OWNER to postgres;
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "nuAnoVigencia" bigint;
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "nuCodInterno" bigint;
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "stDesc" character varying(999);
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "stComercial" character varying(999);
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "fkFabricanteMaterial" bigint;
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "fkUnidade" bigint;
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "vrFracao" bigint;
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "bFracionar" boolean;
+ALTER TABLE public."SaudeValorMaterial" ADD COLUMN if not exists "vrValor" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeValorMedicamento" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeValorMedicamento" OWNER to postgres;
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "nuAnoVigencia" bigint;
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "nuCodInterno" bigint;
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "stDesc" character varying(999);
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "stComercial" character varying(999);
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "fkFabricanteMedicamento" bigint;
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "vrFracao" bigint;
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "fkUnidade" bigint;
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "bFracionar" boolean;
+ALTER TABLE public."SaudeValorMedicamento" ADD COLUMN if not exists "vrValor" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeValorNaoMedico" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeValorNaoMedico" OWNER to postgres;
+ALTER TABLE public."SaudeValorNaoMedico" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."SaudeValorNaoMedico" ADD COLUMN if not exists "nuAnoVigencia" bigint;
+ALTER TABLE public."SaudeValorNaoMedico" ADD COLUMN if not exists "nuCodInterno" bigint;
+ALTER TABLE public."SaudeValorNaoMedico" ADD COLUMN if not exists "stDesc" character varying(999);
+ALTER TABLE public."SaudeValorNaoMedico" ADD COLUMN if not exists "vrValor" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeValorOPME" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeValorOPME" OWNER to postgres;
+ALTER TABLE public."SaudeValorOPME" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."SaudeValorOPME" ADD COLUMN if not exists "nuAnoVigencia" bigint;
+ALTER TABLE public."SaudeValorOPME" ADD COLUMN if not exists "nuCodInterno" bigint;
+ALTER TABLE public."SaudeValorOPME" ADD COLUMN if not exists "stDesc" character varying(999);
+ALTER TABLE public."SaudeValorOPME" ADD COLUMN if not exists "stTecnica" character varying(999);
+ALTER TABLE public."SaudeValorOPME" ADD COLUMN if not exists "fkClassificacao" bigint;
+ALTER TABLE public."SaudeValorOPME" ADD COLUMN if not exists "fkEspecialidade" bigint;
+ALTER TABLE public."SaudeValorOPME" ADD COLUMN if not exists "vrValor" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeValorPacote" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeValorPacote" OWNER to postgres;
+ALTER TABLE public."SaudeValorPacote" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."SaudeValorPacote" ADD COLUMN if not exists "nuAnoVigencia" bigint;
+ALTER TABLE public."SaudeValorPacote" ADD COLUMN if not exists "nuCodInterno" bigint;
+ALTER TABLE public."SaudeValorPacote" ADD COLUMN if not exists "stDesc" character varying(999);
+ALTER TABLE public."SaudeValorPacote" ADD COLUMN if not exists "vrValor" bigint;
+
+CREATE TABLE IF NOT EXISTS public."SaudeValorProcedimento" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."SaudeValorProcedimento" OWNER to postgres;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "fkEmpresa" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "nuAnoVigencia" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "nuCodInterno" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "stDesc" character varying(999);
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "vrTotalHMCO" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "fkSaudePorteProcedimento" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "vrValorHM" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "vrValorCO" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "nuAux" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "nuAnestesistas" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "vrPorteAnestesista" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "nuFilme4C" bigint;
+ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "vrFilme" bigint;

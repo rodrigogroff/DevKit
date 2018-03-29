@@ -19,62 +19,75 @@ namespace DataModel
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<Associado>               Associado               { get { return this.GetTable<Associado>(); } }
-		public ITable<AssociadoDependente>     AssociadoDependente     { get { return this.GetTable<AssociadoDependente>(); } }
-		public ITable<AssociadoEmail>          AssociadoEmail          { get { return this.GetTable<AssociadoEmail>(); } }
-		public ITable<AssociadoEndereco>       AssociadoEndereco       { get { return this.GetTable<AssociadoEndereco>(); } }
-		public ITable<AssociadoTelefone>       AssociadoTelefone       { get { return this.GetTable<AssociadoTelefone>(); } }
-		public ITable<AuditLog>                AuditLog                { get { return this.GetTable<AuditLog>(); } }
-		public ITable<Autorizacao>             Autorizacao             { get { return this.GetTable<Autorizacao>(); } }
-		public ITable<Cidade>                  Cidade                  { get { return this.GetTable<Cidade>(); } }
-		public ITable<CompanyNews>             CompanyNews             { get { return this.GetTable<CompanyNews>(); } }
-		public ITable<Credenciado>             Credenciado             { get { return this.GetTable<Credenciado>(); } }
-		public ITable<CredenciadoEmail>        CredenciadoEmail        { get { return this.GetTable<CredenciadoEmail>(); } }
-		public ITable<CredenciadoEmpresa>      CredenciadoEmpresa      { get { return this.GetTable<CredenciadoEmpresa>(); } }
-		public ITable<CredenciadoEmpresaTuss>  CredenciadoEmpresaTuss  { get { return this.GetTable<CredenciadoEmpresaTuss>(); } }
-		public ITable<CredenciadoEndereco>     CredenciadoEndereco     { get { return this.GetTable<CredenciadoEndereco>(); } }
-		public ITable<CredenciadoTelefone>     CredenciadoTelefone     { get { return this.GetTable<CredenciadoTelefone>(); } }
-		public ITable<Empresa>                 Empresa                 { get { return this.GetTable<Empresa>(); } }
-		public ITable<EmpresaConsultaAno>      EmpresaConsultaAno      { get { return this.GetTable<EmpresaConsultaAno>(); } }
-		public ITable<EmpresaEmail>            EmpresaEmail            { get { return this.GetTable<EmpresaEmail>(); } }
-		public ITable<EmpresaEndereco>         EmpresaEndereco         { get { return this.GetTable<EmpresaEndereco>(); } }
-		public ITable<EmpresaSecao>            EmpresaSecao            { get { return this.GetTable<EmpresaSecao>(); } }
-		public ITable<EmpresaTelefone>         EmpresaTelefone         { get { return this.GetTable<EmpresaTelefone>(); } }
-		public ITable<Especialidade>           Especialidade           { get { return this.GetTable<Especialidade>(); } }
-		public ITable<Estado>                  Estado                  { get { return this.GetTable<Estado>(); } }
-		public ITable<LogAutorizaProc>         LogAutorizaProc         { get { return this.GetTable<LogAutorizaProc>(); } }
-		public ITable<LoteGrafica>             LoteGrafica             { get { return this.GetTable<LoteGrafica>(); } }
-		public ITable<LoteGraficaCartao>       LoteGraficaCartao       { get { return this.GetTable<LoteGraficaCartao>(); } }
-		public ITable<Profile>                 Profile                 { get { return this.GetTable<Profile>(); } }
-		public ITable<Project>                 Project                 { get { return this.GetTable<Project>(); } }
-		public ITable<ProjectPhase>            ProjectPhase            { get { return this.GetTable<ProjectPhase>(); } }
-		public ITable<ProjectSprint>           ProjectSprint           { get { return this.GetTable<ProjectSprint>(); } }
-		public ITable<ProjectSprintVersion>    ProjectSprintVersion    { get { return this.GetTable<ProjectSprintVersion>(); } }
-		public ITable<ProjectUser>             ProjectUser             { get { return this.GetTable<ProjectUser>(); } }
-		public ITable<Setup>                   Setup                   { get { return this.GetTable<Setup>(); } }
-		public ITable<Survey>                  Survey                  { get { return this.GetTable<Survey>(); } }
-		public ITable<SurveyOption>            SurveyOption            { get { return this.GetTable<SurveyOption>(); } }
-		public ITable<SurveyUserOption>        SurveyUserOption        { get { return this.GetTable<SurveyUserOption>(); } }
-		public ITable<Task>                    Task                    { get { return this.GetTable<Task>(); } }
-		public ITable<TaskAccumulatorValue>    TaskAccumulatorValue    { get { return this.GetTable<TaskAccumulatorValue>(); } }
-		public ITable<TaskCategory>            TaskCategory            { get { return this.GetTable<TaskCategory>(); } }
-		public ITable<TaskCheckPoint>          TaskCheckPoint          { get { return this.GetTable<TaskCheckPoint>(); } }
-		public ITable<TaskCheckPointMark>      TaskCheckPointMark      { get { return this.GetTable<TaskCheckPointMark>(); } }
-		public ITable<TaskCustomStep>          TaskCustomStep          { get { return this.GetTable<TaskCustomStep>(); } }
-		public ITable<TaskDependency>          TaskDependency          { get { return this.GetTable<TaskDependency>(); } }
-		public ITable<TaskFlow>                TaskFlow                { get { return this.GetTable<TaskFlow>(); } }
-		public ITable<TaskFlowChange>          TaskFlowChange          { get { return this.GetTable<TaskFlowChange>(); } }
-		public ITable<TaskMessage>             TaskMessage             { get { return this.GetTable<TaskMessage>(); } }
-		public ITable<TaskProgress>            TaskProgress            { get { return this.GetTable<TaskProgress>(); } }
-		public ITable<TaskQuestion>            TaskQuestion            { get { return this.GetTable<TaskQuestion>(); } }
-		public ITable<TaskType>                TaskType                { get { return this.GetTable<TaskType>(); } }
-		public ITable<TaskTypeAccumulator>     TaskTypeAccumulator     { get { return this.GetTable<TaskTypeAccumulator>(); } }
-		public ITable<TipoCoberturaDependente> TipoCoberturaDependente { get { return this.GetTable<TipoCoberturaDependente>(); } }
-		public ITable<TUSS>                    TUSS                    { get { return this.GetTable<TUSS>(); } }
-		public ITable<User>                    User                    { get { return this.GetTable<User>(); } }
-		public ITable<UserEmail>               UserEmail               { get { return this.GetTable<UserEmail>(); } }
-		public ITable<UserNewsRead>            UserNewsRead            { get { return this.GetTable<UserNewsRead>(); } }
-		public ITable<UserPhone>               UserPhone               { get { return this.GetTable<UserPhone>(); } }
+		public ITable<Associado>                         Associado                         { get { return this.GetTable<Associado>(); } }
+		public ITable<AssociadoDependente>               AssociadoDependente               { get { return this.GetTable<AssociadoDependente>(); } }
+		public ITable<AssociadoEmail>                    AssociadoEmail                    { get { return this.GetTable<AssociadoEmail>(); } }
+		public ITable<AssociadoEndereco>                 AssociadoEndereco                 { get { return this.GetTable<AssociadoEndereco>(); } }
+		public ITable<AssociadoTelefone>                 AssociadoTelefone                 { get { return this.GetTable<AssociadoTelefone>(); } }
+		public ITable<AuditLog>                          AuditLog                          { get { return this.GetTable<AuditLog>(); } }
+		public ITable<Autorizacao>                       Autorizacao                       { get { return this.GetTable<Autorizacao>(); } }
+		public ITable<Cidade>                            Cidade                            { get { return this.GetTable<Cidade>(); } }
+		public ITable<CompanyNews>                       CompanyNews                       { get { return this.GetTable<CompanyNews>(); } }
+		public ITable<Credenciado>                       Credenciado                       { get { return this.GetTable<Credenciado>(); } }
+		public ITable<CredenciadoEmail>                  CredenciadoEmail                  { get { return this.GetTable<CredenciadoEmail>(); } }
+		public ITable<CredenciadoEmpresa>                CredenciadoEmpresa                { get { return this.GetTable<CredenciadoEmpresa>(); } }
+		public ITable<CredenciadoEmpresaTuss>            CredenciadoEmpresaTuss            { get { return this.GetTable<CredenciadoEmpresaTuss>(); } }
+		public ITable<CredenciadoEndereco>               CredenciadoEndereco               { get { return this.GetTable<CredenciadoEndereco>(); } }
+		public ITable<CredenciadoTelefone>               CredenciadoTelefone               { get { return this.GetTable<CredenciadoTelefone>(); } }
+		public ITable<Empresa>                           Empresa                           { get { return this.GetTable<Empresa>(); } }
+		public ITable<EmpresaConsultaAno>                EmpresaConsultaAno                { get { return this.GetTable<EmpresaConsultaAno>(); } }
+		public ITable<EmpresaEmail>                      EmpresaEmail                      { get { return this.GetTable<EmpresaEmail>(); } }
+		public ITable<EmpresaEndereco>                   EmpresaEndereco                   { get { return this.GetTable<EmpresaEndereco>(); } }
+		public ITable<EmpresaSecao>                      EmpresaSecao                      { get { return this.GetTable<EmpresaSecao>(); } }
+		public ITable<EmpresaTelefone>                   EmpresaTelefone                   { get { return this.GetTable<EmpresaTelefone>(); } }
+		public ITable<Especialidade>                     Especialidade                     { get { return this.GetTable<Especialidade>(); } }
+		public ITable<Estado>                            Estado                            { get { return this.GetTable<Estado>(); } }
+		public ITable<LogAutorizaProc>                   LogAutorizaProc                   { get { return this.GetTable<LogAutorizaProc>(); } }
+		public ITable<LoteGrafica>                       LoteGrafica                       { get { return this.GetTable<LoteGrafica>(); } }
+		public ITable<LoteGraficaCartao>                 LoteGraficaCartao                 { get { return this.GetTable<LoteGraficaCartao>(); } }
+		public ITable<Profile>                           Profile                           { get { return this.GetTable<Profile>(); } }
+		public ITable<Project>                           Project                           { get { return this.GetTable<Project>(); } }
+		public ITable<ProjectPhase>                      ProjectPhase                      { get { return this.GetTable<ProjectPhase>(); } }
+		public ITable<ProjectSprint>                     ProjectSprint                     { get { return this.GetTable<ProjectSprint>(); } }
+		public ITable<ProjectSprintVersion>              ProjectSprintVersion              { get { return this.GetTable<ProjectSprintVersion>(); } }
+		public ITable<ProjectUser>                       ProjectUser                       { get { return this.GetTable<ProjectUser>(); } }
+		public ITable<SaudeFabricanteMaterialEmpresa>    SaudeFabricanteMaterialEmpresa    { get { return this.GetTable<SaudeFabricanteMaterialEmpresa>(); } }
+		public ITable<SaudeFabricanteMedicamentoEmpresa> SaudeFabricanteMedicamentoEmpresa { get { return this.GetTable<SaudeFabricanteMedicamentoEmpresa>(); } }
+		public ITable<SaudeOPMEClassificacaoEmpresa>     SaudeOPMEClassificacaoEmpresa     { get { return this.GetTable<SaudeOPMEClassificacaoEmpresa>(); } }
+		public ITable<SaudeOPMEEspecialidadeEmpresa>     SaudeOPMEEspecialidadeEmpresa     { get { return this.GetTable<SaudeOPMEEspecialidadeEmpresa>(); } }
+		public ITable<SaudePorteProcedimentoEmpresa>     SaudePorteProcedimentoEmpresa     { get { return this.GetTable<SaudePorteProcedimentoEmpresa>(); } }
+		public ITable<SaudeUnidadeEmpresa>               SaudeUnidadeEmpresa               { get { return this.GetTable<SaudeUnidadeEmpresa>(); } }
+		public ITable<SaudeValorDiaria>                  SaudeValorDiaria                  { get { return this.GetTable<SaudeValorDiaria>(); } }
+		public ITable<SaudeValorMaterial>                SaudeValorMaterial                { get { return this.GetTable<SaudeValorMaterial>(); } }
+		public ITable<SaudeValorMedicamento>             SaudeValorMedicamento             { get { return this.GetTable<SaudeValorMedicamento>(); } }
+		public ITable<SaudeValorNaoMedico>               SaudeValorNaoMedico               { get { return this.GetTable<SaudeValorNaoMedico>(); } }
+		public ITable<SaudeValorOPME>                    SaudeValorOPME                    { get { return this.GetTable<SaudeValorOPME>(); } }
+		public ITable<SaudeValorPacote>                  SaudeValorPacote                  { get { return this.GetTable<SaudeValorPacote>(); } }
+		public ITable<SaudeValorProcedimento>            SaudeValorProcedimento            { get { return this.GetTable<SaudeValorProcedimento>(); } }
+		public ITable<Setup>                             Setup                             { get { return this.GetTable<Setup>(); } }
+		public ITable<Survey>                            Survey                            { get { return this.GetTable<Survey>(); } }
+		public ITable<SurveyOption>                      SurveyOption                      { get { return this.GetTable<SurveyOption>(); } }
+		public ITable<SurveyUserOption>                  SurveyUserOption                  { get { return this.GetTable<SurveyUserOption>(); } }
+		public ITable<Task>                              Task                              { get { return this.GetTable<Task>(); } }
+		public ITable<TaskAccumulatorValue>              TaskAccumulatorValue              { get { return this.GetTable<TaskAccumulatorValue>(); } }
+		public ITable<TaskCategory>                      TaskCategory                      { get { return this.GetTable<TaskCategory>(); } }
+		public ITable<TaskCheckPoint>                    TaskCheckPoint                    { get { return this.GetTable<TaskCheckPoint>(); } }
+		public ITable<TaskCheckPointMark>                TaskCheckPointMark                { get { return this.GetTable<TaskCheckPointMark>(); } }
+		public ITable<TaskCustomStep>                    TaskCustomStep                    { get { return this.GetTable<TaskCustomStep>(); } }
+		public ITable<TaskDependency>                    TaskDependency                    { get { return this.GetTable<TaskDependency>(); } }
+		public ITable<TaskFlow>                          TaskFlow                          { get { return this.GetTable<TaskFlow>(); } }
+		public ITable<TaskFlowChange>                    TaskFlowChange                    { get { return this.GetTable<TaskFlowChange>(); } }
+		public ITable<TaskMessage>                       TaskMessage                       { get { return this.GetTable<TaskMessage>(); } }
+		public ITable<TaskProgress>                      TaskProgress                      { get { return this.GetTable<TaskProgress>(); } }
+		public ITable<TaskQuestion>                      TaskQuestion                      { get { return this.GetTable<TaskQuestion>(); } }
+		public ITable<TaskType>                          TaskType                          { get { return this.GetTable<TaskType>(); } }
+		public ITable<TaskTypeAccumulator>               TaskTypeAccumulator               { get { return this.GetTable<TaskTypeAccumulator>(); } }
+		public ITable<TipoCoberturaDependente>           TipoCoberturaDependente           { get { return this.GetTable<TipoCoberturaDependente>(); } }
+		public ITable<TUSS>                              TUSS                              { get { return this.GetTable<TUSS>(); } }
+		public ITable<User>                              User                              { get { return this.GetTable<User>(); } }
+		public ITable<UserEmail>                         UserEmail                         { get { return this.GetTable<UserEmail>(); } }
+		public ITable<UserNewsRead>                      UserNewsRead                      { get { return this.GetTable<UserNewsRead>(); } }
+		public ITable<UserPhone>                         UserPhone                         { get { return this.GetTable<UserPhone>(); } }
 
 		public DevKitDB()
 		{
@@ -504,6 +517,156 @@ namespace DataModel
 		[Column,     Nullable] public long?     fkProject { get; set; } // bigint
 		[Column,     Nullable] public string    stRole    { get; set; } // character varying(99)
 		[Column,     Nullable] public DateTime? dtJoin    { get; set; } // timestamp (6) without time zone
+	}
+
+	[Table(Schema="public", Name="SaudeFabricanteMaterialEmpresa")]
+	public partial class SaudeFabricanteMaterialEmpresa
+	{
+		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
+		[Column,     Nullable] public string stNome    { get; set; } // character varying(99)
+		[Column,     Nullable] public long?  fkEmpresa { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeFabricanteMedicamentoEmpresa")]
+	public partial class SaudeFabricanteMedicamentoEmpresa
+	{
+		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
+		[Column,     Nullable] public string stNome    { get; set; } // character varying(99)
+		[Column,     Nullable] public long?  fkEmpresa { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeOPMEClassificacaoEmpresa")]
+	public partial class SaudeOPMEClassificacaoEmpresa
+	{
+		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
+		[Column,     Nullable] public string stNome    { get; set; } // character varying(99)
+		[Column,     Nullable] public long?  fkEmpresa { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeOPMEEspecialidadeEmpresa")]
+	public partial class SaudeOPMEEspecialidadeEmpresa
+	{
+		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
+		[Column,     Nullable] public string stNome    { get; set; } // character varying(99)
+		[Column,     Nullable] public long?  fkEmpresa { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudePorteProcedimentoEmpresa")]
+	public partial class SaudePorteProcedimentoEmpresa
+	{
+		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
+		[Column,     Nullable] public string stNome    { get; set; } // character varying(99)
+		[Column,     Nullable] public long?  fkEmpresa { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeUnidadeEmpresa")]
+	public partial class SaudeUnidadeEmpresa
+	{
+		[PrimaryKey, Identity] public long   id        { get; set; } // bigint
+		[Column,     Nullable] public string stNome    { get; set; } // character varying(99)
+		[Column,     Nullable] public long?  fkEmpresa { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeValorDiaria")]
+	public partial class SaudeValorDiaria
+	{
+		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa     { get; set; } // bigint
+		[Column,     Nullable] public long?  nuAnoVigencia { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCodInterno  { get; set; } // bigint
+		[Column,     Nullable] public string stDesc        { get; set; } // character varying(999)
+		[Column,     Nullable] public long?  vrNivel1      { get; set; } // bigint
+		[Column,     Nullable] public long?  vrNivel2      { get; set; } // bigint
+		[Column,     Nullable] public long?  vrNivel3      { get; set; } // bigint
+		[Column,     Nullable] public long?  vrNivel4      { get; set; } // bigint
+		[Column,     Nullable] public long?  vrNivel5      { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeValorMaterial")]
+	public partial class SaudeValorMaterial
+	{
+		[PrimaryKey, Identity] public long   id                   { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa            { get; set; } // bigint
+		[Column,     Nullable] public long?  nuAnoVigencia        { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCodInterno         { get; set; } // bigint
+		[Column,     Nullable] public string stDesc               { get; set; } // character varying(999)
+		[Column,     Nullable] public string stComercial          { get; set; } // character varying(999)
+		[Column,     Nullable] public long?  fkFabricanteMaterial { get; set; } // bigint
+		[Column,     Nullable] public long?  fkUnidade            { get; set; } // bigint
+		[Column,     Nullable] public long?  vrFracao             { get; set; } // bigint
+		[Column,     Nullable] public bool?  bFracionar           { get; set; } // boolean
+		[Column,     Nullable] public long?  vrValor              { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeValorMedicamento")]
+	public partial class SaudeValorMedicamento
+	{
+		[PrimaryKey, Identity] public long   id                      { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa               { get; set; } // bigint
+		[Column,     Nullable] public long?  nuAnoVigencia           { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCodInterno            { get; set; } // bigint
+		[Column,     Nullable] public string stDesc                  { get; set; } // character varying(999)
+		[Column,     Nullable] public string stComercial             { get; set; } // character varying(999)
+		[Column,     Nullable] public long?  fkFabricanteMedicamento { get; set; } // bigint
+		[Column,     Nullable] public long?  vrFracao                { get; set; } // bigint
+		[Column,     Nullable] public long?  fkUnidade               { get; set; } // bigint
+		[Column,     Nullable] public bool?  bFracionar              { get; set; } // boolean
+		[Column,     Nullable] public long?  vrValor                 { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeValorNaoMedico")]
+	public partial class SaudeValorNaoMedico
+	{
+		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa     { get; set; } // bigint
+		[Column,     Nullable] public long?  nuAnoVigencia { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCodInterno  { get; set; } // bigint
+		[Column,     Nullable] public string stDesc        { get; set; } // character varying(999)
+		[Column,     Nullable] public long?  vrValor       { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeValorOPME")]
+	public partial class SaudeValorOPME
+	{
+		[PrimaryKey, Identity] public long   id              { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa       { get; set; } // bigint
+		[Column,     Nullable] public long?  nuAnoVigencia   { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCodInterno    { get; set; } // bigint
+		[Column,     Nullable] public string stDesc          { get; set; } // character varying(999)
+		[Column,     Nullable] public string stTecnica       { get; set; } // character varying(999)
+		[Column,     Nullable] public long?  fkClassificacao { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEspecialidade { get; set; } // bigint
+		[Column,     Nullable] public long?  vrValor         { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeValorPacote")]
+	public partial class SaudeValorPacote
+	{
+		[PrimaryKey, Identity] public long   id            { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa     { get; set; } // bigint
+		[Column,     Nullable] public long?  nuAnoVigencia { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCodInterno  { get; set; } // bigint
+		[Column,     Nullable] public string stDesc        { get; set; } // character varying(999)
+		[Column,     Nullable] public long?  vrValor       { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="SaudeValorProcedimento")]
+	public partial class SaudeValorProcedimento
+	{
+		[PrimaryKey, Identity] public long   id                       { get; set; } // bigint
+		[Column,     Nullable] public long?  fkEmpresa                { get; set; } // bigint
+		[Column,     Nullable] public long?  nuAnoVigencia            { get; set; } // bigint
+		[Column,     Nullable] public long?  nuCodInterno             { get; set; } // bigint
+		[Column,     Nullable] public string stDesc                   { get; set; } // character varying(999)
+		[Column,     Nullable] public long?  vrTotalHMCO              { get; set; } // bigint
+		[Column,     Nullable] public long?  fkSaudePorteProcedimento { get; set; } // bigint
+		[Column,     Nullable] public long?  vrValorHM                { get; set; } // bigint
+		[Column,     Nullable] public long?  vrValorCO                { get; set; } // bigint
+		[Column,     Nullable] public long?  nuAux                    { get; set; } // bigint
+		[Column,     Nullable] public long?  nuAnestesistas           { get; set; } // bigint
+		[Column,     Nullable] public long?  vrPorteAnestesista       { get; set; } // bigint
+		[Column,     Nullable] public long?  nuFilme4C                { get; set; } // bigint
+		[Column,     Nullable] public long?  vrFilme                  { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Setup")]
@@ -970,6 +1133,84 @@ namespace DataModel
 		}
 
 		public static ProjectUser Find(this ITable<ProjectUser> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeFabricanteMaterialEmpresa Find(this ITable<SaudeFabricanteMaterialEmpresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeFabricanteMedicamentoEmpresa Find(this ITable<SaudeFabricanteMedicamentoEmpresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeOPMEClassificacaoEmpresa Find(this ITable<SaudeOPMEClassificacaoEmpresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeOPMEEspecialidadeEmpresa Find(this ITable<SaudeOPMEEspecialidadeEmpresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudePorteProcedimentoEmpresa Find(this ITable<SaudePorteProcedimentoEmpresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeUnidadeEmpresa Find(this ITable<SaudeUnidadeEmpresa> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeValorDiaria Find(this ITable<SaudeValorDiaria> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeValorMaterial Find(this ITable<SaudeValorMaterial> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeValorMedicamento Find(this ITable<SaudeValorMedicamento> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeValorNaoMedico Find(this ITable<SaudeValorNaoMedico> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeValorOPME Find(this ITable<SaudeValorOPME> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeValorPacote Find(this ITable<SaudeValorPacote> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static SaudeValorProcedimento Find(this ITable<SaudeValorProcedimento> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

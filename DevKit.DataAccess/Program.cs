@@ -46,17 +46,41 @@ namespace GetStarted
             return resp;
         }
 
+        static long LimpaValor(string origem)
+        {
+            var resp = origem.Replace("R$","").Replace(".","").Replace (",","").Trim();
+
+            if (resp == "")
+                return 0;
+
+            return Convert.ToInt64(resp);
+        }
+
+        static long LimpaValor4C(string origem)
+        {
+            var resp = origem.Replace("R$", "").Replace(".", "").Trim();
+
+            if (resp == "")
+                return 0;
+
+            var antes = resp.Split(',')[0];
+            var depois = resp.Split(',')[1].PadRight(4, '0');
+
+            return Convert.ToInt64(antes + depois);
+        }
+
         static void Main(string[] args)
         {
+            Console.WriteLine("Patch?");
+            var opt = Console.ReadLine();
+
             using (var db = new DevKitDB())
             {
-                int opt = 0;
-
                 var setup = new Setup();
 
                 switch (opt)
                 {
-                    case 0:
+                    case "0":
                         {
                             var excel = new XLWorkbook("C:\\carga\\ValoresPacote.xlsx");
                             var sheetMateriais = excel.Worksheets.Skip(2).Take(1).FirstOrDefault();
@@ -225,7 +249,7 @@ namespace GetStarted
                             break;
                         }
 
-                    case 1:
+                    case "1":
                         {
                             Console.WriteLine("CARGA DE BASE");
                             Console.WriteLine("-----------------------------------------");
@@ -628,7 +652,455 @@ namespace GetStarted
 
                             Console.WriteLine("Carga de base finalizada.");
                             Console.WriteLine("-----------------------------------------");
-                            Console.ReadLine();
+                            Console.WriteLine("");
+                            Console.WriteLine("Deseja carregar a base de valores de pacote?");
+
+                            var resp = Console.ReadLine();
+
+                            if (resp.ToUpper() == "S")
+                            {
+                                Console.WriteLine("Código da empresa?");
+                                var stEmp = Console.ReadLine();
+
+                                var empresa = db.Empresa.FirstOrDefault(y => y.nuEmpresa.ToString() == stEmp);
+
+                                if (empresa == null)
+                                {
+                                    Console.WriteLine("Empresa inválida!");
+                                    return;
+                                }
+
+                                var excel = new XLWorkbook("C:\\carga\\ValoresPacote.xlsx");
+
+                                var sheetVigencia = excel.Worksheets.Skip(0).Take(1).FirstOrDefault();
+                                var sheetDiarias = excel.Worksheets.Skip(1).Take(1).FirstOrDefault();
+                                var sheetMateriais = excel.Worksheets.Skip(2).Take(1).FirstOrDefault();
+                                var sheetMedicamentos = excel.Worksheets.Skip(3).Take(1).FirstOrDefault();
+                                var sheetNaoMeds = excel.Worksheets.Skip(4).Take(1).FirstOrDefault();
+                                var sheetOPME = excel.Worksheets.Skip(5).Take(1).FirstOrDefault();
+                                var sheetPacotes = excel.Worksheets.Skip(6).Take(1).FirstOrDefault();
+                                var sheetProcs = excel.Worksheets.Skip(7).Take(1).FirstOrDefault();
+
+                                var nuAnoAtual = sheetVigencia.Cell(2, 3).Value.ToString();
+
+                                // -------------------
+                                // diarias
+                                // -------------------
+
+                                Console.WriteLine("Diarias...");
+
+                                #region - code -
+                                {
+                                    int currentRow = 2;
+
+                                    foreach (var item in db.SaudeValorDiaria.
+                                                Where(y => y.fkEmpresa == empresa.id &&
+                                                            y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                ToList())
+                                    {
+                                        db.Delete(item);
+                                    }
+                                        
+                                    while (currentRow < 500)
+                                    {
+                                        var codigo = sheetDiarias.Cell(currentRow, 1).Value.ToString();
+                                        var desc = LimpaCampo(sheetDiarias.Cell(currentRow, 2).Value.ToString());
+
+                                        var nvl5 = LimpaValor(sheetDiarias.Cell(currentRow, 3).Value.ToString());
+                                        var nvl4 = LimpaValor(sheetDiarias.Cell(currentRow, 4).Value.ToString());
+                                        var nvl3 = LimpaValor(sheetDiarias.Cell(currentRow, 5).Value.ToString());
+                                        var nvl2 = LimpaValor(sheetDiarias.Cell(currentRow, 6).Value.ToString());
+                                        var nvl1 = LimpaValor(sheetDiarias.Cell(currentRow, 7).Value.ToString());
+
+                                        currentRow++;
+
+                                        if (codigo != "")
+                                        {
+                                            db.Insert(new SaudeValorDiaria
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
+                                                nuCodInterno = Convert.ToInt64(codigo),
+                                                stDesc = desc,
+                                                vrNivel1 = nvl1,
+                                                vrNivel2 = nvl2,
+                                                vrNivel3 = nvl3,
+                                                vrNivel4 = nvl4,
+                                                vrNivel5 = nvl5,                                                
+                                            });
+                                        }
+                                    }
+                                }
+                                #endregion
+
+                                // -------------------
+                                // materiais
+                                // -------------------
+
+                                Console.WriteLine("materiais...");
+
+                                #region - code - 
+                                {
+                                    int currentRow = 2;
+
+                                    foreach (var item in db.SaudeValorMaterial.
+                                                Where(y => y.fkEmpresa == empresa.id &&
+                                                            y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                ToList())
+                                    {
+                                        db.Delete(item);
+                                    }
+
+                                    while (currentRow < 3500)
+                                    {
+                                        var codigo = sheetMateriais.Cell(currentRow, 1).Value.ToString();
+                                        var desc = LimpaCampo(sheetMateriais.Cell(currentRow, 2).Value.ToString());
+                                        var nomeCom = LimpaCampo(sheetMateriais.Cell(currentRow, 3).Value.ToString());
+                                        var fab = LimpaCampo(sheetMateriais.Cell(currentRow, 4).Value.ToString());
+                                        var fracao = LimpaValor(sheetMateriais.Cell(currentRow, 5).Value.ToString());
+                                        var fracionar = LimpaCampo(sheetMateriais.Cell(currentRow, 5).Value.ToString());
+                                        var unidade = LimpaCampo(sheetMateriais.Cell(currentRow, 5).Value.ToString());
+                                        var vlr = LimpaValor(sheetMateriais.Cell(currentRow, 5).Value.ToString());
+
+                                        if (!db.SaudeFabricanteMaterialEmpresa.Any(y=>y.stNome == fab && y.fkEmpresa == empresa.id))
+                                        {
+                                            db.Insert(new SaudeFabricanteMaterialEmpresa
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                stNome = fab
+                                            });
+                                        }
+
+                                        if (!db.SaudeUnidadeEmpresa.Any (y => y.stNome == unidade && y.fkEmpresa == empresa.id))
+                                        {
+                                            db.Insert(new SaudeUnidadeEmpresa
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                stNome = unidade
+                                            });
+                                        }
+
+                                        var tbFab = db.SaudeFabricanteMaterialEmpresa.FirstOrDefault(y => y.stNome == fab && y.fkEmpresa == empresa.id);
+                                        var tbUnidade = db.SaudeUnidadeEmpresa.FirstOrDefault(y => y.stNome == unidade && y.fkEmpresa == empresa.id);
+
+                                        currentRow++;
+
+                                        if (codigo != "")
+                                        {
+                                            db.Insert(new SaudeValorMaterial
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
+                                                nuCodInterno = Convert.ToInt64(codigo),
+                                                stDesc = desc,
+                                                stComercial = nomeCom,
+                                                bFracionar = fracionar == "SIM",
+                                                fkFabricanteMaterial = tbFab.id,
+                                                fkUnidade = tbUnidade.id,
+                                                vrFracao = fracao,
+                                                vrValor = vlr
+                                            });
+                                        }
+                                    }
+                                }
+                                #endregion
+
+                                // -------------------
+                                // medicamentos
+                                // -------------------
+
+                                Console.WriteLine("medicamentos...");
+
+                                #region - code - 
+                                {
+                                    int currentRow = 2;
+
+                                    foreach (var item in db.SaudeValorMedicamento.
+                                                Where(y => y.fkEmpresa == empresa.id &&
+                                                            y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                ToList())
+                                    {
+                                        db.Delete(item);
+                                    }
+
+                                    while (currentRow < 6500)
+                                    {
+                                        var codigo = sheetMedicamentos.Cell(currentRow, 1).Value.ToString();
+                                        var desc = LimpaCampo(sheetMedicamentos.Cell(currentRow, 2).Value.ToString());
+                                        var nomeCom = LimpaCampo(sheetMedicamentos.Cell(currentRow, 3).Value.ToString());
+                                        var fab = LimpaCampo(sheetMedicamentos.Cell(currentRow, 4).Value.ToString());
+                                        var fracao = LimpaValor(sheetMedicamentos.Cell(currentRow, 5).Value.ToString());
+                                        var fracionar = LimpaCampo(sheetMedicamentos.Cell(currentRow, 5).Value.ToString());
+                                        var unidade = LimpaCampo(sheetMedicamentos.Cell(currentRow, 5).Value.ToString());
+                                        var vlr = LimpaValor(sheetMedicamentos.Cell(currentRow, 5).Value.ToString());
+
+                                        if (!db.SaudeFabricanteMedicamentoEmpresa.Any(y => y.stNome == fab && y.fkEmpresa == empresa.id))
+                                        {
+                                            db.Insert(new SaudeFabricanteMedicamentoEmpresa
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                stNome = fab
+                                            });
+                                        }
+
+                                        if (!db.SaudeUnidadeEmpresa.Any(y => y.stNome == unidade && y.fkEmpresa == empresa.id))
+                                        {
+                                            db.Insert(new SaudeUnidadeEmpresa
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                stNome = unidade
+                                            });
+                                        }
+
+                                        var tbFab = db.SaudeFabricanteMedicamentoEmpresa.FirstOrDefault(y => y.stNome == fab && y.fkEmpresa == empresa.id);
+                                        var tbUnidade = db.SaudeUnidadeEmpresa.FirstOrDefault(y => y.stNome == unidade && y.fkEmpresa == empresa.id);
+
+                                        currentRow++;
+
+                                        if (codigo != "")
+                                        {
+                                            db.Insert(new SaudeValorMedicamento
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
+                                                nuCodInterno = Convert.ToInt64(codigo),
+                                                stDesc = desc,
+                                                stComercial = nomeCom,
+                                                bFracionar = fracionar == "SIM",
+                                                fkFabricanteMedicamento = tbFab.id,
+                                                fkUnidade = tbUnidade.id,
+                                                vrFracao = fracao,
+                                                vrValor = vlr
+                                            });
+                                        }
+                                    }
+                                }
+                                #endregion
+
+                                // -------------------
+                                // não medico
+                                // -------------------
+
+                                Console.WriteLine("não medico...");
+
+                                #region - code - 
+                                {
+                                    int currentRow = 2;
+
+                                    foreach (var item in db.SaudeValorNaoMedico.
+                                                Where(y => y.fkEmpresa == empresa.id &&
+                                                            y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                ToList())
+                                    {
+                                        db.Delete(item);
+                                    }
+
+                                    while (currentRow < 100)
+                                    {
+                                        var codigo = sheetNaoMeds.Cell(currentRow, 1).Value.ToString();
+                                        var desc = LimpaCampo(sheetNaoMeds.Cell(currentRow, 2).Value.ToString());
+                                        var vlr = LimpaValor(sheetNaoMeds.Cell(currentRow, 3).Value.ToString());
+
+                                        currentRow++;
+
+                                        if (codigo != "")
+                                        {
+                                            db.Insert(new SaudeValorNaoMedico
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
+                                                nuCodInterno = Convert.ToInt64(codigo),
+                                                stDesc = desc,
+                                                vrValor = vlr
+                                            });
+                                        }
+                                    }
+                                }
+                                #endregion
+
+                                // -------------------
+                                // opme
+                                // -------------------
+
+                                Console.WriteLine("opme ...");
+
+                                #region - code - 
+                                {
+                                    int currentRow = 2;
+
+                                    foreach (var item in db.SaudeValorOPME.
+                                                Where(y => y.fkEmpresa == empresa.id &&
+                                                            y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                ToList())
+                                    {
+                                        db.Delete(item);
+                                    }
+
+                                    while (currentRow < 1000)
+                                    {
+                                        var codigo = sheetOPME.Cell(currentRow, 1).Value.ToString();
+                                        var desc = LimpaCampo(sheetOPME.Cell(currentRow, 2).Value.ToString());                                        
+                                        var classif = LimpaCampo(sheetOPME.Cell(currentRow, 3).Value.ToString());
+                                        var especialidade = LimpaCampo(sheetOPME.Cell(currentRow, 4).Value.ToString());
+                                        var vlr = LimpaValor(sheetOPME.Cell(currentRow, 5).Value.ToString());
+
+                                        if (!db.SaudeOPMEClassificacaoEmpresa.Any(y => y.stNome == classif && y.fkEmpresa == empresa.id))
+                                        {
+                                            db.Insert(new SaudeOPMEClassificacaoEmpresa
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                stNome = classif
+                                            });
+                                        }
+
+                                        if (!db.SaudeOPMEEspecialidadeEmpresa.Any(y => y.stNome == especialidade && y.fkEmpresa == empresa.id))
+                                        {
+                                            db.Insert(new SaudeOPMEEspecialidadeEmpresa
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                stNome = especialidade
+                                            });
+                                        }
+
+                                        var tbClassif = db.SaudeOPMEClassificacaoEmpresa.FirstOrDefault(y => y.stNome == classif && y.fkEmpresa == empresa.id);
+                                        var tbEspec = db.SaudeOPMEEspecialidadeEmpresa.FirstOrDefault(y => y.stNome == especialidade && y.fkEmpresa == empresa.id);
+
+                                        currentRow++;
+
+                                        if (codigo != "")
+                                        {
+                                            db.Insert(new SaudeValorOPME
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
+                                                nuCodInterno = Convert.ToInt64(codigo),
+                                                stDesc = desc,
+                                                vrValor = vlr,
+                                                fkClassificacao = tbClassif.id,
+                                                fkEspecialidade = tbEspec.id,
+                                                stTecnica = ""
+                                            });
+                                        }
+                                    }
+                                }
+                                #endregion
+
+                                // -------------------
+                                // pacote
+                                // -------------------
+
+                                Console.WriteLine("pacote ...");
+
+                                #region - code - 
+                                {
+                                    int currentRow = 2;
+
+                                    foreach (var item in db.SaudeValorPacote.
+                                                Where(y => y.fkEmpresa == empresa.id &&
+                                                            y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                ToList())
+                                    {
+                                        db.Delete(item);
+                                    }
+
+                                    while (currentRow < 250)
+                                    {
+                                        var codigo = sheetPacotes.Cell(currentRow, 1).Value.ToString();
+                                        var desc = LimpaCampo(sheetPacotes.Cell(currentRow, 2).Value.ToString());
+                                        var vlr = LimpaValor(sheetPacotes.Cell(currentRow, 3).Value.ToString());
+
+                                        currentRow++;
+
+                                        if (codigo != "")
+                                        {
+                                            db.Insert(new SaudeValorPacote
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
+                                                nuCodInterno = Convert.ToInt64(codigo),
+                                                stDesc = desc,
+                                                vrValor = vlr,
+                                            });
+                                        }
+                                    }
+                                }
+                                #endregion
+
+                                // -------------------
+                                // procedimentos
+                                // -------------------
+
+                                Console.WriteLine("procedimentos ...");
+
+                                #region - code - 
+                                {
+                                    int currentRow = 2;
+
+                                    foreach (var item in db.SaudeValorProcedimento.
+                                                Where(y => y.fkEmpresa == empresa.id &&
+                                                            y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                ToList())
+                                    {
+                                        db.Delete(item);
+                                    }
+
+                                    while (currentRow < 4000)
+                                    {
+                                        var codigo = sheetProcs.Cell(currentRow, 1).Value.ToString();
+                                        var desc = LimpaCampo(sheetProcs.Cell(currentRow, 2).Value.ToString());
+                                        var vlrtotal = LimpaValor(sheetProcs.Cell(currentRow, 3).Value.ToString());
+                                        var porte = LimpaCampo(sheetProcs.Cell(currentRow, 4).Value.ToString());
+                                        var vlrhm = LimpaValor(sheetProcs.Cell(currentRow, 5).Value.ToString());
+                                        var vlrco = LimpaValor(sheetProcs.Cell(currentRow, 6).Value.ToString());
+                                        var naux = LimpaValor(sheetProcs.Cell(currentRow, 7).Value.ToString());
+                                        var nporte = LimpaValor(sheetProcs.Cell(currentRow, 8).Value.ToString());
+                                        var vlrporte = LimpaCampo(sheetProcs.Cell(currentRow, 9).Value.ToString());
+                                        var filme = LimpaValor4C(sheetProcs.Cell(currentRow, 10).Value.ToString());
+                                        var vrfilme = LimpaValor(sheetProcs.Cell(currentRow, 11).Value.ToString());
+
+                                        long nvlrporte = 0;
+
+                                        if (vlrporte.ToUpper() != "ANESTESIA LOCAL")
+                                            nvlrporte = LimpaValor(sheetProcs.Cell(currentRow, 9).Value.ToString());
+
+                                        if (!db.SaudePorteProcedimentoEmpresa.Any(y => y.stNome == porte && y.fkEmpresa == empresa.id))
+                                        {
+                                            db.Insert(new SaudePorteProcedimentoEmpresa
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                stNome = porte
+                                            });
+                                        }
+
+                                        var tbPorte = db.SaudePorteProcedimentoEmpresa.FirstOrDefault(y => y.stNome == porte && y.fkEmpresa == empresa.id);
+
+                                        currentRow++;
+
+                                        if (codigo != "")
+                                        {
+                                            db.Insert(new SaudeValorProcedimento
+                                            {
+                                                fkEmpresa = empresa.id,
+                                                nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
+                                                nuCodInterno = Convert.ToInt64(codigo),
+                                                stDesc = desc,
+                                                vrTotalHMCO = vlrtotal,
+                                                fkSaudePorteProcedimento = tbPorte.id,
+                                                vrValorHM = vlrhm,
+                                                vrValorCO = vlrco,
+                                                nuAux = naux,
+                                                nuAnestesistas = nporte,
+                                                vrPorteAnestesista = nvlrporte,
+                                                nuFilme4C = filme,
+                                                vrFilme = vrfilme
+                                            });
+                                        }
+                                    }
+                                }
+                                #endregion
+                            }
+
+                            Console.WriteLine("FIM!");
 
                             break;
                         }

@@ -15,40 +15,39 @@ namespace GetStarted
         {
             using (var db = new AutorizadorCNDB())
             {
-                int patch = 1;
+                Console.WriteLine("Patch?");
 
-                switch (patch)
+                var strPatch = Console.ReadLine().ToUpper();
+
+                switch (strPatch)
                 {
-                    case 1:
+                    case "FIXABRIL9620":
+                    case "":
+                    {
+                        var dtIni = new DateTime(2018, 3, 2);
+                        var dtFim = new DateTime(2018, 3, 28).AddDays(1);
 
-                        Console.WriteLine("Ajustando cartões");
+                        var lstEmpresas = "009620,009621,009622,009623,009624".Split (',');
 
-                        var lst = db.T_Cartao.Where(y => y.st_empresa == "001201" || 
-                                                         y.st_empresa == "001202").ToList();
+                        var lst = ( from e in db.LOG_Fechamento
+                                    join empDb in db.T_Empresa on e.fk_empresa equals (int) empDb.i_unique
+                                    join parc in db.T_Parcelas on e.fk_parcela equals (int) parc.i_unique
+                                    join ltr in db.LOG_Transacoes on parc.fk_log_transacoes equals (int) ltr.i_unique
+                                    where ltr.dt_transacao > dtIni && ltr.dt_transacao < dtFim
+                                    where lstEmpresas.Contains(empDb.st_empresa)
+                                    where e.st_mes == "03" && e.st_ano == "2018"
+                                    select e).                                        
+                                    ToList();
 
                         foreach (var item in lst)
                         {
-                            Console.WriteLine("Ajustando cartão " + item.st_empresa + " / " + item.st_matricula);
-                            Console.WriteLine(".. De " + item.vr_limiteMensal );
-
-                            var vlrlimM = item.vr_limiteMensal;
-                            var vlrlimT = item.vr_limiteTotal;
-
-                            vlrlimM += item.vr_limiteMensal * 207 / 10000;
-                            vlrlimT += item.vr_limiteTotal * 207 / 10000;
-
-                            item.vr_limiteMensal = vlrlimM;
-                            item.vr_limiteTotal = vlrlimT;
-
-                            Console.WriteLine(".. Para " + item.vr_limiteMensal);
-
+                            item.st_mes = "04";
 
                             db.Update(item);
                         }
 
-                        Console.WriteLine("Ajustando cartões FIM");
-
                         break;
+                    }
                 }
             }
         }

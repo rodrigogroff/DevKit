@@ -1,0 +1,91 @@
+﻿<div class="webFormPostion" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Precificação de <b>Medicamentos</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color:white">
+                <tr height="22px"> </tr>
+                <tr height="36px">
+                    <td width="25px"></td>
+                    <td width="110px"><b>Código</b></td>
+                    <td width="220px">
+                        <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.codigo" />
+                    </td>
+                    <td width="60px"></td>
+                    <td width="110px"><b></b></td>
+                    <td width="220px">
+                        
+                    </td>
+                    <td width="25px"></td>
+                </tr>                
+                <tr height="12px"> </tr>
+                <tr height="42px">
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
+                    </td>
+                </tr>
+                <tr height="12px"> </tr>
+            </table>
+
+            <div style="overflow-x:scroll;overflow:auto;">
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div ng-show="list.length == 0">
+                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="list.length > 0">
+                                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                                <br />
+                                <table class="table table-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="min-width:60px">Ano <br /></th>
+                                            <th style="min-width:80px">Código<br /></th>
+                                            <th style="min-width:200px">Descrição <br /></th>
+                                            <th style="min-width:200px">Descrição <br />Comercial</th>
+                                            <th style="min-width:200px">Fabricante<br /></th>
+                                            <th style="min-width:90px">Unidade <br /></th>
+                                            <th style="min-width:90px">Valor<br />Fração</th>
+                                            <th style="min-width:90px">Fracionar <br /></th>
+                                            <th style="min-width:90px">Valor<br /></th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                        <td>{{ mdl.nuAnoVigencia }}</td>
+                                        <td>{{ mdl.nuCodInterno }}</td>
+                                        <td>{{ mdl.stDesc }}</td>
+                                        <td>{{ mdl.stComercial }}</td>
+                                        <td>{{ mdl.sfkFabricanteMedicamento }}</td>
+                                        <td>{{ mdl.sfkUnidade }}</td>
+                                        <td>{{ mdl.svrFracao }}</td>
+                                        <td>{{ mdl.sbFracionar }}</td>
+                                        <td>{{ mdl.svrValor }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <br />
+            <br />
+    </section>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

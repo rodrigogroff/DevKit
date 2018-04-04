@@ -100,5 +100,6 @@ angular.module('app.services', ['ngResource'])
         TipoCoberturaDependenteCombo: $resource('api/tipocoberturadependentecombo/:id', {}, opcoes),
         PrecoDiaria: $resource('api/precodiaria/:id', {}, opcoes),
         PrecoMaterial: $resource('api/precomaterial/:id', {}, opcoes),
+        PrecoMedicamento: $resource('api/precomedicamento/:id', {}, opcoes),
 	};
 }]);

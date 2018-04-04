@@ -62,7 +62,9 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('listemissorcredenciados', { url: '/emissora/credenciados', templateUrl: 'app/emissora/listagemCredenciados.html', controller: 'ListagemEmissorCredenciadosController' })
     .state('emissorcredenciado', { url: '/emissora/credenciado/:id', templateUrl: 'app/emissora/credenciado.html', controller: 'EmissorCredenciadoController' })
     .state('emissorautorizacaoProc', { url: '/emissora/autorizacaoProc', templateUrl: 'app/emissora/autorizacaoProc.html', controller: 'EmissoraAutorizacaoProcController' })
-    
+        
+    .state('emissorprecodiaria', { url: '/emissora/precosdiaria', templateUrl: 'app/emissora/precoDiaria.html', controller: 'EmissoraPrecoDiariaController' })
+
     .state('credenciados', { url: '/dba/credenciados', templateUrl: 'app/dba/listingCredenciados.html', controller: 'ListingCredenciadosController' })
     .state('credenciado', { url: '/dba/credenciado/:id', templateUrl: 'app/dba/credenciado.html', controller: 'CredenciadoController' })
     .state('tuss', { url: '/dba/tuss', templateUrl: 'app/dba/listingTUSS.html', controller: 'ListingTUSSController' })

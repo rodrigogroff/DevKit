@@ -138,6 +138,7 @@
     <Compile Include="DataModel\Domains\Emissor\Associado\Associado_Loader.cs" />
     <Compile Include="DataModel\Domains\Emissor\Associado\Associado_TrackChanges.cs" />
     <Compile Include="DataModel\Domains\Emissor\Associado\Associado_Update.cs" />
+    <Compile Include="DataModel\Domains\Emissor\Precificacao\Empresa_ValorMaterial.cs" />
     <Compile Include="DataModel\Domains\Emissor\Precificacao\Empresa_ValorDiaria.cs" />
     <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemFechamento_AssocSint.cs" />
     <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemFechamento_AssocAnalitico.cs" />

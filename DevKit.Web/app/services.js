@@ -99,5 +99,6 @@ angular.module('app.services', ['ngResource'])
         TipoExpedicaoCombo: $resource('api/tipoexpedicao/:id', {}, opcoes),
         TipoCoberturaDependenteCombo: $resource('api/tipocoberturadependentecombo/:id', {}, opcoes),
         PrecoDiaria: $resource('api/precodiaria/:id', {}, opcoes),
+        PrecoMaterial: $resource('api/precomaterial/:id', {}, opcoes),
 	};
 }]);

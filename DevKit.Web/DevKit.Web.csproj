@@ -252,6 +252,8 @@
     <Content Include="app\dba\listingLotes.js" />
     <Content Include="app\dba\novoLote.html" />
     <Content Include="app\dba\novoLote.js" />
+    <Content Include="app\emissora\precoOPME.html" />
+    <Content Include="app\emissora\precoOPME.js" />
     <Content Include="app\emissora\precoNaoMedico.html" />
     <Content Include="app\emissora\precoNaoMedico.js" />
     <Content Include="app\emissora\precoMedicamento.html" />
@@ -913,6 +915,7 @@
     <Compile Include="proc\Domains\dba\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\dba\LotesGraficaCtrl.cs" />
     <Compile Include="proc\Domains\emissor\EmissorListagemAutorizacaoCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\PrecoOPMECtrl.cs" />
     <Compile Include="proc\Domains\emissor\PrecoNaoMedicoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\PrecoMedicamentoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\PrecoMaterialCtrl.cs" />

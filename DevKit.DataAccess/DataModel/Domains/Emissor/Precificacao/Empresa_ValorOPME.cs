@@ -7,31 +7,29 @@ using System.Linq;
 
 namespace DataModel
 {
-    public class PrecoOPMEFilter
+    public class PrecoNaoMedicoFilter
     {
         public string codigo = "";
 
         public int skip, take;
     }
 
-    public class SaudeValorOPMEReport
+    public class SaudeValorNaoMedicoReport
     {
         public int count = 0;
 
-        public List<SaudeValorOPME> results = new List<SaudeValorOPME>();
+        public List<SaudeValorNaoMedico> results = new List<SaudeValorNaoMedico>();
     }
 
-    public partial class SaudeValorOPME
+    public partial class SaudeValorNaoMedico
     {
-        public string   sfkClassificacao,
-                        sfkEspecialidade,
-                        svrValor;
+        public string svrValor;
 
-        public SaudeValorOPMEReport Listagem(DevKitDB db, PrecoOPMEFilter filter)
+        public SaudeValorNaoMedicoReport Listagem(DevKitDB db, PrecoNaoMedicoFilter filter)
         {
-            var ret = new SaudeValorOPMEReport();
+            var ret = new SaudeValorNaoMedicoReport();
 
-            var query = from e in db.SaudeValorOPME
+            var query = from e in db.SaudeValorNaoMedico
                         where e.fkEmpresa == db.currentUser.fkEmpresa
                         select e;
 
@@ -49,12 +47,6 @@ namespace DataModel
         public void LoadAssociations(DevKitDB db)
         {
             var mon = new money();
-
-            if (fkClassificacao != null)
-                sfkClassificacao = db.SaudeOPMEClassificacaoEmpresa.FirstOrDefault(y => y.id == fkClassificacao).stNome;
-
-            if (fkEspecialidade != null)
-                sfkEspecialidade = db.SaudeOPMEEspecialidadeEmpresa.FirstOrDefault(y => y.id == fkEspecialidade).stNome;
 
             if (vrValor != null)
                 svrValor = mon.setMoneyFormat((long)vrValor);

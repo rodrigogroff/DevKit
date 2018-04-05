@@ -12,8 +12,8 @@ namespace DevKit.Web.Controllers
 
             var filter = new PrecoMedicamentoFilter
             {                
-                skip = Request.GetQueryStringValue("mes", 0),
-                take = Request.GetQueryStringValue("ano", 15),
+                skip = Request.GetQueryStringValue("skip", 0),
+                take = Request.GetQueryStringValue("take", 15),
                 codigo = Request.GetQueryStringValue("codigo"),                
             };
 

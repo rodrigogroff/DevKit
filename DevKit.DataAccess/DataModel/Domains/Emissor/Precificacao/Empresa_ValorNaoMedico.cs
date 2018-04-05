@@ -34,7 +34,7 @@ namespace DataModel
                         select e;
 
             ret.count = query.Count();
-            ret.results = query.Skip(filter.skip).Take(filter.take).ToList();
+            ret.results = (query.Skip(filter.skip).Take(filter.take)).ToList();
 
             foreach (var item in ret.results)
             {

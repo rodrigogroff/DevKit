@@ -62,12 +62,12 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('listemissorcredenciados', { url: '/emissora/credenciados', templateUrl: 'app/emissora/listagemCredenciados.html', controller: 'ListagemEmissorCredenciadosController' })
     .state('emissorcredenciado', { url: '/emissora/credenciado/:id', templateUrl: 'app/emissora/credenciado.html', controller: 'EmissorCredenciadoController' })
     .state('emissorautorizacaoProc', { url: '/emissora/autorizacaoProc', templateUrl: 'app/emissora/autorizacaoProc.html', controller: 'EmissoraAutorizacaoProcController' })
-        
     .state('emissorprecodiaria', { url: '/emissora/precosdiaria', templateUrl: 'app/emissora/precoDiaria.html', controller: 'EmissoraPrecoDiariaController' })
     .state('emissorprecomaterial', { url: '/emissora/precosmaterial', templateUrl: 'app/emissora/precoMaterial.html', controller: 'EmissoraPrecoMaterialController' })
     .state('emissorprecomedicamento', { url: '/emissora/precosmedicamento', templateUrl: 'app/emissora/precoMedicamento.html', controller: 'EmissoraPrecoMedicamentoController' })
     .state('emissorpreconaomedico', { url: '/emissora/precosnaomedico', templateUrl: 'app/emissora/precoNaoMedico.html', controller: 'EmissoraPrecoNaoMedicoController' })
     .state('emissorprecoopme', { url: '/emissora/precosopme', templateUrl: 'app/emissora/precoOPME.html', controller: 'EmissoraPrecoOPMEController' })
+    .state('emissorprecopacote', { url: '/emissora/precospacote', templateUrl: 'app/emissora/precoPacote.html', controller: 'EmissoraPrecoPacoteController' })
 
     .state('credenciados', { url: '/dba/credenciados', templateUrl: 'app/dba/listingCredenciados.html', controller: 'ListingCredenciadosController' })
     .state('credenciado', { url: '/dba/credenciado/:id', templateUrl: 'app/dba/credenciado.html', controller: 'CredenciadoController' })
@@ -76,7 +76,6 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('lotesgrafica', { url: '/dba/lotes', templateUrl: 'app/dba/listingLotes.html', controller: 'ListingLotesController' })
     .state('novolote', { url: '/dba/lotes/novo', templateUrl: 'app/dba/novoLote.html', controller: 'NovoLoteController' })
     .state('exportaut', { url: '/dba/exportaut', templateUrl: 'app/dba/listingExpAutorizacao.html', controller: 'ListingExpAutorizacaoController' })
-
     .state('novaempresa', { url: '/dba/empresa/:id', templateUrl: 'app/dba/empresa.html', controller: 'EmpresaController' })
     .state('empresa', { url: '/dba/empresa/:id', templateUrl: 'app/dba/empresa.html', controller: 'EmpresaController' })
     .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/listingEmpresas.html', controller: 'ListingEmpresasController' })

@@ -7,29 +7,29 @@ using System.Linq;
 
 namespace DataModel
 {
-    public class PrecoNaoMedicoFilter
+    public class PrecoPacoteFilter
     {
         public string codigo = "";
 
         public int skip, take;
     }
 
-    public class SaudeValorNaoMedicoReport
+    public class SaudeValorPacoteReport
     {
         public int count = 0;
 
-        public List<SaudeValorNaoMedico> results = new List<SaudeValorNaoMedico>();
+        public List<SaudeValorPacote> results = new List<SaudeValorPacote>();
     }
 
-    public partial class SaudeValorNaoMedico
+    public partial class SaudeValorPacote
     {
         public string svrValor;
 
-        public SaudeValorNaoMedicoReport Listagem(DevKitDB db, PrecoNaoMedicoFilter filter)
+        public SaudeValorPacoteReport Listagem(DevKitDB db, PrecoPacoteFilter filter)
         {
-            var ret = new SaudeValorNaoMedicoReport();
+            var ret = new SaudeValorPacoteReport();
 
-            var query = from e in db.SaudeValorNaoMedico
+            var query = from e in db.SaudeValorPacote
                         where e.fkEmpresa == db.currentUser.fkEmpresa
                         select e;
 

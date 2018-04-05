@@ -101,5 +101,6 @@ angular.module('app.services', ['ngResource'])
         PrecoDiaria: $resource('api/precodiaria/:id', {}, opcoes),
         PrecoMaterial: $resource('api/precomaterial/:id', {}, opcoes),
         PrecoMedicamento: $resource('api/precomedicamento/:id', {}, opcoes),
+        PrecoNaoMedico: $resource('api/preconaomedico/:id', {}, opcoes),
 	};
 }]);

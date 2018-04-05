@@ -116,6 +116,7 @@ namespace DevKit.Web
                 "~/app/emissora/precoNaoMedico.js",
                 "~/app/emissora/precoOPME.js",
                 "~/app/emissora/precoPacote.js",
+                "~/app/emissora/precoProcedimento.js",
                 "~/app/emissora/listagemEmissorFechamento.js",
                 "~/app/emissora/listagemEmissorProcedimentos.js",
                 "~/app/emissora/listagemCredenciados.js",

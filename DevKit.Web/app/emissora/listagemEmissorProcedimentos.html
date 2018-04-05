@@ -114,6 +114,7 @@
                                     <thead>
                                         <tr>
                                             <th style="min-width:150px">Data Solicitação</th>
+                                            <th style="min-width:90px">NSU</th>
                                             <th style="min-width:90px">Situação</th>
                                             <th style="min-width:200px">Associado</th>
                                             <th style="min-width:200px">Credenciado</th>
@@ -125,6 +126,7 @@
                                     </thead>
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                                         <td>{{ mdl.sdtSolicitacao }}</td>
+                                        <td>{{ mdl.nuNSU }}</td>
                                         <td>{{ mdl.stgSituacao }}</td>
                                         <td>{{ mdl.snuMatriculaAssociado }} - {{ mdl.sfkAssociadoPortador }}</td>
                                         <td>{{ mdl.snuCodigoCredenciado }} - {{ mdl.sfkCredenciado }}</td>

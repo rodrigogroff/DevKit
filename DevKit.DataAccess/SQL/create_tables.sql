@@ -473,6 +473,7 @@ ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkProcedimento" bigin
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAssociado" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuMes" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuAno" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuNSU" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "tgSituacao" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAutOriginal" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "vrProcedimento" bigint;
@@ -630,3 +631,8 @@ ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "nuAnestesi
 ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "vrPorteAnestesista" bigint;
 ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "nuFilme4C" bigint;
 ALTER TABLE public."SaudeValorProcedimento" ADD COLUMN if not exists "vrFilme" bigint;
+
+CREATE TABLE IF NOT EXISTS public."NSU" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."NSU" OWNER to postgres;
+ALTER TABLE public."NSU" ADD COLUMN if not exists "dtLog" timestamp without time zone;
+ALTER TABLE public."NSU" ADD COLUMN if not exists "fkEmpresa" bigint;

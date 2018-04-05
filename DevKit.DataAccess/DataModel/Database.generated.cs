@@ -45,6 +45,7 @@ namespace DataModel
 		public ITable<LogAutorizaProc>                   LogAutorizaProc                   { get { return this.GetTable<LogAutorizaProc>(); } }
 		public ITable<LoteGrafica>                       LoteGrafica                       { get { return this.GetTable<LoteGrafica>(); } }
 		public ITable<LoteGraficaCartao>                 LoteGraficaCartao                 { get { return this.GetTable<LoteGraficaCartao>(); } }
+		public ITable<NSU>                               NSU                               { get { return this.GetTable<NSU>(); } }
 		public ITable<Profile>                           Profile                           { get { return this.GetTable<Profile>(); } }
 		public ITable<Project>                           Project                           { get { return this.GetTable<Project>(); } }
 		public ITable<ProjectPhase>                      ProjectPhase                      { get { return this.GetTable<ProjectPhase>(); } }
@@ -219,6 +220,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     vrCoPart            { get; set; } // bigint
 		[Column,     Nullable] public long?     vrParcelaCoPart     { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAssociadoPortador { get; set; } // bigint
+		[Column,     Nullable] public long?     nuNSU               { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Cidade")]
@@ -460,6 +462,14 @@ namespace DataModel
 		[Column,     Nullable] public long? fkEmpresa     { get; set; } // bigint
 		[Column,     Nullable] public long? nuVia         { get; set; } // bigint
 		[Column,     Nullable] public long? nuTit         { get; set; } // bigint
+	}
+
+	[Table(Schema="public", Name="NSU")]
+	public partial class NSU
+	{
+		[PrimaryKey, Identity] public long      id        { get; set; } // bigint
+		[Column,     Nullable] public DateTime? dtLog     { get; set; } // timestamp (6) without time zone
+		[Column,     Nullable] public long?     fkEmpresa { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Profile")]
@@ -1097,6 +1107,12 @@ namespace DataModel
 		}
 
 		public static LoteGraficaCartao Find(this ITable<LoteGraficaCartao> table, long id)
+		{
+			return table.FirstOrDefault(t =>
+				t.id == id);
+		}
+
+		public static NSU Find(this ITable<NSU> table, long id)
 		{
 			return table.FirstOrDefault(t =>
 				t.id == id);

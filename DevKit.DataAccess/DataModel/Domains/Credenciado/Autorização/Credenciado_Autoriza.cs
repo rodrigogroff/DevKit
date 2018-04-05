@@ -33,8 +33,6 @@ namespace DataModel
 
             try
             {
-
-
                 var nuTit = Convert.ToInt32(_params.titVia.Substring(0, 2));
                 var nuVia = Convert.ToInt32(_params.titVia.Substring(2, 2));
 
@@ -46,7 +44,10 @@ namespace DataModel
                 if (secaoTb == null)
                     return "Empresa inválida";
 
-                var empTb = (from e in db.Empresa where e.id == secaoTb.fkEmpresa select e).FirstOrDefault();
+                var empTb = (from e in db.Empresa
+                             where e.id == secaoTb.fkEmpresa
+                             select e).
+                             FirstOrDefault();
 
                 var associado = (from e in db.Associado
                                  where e.fkEmpresa == secaoTb.fkEmpresa
@@ -144,6 +145,12 @@ namespace DataModel
                 if (dt.Day < empTb.nuDiaFech)
                     dt = dt.AddMonths(-1);
 
+                var nsu = Convert.ToInt64(db.InsertWithIdentity(new NSU
+                {
+                    dtLog = DateTime.Now,
+                    fkEmpresa = associadoTit.fkEmpresa
+                }));
+
                 var idAutOriginal = Convert.ToInt64(db.InsertWithIdentity(new Autorizacao
                 {
                     dtSolicitacao = DateTime.Now,
@@ -153,6 +160,7 @@ namespace DataModel
                     fkProcedimento = tuss.id,
                     nuAno = dt.Year,
                     nuMes = dt.Month,
+                    nuNSU = nsu,
                     tgSituacao = TipoSitAutorizacao.Autorizado,
                     fkAutOriginal = null,
                     nuIndice = 1,
@@ -179,6 +187,7 @@ namespace DataModel
                             fkProcedimento = tuss.id,
                             nuAno = dt.Year,
                             nuMes = dt.Month,
+                            nuNSU = nsu,
                             tgSituacao = TipoSitAutorizacao.Autorizado,
                             fkAutOriginal = idAutOriginal,
                             nuIndice = nuParc,

@@ -33,7 +33,7 @@ namespace DataModel
                                         ToList();
 
                 // header
-                sw.WriteLine("empresa;mês;ano;data solicitação;portador;cpf portador;matricula;cpfCnpj credenciado;tuss;");
+                sw.WriteLine("empresa;mês;ano;data solicitação;portador;cpf portador;matricula;cpfCnpj credenciado;tuss;nsu;titularidade");
                 
                 lstId = lstAutorizacoes.Select(a => a.fkAssociado).Distinct().ToList();
                 var lstAssoc = db.Associado.Where(y => lstId.Contains(y.id)).ToList();
@@ -62,6 +62,8 @@ namespace DataModel
                     line += assoc.nuMatricula + ";";
                     line += cred.stCnpj + ";";
                     line += proc.nuCodTUSS + ";";
+                    line += item.nuNSU + ";"; 
+                    line += assoc.nuTitularidade;
 
                     sw.WriteLine(line);
                 }

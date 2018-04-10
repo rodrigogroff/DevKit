@@ -11,6 +11,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.loading = false;
         $scope.lastTag = '';
         $scope.modoVenda = '';
+        $scope.autorizando = false;
+
         $scope.viewModel = {};
         $scope.viewModel.senhaPortadorCartao = undefined;        
         $scope.viewModel.cupom = undefined;
@@ -231,6 +233,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.confirmar = function ()
     {
+        $scope.autorizando = true;
+
         Api.EfetuaVenda.listPage(
             {
                 cartao: $scope.viewModel.data.id,
@@ -261,8 +265,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             function (response)
             {
                 $scope.loading = false;
-               // toastr.error(response.data.message, 'Error');
-
+                $scope.autorizando = false;
+               
                 $scope.falhaVendaMsg = response.data.message;
                 $scope.falhaVenda = true;                
             });

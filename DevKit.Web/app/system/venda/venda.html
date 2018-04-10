@@ -530,10 +530,12 @@
                                     </td>
                                     <td width="20px"></td>
                                     <td>
-                                        <button class="btn btn-success" ng-click="confirmar()"
-                                                ng-if="viewModel.requerSenha == 0 || (viewModel.requerSenha == 1 && viewModel.senhaPortadorCartao.length == 4)">
-                                            Confirmar
-                                        </button>
+                                        <div ng-if="autorizando == false">
+                                            <button class="btn btn-success" ng-click="confirmar()"
+                                                    ng-if="viewModel.requerSenha == 0 || (viewModel.requerSenha == 1 && viewModel.senhaPortadorCartao.length == 4)">
+                                                Confirmar
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
 

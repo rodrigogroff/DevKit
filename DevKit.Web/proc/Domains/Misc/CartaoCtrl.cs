@@ -62,7 +62,9 @@ namespace DevKit.Web.Controllers
                     return BadRequest("Credenciado não conveniado à empresa " + emp);
                 }
             }
-            
+
+            associado.LoadAssociationsMini(db);
+
             return Ok( associado );
         }
 	}

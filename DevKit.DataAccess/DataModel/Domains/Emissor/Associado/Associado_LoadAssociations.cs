@@ -2,12 +2,22 @@
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using SyCrafEngine;
 
 namespace DataModel
 {
 	public partial class Associado
     {
-		public Associado LoadAssociations(DevKitDB db)
+        public Associado LoadAssociationsMini(DevKitDB db)
+        {
+            var mon = new money();
+
+            svrMaxEmp = mon.setMoneyFormat((long)db.Empresa.FirstOrDefault(y => y.id == this.fkEmpresa).vrMaxProcSemAut);
+
+            return this;
+        }
+
+        public Associado LoadAssociations(DevKitDB db)
 		{
 			var setup = db.GetSetup();
 
@@ -23,6 +33,10 @@ namespace DataModel
 
             if (fkUserLastUpdate != null)
                 sfkUserLastUpdate = db.GetUser(fkUserLastUpdate).stLogin;
+
+            var mon = new money();
+
+            svrMaxEmp = mon.setMoneyFormat((long)db.Empresa.FirstOrDefault(y => y.id == this.fkEmpresa).vrMaxProcSemAut);
 
             if (fkSecao != null)
                 sfkSecao = db.EmpresaSecao.

@@ -29,6 +29,7 @@ namespace DataModel
                       snuAge = "",
                       stgStatus = "",
                       stgExpedicao = "",
+                      svrMaxEmp = "",
                       updateCommand = "";
 
 		public List<AssociadoTelefone> phones;

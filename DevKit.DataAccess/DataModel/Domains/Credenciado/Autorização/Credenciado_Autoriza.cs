@@ -129,75 +129,104 @@ namespace DataModel
                                                y.fkEmpresa == secaoTb.fkEmpresa))
                     return "Credenciado não conveniado à empresa " + _params.emp;
 
+                DateTime dt = DateTime.Now;
+
                 var tuss = db.TUSS.Where(y => y.nuCodTUSS == _params.tuss).FirstOrDefault();
 
                 if (tuss == null)
-                    return "Procedimento " + _params.tuss + " inválido!";
+                {
+                    var nsu = Convert.ToInt64(db.InsertWithIdentity(new NSU
+                    {
+                        dtLog = DateTime.Now,
+                        fkEmpresa = associadoTit.fkEmpresa
+                    }));
 
-                var proc = db.CredenciadoEmpresaTuss.
+                    var idAutOriginal = Convert.ToInt64(db.InsertWithIdentity(new Autorizacao
+                    {
+                        dtSolicitacao = DateTime.Now,
+                        fkAssociado = associadoTit.id,
+                        fkCredenciado = curCred.id,
+                        fkEmpresa = associadoTit.fkEmpresa,
+                        fkProcedimento = 0,
+                        nuAno = dt.Year,
+                        nuMes = dt.Month,
+                        nuNSU = nsu,
+                        tgSituacao = TipoSitAutorizacao.Autorizado,
+                        fkAutOriginal = null,
+                        nuIndice = 1,
+                        nuTotParcelas = 0,
+                        vrProcedimento = 0,
+                        vrParcela = 0,
+                        vrCoPart = 0,
+                        vrParcelaCoPart = 0,
+                        fkAssociadoPortador = associado.id
+                    }));
+                }
+                else
+                {
+                    var proc = db.CredenciadoEmpresaTuss.
                                 Where(y => y.fkCredenciado == curCred.id).
                                 Where(y => y.fkEmpresa == associado.fkEmpresa).
                                 Where(y => y.nuTUSS == tuss.nuCodTUSS).
                                 FirstOrDefault();
 
-                DateTime dt = DateTime.Now;
+                    if (dt.Day < empTb.nuDiaFech)
+                        dt = dt.AddMonths(-1);
 
-                if (dt.Day < empTb.nuDiaFech)
-                    dt = dt.AddMonths(-1);
-
-                var nsu = Convert.ToInt64(db.InsertWithIdentity(new NSU
-                {
-                    dtLog = DateTime.Now,
-                    fkEmpresa = associadoTit.fkEmpresa
-                }));
-
-                var idAutOriginal = Convert.ToInt64(db.InsertWithIdentity(new Autorizacao
-                {
-                    dtSolicitacao = DateTime.Now,
-                    fkAssociado = associadoTit.id,
-                    fkCredenciado = curCred.id,
-                    fkEmpresa = associadoTit.fkEmpresa,
-                    fkProcedimento = tuss.id,
-                    nuAno = dt.Year,
-                    nuMes = dt.Month,
-                    nuNSU = nsu,
-                    tgSituacao = TipoSitAutorizacao.Autorizado,
-                    fkAutOriginal = null,
-                    nuIndice = 1,
-                    nuTotParcelas = proc.nuParcelas,
-                    vrProcedimento = proc.vrProcedimento,
-                    vrParcela = proc.vrProcedimento / proc.nuParcelas,
-                    vrCoPart = proc.vrCoPart,
-                    vrParcelaCoPart = proc.vrCoPart / proc.nuParcelas,
-                    fkAssociadoPortador = associado.id
-                }));
-
-                if (proc.nuParcelas > 1)
-                {
-                    for (int nuParc = 2; nuParc <= proc.nuParcelas; ++nuParc)
+                    var nsu = Convert.ToInt64(db.InsertWithIdentity(new NSU
                     {
-                        dt = dt.AddMonths(1);
+                        dtLog = DateTime.Now,
+                        fkEmpresa = associadoTit.fkEmpresa
+                    }));
 
-                        db.Insert(new Autorizacao
+                    var idAutOriginal = Convert.ToInt64(db.InsertWithIdentity(new Autorizacao
+                    {
+                        dtSolicitacao = DateTime.Now,
+                        fkAssociado = associadoTit.id,
+                        fkCredenciado = curCred.id,
+                        fkEmpresa = associadoTit.fkEmpresa,
+                        fkProcedimento = tuss.id,
+                        nuAno = dt.Year,
+                        nuMes = dt.Month,
+                        nuNSU = nsu,
+                        tgSituacao = TipoSitAutorizacao.Autorizado,
+                        fkAutOriginal = null,
+                        nuIndice = 1,
+                        nuTotParcelas = proc.nuParcelas,
+                        vrProcedimento = proc.vrProcedimento,
+                        vrParcela = proc.vrProcedimento / proc.nuParcelas,
+                        vrCoPart = proc.vrCoPart,
+                        vrParcelaCoPart = proc.vrCoPart / proc.nuParcelas,
+                        fkAssociadoPortador = associado.id
+                    }));
+
+                    if (proc.nuParcelas > 1)
+                    {
+                        for (int nuParc = 2; nuParc <= proc.nuParcelas; ++nuParc)
                         {
-                            dtSolicitacao = DateTime.Now,
-                            fkAssociado = associado.id,
-                            fkCredenciado = curCred.id,
-                            fkEmpresa = associado.fkEmpresa,
-                            fkProcedimento = tuss.id,
-                            nuAno = dt.Year,
-                            nuMes = dt.Month,
-                            nuNSU = nsu,
-                            tgSituacao = TipoSitAutorizacao.Autorizado,
-                            fkAutOriginal = idAutOriginal,
-                            nuIndice = nuParc,
-                            nuTotParcelas = proc.nuParcelas,
-                            vrProcedimento = proc.vrProcedimento,
-                            vrParcela = proc.vrProcedimento / proc.nuParcelas,
-                            vrCoPart = proc.vrCoPart,
-                            vrParcelaCoPart = proc.vrCoPart / proc.nuParcelas,
-                            fkAssociadoPortador = associado.id
-                        });
+                            dt = dt.AddMonths(1);
+
+                            db.Insert(new Autorizacao
+                            {
+                                dtSolicitacao = DateTime.Now,
+                                fkAssociado = associado.id,
+                                fkCredenciado = curCred.id,
+                                fkEmpresa = associado.fkEmpresa,
+                                fkProcedimento = tuss.id,
+                                nuAno = dt.Year,
+                                nuMes = dt.Month,
+                                nuNSU = nsu,
+                                tgSituacao = TipoSitAutorizacao.Autorizado,
+                                fkAutOriginal = idAutOriginal,
+                                nuIndice = nuParc,
+                                nuTotParcelas = proc.nuParcelas,
+                                vrProcedimento = proc.vrProcedimento,
+                                vrParcela = proc.vrProcedimento / proc.nuParcelas,
+                                vrCoPart = proc.vrCoPart,
+                                vrParcelaCoPart = proc.vrCoPart / proc.nuParcelas,
+                                fkAssociadoPortador = associado.id
+                            });
+                        }
                     }
                 }
                 

@@ -15,7 +15,7 @@
                 <tr height="22px"> </tr>
                 <tr height="36px">
                     <td width="25px"></td>
-                    <td width="180px"><b>Proc. Cadastrado</b></td>
+                    <td width="200px"><b>Procedimento Cadastrado</b></td>
                     <td width="220px">
                         <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.tuss" />
                     </td>
@@ -77,7 +77,8 @@
                                             <th style="min-width:200px">TUSS - Procedimento</th>
                                             <th style="min-width:150px">Empresa</th>
                                             <th style="min-width:120px">Matrícula</th>
-                                            <th style="min-width:200px">Associado</th>
+                                            <th style="min-width:120px">Titularidade</th>
+                                            <th style="min-width:250px">Associado</th>                                            
                                         </tr>
                                     </thead>
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
@@ -85,7 +86,8 @@
                                         <td>{{ mdl.stgSituacao }}</td>
                                         <td>{{ mdl.sfkProcedimento }}</td>
                                         <td>{{ mdl.sfkEmpresa }}</td>
-                                        <td>{{ mdl.snuMatriculaAssociado }}.{{ mdl.sfkAssociadoPortadorTit }} </td>
+                                        <td>{{ mdl.snuMatriculaAssociado }}</td>
+                                        <td>{{ mdl.sfkAssociadoPortadorTit }}</td>
                                         <td>{{ mdl.sfkAssociadoPortador }}</td>
                                     </tr>
                                 </table>

@@ -6,7 +6,7 @@
 <#
 	NamespaceName = "DataModel";
 
-	LoadSqlServerMetadata(".\\SQLEXPRESS", "AutorizadorCN", "sa", "convey@2017");
+	LoadSqlServerMetadata(".\\SQLEXPRESS", "AutorizadorCN", "sa", "zxcv1092@");
 
 	GenerateModel();
 #>

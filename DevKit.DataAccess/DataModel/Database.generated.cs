@@ -23,7 +23,7 @@ namespace DataModel
 	/// <summary>
 	/// Database       : AutorizadorCN
 	/// Data Source    : .\SQLEXPRESS
-	/// Server Version : 11.00.3000
+	/// Server Version : 11.00.2100
 	/// </summary>
 	public partial class AutorizadorCNDB : LinqToDB.Data.DataConnection
 	{

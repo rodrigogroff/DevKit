@@ -100,6 +100,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		{
 			$scope.stName_fail = invalidCheck($scope.viewModel.stName);
             $scope.mat_fail = invalidCheck($scope.viewModel.nuMatricula);
+            $scope.matS_fail = invalidCheck($scope.viewModel.nuMatSaude);
             $scope.cpf_fail = invalidCheck($scope.viewModel.stCPF);
             $scope.fkSecao_fail = invalidCheck($scope.viewModel.fkSecao);
 	

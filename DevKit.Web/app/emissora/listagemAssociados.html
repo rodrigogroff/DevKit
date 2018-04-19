@@ -33,7 +33,7 @@
                     <td></td>
                     <td><b>Matrícula</b></td>
                     <td>
-                        <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.matricula" />
+                        <input type="text" class="form-control input-transparent" ng-model="campos.matricula" />
                     </td>
                     <td></td>
                     <td><b>CPF</b></td>
@@ -46,14 +46,23 @@
 
                 <tr height="36px">
                     <td></td>
+                    <td><b>Mat. Saude</b></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.matSaude" />
+                    </td>
+                    <td></td>                    
+                </tr>
+
+                <tr height="36px">
+                    <td></td>
                     <td><b>Email</b></td>
                     <td>
-                        <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.email" />
+                        <input type="text" class="form-control input-transparent" ng-model="campos.email" />
                     </td>
                     <td></td>
                     <td><b>Telefone</b></td>
                     <td>
-                        <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.phone" />
+                        <input type="text" class="form-control input-transparent" ng-model="campos.phone" />
                     </td>
                     <td></td>
                 </tr>
@@ -98,6 +107,7 @@
                                             <th style="min-width:180px">Seção</th>
                                             <th style="min-width:300px">Nome</th>
                                             <th style="min-width:140px">Matrícula</th>
+                                            <th style="min-width:140px">Mat. Saude</th>
                                             <th style="min-width:80px">Tit.</th>
                                             <th style="min-width:140px">Situação</th>
                                             <th style="min-width:140px">Expedição</th>
@@ -114,6 +124,7 @@
                                         <td>{{ mdl.sfkSecao }}</td>
                                         <td>{{ mdl.stName }}</td>
                                         <td>{{ mdl.nuMatricula }}</td>
+                                        <td>{{ mdl.nuMatSaude }}</td>
                                         <td>{{ mdl.nuTitularidade }}</td>
                                         <td>{{ mdl.stgStatus }}</td>
                                         <td>{{ mdl.stgExpedicao }}</td>

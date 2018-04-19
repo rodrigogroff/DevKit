@@ -308,6 +308,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Carga\cartoes_1803.csv" />
+    <None Include="Carga\Deps.xlsx" />
     <None Include="Carga\medicos.xlsx" />
     <None Include="Carga\medico_especialidade.xlsx" />
     <None Include="Carga\Tb_tuss.xlsx" />

@@ -68,6 +68,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             fkSecao: $scope.campos.fkSecao,
             cpf: $scope.campos.cpf,
             matricula: $scope.campos.matricula,
+            matSaude: $scope.campos.matSaude,
             ativo: $scope.campos.ativo,
             email: $scope.campos.email,
             phone: $scope.campos.phone,

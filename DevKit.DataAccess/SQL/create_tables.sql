@@ -362,6 +362,7 @@ ALTER TABLE public."Associado" ADD COLUMN if not exists "tgFaltaEnd" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "tgFaltaTelefone" bigint;
 ALTER TABLE public."Associado" ADD COLUMN if not exists "stSenha" character varying(4);
 ALTER TABLE public."Associado" ADD COLUMN if not exists "stPaciente" character varying(4000);
+ALTER TABLE public."Associado" ADD COLUMN if not exists "nuMatSaude" bigint;
 
 CREATE TABLE IF NOT EXISTS public."AssociadoEmail" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."AssociadoEmail" OWNER to postgres;

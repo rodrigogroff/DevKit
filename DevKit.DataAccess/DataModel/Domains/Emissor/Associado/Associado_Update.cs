@@ -89,7 +89,12 @@ namespace DataModel
 
                         if (ent.id == 0)
                         {
-                            if ((from ne in db.AssociadoDependente where ne.stNome == ent.stNome select ne).Any())
+                            if ((from ne in db.AssociadoDependente
+                                 where fkEmpresa == ne.fkEmpresa && 
+                                       ne.fkAssociado == this.id && 
+                                       ne.stNome == ent.stNome
+                                 select ne).
+                                 Any())
                             {
                                 resp = "Dependente já utilizado!";
                                 return false;

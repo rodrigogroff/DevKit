@@ -133,6 +133,7 @@ namespace DataModel
 		[Column,     Nullable] public long?     tgFaltaTelefone   { get; set; } // bigint
 		[Column,     Nullable] public string    stSenha           { get; set; } // character varying(4)
 		[Column,     Nullable] public string    stPaciente        { get; set; } // character varying(4000)
+		[Column,     Nullable] public long?     nuMatSaude        { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="AssociadoDependente")]

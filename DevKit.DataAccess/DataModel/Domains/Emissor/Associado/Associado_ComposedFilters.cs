@@ -8,6 +8,7 @@ namespace DataModel
 	public class AssociadoFilter : BaseFilter
     {
         public string matricula,
+                        matSaude,
                         fkSecao,
                         email,
                         cpf,
@@ -30,6 +31,7 @@ namespace DataModel
             ret.Append(fkEmpresa + ",");
             ret.Append(fkSecao + ",");
             ret.Append(matricula + ",");
+            ret.Append(matSaude + ",");
             ret.Append(email + ",");
             ret.Append(cpf + ",");
             ret.Append(phone + ",");
@@ -79,7 +81,12 @@ namespace DataModel
                 query = from e in query
                         where e.nuMatricula.ToString() == filter.matricula
                         select e;
-            
+
+            if (!string.IsNullOrEmpty(filter.matSaude))
+                query = from e in query
+                        where e.nuMatSaude.ToString() == filter.matSaude
+                        select e;
+
             if (filter.tgSituacao != null)
                 query = from e in query
                         where e.tgStatus == Convert.ToInt32(filter.tgSituacao) - 1

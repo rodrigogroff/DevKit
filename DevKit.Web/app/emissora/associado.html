@@ -84,6 +84,24 @@
                             <tr height="40px">
                                 <td></td>
                                 <td>
+                                    <b>Mat. Saude</b>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="matS_fail">!</button>
+                                </td>
+                                <td ng-if="viewModel.id == undefined">
+                                    <input type="text" class="form-control input-transparent" maxlength="6" numbers-only
+                                           ng-disabled="!permModel.edicao" ng-model="viewModel.nuMatSaude">
+                                </td>
+                                <td ng-if="viewModel.id > 0">
+                                    {{viewModel.nuMatSaude}}
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            <tr height="40px">
+                                <td></td>
+                                <td>
                                     <b>CPF</b>
                                 </td>
                                 <td>

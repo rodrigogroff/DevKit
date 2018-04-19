@@ -1198,6 +1198,7 @@ namespace GetStarted
                                                     fkSecao = cartTit.fkSecao,
                                                     fkUserAdd = cartTit.fkUserAdd,
                                                     nuMatricula = cartTit.nuMatricula,
+                                                    nuMatSaude = cartTit.nuMatSaude,
                                                     tgStatus = TipoSituacaoCartao.Habilitado,
                                                     tgExpedicao = TipoExpedicaoCartao.Requerido,
                                                     stSenha = cartTit.stSenha,

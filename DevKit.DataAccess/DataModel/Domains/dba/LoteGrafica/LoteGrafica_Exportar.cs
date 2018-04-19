@@ -10,17 +10,12 @@ namespace DataModel
 {
 	public partial class LoteGrafica
     {
-		public string Exportar(DevKitDB db, string idLote, string dep)
+		public string Exportar(DevKitDB db, string idLote)
 		{
             var util = new Util();
 
             string dir = "c:\\lotes_grafica\\";
-            string file = dir + "Lote_" + idLote;
-
-            if (dep == "1")
-                file += "dependentes.txt";
-            else
-                file += "titulares.txt";
+            string file = dir + "Lote_" + idLote + "_exp_arq.txt";
 
             using (var sw = new StreamWriter(file, false, Encoding.Default))
             {
@@ -41,10 +36,6 @@ namespace DataModel
                 foreach (var item in query.ToList())
                 {
                     var assoc = lstAssoc.Where(y => y.id == item.fkAssociado).FirstOrDefault();
-
-                    if (dep == "1" && assoc.nuTitularidade == 1)
-                        continue;
-
                     var emp = lstEmp.Where(y => y.id == item.fkEmpresa).FirstOrDefault();
 
                     var secao = db.EmpresaSecao.Where (y=> y.id == assoc.fkSecao).FirstOrDefault();
@@ -69,13 +60,29 @@ namespace DataModel
                     line += ",";
                     line += nome + ",";
 
-                    if (dep == "1" && assoc.nuTitularidade > 1)
+                    if (assoc.nuTitularidade > 1)
                     {
                         var depTb = db.AssociadoDependente.Where(y => y.fkCartao == assoc.id).FirstOrDefault();
 
                         if (depTb != null)
                             line += Convert.ToDateTime(depTb.dtNasc).ToString("dd/MM/yyyy") + ",";
+                        else
+                            line += ",";
                     }
+                    else
+                    {
+                        if (assoc.nuDayAniversary != null && assoc.nuMonthAniversary != null && assoc.nuYearBirth != null)
+                        {
+                            line += assoc.nuDayAniversary.ToString().PadLeft(2, '0') + "/";
+                            line += assoc.nuMonthAniversary.ToString().PadLeft(2, '0') + "/";
+                            line += assoc.nuYearBirth.ToString() + ",";
+                        }
+                        else
+                            line += ",";
+                    }
+
+                    if (assoc.nuMatSaude != null)
+                        line += assoc.nuMatSaude.ToString();
 
                     line += "|";
 

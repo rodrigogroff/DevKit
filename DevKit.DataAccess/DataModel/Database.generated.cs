@@ -23,7 +23,7 @@ namespace DataModel
 	/// <summary>
 	/// Database       : AutorizadorCN
 	/// Data Source    : .\SQLEXPRESS
-	/// Server Version : 11.00.2100
+	/// Server Version : 11.00.3000
 	/// </summary>
 	public partial class AutorizadorCNDB : LinqToDB.Data.DataConnection
 	{
@@ -965,6 +965,19 @@ namespace DataModel
 
 	public static partial class AutorizadorCNDBStoredProcedures
 	{
+		#region sp_alterdiagram
+
+		public static int sp_alterdiagram(this DataConnection dataConnection, string @diagramname, int? @owner_id, int? @version, byte[] @definition)
+		{
+			return dataConnection.ExecuteProc("[dbo].[sp_alterdiagram]",
+				new DataParameter("@diagramname", @diagramname, DataType.NVarChar),
+				new DataParameter("@owner_id",    @owner_id,    DataType.Int32),
+				new DataParameter("@version",     @version,     DataType.Int32),
+				new DataParameter("@definition",  @definition,  DataType.VarBinary));
+		}
+
+		#endregion
+
 		#region sp_creatediagram
 
 		public static int sp_creatediagram(this DataConnection dataConnection, string @diagramname, int? @owner_id, int? @version, byte[] @definition)
@@ -989,6 +1002,23 @@ namespace DataModel
 
 		#endregion
 
+		#region sp_helpdiagramdefinition
+
+		public static IEnumerable<sp_helpdiagramdefinitionResult> sp_helpdiagramdefinition(this DataConnection dataConnection, string @diagramname, int? @owner_id)
+		{
+			return dataConnection.QueryProc<sp_helpdiagramdefinitionResult>("[dbo].[sp_helpdiagramdefinition]",
+				new DataParameter("@diagramname", @diagramname, DataType.NVarChar),
+				new DataParameter("@owner_id",    @owner_id,    DataType.Int32));
+		}
+
+		public partial class sp_helpdiagramdefinitionResult
+		{
+			public int?   version    { get; set; }
+			public byte[] definition { get; set; }
+		}
+
+		#endregion
+
 		#region sp_helpdiagrams
 
 		public static IEnumerable<sp_helpdiagramsResult> sp_helpdiagrams(this DataConnection dataConnection, string @diagramname, int? @owner_id)
@@ -1009,11 +1039,14 @@ namespace DataModel
 
 		#endregion
 
-		#region sp_upgraddiagrams
+		#region sp_renamediagram
 
-		public static int sp_upgraddiagrams(this DataConnection dataConnection)
+		public static int sp_renamediagram(this DataConnection dataConnection, string @diagramname, int? @owner_id, string @new_diagramname)
 		{
-			return dataConnection.ExecuteProc("[dbo].[sp_upgraddiagrams]");
+			return dataConnection.ExecuteProc("[dbo].[sp_renamediagram]",
+				new DataParameter("@diagramname",     @diagramname,     DataType.NVarChar),
+				new DataParameter("@owner_id",        @owner_id,        DataType.Int32),
+				new DataParameter("@new_diagramname", @new_diagramname, DataType.NVarChar));
 		}
 
 		#endregion

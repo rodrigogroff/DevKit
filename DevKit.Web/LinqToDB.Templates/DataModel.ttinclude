@@ -20,19 +20,20 @@ string   NamespaceName
 	set { Model.Namespace.Name = value; }
 }
 
-string   DatabaseName             = null;
-string   DataContextName          = null;
-string   BaseDataContextClass     = null;
-string   BaseEntityClass          = null;
-string   OneToManyAssociationType = "IEnumerable<{0}>";
+string   DatabaseName                  = null;
+string   DataContextName               = null;
+string   BaseDataContextClass          = null;
+string   BaseEntityClass               = null;
+string   OneToManyAssociationType      = "IEnumerable<{0}>";
 
-bool     GenerateDatabaseName     = false;
-bool     GenerateConstructors     = true;
-string   DefaultConfiguration     = null;
-bool     GenerateAssociations     = true;
-bool     GenerateBackReferences   = true;
-bool     ReplaceSimilarTables     = true;
-bool     IncludeDefaultSchema     = true;
+bool     GenerateDatabaseName          = false;
+bool     GenerateConstructors          = true;
+string   DefaultConfiguration          = null;
+bool     GenerateAssociations          = true;
+bool     GenerateBackReferences        = true;
+bool     GenerateAssociationExtensions = false;
+bool     ReplaceSimilarTables          = true;
+bool     IncludeDefaultSchema          = true;
 
 Class    DataContextObject;
 
@@ -43,12 +44,56 @@ bool SingularizeDataContextPropertyNames = false;
 
 bool NormalizeNames                      = true;
 
+private Func<string, bool, string> _toValidName;
+Func<string, bool, string> ToValidName
+{
+	get { return _toValidName ?? ToValidNameDefault; }
+	set { _toValidName = value; }
+}
+
+private Func<string, bool, string> _convertToCompilabl;
+Func<string, bool, string> ConvertToCompilable 
+{
+	get { return _convertToCompilabl ?? ConvertToCompilableDefault; }
+	set { _convertToCompilabl = value; }
+}
+
+private Func<ForeignKey, string> _getAssociationExtensionPluralName;
+Func<ForeignKey, string> GetAssociationExtensionPluralName
+{
+	get { return _getAssociationExtensionPluralName ?? GetAssociationExtensionPluralNameDefault; }
+	set { _getAssociationExtensionPluralName = value; }
+}
+
+private Func<ForeignKey, string> _getAssociationExtensionSingularName;
+Func<ForeignKey, string> GetAssociationExtensionSinglularName
+{
+	get { return _getAssociationExtensionSingularName ?? GetAssociationExtensionSinglularNameDefault; }
+	set { _getAssociationExtensionSingularName = value; }
+}
+
 LinqToDB.SchemaProvider.GetSchemaOptions GetSchemaOptions =
 	new LinqToDB.SchemaProvider.GetSchemaOptions();
 
 LinqToDB.SqlProvider.ISqlBuilder SqlBuilder;
 
 Func<TableSchema,Table> LoadProviderSpecificTable = tableSchema => null;
+
+static Func<ColumnSchema,string>                 ConvertColumnMemberType          = (c) => c.MemberType;
+static Func<TableSchema,ColumnSchema,string>     ConvertTableColumnMemberType     = (t,c) => ConvertColumnMemberType(c);
+static Func<ProcedureSchema,ColumnSchema,string> ConvertProcedureColumnMemberType = (t,c) => ConvertColumnMemberType(c);
+
+HashSet<string> KeyWords = new HashSet<string>
+{
+	"abstract", "as",       "base",     "bool",    "break",     "byte",     "case",       "catch",     "char",    "checked",
+	"class",    "const",    "continue", "decimal", "default",   "delegate", "do",         "double",    "else",    "enum",
+	"event",    "explicit", "extern",   "false",   "finally",   "fixed",    "float",      "for",       "foreach", "goto",
+	"if",       "implicit", "in",       "int",     "interface", "internal", "is",         "lock",      "long",    "new",
+	"null",     "object",   "operator", "out",     "override",  "params",   "private",    "protected", "public",  "readonly",
+	"ref",      "return",   "sbyte",    "sealed",  "short",     "sizeof",   "stackalloc", "static",    "struct",  "switch",
+	"this",     "throw",    "true",     "try",     "typeof",    "uint",     "ulong",      "unchecked", "unsafe",  "ushort",
+	"using",    "virtual",  "volatile", "void",    "while",     "namespace", "string"
+};
 
 void LoadServerMetadata(DataConnection dataConnection)
 {
@@ -61,7 +106,7 @@ void LoadServerMetadata(DataConnection dataConnection)
 		DatabaseName = db.Database;
 
 	if (DataContextName == null)
-		DataContextObject.Name = DataContextName = (ToValidName(db.Database) + "DB");
+		DataContextObject.Name = DataContextName = (ToValidName(db.Database, true) + "DB");
 
 	DataContextObject.Comment.Add("/ <summary>");
 	DataContextObject.Comment.Add("/ Database       : " + db.Database);
@@ -81,12 +126,8 @@ void LoadServerMetadata(DataConnection dataConnection)
 				Schema                  = (t.IsDefaultSchema && !IncludeDefaultSchema) || string.IsNullOrEmpty(t.SchemaName)? null : t.SchemaName,
 				BaseClass               = BaseEntityClass,
 				TableName               = t.TableName,
-				TypeName                =
-					PluralizeClassNames   ? ToPlural  (t.TypeName) :
-					SingularizeClassNames ? ToSingular(t.TypeName) : t.TypeName,
-				DataContextPropertyName =
-					PluralizeDataContextPropertyNames   ? ToPlural  (t.TypeName) :
-					SingularizeDataContextPropertyNames ? ToSingular(t.TypeName) : t.TypeName,
+				TypeName                = t.TypeName,
+				DataContextPropertyName = t.TypeName,
 				IsView                  = t.IsView,
 				IsProviderSpecific      = false,
 				Description             = t.Description,
@@ -105,7 +146,7 @@ void LoadServerMetadata(DataConnection dataConnection)
 						IsPrimaryKey    = c.IsPrimaryKey,
 						PrimaryKeyOrder = c.PrimaryKeyOrder,
 						MemberName      = CheckType(c.SystemType, c.MemberName),
-						Type            = c.MemberType,
+						Type            = ConvertTableColumnMemberType(t, c),
 						SkipOnInsert    = c.SkipOnInsert,
 						SkipOnUpdate    = c.SkipOnUpdate,
 						Description     = c.Description,
@@ -113,6 +154,48 @@ void LoadServerMetadata(DataConnection dataConnection)
 			}
 		})
 		.ToList();
+
+	if (PluralizeClassNames || SingularizeClassNames)
+	{
+		var foundNames = new HashSet<string>(tables.Select(t => t.table.TypeName));
+		foreach (var t in tables)
+		{
+			var newName = t.table.TypeName;
+				newName = 
+					PluralizeClassNames   ? ToPlural  (newName) :
+					SingularizeClassNames ? ToSingular(newName) : newName;
+
+			if (newName != t.table.TypeName)
+			{
+				if (!foundNames.Contains(newName))
+				{
+					t.table.TypeName = newName;
+					foundNames.Add(newName);
+				}
+			}
+		}
+	}
+
+	if (PluralizeDataContextPropertyNames || SingularizeDataContextPropertyNames)
+	{
+		var foundNames = new HashSet<string>(tables.Select(t => t.table.DataContextPropertyName));
+		foreach (var t in tables)
+		{
+			var newName = t.table.DataContextPropertyName;
+				newName = 
+					PluralizeDataContextPropertyNames   ? ToPlural  (newName) :
+					SingularizeDataContextPropertyNames ? ToSingular(newName) : newName;
+
+			if (newName != t.table.TypeName)
+			{
+				if (!foundNames.Contains(newName))
+				{
+					t.table.DataContextPropertyName = newName;
+					foundNames.Add(newName);
+				}
+			}
+		}
+	}
 
 	tables.AddRange(db.Tables
 		.Where(t => t.IsProviderSpecific)
@@ -152,17 +235,21 @@ void LoadServerMetadata(DataConnection dataConnection)
 
 	foreach (var key in keys)
 	{
+	    var keyName = key.k.OtherTable.IsDefaultSchema ? key.KeyName : key.k.OtherTable.SchemaName + "." + key.KeyName;
+		ForeignKey foundKey;
+		if (key.t.table.ForeignKeys.TryGetValue(keyName, out foundKey))
+		{
+			key.t.table.ForeignKeys.Remove(keyName);
+			key.t.table.ForeignKeys.Add(foundKey.OtherTable.TableName + "." + keyName, foundKey);
+			keyName = key.k.OtherTable.TableName + "." + keyName;
+		}
+
 		key.t.table.ForeignKeys.Add(
 			key.k.OtherTable.IsDefaultSchema ? key.KeyName : key.k.OtherTable.SchemaName + "." + key.KeyName,
 			key.key);
 
 		if (key.k.BackReference != null)
 			key.key.BackReference = keys.First(k => k.k == key.k.BackReference).key;
-
-		key.key.MemberName = key.key.MemberName.Replace(".", String.Empty);
-
-		key.key.MemberName = key.key.AssociationType == AssociationType.OneToMany ?
-			ToPlural(key.key.MemberName) : ToSingular(key.key.MemberName);
 	}
 
 	var procedures = db.Procedures
@@ -174,7 +261,7 @@ void LoadServerMetadata(DataConnection dataConnection)
 			{
 				Schema          = (p.IsDefaultSchema && !IncludeDefaultSchema) || string.IsNullOrEmpty(p.SchemaName)? null : p.SchemaName,
 				ProcedureName   = p.ProcedureName,
-				Name            = ToValidName(p.MemberName),
+				Name            = ToValidName(p.MemberName, true),
 				IsFunction      = p.IsFunction,
 				IsTableFunction = p.IsTableFunction,
 				IsDefaultSchema = p.IsDefaultSchema,
@@ -184,7 +271,7 @@ void LoadServerMetadata(DataConnection dataConnection)
 					{
 						TypeName = ToValidName(
 							PluralizeClassNames   ? ToPlural  (p.ResultTable.TypeName) :
-							SingularizeClassNames ? ToSingular(p.ResultTable.TypeName) : p.ResultTable.TypeName),
+							SingularizeClassNames ? ToSingular(p.ResultTable.TypeName) : p.ResultTable.TypeName, true),
 						Columns  = ToDictionary(
 							p.ResultTable.Columns,
 							c => c.ColumnName,
@@ -197,7 +284,7 @@ void LoadServerMetadata(DataConnection dataConnection)
 								IsPrimaryKey    = c.IsPrimaryKey,
 								PrimaryKeyOrder = c.PrimaryKeyOrder,
 								MemberName      = CheckColumnName(CheckType(c.SystemType, c.MemberName)),
-								Type            = c.MemberType,
+								Type            = ConvertProcedureColumnMemberType(p, c),
 								SkipOnInsert    = c.SkipOnInsert,
 								SkipOnUpdate    = c.SkipOnUpdate,
 								Description     = c.Description,
@@ -278,7 +365,23 @@ string CheckColumnName(string memberName)
         memberName = "Empty";
     else
     {
-        memberName = memberName.Replace("%", "Percent");
+        memberName = memberName
+			.Replace("%", "Percent")
+			.Replace(">", "Greater")
+			.Replace("<", "Lower")
+			.Replace("+", "Plus")
+			.Replace('(', '_')
+			.Replace(')', '_')
+			.Replace('-', '_')
+			.Replace('|', '_')
+			.Replace(',', '_')
+			.Replace('"', '_')
+			.Replace("'", "_")
+			.Replace(".", "_")
+			.Replace("\u00A3", "Pound");
+	
+		if (KeyWords.Contains(memberName))
+			memberName = "@" + memberName;
     }
     return memberName;
 }
@@ -314,68 +417,118 @@ void LoadMetadata(DataConnection dataConnection)
 	if (Tables.Values.SelectMany(_ => _.ForeignKeys.Values).Any(_ => _.AssociationType == AssociationType.OneToMany))
 		Model.Usings.Add("System.Collections.Generic");
 
-	var keyWords = new HashSet<string>
-	{
-		"abstract", "as",       "base",     "bool",    "break",     "byte",     "case",       "catch",     "char",    "checked",
-		"class",    "const",    "continue", "decimal", "default",   "delegate", "do",         "double",    "else",    "enum",
-		"event",    "explicit", "extern",   "false",   "finally",   "fixed",    "float",      "for",       "foreach", "goto",
-		"if",       "implicit", "in",       "int",     "interface", "internal", "is",         "lock",      "long",    "new",
-		"null",     "object",   "operator", "out",     "override",  "params",   "private",    "protected", "public",  "readonly",
-		"ref",      "return",   "sbyte",    "sealed",  "short",     "sizeof",   "stackalloc", "static",    "struct",  "switch",
-		"this",     "throw",    "true",     "try",     "typeof",    "uint",     "ulong",      "unchecked", "unsafe",  "ushort",
-		"using",    "virtual",  "volatile", "void",    "while"
-	};
-
 	foreach (var t in Tables.Values)
 	{
-		if (keyWords.Contains(t.TypeName))
+		if (KeyWords.Contains(t.TypeName))
 			t.TypeName = "@" + t.TypeName;
 
-		if (keyWords.Contains(t.DataContextPropertyName))
+		if (KeyWords.Contains(t.DataContextPropertyName))
 			t.DataContextPropertyName = "@" + t.DataContextPropertyName;
 
-		t.TypeName                = ConvertToCompilable(t.TypeName);
-		t.DataContextPropertyName = ConvertToCompilable(t.DataContextPropertyName);
+		t.TypeName                = ConvertToCompilable(t.TypeName,                true);
+		t.DataContextPropertyName = ConvertToCompilable(t.DataContextPropertyName, true);
 
 		foreach (var col in t.Columns.Values)
 		{
-			if (keyWords.Contains(col.MemberName))
+			if (KeyWords.Contains(col.MemberName))
 				col.MemberName = "@" + col.MemberName;
 
-			col.MemberName = ConvertToCompilable(col.MemberName);
+			col.MemberName = ConvertToCompilable(col.MemberName, true);
 
 			if (col.MemberName == t.TypeName)
 				col.MemberName += "_Column";
 		}
+	}
 
-	    var duplicates = t.Columns.Values.ToLookup(c => c.MemberName).Where(g => g.Count() > 1);
-	    foreach (var d in duplicates)
-	    {
-			var alreadyNamed = new HashSet<string>();
-	        foreach (var col in d)
-	        {
-	            col.MemberName = col.ColumnName;
-	            if (keyWords.Contains(col.MemberName))
-	                col.MemberName = "@" + col.MemberName;
+	foreach (var t in Tables.Values)
+	{
+		foreach (var fk in t.ForeignKeys.Values)
+		{
+			var memberName = fk.OtherTable.TypeName;
 
-	            col.MemberName = ConvertToCompilable(col.MemberName, false);
+			memberName = fk.AssociationType == AssociationType.OneToMany ?
+				ToPlural(memberName) : ToSingular(memberName);
 
-	            if (col.MemberName == t.TypeName)
-	                col.MemberName += "_Column";
+			fk.MemberName = memberName;
+		}
+	}
 
-	            while (alreadyNamed.Contains(col.MemberName))
-	            {
-	                col.MemberName += "_";
-	            }
-	            alreadyNamed.Add(col.MemberName);
-	        }
-	    }
+	foreach (var t in Tables.Values)
+	{
+		var forbidden = KeyWords.Concat(new [] {t.TypeName});
+
+		var hasDuplicates = t.Columns.Values
+				.Select(c => c.MemberName)
+				.Concat(t.ForeignKeys.Values.Select(f => f.MemberName))
+				.Concat(forbidden)
+				.ToLookup(n => n)
+				.Any(g => g.Count() > 1);
+				
+		if (hasDuplicates)
+		{
+			foreach (var fk in t.ForeignKeys.Values)
+			{
+				var mayDuplicate = t.Columns.Values
+					.Select(c => c.MemberName)
+					.Concat(forbidden)
+					.Concat(t.ForeignKeys.Values.Where(f => f != fk).Select(f => f.MemberName));
+
+				fk.MemberName = SuggestNoDuplicate(mayDuplicate, fk.MemberName, "FK");
+			}
+
+			foreach (var col in t.Columns.Values)
+			{
+				var mayDuplicate = t.Columns.Values
+					.Where(c => c != col)
+					.Select(c => c.MemberName)
+					.Concat(forbidden)
+					.Concat(t.ForeignKeys.Values.Select(fk => fk.MemberName));
+
+				col.MemberName = SuggestNoDuplicate(mayDuplicate, col.MemberName, null);
+			}
+		}
 	}
 
 	AfterLoadMetadata();
 }
 
-string ConvertToCompilable(string name, bool mayRemoveUnderscore = true)
+string SuggestNoDuplicate(IEnumerable<string> currentNames, string newName, string prefix)
+{
+	var names = new HashSet<string>(currentNames);
+	var result = newName;
+	if (names.Contains(result))
+	{
+		if (!string.IsNullOrEmpty(prefix))
+			result = prefix + result;
+		if (names.Contains(result))
+		{
+			var counter = 0;
+			var number = string.Concat(result.Reverse().Take(6).TakeWhile(c => Char.IsDigit(c)).Reverse());
+			if (!string.IsNullOrEmpty(number))
+			{
+				if (int.TryParse(number, out counter))
+				{
+					result = result.Remove(result.Length - number.Length);
+				}
+			}
+			
+			do
+			{
+				++counter;
+				if (!names.Contains(result + counter))
+				{
+					result = result + counter;
+					break;
+				}
+			}
+			while(true);
+		}
+	}
+
+	return result;
+}
+
+string ConvertToCompilableDefault(string name, bool mayRemoveUnderscore)
 {
 	var query =
 		from c in name
@@ -660,8 +813,9 @@ public class Parameter
 	public string   DataType      { get; set; }
 }
 
-int _counter = 0;
-string ToValidName(string name, bool mayRemoveUnderscore = true)
+private int _counter = 0;
+
+string ToValidNameDefault(string name, bool mayRemoveUnderscore)
 {
 	if (NormalizeNames && mayRemoveUnderscore && name.Contains("_"))
 	{
@@ -687,12 +841,22 @@ string ToValidName(string name, bool mayRemoveUnderscore = true)
 	return name;
 }
 
-string SplitAndJoin(string value, string join, params char[] split)
+static string SplitAndJoin(string value, string join, params char[] split)
 {
 	var ss = value.Split(split, StringSplitOptions.RemoveEmptyEntries)
 		.Select(s => char.ToUpper(s[0]) + s.Substring(1));
 
 	return string.Join(join, ss.ToArray());
+}
+
+private string GetAssociationExtensionSinglularNameDefault(ForeignKey key)
+{
+	return ToSingular(key.Name);
+}
+
+private string GetAssociationExtensionPluralNameDefault(ForeignKey key)
+{
+	return ToPlural(ToSingular(key.Name));
 }
 
 #>

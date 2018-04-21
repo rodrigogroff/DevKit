@@ -18,6 +18,50 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.viewModel.cupom = undefined;
     }
 
+    $scope.conferirCartaoNovo = function ()
+    {
+        $scope.viewModel.error = '';
+        $scope.modoVenda = '';
+
+        var stCart = $scope.viewModel.stCartaoCompleto;
+
+        if (stCart == undefined) {
+            $scope.viewModel.error = "Cartão Inválido";
+            return;
+        }
+
+        if (stCart.length != 20) {
+            $scope.viewModel.error = "Cartão Inválido";
+            return;
+        }
+
+        $scope.loading = true;
+
+        console.log(stCart);
+
+        Api.Associado.listPage({
+            empresa: stCart.substring(0, 0 + 6),
+            matricula: stCart.substring(6, 6 + 6),
+            acesso: stCart.substring(12, 12 + 4),
+            vencimento: stCart.substring(16, 16 + 4),
+        },
+        function (data) {
+            $scope.viewModel.data = data.results[0];
+            $scope.loading = false;
+        },
+        function (response) {
+            $scope.viewModel.error = "Cartão Inválido";
+            $scope.loading = false;
+            $scope.viewModel.data = undefined;
+            $scope.viewModel.parcelas = '';
+            $scope.viewModel.valor = '';
+            $scope.simulacao = undefined;
+            $scope.modoVenda = '';
+            $scope.erro = '';
+            $scope.lastTag = '';
+        });
+    }
+
     $scope.conferirCartao = function ()
     {
         $scope.viewModel.error = '';

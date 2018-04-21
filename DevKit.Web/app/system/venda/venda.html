@@ -16,56 +16,68 @@
 
 		<div class="divWebForm">
 
-            <table >
-                <tr height="40px">                    
-                    <td width="50px">
-                        <b>Cartão</b>
+            <table>
+                <tr height="40px">
+                    <td width="300px">
+                        <input type="text" class="form-control input-transparent"
+                               maxlength="23" ui-mask="999999.999999.9999.9999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                               ng-model="viewModel.stCartaoCompleto" ng-keyup="$event.keyCode == 13 && conferirCartaoNovo()">
                     </td>
                     <td width="10px"></td>
-                    <td width="20px">
-                        <span class="btn btn-xs btn-danger" ng-show="stEmpresa_fail">!</span>
-                    </td>
-                    <td width="75px">
-                        <input type="text" focus="true" numeric-only maxlength="6" class="form-control input-transparent" 
-                               ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800"
-                               ng-keyup="$event.keyCode == 13 && conferirCartao()">
-                    </td>                 
-                    <td width="10px"></td>
-                    <td width="20px">
-                        <span class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</span>
-                    </td>
-                    <td width="75px">
-                        <input type="text" numeric-only maxlength="6" class="form-control input-transparent" 
-                               ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800" ng-maxlength="6" auto-next tabindex="2"
-                               ng-keyup="$event.keyCode == 13 && conferirCartao()">
-                    </td>
-                    <td width="10px"></td>
-                    <td width="20px">
-                        <span class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</span>
-                    </td>
-                    <td width="60px">
-                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" 
-                               ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" ng-maxlength="4" auto-next tabindex="3"
-                               ng-keyup="$event.keyCode == 13 && conferirCartao()">
-                    </td>                 
-                    <td width="10px"></td>
-                    <td width="20px">
-                        <span class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</span>
-                    </td>
-                    <td width="60px">
-                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent" 
-                               ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800" ng-maxlength="4" auto-next tabindex="4"
-                               ng-keyup="$event.keyCode == 13 && conferirCartao()" >
-                    </td>
-                    <td width="10px"></td>
-                    <td width="150px">
-                        <span class="btn btn-warning" ng-if="viewModel.error.length > 0">
-                            {{viewModel.error}}
-                        </span>
-                    </td>
+                    <td width="150px">{{viewModel.error}}</td>
                 </tr>
-                <tr height="24px"></tr>
+
+                <!--<tr height="40px">
+        <td width="50px">
+            <b>Cartão</b>
+        </td>
+        <td width="10px"></td>
+        <td width="20px">
+            <span class="btn btn-xs btn-danger" ng-show="stEmpresa_fail">!</span>
+        </td>
+        <td width="75px">
+            <input type="text" focus="true" numeric-only maxlength="6" class="form-control input-transparent"
+                   ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800"
+                   ng-keyup="$event.keyCode == 13 && conferirCartao()">
+        </td>
+        <td width="10px"></td>
+        <td width="20px">
+            <span class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</span>
+        </td>
+        <td width="75px">
+            <input type="text" numeric-only maxlength="6" class="form-control input-transparent"
+                   ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800" ng-maxlength="6" auto-next tabindex="2"
+                   ng-keyup="$event.keyCode == 13 && conferirCartao()">
+        </td>
+        <td width="10px"></td>
+        <td width="20px">
+            <span class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</span>
+        </td>
+        <td width="60px">
+            <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
+                   ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" ng-maxlength="4" auto-next tabindex="3"
+                   ng-keyup="$event.keyCode == 13 && conferirCartao()">
+        </td>
+        <td width="10px"></td>
+        <td width="20px">
+            <span class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</span>
+        </td>
+        <td width="60px">
+            <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
+                   ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800" ng-maxlength="4" auto-next tabindex="4"
+                   ng-keyup="$event.keyCode == 13 && conferirCartao()" >
+        </td>
+        <td width="10px"></td>
+        <td width="150px">
+            <span class="btn btn-warning" ng-if="viewModel.error.length > 0">
+                {{viewModel.error}}
+            </span>
+        </td>
+    </tr>
+    <tr height="24px"></tr>
+        -->
             </table>
+            <br />
 
             <div ng-if="viewModel.cupom != undefined">
                 <table width="500px" class="widgetForm">

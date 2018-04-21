@@ -18,50 +18,35 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.viewModel.cupom = undefined;
     }
 
-    $scope.conferirCartaoNovo = function ()
-    {
-        $scope.viewModel.error = '';
-        $scope.modoVenda = '';
+    $scope.$watch("viewModel.stEmpresa", function (novo, anterior) {
 
-        var stCart = $scope.viewModel.stCartaoCompleto;
+        if (novo != undefined)
+            if (novo.length == 6)
+                document.getElementById("cartMat").focus();
 
-        if (stCart == undefined) {
-            $scope.viewModel.error = "Cartão Inválido";
-            return;
-        }
+    }, true);
 
-        if (stCart.length != 20) {
-            $scope.viewModel.error = "Cartão Inválido";
-            return;
-        }
+    $scope.$watch("viewModel.stMatricula", function (novo, anterior) {
 
-        $scope.loading = true;
+        if (novo != undefined)
+            if (novo.length == 6)
+                document.getElementById("cartAcesso").focus();            
 
-        console.log(stCart);
+    }, true);
 
-        Api.Associado.listPage({
-            empresa: stCart.substring(0, 0 + 6),
-            matricula: stCart.substring(6, 6 + 6),
-            acesso: stCart.substring(12, 12 + 4),
-            vencimento: stCart.substring(16, 16 + 4),
-        },
-        function (data) {
-            $scope.viewModel.data = data.results[0];
-            $scope.loading = false;
-        },
-        function (response) {
-            $scope.viewModel.error = "Cartão Inválido";
-            $scope.loading = false;
-            $scope.viewModel.data = undefined;
-            $scope.viewModel.parcelas = '';
-            $scope.viewModel.valor = '';
-            $scope.simulacao = undefined;
-            $scope.modoVenda = '';
-            $scope.erro = '';
-            $scope.lastTag = '';
-        });
-    }
+    $scope.$watch("viewModel.stAcesso", function (novo, anterior) {
 
+        if (novo != undefined)
+            if (novo.length == 4) 
+                document.getElementById("cartVenc").focus();
+            
+
+    }, true);
+
+    $scope.pulaMatricula = function () { document.getElementById("cartMat").focus();}
+    $scope.pulaAcesso = function () { document.getElementById("cartAcesso").focus();             }
+    $scope.pulaVenc = function () { document.getElementById("cartVenc").focus(); }
+    
     $scope.conferirCartao = function ()
     {
         $scope.viewModel.error = '';

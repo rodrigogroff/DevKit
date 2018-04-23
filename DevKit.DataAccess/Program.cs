@@ -1108,6 +1108,46 @@ namespace GetStarted
                                 break;
                             }
 
+                        case "geradeps":
+                            {
+                                var strName = "export_tits_deps.csv";
+
+                                if (File.Exists(strName))
+                                    File.Delete(strName);
+
+                                using (var sw = new StreamWriter(strName, false, Encoding.Default))
+                                {
+                                    var lst = db.Associado.OrderBy(y => y.nuMatricula).
+                                                            ThenBy(y => y.nuTitularidade).
+                                                            ToList();
+
+                                    var lstEmps = db.Empresa.ToList();
+                                    var lstEmpSecao = db.EmpresaSecao.ToList();
+
+                                    sw.WriteLine("empresa;secao;nome;matricula;mat saude;titularidade;dt nasc");
+
+                                    foreach (var item in lst)
+                                    {
+                                        var emp = lstEmps.FirstOrDefault(y => y.id == item.fkEmpresa);
+                                        var secao = lstEmpSecao.FirstOrDefault(y => y.id == item.fkSecao);
+
+                                        var line = emp.nuEmpresa + ";" + secao.nuEmpresa + ";";
+
+                                        line += item.stName + ";" + item.nuMatricula + ";" + item.nuMatSaude + ";" +
+                                            item.nuTitularidade + ";";
+
+                                        if (item.nuDayAniversary != null)
+                                            line += item.nuDayAniversary.ToString().PadLeft(2, '0') + "." + 
+                                                    item.nuMonthAniversary.ToString().PadLeft(2, '0') + "." + 
+                                                    item.nuYearBirth;
+
+                                        sw.WriteLine(line);
+                                    }
+                                }
+
+                                break;
+                            }
+
                         case "deps":
                             {
                                 #region - carga de dependentes e matricula - 

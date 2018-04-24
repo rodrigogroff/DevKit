@@ -61,7 +61,7 @@
                                id="cartVenc"
                                ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800"  tabindex="4"
                                ng-maxlength="4" auto-next tabindex="4"
-                               ng-keyup="$event.keyCode == 13 && conferirCartao()">
+                               ng-keyup="$event.keyCode == 13 && conferirCartao() && focoValor()">
                     </td>
                     <td width="10px"></td>
                     <td width="150px">
@@ -138,6 +138,7 @@
                                     </td>
                                     <td width="130px">
                                         <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
+                                               focus="true"
                                                ng-model="viewModel.valor" style="background-color:darkgreen;color:white"
                                                ng-keyup="$event.keyCode == 13 && parcelar()">
                                     </td>

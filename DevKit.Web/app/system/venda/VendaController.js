@@ -22,6 +22,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.viewModel.cupom = undefined;
     }
 
+    $scope.closeModalSenha = function () {
+        $scope.modoVenda = '';
+    }
+
     $scope.$watch("viewModel.stEmpresa", function (novo, anterior) {
 
         if (novo != undefined)
@@ -50,6 +54,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.pulaMatricula = function () { document.getElementById("cartMat").focus();}
     $scope.pulaAcesso = function () { document.getElementById("cartAcesso").focus();             }
     $scope.pulaVenc = function () { document.getElementById("cartVenc").focus(); }
+
+   
 
     $scope.conferirCartao = function ()
     {
@@ -135,7 +141,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     {
         if ($scope.modoVenda == 'simulacao')
         {
-            console.log('hello');
             $scope.efetuarVenda();
         }
         else

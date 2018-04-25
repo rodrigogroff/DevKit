@@ -15,7 +15,6 @@
         </legend>
 
         <div class="divWebForm">
-
             <table>
                 <tr height="40px">
                     <td width="50px">
@@ -59,7 +58,7 @@
                     <td width="60px">
                         <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
                                id="cartVenc"
-                               ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800"  tabindex="4"
+                               ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800" tabindex="4"
                                ng-maxlength="4" auto-next tabindex="4"
                                ng-keyup="$event.keyCode == 13 && conferirCartao() && focoValor()">
                     </td>
@@ -127,7 +126,6 @@
                 <table width="100%" ng-if="viewModel.data.bloqueado == false">
                     <tr>
                         <td width="500px" valign="top">
-
                             <table ng-if="modoVenda == 'simulacao' || modoVenda == ''">
                                 <tr>
                                     <td width="80px">
@@ -160,20 +158,15 @@
                                         <button class="btn btn-primary" ng-click="parcelar()">Calcula parcela</button>
                                     </td>
                                 </tr>
-
                                 <tr height="10px"></tr>
-
                             </table>
 
                             <section class="widgetForm" style="width:475px" ng-if="modoVenda == 'simulacao'">
-
                                 <table ng-if="modoVenda == 'simulacao' || modoVenda == ''">
-
                                     <tr height="16px">
                                         <td></td>
                                         <td colspan="9"><h3>Simulação de parcelamento</h3></td>
                                     </tr>
-
                                     <tr height="16px">
                                         <td width="20px"></td>
                                         <td width="80px"></td>
@@ -187,7 +180,6 @@
                                         <td width="30px"></td>
                                         <td width="90px"></td>
                                     </tr>
-
                                     <tr ng-if="modoVenda == 'simulacao'">
                                         <td></td>
                                         <td>
@@ -371,9 +363,7 @@
                                     </tr>
 
                                 </table>
-
                                 <br />
-
                             </section>
 
                             <br ng-if="modoVenda == 'simulacao'" />
@@ -399,96 +389,37 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-
                                         <tr>
                                             <td>Nome associado</td>
                                             <td><b>{{ viewModel.data.nome }}</b></td>
                                         </tr>
-
                                         <tr>
                                             <td>Valor total da venda</td>
                                             <td><b>R$ {{viewModel.valor}}</b></td>
                                         </tr>
-
                                         <tr>
                                             <td>Número de parcelas</td>
                                             <td>{{viewModel.parcelas}}</td>
                                         </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 1">
-                                            <td>Parcela 1</td>
-                                            <td>R$ {{viewModel.p1}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 2">
-                                            <td>Parcela 2</td>
-                                            <td>R$ {{viewModel.p2}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 3">
-                                            <td>Parcela 3</td>
-                                            <td>R$ {{viewModel.p3}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 4">
-                                            <td>Parcela 4</td>
-                                            <td>R$ {{viewModel.p4}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 5">
-                                            <td>Parcela 5</td>
-                                            <td>R$ {{viewModel.p5}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 6">
-                                            <td>Parcela 6</td>
-                                            <td>R$ {{viewModel.p6}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 7">
-                                            <td>Parcela 7</td>
-                                            <td>R$ {{viewModel.p7}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 8">
-                                            <td>Parcela 8</td>
-                                            <td>R$ {{viewModel.p8}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 9">
-                                            <td>Parcela 9</td>
-                                            <td>R$ {{viewModel.p9}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 10">
-                                            <td>Parcela 10</td>
-                                            <td>R$ {{viewModel.p10}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 11">
-                                            <td>Parcela 11</td>
-                                            <td>R$ {{viewModel.p11}}</td>
-                                        </tr>
-
-                                        <tr ng-if="viewModel.parcelas >= 12">
-                                            <td>Parcela 12</td>
-                                            <td>R$ {{viewModel.p12}}</td>
-                                        </tr>
-
+                                        <tr ng-if="viewModel.parcelas >= 1"><td>Parcela 1</td><td>R$ {{viewModel.p1}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 2"><td>Parcela 2</td><td>R$ {{viewModel.p2}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 3"><td>Parcela 3</td><td>R$ {{viewModel.p3}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 4"><td>Parcela 4</td><td>R$ {{viewModel.p4}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 5"><td>Parcela 5</td><td>R$ {{viewModel.p5}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 6"><td>Parcela 6</td><td>R$ {{viewModel.p6}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 7"><td>Parcela 7</td><td>R$ {{viewModel.p7}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 8"><td>Parcela 8</td><td>R$ {{viewModel.p8}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 9"><td>Parcela 9</td><td>R$ {{viewModel.p9}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 10"><td>Parcela 10</td><td>R$ {{viewModel.p10}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 11"><td>Parcela 11</td><td>R$ {{viewModel.p11}}</td></tr>
+                                        <tr ng-if="viewModel.parcelas >= 12"><td>Parcela 12</td><td>R$ {{viewModel.p12}}</td></tr>
                                         <tr height="22px"></tr>
-
                                     </table>
-
                                     <br />
-
                                 </div>
-
                                 <br />
-
                             </section>
-
                             <br />
-
                         </td>
 
                         <td width="20px"></td>
@@ -496,42 +427,63 @@
                         <td width="500px" valign="top">
 
                             <div ng-if="falhaVenda == true">
-
                                 <br />
                                 <br />
-
                                 <table width="380px">
                                     <tr><td>{{falhaVendaMsg}}</td></tr>
                                 </table>
-
                                 <br />
                                 <br />
-
                                 <button class="btn btn-info" ng-click="operadorOkFalha()">OK</button>
+                                <br />
+                                <br />
+                                <br />
+                            </div>
 
-                                <br />
-                                <br />
-                                <br />
-
+                            <div class="modal-backdrop"
+                                 ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined && viewModel.requerSenha == 1"
+                                 style="background: rgba(55, 55, 55, 0.5 );">
+                                <div class="modal-dialog" style="width:500px">
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <div class="modal-content" style="color:black">
+                                        <legend style="color:black">
+                                            Senha do associado
+                                            <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalSenha()"> X </button> &nbsp;
+                                        </legend>
+                                        <br />
+                                        <table class="widget">
+                                            <tr height="22px"></tr>
+                                            <tr>
+                                                <td width="20px"></td>
+                                                <td width="120px">Senha</td>
+                                                <td width="90px">
+                                                    <input type="password" focus="true" numeric-only maxlength="4"
+                                                           ng-model="viewModel.senhaPortadorCartao"
+                                                           ng-keyup="$event.keyCode == 13 && confirmar()" />
+                                                </td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                            <tr height="22px"></tr>
+                                        </table>
+                                        <br />
+                                        <div class="pull-right">
+                                            <button class="btn btn-default" ng-click="closeModalSenha()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button class="btn btn-success"
+                                                    ng-disabled="viewModel.senhaPortadorCartao.length != 4"
+                                                    ng-click="confirmar()">
+                                                Confirmar
+                                            </button>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    </div>
+                                </div>
                             </div>
 
                             <table ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined" align="center">
-
-                                <tr height="22px"></tr>
-
-                                <tr ng-if="viewModel.requerSenha == 1">
-                                    <td width="20px"></td>
-                                    <td width="90px">
-                                        <b>SENHA CARTÃO</b>
-                                    </td>
-                                    <td width="20px"></td>
-                                    <td width="90px">
-                                        <input type="password" numeric-only maxlength="4" class="form-control input-transparent" autocomplete="off" ng-model="viewModel.senhaPortadorCartao">
-                                    </td>
-                                </tr>
-
-                                <tr height="22px"></tr>
-
+                                <tr height="44px"></tr>
                                 <tr>
                                     <td></td>
                                     <td>
@@ -541,15 +493,13 @@
                                     <td>
                                         <div ng-if="autorizando == false">
                                             <button class="btn btn-success" ng-click="confirmar()"
-                                                    ng-if="viewModel.requerSenha == 0 || (viewModel.requerSenha == 1 && viewModel.senhaPortadorCartao.length == 4)">
+                                                    ng-if="viewModel.requerSenha == 0">
                                                 Confirmar
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
-
                                 <tr height="22px"></tr>
-
                             </table>
 
                             <table class="table table-hover" ng-if="viewModel.data.bloqueado == false && modoVenda != 'confirmacao'">
@@ -582,6 +532,7 @@
                             </table>
 
                             <span ng-if="modoVenda == 'simulacao'" align="center"><b>CONDIÇÕES DE PARCELAMENTO</b></span><br />
+
                             <br />
 
                             <table ng-if="modoVenda == 'simulacao'" class="table table-hover" style="font-size:16px">
@@ -591,54 +542,18 @@
                                         <th>Valor máximo</th>
                                     </tr>
                                 </thead>
-                                <tr ng-show="viewModel.parcelasSim >= 1">
-                                    <td>1</td>
-                                    <td>{{viewModel.p1m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 2">
-                                    <td>2</td>
-                                    <td>{{viewModel.p2m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 3">
-                                    <td>3</td>
-                                    <td>{{viewModel.p3m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 4">
-                                    <td>4</td>
-                                    <td>{{viewModel.p4m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 5">
-                                    <td>5</td>
-                                    <td>{{viewModel.p5m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 6">
-                                    <td>6</td>
-                                    <td>{{viewModel.p6m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 7">
-                                    <td>7</td>
-                                    <td>{{viewModel.p7m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 8">
-                                    <td>8</td>
-                                    <td>{{viewModel.p8m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 9">
-                                    <td>9</td>
-                                    <td>{{viewModel.p9m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 10">
-                                    <td>10</td>
-                                    <td>{{viewModel.p10m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 11">
-                                    <td>11</td>
-                                    <td>{{viewModel.p11m}}</td>
-                                </tr>
-                                <tr ng-show="viewModel.parcelasSim >= 12">
-                                    <td>12</td>
-                                    <td>{{viewModel.p11m}}</td>
-                                </tr>
+                                <tr ng-show="viewModel.parcelasSim >= 1"><td>1</td><td>{{viewModel.p1m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 2"><td>2</td><td>{{viewModel.p2m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 3"><td>3</td><td>{{viewModel.p3m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 4"><td>4</td><td>{{viewModel.p4m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 5"><td>5</td><td>{{viewModel.p5m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 6"><td>6</td><td>{{viewModel.p6m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 7"><td>7</td><td>{{viewModel.p7m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 8"><td>8</td><td>{{viewModel.p8m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 9"><td>9</td><td>{{viewModel.p9m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 10"><td>10</td><td>{{viewModel.p10m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 11"><td>11</td><td>{{viewModel.p11m}}</td></tr>
+                                <tr ng-show="viewModel.parcelasSim >= 12"><td>12</td><td>{{viewModel.p11m}}</td></tr>
                             </table>
                         </td>
                     </tr>

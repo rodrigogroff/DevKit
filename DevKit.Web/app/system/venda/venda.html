@@ -468,14 +468,18 @@
                                             <tr height="22px"></tr>
                                         </table>
                                         <br />
-                                        <div class="pull-right">
-                                            <button class="btn btn-default" ng-click="closeModalSenha()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button class="btn btn-success"
-                                                    ng-disabled="viewModel.senhaPortadorCartao.length != 4"
-                                                    ng-click="confirmar()">
-                                                Confirmar
-                                            </button>
-                                        </div>
+                                        <table align="center">
+                                            <tr>
+                                                <td>
+                                                    <button class="btn btn-default" ng-click="closeModalSenha()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <button class="btn btn-success"
+                                                            ng-disabled="viewModel.senhaPortadorCartao.length != 4"
+                                                            ng-click="confirmar()">
+                                                        Confirmar
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>                                            
                                         <br />
                                         <br />
                                     </div>

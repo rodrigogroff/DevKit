@@ -55,11 +55,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.pulaAcesso = function () { document.getElementById("cartAcesso").focus();             }
     $scope.pulaVenc = function () { document.getElementById("cartVenc").focus(); }
 
-   
-
     $scope.conferirCartao = function ()
     {
         $scope.viewModel.error = '';
+        $scope.valorVelho = '';
 
         $scope.stEmpresa_fail = invalidCheck($scope.viewModel.stEmpresa);
         $scope.stMatricula_fail = invalidCheck($scope.viewModel.stMatricula);
@@ -139,11 +138,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     
     $scope.parcelar = function ()
     {
-        if ($scope.modoVenda == 'simulacao')
+        if ($scope.modoVenda == 'simulacao' && $scope.valorVelho == $scope.viewModel.valor)
         {
             $scope.efetuarVenda();
+            return;
         }
-        else
+        else        
         {
             $scope.valor_fail = invalidCheck($scope.viewModel.valor);
             $scope.parcelas_fail = invalidCheck($scope.viewModel.parcelas);
@@ -224,6 +224,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
                     $scope.viewModel.valor = data.results[$scope.viewModel.parcelas].valor;
                     $scope.viewModel.parcelasSim = $scope.viewModel.parcelas;
+
+                    $scope.valorVelho = $scope.viewModel.valor;
 
                     $scope.loading = false;
                 },

@@ -59,6 +59,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     {
         $scope.viewModel.error = '';
         $scope.valorVelho = '';
+        $scope.parcelaVelho = '';
 
         $scope.stEmpresa_fail = invalidCheck($scope.viewModel.stEmpresa);
         $scope.stMatricula_fail = invalidCheck($scope.viewModel.stMatricula);
@@ -138,7 +139,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     
     $scope.parcelar = function ()
     {
-        if ($scope.modoVenda == 'simulacao' && $scope.valorVelho == $scope.viewModel.valor)
+        if ($scope.modoVenda == 'simulacao' &&
+            $scope.valorVelho == $scope.viewModel.valor && 
+            $scope.parcelaVelho == $scope.viewModel.parcelas )
         {
             $scope.efetuarVenda();
             return;
@@ -226,6 +229,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                     $scope.viewModel.parcelasSim = $scope.viewModel.parcelas;
 
                     $scope.valorVelho = $scope.viewModel.valor;
+                    $scope.parcelaVelho = $scope.viewModel.parcelas;
 
                     $scope.loading = false;
                 },

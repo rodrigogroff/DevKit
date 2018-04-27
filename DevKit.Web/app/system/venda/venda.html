@@ -13,119 +13,112 @@
                 <tr height="12px"></tr>
             </table>
         </legend>
-
         <div class="divWebForm">
             <table>
-                <tr height="40px">
-                    <td width="50px">
+                <tr>
+                    <td valign="top" width="520px">
                         <b>Cartão</b>
-                    </td>
-                    <td width="10px"></td>
-                    <td width="20px">
-                        <span class="btn btn-xs btn-danger" ng-show="stEmpresa_fail">!</span>
-                    </td>
-                    <td width="75px">
-                        <input type="text" focus="true" numeric-only maxlength="6" class="form-control input-transparent"
-                               ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800" tabindex="1"
-                               ng-keyup="$event.keyCode == 13 && pulaMatricula()">
-                    </td>
-                    <td width="10px"></td>
-                    <td width="20px">
-                        <span class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</span>
-                    </td>
-                    <td width="75px">
-                        <input type="text" numeric-only maxlength="6" class="form-control input-transparent"
-                               id="cartMat"
-                               ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800" tabindex="2"
-                               ng-maxlength="6" auto-next tabindex="2"
-                               ng-keyup="$event.keyCode == 13 && pulaAcesso()">
-                    </td>
-                    <td width="10px"></td>
-                    <td width="20px">
-                        <span class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</span>
-                    </td>
-                    <td width="60px">
-                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
-                               id="cartAcesso"
-                               ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" tabindex="3"
-                               ng-maxlength="4" auto-next tabindex="3"
-                               ng-keyup="$event.keyCode == 13 && pulaVenc()">
-                    </td>
-                    <td width="10px"></td>
-                    <td width="20px">
-                        <span class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</span>
-                    </td>
-                    <td width="60px">
-                        <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
-                               id="cartVenc"
-                               ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800" tabindex="4"
-                               ng-maxlength="4" auto-next tabindex="4"
-                               ng-keyup="$event.keyCode == 13 && conferirCartao() && focoValor()">
-                    </td>
-                    <td width="10px"></td>
-                    <td width="150px">
-                        <span class="btn btn-warning" ng-if="viewModel.error.length > 0">
-                            {{viewModel.error}}
-                        </span>
-                    </td>
-                </tr>
-                <tr height="24px"></tr>
-            </table>
+                        <table width="100%">
+                            <tr height="40px">
+                                <td width="75px">
+                                    <input type="text" focus="true" numeric-only maxlength="6" class="form-control input-transparent"
+                                           ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800" tabindex="1"
+                                           ng-keyup="$event.keyCode == 13 && pulaMatricula()">
+                                </td>
+                                <td width="10px"></td>
+                                <td width="20px">
+                                    <span class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</span>
+                                </td>
+                                <td width="75px">
+                                    <input type="text" numeric-only maxlength="6" class="form-control input-transparent"
+                                           id="cartMat"
+                                           ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800" tabindex="2"
+                                           ng-maxlength="6" auto-next tabindex="2"
+                                           ng-keyup="$event.keyCode == 13 && pulaAcesso()">
+                                </td>
+                                <td width="10px"></td>
+                                <td width="20px">
+                                    <span class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</span>
+                                </td>
+                                <td width="60px">
+                                    <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
+                                           id="cartAcesso"
+                                           ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" tabindex="3"
+                                           ng-maxlength="4" auto-next tabindex="3"
+                                           ng-keyup="$event.keyCode == 13 && pulaVenc()">
+                                </td>
+                                <td width="10px"></td>
+                                <td width="20px">
+                                    <span class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</span>
+                                </td>
+                                <td width="60px">
+                                    <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
+                                           id="cartVenc"
+                                           ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800" tabindex="4"
+                                           ng-maxlength="4" auto-next tabindex="4"
+                                           ng-keyup="$event.keyCode == 13 && conferirCartao() && focoValor()">
+                                </td>
+                                <td width="10px"></td>
+                                <td width="150px">
+                                    <span class="btn btn-warning" ng-if="viewModel.error.length > 0">
+                                        {{viewModel.error}}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr height="24px"></tr>
+                        </table>
 
-            <br />
+                        <br />
 
-            <div ng-if="viewModel.cupom != undefined">
-                <table width="500px" class="widgetForm">
-                    <tr>
-                        <td>
-                            <table id="printable">
-                                <tr height="20px"></tr>
-                                <tr data-ng-repeat="mdl in viewModel.cupom">
-                                    <td width="20px"></td>
+                        <div ng-if="viewModel.cupom != undefined">
+                            <table width="500px" class="widgetForm">
+                                <tr>
                                     <td>
-                                        {{mdl}}
-                                    </td>
-                                    <td width="20px"></td>
-                                </tr>
-                                <tr height="20px"></tr>
-                            </table>
-                            <table>
-                                <tr height="20px">
-                                    <td width="20px"></td>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <button class="btn btn-primary" ng-click="printDiv('printable')">Imprimir</button><br />
-                                                </td>
+                                        <table id="printable">
+                                            <tr height="20px"></tr>
+                                            <tr data-ng-repeat="mdl in viewModel.cupom">
                                                 <td width="20px"></td>
                                                 <td>
-                                                    <button class="btn btn-success" ng-click="novaVenda()">Nova venda</button>
+                                                    {{mdl}}
                                                 </td>
+                                                <td width="20px"></td>
                                             </tr>
+                                            <tr height="20px"></tr>
+                                        </table>
+                                        <table>
+                                            <tr height="20px">
+                                                <td width="20px"></td>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <button class="btn btn-primary" ng-click="printDiv('printable')">Imprimir</button><br />
+                                                            </td>
+                                                            <td width="20px"></td>
+                                                            <td>
+                                                                <button class="btn btn-success" ng-click="novaVenda()">Nova venda</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                            <tr height="20px"></tr>
                                         </table>
                                     </td>
-                                    <td width="20px"></td>
                                 </tr>
-                                <tr height="20px"></tr>
                             </table>
-                        </td>
-                    </tr>
-                </table>
-                <br />
-                <br />
-                <br />
-            </div>
 
-            <div ng-if="viewModel.data.nome != undefined && viewModel.cupom == undefined">
+                            <br /><br /><br />
 
-                <div class="btn btn-warning btn-lg" ng-if="viewModel.data.bloqueado == true">
-                    Atenção: cartão situação BLOQUEADO. Entre em contato com sua entidade.
-                </div>
+                        </div>
 
-                <table width="100%" ng-if="viewModel.data.bloqueado == false">
-                    <tr>
-                        <td width="500px" valign="top">
+                        <div ng-if="viewModel.data.nome != undefined && viewModel.cupom == undefined">
+
+                            <div class="btn btn-warning btn-lg" ng-if="viewModel.data.bloqueado == true">
+                                Atenção: cartão situação BLOQUEADO. Entre em contato com sua entidade.
+                            </div>
+
                             <table ng-if="modoVenda == 'simulacao' || modoVenda == ''">
                                 <tr>
                                     <td width="80px">
@@ -376,6 +369,14 @@
                                 {{erroSoma}}
                             </div>
 
+                            <div ng-if="falhaVenda == true">
+                                <table width="380px">
+                                    <tr><td>{{falhaVendaMsg}}</td></tr>
+                                </table>
+                                <br />
+                                <button class="btn btn-info" ng-click="operadorOkFalha()">OK</button>
+                            </div>
+
                             <section class="widgetForm" style="width:475px" ng-if="modoVenda == 'confirmacao'">
 
                                 <h3 style="padding-left:20px;padding-top:22px">Confirmação de parcelamento</h3>
@@ -420,150 +421,141 @@
                                 <br />
                             </section>
                             <br />
-                        </td>
+                        </div>
 
-                        <td width="20px"></td>
+                        
 
-                        <td width="500px" valign="top">
-
-                            <div ng-if="falhaVenda == true">
-                                <br />
-                                <br />
-                                <table width="380px">
-                                    <tr><td>{{falhaVendaMsg}}</td></tr>
-                                </table>
-                                <br />
-                                <br />
-                                <button class="btn btn-info" ng-click="operadorOkFalha()">OK</button>
+                        <div class="modal-backdrop"
+                             ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined && viewModel.requerSenha == 1"
+                             style="background: rgba(55, 55, 55, 0.5 );">
+                            <div class="modal-dialog" style="width:400px">
                                 <br />
                                 <br />
                                 <br />
-                            </div>
-
-                            <div class="modal-backdrop"
-                                 ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined && viewModel.requerSenha == 1"
-                                 style="background: rgba(55, 55, 55, 0.5 );">
-                                <div class="modal-dialog" style="width:500px">
+                                <div class="modal-content" style="color:black">
+                                    <legend style="color:black">
+                                        Senha do associado
+                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalSenha()"> X </button> &nbsp;
+                                    </legend>
+                                    <br />
+                                    <table class="widget" align="center">
+                                        <tr height="22px"></tr>
+                                        <tr>
+                                            <td width="20px"></td>
+                                            <td width="90px">
+                                                <input type="password" focus="true" numeric-only maxlength="4"
+                                                       ng-model="viewModel.senhaPortadorCartao"
+                                                       ng-keyup="$event.keyCode == 13 && confirmar()" />
+                                            </td>
+                                            <td width="20px"></td>
+                                        </tr>
+                                        <tr height="22px"></tr>
+                                    </table>
+                                    <br />
+                                    <table align="center">
+                                        <tr>
+                                            <td>
+                                                <button class="btn btn-default" ng-click="closeModalSenha()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <button class="btn btn-success"
+                                                        ng-disabled="viewModel.senhaPortadorCartao.length != 4"
+                                                        ng-click="confirmar()">
+                                                    Confirmar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
                                     <br />
                                     <br />
-                                    <br />
-                                    <div class="modal-content" style="color:black">
-                                        <legend style="color:black">
-                                            Senha do associado
-                                            <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalSenha()"> X </button> &nbsp;
-                                        </legend>
-                                        <br />
-                                        <table class="widget">
-                                            <tr height="22px"></tr>
-                                            <tr>
-                                                <td width="20px"></td>
-                                                <td width="120px">Senha</td>
-                                                <td width="90px">
-                                                    <input type="password" focus="true" numeric-only maxlength="4"
-                                                           ng-model="viewModel.senhaPortadorCartao"
-                                                           ng-keyup="$event.keyCode == 13 && confirmar()" />
-                                                </td>
-                                                <td width="20px"></td>
-                                            </tr>
-                                            <tr height="22px"></tr>
-                                        </table>
-                                        <br />
-                                        <table align="center">
-                                            <tr>
-                                                <td>
-                                                    <button class="btn btn-default" ng-click="closeModalSenha()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <button class="btn btn-success"
-                                                            ng-disabled="viewModel.senhaPortadorCartao.length != 4"
-                                                            ng-click="confirmar()">
-                                                        Confirmar
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table>                                            
-                                        <br />
-                                        <br />
-                                    </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <table ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined" align="center">
-                                <tr height="44px"></tr>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <button class="btn btn-danger" ng-click="cancelar()">Cancelar</button>
-                                    </td>
-                                    <td width="20px"></td>
-                                    <td>
-                                        <div ng-if="autorizando == false">
-                                            <button class="btn btn-success" ng-click="confirmar()"
-                                                    ng-if="viewModel.requerSenha == 0">
-                                                Confirmar
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr height="22px"></tr>
-                            </table>
+                        <table ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined" align="center">
+                            <tr height="44px"></tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button class="btn btn-danger" ng-click="cancelar()">Cancelar</button>
+                                </td>
+                                <td width="20px"></td>
+                                <td>
+                                    <div ng-if="autorizando == false">
+                                        <button class="btn btn-success" ng-click="confirmar()"
+                                                ng-if="viewModel.requerSenha == 0">
+                                            Confirmar
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr height="22px"></tr>
+                        </table>
 
-                            <table class="table table-hover" ng-if="viewModel.data.bloqueado == false && modoVenda != 'confirmacao'">
-                                <thead>
-                                    <tr>
-                                        <th>Situação do cartão</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tr>
-                                    <td>Associado</td>
-                                    <td>{{ viewModel.data.nome }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Situação</td>
-                                    <td>{{ viewModel.data.bloqueado == true ? 'Bloqueado' : 'Ativo' }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Disp. mensal</td>
-                                    <td>{{ viewModel.data.dispMensal }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Disp. extra</td>
-                                    <td>{{ viewModel.data.dispExtra }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Máximo parcelas</td>
-                                    <td>{{ viewModel.data.maxParcelasEmpresa }}</td>
-                                </tr>
-                            </table>
+                    </td>
 
-                            <span ng-if="modoVenda == 'simulacao'" align="center"><b>CONDIÇÕES DE PARCELAMENTO</b></span><br />
+                    <td width="20px"></td>
 
-                            <br />
+                    <td valign="top">
+                        
+                        <br />
 
-                            <table ng-if="modoVenda == 'simulacao'" class="table table-hover" style="font-size:16px">
-                                <thead ng-show="viewModel.parcelasSim >= 1">
-                                    <tr>
-                                        <th>Parcela</th>
-                                        <th>Valor máximo</th>
-                                    </tr>
-                                </thead>
-                                <tr ng-show="viewModel.parcelasSim >= 1"><td>1</td><td>{{viewModel.p1m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 2"><td>2</td><td>{{viewModel.p2m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 3"><td>3</td><td>{{viewModel.p3m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 4"><td>4</td><td>{{viewModel.p4m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 5"><td>5</td><td>{{viewModel.p5m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 6"><td>6</td><td>{{viewModel.p6m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 7"><td>7</td><td>{{viewModel.p7m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 8"><td>8</td><td>{{viewModel.p8m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 9"><td>9</td><td>{{viewModel.p9m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 10"><td>10</td><td>{{viewModel.p10m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 11"><td>11</td><td>{{viewModel.p11m}}</td></tr>
-                                <tr ng-show="viewModel.parcelasSim >= 12"><td>12</td><td>{{viewModel.p11m}}</td></tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-                <br />
-            </div>
+                        <table class="table table-hover" ng-if="viewModel.data.bloqueado == false && modoVenda != 'confirmacao'">
+                            <thead>
+                                <tr>
+                                    <th>Situação do cartão</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>Associado</td>
+                                <td>{{ viewModel.data.nome }}</td>
+                            </tr>
+                            <tr>
+                                <td>Situação</td>
+                                <td>{{ viewModel.data.bloqueado == true ? 'Bloqueado' : 'Ativo' }}</td>
+                            </tr>
+                            <tr>
+                                <td>Disp. mensal</td>
+                                <td>{{ viewModel.data.dispMensal }}</td>
+                            </tr>
+                            <tr>
+                                <td>Disp. extra</td>
+                                <td>{{ viewModel.data.dispExtra }}</td>
+                            </tr>
+                            <tr>
+                                <td>Máximo parcelas</td>
+                                <td>{{ viewModel.data.maxParcelasEmpresa }}</td>
+                            </tr>
+                        </table>
+
+                        <span ng-if="modoVenda == 'simulacao'" align="center"><b>CONDIÇÕES DE PARCELAMENTO</b></span><br />
+
+                        <br />
+
+                        <table ng-if="modoVenda == 'simulacao'" class="table table-hover" style="font-size:16px">
+                            <thead ng-show="viewModel.parcelasSim >= 1">
+                                <tr>
+                                    <th>Parcela</th>
+                                    <th>Valor máximo</th>
+                                </tr>
+                            </thead>
+                            <tr ng-show="viewModel.parcelasSim >= 1"><td>1</td><td>{{viewModel.p1m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 2"><td>2</td><td>{{viewModel.p2m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 3"><td>3</td><td>{{viewModel.p3m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 4"><td>4</td><td>{{viewModel.p4m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 5"><td>5</td><td>{{viewModel.p5m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 6"><td>6</td><td>{{viewModel.p6m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 7"><td>7</td><td>{{viewModel.p7m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 8"><td>8</td><td>{{viewModel.p8m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 9"><td>9</td><td>{{viewModel.p9m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 10"><td>10</td><td>{{viewModel.p10m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 11"><td>11</td><td>{{viewModel.p11m}}</td></tr>
+                            <tr ng-show="viewModel.parcelasSim >= 12"><td>12</td><td>{{viewModel.p11m}}</td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+
         </div>
 
     </section>

@@ -22,6 +22,13 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.viewModel.cupom = undefined;
     }
 
+    $scope.toggleExibirDados = function () {
+        if ($scope.exibirDados == undefined)
+            $scope.exibirDados = true;
+        else
+            $scope.exibirDados = !$scope.exibirDados;
+    }
+
     $scope.closeModalSenha = function () {
         $scope.modoVenda = '';
     }

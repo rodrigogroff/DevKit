@@ -1,5 +1,5 @@
 ﻿<div class="webFormPostion">
-    <section class="widgetForm" style="width:975px">
+    <section class="widgetForm" style="width:875px">
         <legend class="legendTop">
             <table><tr height="12px"><td> </td></tr></table>
             <table style="color:white; width:100%">
@@ -16,9 +16,9 @@
         <div class="divWebForm">
             <table>
                 <tr>
-                    <td valign="top" width="520px">
+                    <td valign="top" width="420px">
                         <b>Cartão</b>
-                        <table width="100%">
+                        <table>
                             <tr height="40px">
                                 <td width="75px">
                                     <input type="text" focus="true" numeric-only maxlength="6" class="form-control input-transparent"
@@ -26,9 +26,6 @@
                                            ng-keyup="$event.keyCode == 13 && pulaMatricula()">
                                 </td>
                                 <td width="10px"></td>
-                                <td width="20px">
-                                    <span class="btn btn-xs btn-danger" ng-show="stMatricula_fail">!</span>
-                                </td>
                                 <td width="75px">
                                     <input type="text" numeric-only maxlength="6" class="form-control input-transparent"
                                            id="cartMat"
@@ -37,9 +34,6 @@
                                            ng-keyup="$event.keyCode == 13 && pulaAcesso()">
                                 </td>
                                 <td width="10px"></td>
-                                <td width="20px">
-                                    <span class="btn btn-xs btn-danger" ng-show="stAcesso_fail">!</span>
-                                </td>
                                 <td width="60px">
                                     <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
                                            id="cartAcesso"
@@ -48,9 +42,6 @@
                                            ng-keyup="$event.keyCode == 13 && pulaVenc()">
                                 </td>
                                 <td width="10px"></td>
-                                <td width="20px">
-                                    <span class="btn btn-xs btn-danger" ng-show="stVencimento_fail">!</span>
-                                </td>
                                 <td width="60px">
                                     <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
                                            id="cartVenc"
@@ -59,16 +50,30 @@
                                            ng-keyup="$event.keyCode == 13 && conferirCartao() && focoValor()">
                                 </td>
                                 <td width="10px"></td>
-                                <td width="150px">
-                                    <span class="btn btn-warning" ng-if="viewModel.error.length > 0">
-                                        {{viewModel.error}}
-                                    </span>
-                                </td>
                             </tr>
-                            <tr height="24px"></tr>
                         </table>
 
                         <br />
+
+                        <span class="btn btn-warning" ng-if="viewModel.error.length > 0">
+                            {{viewModel.error}}
+                        </span>
+
+                        <div ng-if="viewModel.data.nome">
+                            Nome associado: <br />
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>{{ viewModel.data.nome }}</b>
+                                    </td>
+                                    <td width="12px"></td>
+                                    <td>
+                                        <button class="btn btn-info" ng-click="toggleExibirDados();" ng-if="viewModel.data.nome"> Situação cartão </button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                        </div>
 
                         <div ng-if="viewModel.cupom != undefined">
                             <table width="500px" class="widgetForm">
@@ -121,32 +126,31 @@
 
                             <table ng-if="modoVenda == 'simulacao' || modoVenda == ''">
                                 <tr>
-                                    <td width="80px">
+                                    <td width="60px">
                                         <b>Valor</b>
                                     </td>
                                     <td width="20px">
                                         <span class="btn btn-xs btn-danger" ng-show="valor_fail">!</span>
                                     </td>
-                                    <td width="130px">
+                                    <td width="110px">
                                         <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                                                focus="true"
                                                ng-model="viewModel.valor" style="background-color:darkgreen;color:white"
                                                ng-keyup="$event.keyCode == 13 && parcelar()">
                                     </td>
-                                    <td width="30px"> </td>
+                                    <td width="10px"> </td>
                                     <td width="60px">
                                         <b>Parcelas</b>
                                     </td>
-                                    <td width="10px"></td>
                                     <td width="20px">
                                         <span class="btn btn-xs btn-danger" ng-show="parcelas_fail">!</span>
                                     </td>
-                                    <td width="90px">
+                                    <td width="60px">
                                         <input type="text" numeric-only maxlength="2" class="form-control input-transparent"
                                                ng-model="viewModel.parcelas" style="background-color:darkgreen;color:white"
                                                ng-keyup="$event.keyCode == 13 && parcelar()">
                                     </td>
-                                    <td width="30px"></td>
+                                    <td width="20px"></td>
                                     <td width="90px">
                                         <button class="btn btn-primary" ng-click="parcelar()">Calcula parcela</button>
                                     </td>
@@ -154,7 +158,7 @@
                                 <tr height="10px"></tr>
                             </table>
 
-                            <section class="widgetForm" style="width:475px" ng-if="modoVenda == 'simulacao'">
+                            <section class="widgetForm" style="width:425px" ng-if="modoVenda == 'simulacao'">
                                 <table ng-if="modoVenda == 'simulacao' || modoVenda == ''">
                                     <tr height="16px">
                                         <td></td>
@@ -171,7 +175,6 @@
                                         <td width="20px"></td>
                                         <td width="90px"></td>
                                         <td width="30px"></td>
-                                        <td width="90px"></td>
                                     </tr>
                                     <tr ng-if="modoVenda == 'simulacao'">
                                         <td></td>
@@ -195,7 +198,6 @@
                                                    ng-model="viewModel.p2" ng-show="viewModel.parcelasSim >= 2"
                                                    style="background-color:black;color:white">
                                         </td>
-                                        <td></td>
                                         <td></td>
                                     </tr>
 
@@ -222,7 +224,6 @@
                                                    style="background-color:black;color:white">
                                         </td>
                                         <td></td>
-                                        <td></td>
                                     </tr>
 
                                     <tr ng-if="modoVenda == 'simulacao'" ng-show="viewModel.parcelasSim >= 5">
@@ -247,7 +248,6 @@
                                                    ng-model="viewModel.p6" ng-show="viewModel.parcelasSim >= 6"
                                                    style="background-color:black;color:white">
                                         </td>
-                                        <td></td>
                                         <td></td>
                                     </tr>
 
@@ -274,7 +274,6 @@
                                                    style="background-color:black;color:white">
                                         </td>
                                         <td></td>
-                                        <td></td>
                                     </tr>
 
                                     <tr ng-if="modoVenda == 'simulacao'" ng-show="viewModel.parcelasSim >= 9">
@@ -299,7 +298,6 @@
                                                    ng-model="viewModel.p10" ng-show="viewModel.parcelasSim >= 10"
                                                    style="background-color:black;color:white">
                                         </td>
-                                        <td></td>
                                         <td></td>
                                     </tr>
 
@@ -326,17 +324,9 @@
                                                    style="background-color:black;color:white">
                                         </td>
                                         <td></td>
-                                        <td></td>
                                     </tr>
 
-                                    <tr height="22px" ng-if="modoVenda == 'simulacao'"></tr>
-
-                                    <tr ng-if="modoVenda == 'simulacao'">
-                                        <td></td>
-                                        <td colspan="9"></td>
-                                    </tr>
-
-                                    <tr height="22px" ng-if="modoVenda == 'simulacao'"></tr>
+                                    <tr height="32px" ng-if="modoVenda == 'simulacao'"></tr>
 
                                     <tr ng-if="modoVenda == 'simulacao'">
                                         <td></td>
@@ -423,7 +413,7 @@
                             <br />
                         </div>
 
-                        
+
 
                         <div class="modal-backdrop"
                              ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined && viewModel.requerSenha == 1"
@@ -495,10 +485,10 @@
                     <td width="20px"></td>
 
                     <td valign="top">
-                        
+
                         <br />
 
-                        <table class="table table-hover" ng-if="viewModel.data.bloqueado == false && modoVenda != 'confirmacao'">
+                        <table class="table table-hover" ng-if="viewModel.data.bloqueado == false && modoVenda != 'confirmacao' && exibirDados == true">
                             <thead>
                                 <tr>
                                     <th>Situação do cartão</th>

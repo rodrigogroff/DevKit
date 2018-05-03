@@ -1,10 +1,17 @@
 ﻿'use strict';
 angular.module('app.controllers').controller('LoginController',
-['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version', 'Api', '$stateParams',
-function ($scope, $rootScope, $location, $state, AuthService, version, Api, $stateParams)
+['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version', 'Api', '$stateParams', '$window',
+function ($scope, $rootScope, $location, $state, AuthService, version, Api, $stateParams, $window)
 {
     $rootScope.exibirMenu = false;
-    $rootScope.mobileVersion = false;
+    $scope.mobileVersion = false;
+    
+    var w = angular.element($window);
+
+    $scope.$watch(function () { return $window.innerWidth; },
+        function (value) { $scope.width = $window.innerWidth + ", " + $window.innerHeight; $scope.mobileVersion = $window.innerWidth < 1000; }, true);
+
+    w.bind('resize', function () { $scope.$apply(); });
     
 	$scope.version = version;	
 	$scope.loading = false;

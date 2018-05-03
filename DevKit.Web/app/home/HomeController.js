@@ -1,15 +1,16 @@
 ﻿angular.module('app.controllers').controller('HomeController',
-['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
+['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$window',
+function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $window)
 {
 	$rootScope.exibirMenu = true;
-
 	$scope.loading = false;
 
-	$scope.windowWidth = 900; var w = angular.element($window);
-	$scope.$watch( function () { return $window.innerWidth; },
-	  function (value) { $scope.availWidth = value; if (value > 1400) $scope.windowWidth = 1630; else $scope.windowWidth = 900; },
-	  true ); w.bind('resize', function () { $scope.$apply();	});
+    var w = angular.element($window);
+
+    $scope.$watch(function () { return $window.innerWidth; },
+        function (value) { $scope.width = $window.innerWidth + ", " + $window.innerHeight; $scope.mobileVersion = $window.innerWidth < 1000; }, true);
+
+    w.bind('resize', function () { $scope.$apply(); });
 
 	$scope.viewModel = undefined;
 	

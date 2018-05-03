@@ -1,8 +1,17 @@
 ﻿angular.module('app.controllers').controller('VendaController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
+['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$window',
+function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $window )
 {
     $rootScope.exibirMenu = true;
+
+    $scope.mobileVersion = false;
+
+    var w = angular.element($window);
+
+    $scope.$watch(function () { return $window.innerWidth; },
+        function (value) { $scope.width = $window.innerWidth; $scope.mobileVersion = $window.innerWidth < 1000; }, true);
+
+    w.bind('resize', function () { $scope.$apply(); });
 
     init();
 
@@ -254,33 +263,34 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.erroSoma = '';
 
         Api.SomaParcelada.listPage(
-        {
-            valor: $scope.viewModel.valor,
-            parcelas: $scope.viewModel.parcelas,
-            p1: $scope.viewModel.p1,
-            p2: $scope.viewModel.p2,
-            p3: $scope.viewModel.p3,
-            p4: $scope.viewModel.p4,
-            p5: $scope.viewModel.p5,
-            p6: $scope.viewModel.p6,
-            p7: $scope.viewModel.p7,
-            p8: $scope.viewModel.p8,
-            p9: $scope.viewModel.p9,
-            p10: $scope.viewModel.p10,
-            p11: $scope.viewModel.p11,
-            p12: $scope.viewModel.p12,
-        },
-        function (data)
-        {
-            $scope.loading = false;
-            $scope.modoVenda = 'confirmacao';
-            $scope.viewModel.requerSenha = data.results[0].requerSenha;
-        },
-        function (response)
-        {
-            $scope.loading = false;
-            $scope.erroSoma = response.data.message;
-        });
+            {
+                valor: $scope.viewModel.valor,
+                parcelas: $scope.viewModel.parcelas,
+                p1: $scope.viewModel.p1,
+                p2: $scope.viewModel.p2,
+                p3: $scope.viewModel.p3,
+                p4: $scope.viewModel.p4,
+                p5: $scope.viewModel.p5,
+                p6: $scope.viewModel.p6,
+                p7: $scope.viewModel.p7,
+                p8: $scope.viewModel.p8,
+                p9: $scope.viewModel.p9,
+                p10: $scope.viewModel.p10,
+                p11: $scope.viewModel.p11,
+                p12: $scope.viewModel.p12,
+            },
+            function (data) {
+                $scope.loading = false;
+                $scope.modoVenda = 'confirmacao';
+                $scope.viewModel.requerSenha = data.results[0].requerSenha;
+            },
+            function (response) {
+                $scope.loading = false;
+                $scope.erroSoma = response.data.message;
+            });
+
+        if ($scope.mobileVersion == true)
+            $scope.confirmar();
     }
 
     $scope.cancelar = function () {
@@ -289,6 +299,16 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.confirmar = function ()
     {
+        if ($scope.mobileVersion == true) {
+            
+            $scope.valor_fail = invalidCheck($scope.viewModel.valor);
+            $scope.parcelas_fail = invalidCheck($scope.viewModel.parcelas);
+            $scope.senhaportador_fail = invalidCheck($scope.viewModel.senhaPortadorCartao);
+
+            if ($scope.valor_fail || $scope.parcelas_fail || $scope.senhaportador_fail)
+                return;
+        }
+
         $scope.autorizando = true;
 
         Api.EfetuaVenda.listPage(

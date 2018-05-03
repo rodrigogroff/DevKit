@@ -80,44 +80,12 @@
 <body class="background" ng-cloak>
     <div ng-show="exibirMenu" ng-controller="MenuController">
 
-        <div ng-if="mobileVersion">
-            <table>
-                <tr>
-                    <td valign="top" style="width:120px">
-                        <section style="width:120px;font-size:11px" ng-if="authentication.tipo == '2'">
-                            <br />
-                            <ul id="side-nav" class="side-nav" style="color:black">
-                                <li class="panel">
-                                    <a class="accordion-toggle " data-toggle="collapse"
-                                       data-parent="#side-nav" href="#forms-collapseUsrExtratos"><span class="name">Financeiro</span></a>
-                                    <ul id="forms-collapseUsrExtratos" class="panel-collapse collapse">
-                                        <li><a ui-sref="limitesUsr"><span>Limites</span></a></li>
-                                        <li><a ui-sref="extratosUsr"><span>Extratos</span></a></li>
-                                    </ul>
-                                </li>
-                                <li class="panel">
-                                    <a class="accordion-toggle " data-toggle="collapse"
-                                       data-parent="#side-nav" href="#forms-collapseUsrRede"><span class="name">Rede</span></a>
-                                    <ul id="forms-collapseUsrRede" class="panel-collapse collapse">
-                                        <li><a ui-sref="lojistasUsr"><span>Lojas</span></a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <ul><li>&nbsp;</li></ul>
-                            <ul><li style="padding-left:20px"><a href="login" ng-click="logOut()" style="color:black">Sair</a></li></ul>
-                        </section>                        
-                    </td>
-                    <td width="20px"></td>
-                    <td valign="top">
-                        <br />
-                        <h4>ConveyNET Benefícios</h4>
-                        <div id="ui-view" style="width:100%" ui-view></div>
-                    </td>
-                </tr>
-            </table>
+        <div ng-if="mobileVersion == true">
+            <h4>ConveyNET Benefícios</h4>
+            <div id="ui-view" style="width:100%" ui-view></div>
         </div>
 
-        <div class="header" ng-if="!mobileVersion">
+        <div class="header" ng-if="mobileVersion == false">
             <div class="logo" style="padding-top:-4px; padding-left:-80px">
                 <a ng-click="goHome()">
                     <img src='../../images/logo.png' height="90px" />

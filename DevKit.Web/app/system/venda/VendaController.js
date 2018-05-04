@@ -4,7 +4,11 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
 
+    $scope.loading = false;
+
     $scope.mobileVersion = false;
+    $scope.mostraModalMobile = false;
+    $scope.mostraModalMobileAutorizado = false;
 
     var w = angular.element($window);
 
@@ -29,6 +33,32 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         $scope.viewModel.senhaPortadorCartao = undefined;        
         $scope.viewModel.cupom = undefined;
+    }
+
+    $scope.efetuaVendaMobile = function ()
+    {
+        $scope.valor_fail = invalidCheck($scope.viewModel.valor);
+        $scope.parcelas_fail = invalidCheck($scope.viewModel.parcelas);
+
+        if ($scope.valor_fail || $scope.parcelas_fail)
+            return;
+
+        $scope.parcelar();
+
+        $scope.mostraModalMobile = true;        
+    }
+
+    $scope.closeModalMobile = function () {
+        $scope.mostraModalMobile = false;
+    }
+
+    $scope.closeModalMobileAutorizado = function () {
+        $scope.closeModalMobileAutorizado = false;
+    }
+
+    $scope.confirmarMobile = function () {
+        $scope.efetuarVenda();
+        $scope.mostraModalMobile = false;
     }
 
     $scope.toggleExibirDados = function () {
@@ -155,107 +185,98 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     
     $scope.parcelar = function ()
     {
-        if ($scope.modoVenda == 'simulacao' &&
-            $scope.valorVelho == $scope.viewModel.valor && 
-            $scope.parcelaVelho == $scope.viewModel.parcelas )
-        {
-            $scope.efetuarVenda();
+        $scope.valor_fail = invalidCheck($scope.viewModel.valor);
+        $scope.parcelas_fail = invalidCheck($scope.viewModel.parcelas);
+
+        if ($scope.valor_fail || $scope.parcelas_fail)
             return;
+
+        $scope.loading = true;
+        $scope.erro = '';
+
+        if ($scope.viewModel.parcelas != $scope.viewModel.parcelasSim) {
+            $scope.viewModel.p1 = ''; $scope.viewModel.p2 = ''; $scope.viewModel.p3 = '';
+            $scope.viewModel.p4 = ''; $scope.viewModel.p5 = ''; $scope.viewModel.p6 = '';
+            $scope.viewModel.p7 = ''; $scope.viewModel.p8 = ''; $scope.viewModel.p9 = '';
+            $scope.viewModel.p10 = ''; $scope.viewModel.p11 = ''; $scope.viewModel.p12 = '';
         }
-        else        
-        {
-            $scope.valor_fail = invalidCheck($scope.viewModel.valor);
-            $scope.parcelas_fail = invalidCheck($scope.viewModel.parcelas);
 
-            if ($scope.valor_fail || $scope.parcelas_fail)
-                return;
+        if ($scope.viewModel.parcelas.length == 2)
+            if ($scope.viewModel.parcelas != 10)
+                if ($scope.viewModel.parcelas[0] == '0')
+                    $scope.viewModel.parcelas = $scope.viewModel.parcelas[1];
 
-            $scope.loading = true;
-            $scope.erro = '';
+        Api.SimulaParcelada.listPage(
+            {
+                cartao: $scope.viewModel.data.id,
+                valor: $scope.viewModel.valor,
+                parcelas: $scope.viewModel.parcelas,
+                p1: $scope.viewModel.p1,
+                p2: $scope.viewModel.p2,
+                p3: $scope.viewModel.p3,
+                p4: $scope.viewModel.p4,
+                p5: $scope.viewModel.p5,
+                p6: $scope.viewModel.p6,
+                p7: $scope.viewModel.p7,
+                p8: $scope.viewModel.p8,
+                p9: $scope.viewModel.p9,
+                p10: $scope.viewModel.p10,
+                p11: $scope.viewModel.p11,
+                p12: $scope.viewModel.p12,
+            },
+            function (data) {
+                $scope.modoVenda = 'simulacao';
 
-            if ($scope.viewModel.parcelas != $scope.viewModel.parcelasSim) {
                 $scope.viewModel.p1 = ''; $scope.viewModel.p2 = ''; $scope.viewModel.p3 = '';
                 $scope.viewModel.p4 = ''; $scope.viewModel.p5 = ''; $scope.viewModel.p6 = '';
                 $scope.viewModel.p7 = ''; $scope.viewModel.p8 = ''; $scope.viewModel.p9 = '';
                 $scope.viewModel.p10 = ''; $scope.viewModel.p11 = ''; $scope.viewModel.p12 = '';
-            }
+                $scope.viewModel.p1m = ''; $scope.viewModel.p2m = ''; $scope.viewModel.p3m = '';
+                $scope.viewModel.p4m = ''; $scope.viewModel.p5m = ''; $scope.viewModel.p6m = '';
+                $scope.viewModel.p7m = ''; $scope.viewModel.p8m = ''; $scope.viewModel.p9m = '';
+                $scope.viewModel.p10m = ''; $scope.viewModel.p11m = ''; $scope.viewModel.p12m = '';
 
-            if ($scope.viewModel.parcelas.length == 2)
-                if ($scope.viewModel.parcelas != 10)
-                    if ($scope.viewModel.parcelas[0] == '0')
-                        $scope.viewModel.parcelas = $scope.viewModel.parcelas[1];
+                if ($scope.viewModel.parcelas >= 1) $scope.viewModel.p1 = data.results[0].valor;
+                if ($scope.viewModel.parcelas >= 2) $scope.viewModel.p2 = data.results[1].valor;
+                if ($scope.viewModel.parcelas >= 3) $scope.viewModel.p3 = data.results[2].valor;
+                if ($scope.viewModel.parcelas >= 4) $scope.viewModel.p4 = data.results[3].valor;
+                if ($scope.viewModel.parcelas >= 5) $scope.viewModel.p5 = data.results[4].valor;
+                if ($scope.viewModel.parcelas >= 6) $scope.viewModel.p6 = data.results[5].valor;
+                if ($scope.viewModel.parcelas >= 7) $scope.viewModel.p7 = data.results[6].valor;
+                if ($scope.viewModel.parcelas >= 8) $scope.viewModel.p8 = data.results[7].valor;
+                if ($scope.viewModel.parcelas >= 9) $scope.viewModel.p9 = data.results[8].valor;
+                if ($scope.viewModel.parcelas >= 10) $scope.viewModel.p10 = data.results[9].valor;
+                if ($scope.viewModel.parcelas >= 11) $scope.viewModel.p11 = data.results[10].valor;
+                if ($scope.viewModel.parcelas >= 12) $scope.viewModel.p12 = data.results[11].valor;
 
-            Api.SimulaParcelada.listPage(
-                {
-                    cartao: $scope.viewModel.data.id,
-                    valor: $scope.viewModel.valor,
-                    parcelas: $scope.viewModel.parcelas,
-                    p1: $scope.viewModel.p1,
-                    p2: $scope.viewModel.p2,
-                    p3: $scope.viewModel.p3,
-                    p4: $scope.viewModel.p4,
-                    p5: $scope.viewModel.p5,
-                    p6: $scope.viewModel.p6,
-                    p7: $scope.viewModel.p7,
-                    p8: $scope.viewModel.p8,
-                    p9: $scope.viewModel.p9,
-                    p10: $scope.viewModel.p10,
-                    p11: $scope.viewModel.p11,
-                    p12: $scope.viewModel.p12,
-                },
-                function (data) {
-                    $scope.modoVenda = 'simulacao';
+                if ($scope.viewModel.parcelas >= 1) $scope.viewModel.p1m = data.results[0].valorMax;
+                if ($scope.viewModel.parcelas >= 2) $scope.viewModel.p2m = data.results[1].valorMax;
+                if ($scope.viewModel.parcelas >= 3) $scope.viewModel.p3m = data.results[2].valorMax;
+                if ($scope.viewModel.parcelas >= 4) $scope.viewModel.p4m = data.results[3].valorMax;
+                if ($scope.viewModel.parcelas >= 5) $scope.viewModel.p5m = data.results[4].valorMax;
+                if ($scope.viewModel.parcelas >= 6) $scope.viewModel.p6m = data.results[5].valorMax;
+                if ($scope.viewModel.parcelas >= 7) $scope.viewModel.p7m = data.results[6].valorMax;
+                if ($scope.viewModel.parcelas >= 8) $scope.viewModel.p8m = data.results[7].valorMax;
+                if ($scope.viewModel.parcelas >= 9) $scope.viewModel.p9m = data.results[8].valorMax;
+                if ($scope.viewModel.parcelas >= 10) $scope.viewModel.p10m = data.results[9].valorMax;
+                if ($scope.viewModel.parcelas >= 11) $scope.viewModel.p11m = data.results[10].valorMax;
+                if ($scope.viewModel.parcelas >= 12) $scope.viewModel.p12m = data.results[11].valorMax;
 
-                    $scope.viewModel.p1 = ''; $scope.viewModel.p2 = ''; $scope.viewModel.p3 = '';
-                    $scope.viewModel.p4 = ''; $scope.viewModel.p5 = ''; $scope.viewModel.p6 = '';
-                    $scope.viewModel.p7 = ''; $scope.viewModel.p8 = ''; $scope.viewModel.p9 = '';
-                    $scope.viewModel.p10 = ''; $scope.viewModel.p11 = ''; $scope.viewModel.p12 = '';
-                    $scope.viewModel.p1m = ''; $scope.viewModel.p2m = ''; $scope.viewModel.p3m = '';
-                    $scope.viewModel.p4m = ''; $scope.viewModel.p5m = ''; $scope.viewModel.p6m = '';
-                    $scope.viewModel.p7m = ''; $scope.viewModel.p8m = ''; $scope.viewModel.p9m = '';
-                    $scope.viewModel.p10m = ''; $scope.viewModel.p11m = ''; $scope.viewModel.p12m = '';
+                $scope.viewModel.valor = data.results[$scope.viewModel.parcelas].valor;
+                $scope.viewModel.parcelasSim = $scope.viewModel.parcelas;
 
-                    if ($scope.viewModel.parcelas >= 1) $scope.viewModel.p1 = data.results[0].valor;
-                    if ($scope.viewModel.parcelas >= 2) $scope.viewModel.p2 = data.results[1].valor;
-                    if ($scope.viewModel.parcelas >= 3) $scope.viewModel.p3 = data.results[2].valor;
-                    if ($scope.viewModel.parcelas >= 4) $scope.viewModel.p4 = data.results[3].valor;
-                    if ($scope.viewModel.parcelas >= 5) $scope.viewModel.p5 = data.results[4].valor;
-                    if ($scope.viewModel.parcelas >= 6) $scope.viewModel.p6 = data.results[5].valor;
-                    if ($scope.viewModel.parcelas >= 7) $scope.viewModel.p7 = data.results[6].valor;
-                    if ($scope.viewModel.parcelas >= 8) $scope.viewModel.p8 = data.results[7].valor;
-                    if ($scope.viewModel.parcelas >= 9) $scope.viewModel.p9 = data.results[8].valor;
-                    if ($scope.viewModel.parcelas >= 10) $scope.viewModel.p10 = data.results[9].valor;
-                    if ($scope.viewModel.parcelas >= 11) $scope.viewModel.p11 = data.results[10].valor;
-                    if ($scope.viewModel.parcelas >= 12) $scope.viewModel.p12 = data.results[11].valor;
+                $scope.valorVelho = $scope.viewModel.valor;
+                $scope.parcelaVelho = $scope.viewModel.parcelas;
 
-                    if ($scope.viewModel.parcelas >= 1) $scope.viewModel.p1m = data.results[0].valorMax;
-                    if ($scope.viewModel.parcelas >= 2) $scope.viewModel.p2m = data.results[1].valorMax;
-                    if ($scope.viewModel.parcelas >= 3) $scope.viewModel.p3m = data.results[2].valorMax;
-                    if ($scope.viewModel.parcelas >= 4) $scope.viewModel.p4m = data.results[3].valorMax;
-                    if ($scope.viewModel.parcelas >= 5) $scope.viewModel.p5m = data.results[4].valorMax;
-                    if ($scope.viewModel.parcelas >= 6) $scope.viewModel.p6m = data.results[5].valorMax;
-                    if ($scope.viewModel.parcelas >= 7) $scope.viewModel.p7m = data.results[6].valorMax;
-                    if ($scope.viewModel.parcelas >= 8) $scope.viewModel.p8m = data.results[7].valorMax;
-                    if ($scope.viewModel.parcelas >= 9) $scope.viewModel.p9m = data.results[8].valorMax;
-                    if ($scope.viewModel.parcelas >= 10) $scope.viewModel.p10m = data.results[9].valorMax;
-                    if ($scope.viewModel.parcelas >= 11) $scope.viewModel.p11m = data.results[10].valorMax;
-                    if ($scope.viewModel.parcelas >= 12) $scope.viewModel.p12m = data.results[11].valorMax;
+                $scope.loading = false;
+            },
+            function (response) {
+                $scope.loading = false;
+                $scope.modoVenda = '';
 
-                    $scope.viewModel.valor = data.results[$scope.viewModel.parcelas].valor;
-                    $scope.viewModel.parcelasSim = $scope.viewModel.parcelas;
-
-                    $scope.valorVelho = $scope.viewModel.valor;
-                    $scope.parcelaVelho = $scope.viewModel.parcelas;
-
-                    $scope.loading = false;
-                },
-                function (response) {
-                    $scope.loading = false;
-                    $scope.modoVenda = '';
-
-                    $scope.erro = response.data.message;
-                });
-        }
+                $scope.erro = response.data.message;
+            });
+        
     }
     
     $scope.efetuarVenda = function ()
@@ -336,7 +357,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             },
             function (data)
             {                
-                $scope.viewModel.cupom = data.results;                
+                $scope.viewModel.cupom = data.results;
+                $scope.closeModalMobileAutorizado = true;
             },
             function (response)
             {

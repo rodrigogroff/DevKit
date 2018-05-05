@@ -4,18 +4,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
 
-    $scope.loading = false;
-
-    $scope.mobileVersion = false;
+    $scope.loading = false;    
     $scope.mostraModalMobile = false;
     $scope.mostraModalMobileAutorizado = false;
-
-    var w = angular.element($window);
-
-    $scope.$watch(function () { return $window.innerWidth; },
-        function (value) { $scope.width = $window.innerWidth; $scope.mobileVersion = $window.innerWidth < 1000; }, true);
-
-    w.bind('resize', function () { $scope.$apply(); });
 
     init();
 

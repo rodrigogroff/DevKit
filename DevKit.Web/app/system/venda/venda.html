@@ -1,6 +1,8 @@
 ﻿
-<div ng-if="mobileVersion == true">
+<!--mobile-->
+<div ng-if="mobileVersion && resizeReady">
     <br />
+    
     <div style="width:340px;height:450px;background-color:#e0e0e0;margin-left:16px">
 
         <div style="padding-left:20px">
@@ -187,7 +189,8 @@
     </div>
 </div>
 
-<div ng-if="mobileVersion == false">
+<!--non-mobile-->
+<div ng-if="!mobileVersion && resizeReady">
     <div class="webFormPostion">
         <section class="widgetForm" style="width:875px">
             <legend class="legendTop">

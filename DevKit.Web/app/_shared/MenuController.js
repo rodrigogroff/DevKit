@@ -1,14 +1,28 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('MenuController',
-['$scope', '$rootScope', '$location', 'AuthService', 'Api', 'version','$state',
-function ($scope, $rootScope, $location, AuthService, Api, version, $state)
+['$scope', '$rootScope', '$location', 'AuthService', 'Api', 'version', '$state', '$window',
+function ($scope, $rootScope, $location, AuthService, Api, version, $state, $window)
 {
 	$scope.version = version;
-	$scope.userTasks = 0;
-	$scope.projectTasks = 0;
-	$scope.userDeadlineTasks = 0;
 	$scope.searchParam = '';
+
+    $scope.mobileVersion = false;
+    $scope.resizeReady = false;
+
+    var w = angular.element($window);
+
+    $scope.$watch(function () { return $window.innerWidth; },
+        function (value)
+        {
+            $scope.resizeReady = false;
+            $scope.width = $window.innerWidth;
+            $scope.mobileVersion = $window.innerWidth < 1000;
+            $scope.resizeReady = true;
+        },
+        true);
+
+    w.bind('resize', function () { $scope.$apply(); $scope.resizeReady = true; });
 
 	init();
 

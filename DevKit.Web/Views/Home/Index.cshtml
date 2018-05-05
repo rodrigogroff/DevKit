@@ -80,8 +80,7 @@
 <body class="background" ng-cloak>
     <div ng-show="exibirMenu" ng-controller="MenuController">
 
-        <div ng-if="mobileVersion == true">
-            <h4>ConveyNET Benefícios</h4>
+        <div ng-if="mobileVersion">
             <div id="ui-view" style="width:100%" ui-view></div>
         </div>
 
@@ -125,7 +124,7 @@
                                     </tr>
                                 </table>
                             </td>
-                            
+
                         </tr>
                     </table>
                 </div>

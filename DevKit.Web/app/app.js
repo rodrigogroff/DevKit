@@ -12,6 +12,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
         
     .state('associado', { url: '/system/associado', templateUrl: 'app/system/associado/listingAssociados.html', controller: 'ListingAssociadosController' })
     .state('venda', { url: '/system/venda', templateUrl: 'app/system/venda/venda.html', controller: 'VendaController' })
+    .state('vendamobile', { url: '/system/vendamobile', templateUrl: 'app/system/venda/vendamobile.html', controller: 'VendaMobileController' })
     .state('cancelamento', { url: '/system/cancelamento', templateUrl: 'app/system/cancelamento/cancelamento.html', controller: 'CancelamentoController' })
 
     .state('relAssociados', { url: '/system/relAssociados', templateUrl: 'app/system/relatorios/listingRelAssociados.html', controller: 'ListingRelAssociadosController' })

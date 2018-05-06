@@ -4,14 +4,6 @@ angular.module('app.controllers').controller('LoginController',
 function ($scope, $rootScope, $location, $state, AuthService, version, Api, $stateParams, $window)
 {
     $rootScope.exibirMenu = false;
-    $scope.mobileVersion = false;
-    
-    var w = angular.element($window);
-
-    $scope.$watch(function () { return $window.innerWidth; },
-        function (value) { $scope.width = $window.innerWidth + ", " + $window.innerHeight; $scope.mobileVersion = $window.innerWidth < 1000; }, true);
-
-    w.bind('resize', function () { $scope.$apply(); });
     
 	$scope.version = version;	
 	$scope.loading = false;
@@ -100,14 +92,17 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
                     {
                         Api.LojistaMensagens.listPage({}, function (data)
                         {
-                            if (data.count == 0 && $rootScope.tipo == 1)
-                            {
-                                $state.go('venda', {});
+                            if ($rootScope.mobileVersion == true) {
+                                $state.go('vendamobile', {});
                             }
-                            else if (data.count > 0)
-                            {
-                                $state.go('mensagens', {});
-                            }                                
+                            else {
+                                if (data.count == 0 && $rootScope.tipo == 1) {
+                                    $state.go('venda', {});
+                                }
+                                else if (data.count > 0) {
+                                    $state.go('mensagens', {});
+                                }
+                            }
                         });
                     }
                 }

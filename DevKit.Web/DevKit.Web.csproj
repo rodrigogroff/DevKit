@@ -274,7 +274,9 @@
     <Content Include="app\system\relatorios\ListingLojasController.js" />
     <Content Include="app\system\relatorios\ListingRelatoriosController.js" />
     <Content Include="app\system\relatorios\ListingRelAssociadosController.js" />
+    <Content Include="app\system\venda\vendamobile.html" />
     <Content Include="app\system\venda\venda.html" />
+    <Content Include="app\system\venda\VendaMobileController.js" />
     <Content Include="app\system\venda\VendaController.js" />
     <Content Include="app\system\loja\listingLojas.html" />
     <Content Include="app\system\loja\ListingLojasController.js" />

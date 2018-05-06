@@ -80,10 +80,7 @@
 <body class="background" ng-cloak>
     <div ng-show="exibirMenu" ng-controller="MenuController">
 
-        <div ng-if="mobileVersion">
-            <div id="ui-view" style="width:100%" ui-view></div>
-        </div>
-
+        
         <div class="header" ng-if="mobileVersion == false">
             <div class="logo" style="padding-top:-4px; padding-left:-80px">
                 <a ng-click="goHome()">
@@ -298,7 +295,7 @@
                             <ul id="forms-collapseEmpLoj" class="panel-collapse collapse">
                                 <li><a ui-sref="empListagemLoja"><span>Listagem</span></a></li>
                                 @*<li><a ><span>Bloqueio convênio</span></a></li>
-                                <li><a ><span>Bonificação</span></a></li>*@
+                                    <li><a ><span>Bonificação</span></a></li>*@
                             </ul>
                         </li>
                         <li class="panel">
@@ -327,16 +324,18 @@
         </div>
 
     </div>
-	<table align="left" style="width:100%" ng-if="!mobileVersion">
-		<tr>
-			<td>
-				<div id="ui-view" style="width:100%" ui-view></div>
-			</td>
-		</tr>
-	</table>
-	@Scripts.Render("~/bundles/app")
-	<script>
+
+    <table align="left" style="width:100%">
+        <tr>
+            <td>
+                <div id="ui-view" style="width:100%" ui-view></div>
+            </td>
+        </tr>
+    </table>
+
+    @Scripts.Render("~/bundles/app")
+    <script>
 		app.constant('version', '@version'); // Version constant
-	</script>
+    </script>
 </body>
 </html>

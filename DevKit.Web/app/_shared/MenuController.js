@@ -1,61 +1,47 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('MenuController',
-['$scope', '$rootScope', '$location', 'AuthService', 'Api', 'version', '$state', '$window',
-function ($scope, $rootScope, $location, AuthService, Api, version, $state, $window)
-{
-	$scope.version = version;
-	$scope.searchParam = '';
+    ['$scope', '$rootScope', '$location', 'AuthService', 'Api', 'version', '$state', '$window',
+        function ($scope, $rootScope, $location, AuthService, Api, version, $state, $window) {
+            $scope.version = version;
+            $scope.searchParam = '';
 
-    $scope.mobileVersion = false;
-    $scope.resizeReady = false;
+            init();
 
-    var w = angular.element($window);
+            function init()
+            {
+                $rootScope.mobileVersion = $window.innerWidth < 1000;
 
-    $scope.$watch(function () { return $window.innerWidth; },
-        function (value)
-        {
-            $scope.resizeReady = false;
-            $scope.width = $window.innerWidth;
-            $scope.mobileVersion = $window.innerWidth < 1000;
-            $scope.resizeReady = true;
-        },
-        true);
+                console.log('menu init (mv) > ' + $rootScope.mobileVersion);
 
-    w.bind('resize', function () { $scope.$apply(); $scope.resizeReady = true; });
+                AuthService.fillAuthData();
 
-	init();
+                $scope.authentication = AuthService.authentication;
 
-	function init()
-	{
-		AuthService.fillAuthData();
+                var tipo = $rootScope.tipo;
 
-		$scope.authentication = AuthService.authentication;
+                if (!AuthService.authentication.isAuth)
+                    $location.path('login');
 
-        var tipo = $rootScope.tipo;
+                $scope.resizeReady = false;
+                $scope.width = $window.innerWidth;
+                $scope.mobileVersion = $window.innerWidth < 1000;
+                $scope.resizeReady = true;
+            }
 
-		if (!AuthService.authentication.isAuth)
-            $location.path('login');    
-	}
+            $scope.logOut = function () {
+                AuthService.fillAuthData();
 
-//	$scope.searchSystem = function () {
-	//	$location.path('/task/tasks').search({ searchSystem: $scope.searchParam });
-	//}
+                $scope.authentication = AuthService.authentication;
 
-    $scope.logOut = function ()
-    {
-        AuthService.fillAuthData();
+                console.log($scope.authentication)
 
-        $scope.authentication = AuthService.authentication;
+                var tipo = $scope.authentication.tipo;
 
-        console.log($scope.authentication)
+                if (tipo == 2 || tipo == 1)
+                    AuthService.logOut();
+                else
+                    window.location = '/login?tipo=' + tipo;
+            };
 
-        var tipo = $scope.authentication.tipo;
-
-        if (tipo == 2 || tipo == 1)
-            AuthService.logOut();
-        else
-            window.location = '/login?tipo=' + tipo;        
-    };
-
-}]);
+        }]);

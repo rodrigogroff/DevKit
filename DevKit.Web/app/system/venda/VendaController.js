@@ -4,7 +4,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
 
+    $scope.ready = false;
     $scope.loading = false;    
+    
     $scope.mostraModalMobile = false;
     $scope.mostraModalMobileAutorizado = false;
 
@@ -24,6 +26,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         $scope.viewModel.senhaPortadorCartao = undefined;        
         $scope.viewModel.cupom = undefined;
+
+        $scope.ready = true;
     }
 
     $scope.efetuaVendaMobile = function ()

@@ -45,7 +45,18 @@
 
             }, true);
 
+
+            $scope.acesso_zero = false;
+
             $scope.$watch("viewModel.stAcesso", function (novo, anterior) {
+
+                if (novo == '0')
+                    $scope.acesso_zero = true;
+
+                console.log(novo);
+
+                if ($scope.acesso_zero == true)
+                    novo = '0' + novo;
 
                 if (novo != undefined)
                     if (novo.length == 4)
@@ -58,15 +69,22 @@
             $scope.pulaAcesso = function () { document.getElementById("cartAcesso").focus(); }
             $scope.pulaVenc = function () { document.getElementById("cartVenc").focus(); }
 
-            $scope.conferirCartao = function () {
+            $scope.conferirCartao = function ()
+            {
+                var stA = $scope.viewModel.stAcesso.toString();
+                var stV = $scope.viewModel.stVencimento.toString();
+
                 $scope.viewModel.error = '';
                 $scope.valorVelho = '';
                 $scope.parcelaVelho = '';
 
+                if (stA.length == 3) stA = "0" + stA;
+                if (stV.length == 3) stV = "0" + stV;
+
                 $scope.stEmpresa_fail = invalidCheck($scope.viewModel.stEmpresa);
                 $scope.stMatricula_fail = invalidCheck($scope.viewModel.stMatricula);
-                $scope.stAcesso_fail = invalidCheck($scope.viewModel.stAcesso);
-                $scope.stVencimento_fail = invalidCheck($scope.viewModel.stVencimento);
+                $scope.stAcesso_fail = invalidCheck(stA);
+                $scope.stVencimento_fail = invalidCheck(stV);
 
                 if ($scope.stEmpresa_fail ||
                     $scope.stMatricula_fail ||
@@ -77,8 +95,8 @@
 
                 var tag = $scope.viewModel.stEmpresa +
                     $scope.viewModel.stMatricula +
-                    $scope.viewModel.stAcesso +
-                    $scope.viewModel.stVencimento;
+                    stA +
+                    stV;
 
                 if (tag == $scope.lastTag)
                     return;
@@ -89,26 +107,26 @@
                 $scope.loading = true;
 
                 Api.Associado.listPage({
-                    empresa: $scope.viewModel.stEmpresa,
-                    matricula: $scope.viewModel.stMatricula,
-                    acesso: $scope.viewModel.stAcesso,
-                    vencimento: $scope.viewModel.stVencimento,
+                    empresa: $scope.viewModel.stEmpresa.toString(),
+                    matricula: $scope.viewModel.stMatricula.toString(),
+                    acesso: stA,
+                    vencimento: stV,
                 },
-                    function (data) {
-                        $scope.viewModel.data = data.results[0];
-                        $scope.loading = false;
-                    },
-                    function (response) {
-                        $scope.viewModel.error = "Cartão Inválido";
-                        $scope.loading = false;
-                        $scope.viewModel.data = undefined;
-                        $scope.viewModel.parcelas = '';
-                        $scope.viewModel.valor = '';
-                        $scope.simulacao = undefined;
-                        $scope.modoVenda = '';
-                        $scope.erro = '';
-                        $scope.lastTag = '';
-                    });
+                function (data) {
+                    $scope.viewModel.data = data.results[0];
+                    $scope.loading = false;
+                },
+                function (response) {                        
+                    $scope.loading = false;
+                    $scope.viewModel.error = "Cartão Inválido";
+                    $scope.viewModel.data = undefined;
+                    $scope.viewModel.parcelas = '';
+                    $scope.viewModel.valor = '';
+                    $scope.simulacao = undefined;
+                    $scope.modoVenda = '';
+                    $scope.erro = '';
+                    $scope.lastTag = '';
+                });
             }
 
             var invalidCheck = function (element) {
@@ -287,14 +305,26 @@
                         },
                         function (data) {
                             $scope.viewModel.cupom = data.results;
-                            $scope.closeModalMobileAutorizado = true;
                             $scope.loading = false;
+
+                            $scope.mostraModalMobileAutorizado = true;
+
                         },
                         function (response) {
                             $scope.falhaVendaMsg = response.data.message;
                             $scope.loading = false;
                         });
                 }
+            }
+
+            $scope.closeModalMobileEnviaEmail = function () {
+
+                $scope.mostraModalMobileEnviaEmail = false;
+                $scope.cancelarSimula();
+            }
+
+            $scope.confirmarMobileEnviarEmail = function () {
+
             }
 
         }]);

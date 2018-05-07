@@ -2,7 +2,7 @@
 <!--mobile-->
 
 <br />
-<div style="width:340px;height:450px;background-color:#e0e0e0;margin-left:16px">
+<div style="width:340px;height:490px;background-color:#e0e0e0;margin-left:16px">
     <div style="padding-left:20px">
         <br />
         <table>
@@ -13,41 +13,44 @@
             </tr>
         </table>
         <br />
-        Cartão <i class="fa fa-spinner fa-spin" ng-show="loading"></i><br />
+        Cartão<br />
         <table>
             <tr height="40px">
                 <td width="75px">
-                    <input type="text" focus="true" numeric-only maxlength="6" class="form-control input-transparent"
-                            ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800" tabindex="1"
-                            ng-keyup="$event.keyCode == 13 && pulaMatricula()">
+                    <input type="number" focus="true" numeric-only maxlength="6" class="form-control input-transparent"
+                           ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800" tabindex="1"
+                           ng-keyup="$event.keyCode == 13 && pulaMatricula()">
                 </td>
                 <td width="10px"></td>
                 <td width="75px">
-                    <input type="text" numeric-only maxlength="6" class="form-control input-transparent"
-                            id="cartMat"
-                            ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800" tabindex="2"
-                            ng-maxlength="6" auto-next tabindex="2"
-                            ng-keyup="$event.keyCode == 13 && pulaAcesso()">
+                    <input type="number" numeric-only maxlength="6" class="form-control input-transparent"
+                           id="cartMat"
+                           ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800" tabindex="2"
+                           ng-maxlength="6" auto-next tabindex="2"
+                           ng-keyup="$event.keyCode == 13 && pulaAcesso()">
                 </td>
                 <td width="10px"></td>
                 <td width="60px">
-                    <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
-                            id="cartAcesso"
-                            ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" tabindex="3"
-                            ng-maxlength="4" auto-next tabindex="3"
-                            ng-keyup="$event.keyCode == 13 && pulaVenc()">
+                    <input type="number" numeric-only maxlength="4" class="form-control input-transparent"
+                           id="cartAcesso"
+                           ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" tabindex="3"
+                           ng-maxlength="4" auto-next tabindex="3"
+                           ng-keyup="$event.keyCode == 13 && pulaVenc()">
                 </td>
                 <td width="10px"></td>
                 <td width="60px">
-                    <input type="text" numeric-only maxlength="4" class="form-control input-transparent"
-                            id="cartVenc"
-                            ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800" tabindex="4"
-                            ng-maxlength="4" auto-next tabindex="4"
-                            ng-keyup="$event.keyCode == 13 && conferirCartao() && focoValor()">
+                    <input type="number" numeric-only maxlength="4" class="form-control input-transparent"
+                           id="cartVenc"
+                           ng-model="viewModel.stVencimento" style="font-size:14px; font-weight:800" tabindex="4"
+                           ng-maxlength="4" auto-next tabindex="4"
+                           ng-keyup="$event.keyCode == 13 && conferirCartao() && focoValor()">
                 </td>
                 <td width="10px"></td>
             </tr>
         </table>
+
+        <br />
+        <button class="btn btn-info" ng-click="conferirCartao()">Confirma</button><br />
 
         <br />
 
@@ -55,9 +58,9 @@
             {{viewModel.error}}
         </span>
 
-        <div class="btn btn-warning btn-lg" ng-if="viewModel.data.bloqueado == true">
+        <span style="color:red" ng-if="viewModel.data.bloqueado == true">
             Atenção: cartão situação BLOQUEADO. Entre em contato com sua entidade.
-        </div>
+        </span>
 
         <div ng-if="viewModel.data.nome">
             Nome associado: <br />
@@ -75,8 +78,8 @@
                 </td>
                 <td width="90px">
                     <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
-                            focus="true"
-                            ng-model="viewModel.valor">
+                           focus="true"
+                           ng-model="viewModel.valor">
                 </td>
             </tr>
             <tr height="40px">
@@ -87,8 +90,8 @@
                     <span class="btn btn-xs btn-danger" ng-show="parcelas_fail">!</span>
                 </td>
                 <td>
-                    <input type="text" numeric-only maxlength="2" class="form-control input-transparent"
-                            ng-model="viewModel.parcelas">
+                    <input type="number" numeric-only maxlength="2" class="form-control input-transparent"
+                           ng-model="viewModel.parcelas">
                 </td>
             </tr>
         </table>
@@ -96,7 +99,7 @@
         <br />
         <br />
 
-        <table ng-if="viewModel.data.nome && !loading" >
+        <table ng-if="viewModel.data.nome && !loading">
             <tr>
                 <td>
                     <button class="btn btn-default" ng-click="cancelarSimula()">Cancelar</button>
@@ -109,8 +112,8 @@
         </table>
 
         <div class="modal-backdrop"
-                ng-if="mostraModalMobile"
-                style="background: rgba(55, 55, 55, 0.5 );">
+             ng-if="mostraModalMobile"
+             style="background: rgba(55, 55, 55, 0.5 );">
             <div class="modal-dialog" style="width:320px;margin-left:32px">
                 <br />
                 <br />
@@ -124,8 +127,8 @@
                             <td width="20px"></td>
                             <td width="90px">
                                 <input type="password" focus="true" numeric-only maxlength="4"
-                                        ng-model="viewModel.senhaPortadorCartao"
-                                        ng-keyup="$event.keyCode == 13 && confirmarMobile()" />
+                                       ng-model="viewModel.senhaPortadorCartao"
+                                       ng-keyup="$event.keyCode == 13 && confirmarMobile()" />
                             </td>
                             <td width="20px"></td>
                         </tr>
@@ -151,8 +154,8 @@
         </div>
 
         <div class="modal-backdrop"
-                ng-if="mostraModalMobileAutorizado"
-                style="background: rgba(55, 55, 55, 0.5 );">
+             ng-if="mostraModalMobileAutorizado"
+             style="background: rgba(55, 55, 55, 0.5 );">
             <div class="modal-dialog" style="width:320px;margin-left:32px">
                 <br />
                 <br />
@@ -162,6 +165,8 @@
                     <br />
                     <h3>Venda Autorizada!</h3>
                     <br />
+                    <br />
+
                     <table align="center">
                         <tr>
                             <td>
@@ -174,6 +179,36 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal-backdrop"
+             ng-if="mostraModalMobileEnviaEmail"
+             style="background: rgba(55, 55, 55, 0.5 );">
+            <div class="modal-dialog" style="width:320px;margin-left:32px">
+                <br />
+                <br />
+                <br />
+                <div class="modal-content" style="color:black">
+                    <legend style="color:black">Cupom de venda</legend>
+                    <br />
+                    <h3>Enviar cupom de venda por email?</h3>
+                    <br />
+                    <br />
+
+                    <table align="center">
+                        <tr>
+                            <td>
+                                <button class="btn btn-default" ng-click="closeModalMobileEnviaEmail()"> Não </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-success" ng-click="confirmarMobileEnviarEmail()"> Sim </button>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+
         <br />
         <span style="color:red">{{falhaVendaMsg}}</span>
     </div>

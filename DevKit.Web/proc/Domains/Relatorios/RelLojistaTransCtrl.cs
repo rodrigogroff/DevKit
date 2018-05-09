@@ -234,6 +234,7 @@ namespace DevKit.Web.Controllers
                             cupom = new Cupom().Venda ( db, 
                                                         cart, 
                                                         prop, 
+                                                        Convert.ToDateTime(trans.dt_transacao).ToString("dd/MM/yyyy HH:mm"),
                                                         trans.nu_nsu.ToString(), 
                                                         nomeTerm, 
                                                         (int) trans.nu_parcelas, 

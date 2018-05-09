@@ -9,7 +9,8 @@
 
             init();
 
-            function init() {
+            function init()
+            {
                 $scope.loading = false;
                 $scope.lastTag = '';
                 $scope.modoVenda = '';

@@ -892,6 +892,7 @@
     <Compile Include="proc\Domains\Relatorios\RelAssociadosCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\ExtratoAssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\LimitesAssociadoCtrl.cs" />
+    <Compile Include="proc\Domains\Services\EnvioEmailCtrl.cs" />
     <Compile Include="proc\Domains\Services\ConfereNSUCtrl.cs" />
     <Compile Include="proc\Domains\Services\CancelaVendaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\AssociadoCtrl.cs" />

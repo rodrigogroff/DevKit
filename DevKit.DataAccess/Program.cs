@@ -6,6 +6,7 @@ using System.Collections;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Net.Mail;
 
 namespace GetStarted
 {
@@ -13,16 +14,60 @@ namespace GetStarted
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Patch?");
+
             using (var db = new AutorizadorCNDB())
             {
-                Console.WriteLine("Patch?");
+                var strPatch = Console.ReadLine();
 
-                var strPatch = Console.ReadLine().ToUpper();
+                strPatch = strPatch.ToUpper();
 
                 switch (strPatch)
                 {
+                    case "TESTEEMAIL":
+                        {
+                            var param_usuario = "conveynet@conveynet.com.br";
+                            var email = "gvnfraga@gmail.com,rodrigo.groff@gmail.com";
+
+                            using (var client = new SmtpClient
+                            {
+                                Port = 587,
+                                Host = "smtp.conveynet.com.br",
+                                EnableSsl = false,
+                                Timeout = 10000,
+                                DeliveryMethod = SmtpDeliveryMethod.Network,
+                                UseDefaultCredentials = false,
+                                Credentials = new System.Net.NetworkCredential(param_usuario, "c917800")
+                            })
+                            {
+                                try
+                                {
+                                    string assunto = "bla bla assunto", texto = "este é o texto!";
+
+                                    Console.WriteLine("Email:" + email);
+
+                                    var mm = new MailMessage(param_usuario,
+                                                               email,
+                                                               assunto,
+                                                               texto)
+                                    {
+                                        BodyEncoding = UTF8Encoding.UTF8,
+                                        DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
+                                    };
+
+                                    client.Send(mm);
+                                }
+                                catch (SystemException ex)
+                                {
+                                    Console.WriteLine(ex.ToString());
+                                }
+                            }
+
+                            break;
+                        }
+
                     case "FIXABRIL9620":
-                    case "":
+                    case "WHATEVER":
                     {
                         var dtIni = new DateTime(2018, 3, 2);
                         var dtFim = new DateTime(2018, 3, 28).AddDays(1);

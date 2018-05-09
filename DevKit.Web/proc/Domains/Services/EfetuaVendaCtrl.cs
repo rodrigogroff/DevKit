@@ -257,6 +257,7 @@ namespace DevKit.Web.Controllers
                 Venda ( db, 
                         associadoPrincipal, 
                         dadosProprietario, 
+                        DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"),
                         nsu_retorno,
                         terminal,
                         (int) parcelas, 

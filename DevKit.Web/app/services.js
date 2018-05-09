@@ -74,5 +74,6 @@ angular.module('app.services', ['ngResource'])
         SituacoesCombo: $resource('api/situacoes/:id', {}, opcoes),
         ExpedicoesCombo: $resource('api/expedicoes/:id', {}, opcoes),
         ConveniosCombo: $resource('api/convenios/:id', {}, opcoes),
+        EnvioEmail: $resource('api/envioemail/:id', {}, opcoes),
 	};
 }]);

@@ -44,6 +44,7 @@ namespace DevKit.Web.Controllers
         public List<string> Venda ( AutorizadorCNDB db, 
                                     T_Cartao associadoPrincipal, 
                                     T_Proprietario dadosProprietario,
+                                    string dataVenda,
                                     string nsu_retorno, 
                                     string terminal, 
                                     int parcelas, 
@@ -71,7 +72,7 @@ namespace DevKit.Web.Controllers
             cupom.Add(db.currentLojista.st_endereco.Replace("{SE$3}", "") + " " + db.currentLojista.st_cidade + " / " + db.currentLojista.st_estado);
             cupom.Add("Estabelecimento: " + db.currentLojista.st_loja);
             cupom.Add("Cartão: " + associadoPrincipal.st_empresa + associadoPrincipal.st_matricula);
-            cupom.Add("Data transação: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
+            cupom.Add("Data transação: " + dataVenda);
             cupom.Add("NSU: " + nsu_retorno);
             cupom.Add("Terminal: " + terminal);
             cupom.Add("VALOR TOTAL: R$ " + mon.setMoneyFormat(valor));

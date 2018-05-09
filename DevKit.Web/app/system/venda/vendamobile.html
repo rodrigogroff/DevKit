@@ -118,8 +118,11 @@
                 <br />
                 <br />
                 <div class="modal-content" style="color:black">
+                    
                     <legend style="color:black">Senha do associado</legend>
+
                     <br />
+                    
                     <table class="widget" align="center">
                         <tr height="22px"></tr>
                         <tr>
@@ -189,7 +192,13 @@
                 <div class="modal-content" style="color:black">
                     <legend style="color:black">Cupom de venda</legend>
                     <br />
-                    <h3>Enviar cupom de venda por email?</h3>
+                    Enviar cupom de venda por email?<br />
+                    <br />
+
+                    <div width="200px">
+                        <input type="text" focus="true" maxlength="99" ng-model="email" />
+                    </div>                    
+
                     <br />
                     <br />
 
@@ -197,7 +206,7 @@
                         <tr>
                             <td>
                                 <button class="btn btn-default" ng-click="closeModalMobileEnviaEmail()"> Não </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-success" ng-click="confirmarMobileEnviarEmail()"> Sim </button>
+                                <button class="btn btn-success" ng-click="confirmarMobileEnviarEmail()"> Enviar comprovante </button>
                             </td>
                         </tr>
                     </table>

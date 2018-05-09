@@ -64,6 +64,8 @@ namespace DevKit.Web.Controllers
                                      select e).
                                      FirstOrDefault();
 
+            
+
             var codAcessoCalc = new CodigoAcesso().Obter(empresa,
                                                            matricula,
                                                            associado.st_titularidade,
@@ -155,7 +157,8 @@ namespace DevKit.Web.Controllers
                         dispExtra = mon.setMoneyFormat ((long)associado.vr_extraCota),
                         maxParcelasEmpresa = tEmpresa.nu_parcelas.ToString(),
                         bloqueado = associado.tg_status == '1' ? true : false,
-                        lstParcelas = lstParcelas
+                        lstParcelas = lstParcelas,
+                        email = dadosProprietario.st_email
                     }
                 }
             });

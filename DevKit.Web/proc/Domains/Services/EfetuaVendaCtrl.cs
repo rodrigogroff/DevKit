@@ -52,223 +52,233 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest("Não autorizado!");
 
-            // =============================
-            // obtem terminal
-            // =============================
-                        
-            terminal = userLoggedName.PadLeft(8,'0');
-
-            // =============================
-            // verifica cartão
-            // =============================
-
-            #region - code - 
-
-            var associadoPrincipal = (from e in db.T_Cartao
-                             where e.st_empresa == empresa
-                             where e.st_matricula == matricula
-                             where e.st_titularidade == "01"
-                             select e).
-                             FirstOrDefault();
-
-            var dadosProprietario = ( from e in db.T_Proprietario
-                                      where e.i_unique == associadoPrincipal.fk_dadosProprietario
-                                      select e).
-                                      FirstOrDefault();
-
-            int titularidadeFinal = 1, via = 1;
-
-            var calcAcesso = new CodigoAcesso();
-
-            var codAcessoCalc = calcAcesso.Obter ( empresa,
-                                                   matricula, 
-                                                   titularidadeFinal, 
-                                                   via, 
-                                                   dadosProprietario.st_cpf );
-            
-            while (codAcessoCalc != codAcesso)
+            try
             {
-                via = 0;
+                // =============================
+                // obtem terminal
+                // =============================
 
-                for (int t=0; t < 9; ++t)
+                terminal = userLoggedName.PadLeft(8, '0');
+
+                // =============================
+                // verifica cartão
+                // =============================
+
+                #region - code - 
+
+                var associadoPrincipal = (from e in db.T_Cartao
+                                          where e.st_empresa == empresa
+                                          where e.st_matricula == matricula
+                                          where e.st_titularidade == "01"
+                                          select e).
+                                 FirstOrDefault();
+
+                var dadosProprietario = (from e in db.T_Proprietario
+                                         where e.i_unique == associadoPrincipal.fk_dadosProprietario
+                                         select e).
+                                          FirstOrDefault();
+
+                int titularidadeFinal = 1, via = 1;
+
+                var calcAcesso = new CodigoAcesso();
+
+                var codAcessoCalc = calcAcesso.Obter(empresa,
+                                                       matricula,
+                                                       titularidadeFinal,
+                                                       via,
+                                                       dadosProprietario.st_cpf);
+
+                while (codAcessoCalc != codAcesso)
                 {
-                    codAcessoCalc = calcAcesso.Obter ( empresa, 
-                                                       matricula, 
-                                                       titularidadeFinal, 
-                                                       ++via, 
-                                                       dadosProprietario.st_cpf );
+                    via = 0;
+
+                    for (int t = 0; t < 9; ++t)
+                    {
+                        codAcessoCalc = calcAcesso.Obter(empresa,
+                                                           matricula,
+                                                           titularidadeFinal,
+                                                           ++via,
+                                                           dadosProprietario.st_cpf);
+
+                        if (codAcessoCalc == codAcesso)
+                            break;
+                    }
 
                     if (codAcessoCalc == codAcesso)
                         break;
+
+                    titularidadeFinal++;
+
+                    if (titularidadeFinal > 9)
+                        break;
                 }
 
-                if (codAcessoCalc == codAcesso)
-                    break;
-
-                titularidadeFinal++;
-            }
-
-            if (titularidadeFinal != 1 )
-            {
-                var associado = (from e in db.T_Cartao
-                                 where e.st_empresa == empresa
-                                 where e.st_matricula == matricula
-                                 where e.st_titularidade == titularidadeFinal.ToString().PadLeft(2,'0')
-                                 select e).
-                                 FirstOrDefault();
-
-                if (associado.st_venctoCartao != stVencimento)
-                    return BadRequest("Cartão inválido (0xA1)");
-            }
-            else
-            {
-                if (associadoPrincipal.st_venctoCartao != stVencimento)
-                    return BadRequest("Cartão inválido (0xA)");
-            }
-
-            #endregion
-
-            // verifica duplicidade
-
-            var ultParcela = (from e in db.T_Parcelas
-                            where e.fk_cartao == associadoPrincipal.i_unique
-                            where e.fk_loja == db.currentLojista.i_unique
-                            where e.nu_parcela == 1
-                            orderby e.dt_inclusao descending
-                            select e).
-                            FirstOrDefault();
-
-            if (ultParcela != null)
-            {
-                var ultLog = (from e in db.LOG_Transacoes where e.i_unique == ultParcela.fk_log_transacoes select e).FirstOrDefault();
-
-                if (ultLog.vr_total == valor)
+                if (titularidadeFinal != 1 && titularidadeFinal < 10)
                 {
-                    var ts = (DateTime.Now - ultLog.dt_transacao).Value;
+                    var associado = (from e in db.T_Cartao
+                                     where e.st_empresa == empresa
+                                     where e.st_matricula == matricula
+                                     where e.st_titularidade == titularidadeFinal.ToString().PadLeft(2, '0')
+                                     select e).
+                                     FirstOrDefault();
 
-                    if (ts.TotalMinutes < 5)
-                        return BadRequest("Transação em duplicidade de valor");
+                    if (associado.st_venctoCartao != stVencimento)
+                        return BadRequest("Cartão inválido (0xA1)");
                 }
-            }
-
-            var sc = new SocketConvey();
-
-            var sck = sc.connectSocket(cnet_server, cnet_port);
-
-            if (sck == null)
-                return BadRequest("Falha de comunicação com servidor (0x1)");
-
-            // #############################################################
-            // #############################################################
-
-            // Venda
-
-            // #############################################################
-            // #############################################################
-
-            strMessage = MontaVendaDigitada(titularidadeFinal);
-            
-            if (!sc.socketEnvia(sck, strMessage))
-            {
-                sck.Close();
-                return BadRequest("Falha de comunicação com servidor (0x2)");
-            }
-                
-            retorno = sc.socketRecebe(sck);
-
-            if (retorno.Length < 6 )
-            {
-                sck.Close();
-                return BadRequest("Falha de comunicação com servidor (0x3)");
-            }
-                
-            var codResp = retorno.Substring(2, 4);
-
-            if (codResp != "0000")
-            {
-                sck.Close();
-
-                if (codResp == "0505")
+                else
                 {
-                    return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                    if (associadoPrincipal.st_venctoCartao != stVencimento)
+                        return BadRequest("Cartão inválido (0xA)");
                 }
-                else if (codResp == "4343")
-                {
-                    var numErros = (from e in db.T_Cartao
-                                    where e.i_unique == associadoPrincipal.i_unique
-                                    select e.nu_senhaErrada).
-                                    FirstOrDefault();
 
-                    if (numErros == 3)
+                #endregion
+
+                // verifica duplicidade
+
+                var ultParcela = (from e in db.T_Parcelas
+                                  where e.fk_cartao == associadoPrincipal.i_unique
+                                  where e.fk_loja == db.currentLojista.i_unique
+                                  where e.nu_parcela == 1
+                                  orderby e.dt_inclusao descending
+                                  select e).
+                                FirstOrDefault();
+
+                if (ultParcela != null)
+                {
+                    var ultLog = (from e in db.LOG_Transacoes where e.i_unique == ultParcela.fk_log_transacoes select e).FirstOrDefault();
+
+                    if (ultLog.vr_total == valor)
                     {
-                        // ultima!
-                        return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
+                        var ts = (DateTime.Now - ultLog.dt_transacao).Value;
+
+                        if (ts.TotalMinutes < 5)
+                            return BadRequest("Transação em duplicidade de valor");
                     }
-                    else if (numErros >= 4)
+                }
+
+                var sc = new SocketConvey();
+
+                var sck = sc.connectSocket(cnet_server, cnet_port);
+
+                if (sck == null)
+                    return BadRequest("Falha de comunicação com servidor (0x1)");
+
+                // #############################################################
+                // #############################################################
+
+                // Venda
+
+                // #############################################################
+                // #############################################################
+
+                strMessage = MontaVendaDigitada(titularidadeFinal);
+
+                if (!sc.socketEnvia(sck, strMessage))
+                {
+                    sck.Close();
+                    return BadRequest("Falha de comunicação com servidor (0x2)");
+                }
+
+                retorno = sc.socketRecebe(sck);
+
+                if (retorno.Length < 6)
+                {
+                    sck.Close();
+                    return BadRequest("Falha de comunicação com servidor (0x3)");
+                }
+
+                var codResp = retorno.Substring(2, 4);
+
+                if (codResp != "0000")
+                {
+                    sck.Close();
+
+                    if (codResp == "0505")
                     {
                         return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
                     }
-                    else
+                    else if (codResp == "4343")
                     {
-                        var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
+                        var numErros = (from e in db.T_Cartao
+                                        where e.i_unique == associadoPrincipal.i_unique
+                                        select e.nu_senhaErrada).
+                                        FirstOrDefault();
 
-                        return BadRequest("(43) Senha inválida! " + tentativas);
-                    }                    
+                        if (numErros == 3)
+                        {
+                            // ultima!
+                            return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
+                        }
+                        else if (numErros >= 4)
+                        {
+                            return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                        }
+                        else
+                        {
+                            var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
+
+                            return BadRequest("(43) Senha inválida! " + tentativas);
+                        }
+                    }
+                    else
+                        return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
                 }
-                else
-                    return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
-            }                
 
-            nsu_retorno = ObtemNsuRetorno(retorno);
+                nsu_retorno = ObtemNsuRetorno(retorno);
 
-            // #############################################################
-            // #############################################################
+                // #############################################################
+                // #############################################################
 
-            // Confirmação
+                // Confirmação
 
-            // #############################################################
-            // #############################################################
+                // #############################################################
+                // #############################################################
 
-            strMessage = MontaConfirmacao(titularidadeFinal);
-            
-            if (!sc.socketEnvia(sck, strMessage))
-            {
+                strMessage = MontaConfirmacao(titularidadeFinal);
+
+                if (!sc.socketEnvia(sck, strMessage))
+                {
+                    sck.Close();
+                    return BadRequest("Falha de comunicação com servidor (0x4)");
+                }
+
+                retorno = sc.socketRecebe(sck);
+
                 sck.Close();
-                return BadRequest("Falha de comunicação com servidor (0x4)");
+
+                if (retorno.Length < 6)
+                    return BadRequest("Falha de comunicação com servidor (0x5)");
+
+                codResp = retorno.Substring(2, 4);
+
+                if (codResp != "0000")
+                    return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+
+                CleanCache(db, CacheTags.associado, idCartao);
+
+                sck.Close();
+
+                var cupom = new Cupom().
+                    Venda(db,
+                            associadoPrincipal,
+                            dadosProprietario,
+                            DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"),
+                            nsu_retorno,
+                            terminal,
+                            (int)parcelas,
+                            valor,
+                            p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+
+                return Ok(new
+                {
+                    count = 1,
+                    results = cupom
+                });
             }
-                
-            retorno = sc.socketRecebe(sck);
-
-            sck.Close();
-
-            if (retorno.Length < 6)
-                return BadRequest("Falha de comunicação com servidor (0x5)");
-                
-            codResp = retorno.Substring(2, 4);
-
-            if (codResp != "0000")
-                return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
-
-            CleanCache(db, CacheTags.associado, idCartao );
-
-            sck.Close();
-                        
-            var cupom = new Cupom().
-                Venda ( db, 
-                        associadoPrincipal, 
-                        dadosProprietario, 
-                        DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"),
-                        nsu_retorno,
-                        terminal,
-                        (int) parcelas, 
-                        valor, 
-                        p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12 );
-            
-            return Ok(new
+            catch (SystemException ex)
             {
-                count = 1,
-                results = cupom 
-            });
+                return BadRequest(ex.ToString());
+            }
         }
 
         public string MontaVendaDigitada(int titularidade)

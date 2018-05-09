@@ -115,6 +115,7 @@
                 },
                 function (data) {
                     $scope.viewModel.data = data.results[0];
+                    $scope.email = $scope.viewModel.data.email;
                     $scope.loading = false;
                 },
                 function (response) {                        
@@ -307,15 +308,28 @@
                         function (data) {
                             $scope.viewModel.cupom = data.results;
                             $scope.loading = false;
-
                             $scope.mostraModalMobileAutorizado = true;
-
                         },
                         function (response) {
                             $scope.falhaVendaMsg = response.data.message;
                             $scope.loading = false;
+
+                            // RETIRAR!!!!
+                            // ===========================================
+                            $scope.mostraModalMobileAutorizado = true;
+                            // ===========================================
                         });
                 }
+            }
+
+            $scope.closeModalMobile = function () {
+                $scope.mostraModalMobile = undefined;
+                $scope.loading = false;
+            }
+
+            $scope.closeModalMobileAutorizado = function () {
+                $scope.mostraModalMobileAutorizado = false;
+                $scope.mostraModalMobileEnviaEmail = true;
             }
 
             $scope.closeModalMobileEnviaEmail = function () {
@@ -329,4 +343,3 @@
             }
 
         }]);
-

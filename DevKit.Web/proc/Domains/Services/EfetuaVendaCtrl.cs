@@ -269,6 +269,12 @@ namespace DevKit.Web.Controllers
                             valor,
                             p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
 
+                var ltrUltimo = db.LOG_Transacoes.Where(y => y.fk_cartao == associadoPrincipal.i_unique).OrderByDescending(y => y.i_unique).FirstOrDefault();
+
+                ltrUltimo.st_msg_transacao = "Mobile Payment";
+
+                db.Update(ltrUltimo);
+                
                 return Ok(new
                 {
                     count = 1,

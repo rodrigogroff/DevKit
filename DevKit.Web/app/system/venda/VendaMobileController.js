@@ -115,7 +115,8 @@
                 },
                 function (data) {
                     $scope.viewModel.data = data.results[0];
-                    $scope.email = $scope.viewModel.data.email;
+                    $scope.viewModel.emailCupom = $scope.viewModel.data.email;
+                    
                     $scope.loading = false;
                 },
                 function (response) {                        
@@ -339,8 +340,15 @@
                 $scope.cancelarSimula();
             }
 
-            $scope.confirmarMobileEnviarEmail = function () {
-
+            $scope.confirmarMobileEnviarEmail = function ()
+            {
+                Api.EnvioEmail.listPage(
+                {
+                    cartao: $scope.viewModel.data.id,
+                    email: $scope.viewModel.emailCupom
+                },
+                function (data) { $scope.closeModalMobileEnviaEmail(); },
+                function (response) { });
             }
 
         }]);

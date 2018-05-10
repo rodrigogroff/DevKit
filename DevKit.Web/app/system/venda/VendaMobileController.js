@@ -6,6 +6,7 @@
             $scope.loading = false;
             $scope.mostraModalMobile = false;
             $scope.mostraModalMobileAutorizado = false;
+            $scope.processandoVenda = false;
 
             init();
 
@@ -327,11 +328,13 @@
             $scope.closeModalMobile = function () {
                 $scope.mostraModalMobile = undefined;
                 $scope.loading = false;
+                $scope.processandoVenda = false;
             }
 
             $scope.closeModalMobileAutorizado = function () {
                 $scope.mostraModalMobileAutorizado = false;
                 $scope.mostraModalMobileEnviaEmail = true;
+                $scope.processandoVenda = false;
             }
 
             $scope.closeModalMobileEnviaEmail = function () {

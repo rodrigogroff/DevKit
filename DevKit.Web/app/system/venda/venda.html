@@ -1,5 +1,4 @@
 ﻿
-<!--non-mobile-->
 <div class="webFormPostion">
     <section class="widgetForm" style="width:875px">
         <legend class="legendTop">
@@ -415,8 +414,6 @@
                             <br />
                         </div>
 
-
-
                         <div class="modal-backdrop"
                                 ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined && viewModel.requerSenha == 1"
                                 style="background: rgba(55, 55, 55, 0.5 );">
@@ -446,13 +443,19 @@
                                     <br />
                                     <table align="center">
                                         <tr>
-                                            <td>
-                                                <button class="btn btn-default" ng-click="closeModalSenha()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <td ng-if="processandoVenda == false">
+                                                <button class="btn btn-default" ng-click="closeModalSenha()"> Cancelar </button>
+                                            </td>
+                                            <td ng-if="processandoVenda == false" width="10px"></td>
+                                            <td ng-if="processandoVenda == true">
+                                                <i class="fa fa-spinner fa-spin"></i> Processando venda
+                                            </td>
+                                            <td ng-if="processandoVenda == false">
                                                 <button class="btn btn-success"
                                                         ng-disabled="viewModel.senhaPortadorCartao.length != 4"
                                                         ng-click="confirmar()">
                                                     Confirmar
-                                                </button>
+                                                </button>                                                
                                             </td>
                                         </tr>
                                     </table>
@@ -519,11 +522,11 @@
                             </tr>
                         </table>
 
-                        <span ng-if="modoVenda == 'simulacao'" align="center"><b>CONDIÇÕES DE PARCELAMENTO</b></span><br />
+                        <span ng-if="modoVenda == 'simulacao' && exibirDados == true" align="center"><b>CONDIÇÕES DE PARCELAMENTO</b></span><br />
 
                         <br />
 
-                        <table ng-if="modoVenda == 'simulacao'" class="table table-hover" style="font-size:16px">
+                        <table ng-if="modoVenda == 'simulacao' && exibirDados == true" class="table table-hover" style="font-size:16px">
                             <thead ng-show="viewModel.parcelasSim >= 1">
                                 <tr>
                                     <th>Parcela</th>

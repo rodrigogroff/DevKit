@@ -6,9 +6,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.ready = false;
     $scope.loading = false;    
-    
-    $scope.mostraModalMobile = false;
-    $scope.mostraModalMobileAutorizado = false;
+
+    $scope.processandoVenda = false;    
 
     init();
 
@@ -28,32 +27,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.viewModel.cupom = undefined;
 
         $scope.ready = true;
-    }
-
-    $scope.efetuaVendaMobile = function ()
-    {
-        $scope.valor_fail = invalidCheck($scope.viewModel.valor);
-        $scope.parcelas_fail = invalidCheck($scope.viewModel.parcelas);
-
-        if ($scope.valor_fail || $scope.parcelas_fail)
-            return;
-
-        $scope.parcelar();
-
-        $scope.mostraModalMobile = true;        
-    }
-
-    $scope.closeModalMobile = function () {
-        $scope.mostraModalMobile = false;
-    }
-
-    $scope.closeModalMobileAutorizado = function () {
-        $scope.closeModalMobileAutorizado = false;
-    }
-
-    $scope.confirmarMobile = function () {
-        $scope.efetuarVenda();
-        $scope.mostraModalMobile = false;
     }
 
     $scope.toggleExibirDados = function () {
@@ -257,13 +230,20 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 if ($scope.viewModel.parcelas >= 11) $scope.viewModel.p11m = data.results[10].valorMax;
                 if ($scope.viewModel.parcelas >= 12) $scope.viewModel.p12m = data.results[11].valorMax;
 
+                $scope.loading = false;
+
                 $scope.viewModel.valor = data.results[$scope.viewModel.parcelas].valor;
                 $scope.viewModel.parcelasSim = $scope.viewModel.parcelas;
 
-                $scope.valorVelho = $scope.viewModel.valor;
-                $scope.parcelaVelho = $scope.viewModel.parcelas;
-
-                $scope.loading = false;
+                if ($scope.valorVelho == $scope.viewModel.valor && $scope.parcelaVelho == $scope.viewModel.parcelas)
+                {
+                    $scope.efetuarVenda();
+                }
+                else
+                {
+                    $scope.valorVelho = $scope.viewModel.valor;
+                    $scope.parcelaVelho = $scope.viewModel.parcelas;
+                }
             },
             function (response) {
                 $scope.loading = false;
@@ -271,7 +251,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
                 $scope.erro = response.data.message;
             });
-        
     }
     
     $scope.efetuarVenda = function ()
@@ -299,14 +278,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.loading = false;
                 $scope.modoVenda = 'confirmacao';
                 $scope.viewModel.requerSenha = data.results[0].requerSenha;
+                $scope.processandoVenda = false;
             },
             function (response) {
                 $scope.loading = false;
                 $scope.erroSoma = response.data.message;
             });
-
-        if ($scope.mobileVersion == true)
-            $scope.confirmar();
     }
 
     $scope.cancelar = function () {
@@ -315,6 +292,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.confirmar = function ()
     {
+        $scope.processandoVenda = true;    
+
         if ($scope.mobileVersion == true) {
             
             $scope.valor_fail = invalidCheck($scope.viewModel.valor);
@@ -354,6 +333,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             {                
                 $scope.viewModel.cupom = data.results;
                 $scope.closeModalMobileAutorizado = true;
+                $scope.processandoVenda = false;    
             },
             function (response)
             {
@@ -361,7 +341,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.autorizando = false;
                
                 $scope.falhaVendaMsg = response.data.message;
-                $scope.falhaVenda = true;                
+                $scope.falhaVenda = true;          
+                $scope.processandoVenda = false;    
             });
     }
 

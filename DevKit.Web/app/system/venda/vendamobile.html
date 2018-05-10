@@ -118,11 +118,11 @@
                 <br />
                 <br />
                 <div class="modal-content" style="color:black">
-                    
+
                     <legend style="color:black">Senha do associado</legend>
 
                     <br />
-                    
+
                     <table class="widget" align="center">
                         <tr height="22px"></tr>
                         <tr>
@@ -137,10 +137,18 @@
                         <tr height="22px"></tr>
                     </table>
                     <br />
+
+
                     <table align="center">
                         <tr>
-                            <td>
-                                <button class="btn btn-default" ng-click="closeModalMobile()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <td ng-if="processandoVenda == false">
+                                <button class="btn btn-default" ng-click="closeModalMobile()"> Cancelar </button>
+                            </td>
+                            <td ng-if="processandoVenda == false" width="10px"></td>
+                            <td ng-if="processandoVenda == true">
+                                <i class="fa fa-spinner fa-spin"></i> Processando venda
+                            </td>
+                            <td ng-if="processandoVenda == false">
                                 <button class="btn btn-success"
                                         ng-disabled="viewModel.senhaPortadorCartao.length != 4"
                                         ng-click="confirmarMobile()">
@@ -149,6 +157,7 @@
                             </td>
                         </tr>
                     </table>
+                    
                     <br />
                     <br />
                 </div>

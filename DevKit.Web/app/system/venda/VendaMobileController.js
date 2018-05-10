@@ -313,11 +313,6 @@
                         function (response) {
                             $scope.falhaVendaMsg = response.data.message;
                             $scope.loading = false;
-
-                            // RETIRAR!!!!
-                            // ===========================================
-                            $scope.mostraModalMobileAutorizado = true;
-                            // ===========================================
                         });
                 }
             }

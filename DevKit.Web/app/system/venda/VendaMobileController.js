@@ -282,13 +282,19 @@
 
                 if ($scope.loading == true)
                 {
+                    var stA = $scope.viewModel.stAcesso.toString();
+                    var stV = $scope.viewModel.stVencimento.toString();
+
+                    if (stA.length == 3) stA = "0" + stA;
+                    if (stV.length == 3) stV = "0" + stV;
+
                     Api.EfetuaVenda.listPage(
                         {
                             cartao: $scope.viewModel.data.id,
                             empresa: $scope.viewModel.stEmpresa,
                             matricula: $scope.viewModel.stMatricula,
-                            codAcesso: $scope.viewModel.stAcesso,
-                            stVencimento: $scope.viewModel.stVencimento,
+                            codAcesso: stA,
+                            stVencimento: stV,
                             valor: $scope.viewModel.valor,
                             senha: $scope.viewModel.senhaPortadorCartao,
                             parcelas: $scope.viewModel.parcelas,

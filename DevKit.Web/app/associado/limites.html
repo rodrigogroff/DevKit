@@ -1,45 +1,52 @@
-﻿<section class="widgetForm" style="width:525px;">
-    <div class="divWebForm" ng-show="list.length > 0">
-        <div style="width:380px;">
-            <br />
-            <legend style="color:white">Limites do <b>associado </b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></legend>
-        </div>
-        {{list[0].nome}}: <b>R$ {{list[0].valor}}</b> <br />
-        {{list[1].nome}}: <b>{{list[1].valor}} parcelas</b>
+﻿
+<br />
+
+<div style="width:340px;height:390px;background-color:#e0e0e0;margin-left:16px">
+    <div style="padding-left:20px">
         <br />
-        <br />
-        <table class="table table-hover" style="width:380px">
+        <table width="100%">
             <tr>
-                <td width="220px">
-                    {{list[2].nome}}
-                </td>
-                <td>
-                    <b>{{list[2].valor}}</b>
-                </td>
+                <td><img src='../../images/logo.png' height="50px" /></td>
+                <td width="10px"></td>
+                <td align="right"><button class="btn btn-info" ng-click="menu()">Menu</button></td>
+                <td width="20px"></td>
             </tr>
-            <tr>
-                <td>{{list[3].nome}}</td>
-                <td><b>{{list[3].valor}}</b></td>
-            </tr>
-            <tr>
-                <td>{{list[5].nome}}</td>
-                <td><b>{{list[5].valor}}</b></td>
-            </tr>
-            <tr>
-                <td>{{list[4].nome}}</td>
-                <td><b>{{list[4].valor}}</b></td>
-            </tr>
-            <tr>
-                <td>{{list[6].nome}}</td>
-                <td><b>{{list[6].valor}}</b></td>
-            </tr>                
         </table>
+        <h3 style="padding-left:8px">Limites do <b>associado </b></h3>
         <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <div style="padding-left:8px">
+            {{list[0].nome}}: <b>R$ {{list[0].valor}}</b> <br />
+            {{list[1].nome}}: <b>{{list[1].valor}} parcelas</b>
+            <br />
+            <br />
+            <table>
+                <tr>
+                    <td width="175px">
+                        {{list[2].nome}}
+                    </td>
+                    <td>
+                        <b>{{list[2].valor}}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{list[3].nome}}</td>
+                    <td><b>{{list[3].valor}}</b></td>
+                </tr>
+                <tr>
+                    <td>{{list[5].nome}}</td>
+                    <td><b>{{list[5].valor}}</b></td>
+                </tr>
+                <tr>
+                    <td>{{list[4].nome}}</td>
+                    <td><b>{{list[4].valor}}</b></td>
+                </tr>
+                <tr>
+                    <td>{{list[6].nome}}</td>
+                    <td><b>{{list[6].valor}}</b></td>
+                </tr>
+            </table>
+            <br />
+            <br />
+        </div>
     </div>
-</section>
+</div>

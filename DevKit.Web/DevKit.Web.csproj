@@ -216,6 +216,8 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\associado\extratos.html" />
+    <Content Include="app\associado\menu.html" />
+    <Content Include="app\associado\associadoMenuController.js" />
     <Content Include="app\associado\lojistas.html" />
     <Content Include="app\associado\limites.html" />
     <Content Include="app\associado\ExtratosController.js" />
@@ -353,6 +355,7 @@
     <Content Include="Global.asax" />
     <Content Include="images\arrow_left.png" />
     <Content Include="images\Check-icon.png" />
+    <Content Include="images\dinheiro_318-138572.jpg" />
     <Content Include="images\file.png" />
     <Content Include="images\folder-closed.png" />
     <Content Include="images\folder.png" />

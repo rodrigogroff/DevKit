@@ -12,8 +12,6 @@ angular.module('app.controllers').controller('MenuController',
             {
                 $rootScope.mobileVersion = $window.innerWidth < 1000;
 
-                console.log('menu init (mv) > ' + $rootScope.mobileVersion);
-
                 AuthService.fillAuthData();
 
                 $scope.authentication = AuthService.authentication;
@@ -25,16 +23,15 @@ angular.module('app.controllers').controller('MenuController',
 
                 $scope.resizeReady = false;
                 $scope.width = $window.innerWidth;
-                $scope.mobileVersion = $window.innerWidth < 1000;
+                
                 $scope.resizeReady = true;
             }
 
-            $scope.logOut = function () {
+            $scope.logOut = function ()
+            {
                 AuthService.fillAuthData();
 
                 $scope.authentication = AuthService.authentication;
-
-                console.log($scope.authentication)
 
                 var tipo = $scope.authentication.tipo;
 

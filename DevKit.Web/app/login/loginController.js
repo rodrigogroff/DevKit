@@ -43,12 +43,18 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
 
             if ($rootScope.tipo == 2)
             {
+                var stA = $scope.loginData.userNameAcesso.toString();
+                var stV = $scope.loginData.userNameVenc.toString();
+
+                if (stA.length == 3) stA = "0" + stA;
+                if (stV.length == 3) stV = "0" + stV;
+
                 // usuarios
                 lData.userName = "2." +
-                    $scope.loginData.userName + "." +
-                    $scope.loginData.userNameMat + "." +
-                    $scope.loginData.userNameAcesso + "." +
-                    $scope.loginData.userNameVenc;
+                                 $scope.loginData.userName + "." +
+                                 $scope.loginData.userNameMat + "." +
+                                 stA + "." +
+                                 stV;
             }
             else if ($rootScope.tipo == 4)
             {
@@ -73,9 +79,6 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
 
                 if ($rootScope.tipo == 2)
                 {
-                    // usuarios
-                    $rootScope.mobileVersion = true;
-
                     $state.go('limitesUsr', {});
                 }
                 else if ($rootScope.tipo == 1 || $rootScope.tipo == 3)

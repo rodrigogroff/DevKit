@@ -20,6 +20,11 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.total = data.count;
             $scope.loading = false;
         });
-	}
+    }
+
+    $scope.menu = function ()
+    {
+        $state.go('menuUsr', {});
+    }
 	
 }]);

@@ -393,6 +393,7 @@
     <Content Include="images\iconeExpandir.gif" />
     <Content Include="images\iconeGrafico.png" />
     <Content Include="images\iconeTabela.png" />
+    <Content Include="images\list.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\icon-copy.png" />
     <Content Include="images\icon-paste.png" />

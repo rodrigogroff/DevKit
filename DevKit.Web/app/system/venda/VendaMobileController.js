@@ -55,8 +55,6 @@
                 if (novo == '0')
                     $scope.acesso_zero = true;
 
-                console.log(novo);
-
                 if ($scope.acesso_zero == true)
                     novo = '0' + novo;
 
@@ -246,8 +244,9 @@
                         $scope.mostraModalMobile = true;
                     },
                     function (response) {
-                        $scope.modoVenda = '';
+                        $scope.falhaVendaMsg = response.data.message;
                         $scope.erro = response.data.message;
+                        $scope.loading = false;
                     });
 
             }

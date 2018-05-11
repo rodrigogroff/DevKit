@@ -329,7 +329,7 @@
 
                                     <tr height="32px" ng-if="modoVenda == 'simulacao'"></tr>
 
-                                    <tr ng-if="modoVenda == 'simulacao'">
+                                    <tr ng-if="modoVenda == 'simulacao' && viewModel.cupom == undefined">
                                         <td></td>
                                         <td colspan="5">
                                             <table>
@@ -415,7 +415,7 @@
                         </div>
 
                         <div class="modal-backdrop"
-                                ng-if="modoVenda == 'confirmacao' && falhaVenda == undefined && viewModel.requerSenha == 1"
+                                ng-if="mostraSenha"
                                 style="background: rgba(55, 55, 55, 0.5 );">
                             <div class="modal-dialog" style="width:400px">
                                 <br />
@@ -433,14 +433,20 @@
                                             <td width="20px"></td>
                                             <td width="90px">
                                                 <input type="password" focus="true" numeric-only maxlength="4"
-                                                        ng-model="viewModel.senhaPortadorCartao"
-                                                        ng-keyup="$event.keyCode == 13 && confirmar()" />
+                                                       ng-model="viewModel.senhaPortadorCartao"
+                                                       ng-keyup="$event.keyCode == 13 && confirmar()" />
                                             </td>
                                             <td width="20px"></td>
                                         </tr>
                                         <tr height="22px"></tr>
                                     </table>
                                     <br />
+
+                                    <div ng-if="falhaVendaMsg">
+                                        <span style="color:red">{{falhaVendaMsg}}</span><br />
+                                        <br />
+                                    </div>
+
                                     <table align="center">
                                         <tr>
                                             <td ng-if="processandoVenda == false">
@@ -455,7 +461,7 @@
                                                         ng-disabled="viewModel.senhaPortadorCartao.length != 4"
                                                         ng-click="confirmar()">
                                                     Confirmar
-                                                </button>                                                
+                                                </button>
                                             </td>
                                         </tr>
                                     </table>

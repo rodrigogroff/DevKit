@@ -94,7 +94,7 @@
                             <td width="900px">
                                 <table>
                                     <tr>
-                                        <td width="190px">
+                                        <td width="290px">
                                             <span ng-if="authentication.tipo == '1'" style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
                                             <span ng-if="authentication.tipo == '2'" style="color:black;padding-top:12px">Cartão <b>{{authentication.nameUser}}</b></span>
                                             <div ng-if="authentication.tipo == '4'" style="padding-top:12px">
@@ -103,14 +103,14 @@
                                                     <b>{{authentication.nameUser}}</b>
                                                 </span>
                                             </div>
+                                            <div ng-if="authentication.tipo == '3'" style="padding-top:12px">
+                                                <b>{{authentication.m1}}</b><br />
+                                                {{authentication.m2}}
+                                            </div>
                                         </td>
                                         <td width="20px"></td>
                                         <td ng-if="authentication.tipo == '4'" style="padding-top:12px">
                                             Emissora: <b>{{authentication.m1}}</b><br />
-                                            {{authentication.m2}}
-                                        </td>
-                                        <td ng-if="authentication.tipo != '4'" style="padding-top:12px">
-                                            <b>{{authentication.m1}}</b><br />
                                             {{authentication.m2}}
                                         </td>
                                         <td width="40px"></td>

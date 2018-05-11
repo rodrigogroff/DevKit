@@ -6,6 +6,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.ready = false;
     $scope.loading = false;    
+    $scope.mostraSenha = false;    
 
     $scope.processandoVenda = false;    
 
@@ -17,6 +18,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.lastTag = '';
         $scope.modoVenda = '';
         $scope.autorizando = false;
+        $scope.falhaVendaMsg = '';
+        $scope.falhaVenda = false;
 
         $scope.viewModel =
             {
@@ -38,6 +41,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.closeModalSenha = function () {
         $scope.modoVenda = '';
+        $scope.mostraSenha = false;    
     }
 
     $scope.$watch("viewModel.stEmpresa", function (novo, anterior) {
@@ -279,6 +283,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.modoVenda = 'confirmacao';
                 $scope.viewModel.requerSenha = data.results[0].requerSenha;
                 $scope.processandoVenda = false;
+
+                $scope.mostraSenha = true;
             },
             function (response) {
                 $scope.loading = false;
@@ -334,6 +340,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.viewModel.cupom = data.results;
                 $scope.closeModalMobileAutorizado = true;
                 $scope.processandoVenda = false;    
+                $scope.mostraSenha = false;
             },
             function (response)
             {
@@ -387,6 +394,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.novaVenda = function ()
     {
+        
         init();
     }
 

@@ -66,11 +66,11 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
             else if ($rootScope.tipo == 1 || $rootScope.tipo == 3)
             {
                 // lojista
-                lData.userName = $rootScope.tipo + $scope.loginData.userName;
+                lData.userName = $rootScope.tipo + $scope.loginData.userName.toString();
             }
 
             lData.password = $scope.loginData.password;
-            lData.tipo = $scope.tipo;
+            lData.tipo = $rootScope.tipo;
 
             AuthService.login(lData).then(function (response)
     		{

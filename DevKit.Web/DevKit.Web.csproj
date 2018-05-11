@@ -215,7 +215,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\associado\extratosMobile.html" />
     <Content Include="app\associado\extratos.html" />
+    <Content Include="app\associado\ExtratosMobileController.js" />
+    <Content Include="app\associado\limitesMobile.html" />
+    <Content Include="app\associado\LimitesMobileController.js" />
     <Content Include="app\associado\menu.html" />
     <Content Include="app\associado\associadoMenuController.js" />
     <Content Include="app\associado\lojistas.html" />

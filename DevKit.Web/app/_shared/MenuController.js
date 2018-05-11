@@ -10,13 +10,13 @@ angular.module('app.controllers').controller('MenuController',
 
             function init()
             {
+                var tipo = $rootScope.tipo;
+
                 $rootScope.mobileVersion = $window.innerWidth < 1000;
 
                 AuthService.fillAuthData();
 
                 $scope.authentication = AuthService.authentication;
-
-                var tipo = $rootScope.tipo;
 
                 if (!AuthService.authentication.isAuth)
                     $location.path('login');

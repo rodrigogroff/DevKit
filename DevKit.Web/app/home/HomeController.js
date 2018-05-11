@@ -8,7 +8,7 @@ function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, A
     var w = angular.element($window);
 
     $scope.$watch(function () { return $window.innerWidth; },
-        function (value) { $scope.width = $window.innerWidth + ", " + $window.innerHeight; $scope.mobileVersion = $window.innerWidth < 1000; }, true);
+        function (value) { $scope.width = $window.innerWidth + ", " + $window.innerHeight; }, true);
 
     w.bind('resize', function () { $scope.$apply(); });
 

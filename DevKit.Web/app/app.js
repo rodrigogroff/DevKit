@@ -33,7 +33,11 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
         })
         
     .state('limitesUsr', { url: '/associado/limites', templateUrl: 'app/associado/limites.html', controller: 'LimitesController' })
-    .state('extratosUsr', { url: '/associado/extratos', templateUrl: 'app/associado/extratos.html', controller: 'ExtratosController' })
+    .state('limitesUsrMobile', { url: '/associado/limitesMobile', templateUrl: 'app/associado/limitesMobile.html', controller: 'LimitesMobileController' })
+
+        .state('extratosUsr', { url: '/associado/extratos', templateUrl: 'app/associado/extratos.html', controller: 'ExtratosController' })
+        .state('extratosUsrMobile', { url: '/associado/extratosMobile', templateUrl: 'app/associado/extratosMobile.html', controller: 'ExtratosMobileController' })
+
     .state('lojistasUsr', { url: '/associado/lojistas', templateUrl: 'app/associado/lojistas.html', controller: 'LojistasAssociadoController' })
 
     .state('mensagens', { url: '/system/lojasMensagens', templateUrl: 'app/system/loja/lojaMensagens.html', controller: 'LojaMensagensController' })

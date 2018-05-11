@@ -51,8 +51,8 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
 
                 // usuarios
                 lData.userName = "2." +
-                                 $scope.loginData.userName + "." +
-                                 $scope.loginData.userNameMat + "." +
+                                 $scope.loginData.userName.toString() + "." +
+                                 $scope.loginData.userNameMat.toString() + "." +
                                  stA + "." +
                                  stV;
             }
@@ -79,7 +79,10 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
 
                 if ($rootScope.tipo == 2)
                 {
-                    $state.go('limitesUsr', {});
+                    if ($rootScope.mobileVersion == true)
+                        $state.go('limitesUsrMobile', {});
+                    else
+                        $state.go('limitesUsr', {});
                 }
                 else if ($rootScope.tipo == 1 || $rootScope.tipo == 3)
                 {

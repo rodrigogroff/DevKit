@@ -1,10 +1,10 @@
 ﻿
-angular.module('app.controllers').controller('LimitesController',
+angular.module('app.controllers').controller('LimitesMobileController',
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
     $rootScope.exibirMenu = true;
-    $rootScope.mobileVersion = false;
+    $rootScope.mobileVersion = true;
 
 	$scope.loading = false;
 

@@ -98,7 +98,6 @@
 <body class="background" ng-cloak>
     <div ng-show="exibirMenu" ng-controller="MenuController">
 
-        
         <div class="header" ng-if="mobileVersion == false">
             <div class="logo" style="padding-top:-4px; padding-left:-80px">
                 <a ng-click="goHome()">
@@ -144,8 +143,8 @@
                     </table>
                 </div>
             </header>
-            <nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:6px;padding-left:-200px">
 
+            <nav id="sidebar" class="sidebar nav-collapse collapse" style="padding-top:6px;padding-left:-200px">
                 <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.nameUser == 'DBA' && authentication.tipo == '1'">
                     <ul id="side-nav" class="side-nav" style="color:black">
                         <li class="panel">
@@ -172,7 +171,6 @@
                     </ul>
                     <ul><li></li></ul>
                 </section>
-
                 <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.tipo == '2'">
                     <ul id="side-nav" class="side-nav" style="color:black">
                         <li class="panel">
@@ -313,7 +311,7 @@
                             <ul id="forms-collapseEmpLoj" class="panel-collapse collapse">
                                 <li><a ui-sref="empListagemLoja"><span>Listagem</span></a></li>
                                 @*<li><a ><span>Bloqueio convênio</span></a></li>
-                                    <li><a ><span>Bonificação</span></a></li>*@
+                                <li><a ><span>Bonificação</span></a></li>*@
                             </ul>
                         </li>
                         <li class="panel">

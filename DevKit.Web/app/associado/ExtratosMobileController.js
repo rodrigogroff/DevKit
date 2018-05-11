@@ -1,11 +1,8 @@
 ﻿
-angular.module('app.controllers').controller('ExtratosController',
+angular.module('app.controllers').controller('ExtratosMobileController',
 ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 'AuthService',
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, AuthService)
 {
-    $rootScope.exibirMenu = true;        
-    $rootScope.mobileVersion = false;
-
     $scope.authentication = AuthService.authentication;
     $scope.date = new Date();
     $scope.loading = false;

@@ -312,6 +312,7 @@
                             p10: $scope.viewModel.p10,
                             p11: $scope.viewModel.p11,
                             p12: $scope.viewModel.p12,
+                            tipoWeb: 'mobile'
                         },
                         function (data) {
                             $scope.viewModel.cupom = data.results;

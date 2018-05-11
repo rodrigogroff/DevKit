@@ -17,16 +17,18 @@
     <script type="text/javascript">
 
         function money(o, f) {
-            v_obj = o
-            v_fun = f
-            setTimeout("execmascara()", 1)
+            v_obj = o;
+            v_fun = f;
+            execmascara();
+            //setTimeout("execmascara()", 1);
         }
 
         function execmascara() {
             v_obj.value = v_fun(v_obj.value)
         }
 
-        function trimStart(character, string) {
+        function trimStart(character, string)
+        {
             var startIndex = 0;
 
             while (string[startIndex] === character) {
@@ -36,15 +38,31 @@
             return string.substr(startIndex);
         }
 
-        function ValorNum(v) {
+        function extractNumbers(strMoney)
+        {
+            var ret = '';
+
+            for (var i = 0; i < strMoney.length; i++)
+            {
+                var va = strMoney[i];
+
+                if (va == '0' || va == '1' || va == '2' || va == '3' || va == '4' || va == '5' || va == '6' || va == '7' || va == '8' || va == '9')
+                    ret += va;
+            }
+
+            return ret;
+        }
+
+        function ValorNum(v)
+        {
             v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
 
             return v
         }
 
-        function Valor(v) {
-            v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
-
+        function Valor(v)
+        {
+            v = extractNumbers(v);
             v = trimStart('0', v);
 
             if (v.length == 1) v = "0,0" + v;

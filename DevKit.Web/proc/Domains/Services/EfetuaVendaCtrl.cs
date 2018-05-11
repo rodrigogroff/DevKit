@@ -9,16 +9,17 @@ namespace DevKit.Web.Controllers
 {
     public class EfetuaVendaController : ApiControllerBase
     {
-        public string terminal, 
-                        empresa, 
-                        matricula, 
-                        codAcesso, 
-                        stVencimento, 
-                        strMessage, 
-                        retorno, 
-                        nsu_retorno, 
+        public string terminal,
+                        empresa,
+                        matricula,
+                        codAcesso,
+                        stVencimento,
+                        strMessage,
+                        retorno,
+                        nsu_retorno,
                         ultima_linha,
-                        senha;
+                        senha,
+                        tipoWeb;
 
         public long idCartao, 
                     valor, 
@@ -35,7 +36,8 @@ namespace DevKit.Web.Controllers
             idCartao = Request.GetQueryStringValue<int>("cartao");
             valor = ObtemValor(Request.GetQueryStringValue("valor"));            
             parcelas = Request.GetQueryStringValue<int>("parcelas");
-            
+            tipoWeb = Request.GetQueryStringValue("tipoWeb");
+
             p1 = ObtemValor(Request.GetQueryStringValue("p1"));
             p2 = ObtemValor(Request.GetQueryStringValue("p2"));
             p3 = ObtemValor(Request.GetQueryStringValue("p3"));
@@ -269,12 +271,35 @@ namespace DevKit.Web.Controllers
                             valor,
                             p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
 
-                var ltrUltimo = db.LOG_Transacoes.Where(y => y.fk_cartao == associadoPrincipal.i_unique).OrderByDescending(y => y.i_unique).FirstOrDefault();
+                // -----------------------------------------
+                // seta tipo de venda (mensagem)
+                // -----------------------------------------
 
-                ltrUltimo.st_msg_transacao = "Mobile Payment";
+                var ltrUltimo = db.LOG_Transacoes.Where(y => y.fk_cartao == associadoPrincipal.i_unique).
+                                    OrderByDescending(y => y.i_unique).
+                                    FirstOrDefault();
+                
+                if (tipoWeb == "mobile")
+                    ltrUltimo.st_msg_transacao = "Mobile Payment";
+                else
+                    ltrUltimo.st_msg_transacao = "Web Payment";
 
                 db.Update(ltrUltimo);
-                
+
+                // -----------------------------------------
+                // zera tentativas erradas de senha, pois teve sucesso
+                // -----------------------------------------
+
+                var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == ltrUltimo.fk_cartao);
+
+                cart.nu_senhaErrada = 0;
+
+                db.Update(cart);
+
+                // -----------------------------------------
+                // encerra
+                // -----------------------------------------
+
                 return Ok(new
                 {
                     count = 1,

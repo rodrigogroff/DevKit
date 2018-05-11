@@ -334,6 +334,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 p10: $scope.viewModel.p10,
                 p11: $scope.viewModel.p11,
                 p12: $scope.viewModel.p12,
+                tipoWeb: 'web'
             },
             function (data)
             {                

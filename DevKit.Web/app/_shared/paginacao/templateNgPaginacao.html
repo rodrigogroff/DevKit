@@ -1,10 +1,11 @@
 ﻿<div class="table-pagination" ng-if="itemFinal >=1">
+
 	<table style="color:white;font-size:13px">
 		<tr height="52px">
-			<td>
+			<td ng-if="mobile == 'true'">
 				Exibindo resultados <b>{{itemInicial}}</b> a <b>{{itemFinal}}</b> de {{total}} itens
 			</td>
-			<td width="50px;" valign="middle"></td>	
+			<td ng-if="mobile == 'true'" width="50px;" valign="middle"></td>	
 			<!--<td valign="middle">
 				Mostrar &nbsp;&nbsp;
 				<select id="itensporpagina" name="itensporpagina" ng-model="itensporpagina" style="color:black">
@@ -21,7 +22,7 @@
 				&nbsp;&nbsp;
 				itens
 			</td>-->	
-			<td width="50px;"  valign="middle"></td>	
+			<td ng-if="mobile == 'true'" width="50px;"  valign="middle"></td>	
 			<td  valign="middle">
 				<div class="table-pagination__index-list">
 					<ul class="pagination no-margin">

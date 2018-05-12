@@ -220,6 +220,8 @@
     <Content Include="app\associado\ExtratosMobileController.js" />
     <Content Include="app\associado\limitesMobile.html" />
     <Content Include="app\associado\LimitesMobileController.js" />
+    <Content Include="app\associado\lojistasMobile.html" />
+    <Content Include="app\associado\LojistasAssociadoMobileController.js" />
     <Content Include="app\associado\menu.html" />
     <Content Include="app\associado\associadoMenuController.js" />
     <Content Include="app\associado\lojistas.html" />
@@ -398,6 +400,7 @@
     <Content Include="images\icon-copy.png" />
     <Content Include="images\icon-paste.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\lojas.jpg" />
     <Content Include="images\progressbar.gif" />
     <Content Include="images\user.png" />
     <Content Include="img\error.png" />

@@ -1,0 +1,97 @@
+﻿
+<br />
+
+<div style="width:{{setWidth - 40}}px;min-height:480px;background-color:#e0e0e0;margin-left:16px">
+    <div style="padding-left:20px">
+        <br />
+        <table width="100%">
+            <tr>
+                <td><img src='../../images/logo.png' height="50px" /></td>
+                <td width="10px"></td>
+                <td align="right"><button class="btn btn-info" ng-click="menu()">Menu</button></td>
+                <td width="20px"></td>
+            </tr>
+        </table>
+        <h3 style="padding-left:8px">Rede de <b>Lojas</b></h3>
+        <br />
+
+        <br />
+        <table>
+            <tr height="44px">
+                <td width="10px"></td>
+                <td width="80px">
+                    Nome
+                </td>
+                <td>
+                    <input type="text" focus="true"
+                           class="form-control input-transparent"
+                           ng-model="busca"
+                           ng-keyup="$event.keyCode == 13 && search()" />
+                </td>
+                <td width="10px"></td>
+            </tr>
+
+            <tr height="44px">
+                <td></td>
+                <td>
+                    <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                </td>
+            </tr>
+        </table>
+
+        <br />
+
+        <div ng-if="setWidth > 460">
+            <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+
+            <div ng-if="list.length > 0">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><span style="color:black">Estado</span></th>
+                            <th><span style="color:black">Cidade</span></th>
+                            <th><span style="color:black">Estabelecimento</span></th>
+                            <th><span style="color:black">Endereço</span></th>
+                        </tr>
+                    </thead>
+                    <tr data-ng-repeat="mdl in list">
+                        <td><span style="color:black">{{ mdl.estado }}</span></td>
+                        <td><span style="color:black">{{ mdl.cidade }}</span></td>
+                        <td><span style="color:black">{{ mdl.nome }}</span></td>
+                        <td><span style="color:black">{{ mdl.endereco }}</span></td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+            </div>
+        </div>
+
+        <div ng-if="setWidth <= 460">
+
+            <ng-paginacao carregar="load" list="list" total="total" mobile="true" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+
+            <div ng-if="list.length > 0">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><span style="color:black">Estabelecimento</span></th>
+                            <th><span style="color:black">Endereço</span></th>
+                        </tr>
+                    </thead>
+                    <tr data-ng-repeat="mdl in list">
+                        <td><span style="color:black">{{ mdl.nome }}</span></td>
+                        <td><span style="color:black">{{ mdl.endereco }}<br />{{ mdl.estado }} / {{ mdl.cidade }}</span></td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<br />
+<br />

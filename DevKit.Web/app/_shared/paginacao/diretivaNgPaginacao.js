@@ -11,7 +11,8 @@ angular.module('app.directives').directive('ngPaginacao', function () {
 			list: '=',
 			total: '=',
 			itensporpagina: '=',
-			paginador: '=',
+            paginador: '=',
+            mobile: '=',
 			ehModalParam: '@?',
 			carregarAutomaticamente: '@?'
 		},

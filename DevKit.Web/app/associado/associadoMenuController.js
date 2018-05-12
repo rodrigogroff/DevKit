@@ -13,6 +13,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $state.go('extratosUsrMobile', {});
     }
 
+    $scope.lojistasUsrMobile = function () {
+        $state.go('lojistasUsrMobile', {});
+    }
+
     $scope.logOut = function ()
     {
         window.location = '/login?tipo=2';

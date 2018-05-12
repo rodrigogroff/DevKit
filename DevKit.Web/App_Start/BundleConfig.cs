@@ -128,6 +128,7 @@ namespace DevKit.Web
                 "~/app/emissora/EmissoraRelExtratTransController.js",
                 "~/app/emissora/EmissoraRelRepFinancController.js",
                 "~/app/associado/LojistasAssociadoController.js",
+                "~/app/associado/LojistasAssociadoMobileController.js",
                 "~/app/system/relatorios/ListingRelatoriosController.js",
                 "~/app/system/relatorios/ListingRelAssociadosController.js",
                 "~/app/system/relatorios/ListingLojistaTransController.js",

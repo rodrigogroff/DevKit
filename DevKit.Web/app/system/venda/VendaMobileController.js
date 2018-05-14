@@ -1,18 +1,18 @@
 ﻿angular.module('app.controllers').controller('VendaMobileController',
     ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$window',
         function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $window) {
-            $rootScope.exibirMenu = true;
-
-            $scope.loading = false;
-            $scope.mostraModalMobile = false;
-            $scope.mostraModalMobileAutorizado = false;
-            $scope.processandoVenda = false;
 
             init();
 
             function init()
             {
+                $rootScope.exibirMenu = true;
+
                 $scope.loading = false;
+                $scope.mostraModalMobile = false;
+                $scope.mostraModalMobileAutorizado = false;
+                $scope.processandoVenda = false;
+                                
                 $scope.lastTag = '';
                 $scope.modoVenda = '';
                 $scope.autorizando = false;
@@ -20,6 +20,7 @@
                 $scope.viewModel =
                     {
                         parcelas: 1,
+                        valor: '0,00'
                     };
 
                 $scope.viewModel.senhaPortadorCartao = undefined;
@@ -352,6 +353,158 @@
                 },
                 function (data) { $scope.closeModalMobileEnviaEmail(); },
                 function (response) { });
+            }
+
+            // ---------------------------------------
+            // controle de dinheiro
+            // ---------------------------------------
+
+            function trimStart(character, string) {
+                var startIndex = 0;
+                while (string[startIndex] === character) {
+                    startIndex++;
+                }
+                return string.substr(startIndex);
+            }
+
+            function cleanup(strMoney) {
+                var ret = '';
+                var i = 0;
+                for (; i < strMoney.length; i++) {
+                    var va = strMoney[i];
+                    if (va == '0') { } else {
+                        break;
+                        ret += va;
+                    }
+                }
+                for (; i < strMoney.length; i++) {
+                    var va = strMoney[i];
+                    ret += va;
+                }
+                return ret;
+            }
+
+            function extractNumbers(strMoney) {
+                var ret = '';
+                for (var i = 0; i < strMoney.length; i++) {
+                    var va = strMoney[i];
+                    if (va == '0' || va == '1' || va == '2' || va == '3' || va == '4' || va == '5' || va == '6' || va == '7' || va == '8' || va == '9')
+                        ret += va;
+                }
+                return ret;
+            }
+
+            function Valor(v)
+            {
+                var extract = extractNumbers(v);
+                var clean = cleanup(extract);
+
+                var resp = '';
+
+                switch (clean.length) {
+                    case 1: resp = '0,0' + clean; break;
+                    case 2: resp = '0,' + clean; break;
+                    case 3:
+                        {
+                            var p1 = clean.substr(0, 1);
+                            var p2 = clean.substr(1, 2);
+
+                            resp = p1 + ',' + p2;
+                            break;
+                        }
+
+                    case 4:
+                        {
+                            var p1 = clean.substr(0, 2);
+                            var p2 = clean.substr(2, 2);
+
+                            resp = p1 + ',' + p2;
+                            break;
+                        }
+
+                    case 5:
+                        {
+                            var p1 = clean.substr(0, 3);
+                            var p2 = clean.substr(3, 2);
+
+                            resp = p1 + ',' + p2;
+                            break;
+                        }
+
+                    case 6:
+                        {
+                            var p1 = clean.substr(0, 1);
+                            var p2 = clean.substr(1, 3);
+                            var p3 = clean.substr(4, 2);
+
+                            resp = p1 + '.' + p2 + ',' + p3;
+                            break;
+                        }
+
+                    case 7:
+                        {
+                            var p1 = clean.substr(0, 2);
+                            var p2 = clean.substr(2, 3);
+                            var p3 = clean.substr(5, 2);
+
+                            resp = p1 + '.' + p2 + ',' + p3;
+                            break;
+                        }
+
+                    case 8:
+                        {
+                            var p1 = clean.substr(0, 3);
+                            var p2 = clean.substr(3, 3);
+                            var p3 = clean.substr(6, 2);
+
+                            resp = p1 + '.' + p2 + ',' + p3;
+
+                            break;
+                        }
+
+                    case 9:
+                        {
+                            var p1 = clean.substr(0, 1);
+                            var p2 = clean.substr(1, 3);
+                            var p3 = clean.substr(4, 3);
+                            var p4 = clean.substr(7, 2);
+
+                            resp = p1 + '.' + p2 + '.' + p3 + ',' + p4;
+                        }
+
+                    default: break;
+                }
+
+                // console.log('resp: ' + resp);
+
+                return resp;
+            }
+
+            // ----------------------
+            // valor
+            // ----------------------
+
+            $scope.abreModalValor = function () { $scope.modalValor = true; }
+            $scope.fechaModalValor = function () { $scope.modalValor = false; }
+            $scope.btnOneValor = function () { if($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '1'); }
+            $scope.btnTwoValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '2'); }
+            $scope.btnThreeValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '3'); }
+            $scope.btnFourValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '4'); }
+            $scope.btnFiveValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '5'); }
+            $scope.btnSixValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '6'); }
+            $scope.btnSevenValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '7'); }
+            $scope.btnEightValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '8'); }
+            $scope.btnNineValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '9'); }
+            $scope.btnZeroValor = function () {
+                if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '0'); if ($scope.viewModel.valor == '')
+                    $scope.viewModel.valor = '0,00';}
+            $scope.btnCleanValor = function () { $scope.viewModel.valor = '0,00'; }
+            $scope.btnDelValor = function () {
+                if ($scope.viewModel.valor != '0,00') {
+                    $scope.viewModel.valor = Valor($scope.viewModel.valor.substr(0, $scope.viewModel.valor.length - 1));
+                    if ($scope.viewModel.valor == '')
+                        $scope.viewModel.valor = '0,00';
+                }
             }
 
         }]);

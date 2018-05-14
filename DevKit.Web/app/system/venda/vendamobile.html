@@ -17,24 +17,21 @@
             <tr height="40px">
                 <td width="75px">
                     <input type="number" focus="true" numeric-only maxlength="6" class="form-control input-transparent"
-                           ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800" tabindex="1"
-                           ng-keyup="$event.keyCode == 13 && pulaMatricula()">
+                           ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800" tabindex="1">
                 </td>
                 <td width="10px"></td>
                 <td width="75px">
                     <input type="number" numeric-only maxlength="6" class="form-control input-transparent"
                            id="cartMat"
                            ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800" tabindex="2"
-                           ng-maxlength="6" auto-next tabindex="2"
-                           ng-keyup="$event.keyCode == 13 && pulaAcesso()">
+                           ng-maxlength="6" auto-next tabindex="2">
                 </td>
                 <td width="10px"></td>
                 <td width="60px">
                     <input type="number" numeric-only maxlength="4" class="form-control input-transparent"
                            id="cartAcesso"
                            ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" tabindex="3"
-                           ng-maxlength="4" auto-next tabindex="3"
-                           ng-keyup="$event.keyCode == 13 && pulaVenc()">
+                           ng-maxlength="4" auto-next tabindex="3">
                 </td>
                 <td width="10px"></td>
                 <td width="60px">
@@ -76,11 +73,55 @@
                     <span class="btn btn-xs btn-danger" ng-show="valor_fail">!</span>
                 </td>
                 <td width="90px">
-                    <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
-                           focus="true"
-                           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                           ng-keyup="$event.keyCode == 13 && parcelar()"
-                           ng-model="viewModel.valor">
+                    <button class="btn btn-success" ng-click="abreModalValor()">{{viewModel.valor}}</button>
+                    <div class="modal-backdrop"
+                         ng-if="modalValor == true"
+                         style="background: rgba(55, 55, 55, 0.5 );">
+                        <div class="modal-dialog" style="width:320px;margin-left:32px">
+                            <br /><br /><br />
+                            <div class="modal-content" style="color:black">
+                                <legend style="color:black">Valor total da venda</legend> 
+                                <div align="center">
+                                    <h3>
+                                        <span style="color:grey">R$ </span><span style="color:green">{{viewModel.valor}}</span>
+                                    </h3>
+                                </div>
+                                <br />
+                                <table align="center" style="background-color:lightgrey">
+                                    <tr height="12px"></tr>
+                                    <tr>
+                                        <td width="10px"></td><td><button class="btn btn-default btn-lg" ng-click="btnOneValor()">1</button></td>
+                                        <td width="10px"></td><td><button class="btn btn-default btn-lg" ng-click="btnTwoValor()">2</button></td>
+                                        <td width="10px"></td><td><button class="btn btn-default btn-lg" ng-click="btnThreeValor()">3</button></td>
+                                        <td width="10px"></td>
+                                    </tr>
+                                    <tr height="12px"></tr>
+                                    <tr>
+                                        <td></td><td><button class="btn btn-default btn-lg" ng-click="btnFourValor()">4</button></td>
+                                        <td></td><td><button class="btn btn-default btn-lg" ng-click="btnFiveValor()">5</button></td>
+                                        <td></td><td><button class="btn btn-default btn-lg" ng-click="btnSixValor()">6</button></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr height="12px"></tr>
+                                    <tr>
+                                        <td></td><td><button class="btn btn-default btn-lg" ng-click="btnSevenValor()">7</button></td>
+                                        <td></td><td><button class="btn btn-default btn-lg" ng-click="btnEightValor()">8</button></td>
+                                        <td></td><td><button class="btn btn-default btn-lg" ng-click="btnNineValor()">9</button></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr height="12px"></tr>
+                                    <tr>
+                                        <td></td><td><button class="btn btn-white btn-lg" ng-click="btnCleanValor()">L</button></td>
+                                        <td></td><td><button class="btn btn-default btn-lg" ng-click="btnZeroValor()">0</button></td>
+                                        <td></td><td><button class="btn btn-white btn-lg" ng-click="btnDelValor()">D</button></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr height="12px"></tr>
+                                </table>
+                                <br /><br /><div align="center"><button class="btn btn-info" ng-click="fechaModalValor()">Fechar</button></div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr height="40px">
@@ -97,10 +138,8 @@
                 </td>
             </tr>
         </table>
-
         <br />
         <br />
-
         <table ng-if="viewModel.data.nome && !loading">
             <tr>
                 <td>
@@ -112,7 +151,6 @@
                 </td>
             </tr>
         </table>
-
         <div class="modal-backdrop"
              ng-if="mostraModalMobile"
              style="background: rgba(55, 55, 55, 0.5 );">
@@ -121,11 +159,8 @@
                 <br />
                 <br />
                 <div class="modal-content" style="color:black">
-
                     <legend style="color:black">Senha do associado</legend>
-
                     <br />
-
                     <table class="widget" align="center">
                         <tr height="22px"></tr>
                         <tr>
@@ -140,8 +175,6 @@
                         <tr height="22px"></tr>
                     </table>
                     <br />
-
-
                     <table align="center">
                         <tr>
                             <td ng-if="processandoVenda == false">
@@ -160,13 +193,11 @@
                             </td>
                         </tr>
                     </table>
-                    
                     <br />
                     <br />
                 </div>
             </div>
         </div>
-
         <div class="modal-backdrop"
              ng-if="mostraModalMobileAutorizado"
              style="background: rgba(55, 55, 55, 0.5 );">
@@ -180,7 +211,6 @@
                     <h3>Venda Autorizada!</h3>
                     <br />
                     <br />
-
                     <table align="center">
                         <tr>
                             <td>
@@ -193,7 +223,6 @@
                 </div>
             </div>
         </div>
-
         <div class="modal-backdrop"
              ng-if="mostraModalMobileEnviaEmail"
              style="background: rgba(55, 55, 55, 0.5 );">
@@ -206,14 +235,11 @@
                     <br />
                     Enviar cupom de venda por email?<br />
                     <br />
-
                     <div width="200px">
                         <input type="text" focus="true" maxlength="99" ng-model="viewModel.emailCupom"/>
-                    </div>                    
-
+                    </div>
                     <br />
                     <br />
-
                     <table align="center">
                         <tr>
                             <td>
@@ -222,13 +248,11 @@
                             </td>
                         </tr>
                     </table>
-
                     <br />
                     <br />
                 </div>
             </div>
         </div>
-
         <br />
         <span style="color:red">{{falhaVendaMsg}}</span>
     </div>

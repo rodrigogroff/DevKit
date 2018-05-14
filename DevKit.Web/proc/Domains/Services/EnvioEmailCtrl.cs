@@ -4,6 +4,7 @@ using System.Linq;
 using LinqToDB;
 using System.Net.Mail;
 using System.Text;
+using SyCrafEngine;
 
 namespace DevKit.Web.Controllers
 {
@@ -28,8 +29,8 @@ namespace DevKit.Web.Controllers
 
                 var dadosCartao = db.T_Cartao.FirstOrDefault(y => y.i_unique.ToString() == idCartao);
                 var dadosProp = db.T_Proprietario.FirstOrDefault(y => y.i_unique == dadosCartao.fk_dadosProprietario);
-                var venda = db.LOG_Transacoes.Where(y => y.fk_cartao.ToString() == idCartao).OrderByDescending(y => y.i_unique).FirstOrDefault();
-                var estab = db.T_Loja.FirstOrDefault(y=> y.i_unique == venda.fk_loja);
+                var dadosVenda = db.LOG_Transacoes.Where(y => y.fk_cartao.ToString() == idCartao).OrderByDescending(y => y.i_unique).FirstOrDefault();
+                var estab = db.T_Loja.FirstOrDefault(y=> y.i_unique == dadosVenda.fk_loja);
 
                 // ---------------------------
                 // atualiza novo email
@@ -61,16 +62,15 @@ namespace DevKit.Web.Controllers
 
                             texto = "CARTÃO CONVEYNET BENEFICIOS" + 
                                     "\r\nVENDA AUTORIZADA - DATA / HORA:" + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") +
-                                    "\r\nNSU: " + venda.nu_nsu.ToString() +
+                                    "\r\nVALOR TOTAL: " + new money().formatToMoney(dadosVenda.vr_total.ToString()) +
+                                    "\r\nPARCELAS: " + dadosVenda.nu_parcelas +
+                                    "\r\nNSU: " + dadosVenda.nu_nsu.ToString() +
                                     "\r\nEstabelecimento: " + estab.st_nome +
                                     "\r\nAssociado: " + dadosProp.st_nome +
                                     "\r\nAssociação: " + dadosCartao.st_empresa +
                                     "\r\nMatricula: " + dadosCartao.st_matricula;
 
-                    var mm = new MailMessage(param_usuario,
-                                                stEmail,
-                                                assunto,
-                                                texto)
+                    var mm = new MailMessage(param_usuario, stEmail, assunto, texto)
                     {
                         BodyEncoding = UTF8Encoding.UTF8,
                         DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure

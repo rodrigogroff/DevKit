@@ -17,21 +17,24 @@
             <tr height="40px">
                 <td width="75px">
                     <input type="number" focus="true" numeric-only maxlength="6" class="form-control input-transparent"
-                           ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800" tabindex="1">
+                           ng-model="viewModel.stEmpresa" style="font-size:14px; font-weight:800" tabindex="1"
+                           ng-keyup="$event.keyCode == 13 && pulaMatricula()">
                 </td>
                 <td width="10px"></td>
                 <td width="75px">
                     <input type="number" numeric-only maxlength="6" class="form-control input-transparent"
                            id="cartMat"
                            ng-model="viewModel.stMatricula" style="font-size:14px; font-weight:800" tabindex="2"
-                           ng-maxlength="6" auto-next tabindex="2">
+                           ng-maxlength="6" auto-next tabindex="2"
+                           ng-keyup="$event.keyCode == 13 && pulaAcesso()">
                 </td>
                 <td width="10px"></td>
                 <td width="60px">
                     <input type="number" numeric-only maxlength="4" class="form-control input-transparent"
                            id="cartAcesso"
                            ng-model="viewModel.stAcesso" style="font-size:14px; font-weight:800" tabindex="3"
-                           ng-maxlength="4" auto-next tabindex="3">
+                           ng-maxlength="4" auto-next tabindex="3"
+                           ng-keyup="$event.keyCode == 13 && pulaVenc()">
                 </td>
                 <td width="10px"></td>
                 <td width="60px">
@@ -118,7 +121,7 @@
                                     </tr>
                                     <tr height="12px"></tr>
                                 </table>
-                                <br /><br /><div align="center"><button class="btn btn-info" ng-click="fechaModalValor()">Fechar</button></div>
+                                <br /><br /><div align="center"><button class="btn btn-info" ng-click="fechaModalValor()">Confirmar</button></div>
                             </div>
                         </div>
                     </div>

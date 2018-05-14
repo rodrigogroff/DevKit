@@ -368,6 +368,9 @@ namespace DevKit.Web.Controllers
             if (!string.IsNullOrEmpty(mdl.dtNasc))
                 prop.dt_nasc = ObtemData(mdl.dtNasc);
 
+            if (prop.dt_nasc == null)
+                prop.dt_nasc = new DateTime(1976, 1, 1);
+
             prop.st_nome = mdl.nome;
             prop.st_cpf = mdl.cpf;
             prop.st_telefone = mdl.tel;

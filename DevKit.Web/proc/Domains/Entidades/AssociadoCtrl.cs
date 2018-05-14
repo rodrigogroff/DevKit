@@ -143,6 +143,14 @@ namespace DevKit.Web.Controllers
                 }                    
             }
 
+            if (dadosProprietario.st_email != null)
+                if (!dadosProprietario.st_email.Contains("@"))
+                {
+                    dadosProprietario.st_email = "";
+
+                    db.Update(dadosProprietario);
+                }                    
+
             return Ok(new
             {
                 count = 0,

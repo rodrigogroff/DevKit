@@ -79,6 +79,7 @@
                     <input type="text" onKeyUp="money(this,Valor);" maxlength="12" class="form-control input-transparent"
                            focus="true"
                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                           ng-keyup="$event.keyCode == 13 && parcelar()"
                            ng-model="viewModel.valor">
                 </td>
             </tr>
@@ -91,6 +92,7 @@
                 </td>
                 <td>
                     <input type="number" numeric-only maxlength="2" class="form-control input-transparent"
+                           ng-keyup="$event.keyCode == 13 && parcelar()"
                            ng-model="viewModel.parcelas">
                 </td>
             </tr>

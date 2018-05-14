@@ -226,10 +226,17 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public string ObtemData(DateTime? valor)
         {
-            if (valor == null)
-                return "";
+            try
+            {
+                if (valor == null)
+                    return "";
 
-            return Convert.ToDateTime(valor).ToString("dd/MM/yyyy HH:mm");
+                return Convert.ToDateTime(valor).ToString("dd/MM/yyyy HH:mm");
+            }
+            catch (SystemException ex)
+            {
+                return null;
+            }
         }
 
         [NonAction]
@@ -256,29 +263,49 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public long ObtemValor(string valor)
         {
-            if (valor == null)
+            try
+            {
+                if (valor == null)
+                    return 0;
+
+                if (valor == "")
+                    valor = "0";
+
+                var iValor = 0;
+
+                if (!valor.Contains(","))
+                    valor += ",00";
+
+                valor = valor.Replace(",", "").Replace(".", "");
+                iValor = Convert.ToInt32(valor);
+
+                return iValor;
+            }
+            catch (SystemException ex)
+            {
                 return 0;
-
-            var iValor = 0;
-
-            if (!valor.Contains(","))
-                valor += ",00";
-
-            valor = valor.Replace(",", "").Replace(".", "");
-            iValor = Convert.ToInt32(valor);
-
-            return iValor;
+            }
         }
 
         [NonAction]
         public int? LimpaValor(string valor)
         {
-            if (valor == null)
+            try
+            {
+                if (valor == null)
                 return 0;
-                        
-            int? iValor = Convert.ToInt32(valor.Replace (",","").Replace(".",""));
 
-            return iValor;
+                if (valor == "")
+                    return 0;
+
+                int? iValor = Convert.ToInt32(valor.Replace (",","").Replace(".",""));
+
+                return iValor;
+            }
+            catch (SystemException ex)
+            {
+                return null;
+            }
         }
 
         [NonAction]

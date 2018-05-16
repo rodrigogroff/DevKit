@@ -290,7 +290,6 @@
     <Content Include="app\system\loja\ListingLojasController.js" />
     <Content Include="app\system\loja\loja.html" />
     <Content Include="app\system\loja\LojaController.js" />
-    <Content Include="app\system\loja\_filterLoja.html" />
     <Content Include="app\system\setup\setup.html" />
     <Content Include="app\system\setup\SetupController.js" />
     <Content Include="app\system\associado\listingAssociados.html" />
@@ -912,6 +911,7 @@
     <Compile Include="proc\Domains\Services\SimulaParceladaCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
+    <Compile Include="proc\Infrastructure\Excel.cs" />
     <Compile Include="proc\Infrastructure\Iso8583\ISO8583.cs" />
     <Compile Include="proc\Infrastructure\Iso8583\ISO8583_desmontaRegistro.cs" />
     <Compile Include="proc\Infrastructure\Iso8583\ISO8583_montaRegistro.cs" />

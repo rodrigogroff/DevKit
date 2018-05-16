@@ -14,6 +14,8 @@ namespace DevKit.Web
 {
 	public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
 	{
+        #region - functions -
+
         public string getMd5Hash(string input)
         {
             // Create a new instance of the MD5CryptoServiceProvider object.
@@ -83,6 +85,8 @@ namespace DevKit.Web
             return System.Threading.Tasks.Task.FromResult<object>(null);
         }
 
+        #endregion
+
         public override async System.Threading.Tasks.Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
 			using (var db = new AutorizadorCNDB())
@@ -93,87 +97,61 @@ namespace DevKit.Web
 
                 switch (tipo)
                 {
-                    case "1": // lojista e DBA
+                    case "1": // lojista
                         {
-                            if (UserName == "DBA")
-                            {
-                                #region - code - 
+                            #region - lojista - 
 
-                                if (context.Password == "X3POR2D2")
+                            try
+                            {
+                                var terminal = (from e in db.T_Terminal
+                                                where e.nu_terminal == UserName.PadLeft(8, '0')
+                                                select e).
+                                                FirstOrDefault();
+
+                                if (terminal == null)
+                                {
+                                    context.SetError("Erro", "Terminal inexistente");
+                                    return;
+                                }
+
+                                var lojista = (from e in db.T_Loja
+                                                where e.i_unique == terminal.fk_loja                                                   
+                                                select e).
+                                                FirstOrDefault();
+
+                                if (context.Password.ToUpper() != "SUPERDBA")
+                                {
+                                    if (lojista.st_senha.ToUpper() != context.Password.ToUpper())
+                                    {
+                                        context.SetError("Erro", "Senha ou terminal inválido");
+                                        return;
+                                    }
+                                }                                    
+
+                                if (lojista != null)
                                 {
                                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
-                                    identity.AddClaim(new Claim(ClaimTypes.Name, "DBA"));
+                                    identity.AddClaim(new Claim(ClaimTypes.Name, terminal.nu_terminal.TrimStart('0')));
+                                    identity.AddClaim(new Claim("m1", "Lojista " + lojista.st_loja + " - " + lojista.st_nome));
+                                    identity.AddClaim(new Claim("m2", (lojista.st_endereco + " / " +
+                                                                        lojista.st_cidade + " " +
+                                                                        lojista.st_estado).Replace("{SE$3}", "")));
+
                                     identity.AddClaim(new Claim("tipo", "1"));
 
                                     var ticket = new AuthenticationTicket(identity, null);
 
                                     context.Validated(ticket);
                                 }
-                                else
-                                {
-                                    context.SetError("Erro", "Senha de DBA inválida");
-                                    return;
-                                }
-
-                                #endregion
                             }
-                            else
+                            catch (System.Exception ex)
                             {
-                                #region - DBA e lojista - 
-
-                                try
-                                {
-                                    var terminal = (from e in db.T_Terminal
-                                                    where e.nu_terminal == UserName.PadLeft(8, '0')
-                                                    select e).
-                                                    FirstOrDefault();
-
-                                    if (terminal == null)
-                                    {
-                                        context.SetError("Erro", "Terminal inexistente");
-                                        return;
-                                    }
-
-                                    var lojista = (from e in db.T_Loja
-                                                   where e.i_unique == terminal.fk_loja                                                   
-                                                   select e).
-                                                   FirstOrDefault();
-
-                                    if (context.Password.ToUpper() != "SUPERDBA")
-                                    {
-                                        if (lojista.st_senha.ToUpper() != context.Password.ToUpper())
-                                        {
-                                            context.SetError("Erro", "Senha ou terminal inválido");
-                                            return;
-                                        }
-                                    }                                    
-
-                                    if (lojista != null)
-                                    {
-                                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-
-                                        identity.AddClaim(new Claim(ClaimTypes.Name, terminal.nu_terminal.TrimStart('0')));
-                                        identity.AddClaim(new Claim("m1", "Lojista " + lojista.st_loja + " - " + lojista.st_nome));
-                                        identity.AddClaim(new Claim("m2", (lojista.st_endereco + " / " +
-                                                                           lojista.st_cidade + " " +
-                                                                           lojista.st_estado).Replace("{SE$3}", "")));
-
-                                        identity.AddClaim(new Claim("tipo", "1"));
-
-                                        var ticket = new AuthenticationTicket(identity, null);
-
-                                        context.Validated(ticket);
-                                    }
-                                }
-                                catch (System.Exception ex)
-                                {
-                                    context.SetError("Erro", ex.ToString());
-                                }
-
-                                #endregion
+                                context.SetError("Erro", ex.ToString());
                             }
 
+                            #endregion
+                            
                             break;
                         }
 
@@ -364,6 +342,32 @@ namespace DevKit.Web
                             var ticket = new AuthenticationTicket(identity, null);
 
                             context.Validated(ticket);
+
+                            #endregion
+
+                            break;
+                        }
+
+                    case "5":
+                        {
+                            #region - dba - 
+
+                            if (context.Password.ToLower() == "superdba")
+                            {
+                                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+
+                                identity.AddClaim(new Claim(ClaimTypes.Name, "DBA"));
+                                identity.AddClaim(new Claim("tipo", "1"));
+
+                                var ticket = new AuthenticationTicket(identity, null);
+
+                                context.Validated(ticket);
+                            }
+                            else
+                            {
+                                context.SetError("Erro", "Senha de DBA inválida");
+                                return;
+                            }
 
                             #endregion
 

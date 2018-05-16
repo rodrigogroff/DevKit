@@ -213,6 +213,11 @@ namespace DevKit.Web.Controllers
                                           FirstOrDefault().
                                           nu_monthly_day;
 
+                        var dtNow = DateTime.Now.AddMonths(1);
+
+                        if (dtNow.Day >= diaFech)
+                            dtNow = dtNow.AddMonths(1);
+
                         if (tipoFut == "1") // resumido
                         {
                             var lstParcelasFuturas = (from e in db.T_Parcelas
@@ -224,8 +229,6 @@ namespace DevKit.Web.Controllers
                                                       select e).
                                                       ToList();
 
-                            var dtNow = DateTime.Now.AddMonths(1);
-                                                        
                             var lst = new List<RelExtratoFutResumido>();
                             
                             var parcs = lstParcelasFuturas.
@@ -287,8 +290,6 @@ namespace DevKit.Web.Controllers
                             var mes = Request.GetQueryStringValue("mes");
                             var ano = Request.GetQueryStringValue("ano");
 
-                            var dtNow = DateTime.Now.AddMonths(1); // fev
-                            //jan
                             var dtReq = new DateTime(Convert.ToInt32(ano), Convert.ToInt32(mes), 1);
 
                             // passado

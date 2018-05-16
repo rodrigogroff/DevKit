@@ -13,56 +13,118 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div class="divWebForm">
-			<table width="100%">
-				<tr>
-					<td width="15px"></td>
-					<td valign="top">
-						<ng-filtro tipo="profile" campos="campos" template-avancado="app/system/loja/_filterLoja.html" funcao-pesquisar="search"></ng-filtro>
-					</td>
-				</tr>
-			</table>
-			<table width="100%">
-				<tr>
-					<td valign="top">
-						<div ng-show="list.length == 0">
-							<br />
-							<br />
-							<div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
-							<br />
-							<br />
-						</div>
-						<div ng-show="list.length > 0">
-							<br />
-							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
-							<br />
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th>Código</th>
+        <div class="divWebForm">
+            <table>
+                <tr height="12px"> </tr>
+                <tr height="36px">
+                    <td width="120px"><b>Nome da loja</b></td>
+                    <td>
+                        <input type="text" focus="true"
+                               class="form-control input-transparent"
+                               ng-model="campos.busca" />
+                    </td>
+                    <td width="60px"></td>
+                    <td width="120px"><b>Terminal</b></td>
+                    <td width="90px">
+                        <input type="text" numeric-only maxlength="6"
+                               class="form-control input-transparent"
+                               ng-model="campos.terminal" />
+                    </td>
+                </tr>
+                <tr height="36px">
+                    <td><b>Cidade</b></td>
+                    <td>
+                        <input type="text"
+                               class="form-control input-transparent"
+                               ng-model="campos.cidade" />
+                    </td>
+                    <td></td>
+                    <td><b>Estado</b></td>
+                    <td>
+                        <input type="text"
+                               class="form-control input-transparent"
+                               ng-model="campos.estado" />
+                    </td>
+                </tr>
+                <tr height="36px">
+                    <td><b>Empresa</b></td>
+                    <td>
+                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="selectEmpresa" ng-model="campos.idEmpresa" />
+                    </td>                    
+                </tr>
+                <tr height="36px">
+                    <td><b>Situação</b></td>
+                    <td>
+                        <br />
+                        <input type="radio" value="false" ng-model="campos.bloqueada"> Ativa
+                        <br />
+                        <input type="radio" value="true" ng-model="campos.bloqueada"> Bloqueada
+                        <br />
+                        <input type="radio" value="undefined" ng-model="campos.bloqueada"> (Ambos)
+                    </td>
+                    <td></td>
+                    <td><b>Tipo Venda</b></td>
+                    <td>
+                        <br />
+                        <input type="radio" value="true" ng-model="campos.comSenha"> Com senha
+                        <br />
+                        <input type="radio" value="false" ng-model="campos.comSenha"> Sem senha
+                        <br />
+                        <input type="radio" value="undefined" ng-model="campos.comSenha"> (Ambos)
+                    </td>
+                </tr>
+                <tr height="22px"></tr>
+            </table>
+
+            <input type="submit" class="btn btn-info" value="Pesquisar" ng-click="search()"><br />
+
+            <table width="100%">
+                <tr>
+                    <td valign="top">
+                        <div ng-show="list.length == 0">
+                            <br />
+                            <br />
+                            <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <br />
+                            <br />
+                        </div>
+                        <div ng-show="list.length > 0">
+                            <br />
+                            <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                            <br />
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
                                         <th>Terminal</th>
-										<th>Nome loja</th>
+                                        <th>Nome loja</th>
                                         <th>Cidade</th>
                                         <th>Estado</th>
                                         <th>Situação</th>
-                                        <th>Tipo Venda</th>										
-									</tr>
-								</thead>
-								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                        <th>Tipo Venda</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                                     <td>{{ mdl.id }}</td>
-									<td>{{ mdl.terminal }}</td>
+                                    <td>{{ mdl.terminal }}</td>
                                     <td>{{ mdl.nome }}</td>
                                     <td>{{ mdl.cidade }}</td>
                                     <td>{{ mdl.estado }}</td>
                                     <td>{{ mdl.situacao }}</td>
-                                    <td>{{ mdl.tipoVenda }}</td>									
-								</tr>
-							</table>
-						</div>
-						<br />
-					</td>
-				</tr>
-			</table>
-		</div>
+                                    <td>{{ mdl.tipoVenda }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" class="btn btn-info" value="Exportar" ng-if="list.length > 0" ng-click="exportar()"><br />
+            <br />
+        </div>
 	</section>
 </div>
+
+<br />
+<br />
+<br />

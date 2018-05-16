@@ -30,15 +30,10 @@ angular.module('app.controllers').controller('MenuController',
             $scope.logOut = function ()
             {
                 AuthService.fillAuthData();
-
-                $scope.authentication = AuthService.authentication;
-
-                var tipo = $scope.authentication.tipo;
-
-                if (tipo == 2 || tipo == 1)
-                    AuthService.logOut();
-                else
-                    window.location = '/login?tipo=' + tipo;
+                var tipo = AuthService.authentication.tipo;
+                if (tipo == undefined) tipo = 1;
+                AuthService.logOut();
+                //window.location = '/login?tipo=' + tipo;
             };
 
         }]);

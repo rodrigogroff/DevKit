@@ -5,12 +5,77 @@ using System.Web.Http;
 using System.Net;
 using System;
 using DataModel;
+using App.Web;
 
 namespace DevKit.Web.Controllers
 {
     public class LojaController : ApiControllerBase
     {
-        public IHttpActionResult Get()
+        #region - exportar -
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/loja/exportar", Name = "ExportarLojas")]
+        public IHttpActionResult Exportar()
+        {
+            return Get(exportar: true);
+        }
+
+        [NonAction]
+        private IHttpActionResult Export( IQueryable<T_Loja> query)
+        {
+            var myXLSWrapper = new ExportWrapper ( "Export_Lojas.xlsx",
+                                                   "Lojas",
+                                                   new string[] { "Código",
+                                                                  "Nome",
+                                                                  "Cidade",
+                                                                  "Estado",
+                                                                  "Endereço",
+                                                                  "Telefone",
+                                                                  "Empresas",
+                                                                  "Terminais",
+                                                                  "Bloqueio",
+                                                                  "Senha" });
+
+            var lstEmpresas = db.T_Empresa.ToList();
+            var lstLinks = db.LINK_LojaEmpresa.ToList();
+            var lstTerms = db.T_Terminal.ToList();
+
+            foreach (var item in query)
+            {
+                string senha = "Com Senha", empresas = "", terminais = "";
+
+                if (item.tg_portalComSenha == 0)
+                    senha = "Sem Senha";
+
+                foreach (var it in lstLinks.Where (y=> y.fk_loja == item.i_unique ).ToList())
+                    empresas += lstEmpresas.
+                                    FirstOrDefault(y => y.i_unique == it.fk_empresa).st_empresa.TrimStart('0') + ",";
+
+                foreach (var it in lstTerms.Where(y => y.fk_loja == item.i_unique).ToList())
+                    terminais += it.nu_terminal.ToString().TrimStart('0') + ",";
+
+                myXLSWrapper.AddContents(new string[]
+                {
+                    item.st_loja,
+                    item.st_nome,
+                    item.st_cidade,
+                    item.st_estado,
+                    item.st_endereco,
+                    item.nu_telefone.ToString(),
+                    empresas,
+                    terminais,
+                    item.tg_blocked == '1' ? "Bloqueada" : "Ativa",
+                    senha,
+                });
+            };
+
+            return ResponseMessage(myXLSWrapper.GetSingleSheetHttpResponse());
+        }
+
+        #endregion
+
+        public IHttpActionResult Get(bool? exportar = false)
         {
             var busca = Request.GetQueryStringValue("busca");
             var terminal = Request.GetQueryStringValue("terminal");
@@ -18,6 +83,7 @@ namespace DevKit.Web.Controllers
             var estado = Request.GetQueryStringValue("estado");
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
+            var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa");
             var bloqueada = Request.GetQueryStringValue<bool?>("bloqueada", null);
             var comSenha = Request.GetQueryStringValue<bool?>("comSenha", null);
 
@@ -44,6 +110,14 @@ namespace DevKit.Web.Controllers
             {
                 query = from e in query
                         where e.st_cidade.ToUpper() == cidade
+                        select e;
+            }
+
+            if (idEmpresa != null)
+            {
+                query = from e in query
+                        join emp in db.LINK_LojaEmpresa on Convert.ToInt32(e.i_unique) equals emp.fk_loja
+                        where emp.fk_empresa == idEmpresa
                         select e;
             }
 
@@ -80,6 +154,9 @@ namespace DevKit.Web.Controllers
 
             query = query.OrderBy(y => y.st_nome);
 
+            if (exportar == true)
+                return Export(query);
+
             var lst = new List<Loja>();
 
             foreach (var item in query.Skip(skip).Take(take).ToList())
@@ -87,7 +164,7 @@ namespace DevKit.Web.Controllers
                 var senha = "Com Senha";
 
                 if (item.tg_portalComSenha == 0)
-                    senha = "Sem senha";
+                    senha = "Sem Senha";
 
                 lst.Add(new Loja
                 {

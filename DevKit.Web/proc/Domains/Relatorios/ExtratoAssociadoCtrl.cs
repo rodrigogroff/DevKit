@@ -167,7 +167,17 @@ namespace DevKit.Web.Controllers
                 case 3: // futuro
                     #region - code - 
                     {
-                        var dt = DateTime.Now.AddMonths(1);
+                        var dtNow = DateTime.Now.AddMonths(1);
+
+                        var diaFech = (from e in db.I_Scheduler
+                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentAssociadoEmpresa.st_empresa)
+                                       select e).
+                                       FirstOrDefault().
+                                       nu_monthly_day;
+
+                        if (dtNow.Day >= diaFech)
+                            dtNow = dtNow.AddMonths(1);
+
                         var lstFinal = new List<ExtratoAssociadoFuturo>();
 
                         int t_parc = 2;
@@ -215,7 +225,7 @@ namespace DevKit.Web.Controllers
 
                                 lstFinal.Add(new ExtratoAssociadoFuturo
                                 {
-                                    mes_ano = eMonth.Get(dt.Month).stName + " / " + dt.Year,
+                                    mes_ano = eMonth.Get(dtNow.Month).stName + " / " + dtNow.Year,
                                     compras = lst.Count.ToString(),
                                     total = mon.setMoneyFormat((long)tot),
                                     pct_real = mon.setMoneyFormat((long)vrPctReal),
@@ -227,7 +237,7 @@ namespace DevKit.Web.Controllers
                                 break;
 
                             t_parc++;
-                            dt = dt.AddMonths(1);
+                            dtNow = dtNow.AddMonths(1);
                         }
 
                         return Ok(new
@@ -239,7 +249,7 @@ namespace DevKit.Web.Controllers
                     #endregion
             }
 
-            return BadRequest();            
+            return BadRequest();
         }
     }
 }

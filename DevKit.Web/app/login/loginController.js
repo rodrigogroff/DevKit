@@ -1,4 +1,5 @@
 ﻿'use strict';
+
 angular.module('app.controllers').controller('LoginController',
 ['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version', 'Api', '$stateParams', '$window',
 function ($scope, $rootScope, $location, $state, AuthService, version, Api, $stateParams, $window)
@@ -39,9 +40,10 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
             var lData = { };
 
             if ($rootScope.tipo == undefined)
+            {
                 $rootScope.tipo = 1;
-
-            if ($rootScope.tipo == 2)
+            }
+            else if ($rootScope.tipo == 2)
             {
                 var stA = $scope.loginData.userNameAcesso.toString();
                 var stV = $scope.loginData.userNameVenc.toString();
@@ -49,7 +51,6 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
                 if (stA.length == 3) stA = "0" + stA;
                 if (stV.length == 3) stV = "0" + stV;
 
-                // usuarios
                 lData.userName = "2." +
                                  $scope.loginData.userName.toString() + "." +
                                  $scope.loginData.userNameMat.toString() + "." +
@@ -63,9 +64,10 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
                     $scope.loginData.userEmp + "." +
                     $scope.loginData.userName;
             }
-            else if ($rootScope.tipo == 1 || $rootScope.tipo == 3)
-            {
-                // lojista
+            else if ($rootScope.tipo == 1 ||
+                     $rootScope.tipo == 3 ||
+                     $rootScope.tipo == 5)
+            {                
                 lData.userName = $rootScope.tipo + $scope.loginData.userName.toString();
             }
 
@@ -77,7 +79,14 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
                 $scope.loginOK = true;
                 $rootScope.exibirMenu = true;              
 
-                if ($rootScope.tipo == 2)
+                if ($rootScope.tipo == 5)
+                {
+                    $rootScope.lojistaLogado = "DBA";
+                    $rootScope.lojistaEnd = "Modo de configuração do portal";
+
+                    $state.go('relAssociados', {});
+                }
+                else if ($rootScope.tipo == 2)
                 {
                     if ($rootScope.mobileVersion == true)
                         $state.go('limitesUsrMobile', {});
@@ -86,31 +95,20 @@ function ($scope, $rootScope, $location, $state, AuthService, version, Api, $sta
                 }
                 else if ($rootScope.tipo == 1 || $rootScope.tipo == 3)
                 {
-                    // lojistas
-
-                    if ($scope.loginData.userName == "DBA") {
-                        $rootScope.lojistaLogado = "DBA";
-                        $rootScope.lojistaEnd = "Modo de configuração do portal";
-
-                        $state.go('relAssociados', {});
-                    }
-                    else
+                    Api.LojistaMensagens.listPage({}, function (data)
                     {
-                        Api.LojistaMensagens.listPage({}, function (data)
-                        {
-                            if ($rootScope.mobileVersion == true) {
-                                $state.go('vendamobile', {});
+                        if ($rootScope.mobileVersion == true) {
+                            $state.go('vendamobile', {});
+                        }
+                        else {
+                            if (data.count == 0 && $rootScope.tipo == 1) {
+                                $state.go('venda', {});
                             }
-                            else {
-                                if (data.count == 0 && $rootScope.tipo == 1) {
-                                    $state.go('venda', {});
-                                }
-                                else if (data.count > 0) {
-                                    $state.go('mensagens', {});
-                                }
+                            else if (data.count > 0) {
+                                $state.go('mensagens', {});
                             }
-                        });
-                    }
+                        }
+                    });
                 }
                                 
     		},

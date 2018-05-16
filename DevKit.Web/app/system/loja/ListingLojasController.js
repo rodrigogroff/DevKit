@@ -17,36 +17,53 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
 	function init()
     {
+        $scope.selectEmpresa = ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 });
+
 		if (ngHistoricoFiltro.filtro)
 			ngHistoricoFiltro.filtro.exibeFiltro = false;
 	}
 
 	$scope.search = function ()
 	{
-		$scope.load(0, $scope.itensporpagina);
+		$scope.load(0, $scope.itensporpagina, false);
 		$scope.paginador.reiniciar();
 	}
 
-	$scope.load = function (skip, take)
+	$scope.load = function (skip, take, exportar)
 	{
-		$scope.loading = true;
+        var opcoes =
+            {
+                skip: skip,
+                take: take,
+                busca: $scope.campos.busca,
+                terminal: $scope.campos.terminal,
+                cidade: $scope.campos.cidade,
+                estado: $scope.campos.estado,
+                bloqueada: $scope.campos.bloqueada,
+                comSenha: $scope.campos.comSenha,
+                idEmpresa: $scope.campos.idEmpresa
+            };
 
-        var opcoes = { skip: skip, take: take };
+        if (exportar)
+        {
+            toastr.warning('Aguarde, solicitação em andamento', 'Exportar');
+            window.location.href = "/api/loja/exportar?" + $.param(opcoes);
+        }
+        else
+        {
+            $scope.loading = true;
 
-		var filtro = ngHistoricoFiltro.filtro.filtroGerado;
-
-		if (filtro)
-            angular.extend(opcoes, filtro);
-
-        opcoes.bloqueada = $scope.campos.bloqueada;
-        opcoes.comSenha = $scope.campos.comSenha;
-
-        Api.Loja.listPage(opcoes, function (data) {
-            $scope.list = data.results;
-            $scope.total = data.count;
-            $scope.loading = false;
-        });
+            Api.Loja.listPage(opcoes, function (data) {
+                $scope.list = data.results;
+                $scope.total = data.count;
+                $scope.loading = false;
+            });
+        }
 	}
+
+    $scope.exportar = function () {
+        $scope.load(0, $scope.itensporpagina, true);
+    }
 
 	$scope.show = function (mdl)
 	{

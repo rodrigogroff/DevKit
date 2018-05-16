@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using System;
+using System.Linq;
 
 namespace DevKit.Web.Controllers
 {
@@ -52,20 +53,21 @@ namespace DevKit.Web.Controllers
 
             var senha = "1";
 
-            if (db.currentLojista.tg_portalComSenha == 0 )
+            var dbLoja = db.T_Loja.FirstOrDefault(y => y.i_unique == db.currentLojista.i_unique);
+
+            if (dbLoja.tg_portalComSenha == 0 )
                 senha = "0";
-
-            var lst = new List<SomaParceladaView>();
-
-            lst.Add(new SomaParceladaView
-            {
-                requerSenha = senha
-            });
-
+            
             return Ok(new
             {
                 count = 0,
-                results = lst
+                results = new List<SomaParceladaView>
+                {
+                    new SomaParceladaView
+                    {
+                        requerSenha = senha // "0"
+                    }
+                }
             });
         }
     }

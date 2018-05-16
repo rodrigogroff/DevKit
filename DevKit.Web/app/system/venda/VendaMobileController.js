@@ -242,7 +242,12 @@
                         $scope.valorVelho = $scope.viewModel.valor;
                         $scope.parcelaVelho = $scope.viewModel.parcelas;
 
-                        $scope.mostraModalMobile = true;
+                        $scope.viewModel.requerSenha = data.results[0].requerSenha;
+
+                        if ($scope.viewModel.requerSenha == '1')
+                            $scope.mostraModalMobile = true;
+                        else 
+                            $scope.efetuarVenda();                        
                     },
                     function (response) {
                         $scope.falhaVendaMsg = response.data.message;

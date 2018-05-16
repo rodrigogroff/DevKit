@@ -284,7 +284,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 $scope.viewModel.requerSenha = data.results[0].requerSenha;
                 $scope.processandoVenda = false;
 
-                $scope.mostraSenha = true;
+                if ($scope.viewModel.requerSenha == '1')
+                    $scope.mostraSenha = true;
+                else
+                    $scope.mostraSenha = false;
             },
             function (response) {
                 $scope.loading = false;
@@ -299,17 +302,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $scope.confirmar = function ()
     {
         $scope.processandoVenda = true;    
-
-        if ($scope.mobileVersion == true) {
-            
-            $scope.valor_fail = invalidCheck($scope.viewModel.valor);
-            $scope.parcelas_fail = invalidCheck($scope.viewModel.parcelas);
-            $scope.senhaportador_fail = invalidCheck($scope.viewModel.senhaPortadorCartao);
-
-            if ($scope.valor_fail || $scope.parcelas_fail || $scope.senhaportador_fail)
-                return;
-        }
-
         $scope.autorizando = true;
 
         Api.EfetuaVenda.listPage(
@@ -339,15 +331,18 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             function (data)
             {                
                 $scope.viewModel.cupom = data.results;
-                $scope.closeModalMobileAutorizado = true;
                 $scope.processandoVenda = false;    
                 $scope.mostraSenha = false;
             },
             function (response)
             {
+                // teste!!!
+                //$scope.viewModel.cupom = {};
+                //$scope.processandoVenda = false;
+                //$scope.mostraSenha = false;
+
                 $scope.loading = false;
-                $scope.autorizando = false;
-               
+                $scope.autorizando = false;               
                 $scope.falhaVendaMsg = response.data.message;
                 $scope.falhaVenda = true;          
                 $scope.processandoVenda = false;    

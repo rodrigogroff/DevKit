@@ -28,7 +28,7 @@ namespace DevKit.Web.Controllers
                                 FirstOrDefault();
 
                 string dir = "C:\\fechamento_dbf",
-                        file = "F" + tEmpresa.i_unique + mes + ano.Substring(2),
+                        file = "F" + tEmpresa.st_empresa + "-" + mes + ano.Substring(2),
                         ext = "DBF";
 
                 var odbf = new DbfFile(System.Text.Encoding.Default);

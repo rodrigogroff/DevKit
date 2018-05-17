@@ -55,17 +55,31 @@ namespace DevKit.Web.Controllers
             db = _db;
             SetupFile();
 
+            var_operacaoCartao = OperacaoCartao.VENDA_EMPRESARIAL;
+            var_operacaoCartaoFail = OperacaoCartao.FALHA_VENDA_EMPRESARIAL;
+
+            Registry("-------------------------");
+            Registry("Authenticate");
+            Registry("-------------------------");
+
             if (Authenticate())
             {
 
             }
 
+            Registry("-------------------------");
+            Registry("Finalizado!");
+            Registry("-------------------------");
+
+            Registry("Resultado: " + output_st_msg);
+            Registry("Código de resposta: " + var_codResp);
+            
             CloseFile();
         }
 
         private bool Authenticate()
         {
-            Registry("authenticate exec_pos_vendaEmpresarial ");
+            
 
             // Default é erro genérico
             var_codResp = "9999";
@@ -84,18 +98,14 @@ namespace DevKit.Web.Controllers
 
             var_codResp = "0606";
 
-            #region - valida terminal - 
-
             // --------------------------------------------
-            // ## Busca terminal pelo seu código
+            // Busca terminal pelo seu código
             // --------------------------------------------
-
-            //00000212
 
             {
-                var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal.PadLeft(8, '0'));
+                var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal);
 
-                Registry(q.ToString());
+                Registry("db.T_Terminal.Where(y => y.nu_terminal == " + input_cont_pe.st_terminal);
 
                 term = q.FirstOrDefault();
 
@@ -107,131 +117,130 @@ namespace DevKit.Web.Controllers
                 }
             }
 
-            /*
-            if (!term.select_rows_terminal(input_cont_pe.get_st_terminal()))
+            // --------------------------------------------
+            // Busca empresa informada
+            // --------------------------------------------
+
             {
-                output_st_msg = "Terminal inexistente";
-                var_codResp = "0303";
-                return false;
-            }
+                var q = db.T_Empresa.Where(y => y.st_empresa == input_cont_pe.st_empresa);
 
-            if (!term.fetch())
-            {
-                output_st_msg = "Erro aplicativo";
-                return false;
-            }
-            */
+                Registry("db.T_Empresa.Where(y => y.st_empresa == " + input_cont_pe.st_empresa);
 
-            #endregion
-            /*
-            #region - valida empresa - 
+                emp = q.FirstOrDefault();
 
-            // ## Busca empresa informada
-
-            if (!emp.select_rows_empresa(input_cont_pe.get_st_empresa()))
-            {
-                output_st_msg = "Empresa inexistente";
-                var_codResp = "0303";
-                return false;
-            }
-
-            if (!emp.fetch())
-            {
-                output_st_msg = "Erro de aplicativo";
-                return false;
-            }
-
-            // ## Caso empresa bloqueada, sair
-
-            if (emp.get_tg_bloq() == Context.TRUE)
-            {
-                output_st_msg = "Empresa bloqueada";
-                var_codResp = "0303";
-                return false;
-            }
-
-            #endregion
-
-            #region - valida relação da Loja do Terminal com Empresa (Convênio)
-
-            LINK_LojaEmpresa loj_emp = new LINK_LojaEmpresa(this);
-
-            if (!loj_emp.select_fk_empresa_loja(emp.get_identity(), term.get_fk_loja()))
-            {
-                output_st_msg = "Terminal não conveniado";
-                var_codResp = "0303";
-                return false;
-            }
-
-            if (!loj.selectIdentity(term.get_fk_loja()))
-            {
-                output_st_msg = "Erro aplicativo";
-                return false;
-            }
-
-            if (loj.get_tg_blocked() == Context.TRUE)
-            {
-                output_st_msg = "Loja bloqueada";
-                var_codResp = "0303";
-                return false;
-            }
-
-            if (loj.get_tg_cancel() == Context.TRUE)
-            {
-                output_st_msg = "Loja cancelada";
-                var_codResp = "0303";
-                return false;
-            }
-
-            #endregion
-
-            #region - valida cartão - 
-
-            if (!cart.select_rows_tudo(input_cont_pe.get_st_empresa(),
-                                           input_cont_pe.get_st_matricula(),
-                                             input_cont_pe.get_st_titularidade()))
-            {
-                output_st_msg = "Cartão inexistente";
-                var_codResp = "0606";
-                return false;
-            }
-
-            if (!cart.fetch())
-            {
-                output_st_msg = "Erro aplicativo";
-                return false;
-            }
-
-            // ## Verifica bloqueio 
-
-            if (cart.get_tg_status() == CartaoStatus.Bloqueado)
-            {
-                output_st_msg = "Cartão inválido";
-                var_codResp = "0505";
-                return false;
-            }
-
-            if (cart.get_tg_emitido() != StatusExpedicao.Expedido)
-            {
-                output_st_msg = "Cartão inválido";
-                var_codResp = "0505";
-                return false;
-            }
-
-            if (cart.get_tg_tipoCartao() == TipoCartao.educacional)
-            {
-                // ## No caso educacional, permitir somente venda 
-                // ## em uma parcela
-
-                if (input_cont_pe.get_nu_parcelas().TrimStart('0') != "1")
+                if (emp == null)
                 {
-                    output_st_msg = "Somente uma parcela";
-                    var_codResp = "0606";
+                    output_st_msg = "Empresa inexistente";
+                    var_codResp = "0303";                    
                     return false;
                 }
             }
 
-            #endregion
+            Registry("emp.tg_bloq " + (emp.tg_bloq == null ? "NULO" : emp.tg_bloq.ToString()));
+
+            if (emp.tg_bloq != null)
+                if (emp.tg_bloq.ToString() == Context.TRUE)
+                {
+                    output_st_msg = "Empresa bloqueada";
+                    var_codResp = "0303";
+                    return false;
+                }
+
+            var loj_emp = new LINK_LojaEmpresa();
+
+            {
+                var q = db.LINK_LojaEmpresa.
+                    Where(y => y.fk_empresa == emp.i_unique).
+                    Where(y => y.fk_loja == term.fk_loja);
+
+                Registry("db.LINK_LojaEmpresa.Where(y => y.fk_empresa == " + emp.i_unique.ToString() +
+                    ").Where(y => y.fk_loja == " + term.fk_loja);
+
+                loj_emp = q.FirstOrDefault();
+
+                if (loj_emp == null)
+                {
+                    output_st_msg = "Terminal não conveniado";
+                    var_codResp = "0303";
+                    return false;
+                }
+            }
+
+            {
+                var q = db.T_Loja.Where(y => y.i_unique == term.fk_loja);
+
+                Registry("db.T_Loja.Where(y => y.i_unique == " + term.fk_loja);
+
+                loj = q.FirstOrDefault();
+
+                if (loj == null)
+                {
+                    output_st_msg = "Erro aplicativo";
+                    return false;
+                }
+
+                Registry("loj.tg_blocked " + (loj.tg_blocked == null ? "NULO" : loj.tg_blocked.ToString()));
+
+                if (loj.tg_blocked != null)
+                    if (loj.tg_blocked.ToString() == Context.TRUE)
+                    {
+                        output_st_msg = "Loja bloqueada";
+                        var_codResp = "0303";
+                        return false;
+                    }
+
+                Registry("loj.tg_cancel " + (loj.tg_cancel == null ? "NULO" : loj.tg_cancel.ToString()));
+
+                if (loj.tg_cancel != null)
+                    if (loj.tg_cancel.ToString() == Context.TRUE)
+                    {
+                        output_st_msg = "Loja cancelada";
+                        var_codResp = "0303";
+                        return false;
+                    }
+            }
+
+            {
+                var q = db.T_Cartao.
+                        Where(y => y.st_empresa == input_cont_pe.st_empresa).
+                        Where(y => y.st_matricula == input_cont_pe.st_matricula).
+                        Where(y => y.st_titularidade == input_cont_pe.st_titularidade);
+
+                Registry("db.T_Cartao.Where(y => y.st_empresa == " + input_cont_pe.st_empresa +
+                    ").Where(y => y.st_matricula == " + input_cont_pe.st_matricula +
+                    ").Where(y => y.st_titularidade == " + input_cont_pe.st_titularidade);
+
+                cart = q.FirstOrDefault();
+
+                if (cart == null)
+                {
+                    output_st_msg = "Cartão inexistente";
+                    var_codResp = "0606";
+                    return false;
+                }
+
+                Registry("cart.tg_status " + (cart.tg_status == null ? "NULO" : cart.tg_status.ToString()));
+
+                if (cart.tg_status != null)
+                    if (cart.tg_status.ToString() == CartaoStatus.Bloqueado)
+                    {
+                        output_st_msg = "Cartão inválido";
+                        var_codResp = "0505";
+                        return false;
+                    }
+
+                Registry("cart.tg_emitido " + (cart.tg_emitido == null ? "NULO" : cart.tg_emitido.ToString()));
+
+                if (cart.tg_emitido == null)
+                    if (cart.tg_emitido.ToString() == StatusExpedicao.Expedido)
+                    {
+                        output_st_msg = "Cartão inválido";
+                        var_codResp = "0505";
+                        return false;
+                    }
+            }
+
+            /*
 
             var_vr_total = input_cont_pe.get_vr_valor();
             var_nu_parcelas = input_cont_pe.get_nu_parcelas();

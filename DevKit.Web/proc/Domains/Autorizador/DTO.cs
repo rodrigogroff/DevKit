@@ -32,4 +32,41 @@ namespace DevKit.Web.Controllers
                       st_mesPri,
                       st_variavel;
     }
+
+    public class OperacaoCartao
+    {
+        public const string VENDA_EMPRESARIAL = "0";
+        public const string CONF_VENDA_EMP = "1";
+        public const string PAY_FONE_GRAVA_PEND = "2";
+        public const string PAY_FONE_CANCELA_PEND = "3";
+        public const string PAY_FONE_AUTORIZA_VENDA = "4";
+        public const string PAY_FONE_CONFIRMA_VENDA = "5";
+        public const string PAY_FONE_CANCELA_VENDA = "6";
+        public const string PAY_FONE_CANCELA_PEND_LOJISTA = "7";
+        public const string FALHA_VENDA_EMPRESARIAL = "8";
+        public const string FALHA_PAY_FONE_GRAVA_PEND = "9";
+        public const string FALHA_PAY_FONE_CANCELA_PEND = "10";
+        public const string FALHA_PAY_FONE_AUTORIZA_VENDA = "11";
+        public const string FALHA_PAY_FONE_CONFIRMA_VENDA = "12";
+        public const string FALHA_PAY_FONE_CANCELA_VENDA = "13";
+        public const string FALHA_PAY_FONE_CANCELA_PEND_LOJISTA = "14";
+        public const string VENDA_EMPRESARIAL_CANCELA = "15";
+        public const string FALHA_VENDA_EMPRESARIAL_CANCELA = "16";
+        public const string FALHA_CONF_VENDA_EMP = "17";
+        public const string EDU_DEP_IMEDIATO = "18";
+        public const string EDU_DEP_FUNDO = "19";
+        public const string EDU_DEP_DIARIO = "20";
+        public const string VENDA_EMPRESARIAL_DESFAZ = "21";
+    }
+
+    public class Context
+    {
+        public const string TRUE = "1";
+        public const string FALSE = "0";
+        public const string NOT_SET = "0";
+        public const string EMPTY = "";
+        public const string OPEN = "0";
+        public const string CLOSED = "1";
+        public const string NONE = "0";
+    }
 }

@@ -95,9 +95,12 @@ namespace DevKit.Web
 
                 var UserName = context.UserName.Substring(1);
 
-                //VendaEmpresarial v = new VendaEmpresarial();
-                //v.input_cont_pe.st_terminal = "4200";
-                //v.Run(db);
+                #if DEBUG
+                VendaEmpresarial v = new VendaEmpresarial();
+                v.input_cont_pe.st_terminal = "00006101";
+                v.input_cont_pe.st_empresa = "001401";
+                v.Run(db);
+                #endif
 
                 switch (tipo)
                 {
@@ -155,9 +158,7 @@ namespace DevKit.Web
                             }
 
                             #endregion
-
-                            
-                            
+                                                        
                             break;
                         }
 

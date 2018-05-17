@@ -45,14 +45,14 @@ namespace DevKit.Web.Controllers
 
             sw = new StreamWriter(nomeFile, false, Encoding.ASCII);
 
-            Registry(" ---- StartUp ---- ");
+            Registry(" ---- File Created ---- ");
 
             return dir;
         }        
 
         public void Registry (string text)
         {
-            sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:SS:ffff") + " " + text);
+            sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff") + " " + text);
             sw.Flush();
         }
 

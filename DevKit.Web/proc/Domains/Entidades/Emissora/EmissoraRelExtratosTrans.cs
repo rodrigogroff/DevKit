@@ -82,6 +82,7 @@ namespace DevKit.Web.Controllers
             }
 
             var trans = (from e in db.LOG_Transacoes
+                         where e.fk_empresa == db.currentEmpresa.i_unique
                          where lstCarts.Contains((int)e.fk_cartao) || lstCarts.Count() == 0
                          where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
                          orderby e.tg_confirmada, e.dt_transacao

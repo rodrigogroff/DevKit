@@ -247,12 +247,17 @@ namespace DevKit.Web.Controllers
                 if (valor == null)
                     return null;
 
-                if (valor.Length < 10)
+                if (valor.Length < 8)
                     return null;
 
+                if (valor.Length == 8)
+                    valor = valor.Substring(0, 2) + "/" + 
+                            valor.Substring(2, 2) + "/" + 
+                            valor.Substring(4, 4);
+
                 return new DateTime(Convert.ToInt32(valor.Substring(6, 4)),
-                                                Convert.ToInt32(valor.Substring(3, 2)),
-                                                Convert.ToInt32(valor.Substring(0, 2)), 0, 0, 0);
+                                    Convert.ToInt32(valor.Substring(3, 2)),
+                                    Convert.ToInt32(valor.Substring(0, 2)), 0, 0, 0);
             }
             catch (SystemException ex)
             {

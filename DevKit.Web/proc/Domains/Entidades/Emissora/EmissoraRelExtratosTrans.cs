@@ -44,10 +44,12 @@ namespace DevKit.Web.Controllers
 
             if (dt_inicial == null)
                 dt_inicial = new DateTime(dt.Year, dt.Month, dt.Day);
-            
+
             if (dt_final == null)
                 dt_final = new DateTime(dt.Year, dt.Month, dt.Day).AddDays(1);
-                        
+            else
+                dt_final = Convert.ToDateTime(dt_final).AddDays(1);
+            
             if (dt_final != null && dt_inicial != null)
                 if (dt_final < dt_inicial)
                     return BadRequest("Datas inválidas");
@@ -99,12 +101,14 @@ namespace DevKit.Web.Controllers
                              select term).
                              ToList();
 
+            /*
             var parcelasConf = (from e in trans
                                 join pa in db.T_Parcelas on (int)e.i_unique equals pa.fk_log_transacoes
                                 where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
                                 select pa).
                                 ToList();
-            
+            */
+
             var mon = new money();
 
             var lst = new List<EmissoraRelExtratosTrans>
@@ -142,6 +146,7 @@ namespace DevKit.Web.Controllers
                         valorTot = mon.setMoneyFormat((long)tran.vr_total)
                     });
 
+                    /*
                     if (tran.nu_parcelas > 0)
                     {
                         foreach (var par in from e in parcelasConf
@@ -164,6 +169,7 @@ namespace DevKit.Web.Controllers
                             });
                         }
                     }
+                    */
                 }
             }
 

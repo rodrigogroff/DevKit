@@ -95,6 +95,10 @@ namespace DevKit.Web
 
                 var UserName = context.UserName.Substring(1);
 
+                //VendaEmpresarial v = new VendaEmpresarial();
+                //v.input_cont_pe.st_terminal = "4200";
+                //v.Run(db);
+
                 switch (tipo)
                 {
                     case "1": // lojista
@@ -151,6 +155,8 @@ namespace DevKit.Web
                             }
 
                             #endregion
+
+                            
                             
                             break;
                         }

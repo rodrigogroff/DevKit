@@ -72,119 +72,140 @@
                 <b>Cartão</b>: {{cartao}}<br />
                 <b>Período</b>: {{periodo}}<br />
                 <b>Valor total</b>: R$ {{total}}<br />
+                <b>Situação</b>: <span ng-if="campos.sit == 1">Todas</span>
+                <span ng-if="campos.sit == 2">Confirmadas</span>
+                <span ng-if="campos.sit == 3">Canceladas</span>
+                <span ng-if="campos.sit == 4">Pendentes</span>
                 <br />
-                <h4>Transações confirmadas</h4>
                 <br />
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Serial</th>
-                            <th>Loja</th>
-                            <th>Terminal</th>
-                            <th>NSU</th>
-                            <th>Vlr. Total</th>
-                            <th>Parcelas</th>
-                            <th>Data</th>
-                            <th>Status</th>
-                            <th>Operação</th>
+
+                <div ng-if="campos.sit == 1 || campos.sit == 2">
+
+                    <h4>Transações confirmadas</h4>
+                    <br />
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Serial</th>
+                                <th>Loja</th>
+                                <th>Terminal</th>
+                                <th>NSU</th>
+                                <th>Vlr. Total</th>
+                                <th>Parcelas</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Operação</th>
+                            </tr>
+                        </thead>
+                        <tr data-ng-repeat="mdl in list[0].itens">
+                            <td>{{ mdl.serial }}</td>
+                            <td>{{ mdl.loja }}</td>
+                            <td>{{ mdl.terminal }}</td>
+                            <td>{{ mdl.nsu }}</td>
+                            <td>{{ mdl.valorTot }}</td>
+                            <td>{{ mdl.parcelas }}</td>
+                            <td>{{ mdl.dt }}</td>
+                            <td>CONFIRMADA</td>
+                            <td>VENDA</td>
                         </tr>
-                    </thead>
-                    <tr data-ng-repeat="mdl in list[0].itens">
-                        <td>{{ mdl.serial }}</td>
-                        <td>{{ mdl.loja }}</td>
-                        <td>{{ mdl.terminal }}</td>
-                        <td>{{ mdl.nsu }}</td>
-                        <td>{{ mdl.valorTot }}</td>
-                        <td>{{ mdl.parcelas }}</td>
-                        <td>{{ mdl.dt }}</td>
-                        <td>CONFIRMADA</td>
-                        <td>VENDA</td>
-                    </tr>
-                </table>
-                <h4>Transações canceladas</h4>
-                <br />
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Serial</th>
-                            <th>Loja</th>
-                            <th>Terminal</th>
-                            <th>NSU</th>
-                            <th>Vlr. Total</th>
-                            <th>Parcelas</th>
-                            <th>Data</th>
-                            <th>Status</th>
-                            <th>Operação</th>
+                    </table>
+
+                </div>
+
+                <div ng-if="campos.sit == 1 || campos.sit == 3">
+
+                    <h4>Transações canceladas</h4>
+                    <br />
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Serial</th>
+                                <th>Loja</th>
+                                <th>Terminal</th>
+                                <th>NSU</th>
+                                <th>Vlr. Total</th>
+                                <th>Parcelas</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Operação</th>
+                            </tr>
+                        </thead>
+                        <tr data-ng-repeat="mdl in list[1].itens">
+                            <td>{{ mdl.serial }}</td>
+                            <td>{{ mdl.loja }}</td>
+                            <td>{{ mdl.terminal }}</td>
+                            <td>{{ mdl.nsu }}</td>
+                            <td>{{ mdl.valorTot }}</td>
+                            <td>{{ mdl.parcelas }}</td>
+                            <td>{{ mdl.dt }}</td>
+                            <td>CANC.</td>
+                            <td>VENDA</td>
                         </tr>
-                    </thead>
-                    <tr data-ng-repeat="mdl in list[1].itens">
-                        <td>{{ mdl.serial }}</td>
-                        <td>{{ mdl.loja }}</td>
-                        <td>{{ mdl.terminal }}</td>
-                        <td>{{ mdl.nsu }}</td>
-                        <td>{{ mdl.valorTot }}</td>
-                        <td>{{ mdl.parcelas }}</td>
-                        <td>{{ mdl.dt }}</td>
-                        <td>CANC.</td>
-                        <td>VENDA</td>
-                    </tr>
-                </table>
-                <h4>Transações negadas</h4>
-                <br />
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Serial</th>
-                            <th>Loja</th>
-                            <th>Terminal</th>
-                            <th>NSU</th>
-                            <th>Vlr. Total</th>
-                            <th>Parcelas</th>
-                            <th>Data</th>
-                            <th>Status</th>
-                            <th>Operação</th>
+                    </table>
+
+                    <h4>Transações negadas</h4>
+                    <br />
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Serial</th>
+                                <th>Loja</th>
+                                <th>Terminal</th>
+                                <th>NSU</th>
+                                <th>Vlr. Total</th>
+                                <th>Parcelas</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Operação</th>
+                            </tr>
+                        </thead>
+                        <tr data-ng-repeat="mdl in list[2].itens">
+                            <td>{{ mdl.serial }}</td>
+                            <td>{{ mdl.loja }}</td>
+                            <td>{{ mdl.terminal }}</td>
+                            <td>{{ mdl.nsu }}</td>
+                            <td>{{ mdl.valorTot }}</td>
+                            <td>{{ mdl.parcelas }}</td>
+                            <td>{{ mdl.dt }}</td>
+                            <td>NEGADA</td>
+                            <td>{{ mdl.motivo }}</td>
                         </tr>
-                    </thead>
-                    <tr data-ng-repeat="mdl in list[2].itens">
-                        <td>{{ mdl.serial }}</td>
-                        <td>{{ mdl.loja }}</td>
-                        <td>{{ mdl.terminal }}</td>
-                        <td>{{ mdl.nsu }}</td>
-                        <td>{{ mdl.valorTot }}</td>
-                        <td>{{ mdl.parcelas }}</td>
-                        <td>{{ mdl.dt }}</td>
-                        <td>NEGADA</td>
-                        <td>{{ mdl.motivo }}</td>
-                    </tr>
-                </table>
-                <h4>Transações pendentes</h4>
-                <br />
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Serial</th>
-                            <th>Loja</th>
-                            <th>Terminal</th>
-                            <th>NSU</th>
-                            <th>Vlr. Total</th>
-                            <th>Parcelas</th>
-                            <th>Data</th>
-                            <th>Status</th>
-                            <th>Operação</th>
+                    </table>
+
+                </div>
+
+                <div ng-if="campos.sit == 1 || campos.sit == 4">
+
+                    <h4>Transações pendentes</h4>
+                    <br />
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Serial</th>
+                                <th>Loja</th>
+                                <th>Terminal</th>
+                                <th>NSU</th>
+                                <th>Vlr. Total</th>
+                                <th>Parcelas</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Operação</th>
+                            </tr>
+                        </thead>
+                        <tr data-ng-repeat="mdl in list[3].itens">
+                            <td>{{ mdl.serial }}</td>
+                            <td>{{ mdl.loja }}</td>
+                            <td>{{ mdl.terminal }}</td>
+                            <td>{{ mdl.nsu }}</td>
+                            <td>{{ mdl.valorTot }}</td>
+                            <td>{{ mdl.parcelas }}</td>
+                            <td>{{ mdl.dt }}</td>
+                            <td>PENDENTE</td>
+                            <td>VENDA</td>
                         </tr>
-                    </thead>
-                    <tr data-ng-repeat="mdl in list[3].itens">
-                        <td>{{ mdl.serial }}</td>
-                        <td>{{ mdl.loja }}</td>
-                        <td>{{ mdl.terminal }}</td>
-                        <td>{{ mdl.nsu }}</td>
-                        <td>{{ mdl.valorTot }}</td>
-                        <td>{{ mdl.parcelas }}</td>
-                        <td>{{ mdl.dt }}</td>
-                        <td>PENDENTE</td>
-                        <td>VENDA</td>
-                    </tr>
-                </table>
+                    </table>
+                </div>
+
                 <br />
             </div>
             <br />

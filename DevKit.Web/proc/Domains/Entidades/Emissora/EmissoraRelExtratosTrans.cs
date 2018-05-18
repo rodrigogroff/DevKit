@@ -19,6 +19,8 @@ namespace DevKit.Web.Controllers
                         loja,
                         terminal,
                         nsu,
+                        mat,
+                        assoc,
                         valorTot,
                         parcelas,
                         dt,
@@ -83,11 +85,16 @@ namespace DevKit.Web.Controllers
                         FirstOrDefault();
             }
 
+            var lstTotCarts = (from e in db.T_Cartao
+                               where e.st_empresa == db.currentEmpresa.st_empresa
+                               select e).
+                               ToList();
+
             var trans = (from e in db.LOG_Transacoes
                          where e.fk_empresa == db.currentEmpresa.i_unique
                          where lstCarts.Contains((int)e.fk_cartao) || lstCarts.Count() == 0
                          where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
-                         orderby e.tg_confirmada, e.dt_transacao
+                         orderby e.dt_transacao descending
                          select e).
                         ToList();
 
@@ -101,14 +108,6 @@ namespace DevKit.Web.Controllers
                              select term).
                              ToList();
 
-            /*
-            var parcelasConf = (from e in trans
-                                join pa in db.T_Parcelas on (int)e.i_unique equals pa.fk_log_transacoes
-                                where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                select pa).
-                                ToList();
-            */
-
             var mon = new money();
 
             var lst = new List<EmissoraRelExtratosTrans>
@@ -116,7 +115,7 @@ namespace DevKit.Web.Controllers
                 new EmissoraRelExtratosTrans(),
                 new EmissoraRelExtratosTrans(),
                 new EmissoraRelExtratosTrans(),
-                new EmissoraRelExtratosTrans()
+                new EmissoraRelExtratosTrans(),                
             };
 
             long serial = 0, tot = 0;
@@ -135,41 +134,34 @@ namespace DevKit.Web.Controllers
 
                     tot += (long) tran.vr_total;
 
+                    string assocNome = "", _mat = "";
+                    var _cart = lstTotCarts.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
+
+                    if (_cart != null)
+                    {
+                        _mat = _cart.st_matricula;
+
+                        if (_cart.st_titularidade != "01")
+                            assocNome = db.T_Dependente.
+                                            FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
+                                                           y.fk_proprietario == _cart.i_unique).
+                                                             st_nome;
+                        else
+                            assocNome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;
+                    }
+
                     lstIT.itens.Add(new ItensTrans
                     {
                         serial = serial.ToString(),
                         dt = ObtemData(tran.dt_transacao),
                         loja = loja.st_nome,
                         nsu = tran.nu_nsu.ToString(),
+                        mat = _mat,
+                        assoc = assocNome,
                         parcelas = tran.nu_parcelas.ToString(),
                         terminal = term.nu_terminal.ToString(),
                         valorTot = mon.setMoneyFormat((long)tran.vr_total)
                     });
-
-                    /*
-                    if (tran.nu_parcelas > 0)
-                    {
-                        foreach (var par in from e in parcelasConf
-                                            where e.fk_log_transacoes == tran.i_unique
-                                            orderby e.nu_indice
-                                            select e)
-
-                        {
-                            serial++;
-
-                            lstIT.itens.Add(new ItensTrans
-                            {
-                                serial = serial.ToString(),
-                                dt = "",
-                                loja = "",
-                                nsu = "",
-                                parcelas = par.nu_indice + " / " + par.nu_tot_parcelas,
-                                terminal = "",
-                                valorTot = mon.setMoneyFormat((long)par.vr_valor)
-                            });
-                        }
-                    }
-                    */
                 }
             }
 
@@ -185,12 +177,30 @@ namespace DevKit.Web.Controllers
                     var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
                     var term = terminais.Where(y => y.i_unique == tran.fk_terminal).FirstOrDefault();
 
+                    string assocNome = "", _mat = "";
+                    var _cart = lstTotCarts.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
+
+                    if (_cart != null)
+                    {
+                        _mat = _cart.st_matricula;
+
+                        if (_cart.st_titularidade != "01")
+                            assocNome = db.T_Dependente.
+                                            FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
+                                                           y.fk_proprietario == _cart.i_unique).
+                                                             st_nome;
+                        else
+                            assocNome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;
+                    }
+
                     lstIT.itens.Add(new ItensTrans
                     {
                         serial = serial.ToString(),
                         dt = ObtemData(tran.dt_transacao),
                         loja = loja.st_nome,
                         nsu = tran.nu_nsu.ToString(),
+                        mat = _mat,
+                        assoc = assocNome,
                         parcelas = tran.nu_parcelas.ToString(),
                         terminal = term.nu_terminal.ToString(),
                         valorTot = mon.setMoneyFormat((long)tran.vr_total)
@@ -211,12 +221,30 @@ namespace DevKit.Web.Controllers
                     var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
                     var term = terminais.Where(y => y.i_unique == tran.fk_terminal).FirstOrDefault();
 
+                    string assocNome = "", _mat = "";
+                    var _cart = lstTotCarts.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
+
+                    if (_cart != null)
+                    {
+                        _mat = _cart.st_matricula;
+
+                        if (_cart.st_titularidade != "01")
+                            assocNome = db.T_Dependente.
+                                            FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
+                                                           y.fk_proprietario == _cart.i_unique).
+                                                             st_nome;
+                        else
+                            assocNome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;
+                    }
+
                     lstIT.itens.Add(new ItensTrans
                     {
                         serial = serial.ToString(),
                         dt = ObtemData(tran.dt_transacao),
                         loja = loja != null ? loja.st_nome : "[*Não disponível*]",
                         nsu = tran.nu_nsu.ToString(),
+                        mat = _mat,
+                        assoc = assocNome,
                         parcelas = tran.nu_parcelas != null ? tran.nu_parcelas.ToString() : "",
                         terminal = term != null ? term.nu_terminal.ToString() : "[*Não disponível*]",
                         valorTot = tran.vr_total != null ? mon.setMoneyFormat((long)tran.vr_total) : "(?)",
@@ -237,12 +265,30 @@ namespace DevKit.Web.Controllers
                     var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
                     var term = terminais.Where(y => y.i_unique == tran.fk_terminal).FirstOrDefault();
 
+                    string assocNome = "", _mat = "";
+                    var _cart = lstTotCarts.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
+
+                    if (_cart != null)
+                    {
+                        _mat = _cart.st_matricula;
+
+                        if (_cart.st_titularidade != "01")
+                            assocNome = db.T_Dependente.
+                                            FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
+                                                           y.fk_proprietario == _cart.i_unique).
+                                                             st_nome;
+                        else
+                            assocNome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;
+                    }
+
                     lstIT.itens.Add(new ItensTrans
                     {
                         serial = serial.ToString(),
                         dt = ObtemData(tran.dt_transacao),
                         loja = loja.st_nome,
                         nsu = tran.nu_nsu.ToString(),
+                        mat = _mat,
+                        assoc = assocNome,
                         parcelas = tran.nu_parcelas.ToString(),
                         terminal = term.nu_terminal.ToString(),
                         valorTot = mon.setMoneyFormat((long)tran.vr_total)

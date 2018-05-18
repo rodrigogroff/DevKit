@@ -11,7 +11,7 @@
             </table>
         </legend>
         <div class="divWebForm" style="max-width:95%;min-width:95%">
-            <table class="widget" style="color: white">
+            <table class="widget" style="color: white" width="700px">
                 <tr height="22px"> </tr>
                 <tr height="43px">
                     <td width="20px"></td>
@@ -46,7 +46,8 @@
                         <label><input type="radio" name="status1" value="1" ng-model="campos.sit"> Todas </label>&nbsp;&nbsp;
                         <label><input type="radio" name="status2" value="2" ng-model="campos.sit"> Confirmadas</label>&nbsp;&nbsp;
                         <label><input type="radio" name="status3" value="3" ng-model="campos.sit"> Canceladas</label>&nbsp;&nbsp;
-                        <label><input type="radio" name="status3" value="4" ng-model="campos.sit"> Pendentes</label>
+                        <label><input type="radio" name="status3" value="4" ng-model="campos.sit"> Negadas</label>&nbsp;&nbsp;
+                        <label><input type="radio" name="status3" value="5" ng-model="campos.sit"> Pendentes</label>
                     </td>
                 </tr>
                 <tr>
@@ -75,7 +76,8 @@
                 <b>Situação</b>: <span ng-if="campos.sit == 1">Todas</span>
                 <span ng-if="campos.sit == 2">Confirmadas</span>
                 <span ng-if="campos.sit == 3">Canceladas</span>
-                <span ng-if="campos.sit == 4">Pendentes</span>
+                <span ng-if="campos.sit == 4">Negadas</span>
+                <span ng-if="campos.sit == 5">Pendentes</span>
                 <br />
                 <br />
 
@@ -90,6 +92,8 @@
                                 <th>Loja</th>
                                 <th>Terminal</th>
                                 <th>NSU</th>
+                                <th>Matrícula</th>
+                                <th>Associado</th>
                                 <th>Vlr. Total</th>
                                 <th>Parcelas</th>
                                 <th>Data</th>
@@ -102,6 +106,8 @@
                             <td>{{ mdl.loja }}</td>
                             <td>{{ mdl.terminal }}</td>
                             <td>{{ mdl.nsu }}</td>
+                            <td>{{ mdl.mat }}</td>
+                            <td>{{ mdl.assoc }}</td>
                             <td>{{ mdl.valorTot }}</td>
                             <td>{{ mdl.parcelas }}</td>
                             <td>{{ mdl.dt }}</td>
@@ -123,6 +129,8 @@
                                 <th>Loja</th>
                                 <th>Terminal</th>
                                 <th>NSU</th>
+                                <th>Matrícula</th>
+                                <th>Associado</th>
                                 <th>Vlr. Total</th>
                                 <th>Parcelas</th>
                                 <th>Data</th>
@@ -135,6 +143,8 @@
                             <td>{{ mdl.loja }}</td>
                             <td>{{ mdl.terminal }}</td>
                             <td>{{ mdl.nsu }}</td>
+                            <td>{{ mdl.mat }}</td>
+                            <td>{{ mdl.assoc }}</td>
                             <td>{{ mdl.valorTot }}</td>
                             <td>{{ mdl.parcelas }}</td>
                             <td>{{ mdl.dt }}</td>
@@ -142,6 +152,10 @@
                             <td>VENDA</td>
                         </tr>
                     </table>
+
+                </div>
+
+                <div ng-if="campos.sit == 1 || campos.sit == 4">
 
                     <h4>Transações negadas</h4>
                     <br />
@@ -152,6 +166,8 @@
                                 <th>Loja</th>
                                 <th>Terminal</th>
                                 <th>NSU</th>
+                                <th>Matrícula</th>
+                                <th>Associado</th>
                                 <th>Vlr. Total</th>
                                 <th>Parcelas</th>
                                 <th>Data</th>
@@ -164,6 +180,8 @@
                             <td>{{ mdl.loja }}</td>
                             <td>{{ mdl.terminal }}</td>
                             <td>{{ mdl.nsu }}</td>
+                            <td>{{ mdl.mat }}</td>
+                            <td>{{ mdl.assoc }}</td>
                             <td>{{ mdl.valorTot }}</td>
                             <td>{{ mdl.parcelas }}</td>
                             <td>{{ mdl.dt }}</td>
@@ -174,7 +192,7 @@
 
                 </div>
 
-                <div ng-if="campos.sit == 1 || campos.sit == 4">
+                <div ng-if="campos.sit == 1 || campos.sit == 5">
 
                     <h4>Transações pendentes</h4>
                     <br />
@@ -185,6 +203,8 @@
                                 <th>Loja</th>
                                 <th>Terminal</th>
                                 <th>NSU</th>
+                                <th>Matrícula</th>
+                                <th>Associado</th>
                                 <th>Vlr. Total</th>
                                 <th>Parcelas</th>
                                 <th>Data</th>
@@ -197,6 +217,8 @@
                             <td>{{ mdl.loja }}</td>
                             <td>{{ mdl.terminal }}</td>
                             <td>{{ mdl.nsu }}</td>
+                            <td>{{ mdl.mat }}</td>
+                            <td>{{ mdl.assoc }}</td>
                             <td>{{ mdl.valorTot }}</td>
                             <td>{{ mdl.parcelas }}</td>
                             <td>{{ mdl.dt }}</td>

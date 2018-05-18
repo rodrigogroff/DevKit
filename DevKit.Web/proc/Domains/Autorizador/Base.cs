@@ -63,8 +63,7 @@ namespace DevKit.Web.Controllers
 
         private string GetRandomString(int length)
         {
-            Random rand = new Random();
-
+            var rand = new Random();
             var ret = "";
 
             for (int i = 0; i < length; i++)

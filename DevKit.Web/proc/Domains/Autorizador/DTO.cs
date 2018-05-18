@@ -69,4 +69,13 @@ namespace DevKit.Web.Controllers
         public const string CLOSED = "1";
         public const string NONE = "0";
     }
+
+    public class MotivoBloqueio
+    {
+        public const string PERDA = "0";
+        public const string ROUBO = "1";
+        public const string SENHA_ERRADA = "2";
+        public const string CANCELAMENTO = "3";
+        public const string ADMINISTRATIVO = "4";
+    }
 }

@@ -6,6 +6,7 @@ using LinqToDB;
 using SyCrafEngine;
 using DataModel;
 using System.Collections;
+using System.Diagnostics;
 
 namespace DevKit.Web.Controllers
 {
@@ -18,10 +19,10 @@ namespace DevKit.Web.Controllers
         public POS_Entrada input_cont_pe = new POS_Entrada();
         public POS_Resposta output_cont_pr = new POS_Resposta();
 
-        public T_Cartao cart;
+        public T_Cartao cartPortador;
+        public T_Cartao cartTitular;
         public T_Empresa emp;
         public T_Terminal term;
-        public T_InfoAdicionai info;
         public LOG_NSU l_nsu;
         public T_Proprietario prot;
         public T_Loja loj;
@@ -52,55 +53,61 @@ namespace DevKit.Web.Controllers
 
         public void Run(AutorizadorCNDB _db)
         {
+            var st = new Stopwatch();
+            st.Start();
+
             db = _db;
+
             SetupFile();
 
             var_operacaoCartao = OperacaoCartao.VENDA_EMPRESARIAL;
             var_operacaoCartaoFail = OperacaoCartao.FALHA_VENDA_EMPRESARIAL;
 
-            Registry("-------------------------");
-            Registry("Authenticate");
-            Registry("-------------------------");
-
-            if (Authenticate())
+            try
             {
+                if (Authenticate())
+                    Execute();
 
+                Finish();
+            }
+            catch (SystemException ex)
+            {
+                Registry("-------------------------");
+                Registry("*ERROR! " + ex.ToString());
+                Registry("-------------------------");
             }
 
-            Registry("-------------------------");
-            Registry("Finalizado!");
-            Registry("-------------------------");
+            st.Stop();
 
+            Registry("-------------------------");
+            Registry("Finalizado! tempo: " + st.ElapsedMilliseconds.ToString());
+            Registry("-------------------------");
             Registry("Resultado: " + output_st_msg);
             Registry("Código de resposta: " + var_codResp);
-            
+            Registry("-------------------------");
+
             CloseFile();
         }
 
         private bool Authenticate()
         {
-            
+            Registry("-------------------------");
+            Registry("Authenticate");
+            Registry("-------------------------");
 
-            // Default é erro genérico
+            var st = new Stopwatch(); st.Start();
+
+            #region - code - 
+
             var_codResp = "9999";
-
-            // Normal
             var_nu_nsuAtual = Context.NONE;
             var_nu_nsuEntidade = Context.NONE;
-
-            // Cancelamento
             var_nu_nsuOrig = Context.NONE;
             var_nu_nsuEntOrig = Context.NONE;
-
-            // Valores básicos de comércio
             var_vr_total = input_cont_pe.vr_valor;
             var_nu_parcelas = input_cont_pe.nu_parcelas;
 
             var_codResp = "0606";
-
-            // --------------------------------------------
-            // Busca terminal pelo seu código
-            // --------------------------------------------
 
             {
                 var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal);
@@ -116,10 +123,6 @@ namespace DevKit.Web.Controllers
                     return false;
                 }
             }
-
-            // --------------------------------------------
-            // Busca empresa informada
-            // --------------------------------------------
 
             {
                 var q = db.T_Empresa.Where(y => y.st_empresa == input_cont_pe.st_empresa);
@@ -210,29 +213,29 @@ namespace DevKit.Web.Controllers
                     ").Where(y => y.st_matricula == " + input_cont_pe.st_matricula +
                     ").Where(y => y.st_titularidade == " + input_cont_pe.st_titularidade);
 
-                cart = q.FirstOrDefault();
+                cartPortador = q.FirstOrDefault();
 
-                if (cart == null)
+                if (cartPortador == null)
                 {
                     output_st_msg = "Cartão inexistente";
                     var_codResp = "0606";
                     return false;
                 }
 
-                Registry("cart.tg_status " + (cart.tg_status == null ? "NULO" : cart.tg_status.ToString()));
+                Registry("cartPortador.tg_status " + (cartPortador.tg_status == null ? "NULO" : cartPortador.tg_status.ToString()));
 
-                if (cart.tg_status != null)
-                    if (cart.tg_status.ToString() == CartaoStatus.Bloqueado)
+                if (cartPortador.tg_status != null)
+                    if (cartPortador.tg_status.ToString() == CartaoStatus.Bloqueado)
                     {
                         output_st_msg = "Cartão inválido";
                         var_codResp = "0505";
                         return false;
                     }
 
-                Registry("cart.tg_emitido " + (cart.tg_emitido == null ? "NULO" : cart.tg_emitido.ToString()));
+                Registry("cartPortador.tg_emitido " + (cartPortador.tg_emitido == null ? "NULO" : cartPortador.tg_emitido.ToString()));
 
-                if (cart.tg_emitido == null)
-                    if (cart.tg_emitido.ToString() == StatusExpedicao.Expedido)
+                if (cartPortador.tg_emitido == null)
+                    if (cartPortador.tg_emitido.ToString() == StatusExpedicao.Expedido)
                     {
                         output_st_msg = "Cartão inválido";
                         var_codResp = "0505";
@@ -240,150 +243,340 @@ namespace DevKit.Web.Controllers
                     }
             }
 
-            /*
+            var_vr_total = input_cont_pe.vr_valor;
+            var_nu_parcelas = input_cont_pe.nu_parcelas;
 
-            var_vr_total = input_cont_pe.get_vr_valor();
-            var_nu_parcelas = input_cont_pe.get_nu_parcelas();
+            Registry("input_cont_pe.vr_valor " + (input_cont_pe.vr_valor == null ? "NULO" : input_cont_pe.vr_valor));
 
-            SQL_LOGGING_ENABLE = false;
-
-            #region - Verifica disponivel mensal nas parcelas - 
-
-            T_Parcelas parc = new T_Parcelas(this);
-
-            string myId = cart.get_identity();
-
-            if (cart.get_st_titularidade() != "01")
+            if (string.IsNullOrEmpty(input_cont_pe.vr_valor))
             {
-                cart.select_rows_tudo(cart.get_st_empresa(),
-                                           cart.get_st_matricula(),
-                                           "01");
-                cart.fetch();
+                output_st_msg = "Valor total nulo";
+                var_codResp = "0507";
+                return false;
             }
 
-            vr_dispMes = cart.get_int_vr_limiteMensal() + cart.get_int_vr_extraCota();
-            vr_dispTot = cart.get_int_vr_limiteTotal() + cart.get_int_vr_extraCota();
+            vr_valor = Convert.ToInt64(input_cont_pe.vr_valor);
 
-            vr_valor = Convert.ToInt64(input_cont_pe.get_vr_valor());
-
-            if (cart.get_tg_tipoCartao() != TipoCartao.presente)
+            if (vr_valor == 0)
             {
-                new ApplicationUtil().GetSaldoDisponivel(ref cart, ref vr_dispMes, ref vr_dispTot);
+                output_st_msg = "Valor total zerado";
+                var_codResp = "0508";
+                return false;
+            }
 
-                int tmp_nu_parc = Convert.ToInt32(input_cont_pe.get_nu_parcelas());
+            if (cartPortador.st_titularidade != "01")
+            {
+                cartTitular = db.T_Cartao.FirstOrDefault ( y => y.st_empresa == cartPortador.st_empresa &&
+                                                           y.st_matricula == cartPortador.st_matricula &&
+                                                           y.st_titularidade == "01");
+            }
+            else
+                cartTitular = cartPortador;                
 
-                if (tmp_nu_parc > 1)
+            new SaldoDisponivel().Obter(db, cartTitular, ref vr_dispMes, ref vr_dispTot);
+
+            Registry("input_cont_pe.nu_parcelas " + (input_cont_pe.nu_parcelas == null ? "NULO" : input_cont_pe.nu_parcelas));
+
+            if (string.IsNullOrEmpty(input_cont_pe.nu_parcelas))
+            {
+                output_st_msg = "Parcelas inválidas";
+                var_codResp = "0509";
+                return false;
+            }
+
+            int tmp_nu_parc = Convert.ToInt32(input_cont_pe.nu_parcelas);
+
+            if (tmp_nu_parc > 1)
+            {
+                if (vr_valor > vr_dispTot)
                 {
-                    if (vr_valor > vr_dispTot)
+                    output_st_msg = "limite excedido";
+                    var_codResp = "2721";
+                    return false;
+                }
+
+                string valoresParcelados = input_cont_pe.st_valores;
+
+                Registry("input_cont_pe.st_valores " + (input_cont_pe.st_valores == null ? "NULO" : input_cont_pe.st_valores));
+
+                if (string.IsNullOrEmpty(input_cont_pe.st_valores))
+                {
+                    output_st_msg = "Valores parc. vazio";
+                    var_codResp = "0510";
+                    return false;
+                }
+
+                var lstCartoes = new List<string>();
+
+                Registry("db.T_Cartao.Where(y => y.st_empresa == " + cartPortador.st_empresa + " && y.st_matricula == " + cartPortador.st_matricula);
+
+                foreach (var item in db.T_Cartao.
+                                        Where (y=> y.st_empresa == cartPortador.st_empresa && 
+                                        y.st_matricula == cartPortador.st_matricula))
+                {
+                    var _id = item.i_unique.ToString();
+                    Registry("T_Cartao => " + _id);
+                    lstCartoes.Add(_id);
+                }
+                    
+                for (int t = 1, index_pos = 0; t <= tmp_nu_parc; ++t)
+                {
+                    long valor_unit_parc = Convert.ToInt64(valoresParcelados.Substring(index_pos, 12));
+
+                    index_pos += 12;
+
+                    if (valor_unit_parc > cartPortador.vr_limiteMensal)
                     {
                         output_st_msg = "limite excedido";
-                        var_codResp = "2721";
-
-                        SQL_LOGGING_ENABLE = true;
-
+                        var_codResp = "2722";
                         return false;
                     }
 
-                    LOG_Transacoes ltr = new LOG_Transacoes(this);
-                    T_Parcelas parcTot = new T_Parcelas(this);
+                    long dispMesParc = Convert.ToInt64(cartPortador.vr_limiteMensal);
 
-                    string tmp = input_cont_pe.get_st_valores();
+                    T_Parcela parcTot = new T_Parcela();
 
-                    ArrayList lstCartoes = new ArrayList();
-
-                    T_Cartao c_t = new T_Cartao(this);
-
-                    c_t.select_rows_empresa_matricula(cart.get_st_empresa(),
-                                                        cart.get_st_matricula());
-
-                    while (c_t.fetch())
-                        lstCartoes.Add(c_t.get_identity());
-
-                    for (int t = 1, index_pos = 0; t <= tmp_nu_parc; ++t)
+                    foreach (var itemParcela in db.T_Parcelas.
+                                            Where ( y=> lstCartoes.Contains(y.fk_cartao.ToString())).
+                                            Where ( y=> y.nu_parcela == t).ToList() )
                     {
-                        long valor_unit_parc = Convert.ToInt64(tmp.Substring(index_pos, 12));
+                        var ltr = db.LOG_Transacoes.
+                                    FirstOrDefault(y => y.i_unique == itemParcela.fk_log_transacoes);
 
-                        index_pos += 12;
+                        var tg_conf = ltr.tg_confirmada.ToString();
 
-                        if (valor_unit_parc > cart.get_int_vr_limiteMensal())
-                        {
-                            output_st_msg = "limite excedido";
-                            var_codResp = "2722";
-
-                            SQL_LOGGING_ENABLE = true;
-
-                            return false;
-                        }
-
-                        long dispMesParc = cart.get_int_vr_limiteMensal();
-
-                        // Verifica disponivel mensal nas parcelas
-                        if (parcTot.select_rows_cartao_mensal(ref lstCartoes, t.ToString())) // este mês
-                        {
-                            while (parcTot.fetch())
-                            {
-                                if (ltr.selectIdentity(parcTot.get_fk_log_transacoes())) // busca transação
-                                {
-                                    if (ltr.get_tg_confirmada() == TipoConfirmacao.Confirmada ||
-                                           ltr.get_tg_confirmada() == TipoConfirmacao.Pendente)
-                                    {
-                                        dispMesParc -= parcTot.get_int_vr_valor();
-                                    }
-                                }
-                            }
-                        }
+                        if (tg_conf == TipoConfirmacao.Confirmada || tg_conf == TipoConfirmacao.Pendente)
+                            dispMesParc -= (long) parcTot.vr_valor;
 
                         if (valor_unit_parc > dispMesParc)
                         {
                             output_st_msg = "limite excedido";
                             var_codResp = "2723";
-
-                            SQL_LOGGING_ENABLE = true;
-
                             return false;
                         }
-                    }
-                }
-                else
-                {
-                    if (vr_valor > vr_dispMes || vr_valor > vr_dispTot)
-                    {
-                        output_st_msg = "limite excedido";
-                        var_codResp = "2724";
-
-                        SQL_LOGGING_ENABLE = true;
-
-                        return false;
                     }
                 }
             }
             else
             {
-                if (vr_valor > cart.get_int_vr_limiteTotal())
+                Registry("if (vr_valor > vr_dispMes || vr_valor > vr_dispTot)");
+                Registry("if (" + vr_valor  + " > " + vr_dispMes + " || " + vr_valor+ " > " + vr_dispTot + ")" );
+                
+                if (vr_valor > vr_dispMes || vr_valor > vr_dispTot)
                 {
                     output_st_msg = "limite excedido";
-                    var_codResp = "2725";
-
-                    SQL_LOGGING_ENABLE = true;
-
+                    var_codResp = "2724";
                     return false;
                 }
             }
 
-            if (myId != cart.get_identity())
+            #endregion
+
+            st.Stop();
+
+            Registry("-------------------------");
+            Registry("Authenticate DONE, tempo: " + st.ElapsedMilliseconds.ToString());
+            Registry("-------------------------");
+
+            return true;
+        }
+
+        private bool Execute()
+        {
+            Registry("-------------------------");
+            Registry("Execute");
+            Registry("-------------------------");
+
+            var st = new Stopwatch(); st.Start();
+
+            #region - code -
+
+            prot = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cartTitular.fk_dadosProprietario);
+
+            Registry("db.T_Proprietario.FirstOrDefault(y => y.i_unique == " + cartTitular.fk_dadosProprietario);
+
+            if (prot == null)
             {
-                // restaurar cartão dep
-                cart.selectIdentity(myId);
+                output_st_msg = "Erro aplicativo (E1)";
+                return false;
+            }
+
+            if (cartPortador.st_titularidade != "01")
+            {
+                var dep = db.T_Dependente.
+                            FirstOrDefault(y => y.fk_proprietario == cartPortador.fk_dadosProprietario && 
+                                                y.nu_titularidade == Convert.ToInt32(cartPortador.st_titularidade));
+
+                Registry("db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == " + cartPortador.fk_dadosProprietario + 
+                         " && y.nu_titularidade == " + Convert.ToInt32(cartPortador.st_titularidade));
+
+                if (dep == null)
+                {
+                    output_st_msg = "Erro aplicativo (E2)";
+                    return false;
+                }
+
+                var_nomeCliente = dep.st_nome;
+            }
+            else
+                var_nomeCliente = prot.st_nome;
+
+            Registry("Nome portador: " + var_nomeCliente);
+
+            if (cartPortador.st_senha != input_cont_pe.st_senha)
+            {
+                Registry("Senha Errada!");
+
+                long senhasErradas = (int)cartPortador.nu_senhaErrada + 1;
+
+                Registry("senhasErradas: " + senhasErradas);
+
+                if (senhasErradas > 4)
+                {
+                    cartPortador.tg_status = Convert.ToChar(CartaoStatus.Bloqueado);
+                    cartPortador.tg_motivoBloqueio = Convert.ToChar(MotivoBloqueio.SENHA_ERRADA);
+                    cartPortador.dt_bloqueio = DateTime.Now;
+                }
+
+                db.Update(cartPortador);
+
+                output_st_msg = "Senha inválida";
+                var_codResp = "4343";
+
+                return false;
+            }
+            else
+            {
+                cartPortador.nu_senhaErrada = 0;
+
+                db.Update(cartPortador);
+            }
+
+            int tmp_nu_parc = Convert.ToInt32(input_cont_pe.nu_parcelas);
+            int index_pos = 0;
+
+            string tmp_variavel = input_cont_pe.st_valores;
+
+            if (tmp_variavel.Length < tmp_nu_parc * 12)
+            {
+                output_st_msg = "formato incorreto";
+                return false;
+            }
+
+            if (tmp_nu_parc > emp.nu_parcelas)
+            {
+                output_st_msg = "excede max. parcelas";
+                var_codResp = "1212";
+                return false;
+            }
+
+            l_nsu.dt_log = DateTime.Now;
+            l_nsu.i_unique = Convert.ToInt64(db.InsertWithIdentity(l_nsu));
+            
+            #endregion
+
+            /*
+
+            #region - Faz efetivamente a venda -
+
+            int 	tmp_nu_parc  = Convert.ToInt32 ( input_cont_pe.get_nu_parcelas() );
+            int 	index_pos    = 0;
+
+            string  tmp_variavel = input_cont_pe.get_st_valores();
+
+            if ( tmp_variavel.Length < tmp_nu_parc * 12 )
+            {
+                output_st_msg = "formato incorreto";
+                return false;				
+            }
+
+            if ( cart.get_tg_tipoCartao() != TipoCartao.presente )
+            {
+                if ( tmp_nu_parc > emp.get_int_nu_parcelas() )
+                {
+                    output_st_msg = "excede max. parcelas";
+                    var_codResp   = "1212";
+                    return false;				
+                }
+            }
+
+            #region - obtem nsu - 
+
+            l_nsu.set_dt_log ( GetDataBaseTime() );
+
+            if ( !l_nsu.create_LOG_NSU() )
+            {
+                output_st_msg = "Erro aplicativo";
+                return false;
             }
 
             #endregion
 
-            SQL_LOGGING_ENABLE = true;
+            var_nu_nsuAtual    = l_nsu.get_identity();
+            var_nu_nsuEntidade = var_nu_nsuAtual;
 
-            /// USER [ authenticate ] END
+            var_dt_transacao = GetDataBaseTime();
 
-            Registry("authenticate done exec_pos_vendaEmpresarial ");
-            */
+            // ## Criar parcelas
+
+            for (int t=1; t <= tmp_nu_parc; ++t )
+            {
+                T_Parcelas parc = new T_Parcelas (this);
+
+                string valor_unit_parc = tmp_variavel.Substring ( index_pos, 12 );
+
+                index_pos += 12;
+
+                #region - atribui valores e links à parcela - 
+
+                parc.set_nu_nsu				( l_nsu.get_identity()		);
+                parc.set_fk_empresa			( emp.get_identity()		);
+                parc.set_fk_cartao			( cart.get_identity()		);
+                parc.set_dt_inclusao		( var_dt_transacao			);
+                parc.set_nu_parcela			( t.ToString()				);
+                parc.set_vr_valor			( valor_unit_parc      	 	);
+                parc.set_nu_indice			( t.ToString()				); 
+                parc.set_tg_pago			( TipoParcela.EM_ABERTO		);
+                parc.set_fk_loja			( loj.get_identity()		);
+                parc.set_nu_tot_parcelas	( tmp_nu_parc.ToString() 	);
+                parc.set_fk_terminal		( term.get_identity()		);
+
+                #endregion
+
+                if ( !parc.create_T_Parcelas() )
+                {
+                    output_st_msg = "erro aplicativo";
+                    return false;				
+                }
+
+                lstParcs.Add ( parc.get_identity() );
+            }
+
+            #endregion*/
+
+            st.Stop();
+
+            Registry("-------------------------");
+            Registry("Execute DONE, tempo: " + st.ElapsedMilliseconds.ToString());
+            Registry("-------------------------");
+
+            return true;
+        }
+
+        private bool Finish()
+        {
+            Registry("-------------------------");
+            Registry("Finish");
+            Registry("-------------------------");
+
+            var st = new Stopwatch(); st.Start();
+
+
+            st.Stop();
+
+            Registry("-------------------------");
+            Registry("Finish DONE, tempo: " + st.ElapsedMilliseconds.ToString());
+            Registry("-------------------------");
 
             return true;
         }

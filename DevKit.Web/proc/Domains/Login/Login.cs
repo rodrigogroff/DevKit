@@ -98,7 +98,11 @@ namespace DevKit.Web
                 #if DEBUG
                 VendaEmpresarial v = new VendaEmpresarial();
                 v.input_cont_pe.st_terminal = "00006101";
-                v.input_cont_pe.st_empresa = "001401";
+                v.input_cont_pe.st_empresa = "000002";
+                v.input_cont_pe.st_matricula = "000001";
+                v.input_cont_pe.st_titularidade = "01";
+                v.input_cont_pe.nu_parcelas = "02";
+                v.input_cont_pe.vr_valor = "100";
                 v.Run(db);
                 #endif
 

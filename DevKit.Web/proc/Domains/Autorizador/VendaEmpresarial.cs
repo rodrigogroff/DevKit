@@ -67,10 +67,10 @@ namespace DevKit.Web.Controllers
 
             try
             {
-                IsFail = Authenticate();
+                var_codResp = "0000";
 
-                if (!IsFail)
-                    IsFail = Execute();
+                if (Authenticate())
+                    Execute();
 
                 Finish();
             }
@@ -574,7 +574,7 @@ namespace DevKit.Web.Controllers
 
             #region - code - 
 
-            if (IsFail)
+            if (var_codResp != "0000")
             {
                 Registry("(f1) Nsu não foi criado!");
 
@@ -588,8 +588,6 @@ namespace DevKit.Web.Controllers
                 var_nu_nsuAtual = l_nsu.i_unique.ToString();
                 var_operacaoCartao = var_operacaoCartaoFail;
             }
-            else
-                var_codResp = "0000";
 
             Registry("(f2) var_codResp " + var_codResp);
 
@@ -626,7 +624,7 @@ namespace DevKit.Web.Controllers
                 st_doc = st_doc
             };
 
-            if (IsFail)
+            if (var_codResp != "0000")
             {
                 l_tr.tg_confirmada = Convert.ToChar(TipoConfirmacao.Erro);
                 l_tr.tg_contabil = Convert.ToChar(Context.FALSE);

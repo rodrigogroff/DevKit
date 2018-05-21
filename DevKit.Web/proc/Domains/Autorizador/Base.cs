@@ -12,7 +12,7 @@ namespace DevKit.Web.Controllers
     public class BaseVenda
     {
         public string nomeFile;
-        public bool IsFail = false;
+        
         public StreamWriter sw;
 
         public string SetupFile()

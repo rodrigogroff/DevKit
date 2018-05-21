@@ -48,9 +48,9 @@ namespace DevKit.Web.Controllers
                 dt_inicial = new DateTime(dt.Year, dt.Month, dt.Day);
 
             if (dt_final == null)
-                dt_final = new DateTime(dt.Year, dt.Month, dt.Day).AddDays(1);
+                dt_final = new DateTime(dt.Year, dt.Month, dt.Day).AddDays(1).AddSeconds(-1);
             else
-                dt_final = Convert.ToDateTime(dt_final).AddDays(1);
+                dt_final = Convert.ToDateTime(dt_final).AddDays(1).AddSeconds(-1);
             
             if (dt_final != null && dt_inicial != null)
                 if (dt_final < dt_inicial)
@@ -92,7 +92,6 @@ namespace DevKit.Web.Controllers
 
             var trans = (from e in db.LOG_Transacoes
                          where e.fk_empresa == db.currentEmpresa.i_unique
-                         where lstCarts.Contains((int)e.fk_cartao) || lstCarts.Count() == 0
                          where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
                          orderby e.dt_transacao descending
                          select e).
@@ -127,6 +126,10 @@ namespace DevKit.Web.Controllers
 
                 foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada))
                 {
+                    if (lstCarts.Count() > 0)
+                        if (!lstCarts.Contains((int)tran.fk_cartao))
+                            continue;
+
                     serial++;
 
                     var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
@@ -172,6 +175,10 @@ namespace DevKit.Web.Controllers
 
                 foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada))
                 {
+                    if (lstCarts.Count() > 0)
+                        if (!lstCarts.Contains((int)tran.fk_cartao))
+                            continue;
+
                     serial++;
 
                     var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
@@ -216,6 +223,10 @@ namespace DevKit.Web.Controllers
                 foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Erro ||
                                                       y.tg_confirmada.ToString() == TipoConfirmacao.Negada ))
                 {
+                    if (lstCarts.Count() > 0)
+                        if (!lstCarts.Contains((int)tran.fk_cartao))
+                            continue;
+
                     serial++;
 
                     var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
@@ -260,6 +271,10 @@ namespace DevKit.Web.Controllers
 
                 foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente))
                 {
+                    if (lstCarts.Count() > 0)
+                        if (!lstCarts.Contains((int)tran.fk_cartao))
+                            continue;
+
                     serial++;
 
                     var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();

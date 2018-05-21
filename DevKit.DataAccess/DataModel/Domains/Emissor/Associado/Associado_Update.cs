@@ -100,20 +100,23 @@ namespace DataModel
                                 return false;
                             }
 
-                            ent.fkCartao = Convert.ToInt64 (
+                            ent.fkCartao = Convert.ToInt64(
                                 db.InsertWithIdentity(new Associado
                                 {
                                     fkEmpresa = this.fkEmpresa,
                                     fkSecao = this.fkSecao,
                                     fkUserAdd = user.id,
                                     nuMatricula = this.nuMatricula,
-                                    tgStatus =  TipoSituacaoCartao.Habilitado,
+                                    tgStatus = TipoSituacaoCartao.Habilitado,
                                     tgExpedicao = TipoExpedicaoCartao.Requerido,
                                     stSenha = this.stSenha,
                                     stName = ent.stNome,
                                     stCPF = ent.stCPF,
-                                    nuTitularidade = db.AssociadoDependente.Where (y=> y.fkAssociado == id).Count() + 2,
+                                    nuTitularidade = db.AssociadoDependente.Where(y => y.fkAssociado == id).Count() + 2,
                                     nuViaCartao = 1,
+                                    nuDayAniversary = ent.dtNasc.Value.Day,
+                                    nuMonthAniversary = ent.dtNasc.Value.Month,
+                                    nuYearBirth = ent.dtNasc.Value.Year,
                                     dtStart = DateTime.Now,
                                 }) );
 
@@ -122,6 +125,10 @@ namespace DataModel
                         else
                         {
                             var cart = db.Associado.Where(y => y.id == ent.fkCartao).FirstOrDefault();
+
+                            cart.nuDayAniversary = ent.dtNasc.Value.Day;
+                            cart.nuMonthAniversary = ent.dtNasc.Value.Month;
+                            cart.nuYearBirth = ent.dtNasc.Value.Year;
 
                             if (cart.tgExpedicao == 0)
                             {

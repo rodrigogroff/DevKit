@@ -45,41 +45,28 @@ namespace DataModel
                     var tit = assoc.nuTitularidade.ToString().PadLeft(2, '0');
                     var via = assoc.nuViaCartao.ToString().PadLeft(2, '0');
 
+                    assoc.tgExpedicao = 1;
+
+                    db.Update(assoc);
+
                     string line = "+";
 
                     line += nome + ",";
                     line += secao.nuEmpresa + ",";
                     line += mat + ",";
-
-                    assoc.tgExpedicao = 1;
-
-                    db.Update(assoc);
-                    
                     line += tit + "/" + via + ",";
                     line += util.calculaCodigoAcesso (empresa, mat, assoc.nuTitularidade.ToString(), assoc.nuViaCartao.ToString(), assoc.stCPF );
                     line += ",";
                     line += nome + ",";
 
-                    if (assoc.nuTitularidade > 1)
+                    if (assoc.nuDayAniversary != null && assoc.nuMonthAniversary != null && assoc.nuYearBirth != null)
                     {
-                        var depTb = db.AssociadoDependente.Where(y => y.fkCartao == assoc.id).FirstOrDefault();
-
-                        if (depTb != null)
-                            line += Convert.ToDateTime(depTb.dtNasc).ToString("dd/MM/yyyy") + ",";
-                        else
-                            line += ",";
+                        line += assoc.nuDayAniversary.ToString().PadLeft(2, '0') + "/";
+                        line += assoc.nuMonthAniversary.ToString().PadLeft(2, '0') + "/";
+                        line += assoc.nuYearBirth.ToString() + ",";
                     }
                     else
-                    {
-                        if (assoc.nuDayAniversary != null && assoc.nuMonthAniversary != null && assoc.nuYearBirth != null)
-                        {
-                            line += assoc.nuDayAniversary.ToString().PadLeft(2, '0') + "/";
-                            line += assoc.nuMonthAniversary.ToString().PadLeft(2, '0') + "/";
-                            line += assoc.nuYearBirth.ToString() + ",";
-                        }
-                        else
-                            line += ",";
-                    }
+                        line += ",";
 
                     if (assoc.nuMatSaude != null)
                         line += assoc.nuMatSaude.ToString();

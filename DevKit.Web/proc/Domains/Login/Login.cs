@@ -103,6 +103,8 @@ namespace DevKit.Web
                 v.input_cont_pe.st_titularidade = "01";
                 v.input_cont_pe.nu_parcelas = "02";
                 v.input_cont_pe.vr_valor = "100";
+                v.input_cont_pe.st_valores = "000000000100000000000100";
+                v.input_cont_pe.st_senha = new BaseVenda().DESCript("1234".PadLeft(8, '*'), "12345678");
                 v.Run(db);
                 #endif
 

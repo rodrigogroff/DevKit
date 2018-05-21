@@ -7,6 +7,7 @@ using SyCrafEngine;
 using DataModel;
 using System.Collections;
 using System.Diagnostics;
+using System.Text;
 
 namespace DevKit.Web.Controllers
 {
@@ -38,8 +39,9 @@ namespace DevKit.Web.Controllers
                       var_nu_nsuEntOrig = "0",
                       var_codResp = "0",
                       var_nomeCliente = "",
-                      var_dt_transacao = "",
                       st_doc = "";
+
+        public DateTime var_dt_transacao;
 
         public long   vr_dispMes, 
                       vr_dispTot,
@@ -65,8 +67,10 @@ namespace DevKit.Web.Controllers
 
             try
             {
-                if (Authenticate())
-                    Execute();
+                IsFail = Authenticate();
+
+                if (!IsFail)
+                    IsFail = Execute();
 
                 Finish();
             }
@@ -82,6 +86,7 @@ namespace DevKit.Web.Controllers
             Registry("-------------------------");
             Registry("Finalizado! tempo: " + st.ElapsedMilliseconds.ToString());
             Registry("-------------------------");
+
             Registry("Resultado: " + output_st_msg);
             Registry("Código de resposta: " + var_codResp);
             Registry("-------------------------");
@@ -112,7 +117,7 @@ namespace DevKit.Web.Controllers
             {
                 var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal);
 
-                Registry("db.T_Terminal.Where(y => y.nu_terminal == " + input_cont_pe.st_terminal);
+                Registry("(a1) db.T_Terminal.Where(y => y.nu_terminal == " + input_cont_pe.st_terminal);
 
                 term = q.FirstOrDefault();
 
@@ -127,7 +132,7 @@ namespace DevKit.Web.Controllers
             {
                 var q = db.T_Empresa.Where(y => y.st_empresa == input_cont_pe.st_empresa);
 
-                Registry("db.T_Empresa.Where(y => y.st_empresa == " + input_cont_pe.st_empresa);
+                Registry("(a2) db.T_Empresa.Where(y => y.st_empresa == " + input_cont_pe.st_empresa);
 
                 emp = q.FirstOrDefault();
 
@@ -139,7 +144,7 @@ namespace DevKit.Web.Controllers
                 }
             }
 
-            Registry("emp.tg_bloq " + (emp.tg_bloq == null ? "NULO" : emp.tg_bloq.ToString()));
+            Registry("(a3) emp.tg_bloq " + (emp.tg_bloq == null ? "NULO" : emp.tg_bloq.ToString()));
 
             if (emp.tg_bloq != null)
                 if (emp.tg_bloq.ToString() == Context.TRUE)
@@ -156,7 +161,7 @@ namespace DevKit.Web.Controllers
                     Where(y => y.fk_empresa == emp.i_unique).
                     Where(y => y.fk_loja == term.fk_loja);
 
-                Registry("db.LINK_LojaEmpresa.Where(y => y.fk_empresa == " + emp.i_unique.ToString() +
+                Registry("(a4) db.LINK_LojaEmpresa.Where(y => y.fk_empresa == " + emp.i_unique.ToString() +
                     ").Where(y => y.fk_loja == " + term.fk_loja);
 
                 loj_emp = q.FirstOrDefault();
@@ -172,7 +177,7 @@ namespace DevKit.Web.Controllers
             {
                 var q = db.T_Loja.Where(y => y.i_unique == term.fk_loja);
 
-                Registry("db.T_Loja.Where(y => y.i_unique == " + term.fk_loja);
+                Registry("(a5) db.T_Loja.Where(y => y.i_unique == " + term.fk_loja);
 
                 loj = q.FirstOrDefault();
 
@@ -182,7 +187,7 @@ namespace DevKit.Web.Controllers
                     return false;
                 }
 
-                Registry("loj.tg_blocked " + (loj.tg_blocked == null ? "NULO" : loj.tg_blocked.ToString()));
+                Registry("(a6) loj.tg_blocked " + (loj.tg_blocked == null ? "NULO" : loj.tg_blocked.ToString()));
 
                 if (loj.tg_blocked != null)
                     if (loj.tg_blocked.ToString() == Context.TRUE)
@@ -192,7 +197,7 @@ namespace DevKit.Web.Controllers
                         return false;
                     }
 
-                Registry("loj.tg_cancel " + (loj.tg_cancel == null ? "NULO" : loj.tg_cancel.ToString()));
+                Registry("(a7) loj.tg_cancel " + (loj.tg_cancel == null ? "NULO" : loj.tg_cancel.ToString()));
 
                 if (loj.tg_cancel != null)
                     if (loj.tg_cancel.ToString() == Context.TRUE)
@@ -209,7 +214,7 @@ namespace DevKit.Web.Controllers
                         Where(y => y.st_matricula == input_cont_pe.st_matricula).
                         Where(y => y.st_titularidade == input_cont_pe.st_titularidade);
 
-                Registry("db.T_Cartao.Where(y => y.st_empresa == " + input_cont_pe.st_empresa +
+                Registry("(a8) db.T_Cartao.Where(y => y.st_empresa == " + input_cont_pe.st_empresa +
                     ").Where(y => y.st_matricula == " + input_cont_pe.st_matricula +
                     ").Where(y => y.st_titularidade == " + input_cont_pe.st_titularidade);
 
@@ -222,7 +227,7 @@ namespace DevKit.Web.Controllers
                     return false;
                 }
 
-                Registry("cartPortador.tg_status " + (cartPortador.tg_status == null ? "NULO" : cartPortador.tg_status.ToString()));
+                Registry("(a9) cartPortador.tg_status " + (cartPortador.tg_status == null ? "NULO" : cartPortador.tg_status.ToString()));
 
                 if (cartPortador.tg_status != null)
                     if (cartPortador.tg_status.ToString() == CartaoStatus.Bloqueado)
@@ -232,7 +237,7 @@ namespace DevKit.Web.Controllers
                         return false;
                     }
 
-                Registry("cartPortador.tg_emitido " + (cartPortador.tg_emitido == null ? "NULO" : cartPortador.tg_emitido.ToString()));
+                Registry("(a10) cartPortador.tg_emitido " + (cartPortador.tg_emitido == null ? "NULO" : cartPortador.tg_emitido.ToString()));
 
                 if (cartPortador.tg_emitido == null)
                     if (cartPortador.tg_emitido.ToString() == StatusExpedicao.Expedido)
@@ -246,7 +251,7 @@ namespace DevKit.Web.Controllers
             var_vr_total = input_cont_pe.vr_valor;
             var_nu_parcelas = input_cont_pe.nu_parcelas;
 
-            Registry("input_cont_pe.vr_valor " + (input_cont_pe.vr_valor == null ? "NULO" : input_cont_pe.vr_valor));
+            Registry("(a11) input_cont_pe.vr_valor " + (input_cont_pe.vr_valor == null ? "NULO" : input_cont_pe.vr_valor));
 
             if (string.IsNullOrEmpty(input_cont_pe.vr_valor))
             {
@@ -275,7 +280,7 @@ namespace DevKit.Web.Controllers
 
             new SaldoDisponivel().Obter(db, cartTitular, ref vr_dispMes, ref vr_dispTot);
 
-            Registry("input_cont_pe.nu_parcelas " + (input_cont_pe.nu_parcelas == null ? "NULO" : input_cont_pe.nu_parcelas));
+            Registry("(a12) input_cont_pe.nu_parcelas " + (input_cont_pe.nu_parcelas == null ? "NULO" : input_cont_pe.nu_parcelas));
 
             if (string.IsNullOrEmpty(input_cont_pe.nu_parcelas))
             {
@@ -297,7 +302,7 @@ namespace DevKit.Web.Controllers
 
                 string valoresParcelados = input_cont_pe.st_valores;
 
-                Registry("input_cont_pe.st_valores " + (input_cont_pe.st_valores == null ? "NULO" : input_cont_pe.st_valores));
+                Registry("(a13) input_cont_pe.st_valores " + (input_cont_pe.st_valores == null ? "NULO" : input_cont_pe.st_valores));
 
                 if (string.IsNullOrEmpty(input_cont_pe.st_valores))
                 {
@@ -308,14 +313,14 @@ namespace DevKit.Web.Controllers
 
                 var lstCartoes = new List<string>();
 
-                Registry("db.T_Cartao.Where(y => y.st_empresa == " + cartPortador.st_empresa + " && y.st_matricula == " + cartPortador.st_matricula);
+                Registry("(a14) db.T_Cartao.Where(y => y.st_empresa == " + cartPortador.st_empresa + " && y.st_matricula == " + cartPortador.st_matricula);
 
                 foreach (var item in db.T_Cartao.
                                         Where (y=> y.st_empresa == cartPortador.st_empresa && 
                                         y.st_matricula == cartPortador.st_matricula))
                 {
                     var _id = item.i_unique.ToString();
-                    Registry("T_Cartao => " + _id);
+                    Registry("(15) T_Cartao => " + _id);
                     lstCartoes.Add(_id);
                 }
                     
@@ -323,7 +328,12 @@ namespace DevKit.Web.Controllers
                 {
                     long valor_unit_parc = Convert.ToInt64(valoresParcelados.Substring(index_pos, 12));
 
+                    Registry("(a16) valor_unit_parc => " + valor_unit_parc);
+
                     index_pos += 12;
+
+                    Registry("(a17) valor_unit_parc > cartPortador.vr_limiteMensal " );
+                    Registry("(a18) " + valor_unit_parc  + " > " + cartPortador.vr_limiteMensal );
 
                     if (valor_unit_parc > cartPortador.vr_limiteMensal)
                     {
@@ -334,36 +344,59 @@ namespace DevKit.Web.Controllers
 
                     long dispMesParc = Convert.ToInt64(cartPortador.vr_limiteMensal);
 
-                    T_Parcela parcTot = new T_Parcela();
+                    Registry("(a19) dispMesParc : " + dispMesParc);
+
+                    var lstParcNoBanco = db.T_Parcelas.
+                                            Where(y => lstCartoes.Contains(y.fk_cartao.ToString())).
+                                            Where(y => y.nu_parcela == t).ToList();
+
+                    Registry("(a19.1) lstParcNoBanco : " + lstParcNoBanco.Count());
+
+                    var lstIdsTrans = lstParcNoBanco.Select(y => y.fk_log_transacoes.ToString()).ToList();
+
+                    Registry("(a19.2) lstParcNoBanco : " + lstIdsTrans.Count());
+
+                    var lstLTRNoBanco = db.LOG_Transacoes.Where(a => lstIdsTrans.Contains(a.i_unique.ToString())).ToList();
+
+                    Registry("(a19.3) lstLTRNoBanco : " + lstLTRNoBanco.Count());
 
                     foreach (var itemParcela in db.T_Parcelas.
                                             Where ( y=> lstCartoes.Contains(y.fk_cartao.ToString())).
                                             Where ( y=> y.nu_parcela == t).ToList() )
                     {
-                        var ltr = db.LOG_Transacoes.
-                                    FirstOrDefault(y => y.i_unique == itemParcela.fk_log_transacoes);
+                        var ltr = lstLTRNoBanco.FirstOrDefault(y => y.i_unique == itemParcela.fk_log_transacoes);
 
-                        var tg_conf = ltr.tg_confirmada.ToString();
+                        if (ltr == null)
+                            continue;
 
-                        if (tg_conf == TipoConfirmacao.Confirmada || tg_conf == TipoConfirmacao.Pendente)
-                            dispMesParc -= (long) parcTot.vr_valor;
-
-                        if (valor_unit_parc > dispMesParc)
+                        if (ltr.tg_confirmada != null)
                         {
-                            output_st_msg = "limite excedido";
-                            var_codResp = "2723";
-                            return false;
-                        }
+                            var tg_conf = ltr.tg_confirmada.ToString();
+
+                            if (tg_conf == TipoConfirmacao.Confirmada || tg_conf == TipoConfirmacao.Pendente)
+                                dispMesParc -= (long)itemParcela.vr_valor;
+
+                            if (valor_unit_parc > dispMesParc)
+                            {
+                                Registry("(a20) if (valor_unit_parc > dispMesParc) ");
+
+                                output_st_msg = "limite excedido";
+                                var_codResp = "2723";
+                                return false;
+                            }
+                        }                        
                     }
                 }
             }
             else
             {
-                Registry("if (vr_valor > vr_dispMes || vr_valor > vr_dispTot)");
-                Registry("if (" + vr_valor  + " > " + vr_dispMes + " || " + vr_valor+ " > " + vr_dispTot + ")" );
+                Registry("(a21) if (vr_valor > vr_dispMes || vr_valor > vr_dispTot)");
+                Registry("(a22) if (" + vr_valor  + " > " + vr_dispMes + " || " + vr_valor+ " > " + vr_dispTot + ")" );
                 
                 if (vr_valor > vr_dispMes || vr_valor > vr_dispTot)
                 {
+                    Registry("(a22.1) if (vr_valor > vr_dispMes || vr_valor > vr_dispTot)");
+
                     output_st_msg = "limite excedido";
                     var_codResp = "2724";
                     return false;
@@ -393,7 +426,7 @@ namespace DevKit.Web.Controllers
 
             prot = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cartTitular.fk_dadosProprietario);
 
-            Registry("db.T_Proprietario.FirstOrDefault(y => y.i_unique == " + cartTitular.fk_dadosProprietario);
+            Registry("(x1) db.T_Proprietario.FirstOrDefault(y => y.i_unique == " + cartTitular.fk_dadosProprietario);
 
             if (prot == null)
             {
@@ -407,7 +440,7 @@ namespace DevKit.Web.Controllers
                             FirstOrDefault(y => y.fk_proprietario == cartPortador.fk_dadosProprietario && 
                                                 y.nu_titularidade == Convert.ToInt32(cartPortador.st_titularidade));
 
-                Registry("db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == " + cartPortador.fk_dadosProprietario + 
+                Registry("(x2) db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == " + cartPortador.fk_dadosProprietario + 
                          " && y.nu_titularidade == " + Convert.ToInt32(cartPortador.st_titularidade));
 
                 if (dep == null)
@@ -421,15 +454,16 @@ namespace DevKit.Web.Controllers
             else
                 var_nomeCliente = prot.st_nome;
 
-            Registry("Nome portador: " + var_nomeCliente);
-
+            Registry("(x3) Nome portador: " + var_nomeCliente);
+            Registry("(x3.1) input_cont_pe.st_senha: " + (input_cont_pe.st_senha == null ? "NULO" : input_cont_pe.st_senha));
+            
             if (cartPortador.st_senha != input_cont_pe.st_senha)
             {
-                Registry("Senha Errada!");
+                Registry("(x4) Senha Errada!");
 
                 long senhasErradas = (int)cartPortador.nu_senhaErrada + 1;
 
-                Registry("senhasErradas: " + senhasErradas);
+                Registry("(x5) senhasErradas: " + senhasErradas);
 
                 if (senhasErradas > 4)
                 {
@@ -447,13 +481,17 @@ namespace DevKit.Web.Controllers
             }
             else
             {
+                Registry("(x6) Senha correta... Zerando senhasErradas!");
+
                 cartPortador.nu_senhaErrada = 0;
 
                 db.Update(cartPortador);
+
+                Registry("(x6.1) Cartão atualizado.");
             }
 
-            int tmp_nu_parc = Convert.ToInt32(input_cont_pe.nu_parcelas);
-            int index_pos = 0;
+            int tmp_nu_parc = Convert.ToInt32(input_cont_pe.nu_parcelas),
+                index_pos = 0;
 
             string tmp_variavel = input_cont_pe.st_valores;
 
@@ -470,89 +508,52 @@ namespace DevKit.Web.Controllers
                 return false;
             }
 
-            l_nsu.dt_log = DateTime.Now;
-            l_nsu.i_unique = Convert.ToInt64(db.InsertWithIdentity(l_nsu));
+            Registry("(x7) criando nsu...");
+
+            l_nsu = new LOG_NSU
+            {
+                dt_log = DateTime.Now
+            };
+
+            l_nsu.i_unique = Convert.ToInt32(db.InsertWithIdentity(l_nsu));
+
+            Registry("(x8) criando nsu... " + l_nsu.i_unique);
             
-            #endregion
-
-            /*
-
-            #region - Faz efetivamente a venda -
-
-            int 	tmp_nu_parc  = Convert.ToInt32 ( input_cont_pe.get_nu_parcelas() );
-            int 	index_pos    = 0;
-
-            string  tmp_variavel = input_cont_pe.get_st_valores();
-
-            if ( tmp_variavel.Length < tmp_nu_parc * 12 )
-            {
-                output_st_msg = "formato incorreto";
-                return false;				
-            }
-
-            if ( cart.get_tg_tipoCartao() != TipoCartao.presente )
-            {
-                if ( tmp_nu_parc > emp.get_int_nu_parcelas() )
-                {
-                    output_st_msg = "excede max. parcelas";
-                    var_codResp   = "1212";
-                    return false;				
-                }
-            }
-
-            #region - obtem nsu - 
-
-            l_nsu.set_dt_log ( GetDataBaseTime() );
-
-            if ( !l_nsu.create_LOG_NSU() )
-            {
-                output_st_msg = "Erro aplicativo";
-                return false;
-            }
-
-            #endregion
-
-            var_nu_nsuAtual    = l_nsu.get_identity();
+            var_nu_nsuAtual = l_nsu.i_unique.ToString();
             var_nu_nsuEntidade = var_nu_nsuAtual;
-
-            var_dt_transacao = GetDataBaseTime();
+            var_dt_transacao = DateTime.Now;
 
             // ## Criar parcelas
 
-            for (int t=1; t <= tmp_nu_parc; ++t )
+            for (int t = 1; t <= tmp_nu_parc; ++t)
             {
-                T_Parcelas parc = new T_Parcelas (this);
+                var valor_unit_parc = Convert.ToInt32(tmp_variavel.Substring(index_pos, 12));
 
-                string valor_unit_parc = tmp_variavel.Substring ( index_pos, 12 );
+                Registry("(x9) criando parcela de ... " + valor_unit_parc);
 
                 index_pos += 12;
 
-                #region - atribui valores e links à parcela - 
-
-                parc.set_nu_nsu				( l_nsu.get_identity()		);
-                parc.set_fk_empresa			( emp.get_identity()		);
-                parc.set_fk_cartao			( cart.get_identity()		);
-                parc.set_dt_inclusao		( var_dt_transacao			);
-                parc.set_nu_parcela			( t.ToString()				);
-                parc.set_vr_valor			( valor_unit_parc      	 	);
-                parc.set_nu_indice			( t.ToString()				); 
-                parc.set_tg_pago			( TipoParcela.EM_ABERTO		);
-                parc.set_fk_loja			( loj.get_identity()		);
-                parc.set_nu_tot_parcelas	( tmp_nu_parc.ToString() 	);
-                parc.set_fk_terminal		( term.get_identity()		);
-
-                #endregion
-
-                if ( !parc.create_T_Parcelas() )
+                var parc = new T_Parcela
                 {
-                    output_st_msg = "erro aplicativo";
-                    return false;				
-                }
+                    nu_nsu = (int)l_nsu.i_unique,
+                    fk_empresa = (int)emp.i_unique,
+                    fk_cartao = (int)cartPortador.i_unique,
+                    dt_inclusao = var_dt_transacao,
+                    nu_parcela = t,
+                    vr_valor = valor_unit_parc,
+                    nu_indice = t,
+                    tg_pago = '0',
+                    fk_loja = (int)loj.i_unique,
+                    nu_tot_parcelas = tmp_nu_parc,
+                    fk_terminal = (int)term.i_unique
+                };
 
-                lstParcs.Add ( parc.get_identity() );
+                parc.i_unique = Convert.ToInt32(db.InsertWithIdentity(parc));
+
+                lstParcs.Add(parc.i_unique.ToString());
             }
 
-            #endregion*/
+            #endregion
 
             st.Stop();
 
@@ -571,6 +572,88 @@ namespace DevKit.Web.Controllers
 
             var st = new Stopwatch(); st.Start();
 
+            #region - code - 
+
+            if (IsFail)
+            {
+                Registry("(f1) Nsu não foi criado!");
+
+                l_nsu = new LOG_NSU
+                {
+                    dt_log = DateTime.Now
+                };
+
+                l_nsu.i_unique = Convert.ToInt32(db.InsertWithIdentity(l_nsu));
+
+                var_nu_nsuAtual = l_nsu.i_unique.ToString();
+                var_operacaoCartao = var_operacaoCartaoFail;
+            }
+            else
+                var_codResp = "0000";
+
+            Registry("(f2) var_codResp " + var_codResp);
+
+            output_cont_pr.st_codResp = var_codResp;
+            output_cont_pr.st_nsuRcb = var_nu_nsuAtual.PadLeft(6, '0');
+
+            output_cont_pr.st_nsuBanco = new StringBuilder().Append(DateTime.Now.Year.ToString())
+                                                                       .Append(DateTime.Now.Month.ToString("00"))
+                                                                       .Append(DateTime.Now.Day.ToString("00"))
+                                                                       .Append(var_nu_nsuAtual.PadLeft(6, '0')).ToString();
+
+            output_cont_pr.st_PAN = cartPortador.st_empresa + cartPortador.st_matricula;
+
+            output_cont_pr.st_mesPri = Context.EMPTY;
+            output_cont_pr.st_loja = loj.st_loja;
+            output_cont_pr.st_nomeCliente = var_nomeCliente;
+
+            Registry("(f3) registra a transacao");
+
+            var l_tr = new LOG_Transaco
+            {
+                fk_terminal = (int)term.i_unique,
+                fk_empresa = (int)emp.i_unique,
+                fk_cartao = (int)cartPortador.i_unique,
+                vr_total = Convert.ToInt32(var_vr_total),
+                nu_parcelas = Convert.ToInt32(var_nu_parcelas),
+                nu_nsu = Convert.ToInt32(var_nu_nsuAtual),
+                dt_transacao = DateTime.Now,
+                nu_cod_erro = Convert.ToInt32(output_cont_pr.st_codResp),
+                nu_nsuOrig = Convert.ToInt32(var_nu_nsuOrig),
+                en_operacao = var_operacaoCartao,
+                st_msg_transacao = output_st_msg,
+                fk_loja = term.fk_loja,
+                st_doc = st_doc
+            };
+
+            if (IsFail)
+            {
+                l_tr.tg_confirmada = Convert.ToChar(TipoConfirmacao.Erro);
+                l_tr.tg_contabil = Convert.ToChar(Context.FALSE);
+            }
+            else
+            {
+                l_tr.tg_confirmada = Convert.ToChar(TipoConfirmacao.Pendente);
+                l_tr.tg_contabil = Convert.ToChar(Context.TRUE);
+            }
+
+            l_tr.i_unique = Convert.ToInt32(db.InsertWithIdentity(l_tr));
+
+            Registry("(f4) Transacao ID: " + l_tr.i_unique);
+            Registry("(f5) Atualizando parcelas");
+
+            for (int t = 0; t < lstParcs.Count; ++t)
+            {
+                Registry("(f5) Atualizando parcela " + lstParcs[t].ToString() + " com ID log_trans");
+
+                var parc_upd = db.T_Parcelas.FirstOrDefault(y => y.i_unique.ToString() == lstParcs[t].ToString());
+
+                parc_upd.fk_log_transacoes = (int) l_tr.i_unique;
+
+                db.Update(parc_upd);                
+            }
+            
+            #endregion
 
             st.Stop();
 

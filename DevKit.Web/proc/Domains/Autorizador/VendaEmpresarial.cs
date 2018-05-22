@@ -25,7 +25,7 @@ namespace DevKit.Web.Controllers
         public T_Empresa emp;
         public T_Terminal term;
         public LOG_NSU l_nsu;
-        public T_Proprietario prot;
+        public T_Proprietario dadosProprietario;
         public T_Loja loj;
 
         public string output_st_msg = "",
@@ -56,6 +56,7 @@ namespace DevKit.Web.Controllers
         public void Run(AutorizadorCNDB _db)
         {
             var st = new Stopwatch();
+
             st.Start();
 
             db = _db;
@@ -65,12 +66,20 @@ namespace DevKit.Web.Controllers
             var_operacaoCartao = OperacaoCartao.VENDA_EMPRESARIAL;
             var_operacaoCartaoFail = OperacaoCartao.FALHA_VENDA_EMPRESARIAL;
 
+            Registry("-------------------------");
+            Registry("START VendaEmpresarial");
+            Registry("-------------------------");
+
             try
             {
-                var_codResp = "0000";
+                var_codResp = "9999";
 
                 if (Authenticate())
+                {
+                    var_codResp = "0000";
+
                     Execute();
+                }
 
                 Finish();
             }
@@ -104,15 +113,12 @@ namespace DevKit.Web.Controllers
 
             #region - code - 
 
-            var_codResp = "9999";
             var_nu_nsuAtual = Context.NONE;
             var_nu_nsuEntidade = Context.NONE;
             var_nu_nsuOrig = Context.NONE;
             var_nu_nsuEntOrig = Context.NONE;
             var_vr_total = input_cont_pe.vr_valor;
             var_nu_parcelas = input_cont_pe.nu_parcelas;
-
-            var_codResp = "0606";
 
             {
                 var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal);
@@ -424,11 +430,11 @@ namespace DevKit.Web.Controllers
 
             #region - code -
 
-            prot = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cartTitular.fk_dadosProprietario);
+            dadosProprietario = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cartTitular.fk_dadosProprietario);
 
             Registry("(x1) db.T_Proprietario.FirstOrDefault(y => y.i_unique == " + cartTitular.fk_dadosProprietario);
 
-            if (prot == null)
+            if (dadosProprietario == null)
             {
                 output_st_msg = "Erro aplicativo (E1)";
                 return false;
@@ -452,42 +458,47 @@ namespace DevKit.Web.Controllers
                 var_nomeCliente = dep.st_nome;
             }
             else
-                var_nomeCliente = prot.st_nome;
+                var_nomeCliente = dadosProprietario.st_nome;
 
             Registry("(x3) Nome portador: " + var_nomeCliente);
-            Registry("(x3.1) input_cont_pe.st_senha: " + (input_cont_pe.st_senha == null ? "NULO" : input_cont_pe.st_senha));
-            
-            if (cartPortador.st_senha != input_cont_pe.st_senha)
+
+            if (loj.tg_portalComSenha == 1)
             {
-                Registry("(x4) Senha Errada!");
+                Registry("(x3.0) loj.tg_portalComSenha == 1 ");
+                Registry("(x3.1) input_cont_pe.st_senha: " + (input_cont_pe.st_senha == null ? "NULO" : input_cont_pe.st_senha));
 
-                long senhasErradas = (int)cartPortador.nu_senhaErrada + 1;
-
-                Registry("(x5) senhasErradas: " + senhasErradas);
-
-                if (senhasErradas > 4)
+                if (cartTitular.st_senha != input_cont_pe.st_senha)
                 {
-                    cartPortador.tg_status = Convert.ToChar(CartaoStatus.Bloqueado);
-                    cartPortador.tg_motivoBloqueio = Convert.ToChar(MotivoBloqueio.SENHA_ERRADA);
-                    cartPortador.dt_bloqueio = DateTime.Now;
+                    Registry("(x4) Senha Errada!");
+
+                    long senhasErradas = (int)cartPortador.nu_senhaErrada + 1;
+
+                    Registry("(x5) senhasErradas: " + senhasErradas);
+
+                    if (senhasErradas > 4)
+                    {
+                        cartPortador.tg_status = Convert.ToChar(CartaoStatus.Bloqueado);
+                        cartPortador.tg_motivoBloqueio = Convert.ToChar(MotivoBloqueio.SENHA_ERRADA);
+                        cartPortador.dt_bloqueio = DateTime.Now;
+                    }
+
+                    db.Update(cartPortador);
+
+                    output_st_msg = "Senha inválida";
+                    var_codResp = "4343";
+
+                    return false;
                 }
+                else
+                {
+                    Registry("(x6) Senha correta... Zerando senhasErradas!");
 
-                db.Update(cartPortador);
+                    cartPortador.nu_senhaErrada = 0;
 
-                output_st_msg = "Senha inválida";
-                var_codResp = "4343";
+                    db.Update(cartPortador);
 
-                return false;
-            }
-            else
-            {
-                Registry("(x6) Senha correta... Zerando senhasErradas!");
-
-                cartPortador.nu_senhaErrada = 0;
-
-                db.Update(cartPortador);
-
-                Registry("(x6.1) Cartão atualizado.");
+                    Registry("(x6.1) Cartão atualizado.");
+                }
             }
 
             int tmp_nu_parc = Convert.ToInt32(input_cont_pe.nu_parcelas),

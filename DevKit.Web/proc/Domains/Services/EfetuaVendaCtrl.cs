@@ -158,118 +158,201 @@ namespace DevKit.Web.Controllers
                     }
                 }
 
-                var sc = new SocketConvey();
-
-                var sck = sc.connectSocket(cnet_server, cnet_port);
-
-                if (sck == null)
-                    return BadRequest("Falha de comunicação com servidor (0x1)");
-
-                // #############################################################
-                // #############################################################
-
-                // Venda
-
-                // #############################################################
-                // #############################################################
-
-                strMessage = MontaVendaDigitada(titularidadeFinal);
-
-                if (!sc.socketEnvia(sck, strMessage))
+                if (Convert.ToInt32(terminal) == 6101)
                 {
-                    sck.Close();
-                    return BadRequest("Falha de comunicação com servidor (0x2)");
-                }
+                    #region - autorizador interno -
 
-                retorno = sc.socketRecebe(sck);
+                    var cartPortador = db.T_Cartao.FirstOrDefault(y => y.i_unique == idCartao);
 
-                if (retorno.Length < 6)
-                {
-                    sck.Close();
-                    return BadRequest("Falha de comunicação com servidor (0x3)");
-                }
+                    var v = new VendaEmpresarial();
 
-                var codResp = retorno.Substring(2, 4);
+                    v.input_cont_pe.st_terminal = terminal;
+                    v.input_cont_pe.st_empresa = empresa;
+                    v.input_cont_pe.st_matricula = matricula;
+                    v.input_cont_pe.st_titularidade = cartPortador.st_titularidade;
+                    v.input_cont_pe.nu_parcelas = parcelas.ToString().PadLeft(2,'0');
+                    v.input_cont_pe.vr_valor = valor.ToString();
 
-                if (codResp != "0000")
-                {
-                    sck.Close();
+                    v.input_cont_pe.st_valores = "";
 
-                    if (codResp == "0505")
+                    if (parcelas >= 1) v.input_cont_pe.st_valores += p1.ToString().PadLeft(12, '0');
+                    if (parcelas >= 2) v.input_cont_pe.st_valores += p2.ToString().PadLeft(12, '0');
+                    if (parcelas >= 3) v.input_cont_pe.st_valores += p3.ToString().PadLeft(12, '0');
+                    if (parcelas >= 4) v.input_cont_pe.st_valores += p4.ToString().PadLeft(12, '0');
+                    if (parcelas >= 5) v.input_cont_pe.st_valores += p5.ToString().PadLeft(12, '0');
+                    if (parcelas >= 6) v.input_cont_pe.st_valores += p6.ToString().PadLeft(12, '0');
+                    if (parcelas >= 7) v.input_cont_pe.st_valores += p7.ToString().PadLeft(12, '0');
+                    if (parcelas >= 8) v.input_cont_pe.st_valores += p8.ToString().PadLeft(12, '0');
+                    if (parcelas >= 9) v.input_cont_pe.st_valores += p9.ToString().PadLeft(12, '0');
+                    if (parcelas >= 10) v.input_cont_pe.st_valores += p10.ToString().PadLeft(12, '0');
+                    if (parcelas >= 11) v.input_cont_pe.st_valores += p11.ToString().PadLeft(12, '0');
+                    if (parcelas >= 12) v.input_cont_pe.st_valores += p12.ToString().PadLeft(12, '0');
+
+                    v.input_cont_pe.st_senha = new BaseVenda().DESCript(senha.PadLeft(8, '*'), "12345678");
+
+                    v.Run(db);
+
+                    var cdResp = v.output_cont_pr.st_codResp;
+
+                    if (cdResp != "0000")
                     {
-                        return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
-                    }
-                    else if (codResp == "4343")
-                    {
-                        var numErros = (from e in db.T_Cartao
-                                        where e.i_unique == associadoPrincipal.i_unique
-                                        select e.nu_senhaErrada).
-                                        FirstOrDefault();
-
-                        if (numErros == 3)
-                        {
-                            // ultima!
-                            return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
-                        }
-                        else if (numErros >= 4)
+                        if (cdResp == "0505")
                         {
                             return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
                         }
-                        else
+                        else if (cdResp == "4343")
                         {
-                            var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
+                            var numErros = (from e in db.T_Cartao
+                                            where e.i_unique == associadoPrincipal.i_unique
+                                            select e.nu_senhaErrada).
+                                            FirstOrDefault();
 
-                            return BadRequest("(43) Senha inválida! " + tentativas);
+                            if (numErros == 3)
+                            {
+                                // ultima!
+                                return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
+                            }
+                            else if (numErros >= 4)
+                            {
+                                return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                            }
+                            else
+                            {
+                                var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
+
+                                return BadRequest("(43) Senha inválida! " + tentativas);
+                            }
                         }
+                        else
+                            return BadRequest("Falha VC (0xE" + cdResp + " - " + v.output_st_msg + " )");
                     }
-                    else
-                        return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+
+                    var vc = new VendaEmpresarialConfirmacao();
+
+                    vc.Run(db, v.output_cont_pr.st_nsuRcb);
+
+                    #endregion
                 }
-
-                nsu_retorno = ObtemNsuRetorno(retorno);
-
-                // #############################################################
-                // #############################################################
-
-                // Confirmação
-
-                // #############################################################
-                // #############################################################
-
-                strMessage = MontaConfirmacao(titularidadeFinal);
-
-                if (!sc.socketEnvia(sck, strMessage))
+                else
                 {
+                    #region - venda por legado - 
+
+                    var sc = new SocketConvey();
+
+                    var sck = sc.connectSocket(cnet_server, cnet_port);
+
+                    if (sck == null)
+                        return BadRequest("Falha de comunicação com servidor (0x1)");
+
+                    // #############################################################
+                    // #############################################################
+
+                    // Venda
+
+                    // #############################################################
+                    // #############################################################
+
+                    strMessage = MontaVendaDigitada(titularidadeFinal);
+
+                    if (!sc.socketEnvia(sck, strMessage))
+                    {
+                        sck.Close();
+                        return BadRequest("Falha de comunicação com servidor (0x2)");
+                    }
+
+                    retorno = sc.socketRecebe(sck);
+
+                    if (retorno.Length < 6)
+                    {
+                        sck.Close();
+                        return BadRequest("Falha de comunicação com servidor (0x3)");
+                    }
+
+                    var codResp = retorno.Substring(2, 4);
+
+                    if (codResp != "0000")
+                    {
+                        sck.Close();
+
+                        if (codResp == "0505")
+                        {
+                            return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                        }
+                        else if (codResp == "4343")
+                        {
+                            var numErros = (from e in db.T_Cartao
+                                            where e.i_unique == associadoPrincipal.i_unique
+                                            select e.nu_senhaErrada).
+                                            FirstOrDefault();
+
+                            if (numErros == 3)
+                            {
+                                // ultima!
+                                return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
+                            }
+                            else if (numErros >= 4)
+                            {
+                                return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                            }
+                            else
+                            {
+                                var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
+
+                                return BadRequest("(43) Senha inválida! " + tentativas);
+                            }
+                        }
+                        else
+                            return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+                    }
+
+                    nsu_retorno = ObtemNsuRetorno(retorno);
+
+                    // #############################################################
+                    // #############################################################
+
+                    // Confirmação
+
+                    // #############################################################
+                    // #############################################################
+
+                    strMessage = MontaConfirmacao(titularidadeFinal);
+
+                    if (!sc.socketEnvia(sck, strMessage))
+                    {
+                        sck.Close();
+                        return BadRequest("Falha de comunicação com servidor (0x4)");
+                    }
+
+                    retorno = sc.socketRecebe(sck);
+
                     sck.Close();
-                    return BadRequest("Falha de comunicação com servidor (0x4)");
+
+                    if (retorno.Length < 6)
+                        return BadRequest("Falha de comunicação com servidor (0x5)");
+
+                    codResp = retorno.Substring(2, 4);
+
+                    if (codResp != "0000")
+                        return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+
+                    CleanCache(db, CacheTags.associado, idCartao);
+
+                    sck.Close();
+                    
+                    #endregion
                 }
-
-                retorno = sc.socketRecebe(sck);
-
-                sck.Close();
-
-                if (retorno.Length < 6)
-                    return BadRequest("Falha de comunicação com servidor (0x5)");
-
-                codResp = retorno.Substring(2, 4);
-
-                if (codResp != "0000")
-                    return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
-
-                CleanCache(db, CacheTags.associado, idCartao);
-
-                sck.Close();
 
                 var cupom = new Cupom().
-                    Venda(db,
-                            associadoPrincipal,
-                            dadosProprietario,
-                            DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"),
-                            nsu_retorno,
-                            terminal,
-                            (int)parcelas,
-                            valor,
-                            p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+                       Venda(db,
+                               associadoPrincipal,
+                               dadosProprietario,
+                               DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"),
+                               nsu_retorno,
+                               terminal,
+                               (int)parcelas,
+                               valor,
+                               p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+
 
                 // -----------------------------------------
                 // seta tipo de venda (mensagem)

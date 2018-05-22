@@ -95,19 +95,6 @@ namespace DevKit.Web
 
                 var UserName = context.UserName.Substring(1);
 
-                #if DEBUG
-                VendaEmpresarial v = new VendaEmpresarial();
-                v.input_cont_pe.st_terminal = "00006101";
-                v.input_cont_pe.st_empresa = "000002";
-                v.input_cont_pe.st_matricula = "000001";
-                v.input_cont_pe.st_titularidade = "01";
-                v.input_cont_pe.nu_parcelas = "02";
-                v.input_cont_pe.vr_valor = "100";
-                v.input_cont_pe.st_valores = "000000000100000000000100";
-                v.input_cont_pe.st_senha = new BaseVenda().DESCript("1234".PadLeft(8, '*'), "12345678");
-                v.Run(db);
-                #endif
-
                 switch (tipo)
                 {
                     case "1": // lojista

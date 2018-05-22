@@ -130,17 +130,21 @@ namespace DevKit.Web.Controllers
                            select e).
                            FirstOrDefault();
 
-                if (ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada)
+                if (ltr != null)
+                if (ltr.tg_confirmada != null)
                 {
-                    totParc += (int) item.vr_valor;
-                  //  lstParcelas.Add("Parcela " + item.nu_parcela + " -> R$ " + mon.setMoneyFormat((long)item.vr_valor));
+                    if (ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada)
+                    {
+                        totParc += (int)item.vr_valor;
+                        //  lstParcelas.Add("Parcela " + item.nu_parcela + " -> R$ " + mon.setMoneyFormat((long)item.vr_valor));
+                    }
+
+                    if (it != item.nu_parcela)
+                    {
+                        lstParcelas.Add("Total " + it + " : R$ " + mon.setMoneyFormat((long)totParc));
+                        it = (int)item.nu_parcela;
+                    }
                 }
-                
-                if (it != item.nu_parcela)
-                {
-                    lstParcelas.Add("Total " + it + " : R$ " + mon.setMoneyFormat((long)totParc));
-                    it = (int)item.nu_parcela;
-                }                    
             }
 
             if (dadosProprietario.st_email != null)

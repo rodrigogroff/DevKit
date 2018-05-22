@@ -141,8 +141,10 @@ namespace DevKit.Web.Controllers
                                    select e).
                                    FirstOrDefault();
                         
-                        if (ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada)
-                            mTot += (int) item.vr_valor;
+                        if (ltr != null)
+                            if (ltr.tg_confirmada != null)
+                                if (ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada)
+                                    mTot += (int) item.vr_valor;
                     }
 
                     maxParcAtual = mTot.ToString();

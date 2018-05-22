@@ -7,7 +7,7 @@
                     <td width="20px"></td>
                     <td>
                         <span ng-show="viewModel.id == undefined">Novo </span> Associado \ <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.stName}}&nbsp;</span></b>
-                        <button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>
+                        <!--<button class="btn btn-default pull-right" ng-show="viewModel.id > 0" ng-click="remove()">Remover</button>-->
                     </td>
                     <td width="20px"></td>
                 </tr>
@@ -354,7 +354,9 @@
                                                             <td width="120px">
                                                                 <b>CPF</b>
                                                             </td>
-                                                            <td width="20px"></td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="stCPFDep_fail">!</button>
+                                                            </td>
                                                             <td width="200px">
                                                                 <input type="text" class="form-control input-transparent" maxlength="11" ng-model="newDep.stCPF">
                                                             </td>
@@ -363,7 +365,9 @@
                                                             <td width="120px">
                                                                 <b>Data Nascimento</b>
                                                             </td>
-                                                            <td width="20px"></td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="stDtNascDep_fail">!</button>
+                                                            </td>
                                                             <td width="200px">
                                                                 <input type="text" class="form-control input-transparent" name="cnpj" id="dtNasc" ng-model="newDep.sdtNasc"
                                                                        maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_">
@@ -373,7 +377,9 @@
                                                             <td width="120px">
                                                                 <b>Vínculo</b>
                                                             </td>
-                                                            <td width="20px"></td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="stVinculoDep_fail">!</button>
+                                                            </td>
                                                             <td width="200px">
                                                                 <input type="hidden" style="width:100%" ui-select2="selectTipoCoberturaDependente" data-placeholder="(Selecione)" ng-model="newDep.fkTipoCoberturaDependente" />
                                                             </td>
@@ -408,9 +414,8 @@
                                                 <td>{{ mdl.sfkTipoCoberturaDependente }}</td>
                                                 <td>
                                                     <div class="pull-right">
-                                                        <a href="" role="button" ng-click="editDep(mdl)">
-                                                            <i class="glyphicon glyphicon-edit" style="color:white"></i>
-                                                        </a>
+                                                        <a href="" role="button" ng-click="editDep(mdl)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a>
+                                                        <a href="" role="button" ng-click="removeDep(mdl)"><i class="glyphicon glyphicon-remove" style="color:white"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>

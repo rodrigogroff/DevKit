@@ -75,6 +75,21 @@ namespace DataModel
                         return true;
                     }
 
+                case "removeDep":
+                    {
+                        var ent = JsonConvert.DeserializeObject<AssociadoDependente>(anexedEntity.ToString());
+
+                        if (db.LoteGraficaCartao.Any ( y=> y.fkAssociado == ent.fkCartao))
+                        {
+                            resp = "Dependente já utilizado!";
+                            return false;
+                        }
+                        
+                        db.Delete(ent);
+
+                        return true;
+                    }
+
                 case "newDep":
                     {
                         var ent = JsonConvert.DeserializeObject<AssociadoDependente>(anexedEntity.ToString());

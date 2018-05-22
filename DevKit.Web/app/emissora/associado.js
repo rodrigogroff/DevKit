@@ -244,7 +244,28 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 	$scope.cancelDep = function () {
 		$scope.addDep = false;
 		$scope.newDep = {};
-	}
+    }
+
+    $scope.removeDep = function (mdl)
+    {
+        if (!$scope.permModel.novo && !$scope.permModel.edicao)
+            toastr.error('Acesso negado!', 'Permissão');
+        else
+        {   
+            $scope.addDep = false;
+
+            $scope.viewModel.updateCommand = "remveDep";
+            $scope.viewModel.anexedEntity = mdl;
+
+            Api.Associado.update({ id: id }, $scope.viewModel, function (data) {
+                $scope.newDep = {};
+                loadEntity();
+            },
+            function (response) {
+                toastr.error(response.data.message, 'Error');
+            });            
+        }
+    }
 
 	$scope.saveNewDep = function ()
 	{
@@ -252,9 +273,15 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             toastr.error('Acesso negado!', 'Permissão');
 		else
 		{
-            $scope.stNomeDep_fail = invalidCheck($scope.newDep.stNome) ;
+            $scope.stNomeDep_fail = invalidCheck($scope.newDep.stNome);
+            $scope.stCPFDep_fail = invalidCheck($scope.newDep.stCPF);
+            $scope.stDtNascDep_fail = invalidCheck($scope.newDep.sdtNasc);
+            $scope.stVinculoDep_fail = $scope.newDep.fkTipoCoberturaDependente == undefined;
 
-            if (!$scope.stNomeDep_fail)
+            if (!$scope.stNomeDep_fail && 
+                !$scope.stCPFDep_fail &&
+                !$scope.stDtNascDep_fail &&
+                !$scope.stVinculoDep_fail)
 			{
 				$scope.addDep = false;
                 

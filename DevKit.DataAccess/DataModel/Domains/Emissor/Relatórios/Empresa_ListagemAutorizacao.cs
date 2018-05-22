@@ -88,10 +88,16 @@ namespace DataModel
                         select e;
             }
 
-            if (!string.IsNullOrEmpty(filter.mes) && !string.IsNullOrEmpty(filter.ano))
+            if (!string.IsNullOrEmpty(filter.mes))
             {
                 query = from e in query
-                        where e.nuMes.ToString() == filter.mes
+                        where e.nuMes.ToString() == filter.mes             
+                        select e;
+            }
+
+            if (!string.IsNullOrEmpty(filter.ano))
+            {
+                query = from e in query
                         where e.nuAno.ToString() == filter.ano
                         select e;
             }
@@ -149,7 +155,7 @@ namespace DataModel
                 query = from e in query
                         join med in db.Credenciado on e.fkCredenciado equals med.id
                         join espec in db.Especialidade on med.fkEspecialidade equals espec.id
-                        where espec.stNome.ToUpper() == filter.espec.ToUpper()
+                        where espec.stNome.ToUpper().Contains(filter.espec.ToUpper())
                         select e;
             }
 

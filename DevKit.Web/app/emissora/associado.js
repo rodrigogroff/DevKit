@@ -108,7 +108,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             $scope.cpf_fail = invalidCheck($scope.viewModel.stCPF);
             $scope.fkSecao_fail = invalidCheck($scope.viewModel.fkSecao);
 	
-            if (!$scope.stName_fail)
+            if (!$scope.stName_fail && !$scope.cpf_fail)
             {
 				if (id > 0)
                 {

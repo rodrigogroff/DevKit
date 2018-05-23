@@ -10,7 +10,9 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var resp = new Credenciado().AutorizaProcedimento(db, new AutorizaProcedimentoParams
+            var cred = new Credenciado();
+
+            var cupom = cred.AutorizaProcedimento(db, new AutorizaProcedimentoParams
             {
                 emp = Request.GetQueryStringValue("emp", 0),
                 mat = Request.GetQueryStringValue("mat", 0),
@@ -21,10 +23,10 @@ namespace DevKit.Web.Controllers
                 titVia = Request.GetQueryStringValue("titVia")?.PadLeft(4, '0'),
             });
 
-            if (resp == "")
-                return Ok();
+            if (cupom.ok)
+                return Ok(cupom);
             else
-                return BadRequest(resp);
+                return BadRequest(cupom.resp);
         }
     }
 }

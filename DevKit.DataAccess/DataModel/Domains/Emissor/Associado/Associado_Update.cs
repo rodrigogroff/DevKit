@@ -96,7 +96,7 @@ namespace DataModel
 
                         if (db.LoteGraficaCartao.Any ( y=> y.fkAssociado == ent.fkCartao))
                         {
-                            resp = "Dependente já utilizado!";
+                            resp = "Dependente já em lote de gráfica!";
                             return false;
                         }
                         

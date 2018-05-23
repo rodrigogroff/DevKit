@@ -1,23 +1,4 @@
 
--cartão com senha
--segunda-via
--cadastro de dependentes
--bloq e desbloq
 
--carga e combo da tabela tuss
-
--carga de medicos
--autorizador normal / mobile
--senha 
--tela de autorização
-
--processo batch de fechamento
--relatório de fechamento
--exportação de arquivo de fechamento
-
-// --------------------------
-// outros
-// --------------------------
-
--traduzir enumerações
--modais de conf: usuário / tipo tarefa / sprint
+Credenciado 3805
+Cartão  1801 228 0214 0101

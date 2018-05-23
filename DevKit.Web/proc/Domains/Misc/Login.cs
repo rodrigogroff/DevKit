@@ -53,7 +53,7 @@ namespace DevKit.Web
                     }
                     else
                     {
-                        if (context.Password != "SUPERDBA")
+                        if (context.Password.ToUpper() != "SUPERDBA")
                         {
                             if (credenciado.stSenha == null)
                             {

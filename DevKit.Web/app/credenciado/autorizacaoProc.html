@@ -14,13 +14,15 @@
             <table>
                 <tr>
                     <td valign="top">
-
-                        <h3>Selecione o cartão</h3>
                         <br />
                         <table class="widget" style="color:white">
-
+                            <tr>
+                                <td></td>
+                                <td colspan="3">
+                                    <h3>Selecione o cartão</h3>
+                                </td>
+                            </tr>
                             <tr height="22px" />
-
                             <tr height="36px">
                                 <td width="25px"></td>
                                 <td width="500px">
@@ -42,9 +44,7 @@
                                 </td>
                                 <td width="60px"></td>
                             </tr>
-
                             <tr height="22px"></tr>
-
                             <tr ng-if="associado != undefined">
                                 <td></td>
                                 <td>
@@ -62,19 +62,21 @@
                                     </table>
                                 </td>
                             </tr>
-
-                            <tr ng-if="associado != undefined" height="22px"></tr>
-
+                            <tr ng-if="associado != undefined" height="22px">
+                                <td></td>
+                                <td colspan="4">
+                                    <p>Valor máximo permitido: <b>R$ {{associado.svrMaxEmp}}</b></p><br />
+                                </td>
+                            </tr>
                         </table>
-
                         <div ng-if="associado != undefined">
-
-                            <p>Valor máximo permitido: <b>R$ {{associado.svrMaxEmp}}</b></p><br />
-
-                            <h3>Selecione o procedimento</h3>
-                            <br />
-
                             <table class="widget" style="color:white">
+                                <tr>
+                                    <td></td>
+                                    <td colspan="7">
+                                        <h3>Selecione o procedimento</h3>
+                                    </td>
+                                </tr>
                                 <tr height="22px">
                                     <td width="25px"></td>
                                     <td width="90px"></td>
@@ -116,7 +118,6 @@
                                 </tr>
                                 <tr height="22px"> </tr>
                             </table>
-
                             <table width="95%">
                                 <tr>
                                     <td valign="top">
@@ -153,17 +154,10 @@
                                                 </tr>
                                             </table>
                                         </div>
-                                        <br />
                                     </td>
                                 </tr>
                             </table>
-
-                            <br />
-                            <button ng-if="associado != undefined" type="submit" class="btn btn-lg btn-success"
-                                    ng-click="abreSenha()">
-                                Autorizar Procedimento
-                            </button>
-
+                            <button ng-if="associado != undefined" type="submit" class="btn btn-lg btn-success" ng-click="abreSenha()">Autorizar Procedimento</button>
                         </div>
 
                         <div class="modal-backdrop"
@@ -193,7 +187,7 @@
                                         <tr height="22px"></tr>
                                     </table>
                                     <br />
-                                    
+
                                     <div class="pull-right">
                                         <button class="btn btn-default" ng-click="closeModalSenha()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <button class="btn btn-success" ng-disabled="campos.senhaCartao.length != 4" ng-click="autorizar()"> Autorizar </button>
@@ -204,15 +198,84 @@
                             </div>
                         </div>
 
+                        <div class="modal-backdrop"
+                             ng-if="mostraGuia == true"
+                             style="background: rgba(55, 55, 55, 0.5 );">
+                            <div class="modal-dialog" style="width:1100px">
+                                <br />
+                                <br />
+                                <br />
+                                <div class="modal-content" style="color:black">
+                                    <legend style="color:black">
+                                        Guia de autorização                                        
+                                    </legend>
+                                    Validade: {{cupom.validade}}
+                                    <br />
+                                    <br />
+                                    <table border="1">
+                                        <thead>
+                                            <tr>
+                                                <td width="300px"></td>
+                                                <td width="300px"></td>
+                                                <td width="150px"></td>
+                                                <td width="150px"></td>
+                                            </tr>
+                                        </thead>
+                                        <tr height="30px">
+                                            <td></td>
+                                            <td><b>{{cupom.empresa}}</b></td>
+                                            <td colspan="2">Emissão guia: <b>{{cupom.emissao}}</b></td>
+                                        </tr>
+                                        <tr height="30px">
+                                            <td></td>
+                                            <td>Autorização/NSU: <b>{{cupom.autorizacao}}</b></td>
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr height="15px"></tr>
+                                        <tr height="30px">
+                                            <td>Associado: <br /><b>({{cupom.associadoMat}}) {{cupom.associadoNome}}  - Tit.: {{cupom.associadoTit}}</b></td>
+                                            <td>Credenciado: <br /><b>{{cupom.credenciado}}</b></td>
+                                            <td colspan="2">Vínculo/secao: <br /><b>{{cupom.secao}}</b></td>
+                                        </tr>
+                                        <tr height="15px"></tr>
+                                        <tr height="30px">
+                                            <td><b>TUSS</b></td>
+                                            <td><b>PROCEDIMENTO</b></td>
+                                            <td><b>VALOR INTEGRAL</b></td>
+                                            <td><b>VALOR CO-PARTICIPAÇÃO</b></td>
+                                        </tr>
+                                        <tr height="15px"></tr>
+                                        <tr height="30px">
+                                            <td>{{cupom.tuss}}</td>
+                                            <td>{{cupom.procedimento}}</td>
+                                            <td>R$ {{cupom.vrIntegral}}</td>
+                                            <td>R$ {{cupom.vrCoPart}}</td>
+                                        </tr>
+                                        <tr height="15px"></tr>
+                                    </table>
+                                    <br />
+                                    <br />
+                                    Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />
+                                    em minha folha de pagamento, conforme coparticipação de R$ {{cupom.vrCoPart}}
+                                    <br />
+                                    <br />
+                                    _______________________________________<br />
+                                    {{cupom.associadoNome}}
+                                    <br />
+                                    <br />
+                                    <div align="center">
+                                        <button class="btn btn-success" ng-click="imprimirGuia()"> Imprimir </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <br />
                         <br />
-                        <br />
-                        <br />
-
                     </td>
                 </tr>
             </table>
-            
         </div>
     </section>
+    <br />
+    <br />
 </div>

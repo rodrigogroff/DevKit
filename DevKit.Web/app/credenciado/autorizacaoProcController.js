@@ -19,6 +19,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.selecionouProc = null;
         $scope.associado = undefined;
         $scope.pedirSenha = false;
+        $scope.mostraGuia = false;
 	}
 
     $scope.buscarCartao = function () {
@@ -116,12 +117,19 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         
         Api.AutorizaProc.listPage(opcoes, function (data)
         {
+            $scope.cupom = data;
             $scope.closeModalSenha();
-            toastr.success('Procedimento autorizado com sucesso!', 'Autorização');
+            
+            $scope.mostraGuia = true;
         },
         function (response) {
             toastr.error(response.data.message, 'Autorização');
         });
+    }
+
+    $scope.imprimirGuia = function () {
+        $scope.mostraGuia = false;
+        init();
     }
 
 }]);

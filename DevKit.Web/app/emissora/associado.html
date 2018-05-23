@@ -72,7 +72,7 @@
                                     <button class="btn btn-xs btn-danger" ng-show="mat_fail">!</button>
                                 </td>
                                 <td ng-if="viewModel.id == undefined">
-                                    <input type="text" class="form-control input-transparent" maxlength="6" numbers-only
+                                    <input type="text" class="form-control input-transparent" maxlength="6" onKeyUp="money(this,ValorNum);"
                                            ng-disabled="!permModel.edicao" ng-model="viewModel.nuMatricula">
                                 </td>
                                 <td ng-if="viewModel.id > 0">
@@ -89,12 +89,9 @@
                                 <td>
                                     <button class="btn btn-xs btn-danger" ng-show="matS_fail">!</button>
                                 </td>
-                                <td ng-if="viewModel.nuMatSaude == undefined">
-                                    <input type="text" class="form-control input-transparent" maxlength="6" numbers-only
+                                <td >
+                                    <input type="text" class="form-control input-transparent" maxlength="6" onKeyUp="money(this,ValorNum);"
                                            ng-disabled="!permModel.edicao" ng-model="viewModel.nuMatSaude">
-                                </td>
-                                <td ng-if="viewModel.id > 0">
-                                    {{viewModel.nuMatSaude}}
                                 </td>
                                 <td></td>
                             </tr>
@@ -107,12 +104,9 @@
                                 <td>
                                     <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
                                 </td>
-                                <td ng-if="viewModel.id == undefined">
-                                    <input type="text" class="form-control input-transparent" name="cnpj" id="cpf" ng-model="viewModel.stCPF"
+                                <td>
+                                    <input type="text" class="form-control input-transparent" name="cnpj" id="cpf" ng-model="viewModel.stCPF" ng-disabled="disableCPF == true"
                                            maxlength="14" ui-mask="999.999.999-99" ui-mask-placeholder ui-mask-placeholder-char="_">
-                                </td>
-                                <td ng-if="viewModel.id > 0">
-                                    {{viewModel.stCPF}}
                                 </td>
                                 <td></td>
                             </tr>

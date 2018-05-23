@@ -29,6 +29,24 @@ namespace DataModel
 				return false;
 			}
 
+            if (db.Associado.Any(y => y.stCPF == this.stCPF))
+            {
+                resp = "CPF já em uso";
+                return false;
+            }
+
+            if (db.Associado.Any (y=> y.nuMatricula == this.nuMatricula))
+            {
+                resp = "Matrícula já em uso";
+                return false;
+            }
+
+            if (db.Associado.Any(y => y.nuMatSaude == this.nuMatSaude))
+            {
+                resp = "Matrícula saúde já em uso";
+                return false;
+            }
+
             fkEmpresa = user.fkEmpresa;
 
             stName = stName.ToUpper().Trim();

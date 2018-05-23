@@ -54,6 +54,10 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 				$scope.viewModel = data;
                 $scope.loading = false;
                 $scope.loaded = true;
+
+                if (data.stCPF.length > 0) {
+                    $scope.disableCPF = true;
+                }
 			},
 			function (response)
 			{

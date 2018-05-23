@@ -18,6 +18,17 @@ namespace DataModel
 
                 case "entity":
 					{
+                        var oldAssoc = db.Associado.FirstOrDefault(y => y.id == this.id);
+                        
+                        if (oldAssoc.nuMatSaude == null)
+                        {
+                            if (db.Associado.Any (y=> y.nuMatSaude == this.nuMatSaude))
+                            {
+                                resp = "Mat. Saúde já utilizada!";
+                                return false;
+                            }                            
+                        }
+
                         new AuditLog
                         {
                             fkUser = user.id,
@@ -26,7 +37,7 @@ namespace DataModel
                             fkTarget = this.id
                         }.
                         Create(db, "", "");
-
+                        
                         break;
 					}
 

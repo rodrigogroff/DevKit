@@ -17,6 +17,7 @@ namespace DevKit.Web.Controllers
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 fkSecao = Request.GetQueryStringValue("fkSecao"),
+                matSaude = Request.GetQueryStringValue("matSaude"),
                 matricula = Request.GetQueryStringValue("matricula"),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
                 email = Request.GetQueryStringValue("email")?.ToUpper(),

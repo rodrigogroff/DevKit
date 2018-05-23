@@ -9,6 +9,7 @@ namespace DataModel
     public class FechCredAnalDetalhe
     {
         public string   serial, 
+                        nsu,
                         dtSolicitacao, 
                         cpf,
                         secao,
@@ -139,6 +140,7 @@ namespace DataModel
                         resultCred.results.Add(new FechCredAnalDetalhe
                         {
                             serial = serial.ToString(),
+                            nsu = aut.nuNSU != null ? aut.nuNSU.ToString() : "",
                             associado = assoc.stName,
                             cpf = assoc.stCPF,
                             secao = secao.nuEmpresa + " - " + secao.stDesc,

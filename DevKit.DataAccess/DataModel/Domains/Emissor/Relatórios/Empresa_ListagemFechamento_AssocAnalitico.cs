@@ -9,6 +9,7 @@ namespace DataModel
     public class FechAssocAnalDetalhe
     {
         public string   serial, 
+                        nsu,
                         portador,
                         dtSolicitacao, 
                         codCred,
@@ -172,6 +173,7 @@ namespace DataModel
                         resultAssoc.results.Add(new FechAssocAnalDetalhe
                         {
                             serial = serial.ToString(),
+                            nsu = aut.nuNSU != null ? aut.nuNSU.ToString() : "",
                             portador = portador != null ? portador.stName : "",
                             cnpj = cred.stCnpj,
                             codCred = cred.nuCodigo.ToString(),

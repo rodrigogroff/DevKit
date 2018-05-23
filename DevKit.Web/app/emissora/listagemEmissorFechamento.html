@@ -166,6 +166,7 @@
                                         <thead>
                                             <tr>
                                                 <th width="70px">Serial</th>
+                                                <th width="70px">NSU</th>
                                                 <th width="150px">Data Solicitação</th>
                                                 <th width="180px">Empresa / Seção</th>
                                                 <th width="180px">CPF</th>
@@ -179,6 +180,7 @@
                                         </thead>
                                         <tr data-ng-repeat="m in mdl.results">
                                             <td>{{ m.serial }}</td>
+                                            <td>{{ m.nsu }}</td>
                                             <td>{{ m.dtSolicitacao }}</td>
                                             <td>{{ m.secao }}</td>
                                             <td>{{ m.cpf }}</td>
@@ -278,6 +280,7 @@
                                         <thead>
                                             <tr>
                                                 <th width="70px">Serial</th>
+                                                <th width="70px">NSU</th>
                                                 <th width="130px">Portador</th>
                                                 <th width="150px">Data Solicitação</th>
                                                 <th width="320px">Credenciado</th>
@@ -292,6 +295,7 @@
                                         </thead>
                                         <tr data-ng-repeat="m in mdl.results">
                                             <td>{{ m.serial }}</td>
+                                            <td>{{ m.nsu }}</td>
                                             <td>{{ m.portador }}</td>
                                             <td>{{ m.dtSolicitacao }}</td>
                                             <td>{{ m.codCred }} - {{ m.credenciado }}</td>

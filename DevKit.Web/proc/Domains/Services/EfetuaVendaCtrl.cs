@@ -188,7 +188,8 @@ namespace DevKit.Web.Controllers
                     if (parcelas >= 11) v.input_cont_pe.st_valores += p11.ToString().PadLeft(12, '0');
                     if (parcelas >= 12) v.input_cont_pe.st_valores += p12.ToString().PadLeft(12, '0');
 
-                    v.input_cont_pe.st_senha = new BaseVenda().DESCript(senha.PadLeft(8, '*'), "12345678");
+                    if (senha != null)
+                        v.input_cont_pe.st_senha = new BaseVenda().DESCript(senha.PadLeft(8, '*'), "12345678");
 
                     v.Run(db);
 

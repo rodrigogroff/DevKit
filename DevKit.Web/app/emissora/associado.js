@@ -258,12 +258,13 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         {   
             $scope.addDep = false;
 
-            $scope.viewModel.updateCommand = "remveDep";
+            $scope.viewModel.updateCommand = "removeDep";
             $scope.viewModel.anexedEntity = mdl;
 
             Api.Associado.update({ id: id }, $scope.viewModel, function (data) {
                 $scope.newDep = {};
                 loadEntity();
+                toastr.success('Dependente removido!', 'Sucesso');
             },
             function (response) {
                 toastr.error(response.data.message, 'Error');

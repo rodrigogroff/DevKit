@@ -14,7 +14,11 @@ namespace DataModel
 
 			switch (updateCommand)
 			{
-                default: return false;
+                default:
+                    {
+                        resp = "Comando não disponível!";
+                        return false;
+                    }
 
                 case "entity":
 					{

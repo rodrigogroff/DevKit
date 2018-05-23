@@ -45,7 +45,7 @@ namespace DevKit.Web.Controllers
             }
             while (File.Exists(nomeFile));
 
-            sw = new StreamWriter(nomeFile, false, Encoding.ASCII);
+            sw = new StreamWriter(nomeFile, false, Encoding.UTF8);
 
             Registry(" ---- File Created ---- ");
 

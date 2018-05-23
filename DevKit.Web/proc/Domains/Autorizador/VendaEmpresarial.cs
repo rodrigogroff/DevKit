@@ -8,6 +8,7 @@ using DataModel;
 using System.Collections;
 using System.Diagnostics;
 using System.Text;
+using System.IO;
 
 namespace DevKit.Web.Controllers
 {
@@ -101,6 +102,9 @@ namespace DevKit.Web.Controllers
             Registry("-------------------------");
 
             CloseFile();
+
+            if (var_codResp != "0000")
+                File.Move(nomeFile, nomeFile.Replace(".txt", "_falha.txt"));
         }
 
         private bool Authenticate()
@@ -598,6 +602,8 @@ namespace DevKit.Web.Controllers
 
                 var_nu_nsuAtual = l_nsu.i_unique.ToString();
                 var_operacaoCartao = var_operacaoCartaoFail;
+
+                Registry("(f1.1) Nsu criado:" + var_nu_nsuAtual);
             }
 
             Registry("(f2) var_codResp " + var_codResp);
@@ -610,19 +616,23 @@ namespace DevKit.Web.Controllers
                                                                        .Append(DateTime.Now.Day.ToString("00"))
                                                                        .Append(var_nu_nsuAtual.PadLeft(6, '0')).ToString();
 
-            output_cont_pr.st_PAN = cartPortador.st_empresa + cartPortador.st_matricula;
+            if (cartPortador != null)
+                output_cont_pr.st_PAN = cartPortador.st_empresa + cartPortador.st_matricula;
 
             output_cont_pr.st_mesPri = Context.EMPTY;
-            output_cont_pr.st_loja = loj.st_loja;
+
+            if (loj != null)
+                output_cont_pr.st_loja = loj.st_loja;
+
             output_cont_pr.st_nomeCliente = var_nomeCliente;
 
             Registry("(f3) registra a transacao");
 
             var l_tr = new LOG_Transaco
             {
-                fk_terminal = (int)term.i_unique,
-                fk_empresa = (int)emp.i_unique,
-                fk_cartao = (int)cartPortador.i_unique,
+                fk_terminal = term != null ? (int)term.i_unique : (int?)null,
+                fk_empresa = emp != null ? (int)emp.i_unique : (int?)null,
+                fk_cartao = cartPortador != null ? (int)cartPortador.i_unique : (int?)null, 
                 vr_total = Convert.ToInt32(var_vr_total),
                 nu_parcelas = Convert.ToInt32(var_nu_parcelas),
                 nu_nsu = Convert.ToInt32(var_nu_nsuAtual),
@@ -631,7 +641,7 @@ namespace DevKit.Web.Controllers
                 nu_nsuOrig = Convert.ToInt32(var_nu_nsuOrig),
                 en_operacao = var_operacaoCartao,
                 st_msg_transacao = output_st_msg,
-                fk_loja = term.fk_loja,
+                fk_loja = term != null ? (int)term.fk_loja : (int?)null,
                 st_doc = st_doc
             };
 

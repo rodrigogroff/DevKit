@@ -54,6 +54,9 @@ namespace DataModel
 
             LoadCupom(db);
 
+            if (nuTotParcelas == 0)
+                nuTotParcelas = 1;
+
             return this;
 		}
 

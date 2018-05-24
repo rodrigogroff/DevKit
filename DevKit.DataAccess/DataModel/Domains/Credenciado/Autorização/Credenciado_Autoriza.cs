@@ -349,7 +349,7 @@ namespace DataModel
                         tgSituacao = TipoSitAutorizacao.Autorizado,
                         fkAutOriginal = null,
                         nuIndice = 1,
-                        nuTotParcelas = 0,
+                        nuTotParcelas = 1,
                         vrProcedimento = 0,
                         vrParcela = 0,
                         vrCoPart = 0,

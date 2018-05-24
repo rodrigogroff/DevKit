@@ -35,6 +35,7 @@ namespace DataModel
                         associadoMat = "",
                         associadoNome = "",
                         associadoTit = "",
+                        associadoMatSaude = "",
                         credenciado = "",
                         secao = "",
                         tuss = "",
@@ -53,6 +54,7 @@ namespace DataModel
                     "' associadoMat: '" + associadoMat +
                     "' associadoNome: '" + associadoNome +
                     "' associadoTit: '" + associadoTit +
+                    "' associadoMatSaude: '" + associadoMatSaude +
                     "' credenciado: '" + credenciado +
                     "' secao: '" + secao +
                     "' tuss: '" + tuss +
@@ -313,6 +315,8 @@ namespace DataModel
                 cupom.associadoMat = associadoPortador.nuMatricula.ToString();
                 cupom.associadoNome = associadoPortador.stName.ToString();
                 cupom.associadoTit = associadoPortador.nuTitularidade.ToString();
+                cupom.associadoMatSaude = associadoPortador.nuMatSaude != null ? associadoPortador.nuMatSaude.ToString() : "";
+
                 cupom.emissao = dt.ToString("dd/MM/yyyy HH:mm");
                 
                 var tuss = db.TUSS.Where(y => y.nuCodTUSS == _params.tuss).FirstOrDefault();

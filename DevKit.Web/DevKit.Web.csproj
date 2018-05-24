@@ -382,6 +382,7 @@
     <Content Include="images\file.png" />
     <Content Include="images\folder-closed.png" />
     <Content Include="images\folder.png" />
+    <Content Include="images\fumam.png" />
     <Content Include="images\icon-close.png" />
     <Content Include="images\down-arrow.gif" />
     <Content Include="images\icon-arrow-down.png" />

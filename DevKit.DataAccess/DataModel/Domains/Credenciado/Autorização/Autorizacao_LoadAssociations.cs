@@ -95,6 +95,7 @@ namespace DataModel
                 associadoMat = portador.nuMatricula.ToString(),
                 associadoNome = portador.stName,
                 associadoTit = portador.nuTitularidade.ToString(),
+                associadoMatSaude = portador.nuMatSaude != null ? portador.nuMatSaude.ToString() : "",
                 credenciado = cred != null ? cred.stNome : "(NÃO FORNECIDO)",
                 empresa = empresa.stNome,
                 procedimento = tuss != null ? tuss.stProcedimento : "(NÃO FORNECIDO)",

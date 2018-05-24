@@ -183,7 +183,7 @@
                             </tr>
                             <tr height="15px"></tr>
                             <tr height="30px">
-                                <td>Associado: <br /><b>({{cupom.associadoMat}}) {{cupom.associadoNome}}  - Tit.: {{cupom.associadoTit}}</b></td>
+                                <td>Associado: <br /><b>({{cupom.associadoMat}}) {{cupom.associadoNome}}  - Tit.: {{cupom.associadoTit}}<br />Matrícula Saúde: {{cupom.associadoMatSaude}}</b></td>
                                 <td>Credenciado: <br /><b>{{cupom.credenciado}}</b></td>
                                 <td colspan="2">Vínculo/secao: <br /><b>{{cupom.secao}}</b></td>
                             </tr>
@@ -203,16 +203,32 @@
                             </tr>
                             <tr height="15px"></tr>
                         </table>
+
                         <br />
                         <br />
-                        Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />
-                        em minha folha de pagamento, conforme coparticipação de R$ {{cupom.vrCoPart}}
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <img src="../../images/fumam.png" style="max-height:180px" />
+                                </td>
+                                <td width="20px"></td>
+                                <td>
+                                    Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />
+                                    em minha folha de pagamento, conforme coparticipação de R$ {{cupom.vrCoPart}}
+                                    <br />
+                                    <br />
+                                    _______________________________________<br />
+                                    {{cupom.associadoNome}}
+                                    <br />
+                                    <br />
+                                </td>
+                            </tr>
+                        </table>
+
                         <br />
                         <br />
-                        _______________________________________<br />
-                        {{cupom.associadoNome}}
-                        <br />
-                        <br />
+
                         <div align="center">
                             <button class="btn btn-default" ng-click="cancelarGuia()"> Cancelar </button> &nbsp;&nbsp;
                             <button class="btn btn-success" ng-click="imprimirGuia()"> Imprimir </button>

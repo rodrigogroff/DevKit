@@ -207,12 +207,12 @@
                                 <br />
                                 <div class="modal-content" style="color:black">
                                     <legend style="color:black">
-                                        Guia de autorização                                        
+                                        Guia de autorização
                                     </legend>
                                     Validade: {{cupom.validade}}
                                     <br />
                                     <br />
-                                    <table border="1">
+                                    <table border="1" style="background-image:url('../../images/user.png';background-repeat:no-repeat">
                                         <thead>
                                             <tr>
                                                 <td width="300px"></td>
@@ -233,7 +233,7 @@
                                         </tr>
                                         <tr height="15px"></tr>
                                         <tr height="30px">
-                                            <td>Associado: <br /><b>({{cupom.associadoMat}}) {{cupom.associadoNome}}  - Tit.: {{cupom.associadoTit}}</b></td>
+                                            <td>Associado: <br /><b>({{cupom.associadoMat}}) {{cupom.associadoNome}}  - Tit.: {{cupom.associadoTit}}<br />Matrícula Saúde: {{cupom.associadoMatSaude}}</b></td>
                                             <td>Credenciado: <br /><b>{{cupom.credenciado}}</b></td>
                                             <td colspan="2">Vínculo/secao: <br /><b>{{cupom.secao}}</b></td>
                                         </tr>
@@ -255,14 +255,28 @@
                                     </table>
                                     <br />
                                     <br />
-                                    Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />
-                                    em minha folha de pagamento, conforme coparticipação de R$ {{cupom.vrCoPart}}
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <img src="../../images/fumam.png" style="max-height:180px" />
+                                            </td>
+                                            <td width="20px"></td>
+                                            <td>
+                                                Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />
+                                                em minha folha de pagamento, conforme coparticipação de R$ {{cupom.vrCoPart}}
+                                                <br />
+                                                <br />
+                                                _______________________________________<br />
+                                                {{cupom.associadoNome}}
+                                                <br />
+                                                <br />
+                                            </td>
+                                        </tr>
+                                    </table>
+
                                     <br />
                                     <br />
-                                    _______________________________________<br />
-                                    {{cupom.associadoNome}}
-                                    <br />
-                                    <br />
+
                                     <div align="center">
                                         <button class="btn btn-success" ng-click="imprimirGuia()"> Imprimir </button>
                                     </div>

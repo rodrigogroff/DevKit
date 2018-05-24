@@ -2,9 +2,7 @@
 using LinqToDB;
 using SyCrafEngine;
 using System;
-using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace DataModel
 {
@@ -15,17 +13,22 @@ namespace DataModel
 
         public string Export()
         {
-            return "EMP: " + emp + " MAT: " + mat + " CA: " + ca + " SENHA: " + senha + " TITVIA: " + titVia + " TUSS:" + tuss + " CCRED:" + codigoCred;
+            return "EMP: " + emp + 
+                   " MAT: " + mat + 
+                   " CA: " + ca + 
+                   " SENHA: " + senha + 
+                   " TITVIA: " + titVia + 
+                   " TUSS:" + tuss + 
+                   " CCRED:" + codigoCred;
         } 
     }
 
     public class CupomAutorizacao
     {
         public bool ok = false;
-        public string resp = "";
 
-        // campos
-        public string   validade = "",
+        public string   resp = "",
+                        validade = "",
                         empresa = "",
                         emissao = "",
                         autorizacao = "",
@@ -38,6 +41,26 @@ namespace DataModel
                         procedimento = "",
                         vrIntegral = "",
                         vrCoPart = "";
+
+        public string Export()
+        {
+            return  " ok: " + ok +
+                    " resp: '" + resp +
+                    "' validade: '" + validade +
+                    "' empresa: '" + empresa +
+                    "' emissao: '" + emissao +
+                    "' autorizacao: '" + autorizacao +
+                    "' associadoMat: '" + associadoMat +
+                    "' associadoNome: '" + associadoNome +
+                    "' associadoTit: '" + associadoTit +
+                    "' credenciado: '" + credenciado +
+                    "' secao: '" + secao +
+                    "' tuss: '" + tuss +
+                    "' procedimento: '" + procedimento +
+                    "' vrIntegral: '" + vrIntegral +
+                    "' vrCoPart: '" + vrCoPart + 
+                    "'";
+        }
     }
 
     public partial class Credenciado
@@ -49,44 +72,64 @@ namespace DataModel
 
             util.SetupFile();
             util.Registry(" --- AutorizaProcedimento --- ");
+            util.Registry("PARAMS");
+            util.Registry(_params.Export());
+            util.Registry(" ------------------------------------ ");
 
             try
             {
                 var nuTit = Convert.ToInt32(_params.titVia.Substring(0, 2));
                 var nuVia = Convert.ToInt32(_params.titVia.Substring(2, 2));
 
-                var secaoTb = (from e in db.EmpresaSecao
-                               where e.nuEmpresa == _params.emp
-                               select e).
-                               FirstOrDefault();
+                var secaoTb = db.EmpresaSecao.FirstOrDefault(y => y.nuEmpresa == _params.emp);
+
+                util.Registry("db.EmpresaSecao.FirstOrDefault(y => y.nuEmpresa == " + _params.emp );
 
                 if (secaoTb == null)
                 {
                     cupom.ok = false;
-                    cupom.resp = "Empresa inválida";
+                    cupom.resp = "Seção inválida";
+
+                    util.ErrorRegistry(cupom.resp);
+                    util.CloseFile();
+
                     return cupom;
-                }                    
+                }
 
-                var empTb = (from e in db.Empresa
-                             where e.id == secaoTb.fkEmpresa
-                             select e).
-                             FirstOrDefault();
+                var empTb = db.Empresa.FirstOrDefault(y => y.id == secaoTb.fkEmpresa);
 
-                var associadoPortador = (from e in db.Associado
-                                 where e.fkEmpresa == secaoTb.fkEmpresa
-                                 where e.nuMatricula == _params.mat
-                                 where e.nuTitularidade == nuTit
-                                 where e.nuViaCartao == nuVia
-                                 select e).
-                                 FirstOrDefault();
+                util.Registry("db.Empresa.FirstOrDefault(y => y.id == " + secaoTb.fkEmpresa);
+
+                if (empTb == null)
+                {
+                    cupom.ok = false;
+                    cupom.resp = "Empresa inválida";
+
+                    util.ErrorRegistry(cupom.resp);
+                    util.CloseFile();
+
+                    return cupom;
+                }
+
+                var associadoPortador = db.Associado.FirstOrDefault ( e => e.fkEmpresa == secaoTb.fkEmpresa && 
+                                                                      e.nuMatricula == _params.mat && 
+                                                                      e.nuTitularidade == nuTit && 
+                                                                      e.nuViaCartao == nuVia );
+
+                util.Registry("db.Associado.FirstOrDefault(e => e.fkEmpresa == " + secaoTb.fkEmpresa + " && e.nuMatricula == " + _params.mat + " && e.nuTitularidade == " + nuTit + " && e.nuViaCartao == " + nuVia);
 
                 if (associadoPortador == null)
                 {
                     cupom.ok = false;
                     cupom.resp = "Matrícula inválida";
 
+                    util.ErrorRegistry(cupom.resp);
+                    util.CloseFile();
+
                     return cupom;
                 }
+
+                util.Registry("calculaCodigoAcesso");
 
                 var caCalc = util.calculaCodigoAcesso(secaoTb.nuEmpresa.ToString().PadLeft(6, '0'),
                                                         _params.mat.ToString().PadLeft(6, '0'),
@@ -94,28 +137,48 @@ namespace DataModel
                                                         associadoPortador.nuViaCartao.ToString(),
                                                         associadoPortador.stCPF);
 
+                util.Registry("_params.ca != caCalc");
+                util.Registry(_params.ca + " != " + caCalc);
+
                 if (_params.ca != caCalc)
                 {
                     cupom.ok = false;
                     cupom.resp = "Dados do cartão inválidos!";
 
+                    util.ErrorRegistry(cupom.resp);
+                    util.CloseFile();
+
                     return cupom;
                 }
-                    
+
+                util.Registry("associadoPortador.nuTitularidade " + associadoPortador.nuTitularidade);
+
                 if (associadoPortador.nuTitularidade > 1)
                 {
+                    util.Registry("dependente");
+
                     var dadosDep = db.AssociadoDependente.FirstOrDefault(y => y.fkCartao == associadoPortador.id);
 
-                    /*
-                        1)ESPOSA 
-                        2)FILHOS MENORES DE 21 ANOS
-                        3)FILHOS MAIORES DE 21 ESTUDANTES
-                        4)FILHOS MAIORES DE 21 ANOS COM DOENCA PRE EXISTENTES
-                    */
+                    util.Registry("db.AssociadoDependente.FirstOrDefault(y => y.fkCartao == " + associadoPortador.id);
+                    
+                    if (dadosDep == null)
+                    {
+                        cupom.ok = false;
+                        cupom.resp = "Dados do cartão dependente inválidos!";
+
+                        util.ErrorRegistry(cupom.resp);
+                        util.CloseFile();
+
+                        return cupom;
+                    }
 
                     if (dadosDep.dtNasc != null)
                     {
+                        util.Registry("dadosDep.dtNasc " + dadosDep.dtNasc);
+
                         var dtNascDep = Convert.ToDateTime(dadosDep.dtNasc);
+
+                        util.Registry("dadosDep.fkTipoCoberturaDependente " + dadosDep.fkTipoCoberturaDependente);
 
                         switch (dadosDep.fkTipoCoberturaDependente)
                         {
@@ -125,6 +188,9 @@ namespace DataModel
                                     cupom.ok = false;
                                     cupom.resp = "Idade do dependente excede 21!";
 
+                                    util.ErrorRegistry(cupom.resp);
+                                    util.CloseFile();
+
                                     return cupom;
                                 }
                                     
@@ -132,10 +198,14 @@ namespace DataModel
 
                             case 3:
                             case 4:
+
                                 if (DateTime.Now < dtNascDep.AddYears(21))
                                 {
                                     cupom.ok = false;
                                     cupom.resp = "Idade do dependente precisa ser maior que 21!";
+
+                                    util.ErrorRegistry(cupom.resp);
+                                    util.CloseFile();
 
                                     return cupom;
                                 }
@@ -147,47 +217,84 @@ namespace DataModel
                     }
                 }
 
-                var associadoTit = (from e in db.Associado
-                                    where e.fkEmpresa == secaoTb.fkEmpresa
-                                    where e.nuMatricula == _params.mat
-                                    where e.nuTitularidade == 1
-                                    select e).
-                                    FirstOrDefault();
+                var associadoTit = db.Associado.FirstOrDefault(e => e.fkEmpresa == secaoTb.fkEmpresa && 
+                                                                    e.nuMatricula == _params.mat &&
+                                                                    e.nuTitularidade == 1 );
 
-                if (_params.senha != associadoTit.stSenha)
+                util.Registry("db.Associado.FirstOrDefault(e => e.fkEmpresa == " + secaoTb.fkEmpresa + " && e.nuMatricula == " + _params.mat + " && e.nuTitularidade == 1)");
+
+                if (associadoTit == null)
+                {
+                    cupom.ok = false;
+                    cupom.resp = "Titular inválido!";
+
+                    util.ErrorRegistry(cupom.resp);
+                    util.CloseFile();
+
+                    return cupom;
+                }
+
+                util.Registry("_params.senha != associadoTit.stSenha");
+                util.Registry(_params.senha + " != " + associadoTit.stSenha);
+
+                if ( _params.senha != associadoTit.stSenha )
                 {
                     cupom.ok = false;
                     cupom.resp = "Senha inválida!";
 
+                    util.ErrorRegistry(cupom.resp);
+                    util.CloseFile();
+
                     return cupom;
-                }                    
+                }
+
+                util.Registry("associadoPortador.tgStatus: " + (associadoPortador.tgStatus == null ? "NULO" : associadoPortador.tgStatus.ToString()));
 
                 if (associadoPortador.tgStatus == TipoSituacaoCartao.Bloqueado)
                 {
                     cupom.ok = false;
                     cupom.resp = "Cartão bloqueado!";
 
+                    util.ErrorRegistry(cupom.resp);
+                    util.CloseFile();
+
                     return cupom;
                 }
                     
                 var curCred = db.currentCredenciado;
 
+                util.Registry("db.currentCredenciado: " + (db.currentCredenciado == null ? "NULO" : db.currentCredenciado.id.ToString()));
+
+                util.Registry("_params.codigoCred: " + (_params.codigoCred == 0 ? "ZERO" : _params.codigoCred.ToString()));
+
                 if (_params.codigoCred > 0)
+                    curCred = db.Credenciado.FirstOrDefault(y => y.nuCodigo == _params.codigoCred);
+
+                if (curCred == null)
                 {
-                    curCred = db.Credenciado.
-                                Where(y => y.nuCodigo == _params.codigoCred).
-                                FirstOrDefault();
+                    cupom.ok = false;
+                    cupom.resp = "Requer credenciado!";
+
+                    util.ErrorRegistry(cupom.resp);
+                    util.CloseFile();
+
+                    return cupom;
                 }
 
-                if (curCred != null)
-                if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == curCred.id &&
-                                               y.fkEmpresa == secaoTb.fkEmpresa))
+                util.Registry("!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == " + curCred.id + " && y.fkEmpresa == " + secaoTb.fkEmpresa);
+
+                if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == curCred.id && y.fkEmpresa == secaoTb.fkEmpresa))
                 {
                     cupom.ok = false;
                     cupom.resp = "Credenciado não conveniado à empresa " + _params.emp;
 
+                    util.ErrorRegistry(cupom.resp);
+                    util.CloseFile();
+
                     return cupom;
                 }
+                else
+                    util.Registry("Conveniado!");
 
                 // -------------------------------
                 // pronto para cupom!
@@ -201,9 +308,7 @@ namespace DataModel
 
                 cupom.empresa = empTb.stNome;
                 cupom.secao = secaoTb.nuEmpresa.ToString();
-
-                if (curCred != null)
-                    cupom.credenciado = curCred.stNome;
+                cupom.credenciado = curCred.stNome;
 
                 cupom.associadoMat = associadoPortador.nuMatricula.ToString();
                 cupom.associadoNome = associadoPortador.stName.ToString();
@@ -221,6 +326,11 @@ namespace DataModel
                     }));
 
                     cupom.autorizacao = nsu.ToString();
+
+                    cupom.tuss = "(NÃO INFORMADO)";
+                    cupom.procedimento = "(NÃO INFORMADO)";
+                    cupom.vrCoPart = "--------";
+                    cupom.vrIntegral = "--------";
 
                     var idAutOriginal = Convert.ToInt64(db.InsertWithIdentity(new Autorizacao
                     {
@@ -245,14 +355,6 @@ namespace DataModel
                 }
                 else
                 {
-                    if (curCred == null)
-                    {
-                        cupom.ok = false;
-                        cupom.resp = "Requer credenciado!";
-
-                        return cupom;
-                    }
-                                        
                     var proc = db.CredenciadoEmpresaTuss.
                                 Where(y => y.fkCredenciado == curCred.id).
                                 Where(y => y.fkEmpresa == associadoPortador.fkEmpresa).
@@ -263,6 +365,9 @@ namespace DataModel
                     {
                         cupom.ok = false;
                         cupom.resp = "TUSS inválido (" + tuss.nuCodTUSS  + ")";
+
+                        util.ErrorRegistry(cupom.resp);
+                        util.CloseFile();
 
                         return cupom;
                     }
@@ -337,6 +442,7 @@ namespace DataModel
 
                 cupom.ok = true;
 
+                util.Registry( "CUPOM: " + cupom.Export());
                 util.Registry("--- Fim! ");
 
                 util.CloseFile();
@@ -345,10 +451,10 @@ namespace DataModel
             }
             catch (SystemException ex)
             {
-                util.ErrorRegistry(" *ERROR: " + ex.ToString());
-
                 cupom.ok = false;
                 cupom.resp = ex.ToString();
+
+                util.ErrorRegistry(" *ERROR: " + ex.ToString());
 
                 util.CloseFile();
 

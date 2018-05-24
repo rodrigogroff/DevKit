@@ -56,6 +56,11 @@ namespace DataModel
 
         public bool error = false;
 
+        public void ErrorRegistryEmail(string text)
+        {
+            ErrorRegistry(text);
+        }
+
         public void ErrorRegistry(string text)
         {
             error = true;

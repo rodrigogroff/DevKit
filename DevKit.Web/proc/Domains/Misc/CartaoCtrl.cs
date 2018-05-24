@@ -67,8 +67,6 @@ namespace DevKit.Web.Controllers
 
                 associado.LoadAssociationsMini(db);
 
-                util.CloseFile();
-
                 return Ok(associado);
             }
             catch (SystemException ex)
@@ -81,7 +79,8 @@ namespace DevKit.Web.Controllers
                 util.Registry("ca:" + ca);
                 util.Registry("titVia:" + titVia);
                 util.Registry("nuTit:" + nuTit);
-                util.Registry("nuVia:" + nuVia);                
+                util.Registry("nuVia:" + nuVia);      
+                
                 util.ErrorRegistry(" *ERROR: " + ex.ToString());
 
                 util.CloseFile();

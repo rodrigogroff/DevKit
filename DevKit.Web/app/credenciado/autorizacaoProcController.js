@@ -136,7 +136,6 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         printContents += "Validade: " + $scope.cupom.validade + "<br>";
         printContents += "<table border='1'>";
         printContents += "<thead><tr><td width='300px'></td><td width='300px'></td><td width='150px'></td><td width='150px'></td></tr></thead>";
-
         printContents += "<tr height='30px'><td></td ><td><b>" + $scope.cupom.empresa + "</b></td><td colspan='2'>Emissão guia: <b>" + $scope.cupom.emissao + "</b></td></tr >";
         printContents += "<tr height='30px'><td></td><td>Autorização/NSU: <b>" + $scope.cupom.autorizacao + "</b></td><td colspan='2'></td></tr>";
         printContents += "<tr height='15px'></tr>";

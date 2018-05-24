@@ -160,8 +160,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         Api.AutorizaProc.listPage(opcoes, function (data)
         {
             $scope.closeModalSenha();
-            //toastr.success('Procedimento autorizado com sucesso!', 'Autorização');
-
+            $scope.cupom = data;
             $scope.mostraGuia = true;
         },
         function (response) {

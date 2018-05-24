@@ -71,7 +71,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         printContents += "<tr height='30px'><td>" + $scope.cupom.tuss + "</td><td>" + $scope.cupom.procedimento + "</td><td>R$ " + $scope.cupom.vrIntegral + "</td><td>R$ " + $scope.cupom.vrCoPart + "</td></tr>";
         printContents += "<tr height='15px'></tr>";
         printContents += "</table>";
-        printContents += "<br /><br />Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />em minha folha de pagamento, conforme co-participação de R$ " + $scope.cupom.vrCoPart + "<br /><br />_______________________________________<br />" + $scope.cupom.associadoNome + "<br />";
+        printContents += "<br /><br /><table><tr><td><img src='../../images/fumam.png' style='max-height:180px' /></td><td width='20px'></td><td>Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />em minha folha de pagamento, conforme coparticipação de R$ " + $scope.cupom.vrCoPart + "<br /><br />_______________________________________<br />" + $scope.cupom.associadoNome + "<br /><br /></td ></tr ></table >";
 
         var popupWin = window.open('', '_blank', 'width=900,height=600');
         popupWin.document.open();

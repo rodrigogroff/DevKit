@@ -33,8 +33,8 @@
                     <td></td>
                     <td><b>Data Inicial</b></td>
                     <td>
-                        <input type="text" class="form-control input-transparent" ng-model="campos.dtInicial" 
-                               maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.dtInicial"
+                               maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_" />
                     </td>
                     <td></td>
                 </tr>
@@ -42,8 +42,8 @@
                     <td></td>
                     <td><b>Data Final</b></td>
                     <td>
-                        <input type="text" class="form-control input-transparent" ng-model="campos.dtFinal" 
-                               maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.dtFinal"
+                               maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_" />
                     </td>
                     <td></td>
                 </tr>
@@ -78,10 +78,11 @@
                                             <th style="min-width:150px">Empresa</th>
                                             <th style="min-width:120px">Matrícula</th>
                                             <th style="min-width:120px">Titularidade</th>
-                                            <th style="min-width:250px">Associado</th>                                            
+                                            <th style="min-width:250px">Associado</th>
+                                            <th style="min-width:150px">Comprovante</th>
                                         </tr>
                                     </thead>
-                                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <tr data-ng-repeat="mdl in list">
                                         <td>{{ mdl.sdtSolicitacao }}</td>
                                         <td>{{ mdl.stgSituacao }}</td>
                                         <td>{{ mdl.sfkProcedimento }}</td>
@@ -89,6 +90,7 @@
                                         <td>{{ mdl.snuMatriculaAssociado }}</td>
                                         <td>{{ mdl.sfkAssociadoPortadorTit }}</td>
                                         <td>{{ mdl.sfkAssociadoPortador }}</td>
+                                        <td><a ng-click="show(mdl)">Re-imprimir</a></td>
                                     </tr>
                                 </table>
                             </div>
@@ -96,10 +98,84 @@
                     </tr>
                 </table>
             </div>
-        <br />
-        <br />
-        <br />
-    </section>
+            <br />
+            <br />
+            <br />
+
+            <div class="modal-backdrop"
+                 ng-if="mostraGuia == true"
+                 style="background: rgba(55, 55, 55, 0.5 );">
+                <div class="modal-dialog" style="width:1100px">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="modal-content" style="color:black">
+                        <legend style="color:black">
+                            Guia de autorização
+                        </legend>
+                        Validade: {{cupom.validade}}
+                        <br />
+                        <br />
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <td width="300px"></td>
+                                    <td width="300px"></td>
+                                    <td width="150px"></td>
+                                    <td width="150px"></td>
+                                </tr>
+                            </thead>
+                            <tr height="30px">
+                                <td></td>
+                                <td><b>{{cupom.empresa}}</b></td>
+                                <td colspan="2">Emissão guia: <b>{{cupom.emissao}}</b></td>
+                            </tr>
+                            <tr height="30px">
+                                <td></td>
+                                <td>Autorização/NSU: <b>{{cupom.autorizacao}}</b></td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr height="15px"></tr>
+                            <tr height="30px">
+                                <td>Associado: <br /><b>({{cupom.associadoMat}}) {{cupom.associadoNome}}  - Tit.: {{cupom.associadoTit}}</b></td>
+                                <td>Credenciado: <br /><b>{{cupom.credenciado}}</b></td>
+                                <td colspan="2">Vínculo/secao: <br /><b>{{cupom.secao}}</b></td>
+                            </tr>
+                            <tr height="15px"></tr>
+                            <tr height="30px">
+                                <td><b>TUSS</b></td>
+                                <td><b>PROCEDIMENTO</b></td>
+                                <td><b>VALOR INTEGRAL</b></td>
+                                <td><b>VALOR CO-PARTICIPAÇÃO</b></td>
+                            </tr>
+                            <tr height="15px"></tr>
+                            <tr height="30px">
+                                <td>{{cupom.tuss}}</td>
+                                <td>{{cupom.procedimento}}</td>
+                                <td>R$ {{cupom.vrIntegral}}</td>
+                                <td>R$ {{cupom.vrCoPart}}</td>
+                            </tr>
+                            <tr height="15px"></tr>
+                        </table>
+                        <br />
+                        <br />
+                        Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />
+                        em minha folha de pagamento, conforme coparticipação de R$ {{cupom.vrCoPart}}
+                        <br />
+                        <br />
+                        _______________________________________<br />
+                        {{cupom.associadoNome}}
+                        <br />
+                        <br />
+                        <div align="center">
+                            <button class="btn btn-default" ng-click="cancelarGuia()"> Cancelar </button> &nbsp;&nbsp;
+                            <button class="btn btn-success" ng-click="imprimirGuia()"> Imprimir </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
     <br />
     <br />
     <br />

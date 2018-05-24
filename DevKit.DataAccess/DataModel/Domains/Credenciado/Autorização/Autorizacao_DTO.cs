@@ -18,5 +18,7 @@ namespace DataModel
                         sfkAssociado,
                         sfkAssociadoPortador,
                         sfkAssociadoPortadorTit;
+
+        public CupomAutorizacao cupom = new CupomAutorizacao();
     }
 }

@@ -31,123 +31,150 @@ namespace DevKit.Web
 
         public override async System.Threading.Tasks.Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
-			using (var db = new DevKitDB())
-			{
-                var incoming = context.UserName.Split(':');
-                var tipo = incoming[0];
+            var util = new Util();
 
-                if (tipo == "1")
+            util.SetupFile();
+
+            try
+            {
+                util.Registry(" -- System Login -- ");
+                util.Registry(" context.UserName " + context.UserName);
+                util.Registry(" context.UserName " + context.Password);
+
+                using (var db = new DevKitDB())
                 {
-                    #region - credenciado - 
+                    var incoming = context.UserName.Split(':');
+                    var tipo = incoming[0];
 
-                    var codCred = Convert.ToInt64(incoming[1]);
+                    util.Registry(" Tipo: " + tipo);
 
-                    var credenciado = db.Credenciado.
-                                    Where(y => y.nuCodigo == codCred).
-                                    FirstOrDefault();
-
-                    if (credenciado == null)
+                    if (tipo == "1")
                     {
-                        context.SetError("invalid_grant", "Código ou senha inválida!");
-                        return;
-                    }
-                    else
-                    {
-                        if (context.Password.ToUpper() != "SUPERDBA")
+                        util.Registry(" Tipo1 ");
+
+                        #region - credenciado - 
+
+                        var codCred = Convert.ToInt64(incoming[1]);
+
+                        var credenciado = db.Credenciado.
+                                        Where(y => y.nuCodigo == codCred).
+                                        FirstOrDefault();
+
+                        if (credenciado == null)
                         {
-                            if (credenciado.stSenha == null)
-                            {
-                                if (context.Password != credenciado.nuCodigo.ToString())
-                                {
-                                    context.SetError("invalid_grant", "Código ou senha inválida!");
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                if (credenciado.stSenha != context.Password)
-                                {
-                                    context.SetError("invalid_grant", "Código ou senha inválida!");
-                                    return;
-                                }
-                            }
+                            context.SetError("invalid_grant", "Código ou senha inválida!");
+                            return;
                         }
-                        
-                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                        else
+                        {
+                            if (context.Password.ToUpper() != "SUPERDBA")
+                            {
+                                if (credenciado.stSenha == null)
+                                {
+                                    if (context.Password != credenciado.nuCodigo.ToString())
+                                    {
+                                        context.SetError("invalid_grant", "Código ou senha inválida!");
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    if (credenciado.stSenha != context.Password)
+                                    {
+                                        context.SetError("invalid_grant", "Código ou senha inválida!");
+                                        return;
+                                    }
+                                }
+                            }
 
-                        identity.AddClaim(new Claim(ClaimTypes.Name, credenciado.stNome));
-                        identity.AddClaim(new Claim("nuEmpresa", codCred.ToString()));
-                        identity.AddClaim(new Claim("tipo", "1"));
+                            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
-                        var ticket = new AuthenticationTicket(identity, null);
+                            identity.AddClaim(new Claim(ClaimTypes.Name, credenciado.stNome));
+                            identity.AddClaim(new Claim("nuEmpresa", codCred.ToString()));
+                            identity.AddClaim(new Claim("tipo", "1"));
 
-                        context.Validated(ticket);
+                            var ticket = new AuthenticationTicket(identity, null);
+
+                            context.Validated(ticket);
+                        }
+
+                        #endregion
+                    }
+                    else if (tipo == "4")
+                    {
+                        util.Registry(" Tipo4 ");
+
+                        #region - emissora - 
+
+                        var emp = incoming[1];
+                        var login = incoming[2];
+
+                        var usuario = new User();
+
+                        usuario = usuario.Login(db, emp, login, context.Password);
+
+                        if (usuario != null)
+                        {
+                            usuario.dtLastLogin = DateTime.Now;
+
+                            db.Update(usuario);
+
+                            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+
+                            identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
+                            identity.AddClaim(new Claim("nuEmpresa", "(" + usuario.empresa.nuEmpresa + ") " + usuario.empresa.stSigla));
+                            identity.AddClaim(new Claim("tipo", "4"));
+
+                            var ticket = new AuthenticationTicket(identity, null);
+                            context.Validated(ticket);
+                        }
+                        else
+                        {
+                            context.SetError("invalid_grant", "Login ou senha inválida!");
+                            return;
+                        }
+
+                        #endregion
+                    }
+                    else if (tipo == "5")
+                    {
+                        util.Registry(" Tipo5 ");
+
+                        #region - dba - 
+
+                        var login = incoming[1];
+
+                        if (login == "dba" && context.Password.ToUpper() == "SUPERDBA")
+                        {
+                            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+
+                            identity.AddClaim(new Claim(ClaimTypes.Name, login));
+                            identity.AddClaim(new Claim("nuEmpresa", "(Super Usuário Administrador)"));
+                            identity.AddClaim(new Claim("tipo", "5"));
+
+                            var ticket = new AuthenticationTicket(identity, null);
+                            context.Validated(ticket);
+                        }
+                        else
+                        {
+                            context.SetError("invalid_grant", "Login ou senha inválida!");
+                            return;
+                        }
+
+                        #endregion
                     }
 
-                    #endregion
+                    util.Registry("-- FIM! --");
+                    util.CloseFile();
+
+                    await System.Threading.Tasks.Task.FromResult(0);
                 }
-                else if (tipo == "4")
-                {
-                    #region - emissora - 
-
-                    var emp = incoming[1];
-                    var login = incoming[2];
-
-                    var usuario = new User();
-
-                    usuario = usuario.Login(db, emp, login, context.Password);
-
-                    if (usuario != null)
-                    {
-                        usuario.dtLastLogin = DateTime.Now;
-
-                        db.Update(usuario);
-
-                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-
-                        identity.AddClaim(new Claim(ClaimTypes.Name, usuario.stLogin));
-                        identity.AddClaim(new Claim("nuEmpresa", "(" + usuario.empresa.nuEmpresa + ") " + usuario.empresa.stSigla));
-                        identity.AddClaim(new Claim("tipo", "4"));
-
-                        var ticket = new AuthenticationTicket(identity, null);
-                        context.Validated(ticket);
-                    }
-                    else
-                    {
-                        context.SetError("invalid_grant", "Login ou senha inválida!");
-                        return;
-                    }
-
-                    #endregion
-                }
-                else if (tipo == "5")
-                {
-                    #region - dba - 
-
-                    var login = incoming[1];
-
-                    if (login == "dba" && context.Password.ToUpper() =="SUPERDBA")
-                    {
-                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-
-                        identity.AddClaim(new Claim(ClaimTypes.Name, login));
-                        identity.AddClaim(new Claim("nuEmpresa", "(Super Usuário Administrador)"));
-                        identity.AddClaim(new Claim("tipo", "5"));
-
-                        var ticket = new AuthenticationTicket(identity, null);
-                        context.Validated(ticket);
-                    }
-                    else
-                    {
-                        context.SetError("invalid_grant", "Login ou senha inválida!");
-                        return;
-                    }
-
-                    #endregion
-                }
-                
-				await System.Threading.Tasks.Task.FromResult(0);
-			}
+            }
+            catch(System.Exception ex)
+            {
+                util.ErrorRegistry("*ERROR: " + ex.ToString());
+                util.CloseFile();
+            }
 		}
 	}
 }

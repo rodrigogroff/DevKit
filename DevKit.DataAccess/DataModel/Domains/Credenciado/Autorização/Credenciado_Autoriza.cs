@@ -2,7 +2,9 @@
 using LinqToDB;
 using SyCrafEngine;
 using System;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace DataModel
 {
@@ -39,21 +41,14 @@ namespace DataModel
     }
 
     public partial class Credenciado
-    {
-		public CupomAutorizacao AutorizaProcedimento ( DevKitDB db, AutorizaProcedimentoParams _params )
+    {        
+        public CupomAutorizacao AutorizaProcedimento ( DevKitDB db, AutorizaProcedimentoParams _params )
 		{
             var cupom = new CupomAutorizacao();
-
             var util = new Util();
 
-            var log = new LogAutorizaProc
-            {
-                dtLog = DateTime.Now,
-                stLog = _params.Export(),
-                tgErro = false
-            };
-
-            log.id = Convert.ToInt64(db.InsertWithIdentity(log));
+            util.SetupFile();
+            util.Registry(" --- AutorizaProcedimento --- ");
 
             try
             {
@@ -109,7 +104,7 @@ namespace DataModel
                     
                 if (associadoPortador.nuTitularidade > 1)
                 {
-                    var dadosDep = db.AssociadoDependente.Where(y => y.fkCartao == associadoPortador.id).FirstOrDefault();
+                    var dadosDep = db.AssociadoDependente.FirstOrDefault(y => y.fkCartao == associadoPortador.id);
 
                     /*
                         1)ESPOSA 
@@ -184,6 +179,7 @@ namespace DataModel
                                 FirstOrDefault();
                 }
 
+                if (curCred != null)
                 if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == curCred.id &&
                                                y.fkEmpresa == secaoTb.fkEmpresa))
                 {
@@ -205,7 +201,10 @@ namespace DataModel
 
                 cupom.empresa = empTb.stNome;
                 cupom.secao = secaoTb.nuEmpresa.ToString();
-                cupom.credenciado = curCred.stNome;
+
+                if (curCred != null)
+                    cupom.credenciado = curCred.stNome;
+
                 cupom.associadoMat = associadoPortador.nuMatricula.ToString();
                 cupom.associadoNome = associadoPortador.stName.ToString();
                 cupom.associadoTit = associadoPortador.nuTitularidade.ToString();
@@ -227,7 +226,7 @@ namespace DataModel
                     {
                         dtSolicitacao = DateTime.Now,
                         fkAssociado = associadoTit.id,
-                        fkCredenciado = curCred.id,
+                        fkCredenciado = curCred != null ? (long?)curCred.id : null,
                         fkEmpresa = associadoTit.fkEmpresa,
                         fkProcedimento = 0,
                         nuAno = dt.Year,
@@ -246,6 +245,14 @@ namespace DataModel
                 }
                 else
                 {
+                    if (curCred == null)
+                    {
+                        cupom.ok = false;
+                        cupom.resp = "Requer credenciado!";
+
+                        return cupom;
+                    }
+                                        
                     var proc = db.CredenciadoEmpresaTuss.
                                 Where(y => y.fkCredenciado == curCred.id).
                                 Where(y => y.fkEmpresa == associadoPortador.fkEmpresa).
@@ -327,31 +334,26 @@ namespace DataModel
                         }
                     }
                 }
-                
-                log.stLog += " >> OK!";
-
-                db.Update(log);
 
                 cupom.ok = true;
+
+                util.Registry("--- Fim! ");
+
+                util.CloseFile();
 
                 return cupom;
             }
             catch (SystemException ex)
             {
-                log.tgErro = true;
-
-                log.stLog += " >> " + ex.ToString();
-
-                if (log.stLog.Length > 999)
-                    log.stLog = log.stLog.Substring(0, 999);
-
-                db.Update(log);
+                util.ErrorRegistry(" *ERROR: " + ex.ToString());
 
                 cupom.ok = false;
                 cupom.resp = ex.ToString();
 
+                util.CloseFile();
+
                 return cupom;
-            }            
+            }
 		}
 	}
 }

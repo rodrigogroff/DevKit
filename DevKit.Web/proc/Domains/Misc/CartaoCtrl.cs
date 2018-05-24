@@ -16,56 +16,78 @@ namespace DevKit.Web.Controllers
 
             var util = new Util();
 
-            var emp = Request.GetQueryStringValue("emp",0);
-            var mat = Request.GetQueryStringValue("mat",0);
+            var emp = Request.GetQueryStringValue("emp", 0);
+            var mat = Request.GetQueryStringValue("mat", 0);
             var ca = Request.GetQueryStringValue("ca");
-            var titVia = Request.GetQueryStringValue("titVia")?.PadLeft(4,'0');
+            var titVia = Request.GetQueryStringValue("titVia")?.PadLeft(4, '0');
 
             var nuTit = Convert.ToInt32(titVia.Substring(0, 2));
             var nuVia = Convert.ToInt32(titVia.Substring(2, 2));
 
-            var secao = (from e in db.EmpresaSecao
-                         where e.nuEmpresa == emp
-                         select e).
-                       FirstOrDefault();
-
-            var empTb = (from e in db.Empresa where e.id == secao.fkEmpresa select e).FirstOrDefault();
-
-            if (empTb == null)
-                return BadRequest("Empresa inválida");
-
-            var associado = (from e in db.Associado
-                             where e.fkEmpresa == empTb.id
-                             where e.nuMatricula == mat
-                             where e.nuTitularidade == nuTit
-                             where e.nuViaCartao == nuVia
-                             select e).
-                             FirstOrDefault();
-            
-            if (associado == null)
-                return BadRequest("Matrícula inválida");
-
-            var caCalc = util.calculaCodigoAcesso ( secao.nuEmpresa.ToString().PadLeft(6, '0'),
-                                                    mat.ToString().PadLeft(6, '0'),
-                                                    associado.nuTitularidade.ToString(),
-                                                    associado.nuViaCartao.ToString(),
-                                                    associado.stCPF );
-
-            if (ca != caCalc)
-                return BadRequest("Cartão inválido >> " + caCalc);
-
-            if (db.currentCredenciado != null)
+            try
             {
-                if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == db.currentCredenciado.id &&
-                                           y.fkEmpresa == empTb.id))
+                var secao = (from e in db.EmpresaSecao
+                             where e.nuEmpresa == emp
+                             select e).
+                           FirstOrDefault();
+
+                var empTb = (from e in db.Empresa where e.id == secao.fkEmpresa select e).FirstOrDefault();
+
+                if (empTb == null)
+                    return BadRequest("Empresa inválida");
+
+                var associado = (from e in db.Associado
+                                 where e.fkEmpresa == empTb.id
+                                 where e.nuMatricula == mat
+                                 where e.nuTitularidade == nuTit
+                                 where e.nuViaCartao == nuVia
+                                 select e).
+                                 FirstOrDefault();
+
+                if (associado == null)
+                    return BadRequest("Matrícula inválida");
+
+                var caCalc = util.calculaCodigoAcesso(secao.nuEmpresa.ToString().PadLeft(6, '0'),
+                                                        mat.ToString().PadLeft(6, '0'),
+                                                        associado.nuTitularidade.ToString(),
+                                                        associado.nuViaCartao.ToString(),
+                                                        associado.stCPF);
+
+                if (ca != caCalc)
+                    return BadRequest("Cartão inválido >> " + caCalc);
+
+                if (db.currentCredenciado != null)
                 {
-                    return BadRequest("Credenciado não conveniado à empresa " + emp);
+                    if (!db.CredenciadoEmpresa.Any(y => y.fkCredenciado == db.currentCredenciado.id &&
+                                               y.fkEmpresa == empTb.id))
+                    {
+                        return BadRequest("Credenciado não conveniado à empresa " + emp);
+                    }
                 }
+
+                associado.LoadAssociationsMini(db);
+
+                util.CloseFile();
+
+                return Ok(associado);
             }
+            catch (SystemException ex)
+            {
+                util.SetupFile();
 
-            associado.LoadAssociationsMini(db);
+                util.Registry("---- CartaoCtrl.cs ----");
+                util.Registry("emp:" + emp);
+                util.Registry("mat:" + mat);
+                util.Registry("ca:" + ca);
+                util.Registry("titVia:" + titVia);
+                util.Registry("nuTit:" + nuTit);
+                util.Registry("nuVia:" + nuVia);                
+                util.ErrorRegistry(" *ERROR: " + ex.ToString());
 
-            return Ok( associado );
+                util.CloseFile();
+
+                return BadRequest("Erro interno");
+            }
         }
 	}
 }

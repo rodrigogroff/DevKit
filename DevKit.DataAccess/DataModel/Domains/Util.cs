@@ -1,9 +1,89 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace DataModel
 {
     public class Util
     {
+        private string __nomeFile;
+
+        private StreamWriter __sw;
+
+        public string SetupFile()
+        {
+            string dir = "c:\\saude_logs";
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            DateTime dt = DateTime.Now;
+
+            dir += "\\" + dt.Year;
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            dir += "\\" + dt.Month;
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            dir += "\\" + dt.Day;
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            do
+            {
+                __nomeFile = dir + "\\" + GetRandomString(20) + ".txt";
+            }
+            while (File.Exists(__nomeFile));
+
+            __sw = new StreamWriter(__nomeFile, false, Encoding.UTF8);
+
+            Registry(" ---- File Created ---- ");
+
+            return dir;
+        }
+
+        public void Registry(string text)
+        {
+            __sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff") + " " + text);
+            __sw.Flush();
+        }
+
+        public bool error = false;
+
+        public void ErrorRegistry(string text)
+        {
+            error = true;
+            __sw.WriteLine("-------------------------------------------------------");
+            __sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff") + " " + text);
+            __sw.WriteLine("-------------------------------------------------------");
+            __sw.Flush();
+        }
+
+        public void CloseFile()
+        {
+            __sw.Close();
+
+            if (error)
+                File.Move(__nomeFile, __nomeFile.Replace(".txt", "_falha.txt"));
+        }
+
+        private string GetRandomString(int length)
+        {
+            var rand = new Random();
+            var ret = "";
+
+            for (int i = 0; i < length; i++)
+                ret += rand.Next(0, 9);
+
+            return ret;
+        }
+
         // calculo codigo de acesso para cartoes convenio
         public string calculaCodigoAcesso(string empresa, string matricula, string titularidade, string via, string cpf)
         {

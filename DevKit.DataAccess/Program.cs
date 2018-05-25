@@ -30,8 +30,6 @@ namespace GetStarted
             return Convert.ToInt64(vr_proc);
         }
 
-        #endregion
-
         static string LimpaCampo (string origem)
         {
             var resp = "";
@@ -70,6 +68,8 @@ namespace GetStarted
             return Convert.ToInt64(antes + depois);
         }
 
+        #endregion
+
         static void Main(string[] args)
         {
             try
@@ -83,6 +83,77 @@ namespace GetStarted
 
                     switch (opt)
                     {
+                        default:
+                        case "ajusta_cart_deps_dtNasc":
+                            {
+                                Console.WriteLine("ajusta_cart_deps_dtNasc");
+
+                                int t = 0;
+
+                                foreach (var item in db.AssociadoDependente.
+                                                OrderBy(y => y.fkAssociado).
+                                                ThenBy(y => y.id).
+                                                ToList())
+                                {
+                                    var assoc = db.Associado.FirstOrDefault(y => y.id == item.fkCartao);
+
+                                    if (assoc != null)
+                                        if (item.dtNasc != null)
+                                        {
+                                            assoc.nuDayAniversary = Convert.ToDateTime(item.dtNasc).Day;
+                                            assoc.nuMonthAniversary = Convert.ToDateTime(item.dtNasc).Month;
+                                            assoc.nuYearBirth = Convert.ToDateTime(item.dtNasc).Year;
+
+                                            db.Update(assoc);
+                                            t++;
+                                        }
+                                }
+
+                                Console.WriteLine("updates " + t);
+
+                                break;
+                            }
+                                                            
+                        case "ajusta_cart_deps":
+                            {
+                                Console.WriteLine("ajusta_cart_deps");
+
+                                var lst = db.AssociadoDependente.
+                                                OrderBy(y=> y.fkAssociado).
+                                                ThenBy(y=> y.id).
+                                                ToList();
+
+                                int currentTit = 0, currentMat = 0, updates = 0;
+
+                                foreach (var item in lst)
+                                {
+                                    var assoc = db.Associado.FirstOrDefault(y => y.id == item.fkAssociado);
+
+                                    if (currentMat == 0 || currentMat != assoc.nuMatricula)
+                                    {
+                                        currentMat = (int)assoc.nuMatricula;
+                                        currentTit = 2;
+                                    }
+
+                                    var cartDep = db.Associado.FirstOrDefault(y => y.nuMatricula == currentMat &&
+                                                                                    y.nuTitularidade == currentTit &&
+                                                                                    y.fkEmpresa == assoc.fkEmpresa &&
+                                                                                    y.fkSecao == assoc.fkSecao);
+
+                                    if (cartDep != null)
+                                    {
+                                        item.fkCartao = cartDep.id;
+                                        db.Update(item);
+                                        currentTit++;
+                                        updates++;
+                                    }
+                                }
+
+                                Console.WriteLine("updates " + updates);
+
+                                break;
+                            }
+
                         case "pacote":
                             {
                                 var excel = new XLWorkbook("C:\\carga\\ValoresPacote.xlsx");

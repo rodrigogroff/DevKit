@@ -78,7 +78,10 @@ namespace DataModel
 
             foreach (var item in tmpLst)
             {
-                item.snuTit = db.Associado.Where(y => y.id == item.fkCartao).FirstOrDefault().nuTitularidade.ToString();
+                var cartDep = db.Associado.Where(y => y.id == item.fkCartao).FirstOrDefault();
+
+                if (cartDep != null)
+                    item.snuTit = cartDep.nuTitularidade.ToString();
 
                 if (item.fkTipoCoberturaDependente != null)
                     item.sfkTipoCoberturaDependente = tmpLstTipoCob.

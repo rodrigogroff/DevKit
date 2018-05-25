@@ -63,15 +63,11 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         printContents += "<thead><tr><td width='300px'></td><td width='300px'></td><td width='150px'></td><td width='150px'></td></tr></thead>";
         printContents += "<tr height='30px'><td></td ><td><b>" + $scope.cupom.empresa + "</b></td><td colspan='2'>Emissão guia: <b>" + $scope.cupom.emissao + "</b></td></tr >";
         printContents += "<tr height='30px'><td></td><td>Autorização/NSU: <b>" + $scope.cupom.autorizacao + "</b></td><td colspan='2'></td></tr>";
-        printContents += "<tr height='15px'></tr>";
         printContents += "<tr height='30px'><td>Associado: <br /><b>(" + $scope.cupom.associadoMat + ") " + $scope.cupom.associadoNome + " - Tit.: " + $scope.cupom.associadoTit + "</b></td><td>Credenciado: <br /><b>" + $scope.cupom.credenciado + "</b></td><td colspan='2'>Vínculo/secao: <br /><b>" + $scope.cupom.secao + "</b></td></tr>";
-        printContents += "<tr height='15px'></tr>";
         printContents += "<tr height='30px'><td><b>TUSS</b></td><td><b>PROCEDIMENTO</b></td><td><b>VALOR INTEGRAL</b></td><td><b>VALOR CO-PARTICIPAÇÃO</b></td></tr>";
-        printContents += "<tr height='15px'></tr>";
         printContents += "<tr height='30px'><td>" + $scope.cupom.tuss + "</td><td>" + $scope.cupom.procedimento + "</td><td>R$ " + $scope.cupom.vrIntegral + "</td><td>R$ " + $scope.cupom.vrCoPart + "</td></tr>";
-        printContents += "<tr height='15px'></tr>";
         printContents += "</table>";
-        printContents += "<br /><br /><table><tr><td><img src='../../images/fumam.png' style='max-height:180px' /></td><td width='20px'></td><td>Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />em minha folha de pagamento, conforme coparticipação de R$ " + $scope.cupom.vrCoPart + "<br /><br />_______________________________________<br />" + $scope.cupom.associadoNome + "<br /><br /></td ></tr ></table >";
+        printContents += "<br /><br /><table><tr><td><img src='../../images/fumam.png' style='max-height:150px' /></td><td width='20px'></td><td>Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />em minha folha de pagamento, conforme coparticipação de R$ " + $scope.cupom.vrCoPart + "<br /><br /><br /><br />_______________________________________<br />" + $scope.cupom.associadoNome + "<br /><br /></td ></tr ></table >";
 
         var popupWin = window.open('', '_blank', 'width=900,height=600');
         popupWin.document.open();

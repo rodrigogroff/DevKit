@@ -30,7 +30,7 @@ namespace DataModel
             sfkEmpresa = db.EmpresaSecao.Where(y => y.id == assoc.fkSecao).Select (y=> y.nuEmpresa + " - " + y.stDesc).FirstOrDefault();
 
             if (proc != null)
-                sfkProcedimento = proc.nuCodTUSS + " - " + proc.stProcedimento;
+                sfkProcedimento = proc.nuCodTUSS.ToString();// + " - " + proc.stProcedimento;
 
             sfkAssociado = assoc.stName;
 

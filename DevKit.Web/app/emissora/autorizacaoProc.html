@@ -289,36 +289,46 @@
                             <td>Autorização/NSU: <b>{{cupom.autorizacao}}</b></td>
                             <td colspan="2"></td>
                         </tr>
-                        <tr height="15px"></tr>
                         <tr height="30px">
-                            <td>Associado: <br /><b>({{cupom.associadoMat}}) {{cupom.associadoNome}}  - Tit.: {{cupom.associadoTit}}</b></td>
+                            <td>Associado: <br /><b>({{cupom.associadoMat}}) {{cupom.associadoNome}}  - Tit.: {{cupom.associadoTit}}<br />Matrícula Saúde: {{cupom.associadoMatSaude}}</b></td>
                             <td>Credenciado: <br /><b>{{cupom.credenciado}}</b></td>
                             <td colspan="2">Vínculo/secao: <br /><b>{{cupom.secao}}</b></td>
                         </tr>
-                        <tr height="15px"></tr>
                         <tr height="30px">
                             <td><b>TUSS</b></td>
                             <td><b>PROCEDIMENTO</b></td>
                             <td><b>VALOR INTEGRAL</b></td>
                             <td><b>VALOR CO-PARTICIPAÇÃO</b></td>
                         </tr>
-                        <tr height="15px"></tr>
                         <tr height="30px">
                             <td>{{cupom.tuss}}</td>
                             <td>{{cupom.procedimento}}</td>
                             <td>R$ {{cupom.vrIntegral}}</td>
                             <td>R$ {{cupom.vrCoPart}}</td>
                         </tr>
-                        <tr height="15px"></tr>
                     </table>
                     <br />
-                    <br />
-                    Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />
-                    em minha folha de pagamento, conforme coparticipação de R$ {{cupom.vrCoPart}}
-                    <br />
-                    <br />
-                    _______________________________________<br />
-                    {{cupom.associadoNome}}
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="../../images/fumam.png" style="max-height:150px" />
+                            </td>
+                            <td width="20px"></td>
+                            <td>
+                                Através do presente reconheço expressamente que possuo esta autorização para ser descontado <br />
+                                em minha folha de pagamento, conforme coparticipação de R$ {{cupom.vrCoPart}}
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                _______________________________________<br />
+                                {{cupom.associadoNome}}
+                                <br />
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+
                     <br />
                     <br />
                     <div align="center">

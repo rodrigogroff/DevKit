@@ -12,11 +12,11 @@ namespace DataModel
 		public Autorizacao LoadAssociations(DevKitDB db)
 		{
             var proc = db.TUSS.Where(y => y.id == fkProcedimento).FirstOrDefault();
-            var assoc = db.Associado.Where(y => y.id == fkAssociado).FirstOrDefault();
+            var assoc = db.Associado.Where(y => y.id == this.fkAssociado).FirstOrDefault();
             var assocPortador = db.Associado.Where(y => y.id == fkAssociadoPortador).FirstOrDefault();
             var cred = db.Credenciado.Where(y => y.id == fkCredenciado).FirstOrDefault();
 
-            if (cred != null )
+            if (cred != null)
             {
                 var espec = db.Especialidade.Where(y => y.id == cred.fkEspecialidade).FirstOrDefault();
                 sfkEspecialidade = espec.stNome;

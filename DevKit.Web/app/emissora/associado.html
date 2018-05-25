@@ -313,7 +313,7 @@
                     </div>
                 </tab>
 
-                <tab heading="Dependentes [{{viewModel.dependentes.length}}]" ng-if="viewModel.id != undefined">
+                <tab heading="Dependentes [{{viewModel.dependentes.length}}]" ng-if="viewModel.id != undefined && viewModel.nuTitularidade == 1">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
                             <tr height="12px"></tr>
@@ -422,7 +422,7 @@
                     </div>
                 </tab>
 
-                <tab heading="Telefones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined">
+                <tab heading="Telefones [{{viewModel.phones.length}}]" ng-if="viewModel.id != undefined && viewModel.nuTitularidade == 1">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
                             <tr height="12px"></tr>
@@ -533,7 +533,8 @@
                         </table>
                     </div>
                 </tab>
-                <tab heading="Emails [{{viewModel.emails.length}}]" ng-if="viewModel.id != undefined">
+
+                <tab heading="Emails [{{viewModel.emails.length}}]" ng-if="viewModel.id != undefined && viewModel.nuTitularidade == 1">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
                             <tr height="12px"></tr>
@@ -630,7 +631,8 @@
                         </table>
                     </div>
                 </tab>
-                <tab heading="Endereços [{{viewModel.enderecos.length}}]" ng-if="viewModel.id != undefined">
+
+                <tab heading="Endereços [{{viewModel.enderecos.length}}]" ng-if="viewModel.id != undefined && viewModel.nuTitularidade == 1">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
                             <tr height="12px"></tr>
@@ -804,6 +806,7 @@
                         </table>
                     </div>
                 </tab>
+
                 <tab heading="Auditoria" ng-if="viewModel.id != undefined && auditLogView == true">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table width="100%">
@@ -839,6 +842,7 @@
                         </table>
                     </div>
                 </tab>
+
             </tabset>
             <br />
             <br />

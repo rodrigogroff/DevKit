@@ -121,7 +121,7 @@
                                             <th style="min-width:150px">Especialidade</th>
                                             <th style="min-width:90px">Parcela</th>
                                             <th style="min-width:90px">Mês / Ano</th>
-                                            <th style="min-width:300px">TUSS - Procedimento</th>
+                                            <!--<th style="min-width:300px">TUSS - Procedimento</th>-->
                                             <th style="min-width:150px">Comprovante</th>
                                         </tr>
                                     </thead>
@@ -134,7 +134,7 @@
                                         <td>{{ mdl.sfkEspecialidade }}</td>
                                         <td>{{ mdl.nuIndice }} / {{ mdl.nuTotParcelas }}</td>
                                         <td>{{ mdl.nuMes }} / {{ mdl.nuAno }}</td>
-                                        <td>{{ mdl.sfkProcedimento }}</td>
+                                        <!--<td>{{ mdl.sfkProcedimento }}</td>-->
                                         <td><a ng-click="show(mdl)">Re-imprimir</a></td>
                                     </tr>
                                 </table>
@@ -152,8 +152,6 @@
                  ng-if="mostraGuia == true"
                  style="background: rgba(55, 55, 55, 0.5 );">
                 <div class="modal-dialog" style="width:1100px">
-                    <br />
-                    <br />
                     <br />
                     <div class="modal-content" style="color:black">
                         <legend style="color:black">

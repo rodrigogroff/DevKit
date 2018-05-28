@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System;
 using System.Linq;
 using LinqToDB;
-using SyCrafEngine;
 
 namespace DevKit.Web.Controllers
 {
@@ -158,7 +156,7 @@ namespace DevKit.Web.Controllers
                     }
                 }
 
-                if (Convert.ToInt32(terminal) == 6101)
+                //if (Convert.ToInt32(terminal) == 6101)
                 {
                     #region - autorizador interno -
 
@@ -234,114 +232,114 @@ namespace DevKit.Web.Controllers
 
                     #endregion
                 }
-                else
-                {
-                    #region - venda por legado - 
+                //else
+                //{
+                //    #region - venda por legado - 
 
-                    var sc = new SocketConvey();
+                //    var sc = new SocketConvey();
 
-                    var sck = sc.connectSocket(cnet_server, cnet_port);
+                //    var sck = sc.connectSocket(cnet_server, cnet_port);
 
-                    if (sck == null)
-                        return BadRequest("Falha de comunicação com servidor (0x1)");
+                //    if (sck == null)
+                //        return BadRequest("Falha de comunicação com servidor (0x1)");
 
-                    // #############################################################
-                    // #############################################################
+                //    // #############################################################
+                //    // #############################################################
 
-                    // Venda
+                //    // Venda
 
-                    // #############################################################
-                    // #############################################################
+                //    // #############################################################
+                //    // #############################################################
 
-                    strMessage = MontaVendaDigitada(titularidadeFinal);
+                //    strMessage = MontaVendaDigitada(titularidadeFinal);
 
-                    if (!sc.socketEnvia(sck, strMessage))
-                    {
-                        sck.Close();
-                        return BadRequest("Falha de comunicação com servidor (0x2)");
-                    }
+                //    if (!sc.socketEnvia(sck, strMessage))
+                //    {
+                //        sck.Close();
+                //        return BadRequest("Falha de comunicação com servidor (0x2)");
+                //    }
 
-                    retorno = sc.socketRecebe(sck);
+                //    retorno = sc.socketRecebe(sck);
 
-                    if (retorno.Length < 6)
-                    {
-                        sck.Close();
-                        return BadRequest("Falha de comunicação com servidor (0x3)");
-                    }
+                //    if (retorno.Length < 6)
+                //    {
+                //        sck.Close();
+                //        return BadRequest("Falha de comunicação com servidor (0x3)");
+                //    }
 
-                    var codResp = retorno.Substring(2, 4);
+                //    var codResp = retorno.Substring(2, 4);
 
-                    if (codResp != "0000")
-                    {
-                        sck.Close();
+                //    if (codResp != "0000")
+                //    {
+                //        sck.Close();
 
-                        if (codResp == "0505")
-                        {
-                            return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
-                        }
-                        else if (codResp == "4343")
-                        {
-                            var numErros = (from e in db.T_Cartao
-                                            where e.i_unique == associadoPrincipal.i_unique
-                                            select e.nu_senhaErrada).
-                                            FirstOrDefault();
+                //        if (codResp == "0505")
+                //        {
+                //            return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                //        }
+                //        else if (codResp == "4343")
+                //        {
+                //            var numErros = (from e in db.T_Cartao
+                //                            where e.i_unique == associadoPrincipal.i_unique
+                //                            select e.nu_senhaErrada).
+                //                            FirstOrDefault();
 
-                            if (numErros == 3)
-                            {
-                                // ultima!
-                                return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
-                            }
-                            else if (numErros >= 4)
-                            {
-                                return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
-                            }
-                            else
-                            {
-                                var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
+                //            if (numErros == 3)
+                //            {
+                //                // ultima!
+                //                return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
+                //            }
+                //            else if (numErros >= 4)
+                //            {
+                //                return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                //            }
+                //            else
+                //            {
+                //                var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
 
-                                return BadRequest("(43) Senha inválida! " + tentativas);
-                            }
-                        }
-                        else
-                            return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
-                    }
+                //                return BadRequest("(43) Senha inválida! " + tentativas);
+                //            }
+                //        }
+                //        else
+                //            return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+                //    }
 
-                    nsu_retorno = ObtemNsuRetorno(retorno);
+                //    nsu_retorno = ObtemNsuRetorno(retorno);
 
-                    // #############################################################
-                    // #############################################################
+                //    // #############################################################
+                //    // #############################################################
 
-                    // Confirmação
+                //    // Confirmação
 
-                    // #############################################################
-                    // #############################################################
+                //    // #############################################################
+                //    // #############################################################
 
-                    strMessage = MontaConfirmacao(titularidadeFinal);
+                //    strMessage = MontaConfirmacao(titularidadeFinal);
 
-                    if (!sc.socketEnvia(sck, strMessage))
-                    {
-                        sck.Close();
-                        return BadRequest("Falha de comunicação com servidor (0x4)");
-                    }
+                //    if (!sc.socketEnvia(sck, strMessage))
+                //    {
+                //        sck.Close();
+                //        return BadRequest("Falha de comunicação com servidor (0x4)");
+                //    }
 
-                    retorno = sc.socketRecebe(sck);
+                //    retorno = sc.socketRecebe(sck);
 
-                    sck.Close();
+                //    sck.Close();
 
-                    if (retorno.Length < 6)
-                        return BadRequest("Falha de comunicação com servidor (0x5)");
+                //    if (retorno.Length < 6)
+                //        return BadRequest("Falha de comunicação com servidor (0x5)");
 
-                    codResp = retorno.Substring(2, 4);
+                //    codResp = retorno.Substring(2, 4);
 
-                    if (codResp != "0000")
-                        return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
+                //    if (codResp != "0000")
+                //        return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
 
-                    CleanCache(db, CacheTags.associado, idCartao);
+                //    CleanCache(db, CacheTags.associado, idCartao);
 
-                    sck.Close();
+                //    sck.Close();
                     
-                    #endregion
-                }
+                //    #endregion
+                //}
 
                 var cupom = new Cupom().
                        Venda(db,
@@ -353,7 +351,6 @@ namespace DevKit.Web.Controllers
                                (int)parcelas,
                                valor,
                                p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
-
 
                 // -----------------------------------------
                 // seta tipo de venda (mensagem)
@@ -370,15 +367,13 @@ namespace DevKit.Web.Controllers
 
                 db.Update(ltrUltimo);
 
-                // -----------------------------------------
-                // zera tentativas erradas de senha, pois teve sucesso
-                // -----------------------------------------
+                //// -----------------------------------------
+                //// zera tentativas erradas de senha, pois teve sucesso
+                //// -----------------------------------------
 
-                var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == ltrUltimo.fk_cartao);
-
-                cart.nu_senhaErrada = 0;
-
-                db.Update(cart);
+                //var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == ltrUltimo.fk_cartao);
+                //cart.nu_senhaErrada = 0;
+                //db.Update(cart);
 
                 // -----------------------------------------
                 // encerra
@@ -396,77 +391,77 @@ namespace DevKit.Web.Controllers
             }
         }
 
-        public string MontaVendaDigitada(int titularidade)
-        {
-            var reg = "09"; 
+        //public string MontaVendaDigitada(int titularidade)
+        //{
+        //    var reg = "09"; 
                 
-            if (senha != null)
-                reg += "CECE";
-            else
-                reg += "DICE";
+        //    if (senha != null)
+        //        reg += "CECE";
+        //    else
+        //        reg += "DICE";
 
-            reg += terminal.PadRight(8, ' ');
+        //    reg += terminal.PadRight(8, ' ');
 
-            reg += "000000";
+        //    reg += "000000";
 
-            reg += empresa.PadLeft(6, '0');
-            reg += matricula.PadLeft(6, '0');
-            reg += titularidade.ToString().PadLeft(2, '0');
-            reg += "       ";
+        //    reg += empresa.PadLeft(6, '0');
+        //    reg += matricula.PadLeft(6, '0');
+        //    reg += titularidade.ToString().PadLeft(2, '0');
+        //    reg += "       ";
 
-            if (senha != null)
-            {
-                reg += new Criptografia().DESCript(senha);
-            }
-            else
-            {
-                reg += "            ";
-                reg += codAcesso;
-            }
+        //    if (senha != null)
+        //    {
+        //        reg += new Criptografia().DESCript(senha);
+        //    }
+        //    else
+        //    {
+        //        reg += "            ";
+        //        reg += codAcesso;
+        //    }
             
-            reg += valor.ToString().PadLeft(12, '0');
-            reg += parcelas.ToString().PadLeft(2, '0');
+        //    reg += valor.ToString().PadLeft(12, '0');
+        //    reg += parcelas.ToString().PadLeft(2, '0');
             
-            string valores = "";
+        //    string valores = "";
 
-            if (parcelas >= 1) valores += p1.ToString().PadLeft(12, '0');
-            if (parcelas >= 2) valores += p2.ToString().PadLeft(12, '0');
-            if (parcelas >= 3) valores += p3.ToString().PadLeft(12, '0');
-            if (parcelas >= 4) valores += p4.ToString().PadLeft(12, '0');
-            if (parcelas >= 5) valores += p5.ToString().PadLeft(12, '0');
-            if (parcelas >= 6) valores += p6.ToString().PadLeft(12, '0');
-            if (parcelas >= 7) valores += p7.ToString().PadLeft(12, '0');
-            if (parcelas >= 8) valores += p8.ToString().PadLeft(12, '0');
-            if (parcelas >= 9) valores += p9.ToString().PadLeft(12, '0');
-            if (parcelas >= 10) valores += p10.ToString().PadLeft(12, '0');
-            if (parcelas >= 11) valores += p11.ToString().PadLeft(12, '0');
-            if (parcelas >= 12) valores += p12.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 1) valores += p1.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 2) valores += p2.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 3) valores += p3.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 4) valores += p4.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 5) valores += p5.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 6) valores += p6.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 7) valores += p7.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 8) valores += p8.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 9) valores += p9.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 10) valores += p10.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 11) valores += p11.ToString().PadLeft(12, '0');
+        //    if (parcelas >= 12) valores += p12.ToString().PadLeft(12, '0');
 
-            reg += valores;
+        //    reg += valores;
 
-            return reg;
-        }
+        //    return reg;
+        //}
 
         public string ObtemNsuRetorno(string message)
         {
             return message.Substring(7,6).TrimStart('0');
         }
 
-        public string MontaConfirmacao(int titularidade)
-        {
-            var reg = "09CECC";
+        //public string MontaConfirmacao(int titularidade)
+        //{
+        //    var reg = "09CECC";
 
-            reg += terminal.PadRight(8, ' ');
+        //    reg += terminal.PadRight(8, ' ');
 
-            reg += "000000";
+        //    reg += "000000";
 
-            reg += empresa.PadLeft(6, '0');
-            reg += matricula.PadLeft(6, '0');
-            reg += titularidade.ToString().PadLeft(2, '0');
-            reg += "       ";
-            reg += nsu_retorno;
+        //    reg += empresa.PadLeft(6, '0');
+        //    reg += matricula.PadLeft(6, '0');
+        //    reg += titularidade.ToString().PadLeft(2, '0');
+        //    reg += "       ";
+        //    reg += nsu_retorno;
             
-            return reg.PadRight(100, ' ');
-        }
+        //    return reg.PadRight(100, ' ');
+        //}
     }
 }

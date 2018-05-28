@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using System;
+﻿using System;
 using System.Linq;
 using LinqToDB;
-using SyCrafEngine;
 using DataModel;
 using System.Collections;
 using System.Diagnostics;
@@ -22,30 +19,14 @@ namespace DevKit.Web.Controllers
 
         public LOG_Transaco var_ltr = new LOG_Transaco();
         public T_Cartao cartPortador = new T_Cartao();
-        
-        public string output_st_msg = "",                      
+
+        public string output_st_msg = "",
                       var_vr_total = "0",
-                      var_nu_parcelas = "0",
                       var_operacaoCartao = "0",
                       var_operacaoCartaoFail = "0",
-                      var_nu_nsuAtual = "0",
-                      var_nu_nsuOrig = "0",
-                      var_nu_nsuEntidade = "0",
-                      var_nu_nsuEntOrig = "0",
-                      var_codResp = "0",
-                      var_nomeCliente = "",
-                      st_doc = "";
+                      var_codResp = "0";
 
-        public DateTime var_dt_transacao;
-
-        public long   input_st_nsu,
-                      vr_dispMes, 
-                      vr_dispTot,
-                      vr_valor;
-
-        public bool   IsDigitado = false;
-        
-        public ArrayList lstParcs = new ArrayList();
+        public long input_st_nsu;
 
         #endregion
 
@@ -130,6 +111,7 @@ namespace DevKit.Web.Controllers
                 if (var_ltr == null)
                 {
                     output_st_msg = "Nsu (" + input_st_nsu + ") inválido";
+                    var_codResp = "1212";
                     return false;
                 }
             }
@@ -145,6 +127,7 @@ namespace DevKit.Web.Controllers
                 if (cartPortador == null)
                 {
                     output_st_msg = "Cartão inválido";
+                    var_codResp = "1213";
                     return false;
                 }
             }
@@ -205,7 +188,8 @@ namespace DevKit.Web.Controllers
 
             if (emp == null)
             {
-
+                output_st_msg = "Erro interno";
+                var_codResp = "1301";
                 return false;
             }
 
@@ -215,7 +199,8 @@ namespace DevKit.Web.Controllers
 
             if (term == null)
             {
-
+                output_st_msg = "Erro interno";
+                var_codResp = "1302";
                 return false;
             }
 
@@ -225,7 +210,8 @@ namespace DevKit.Web.Controllers
 
             if (loj == null)
             {
-
+                output_st_msg = "Erro interno";
+                var_codResp = "1303";
                 return false;
             }
 
@@ -254,6 +240,27 @@ namespace DevKit.Web.Controllers
 
             if (dep_f != null)
                 output_cont_pr.st_nomeCliente = dep_f.st_nome;
+
+            // ---------------------------------------------
+            // marca a ultima pendente como confirmada
+            // ---------------------------------------------
+            {
+                var ultCart = db.T_Cartao.FirstOrDefault(y => var_ltr.fk_cartao == y.i_unique);
+
+                var ultLtr = (  from e in db.LOG_Transacoes
+                                join ca in db.T_Cartao on (int) e.fk_cartao equals ca.i_unique
+                                where ca.st_matricula == ultCart.st_matricula // qqer catão (dep ou tit)
+                                where e.tg_confirmada.ToString() == TipoConfirmacao.Pendente
+                                where e.i_unique < var_ltr.i_unique
+                                orderby e.i_unique descending
+                                select e).FirstOrDefault();
+
+                if (ultLtr != null)
+                {
+                    ultLtr.tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada);
+                    db.Update(ultLtr);
+                }
+            }
 
             st.Stop();
 

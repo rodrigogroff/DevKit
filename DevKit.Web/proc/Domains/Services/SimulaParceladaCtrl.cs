@@ -58,6 +58,9 @@ namespace DevKit.Web.Controllers
 
             long iValor = ObtemValor(valor);
 
+            if (iValor == 0)
+                return BadRequest("Valor zerado!");
+
             var associado = RestoreTimerCache(CacheTags.associado, idCartao.ToString(), 1) as T_Cartao;
 
             if (associado == null)

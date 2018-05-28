@@ -2,7 +2,6 @@
 using System.Linq;
 using LinqToDB;
 using DataModel;
-using System.Collections;
 using System.Diagnostics;
 using System.Text;
 
@@ -240,27 +239,6 @@ namespace DevKit.Web.Controllers
 
             if (dep_f != null)
                 output_cont_pr.st_nomeCliente = dep_f.st_nome;
-
-            // ---------------------------------------------
-            // marca a ultima pendente como confirmada
-            // ---------------------------------------------
-            {
-                var ultCart = db.T_Cartao.FirstOrDefault(y => var_ltr.fk_cartao == y.i_unique);
-
-                var ultLtr = (  from e in db.LOG_Transacoes
-                                join ca in db.T_Cartao on (int) e.fk_cartao equals ca.i_unique
-                                where ca.st_matricula == ultCart.st_matricula // qqer catão (dep ou tit)
-                                where e.tg_confirmada.ToString() == TipoConfirmacao.Pendente
-                                where e.i_unique < var_ltr.i_unique
-                                orderby e.i_unique descending
-                                select e).FirstOrDefault();
-
-                if (ultLtr != null)
-                {
-                    ultLtr.tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada);
-                    db.Update(ultLtr);
-                }
-            }
 
             st.Stop();
 

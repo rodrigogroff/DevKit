@@ -17,6 +17,7 @@ namespace DevKit.Web.Controllers
         public class Demonstrativo
         {
             public string mesAno, 
+                          anoMesSort,
                           convenio, 
                           totalVendas, 
                           terminal,
@@ -69,8 +70,6 @@ namespace DevKit.Web.Controllers
                                              select e).
                                              ToList();
 
-                        var dt = DateTime.Now;                                               
-
                         // --------------------------------------------------
                         // todos os terminais, sem separação de terminal
                         // --------------------------------------------------
@@ -88,13 +87,21 @@ namespace DevKit.Web.Controllers
 
                             foreach (var convenioAtual in listConvenios)
                             {
-                               // if (convenioAtual.fk_empresa == 11) // convey testes
-                                 //   continue;
+                                var dt = DateTime.Now;
 
                                 var tEmpresa = (from e in db.T_Empresa
                                                 where e.i_unique == convenioAtual.fk_empresa
                                                 select e).
                                                 FirstOrDefault();
+
+                                var diaFech = (from e in db.I_Scheduler
+                                               where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa)
+                                               select e).
+                                       FirstOrDefault().
+                                       nu_monthly_day;
+
+                                if (dt.Day > diaFech)
+                                    dt = dt.AddMonths(1);
 
                                 var st_mes = dt.Month.ToString("00");
                                 var st_ano = dt.Year.ToString();
@@ -130,6 +137,7 @@ namespace DevKit.Web.Controllers
                                     {
                                         convenio = tEmpresa.st_fantasia,
                                         mesAno = st_mes + "/" + st_ano,
+                                        anoMesSort = st_ano + st_mes,
                                         totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
                                         vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
                                         situacao = "ATUAL",
@@ -175,6 +183,7 @@ namespace DevKit.Web.Controllers
                                     {
                                         convenio = tEmpresa.st_fantasia,
                                         mesAno = st_mes + "/" + st_ano,
+                                        anoMesSort = st_ano + st_mes,
                                         totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
                                         vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
                                         situacao = "FUTURO",
@@ -182,10 +191,12 @@ namespace DevKit.Web.Controllers
                                 }
                             }
 
+                            results = results.OrderBy(y => y.anoMesSort).ToList();
+
                             return Ok(new
                             {
                                 count = results.Count,
-                                results = results,
+                                results,
                                 totAtual = "R$ " + mon.setMoneyFormat(totAtual),
                                 totFuturo = "R$ " + mon.setMoneyFormat(totFuturo),
                                 totAtualRepasse = "R$ " + mon.setMoneyFormat(totAtualRepasse),
@@ -217,13 +228,24 @@ namespace DevKit.Web.Controllers
 
                                 foreach (var convenioAtual in listConvenios)
                                 {
-                                //    if (convenioAtual.fk_empresa == 11) // convey testes
-                                   //     continue;
+                                    var dt = DateTime.Now;
+
+                                    //    if (convenioAtual.fk_empresa == 11) // convey testes
+                                    //     continue;
 
                                     var tEmpresa = (from e in db.T_Empresa
                                                     where e.i_unique == convenioAtual.fk_empresa
                                                     select e).
                                                     FirstOrDefault();
+
+                                    var diaFech = (from e in db.I_Scheduler
+                                                   where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa)
+                                                   select e).
+                                       FirstOrDefault().
+                                       nu_monthly_day;
+
+                                    if (dt.Day > diaFech)
+                                        dt = dt.AddMonths(1);
 
                                     // ----------------
                                     // atuais
@@ -409,7 +431,7 @@ namespace DevKit.Web.Controllers
                             return Ok(new
                             {
                                 count = results.Count,
-                                results = results,
+                                results,
                                 totAtual = "R$ " + mon.setMoneyFormat(supertotAtual),
                                 totFuturo = "R$ " + mon.setMoneyFormat(supertotFuturo),
                                 totAtualRepasse = "R$ " + mon.setMoneyFormat(supertotAtualRepasse),

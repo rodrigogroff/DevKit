@@ -5,7 +5,7 @@ using DataModel;
 using System.Diagnostics;
 using System.Text;
 
-namespace DevKit.Web.Controllers
+namespace DataModel
 {
     public class VendaEmpresarialConfirmacao : BaseVenda
     {

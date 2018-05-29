@@ -162,7 +162,7 @@ namespace DevKit.Web.Controllers
 
                     var cartPortador = db.T_Cartao.FirstOrDefault(y => y.i_unique == idCartao);
 
-                    var v = new VendaEmpresarial();
+                    var v = new DataModel.VendaEmpresarial();
 
                     v.input_cont_pe.st_terminal = terminal;
                     v.input_cont_pe.st_empresa = empresa;
@@ -187,7 +187,7 @@ namespace DevKit.Web.Controllers
                     if (parcelas >= 12) v.input_cont_pe.st_valores += p12.ToString().PadLeft(12, '0');
 
                     if (senha != null)
-                        v.input_cont_pe.st_senha = new BaseVenda().DESCript(senha.PadLeft(8, '*'), "12345678");
+                        v.input_cont_pe.st_senha = new DataModel.BaseVenda().DESCript(senha.PadLeft(8, '*'), "12345678");
 
                     v.Run(db);
 
@@ -226,7 +226,7 @@ namespace DevKit.Web.Controllers
                             return BadRequest("Falha VC (0xE" + cdResp + " - " + v.output_st_msg + " )");
                     }
 
-                    var vc = new VendaEmpresarialConfirmacao();
+                    var vc = new DataModel.VendaEmpresarialConfirmacao();
 
                     vc.Run(db, v.output_cont_pr.st_nsuRcb);
 

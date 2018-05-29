@@ -57,5 +57,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DevKit.DataAccess\DevKit.DataAccess.csproj">
+      <Project>{12e2ce82-0027-4152-abdf-fcebe99ae4f7}</Project>
+      <Name>DevKit.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

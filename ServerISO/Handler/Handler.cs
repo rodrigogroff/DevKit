@@ -305,9 +305,6 @@ public partial class ClientHandler
             if (dadosRecebidos == null)
                 dadosRecebidos = "";
 
-           // if (dadosRecebidos.Length > 0)
-             //   Log("ProcessDataReceived - dadosRecebidos >" + dadosRecebidos + "<");
-
             if (dadosRecebidos.ToUpper() == "PING")
             {
                 enviaDadosREDE("PONG");
@@ -325,17 +322,7 @@ public partial class ClientHandler
             if (dadosRecebidos.Length > 3)
                 dadosRecebidos = dadosRecebidos.Substring(2);
             else
-            {
                 return;
-             //   Log("========= ProcessDataReceived FINALIZADO dadosRecebidos.Length < 3 ====================");
-
-                networkStream.Close();
-                ClientSocket.Close();
-                ContinueProcess = false;
-                sw.Close();
-
-                return;
-            }
 
             msgReceived.Clear();
             
@@ -724,8 +711,6 @@ public partial class ClientHandler
         
         if (bFinaliza)
         {
-          //  Log("========= ProcessDataReceived FINALIZADO ====================");
-
             networkStream.Close();
             ClientSocket.Close();
             ContinueProcess = false;

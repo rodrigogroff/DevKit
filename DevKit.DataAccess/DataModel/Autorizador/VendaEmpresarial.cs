@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Text;
 using System.IO;
 
-namespace DevKit.Web.Controllers
+namespace DataModel
 {
     public class VendaEmpresarial : BaseVenda
     {

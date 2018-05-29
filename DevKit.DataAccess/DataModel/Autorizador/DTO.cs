@@ -1,12 +1,21 @@
 ﻿using System.Collections.Generic;
-using System.Web.Http;
 using System;
 using System.Linq;
 using LinqToDB;
-using SyCrafEngine;
 
-namespace DevKit.Web.Controllers
+namespace DataModel
 {
+    public class TipoConfirmacao
+    {
+        public const string Pendente = "0",
+                            Confirmada = "1",
+                            Negada = "2",
+                            Erro = "3",
+                            Registro = "4",
+                            Cancelada = "5",
+                            Desfeita = "6";
+    }
+
     public class POS_Entrada
     {
         public string st_empresa,
@@ -59,16 +68,16 @@ namespace DevKit.Web.Controllers
         public const string VENDA_EMPRESARIAL_DESFAZ = "21";
     }
 
-    public class Context
-    {
-        public const string TRUE = "1";
-        public const string FALSE = "0";
-        public const string NOT_SET = "0";
-        public const string EMPTY = "";
-        public const string OPEN = "0";
-        public const string CLOSED = "1";
-        public const string NONE = "0";
-    }
+    //public class Context
+    //{
+    //    public const string TRUE = "1";
+    //    public const string FALSE = "0";
+    //    public const string NOT_SET = "0";
+    //    public const string EMPTY = "";
+    //    public const string OPEN = "0";
+    //    public const string CLOSED = "1";
+    //    public const string NONE = "0";
+    //}
 
     public class MotivoBloqueio
     {

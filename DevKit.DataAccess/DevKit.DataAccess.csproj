@@ -71,13 +71,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\Autorizador\Base.cs" />
+    <Compile Include="DataModel\Autorizador\Cancelamento.cs" />
+    <Compile Include="DataModel\Autorizador\Confirmacao.cs" />
+    <Compile Include="DataModel\Autorizador\DTO.cs" />
+    <Compile Include="DataModel\Autorizador\VendaEmpresarial.cs" />
     <Compile Include="DataModel\Database.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AutorizadorDB\AutorizadorDB_CurrentUser.cs" />
-    <Compile Include="DataModel\AutorizadorDB\AutorizadorDB_db.cs" />
+    <Compile Include="DataModel\db\AutorizadorDB_CurrentUser.cs" />
+    <Compile Include="DataModel\db\AutorizadorDB_db.cs" />
     <Compile Include="DataModel\Domains\Constantes.cs" />
     <Compile Include="DataModel\Enums\Expedicoes_enum.cs" />
     <Compile Include="DataModel\Enums\OrdemEmissorManutCartoes_enum.cs" />

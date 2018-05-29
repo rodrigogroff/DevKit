@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  devkit.web:
+    image: ${DOCKER_REGISTRY}devkitweb
+    build:
+      context: .\DevKit.Web
+      dockerfile: Dockerfile

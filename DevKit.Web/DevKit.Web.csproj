@@ -884,6 +884,7 @@
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Autorizador\Base.cs" />
+    <Compile Include="proc\Domains\Autorizador\Cancelamento.cs" />
     <Compile Include="proc\Domains\Autorizador\DTO.cs" />
     <Compile Include="proc\Domains\Autorizador\Confirmacao.cs" />
     <Compile Include="proc\Domains\Autorizador\VendaEmpresarial.cs" />

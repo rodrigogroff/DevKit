@@ -121,5 +121,57 @@ namespace DevKit.Web.Controllers
 
             return retorno;
         }
+
+        public DateTime ObtemData(string valor)
+        {
+            try
+            {
+                if (valor == null)
+                    return new DateTime();
+
+                if (valor.Length < 8)
+                    return new DateTime();
+
+                if (valor.Length == 8)
+                    valor = valor.Substring(0, 2) + "/" +
+                            valor.Substring(2, 2) + "/" +
+                            valor.Substring(4, 4);
+
+                return new DateTime(Convert.ToInt32(valor.Substring(6, 4)),
+                                    Convert.ToInt32(valor.Substring(3, 2)),
+                                    Convert.ToInt32(valor.Substring(0, 2)), 0, 0, 0);
+            }
+            catch (SystemException ex)
+            {
+                return new DateTime();
+            }
+        }
+
+        public long ObtemValor(string valor)
+        {
+            try
+            {
+                if (valor == null)
+                    return 0;
+
+                if (valor == "")
+                    valor = "0";
+
+                var iValor = 0;
+
+                if (!valor.Contains(","))
+                    valor += ",00";
+
+                valor = valor.Replace(",", "").Replace(".", "");
+                iValor = Convert.ToInt32(valor);
+
+                return iValor;
+            }
+            catch (SystemException ex)
+            {
+                return 0;
+            }
+        }
+
     }
 }

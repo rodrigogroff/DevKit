@@ -205,12 +205,12 @@ namespace DevKit.Web.Controllers
                             
                             int nuParc = 1;
 
-                            if (dtNow.Month != mes && dtNow.Year != ano)
-                                while (dtNow.Month != mes && dtNow.Year != ano)
-                                {
-                                    nuParc++;
-                                    dtNow = dtNow.AddMonths(1);
-                                }
+                            var target = ano + mes.ToString().PadLeft(2, '0');                        
+                        while (target != dtNow.Year + dtNow.Month.ToString("00"))
+                        {
+                            nuParc++;
+                            dtNow = dtNow.AddMonths(1);
+                        }
 
                             var totalParcsEmAberto = (from e in db.T_Parcelas
                                                       join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
@@ -334,12 +334,12 @@ namespace DevKit.Web.Controllers
 
                             int nuParc = 1;
 
-                            if (dtNow.Month != mes && dtNow.Year != ano)
-                                while (dtNow.Month != mes && dtNow.Year != ano)
-                                {
-                                    nuParc++;
-                                    dtNow = dtNow.AddMonths(1);
-                                }
+                            var target = ano + mes.ToString().PadLeft(2, '0');
+                            while (target != dtNow.Year + dtNow.Month.ToString("00"))
+                            {
+                                nuParc++;
+                                dtNow = dtNow.AddMonths(1);
+                            }
 
                             var totalParcsEmAberto = (from e in db.T_Parcelas
                                                       join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique

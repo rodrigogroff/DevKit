@@ -94,12 +94,19 @@ namespace DevKit.Web.Controllers
 
                         int nuParc = 1;
 
-                        if (dtNow.Month != mes && dtNow.Year != ano)
-                            while (dtNow.Month != mes && dtNow.Year != ano)
-                            {
-                                nuParc++;
-                                dtNow = dtNow.AddMonths(1);
-                            }
+                        var target = ano + mes.ToString().PadLeft(2, '0');                        
+                        while (target != dtNow.Year + dtNow.Month.ToString("00"))
+                        {
+                            nuParc++;
+                            dtNow = dtNow.AddMonths(1);
+                        }
+
+                        //if (dtNow.Month != mes && dtNow.Year != ano)
+                        //while (dtNow.Month != mes && dtNow.Year != ano)
+                        //{
+                        //    nuParc++;
+                        //    dtNow = dtNow.AddMonths(1);
+                        //}
 
                         var termsAbertos = (from e in lstParcelasEmAberto
                                             where e.nu_parcela == nuParc

@@ -39,7 +39,8 @@ namespace DataModel
                       st_loja,
                       st_PAN,
                       st_mesPri,
-                      st_variavel;
+                      st_variavel,
+                      st_via;
     }
 
     public class OperacaoCartao

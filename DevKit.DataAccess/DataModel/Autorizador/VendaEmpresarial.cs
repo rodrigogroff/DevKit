@@ -623,6 +623,7 @@ namespace DataModel
                 output_cont_pr.st_loja = loj.st_loja;
 
             output_cont_pr.st_nomeCliente = var_nomeCliente;
+            output_cont_pr.st_via = cartPortador.nu_viaCartao.ToString();
 
             Registry("(f3) registra a transacao");
 

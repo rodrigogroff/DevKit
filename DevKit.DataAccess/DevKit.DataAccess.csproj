@@ -343,6 +343,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="README.md" />
+    <Content Include="Carga\1801_DEPC.txt" />
+    <Content Include="Carga\1801_DEP_F01.txt" />
+    <Content Include="Carga\1801_TIT.txt" />
     <Content Include="Carga\log_faixa_uf.txt" />
     <Content Include="Carga\log_localidade.txt" />
     <Content Include="ClientEngine.dll" />

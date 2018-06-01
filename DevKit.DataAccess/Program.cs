@@ -74,7 +74,10 @@ namespace GetStarted
         {
             try
             {
+                Console.WriteLine("--------------------");
                 Console.WriteLine("Patch?");
+                Console.WriteLine("--------------------");
+
                 var opt = Console.ReadLine();
 
                 using (var db = new DevKitDB())
@@ -83,6 +86,152 @@ namespace GetStarted
 
                     switch (opt)
                     {
+                        case "1":
+                            {
+                                #region - carga 1801 - 
+
+                                using (var sr = new StreamReader("c:\\carga\\1801_TIT.txt", Encoding.Default, false))
+                                {
+                                    Console.WriteLine("Carga titulares extras [1801].");
+
+                                    while (!sr.EndOfStream)
+                                    {
+                                        var line = sr.ReadLine();
+
+                                        if (line != "")
+                                        {
+                                            var ar = line.Split(';');
+
+                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Associado
+                                            {
+                                                dtStart = DateTime.Now,
+                                                fkEmpresa = 1,
+                                                fkSecao = 1,
+                                                fkUserAdd = 1,
+                                                nuMatricula  = Convert.ToInt64(ar[0]),
+                                                nuMatSaude = Convert.ToInt64(ar[1]),
+                                                nuViaCartao = 1,
+                                                nuTitularidade = 1,
+                                                stName = ar[2],
+                                                stCPF = "111111111111",
+                                                tgExpedicao = 0,
+                                                tgStatus = 0,
+                                            }));
+                                        }
+                                    }
+                                }
+
+                                #endregion
+
+                                break;
+                            }
+
+                        case "2":
+                            {
+                                #region - carga 1801_DEP_F01 - 
+
+                                using (var sr = new StreamReader("c:\\carga\\1801_DEP_F01.txt", Encoding.Default, false))
+                                {
+                                    Console.WriteLine("Carga titulares extras [1801_DEP_F01]");
+
+                                    while (!sr.EndOfStream)
+                                    {
+                                        var line = sr.ReadLine();
+
+                                        if (line != "")
+                                        {
+                                            var ar = line.Split(';');
+
+                                            var tit = db.Associado.FirstOrDefault(y => y.nuMatricula == Convert.ToInt64(ar[0]) && 
+                                                                                       y.fkEmpresa == 1 && 
+                                                                                       y.fkSecao == 1);
+
+                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Associado
+                                            {
+                                                dtStart = DateTime.Now,
+                                                fkEmpresa = 1,
+                                                fkSecao = 1,
+                                                fkUserAdd = 1,
+                                                nuMatricula = Convert.ToInt64(ar[0]),
+                                                nuMatSaude = tit.nuMatSaude,
+                                                nuViaCartao = 1,
+                                                nuTitularidade = db.AssociadoDependente.Where(y => y.fkAssociado == tit.id).Count() + 2,
+                                                stName = ar[2],
+                                                stCPF = "111111111111",
+                                                tgExpedicao = 0,
+                                                tgStatus = 0,
+                                            }));
+
+                                            db.Insert ( new AssociadoDependente()
+                                            {                                                                                                                    
+                                                dtNasc = new DateTime(Convert.ToInt32(ar[3].Substring(6, 4)), Convert.ToInt32(ar[3].Substring(3, 2)), Convert.ToInt32(ar[3].Substring(0, 2))),
+                                                fkAssociado = tit.id,
+                                                fkCartao = new_id,
+                                                fkEmpresa = 1,
+                                                fkTipoCoberturaDependente = 2
+                                            });
+                                        }
+                                    }
+                                }
+
+                                #endregion
+
+                                break;
+                            }
+
+                        case "3":
+                            {
+                                #region - carga 1801_DEPC - 
+
+                                using (var sr = new StreamReader("c:\\carga\\1801_DEPC.txt", Encoding.Default, false))
+                                {
+                                    Console.WriteLine("Carga titulares extras [1801_DEPC]");
+
+                                    while (!sr.EndOfStream)
+                                    {
+                                        var line = sr.ReadLine();
+
+                                        if (line != "")
+                                        {
+                                            var ar = line.Split(';');
+
+                                            var tit = db.Associado.FirstOrDefault(y => y.nuMatricula == Convert.ToInt64(ar[0]) &&
+                                                                                       y.fkEmpresa == 1 &&
+                                                                                       y.fkSecao == 1);
+
+                                            var new_id = Convert.ToInt64(db.InsertWithIdentity(new Associado
+                                            {
+                                                dtStart = DateTime.Now,
+                                                fkEmpresa = 1,
+                                                fkSecao = 1,
+                                                fkUserAdd = 1,
+                                                nuMatricula = Convert.ToInt64(ar[0]),
+                                                nuMatSaude = tit.nuMatSaude,
+                                                nuViaCartao = 1,
+                                                nuTitularidade = db.AssociadoDependente.Where(y => y.fkAssociado == tit.id).Count() + 2,
+                                                stName = ar[1],
+                                                stCPF = "111111111111",
+                                                tgExpedicao = 0,
+                                                tgStatus = 0,
+                                            }));
+
+                                            db.Insert(new AssociadoDependente()
+                                            {
+                                                dtNasc = new DateTime(1980,1,1),
+                                                fkAssociado = tit.id,
+                                                fkCartao = new_id,
+                                                fkEmpresa = 1,
+                                                fkTipoCoberturaDependente = 1
+                                            });
+                                        }
+                                    }
+                                }
+
+                                #endregion
+
+                                break;
+                            }
+
                         default:
                         case "ajusta_cart_deps_dtNasc":
                             {

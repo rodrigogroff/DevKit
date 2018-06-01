@@ -80,7 +80,7 @@ namespace DevKit.Web.Controllers
                             ToList();
 
                 prop = (from e in db.T_Proprietario
-                        where e.i_unique == cart.i_unique
+                        where e.i_unique == cart.fk_dadosProprietario
                         select e).
                         FirstOrDefault();
             }

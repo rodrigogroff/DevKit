@@ -414,6 +414,8 @@ public partial class ClientHandler
                             }
                             else
                             {
+                                #region - cnet server VENDA - 
+
                                 // --------------------------------
                                 // processamento no cnet server VENDA
                                 // --------------------------------
@@ -473,6 +475,8 @@ public partial class ClientHandler
                                     enviaDadosEXPRESS(Iso210.registro);
                                 }
 
+                                #endregion
+
                                 bFinaliza = false; // continua depois via 202
                             }
                         }
@@ -529,6 +533,8 @@ public partial class ClientHandler
 
                             if (strRegIso.Length < 20)
                             {
+                                #region - erro - 
+
                                 LogFalha(isoCode + " montaDesfazimento / montaCancelamento ERRO");
 
                                 if (codigoIso == "0402")
@@ -570,106 +576,111 @@ public partial class ClientHandler
 
                                     #endregion
 
-                                    // --------------------------------
-                                    // envia 210 EXPRESS
-                                    // --------------------------------
-
                                     enviaDadosEXPRESS(Iso430.registro);
                                 }
+
+                                #endregion
                             }
                             else
                             {
-                                using (var tcpClient = new TcpClient(localHost, 2000))
+                                if (codigoIso == "0410")
                                 {
-                                    // --------------------------------
-                                    // processamento no cnet server DESFAZ
-                                    // --------------------------------
-
-                                    string dadosRec400 = enviaRecebeDadosCNET(tcpClient, strRegIso), codResp = "00";
-
-                                    if (codigoIso == "0410")
-                                    {
-                                        #region - cancelamento -
-
-                                        if (dadosRec400 == "")
-                                        {
-                                            Log(isoCode + "Recebeu ISO vazio");
-                                        }
-                                        else if (dadosRec400.Length < 27)
-                                        {
-                                            Log(isoCode + "Recebeu ISO tamanho incorreto");
-                                        }
-                                        else
-                                        {
-                                            dadosRec400 = dadosRec400.PadRight(200, ' ');
-
-                                            var isoRegistro = new ISO8583
-                                            {
-                                                codigo = codigoIso,
-                                                codProcessamento = regIso.codProcessamento,
-                                                codLoja = regIso.codLoja,
-                                                terminal = regIso.terminal,
-                                                codResposta = dadosRec400.Substring(2, 2),
-                                                bit127 = "000" + dadosRec400.Substring(21, 6),
-                                                nsuOrigem = regIso.nsuOrigem,
-                                            };
-
-                                            Log("Montagem Bit 62");
-
-                                            isoRegistro.bit62 = !(dadosRec400.Substring(0, 4) == "0400") ?
-                                                dadosRec400.Substring(7, 6) + regIso.valor :
-                                                regIso.bit125.Substring(3, 6) + regIso.valor;
-
-                                            Log(isoRegistro);
-
-                                            enviaDadosEXPRESS(isoRegistro.registro);
-                                        }
-
-                                        #endregion
-                                    }
-                                    else
-                                    {
-                                        Log("Desfaz DESABILITADO");
-
-                                        //#region - desfazimento -
-
-                                        //if (!dadosRec400.Contains("S"))
-                                        //{
-                                        //    using (var tcpClientRetry = new TcpClient(localHost, 2000))
-                                        //    {
-                                        //        strRegIso = montaDesfazimento(regIso, novo: false);
-                                        //        dadosRec400 = enviaRecebeDadosCNET(tcpClientRetry, strRegIso);
-
-                                        //        if (!dadosRec400.Contains("S"))
-                                        //            codResp = "06";
-                                        //    }
-                                        //}
-
-                                        //#region - monta 430 - 
-
-                                        //var Iso430 = new ISO8583
-                                        //{
-                                        //    codigo = "430",
-                                        //    nsuOrigem = regIso.nsuOrigem,
-                                        //    codResposta = codResp,                                            
-                                        //    valor = regIso.valor,
-                                        //    terminal = regIso.terminal,
-                                        //    codLoja = regIso.codLoja,
-                                        //    bit62 = regIso.nsuOrigem.PadLeft(6,'0') + regIso.valor.PadLeft(12,'0')
-                                        //};
+                                    #region - cancelamento -
                                         
-                                        //Log(Iso430);
+                                    using (var db = new AutorizadorCNDB())
+                                    {
+                                        Cancelamento v = new Cancelamento();
 
-                                        //#endregion
+                                        v.Run(db, regIso.bit125);
 
-                                        //// --------------------------------
-                                        //// envia 210 EXPRESS
-                                        //// --------------------------------
+                                        var isoRegistro = new ISO8583
+                                        {
+                                            codigo = codigoIso,
+                                            codProcessamento = regIso.codProcessamento,
+                                            codLoja = regIso.codLoja,
+                                            terminal = regIso.terminal,
+                                            codResposta = v.var_codResp.Substring(2, 2),
+                                            bit127 = regIso.bit125.PadLeft(6,'0') + regIso.valor.PadLeft(12,'0'),
+                                            nsuOrigem = regIso.nsuOrigem,
+                                        };
 
-                                        //enviaDadosEXPRESS(Iso430.registro);
-
-                                        //#endregion
+                                        enviaDadosEXPRESS(isoRegistro.registro);
                                     }
+                                                
+                                    #region - codigo antigo comentado - 
+
+                                    //dadosRec400 = dadosRec400.PadRight(200, ' ');
+
+                                    //var isoRegistro = new ISO8583
+                                    //{
+                                    //    codigo = codigoIso,
+                                    //    codProcessamento = regIso.codProcessamento,
+                                    //    codLoja = regIso.codLoja,
+                                    //    terminal = regIso.terminal,
+                                    //    codResposta = dadosRec400.Substring(2, 2),
+                                    //    bit127 = "000" + dadosRec400.Substring(21, 6),
+                                    //    nsuOrigem = regIso.nsuOrigem,
+                                    //};
+
+                                    //Log("Montagem Bit 62");
+
+                                    //isoRegistro.bit62 = !(dadosRec400.Substring(0, 4) == "0400") ?
+                                    //    dadosRec400.Substring(7, 6) + regIso.valor :
+                                    //    regIso.bit125.Substring(3, 6) + regIso.valor;
+
+                                    //Log(isoRegistro);
+
+                                    #endregion
+                                        
+
+                                    #endregion
+                                }
+                                else
+                                {
+                                    Log("Desfaz DESABILITADO");
+
+                                    #region - código antigo comentado -
+
+                                    //#region - desfazimento -
+
+                                    //if (!dadosRec400.Contains("S"))
+                                    //{
+                                    //    using (var tcpClientRetry = new TcpClient(localHost, 2000))
+                                    //    {
+                                    //        strRegIso = montaDesfazimento(regIso, novo: false);
+                                    //        dadosRec400 = enviaRecebeDadosCNET(tcpClientRetry, strRegIso);
+
+                                    //        if (!dadosRec400.Contains("S"))
+                                    //            codResp = "06";
+                                    //    }
+                                    //}
+
+                                    //#region - monta 430 - 
+
+                                    //var Iso430 = new ISO8583
+                                    //{
+                                    //    codigo = "430",
+                                    //    nsuOrigem = regIso.nsuOrigem,
+                                    //    codResposta = codResp,                                            
+                                    //    valor = regIso.valor,
+                                    //    terminal = regIso.terminal,
+                                    //    codLoja = regIso.codLoja,
+                                    //    bit62 = regIso.nsuOrigem.PadLeft(6,'0') + regIso.valor.PadLeft(12,'0')
+                                    //};
+
+                                    //Log(Iso430);
+
+                                    //#endregion
+
+                                    //// --------------------------------
+                                    //// envia 210 EXPRESS
+                                    //// --------------------------------
+
+                                    //enviaDadosEXPRESS(Iso430.registro);
+
+                                    //#endregion
+
+                                    #endregion
                                 }
                             }
 

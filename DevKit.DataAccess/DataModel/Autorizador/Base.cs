@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
-using System.Web;
 
 namespace DataModel
 {
@@ -86,13 +83,17 @@ namespace DataModel
 
     public class BaseVenda
     {
-        public string nomeFile;
-        
         public StreamWriter sw;
 
+        public string nomeFile = "", 
+                      dirFile = "";
+        
         public string SetupFile()
         {
-            string dir = "c:\\cnet_logs";
+            if (dirFile == "")
+                dirFile = "cnet_logs";
+
+            string dir = "c:\\" + dirFile;
 
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
@@ -218,6 +219,7 @@ namespace DataModel
             }
             catch (SystemException ex)
             {
+                ex.ToString();
                 return new DateTime();
             }
         }
@@ -244,6 +246,7 @@ namespace DataModel
             }
             catch (SystemException ex)
             {
+                ex.ToString();
                 return 0;
             }
         }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DataModel
 {
-    public class Cancelamento : BaseVenda
+    public class VendaEmpresarialCancelamento : BaseVenda
     {
         #region - variaveis - 
 

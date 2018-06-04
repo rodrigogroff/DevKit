@@ -425,7 +425,10 @@ public partial class ClientHandler
                                 {
                                     #region - monta regras -
 
-                                    var v = new VendaEmpresarial();
+                                    var v = new VendaEmpresarial
+                                    {
+                                        dirFile = "serveriso_logs"
+                                    };
 
                                     v.input_cont_pe.st_terminal = regIso.terminal;
                                     v.input_cont_pe.st_empresa = regIso.trilha2.Substring(6, 6);
@@ -503,7 +506,10 @@ public partial class ClientHandler
 
                                 using (var db = new AutorizadorCNDB())
                                 {
-                                    var v = new VendaEmpresarialConfirmacao();
+                                    var v = new VendaEmpresarialConfirmacao
+                                    {
+                                        dirFile = "serveriso_logs"
+                                    };
 
                                     v.Run(db, regIso.bit127);
                                 }
@@ -593,7 +599,10 @@ public partial class ClientHandler
                                         
                                     using (var db = new AutorizadorCNDB())
                                     {
-                                        var v = new Cancelamento();
+                                        var v = new VendaEmpresarialCancelamento
+                                        {
+                                            dirFile = "serveriso_logs"
+                                        };
 
                                         v.Run(db, regIso.bit125);
 
@@ -639,52 +648,7 @@ public partial class ClientHandler
                                     #endregion
                                 }
                                 else
-                                {
                                     Log("Desfaz DESABILITADO");
-
-                                    #region - código antigo comentado -
-
-                                    //#region - desfazimento -
-
-                                    //if (!dadosRec400.Contains("S"))
-                                    //{
-                                    //    using (var tcpClientRetry = new TcpClient(localHost, 2000))
-                                    //    {
-                                    //        strRegIso = montaDesfazimento(regIso, novo: false);
-                                    //        dadosRec400 = enviaRecebeDadosCNET(tcpClientRetry, strRegIso);
-
-                                    //        if (!dadosRec400.Contains("S"))
-                                    //            codResp = "06";
-                                    //    }
-                                    //}
-
-                                    //#region - monta 430 - 
-
-                                    //var Iso430 = new ISO8583
-                                    //{
-                                    //    codigo = "430",
-                                    //    nsuOrigem = regIso.nsuOrigem,
-                                    //    codResposta = codResp,                                            
-                                    //    valor = regIso.valor,
-                                    //    terminal = regIso.terminal,
-                                    //    codLoja = regIso.codLoja,
-                                    //    bit62 = regIso.nsuOrigem.PadLeft(6,'0') + regIso.valor.PadLeft(12,'0')
-                                    //};
-
-                                    //Log(Iso430);
-
-                                    //#endregion
-
-                                    //// --------------------------------
-                                    //// envia 210 EXPRESS
-                                    //// --------------------------------
-
-                                    //enviaDadosEXPRESS(Iso430.registro);
-
-                                    //#endregion
-
-                                    #endregion
-                                }
                             }
 
                             bFinaliza = true;

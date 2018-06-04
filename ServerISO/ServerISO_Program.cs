@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Collections;
 using System.Threading;
 using DataModel;
+using System.Linq;
 
 #region - ClientConnectionPool - 
 
@@ -115,6 +116,12 @@ public class SynchronousSocketListener
     {
         Console.WriteLine("\n" + DateTime.Now + "]");
         Console.WriteLine("\nCNET ISO [" + portNum + "]");
+
+        using (var db = new AutorizadorCNDB())
+        {
+            var term = db.T_Cartao.FirstOrDefault();
+            Console.WriteLine("DBCHECK -> OK!");
+        }
 
         StartListening();
 

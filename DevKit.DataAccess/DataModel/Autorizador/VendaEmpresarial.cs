@@ -46,7 +46,7 @@ namespace DataModel
                       vr_dispTot,
                       vr_valor;
 
-        public bool   IsDigitado = false;
+        public bool   IsDigitado = false, IsSitef = false;
         
         public ArrayList lstParcs = new ArrayList();
 
@@ -122,12 +122,28 @@ namespace DataModel
             var_vr_total = input_cont_pe.vr_valor;
             var_nu_parcelas = input_cont_pe.nu_parcelas;
 
+            if (IsSitef == false) // venda online
             {
                 var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal);
 
                 Registry("(a1) db.T_Terminal.Where(y => y.nu_terminal == " + input_cont_pe.st_terminal);
 
                 term = q.FirstOrDefault();
+
+                if (term == null)
+                {
+                    output_st_msg = "Terminal inexistente";
+                    var_codResp = "0303";
+                    return false;
+                }
+            }
+            else // sitef
+            {
+                var termSt = input_cont_pe.st_codLoja.TrimStart('0').PadLeft(8, '0');
+
+                Registry("(a1) db.T_Terminal.FirstOrDefault(y => y.nu_terminal == " + termSt);
+
+                term = db.T_Terminal.FirstOrDefault(y => y.nu_terminal == termSt);
 
                 if (term == null)
                 {

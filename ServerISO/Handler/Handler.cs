@@ -427,7 +427,8 @@ public partial class ClientHandler
 
                                     var v = new VendaEmpresarial
                                     {
-                                        dirFile = "serveriso_logs"
+                                        dirFile = "serveriso_logs",
+                                        IsSitef = true
                                     };
 
                                     v.input_cont_pe.st_terminal = regIso.terminal;
@@ -508,7 +509,8 @@ public partial class ClientHandler
                                 {
                                     var v = new VendaEmpresarialConfirmacao
                                     {
-                                        dirFile = "serveriso_logs"
+                                        dirFile = "serveriso_logs",
+                                        //IsSitef = true
                                     };
 
                                     v.Run(db, regIso.bit127);
@@ -601,7 +603,8 @@ public partial class ClientHandler
                                     {
                                         var v = new VendaEmpresarialCancelamento
                                         {
-                                            dirFile = "serveriso_logs"
+                                            dirFile = "serveriso_logs",
+                                            //IsSitef = true
                                         };
 
                                         v.Run(db, regIso.bit125);

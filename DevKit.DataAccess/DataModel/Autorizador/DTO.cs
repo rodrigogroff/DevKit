@@ -27,6 +27,7 @@ namespace DataModel
                         vr_valor,
                         nu_parcelas,
                         st_valores,
+                        st_codLoja,
                         st_nsuOrigemSITEF;
     }
 

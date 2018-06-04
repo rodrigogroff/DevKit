@@ -436,6 +436,9 @@ public partial class ClientHandler
                                     v.input_cont_pe.st_matricula = regIso.trilha2.Substring(12, 6);
                                     v.input_cont_pe.st_titularidade = regIso.trilha2.Substring(18, 2);
 
+                                    v.input_cont_pe.st_codLoja = regIso.codLoja;
+                                    v.input_cont_pe.st_terminal = regIso.terminal;
+
                                     if (regIso.codProcessamento == "002000")
                                     {
                                         v.input_cont_pe.nu_parcelas = "01";

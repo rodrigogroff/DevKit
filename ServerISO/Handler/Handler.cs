@@ -303,6 +303,8 @@ public partial class ClientHandler
         {
             var dadosRecebidos = msgReceived.ToString();
 
+            #region - ajuste de inválidos - 
+
             if (dadosRecebidos == null)
                 dadosRecebidos = "";
 
@@ -326,7 +328,9 @@ public partial class ClientHandler
                 return;
 
             msgReceived.Clear();
-            
+
+            #endregion
+
             if (dadosRecebidos.Length == 0)
             {
                 // desprezar
@@ -361,15 +365,17 @@ public partial class ClientHandler
 
                         if (isoCode == "0200" && (isoCodProc == "002000" || isoCodProc == "002800"))
                         {
-                            string registroCNET = !(regIso.codProcessamento == "002000") ?
-                                                        montaCNET_VendaCEparcelada(ref regIso) :
+                            #region - venda empresarial - 
+
+                            var monta = !(regIso.codProcessamento == "002000") ?
+                                                        montaCNET_VendaCEparcelada(regIso) :
                                                         montaCNET_VendaCE(regIso);
 
-                            if (registroCNET.Length < 20)
+                            if (!monta)
                             {
-                                #region - monta registro de volta -
+                                #region - envia 210 EXPRESS com erro -
 
-                                LogFalha(isoCode + " montaCNET_Venda ERRO ");
+                                LogFalha(isoCode + " montaCNET_Venda falhou");
 
                                 //06
 
@@ -407,22 +413,17 @@ public partial class ClientHandler
 
                                 Log(Iso210);
 
-                                #endregion
-
-                                // envia 210 EXPRESS com erro
                                 enviaDadosEXPRESS(Iso210.registro);
+
+                                #endregion
                             }
                             else
                             {
-                                #region - cnet server VENDA - 
-
-                                // --------------------------------
-                                // processamento no cnet server VENDA
-                                // --------------------------------
+                                #region - processa venda normal - 
 
                                 using (var db = new AutorizadorCNDB())
                                 {
-                                    #region - code -
+                                    #region - monta regras -
 
                                     var v = new VendaEmpresarial();
 
@@ -450,7 +451,7 @@ public partial class ClientHandler
 
                                     #endregion
 
-                                    // retorna 210 EXPRESS
+                                    #region - retorna no socket - 
 
                                     var Iso210 = new ISO8583
                                     {
@@ -473,29 +474,29 @@ public partial class ClientHandler
                                     Log(Iso210);
 
                                     enviaDadosEXPRESS(Iso210.registro);
+
+                                    #endregion
                                 }
 
                                 #endregion
 
                                 bFinaliza = false; // continua depois via 202
                             }
+
+                            #endregion
                         }
                         else if (isoCode == "0202")
                         {
-                            #region - code - 
+                            #region - confirmação da venda - 
 
-                            var strRegIso = montaConfirmacaoCE(regIso);
+                            var monta = montaConfirmacaoCE(regIso);
 
-                            if (strRegIso == null)
-                            {
-                                LogFalha(isoCode + " montaConfirmacaoCE nulo");
-                            }
-                            else if (strRegIso.Length < 20)
-                            {
-                                LogFalha(isoCode + " montaConfirmacaoCE tamanho inválido");
-                            }
+                            if (!monta)
+                                LogFalha(isoCode + " montaConfirmacaoCE falhou");
                             else
                             {
+                                #region - prepara confirmação - 
+
                                 // --------------------------------
                                 // processamento no cnet server CONF
                                 // --------------------------------
@@ -506,36 +507,39 @@ public partial class ClientHandler
 
                                     v.Run(db, regIso.bit127);
                                 }
+
+                                #endregion
                             }
-                            
-                            #endregion
 
                             bFinaliza = true;
+
+                            #endregion
                         }
                         else if (isoCode == "0400" || isoCode == "0420")
                         {
-                            string codigoIso = "", strRegIso = "";
+                            #region - cancelamento / desfazimento -
 
-                            // montagem
+                            var codigoIso = "";
+                            var montar = false;
 
                             if (isoCode == "0400")
                             {
                                 codigoIso = "0410";
-                                strRegIso = montaCancelamento(regIso, "012345678901234567890123456");
+                                montar = montaCancelamento(regIso);
                             }
                             else if (isoCode == "0420")
                             {
                                 codigoIso = "0430";
-                                strRegIso = montaDesfazimento(regIso, novo: true);
+                                montar = montaDesfazimento(regIso);
                             }
 
                             Log("codigoIso " + codigoIso);
 
-                            if (strRegIso.Length < 20)
+                            if (!montar)
                             {
                                 #region - erro - 
 
-                                LogFalha(isoCode + " montaDesfazimento / montaCancelamento ERRO");
+                                LogFalha(isoCode + " montaDesfazimento / montaCancelamento falhou");
 
                                 if (codigoIso == "0402")
                                 {
@@ -589,7 +593,7 @@ public partial class ClientHandler
                                         
                                     using (var db = new AutorizadorCNDB())
                                     {
-                                        Cancelamento v = new Cancelamento();
+                                        var v = new Cancelamento();
 
                                         v.Run(db, regIso.bit125);
 
@@ -631,7 +635,6 @@ public partial class ClientHandler
                                     //Log(isoRegistro);
 
                                     #endregion
-                                        
 
                                     #endregion
                                 }
@@ -685,6 +688,8 @@ public partial class ClientHandler
                             }
 
                             bFinaliza = true;
+
+                            #endregion
                         }
                         else
                             bFinaliza = true;
@@ -692,6 +697,9 @@ public partial class ClientHandler
                 }
             }
         }
+        
+        #region - exceptions - 
+
         catch (SocketException ex)
         {
             LogFalha("ProcessDataReceived SocketException " + ex.ToString());
@@ -707,7 +715,9 @@ public partial class ClientHandler
             LogFalha("ProcessDataReceived Exception " + ex.ToString());
             bFinaliza = true;
         }
-        
+
+        #endregion
+
         if (bFinaliza)
         {
             networkStream.Close();

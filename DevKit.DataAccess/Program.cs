@@ -86,6 +86,36 @@ namespace GetStarted
 
                     switch (opt)
                     {
+                        case "fixCPF":
+                            {
+                                
+                                foreach (var item in db.Associado.ToList())
+                                {
+                                    if (string.IsNullOrEmpty(item.stCPF))
+                                    {
+                                        item.stCPF = "11111111111";
+
+                                        Console.WriteLine("TIT -> " + item.stName);
+
+                                        db.Update(item);
+                                    }
+                                }
+
+                                foreach (var item in db.AssociadoDependente.ToList())
+                                {
+                                    if (string.IsNullOrEmpty(item.stCPF))
+                                    {
+                                        item.stCPF = "11111111111";
+
+                                        Console.WriteLine("DEP -> " + item.stNome);
+
+                                        db.Update(item);
+                                    }
+                                }
+
+                                break;
+                            }
+
                         case "1":
                             {
                                 #region - carga 1801 - 

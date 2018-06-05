@@ -469,13 +469,12 @@ public partial class ClientHandler
                                         valor = regIso.valor,
                                         terminal = regIso.terminal,
                                         codLoja = regIso.codLoja,
-                                        bit63 = regIso.bit62,
                                         bit62 = v.input_cont_pe.st_empresa +
-                                                    v.input_cont_pe.st_matricula +
-                                                    v.input_cont_pe.st_titularidade +
-                                                    v.output_cont_pr.st_via +
-                                                    v.output_cont_pr.st_nomeCliente,
-                                        bit127 = v.output_cont_pr.st_nsuBanco.PadLeft(8, '0')
+                                                v.input_cont_pe.st_matricula +
+                                                v.input_cont_pe.st_titularidade +
+                                                v.output_cont_pr.st_via +
+                                                v.output_cont_pr.st_nomeCliente,
+                                        bit127 = v.output_cont_pr.st_nsuRcb.PadLeft(8, '0')
                                     };
 
                                     Log(Iso210);

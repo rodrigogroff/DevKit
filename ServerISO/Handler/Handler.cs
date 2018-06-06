@@ -9,6 +9,8 @@ public partial class ClientHandler
 {
     public string localHost = "127.0.0.1";
 
+    public ClientHandler() { }
+
     public ClientHandler(TcpClient _clientSocket, int number)
     {
         ContinueProcess = true;
@@ -24,7 +26,7 @@ public partial class ClientHandler
 
     TcpClient ClientSocket;
     NetworkStream networkStream;
-    StringBuilder msgReceived = new StringBuilder();
+    public StringBuilder msgReceived = new StringBuilder();
     Random random = new Random();
 
     string strLogFile = "", idLogFile = "", dir = "";
@@ -295,7 +297,7 @@ public partial class ClientHandler
 
     #endregion
 
-    private void ProcessDataReceived()
+    public void ProcessDataReceived()
     {
         bool bFinaliza = false;
 
@@ -473,8 +475,8 @@ public partial class ClientHandler
                                                 v.input_cont_pe.st_matricula +
                                                 v.input_cont_pe.st_titularidade +
                                                 v.output_cont_pr.st_via +
-                                                v.output_cont_pr.st_nomeCliente,
-                                        bit127 = v.output_cont_pr.st_nsuRcb.PadLeft(8, '0')
+                                                v.output_cont_pr.st_nomeCliente.PadRight(40,' '),
+                                        bit127 = v.output_cont_pr.st_nsuRcb.PadLeft(9, '0')
                                     };
 
                                     Log(Iso210);
@@ -512,7 +514,6 @@ public partial class ClientHandler
                                     var v = new VendaEmpresarialConfirmacao
                                     {
                                         dirFile = "serveriso_logs",
-                                        //IsSitef = true
                                     };
 
                                     v.Run(db, regIso.bit127);
@@ -606,7 +607,6 @@ public partial class ClientHandler
                                         var v = new VendaEmpresarialCancelamento
                                         {
                                             dirFile = "serveriso_logs",
-                                            //IsSitef = true
                                         };
 
                                         v.Run(db, regIso.bit125);

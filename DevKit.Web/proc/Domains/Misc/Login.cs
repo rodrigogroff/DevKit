@@ -39,7 +39,7 @@ namespace DevKit.Web
             {
                 util.Registry(" -- System Login -- ");
                 util.Registry(" context.UserName " + context.UserName);
-                util.Registry(" context.UserName " + context.Password);
+                util.Registry(" context.Password " + context.Password);
 
                 using (var db = new DevKitDB())
                 {
@@ -111,10 +111,16 @@ namespace DevKit.Web
 
                         var usuario = new User();
 
+                        util.Registry("Antes Login");
+
                         usuario = usuario.Login(db, emp, login, context.Password);
+
+                        util.Registry("Depois Login");
 
                         if (usuario != null)
                         {
+                            util.Registry("Achou usuário");
+
                             usuario.dtLastLogin = DateTime.Now;
 
                             db.Update(usuario);
@@ -130,6 +136,8 @@ namespace DevKit.Web
                         }
                         else
                         {
+                            util.Registry("Login ou senha inválida!");
+
                             context.SetError("invalid_grant", "Login ou senha inválida!");
                             return;
                         }
@@ -174,6 +182,9 @@ namespace DevKit.Web
             {
                 util.ErrorRegistry("*ERROR: " + ex.ToString());
                 util.CloseFile();
+
+                context.SetError("invalid_grant", "Login ou senha inválida!");
+                return;
             }
 		}
 	}

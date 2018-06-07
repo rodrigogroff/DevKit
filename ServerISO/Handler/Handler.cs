@@ -458,6 +458,8 @@ public partial class ClientHandler
 
                                     v.Run(db);
 
+                                    Log("Mensagem na log trans: " + v.output_st_msg);
+
                                     #endregion
 
                                     #region - retorna no socket - 

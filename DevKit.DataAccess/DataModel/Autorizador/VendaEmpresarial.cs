@@ -139,8 +139,6 @@ namespace DataModel
             }
             else // sitef
             {
-                Registry("(a1.0) input_cont_pe.st_codLoja = " + input_cont_pe.st_codLoja);
-
                 var termSt = input_cont_pe.st_codLoja.TrimStart('0').PadLeft(8, '0');
 
                 Registry("(a1) db.T_Terminal.FirstOrDefault(y => y.nu_terminal == " + termSt);
@@ -645,6 +643,9 @@ namespace DataModel
 
             Registry("(f3) registra a transacao");
 
+            if (IsSitef && term != null)
+                output_st_msg = "Terminal SITEF:" + term.st_localizacao;
+
             var l_tr = new LOG_Transaco
             {
                 fk_terminal = term != null ? (int)term.i_unique : (int?)null,
@@ -658,7 +659,7 @@ namespace DataModel
                 nu_nsuOrig = Convert.ToInt32(var_nu_nsuOrig),
                 en_operacao = var_operacaoCartao,
                 st_msg_transacao = output_st_msg,
-                fk_loja = term != null ? (int)term.fk_loja : (int?)null,
+                fk_loja = term != null ? (int)term.fk_loja : (int?)null,                
                 st_doc = st_doc
             };
 

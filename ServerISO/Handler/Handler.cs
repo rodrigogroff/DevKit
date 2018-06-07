@@ -458,6 +458,8 @@ public partial class ClientHandler
 
                                     v.Run(db);
 
+                                    Log("NSU: " + v.output_cont_pr.st_nsuRcb);
+                                    Log("Código resp: " + v.var_codResp.Substring(2, 2));
                                     Log("Mensagem na log trans: " + v.output_st_msg);
 
                                     #endregion
@@ -517,6 +519,8 @@ public partial class ClientHandler
                                     {
                                         dirFile = "serveriso_logs",
                                     };
+
+                                    Log("NSU a ser conf: " + regIso.bit127);
 
                                     v.Run(db, regIso.bit127);
                                 }

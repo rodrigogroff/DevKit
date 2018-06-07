@@ -644,7 +644,7 @@ namespace DataModel
             Registry("(f3) registra a transacao");
 
             if (term != null)
-                output_st_msg = "Terminal SITEF:" + term.st_localizacao;
+                output_st_msg = "SITEF (" + term.nu_terminal + ") " + term.st_localizacao;
 
             var l_tr = new LOG_Transaco
             {

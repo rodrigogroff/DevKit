@@ -19,13 +19,13 @@ namespace DataModel
         public POS_Entrada input_cont_pe = new POS_Entrada();
         public POS_Resposta output_cont_pr = new POS_Resposta();
 
-        public T_Cartao cartPortador;
-        public T_Cartao cartTitular;
-        public T_Empresa emp;
-        public T_Terminal term;
-        public LOG_NSU l_nsu;
-        public T_Proprietario dadosProprietario;
-        public T_Loja loj;
+        public T_Cartao cartPortador = null;
+        public T_Cartao cartTitular = null;
+        public T_Empresa emp = null;
+        public T_Terminal term = null;
+        public LOG_NSU l_nsu = null;
+        public T_Proprietario dadosProprietario = null;
+        public T_Loja loj = null;
 
         public string output_st_msg = "",
                       var_vr_total = "0",
@@ -622,24 +622,28 @@ namespace DataModel
 
             Registry("(f2) var_codResp " + var_codResp);
 
+            Registry("(f2.1)");
             output_cont_pr.st_codResp = var_codResp;
+            Registry("(f2.2)");
             output_cont_pr.st_nsuRcb = var_nu_nsuAtual.PadLeft(6, '0');
-
+            Registry("(f2.3)");
             output_cont_pr.st_nsuBanco = new StringBuilder().Append(DateTime.Now.Year.ToString())
                                                                        .Append(DateTime.Now.Month.ToString("00"))
                                                                        .Append(DateTime.Now.Day.ToString("00"))
                                                                        .Append(var_nu_nsuAtual.PadLeft(6, '0')).ToString();
-
+            Registry("(f2.4)");
             if (cartPortador != null)
                 output_cont_pr.st_PAN = cartPortador.st_empresa + cartPortador.st_matricula;
-
+            Registry("(f2.5)");
             output_cont_pr.st_mesPri = Context.EMPTY;
-
+            Registry("(f2.6)");
             if (loj != null)
                 output_cont_pr.st_loja = loj.st_loja;
-
+            Registry("(f2.7)");
             output_cont_pr.st_nomeCliente = var_nomeCliente;
-            output_cont_pr.st_via = cartPortador.nu_viaCartao.ToString();
+            Registry("(f2.8)");
+            if (cartPortador != null)
+                output_cont_pr.st_via = cartPortador.nu_viaCartao.ToString();
 
             Registry("(f3) registra a transacao");
 

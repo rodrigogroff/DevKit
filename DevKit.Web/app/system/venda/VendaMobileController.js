@@ -27,11 +27,6 @@
                 $scope.viewModel.cupom = undefined;
             }
 
-            $scope.confirmarMobile = function () {
-                $scope.efetuarVenda();
-                $scope.mostraModalMobile = false;
-            }
-
             $scope.$watch("viewModel.stEmpresa", function (novo, anterior) {
 
                 if (novo != undefined)
@@ -155,6 +150,8 @@
                 $scope.erro = '';
                 $scope.lastTag = '';
                 $scope.falhaVendaMsg = '';
+                $scope.viewModel.parcelas = 1;
+                $scope.viewModel.valor = '0,00';
             }
 
             $scope.parcelar = function ()
@@ -244,10 +241,13 @@
 
                         $scope.viewModel.requerSenha = data.results[0].requerSenha;
 
-                        if ($scope.viewModel.requerSenha == '1')
+                        console.log('parcelar');
+                        console.log($scope.viewModel.requerSenha);
+
+                        if ($scope.viewModel.requerSenha == '1' || $scope.viewModel.requerSenha == 1)
                             $scope.mostraModalMobile = true;
                         else 
-                            $scope.efetuarVenda();                        
+                            $scope.efetuarVenda();
                     },
                     function (response) {
                         $scope.falhaVendaMsg = response.data.message;
@@ -257,8 +257,8 @@
 
             }
 
-            $scope.efetuarVenda = function () {
-                
+            $scope.efetuarVenda = function ()
+            {                
                 $scope.erroSoma = '';
 
                 Api.SomaParcelada.listPage(
@@ -278,57 +278,106 @@
                         p11: $scope.viewModel.p11,
                         p12: $scope.viewModel.p12,
                     },
-                    function (data) {
+                    function (data)
+                    {
                         $scope.modoVenda = 'confirmacao';
                         $scope.viewModel.requerSenha = data.results[0].requerSenha;
+
+                        if ($scope.viewModel.requerSenha == '1' || $scope.viewModel.requerSenha == 1)
+                            $scope.mostraModalMobile = true;
+                        else
+                        {
+                            var stA = $scope.viewModel.stAcesso.toString();
+                            var stV = $scope.viewModel.stVencimento.toString();
+
+                            if (stA.length == 3) stA = "0" + stA;
+                            if (stV.length == 3) stV = "0" + stV;
+
+                            Api.EfetuaVenda.listPage(
+                                {
+                                    cartao: $scope.viewModel.data.id,
+                                    empresa: $scope.viewModel.stEmpresa,
+                                    matricula: $scope.viewModel.stMatricula,
+                                    codAcesso: stA,
+                                    stVencimento: stV,
+                                    valor: $scope.viewModel.valor,
+                                    senha: $scope.viewModel.senhaPortadorCartao,
+                                    parcelas: $scope.viewModel.parcelas,
+                                    p1: $scope.viewModel.p1,
+                                    p2: $scope.viewModel.p2,
+                                    p3: $scope.viewModel.p3,
+                                    p4: $scope.viewModel.p4,
+                                    p5: $scope.viewModel.p5,
+                                    p6: $scope.viewModel.p6,
+                                    p7: $scope.viewModel.p7,
+                                    p8: $scope.viewModel.p8,
+                                    p9: $scope.viewModel.p9,
+                                    p10: $scope.viewModel.p10,
+                                    p11: $scope.viewModel.p11,
+                                    p12: $scope.viewModel.p12,
+                                    tipoWeb: 'mobile'
+                                },
+                                function (data) {
+                                    $scope.viewModel.cupom = data.results;
+                                    $scope.loading = false;
+                                    $scope.mostraModalMobileAutorizado = true;
+                                },
+                                function (response) {
+                                    $scope.falhaVendaMsg = response.data.message;
+                                    $scope.loading = false;
+                                });
+                        }
                     },
                     function (response) {
                         $scope.loading = false;
                         $scope.erroSoma = response.data.message;
                     });
+            }
 
-                if ($scope.loading == true)
-                {
-                    var stA = $scope.viewModel.stAcesso.toString();
-                    var stV = $scope.viewModel.stVencimento.toString();
+            $scope.confirmarMobile = function () {
 
-                    if (stA.length == 3) stA = "0" + stA;
-                    if (stV.length == 3) stV = "0" + stV;
+                var stA = $scope.viewModel.stAcesso.toString();
+                var stV = $scope.viewModel.stVencimento.toString();
 
-                    Api.EfetuaVenda.listPage(
-                        {
-                            cartao: $scope.viewModel.data.id,
-                            empresa: $scope.viewModel.stEmpresa,
-                            matricula: $scope.viewModel.stMatricula,
-                            codAcesso: stA,
-                            stVencimento: stV,
-                            valor: $scope.viewModel.valor,
-                            senha: $scope.viewModel.senhaPortadorCartao,
-                            parcelas: $scope.viewModel.parcelas,
-                            p1: $scope.viewModel.p1,
-                            p2: $scope.viewModel.p2,
-                            p3: $scope.viewModel.p3,
-                            p4: $scope.viewModel.p4,
-                            p5: $scope.viewModel.p5,
-                            p6: $scope.viewModel.p6,
-                            p7: $scope.viewModel.p7,
-                            p8: $scope.viewModel.p8,
-                            p9: $scope.viewModel.p9,
-                            p10: $scope.viewModel.p10,
-                            p11: $scope.viewModel.p11,
-                            p12: $scope.viewModel.p12,
-                            tipoWeb: 'mobile'
-                        },
-                        function (data) {
-                            $scope.viewModel.cupom = data.results;
-                            $scope.loading = false;
-                            $scope.mostraModalMobileAutorizado = true;
-                        },
-                        function (response) {
-                            $scope.falhaVendaMsg = response.data.message;
-                            $scope.loading = false;
-                        });
-                }
+                if (stA.length == 3) stA = "0" + stA;
+                if (stV.length == 3) stV = "0" + stV;
+
+                Api.EfetuaVenda.listPage(
+                    {
+                        cartao: $scope.viewModel.data.id,
+                        empresa: $scope.viewModel.stEmpresa,
+                        matricula: $scope.viewModel.stMatricula,
+                        codAcesso: stA,
+                        stVencimento: stV,
+                        valor: $scope.viewModel.valor,
+                        senha: $scope.viewModel.senhaPortadorCartao,
+                        parcelas: $scope.viewModel.parcelas,
+                        p1: $scope.viewModel.p1,
+                        p2: $scope.viewModel.p2,
+                        p3: $scope.viewModel.p3,
+                        p4: $scope.viewModel.p4,
+                        p5: $scope.viewModel.p5,
+                        p6: $scope.viewModel.p6,
+                        p7: $scope.viewModel.p7,
+                        p8: $scope.viewModel.p8,
+                        p9: $scope.viewModel.p9,
+                        p10: $scope.viewModel.p10,
+                        p11: $scope.viewModel.p11,
+                        p12: $scope.viewModel.p12,
+                        tipoWeb: 'mobile'
+                    },
+                    function (data) {
+                        $scope.viewModel.cupom = data.results;
+                        $scope.loading = false;
+                        $scope.mostraModalMobile = false;
+                        $scope.mostraModalMobileAutorizado = true;
+                        $scope.viewModel.parcelas = 1;
+                        $scope.viewModel.valor = '0,00';
+                    },
+                    function (response) {
+                        $scope.falhaVendaMsg = response.data.message;
+                        $scope.loading = false;
+                    });
             }
 
             $scope.closeModalMobile = function () {

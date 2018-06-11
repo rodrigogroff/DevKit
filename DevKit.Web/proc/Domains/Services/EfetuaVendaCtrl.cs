@@ -155,8 +155,7 @@ namespace DevKit.Web.Controllers
                             return BadRequest("Transação em duplicidade de valor");
                     }
                 }
-
-                //if (Convert.ToInt32(terminal) == 6101)
+                                
                 {
                     #region - autorizador interno -
 
@@ -170,8 +169,8 @@ namespace DevKit.Web.Controllers
                     v.input_cont_pe.st_titularidade = cartPortador.st_titularidade;
                     v.input_cont_pe.nu_parcelas = parcelas.ToString().PadLeft(2,'0');
                     v.input_cont_pe.vr_valor = valor.ToString();
-
                     v.input_cont_pe.st_valores = "";
+                    v.input_cont_pe.tipoWeb = tipoWeb;
 
                     if (parcelas >= 1) v.input_cont_pe.st_valores += p1.ToString().PadLeft(12, '0');
                     if (parcelas >= 2) v.input_cont_pe.st_valores += p2.ToString().PadLeft(12, '0');
@@ -232,114 +231,6 @@ namespace DevKit.Web.Controllers
 
                     #endregion
                 }
-                //else
-                //{
-                //    #region - venda por legado - 
-
-                //    var sc = new SocketConvey();
-
-                //    var sck = sc.connectSocket(cnet_server, cnet_port);
-
-                //    if (sck == null)
-                //        return BadRequest("Falha de comunicação com servidor (0x1)");
-
-                //    // #############################################################
-                //    // #############################################################
-
-                //    // Venda
-
-                //    // #############################################################
-                //    // #############################################################
-
-                //    strMessage = MontaVendaDigitada(titularidadeFinal);
-
-                //    if (!sc.socketEnvia(sck, strMessage))
-                //    {
-                //        sck.Close();
-                //        return BadRequest("Falha de comunicação com servidor (0x2)");
-                //    }
-
-                //    retorno = sc.socketRecebe(sck);
-
-                //    if (retorno.Length < 6)
-                //    {
-                //        sck.Close();
-                //        return BadRequest("Falha de comunicação com servidor (0x3)");
-                //    }
-
-                //    var codResp = retorno.Substring(2, 4);
-
-                //    if (codResp != "0000")
-                //    {
-                //        sck.Close();
-
-                //        if (codResp == "0505")
-                //        {
-                //            return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
-                //        }
-                //        else if (codResp == "4343")
-                //        {
-                //            var numErros = (from e in db.T_Cartao
-                //                            where e.i_unique == associadoPrincipal.i_unique
-                //                            select e.nu_senhaErrada).
-                //                            FirstOrDefault();
-
-                //            if (numErros == 3)
-                //            {
-                //                // ultima!
-                //                return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
-                //            }
-                //            else if (numErros >= 4)
-                //            {
-                //                return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
-                //            }
-                //            else
-                //            {
-                //                var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
-
-                //                return BadRequest("(43) Senha inválida! " + tentativas);
-                //            }
-                //        }
-                //        else
-                //            return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
-                //    }
-
-                //    nsu_retorno = ObtemNsuRetorno(retorno);
-
-                //    // #############################################################
-                //    // #############################################################
-
-                //    // Confirmação
-
-                //    // #############################################################
-                //    // #############################################################
-
-                //    strMessage = MontaConfirmacao(titularidadeFinal);
-
-                //    if (!sc.socketEnvia(sck, strMessage))
-                //    {
-                //        sck.Close();
-                //        return BadRequest("Falha de comunicação com servidor (0x4)");
-                //    }
-
-                //    retorno = sc.socketRecebe(sck);
-
-                //    sck.Close();
-
-                //    if (retorno.Length < 6)
-                //        return BadRequest("Falha de comunicação com servidor (0x5)");
-
-                //    codResp = retorno.Substring(2, 4);
-
-                //    if (codResp != "0000")
-                //        return BadRequest("Falha VC (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
-
-                //    CleanCache(db, CacheTags.associado, idCartao);
-
-                //    sck.Close();
-                    
-                //    #endregion
-                //}
 
                 var cupom = new Cupom().
                        Venda(db,
@@ -351,29 +242,6 @@ namespace DevKit.Web.Controllers
                                (int)parcelas,
                                valor,
                                p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
-
-                // -----------------------------------------
-                // seta tipo de venda (mensagem)
-                // -----------------------------------------
-
-                var ltrUltimo = db.LOG_Transacoes.Where(y => y.fk_cartao == associadoPrincipal.i_unique).
-                                    OrderByDescending(y => y.i_unique).
-                                    FirstOrDefault();
-                
-                if (tipoWeb == "mobile")
-                    ltrUltimo.st_msg_transacao = "Mobile Payment";
-                else
-                    ltrUltimo.st_msg_transacao = "Web Payment";
-
-                db.Update(ltrUltimo);
-
-                //// -----------------------------------------
-                //// zera tentativas erradas de senha, pois teve sucesso
-                //// -----------------------------------------
-
-                //var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == ltrUltimo.fk_cartao);
-                //cart.nu_senhaErrada = 0;
-                //db.Update(cart);
 
                 // -----------------------------------------
                 // encerra

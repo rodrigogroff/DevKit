@@ -16,27 +16,28 @@ namespace DevKit.Web.Controllers
                                            T_Proprietario prop )
         {
             var mon = new money();
-            var cupom = new List<string>();
-
-            cupom.Add("CONVEYNET - CONVÊNIOS");
-            cupom.Add("COMPROVANTE CANCELAMENTO VENDA");
-            cupom.Add(db.currentLojista.st_nome);
-            cupom.Add("CNPJ: " + db.currentLojista.nu_CNPJ);
-            cupom.Add(db.currentLojista.st_endereco.Replace("{SE$3}", "") + " " + db.currentLojista.st_cidade + " / " + db.currentLojista.st_estado);
-            cupom.Add("Estabelecimento: " + db.currentLojista.st_loja);
-            cupom.Add("Cartão: " + cart.st_empresa + cart.st_matricula);
-            cupom.Add("Data transação: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
-            cupom.Add("NSU: " + nsu_retorno);
-            cupom.Add("Terminal: " + terminal);
-            cupom.Add("NSU trans. original: " + nsu.PadLeft(6, '0'));
-            cupom.Add("Data da Trans. original: " + Convert.ToDateTime(lTr.dt_transacao).ToString("dd-MM-yyyy"));
-            cupom.Add("Hora Trans. original: " + Convert.ToDateTime(lTr.dt_transacao).ToString("HH:mm:ss"));
-            cupom.Add("Valor trans original: R$ " + mon.setMoneyFormat((long)lTr.vr_total));
-            cupom.Add(prop.st_nome);
-            cupom.Add("*Valor estornado do limite do associado");
-            cupom.Add(" ");
-            cupom.Add("   ");
-            cupom.Add("-------------------------------------------");
+            var cupom = new List<string>
+            {
+                "CONVEYNET - CONVÊNIOS",
+                "COMPROVANTE CANCELAMENTO VENDA",
+                db.currentLojista.st_nome,
+                "CNPJ: " + db.currentLojista.nu_CNPJ,
+                db.currentLojista.st_endereco.Replace("{SE$3}", "") + " " + db.currentLojista.st_cidade + " / " + db.currentLojista.st_estado,
+                "Estabelecimento: " + db.currentLojista.st_loja,
+                "Cartão: " + cart.st_empresa + cart.st_matricula,
+                "Data transação: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"),
+                "NSU: " + nsu_retorno,
+                "Terminal: " + terminal,
+                "NSU trans. original: " + nsu.PadLeft(6, '0'),
+                "Data da Trans. original: " + Convert.ToDateTime(lTr.dt_transacao).ToString("dd-MM-yyyy"),
+                "Hora Trans. original: " + Convert.ToDateTime(lTr.dt_transacao).ToString("HH:mm:ss"),
+                "Valor trans original: R$ " + mon.setMoneyFormat((long)lTr.vr_total),
+                prop.st_nome,
+                "*Valor estornado do limite do associado",
+                " ",
+                "   ",
+                "-------------------------------------------"
+            };
 
             return cupom;
         }
@@ -64,18 +65,19 @@ namespace DevKit.Web.Controllers
         {
             var mon = new money();
 
-            var cupom = new List<string>();
-
-            cupom.Add("CONVEYNET - CONVÊNIOS");
-            cupom.Add(db.currentLojista.st_nome);
-            cupom.Add("CNPJ: " + db.currentLojista.nu_CNPJ);
-            cupom.Add(db.currentLojista.st_endereco.Replace("{SE$3}", "") + " " + db.currentLojista.st_cidade + " / " + db.currentLojista.st_estado);
-            cupom.Add("Estabelecimento: " + db.currentLojista.st_loja);
-            cupom.Add("Cartão: " + associadoPrincipal.st_empresa + associadoPrincipal.st_matricula);
-            cupom.Add("Data transação: " + dataVenda);
-            cupom.Add("NSU: " + nsu_retorno);
-            cupom.Add("Terminal: " + terminal);
-            cupom.Add("VALOR TOTAL: R$ " + mon.setMoneyFormat(valor));
+            var cupom = new List<string>
+            {
+                "CONVEYNET - CONVÊNIOS",
+                db.currentLojista.st_nome,
+                "CNPJ: " + db.currentLojista.nu_CNPJ,
+                db.currentLojista.st_endereco.Replace("{SE$3}", "") + " " + db.currentLojista.st_cidade + " / " + db.currentLojista.st_estado,
+                "Estabelecimento: " + db.currentLojista.st_loja,
+                "Cartão: " + associadoPrincipal.st_empresa + associadoPrincipal.st_matricula,
+                "Data transação: " + dataVenda,
+                "NSU: " + nsu_retorno,
+                "Terminal: " + terminal,
+                "VALOR TOTAL: R$ " + mon.setMoneyFormat(valor)
+            };
 
             int iParc = 1;
 

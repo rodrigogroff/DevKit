@@ -28,7 +28,8 @@ namespace DataModel
                         nu_parcelas,
                         st_valores,
                         st_codLoja,
-                        st_nsuOrigemSITEF;
+                        st_nsuOrigemSITEF,
+                        tipoWeb = "";
     }
 
     public class POS_Resposta

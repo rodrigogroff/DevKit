@@ -1,5 +1,4 @@
-﻿using DataModel;
-using LinqToDB;
+﻿using LinqToDB;
 using System.Collections.Generic;
 using System;
 using System.Linq;
@@ -649,6 +648,35 @@ namespace DataModel
 
             if (term != null)
                 output_st_msg = "SITEF (" + term.nu_terminal + ") " + term.st_localizacao;
+
+            if (var_codResp != "0000")
+            {
+                if (input_cont_pe.tipoWeb.ToLower() == "web")
+                    output_st_msg = "Web Payment";
+                else if (input_cont_pe.tipoWeb.ToLower() == "mobile")
+                    output_st_msg = "Mobile Payment";
+                else
+                {
+                    if (term != null)
+                       output_st_msg = "SITEF (" + term.nu_terminal + ") " + term.st_localizacao;
+                    else
+                        output_st_msg = "SITEF";
+                }
+            }
+            else
+            {
+                if (input_cont_pe.tipoWeb.ToLower() == "web")
+                    output_st_msg = "Web Payment";
+                else if (input_cont_pe.tipoWeb.ToLower() == "mobile")
+                    output_st_msg = "Mobile Payment";
+                else
+                {
+                    if (term != null)
+                        output_st_msg = "SITEF (" + term.nu_terminal + ") " + term.st_localizacao;
+                    else
+                        output_st_msg = "SITEF";
+                }
+            }
 
             var l_tr = new LOG_Transaco
             {

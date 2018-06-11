@@ -433,7 +433,6 @@ public partial class ClientHandler
                                         IsSitef = true
                                     };
 
-                                    v.input_cont_pe.st_terminal = regIso.terminal;
                                     v.input_cont_pe.st_empresa = regIso.trilha2.Substring(6, 6);
                                     v.input_cont_pe.st_matricula = regIso.trilha2.Substring(12, 6);
                                     v.input_cont_pe.st_titularidade = regIso.trilha2.Substring(18, 2);

@@ -652,16 +652,11 @@ namespace DataModel
             if (var_codResp != "0000")
             {
                 if (input_cont_pe.tipoWeb.ToLower() == "web")
-                    output_st_msg = "Web Payment";
+                    output_st_msg = "Web (" + output_st_msg + ")";
                 else if (input_cont_pe.tipoWeb.ToLower() == "mobile")
-                    output_st_msg = "Mobile Payment";
+                    output_st_msg = "Mobile (" + output_st_msg + ")";
                 else
-                {
-                    if (term != null)
-                       output_st_msg = "SITEF (" + term.nu_terminal + ") " + term.st_localizacao;
-                    else
-                        output_st_msg = "SITEF";
-                }
+                    output_st_msg = "SITEF (" + output_st_msg + ")";                
             }
             else
             {

@@ -138,18 +138,22 @@ namespace DataModel
             }
             else // sitef
             {
-                var termSt = input_cont_pe.st_codLoja.TrimStart('0').PadLeft(8, '0');
+                var termSt = input_cont_pe.st_codLoja.TrimStart('0');
 
-                Registry("(a1) db.T_Terminal.FirstOrDefault(y => y.nu_terminal == " + termSt);
+                Registry("(Sitef 1.1) db.T_Loja.FirstOrDefault(y => y.st_loja == " + termSt);
+                
+                var _loj = db.T_Loja.FirstOrDefault(y => y.st_loja == termSt);
 
-                term = db.T_Terminal.FirstOrDefault(y => y.nu_terminal == termSt);
-
-                if (term == null)
+                if (_loj == null)
                 {
                     output_st_msg = "Terminal inexistente";
                     var_codResp = "0303";
                     return false;
                 }
+
+                Registry("(Sitef 1.2) db.T_Terminal.FirstOrDefault(y => y.fk_loja == " + loj.i_unique);
+
+                term = db.T_Terminal.FirstOrDefault(y => y.fk_loja == loj.i_unique);                
             }
 
             {
@@ -645,9 +649,6 @@ namespace DataModel
                 output_cont_pr.st_via = cartPortador.nu_viaCartao.ToString();
 
             Registry("(f3) registra a transacao");
-
-            if (term != null)
-                output_st_msg = "SITEF (" + term.nu_terminal + ") " + term.st_localizacao;
 
             if (var_codResp != "0000")
             {

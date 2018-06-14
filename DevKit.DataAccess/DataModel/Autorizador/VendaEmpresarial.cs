@@ -149,9 +149,9 @@ namespace DataModel
                 {
                     // no rows selected, tenta terminal com os zeros
 
-                    var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal);
+                    var q = db.T_Terminal.Where(y => y.nu_terminal == termSt.PadLeft(8,'0'));
 
-                    Registry("(a1.x1) db.T_Terminal.Where(y => y.nu_terminal == " + input_cont_pe.st_terminal);
+                    Registry("(a1.x1) db.T_Terminal.Where(y => y.nu_terminal == " + termSt);
 
                     term = q.FirstOrDefault();
 

@@ -140,20 +140,43 @@ namespace DataModel
             {
                 var termSt = input_cont_pe.st_codLoja.TrimStart('0');
 
+                // passo 1
                 Registry("(Sitef 1.1) db.T_Loja.FirstOrDefault(y => y.st_loja == " + termSt);
                 
                 var _loj = db.T_Loja.FirstOrDefault(y => y.st_loja == termSt);
 
                 if (_loj == null)
                 {
-                    output_st_msg = "Terminal inexistente";
-                    var_codResp = "0303";
-                    return false;
+                    // no rows selected, tenta terminal com os zeros
+
+                    var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal);
+
+                    Registry("(a1.x1) db.T_Terminal.Where(y => y.nu_terminal == " + input_cont_pe.st_terminal);
+
+                    term = q.FirstOrDefault();
+
+                    if (term == null)
+                    {
+                        output_st_msg = "Terminal inexistente";
+                        var_codResp = "0303";
+                        return false;
+                    }
                 }
+                else
+                {
+                    // pega primeito terminal associado
 
-                Registry("(Sitef 1.2) db.T_Terminal.FirstOrDefault(y => y.fk_loja == " + loj.i_unique);
+                    Registry("(a1.x2) db.T_Terminal.FirstOrDefault(y => y.fk_loja == " + _loj.i_unique);
 
-                term = db.T_Terminal.FirstOrDefault(y => y.fk_loja == loj.i_unique);                
+                    term = db.T_Terminal.FirstOrDefault(y => y.fk_loja == _loj.i_unique);
+
+                    if (term == null)
+                    {
+                        output_st_msg = "Terminal inexistente";
+                        var_codResp = "0303";
+                        return false;
+                    }
+                }
             }
 
             {

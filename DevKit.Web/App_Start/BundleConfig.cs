@@ -102,6 +102,7 @@ namespace DevKit.Web
                 "~/app/system/loja/ListingLojasController.js",
                 "~/app/system/loja/LojaController.js",
                 "~/app/system/loja/LojaMensagensController.js",
+                "~/app/system/admopers/opers.js",
                 "~/app/associado/LimitesController.js",
                 "~/app/associado/LimitesMobileController.js",
                 "~/app/associado/ExtratosController.js",

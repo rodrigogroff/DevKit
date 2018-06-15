@@ -7,8 +7,6 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     $stateProvider
 
 	.state('login', { url: '/login', templateUrl: 'app/login/login.html', controller: 'LoginController', data: {} })
-    .state('home', { url: '/', templateUrl: 'app/home/home.html', controller: 'HomeController', data: {} })
-    .state('cache', { url: '/cache', templateUrl: 'app/home/cache.html', controller: 'CacheController', data: {} })
         
     .state('associado', { url: '/system/associado', templateUrl: 'app/system/associado/listingAssociados.html', controller: 'ListingAssociadosController' })
     .state('venda', { url: '/system/venda', templateUrl: 'app/system/venda/venda.html', controller: 'VendaController' })
@@ -45,6 +43,11 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('lojas', { url: '/system/lojas', templateUrl: 'app/system/loja/listingLojas.html', controller: 'ListingLojasController' })
     .state('loja-new', { url: '/system/loja/new', templateUrl: 'app/system/loja/loja.html', controller: 'LojaController' })
     .state('loja', { url: '/system/loja/:id', templateUrl: 'app/system/loja/loja.html', controller: 'LojaController' })
+
+
+        .state('admopers', { url: '/system/admopers/:id', templateUrl: 'app/system/admopers/opers.html', controller: 'AdmOpersController' })
+
+    
 
     .state('menuUsr', { url: '/system/associadoMenu', templateUrl: 'app/associado/menu.html', controller: 'AssociadoMenuController' })
 

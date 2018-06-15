@@ -147,13 +147,14 @@ namespace DevKit.Web.Controllers
                 {
                     var ultLog = (from e in db.LOG_Transacoes where e.i_unique == ultParcela.fk_log_transacoes select e).FirstOrDefault();
 
-                    if (ultLog.vr_total == valor)
-                    {
-                        var ts = (DateTime.Now - ultLog.dt_transacao).Value;
+                    if (ultLog != null)
+                        if (ultLog.vr_total == valor)
+                        {
+                            var ts = (DateTime.Now - ultLog.dt_transacao).Value;
 
-                        if (ts.TotalMinutes < 5)
-                            return BadRequest("Transação em duplicidade de valor");
-                    }
+                            if (ts.TotalMinutes < 5)
+                                return BadRequest("Transação em duplicidade de valor");
+                        }
                 }
                                 
                 {

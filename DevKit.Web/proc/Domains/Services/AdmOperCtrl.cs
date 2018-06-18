@@ -54,7 +54,8 @@ namespace DevKit.Web.Controllers
 
                         foreach (var item in db.LOG_Transacoes.
                                                 Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente &&
-                                                           y.dt_transacao > dt && y.dt_transacao < dtFim))
+                                                           y.dt_transacao > dt && y.dt_transacao < dtFim).
+                                                           ToList())
                         {
                             var itUpd = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == item.i_unique);
                             itUpd.tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada);

@@ -29,13 +29,41 @@
                                     <table width="430px">
                                         <tr>
                                             <td width="90px"><b>Dígitos:</b></td>
-                                            <td width="90px"><input type="text" focus="true" class="form-control input-transparent" ng-model="campos.cartEmp" maxlength="6" /></td>
+                                            <td width="90px">
+                                                <input type="text"
+                                                       focus="true"
+                                                       class="form-control input-transparent"
+                                                       ng-model="campos.cartEmp"
+                                                       maxlength="6"
+                                                       ng-keyup="$event.keyCode == 13 && pulaMatricula()" />
+                                            </td>
                                             <td width="30px"></td>
-                                            <td width="90px"><input type="text" class="form-control input-transparent" ng-model="campos.cartMat" maxlength="6" /></td>
+                                            <td width="90px">
+                                                <input type="text"
+                                                       class="form-control input-transparent"
+                                                       ng-model="campos.cartMat"
+                                                       id="cartMat"
+                                                       maxlength="6"
+                                                       ng-keyup="$event.keyCode == 13 && pulaAcesso()" />
+                                            </td>
                                             <td width="30px"></td>
-                                            <td width="70px"><input type="text" class="form-control input-transparent" ng-model="campos.cartCA" maxlength="4" /></td>
+                                            <td width="70px">
+                                                <input type="text"
+                                                       class="form-control input-transparent"
+                                                       ng-model="campos.cartCA"
+                                                       maxlength="4"
+                                                       id="cartAcesso"
+                                                       ng-keyup="$event.keyCode == 13 && pulaVenc()" />
+                                            </td>
                                             <td width="30px"></td>
-                                            <td width="70px"><input type="text" class="form-control input-transparent" ng-model="campos.cartTitVia" maxlength="4" /></td>
+                                            <td width="70px">
+                                                <input type="text"
+                                                       class="form-control input-transparent"
+                                                       ng-model="campos.cartTitVia"
+                                                       maxlength="4"
+                                                       id="cartVenc"
+                                                       ng-keyup="$event.keyCode == 13 && buscarCartao()" />
+                                            </td>
                                         </tr>
                                     </table>
                                 </td>

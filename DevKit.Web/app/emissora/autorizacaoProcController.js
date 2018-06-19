@@ -19,7 +19,11 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.selecionouProc = null;
         $scope.associado = undefined;
         $scope.pedirSenha = false;
-	}
+    }
+
+    $scope.pulaMatricula = function () { document.getElementById("cartMat").focus(); }
+    $scope.pulaAcesso = function () { document.getElementById("cartAcesso").focus(); }
+    $scope.pulaVenc = function () { document.getElementById("cartVenc").focus(); }
 
     $scope.buscarCartao = function () {
         $scope.loading = true;

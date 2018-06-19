@@ -22,6 +22,10 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.mostraGuia = false;
 	}
 
+    $scope.pulaMatricula = function () { document.getElementById("cartMat").focus(); }
+    $scope.pulaAcesso = function () { document.getElementById("cartAcesso").focus(); }
+    $scope.pulaVenc = function () { document.getElementById("cartVenc").focus(); }
+
     $scope.buscarCartao = function () {
         $scope.loading = true;
         $scope.associado = undefined;

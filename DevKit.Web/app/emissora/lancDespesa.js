@@ -41,6 +41,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
 
     $scope.buscaCartao = function () {
         $scope.loading = true;
+        $scope.campos.nomeAssociado = '';
 
         var opcoes = { skip: 0, take: 1, matricula: $scope.campos.matricula };
 
@@ -58,6 +59,26 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
     
     $scope.cancelar = function (mdl) {
         $scope.campos.selecionado = undefined;
+    }
+
+    var invalidCheck = function (element) {
+        if (element == undefined)
+            return true;
+        else
+            if (element.length == 0)
+                return true;
+
+        return false;
+    }
+
+    $scope.salvar = function ()
+    {
+        $scope.assoc_fail = invalidCheck($scope.campos.matricula) || $scope.campos.nomeAssociado == '';
+        $scope.dt_fail = invalidCheck($scope.campos.dt);
+        $scope.vr_fail = invalidCheck($scope.campos.valor);
+                
+        if ($scope.campos.valor == "0,00")
+            $scope.vr_fail = true;
     }
 
     // ------------------

@@ -17,18 +17,23 @@
                     <td width="120px">
                         Matricula
                     </td>
-                    <td width="20px"></td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="assoc_fail">!</button>
+                    </td>
                     <td width="180px">
                         <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.matricula" ng-keyup="$event.keyCode == 13 && buscaCartao()" />
                     </td>
                     <td width="20px"></td>
                     <td width="200px">
-                        {{campos.nomeAssociado}}
+                        <span class="btn-lg btn-success" ng-if="campos.nomeAssociado != ''">{{campos.nomeAssociado}}</span>
+                        
                     </td>
                 </tr>
                 <tr height="40px">
                     <td>Data</td>
-                    <td></td>
+                    <td>
+                        <button class="btn btn-xs btn-danger" ng-show="dt_fail">!</button>
+                    </td>
                     <td>
                         <input type="text" class="form-control input-transparent" ng-model="campos.dt"
                                maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_" />
@@ -36,14 +41,17 @@
                 </tr>
                 <tr height="40px">
                     <td>Valor final</td>
-                    <td></td>
+                    <td>
+                        <button class="btn btn-xs btn-danger" ng-show="vr_fail">!</button>
+                    </td>
                     <td>
                         <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="2" ng-model="campos.valor">
                     </td>
                 </tr>
                 <tr height="40px">
                     <td>Tipo Despesa</td>
-                    <td></td>
+                    <td>
+                    </td>
                     <td>
                         <input type="hidden" style="width:100%" ui-select2="campos.selectTipoAutorizacao" data-placeholder="(Selecione)" ng-model="campos.tipo" />
                     </td>
@@ -59,7 +67,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Código Diária</b></td>
                         <td width="220px">
-                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchDiaria()"/>
                         </td>
                         <td width="60px"></td>
                         <td width="110px"><b></b></td>
@@ -72,7 +80,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Descrição</b></td>
                         <td width="220px">
-                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchDiaria()" />
                         </td>
                     </tr>
                     <tr height="12px" />
@@ -155,7 +163,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Código Material</b></td>
                         <td width="220px">
-                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchMaterial()" />
                         </td>
                         <td width="60px"></td>
                         <td width="110px"><b></b></td>
@@ -168,7 +176,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Descrição</b></td>
                         <td width="220px">
-                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchMaterial()" />
                         </td>
                     </tr>
                     <tr height="12px" />
@@ -256,7 +264,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Cód. Medicamento</b></td>
                         <td width="220px">
-                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchMed()" />
                         </td>
                         <td width="60px"></td>
                         <td width="110px"><b></b></td>
@@ -269,7 +277,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Descrição</b></td>
                         <td width="220px">
-                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchMed()" />
                         </td>
                     </tr>
                     <tr height="12px" />
@@ -359,7 +367,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Cód. Não Médicos</b></td>
                         <td width="220px">
-                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchNaoMed()"/>
                         </td>
                         <td width="60px"></td>
                         <td width="110px"><b></b></td>
@@ -372,7 +380,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Descrição</b></td>
                         <td width="220px">
-                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchNaoMed()"/>
                         </td>
                     </tr>
                     <tr height="12px" />
@@ -441,7 +449,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Código OPME</b></td>
                         <td width="220px">
-                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchOPME()" />
                         </td>
                         <td width="60px"></td>
                         <td width="110px"><b></b></td>
@@ -454,7 +462,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Descrição</b></td>
                         <td width="220px">
-                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchOPME()"/>
                         </td>
                     </tr>
                     <tr height="12px" />
@@ -532,7 +540,7 @@
                         <td width="25px"></td>
                         <td width="110px"><b>Código Pacote</b></td>
                         <td width="220px">
-                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchPacote()" />
                         </td>
                         <td width="60px"></td>
                         <td width="110px"><b></b></td>
@@ -545,7 +553,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Descrição</b></td>
                         <td width="220px">
-                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchPacote()" />
                         </td>
                     </tr>
                     <tr height="12px" />
@@ -608,7 +616,7 @@
 
             <div ng-if="campos.selecionado != undefined">
                 <br />
-                <button type="submit" class="btn btn-lg btn-success" ng-click="addDespesa()">Adicionar Autorização de despesa</button>
+                <button type="submit" class="btn btn-lg btn-success" ng-click="salvar()">Salvar despesa</button>
             </div>
 
             <br />

@@ -112,9 +112,9 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
 		//if (!$scope.permModel.novo && !$scope.permModel.edicao)
           //  toastr.error('Acesso negado!', 'Permissão');
 		//else
-		{
+        {
 			$scope.stNome_fail = invalidCheck($scope.viewModel.stNome);
-            $scope.cpf_fail = invalidCheck($scope.viewModel.stCPF);
+            $scope.cpf_fail = invalidCheck($scope.viewModel.stCnpj);
 	
             if (!$scope.stName_fail)
             {

@@ -78,7 +78,7 @@ namespace DataModel
                 File.Move(__nomeFile, __nomeFile.Replace(".txt", "_falha.txt"));
         }
 
-        private string GetRandomString(int length)
+        public string GetRandomString(int length)
         {
             var rand = new Random();
             var ret = "";

@@ -9,7 +9,7 @@ namespace DataModel
 {
     public class PrecoOPMEFilter
     {
-        public string codigo = "";
+        public string codigo = "", desc = "";
 
         public int skip, take;
     }
@@ -34,6 +34,12 @@ namespace DataModel
             var query = from e in db.SaudeValorOPME
                         where e.fkEmpresa == db.currentUser.fkEmpresa
                         select e;
+
+            if (!string.IsNullOrEmpty(filter.codigo))
+                query = query.Where(y => y.nuCodInterno.ToString() == filter.codigo);
+            
+            if (!string.IsNullOrEmpty(filter.desc))
+                query = query.Where(y => y.stDesc.ToUpper() == filter.desc);
 
             ret.count = query.Count();
             ret.results = (query.Skip(filter.skip).Take(filter.take)).ToList();

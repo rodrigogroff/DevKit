@@ -70,6 +70,9 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
     .state('emissorprecopacote', { url: '/emissora/precospacote', templateUrl: 'app/emissora/precoPacote.html', controller: 'EmissoraPrecoPacoteController' })
     .state('emissorprecoprocedimento', { url: '/emissora/precosprocedimento', templateUrl: 'app/emissora/precoProcedimento.html', controller: 'EmissoraPrecoProcedimentoController' })
 
+
+    .state('emissorlancdespesa', { url: '/emissora/lancamentoDespesa', templateUrl: 'app/emissora/lancDespesa.html', controller: 'EmissoraLancDespesaController' })
+
     .state('credenciados', { url: '/dba/credenciados', templateUrl: 'app/dba/listingCredenciados.html', controller: 'ListingCredenciadosController' })
     .state('credenciado', { url: '/dba/credenciado/:id', templateUrl: 'app/dba/credenciado.html', controller: 'CredenciadoController' })
     .state('novocredenciado', { url: '/dba/credenciado/novo', templateUrl: 'app/dba/credenciado.html', controller: 'CredenciadoController' })

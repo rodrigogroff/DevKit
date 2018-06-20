@@ -110,6 +110,7 @@ namespace DevKit.Web
                 "~/app/emissora/segVia.js",
                 "~/app/emissora/bloqueio.js",
                 "~/app/emissora/desbloqueio.js",
+                "~/app/emissora/lancDespesa.js",
                 "~/app/emissora/precoDiaria.js",
                 "~/app/emissora/precoMaterial.js",
                 "~/app/emissora/precoMedicamento.js",

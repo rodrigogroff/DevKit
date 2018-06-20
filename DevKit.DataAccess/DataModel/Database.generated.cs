@@ -222,6 +222,9 @@ namespace DataModel
 		[Column,     Nullable] public long?     vrParcelaCoPart     { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAssociadoPortador { get; set; } // bigint
 		[Column,     Nullable] public long?     nuNSU               { get; set; } // bigint
+		[Column,     Nullable] public long?     nuTipoAutorizacao   { get; set; } // bigint
+		[Column,     Nullable] public long?     fkPrecificacao      { get; set; } // bigint
+		[Column,     Nullable] public long?     vrValorOutroTipo    { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Cidade")]

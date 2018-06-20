@@ -157,6 +157,7 @@
     <Compile Include="DataModel\Domains\Util.cs" />
     <Compile Include="DataModel\Enums\Template\AccumulatorType_enum.cs" />
     <Compile Include="DataModel\Enums\Tipos\TipoExpedicao_enum.cs" />
+    <Compile Include="DataModel\Enums\Tipos\TipoAutorizacao_enum.cs" />
     <Compile Include="DataModel\Enums\Tipos\TipoSituacao_enum.cs" />
     <Compile Include="DataModel\Enums\Template\AuditType_enum.cs" />
     <Compile Include="DataModel\Enums\Template\AuditAction_enum.cs" />

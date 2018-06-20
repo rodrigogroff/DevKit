@@ -9,7 +9,7 @@ namespace DataModel
 {
     public class PrecoPacoteFilter
     {
-        public string codigo = "";
+        public string codigo = "", desc = "";
 
         public int skip, take;
     }
@@ -32,6 +32,12 @@ namespace DataModel
             var query = from e in db.SaudeValorPacote
                         where e.fkEmpresa == db.currentUser.fkEmpresa
                         select e;
+
+            if (!string.IsNullOrEmpty(filter.codigo))
+                query = query.Where(y => y.nuCodInterno.ToString() == filter.codigo);
+
+            if (!string.IsNullOrEmpty(filter.desc))
+                query = query.Where(y => y.stDesc.ToUpper() == filter.codigo.ToUpper());
 
             ret.count = query.Count();
             ret.results = (query.Skip(filter.skip).Take(filter.take)).ToList();

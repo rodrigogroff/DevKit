@@ -484,6 +484,9 @@ ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "vrParcelaCoPart" bigi
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuTotParcelas" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuIndice" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAssociadoPortador" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuTipoAutorizacao" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkPrecificacao" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "vrValorOutroTipo" bigint;
 
 CREATE TABLE IF NOT EXISTS public."LoteGrafica" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
 ALTER TABLE public."LoteGrafica" OWNER to postgres;

@@ -1,0 +1,624 @@
+﻿<div class="webFormPostion" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr>
+                    <td width="20px"></td>
+                    <td>Lançamento de <b>Despesas do Associado</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+
+            <table style="">
+                <tr height="40px">
+                    <td width="120px">
+                        Matricula
+                    </td>
+                    <td width="20px"></td>
+                    <td width="180px">
+                        <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.matricula" ng-keyup="$event.keyCode == 13 && buscaCartao()" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="200px">
+                        {{campos.nomeAssociado}}
+                    </td>
+                </tr>
+                <tr height="40px">
+                    <td>Data</td>
+                    <td></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.dt"
+                               maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_" />
+                    </td>
+                </tr>
+                <tr height="40px">
+                    <td>Valor final</td>
+                    <td></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="2" ng-model="campos.valor">
+                    </td>
+                </tr>
+                <tr height="40px">
+                    <td>Tipo Despesa</td>
+                    <td></td>
+                    <td>
+                        <input type="hidden" style="width:100%" ui-select2="campos.selectTipoAutorizacao" data-placeholder="(Selecione)" ng-model="campos.tipo" />
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+
+            <div ng-if="campos.tipo == 1">
+                <table class="widget" style="color:white">
+                    <tr height="22px"> </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Código Diária</b></td>
+                        <td width="220px">
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                        </td>
+                        <td width="60px"></td>
+                        <td width="110px"><b></b></td>
+                        <td width="220px">
+                            <button type="submit" class="btn btn-primary" ng-click="searchDiaria()">Pesquisa</button>
+                        </td>
+                        <td width="25px"></td>
+                    </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Descrição</b></td>
+                        <td width="220px">
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                        </td>
+                    </tr>
+                    <tr height="12px" />
+                </table>
+
+                <div style="overflow-x:scroll;overflow:auto;">
+                    <table>
+                        <tr>
+                            <td valign="top">
+                                <div ng-show="list.length == 0">
+                                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    <br />
+                                    <br />
+                                </div>
+                                <div ng-show="campos.selecionado != undefined">
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano</th>
+                                                <th style="min-width:80px">Código</th>
+                                                <th style="min-width:380px">Descrição</th>
+                                                <th style="min-width:120px">R$ Nível 1</th>
+                                                <th style="min-width:120px">R$ Nível 2</th>
+                                                <th style="min-width:120px">R$ Nível 3</th>
+                                                <th style="min-width:120px">R$ Nível 4</th>
+                                                <th style="min-width:120px">R$ Nível 5</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
+                                            <td>{{ campos.selecionado.nuCodInterno }}</td>
+                                            <td>{{ campos.selecionado.stDesc }}</td>
+                                            <td>{{ campos.selecionado.svrNivel1 }}</td>
+                                            <td>{{ campos.selecionado.svrNivel2 }}</td>
+                                            <td>{{ campos.selecionado.svrNivel3 }}</td>
+                                            <td>{{ campos.selecionado.svrNivel4 }}</td>
+                                            <td>{{ campos.selecionado.svrNivel5 }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div ng-show="list.length > 0 && campos.selecionado == undefined">
+                                    <ng-paginacao carregar="loadDiaria" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorDiaria"></ng-paginacao>
+                                    <br />
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano</th>
+                                                <th style="min-width:80px">Código</th>
+                                                <th style="min-width:380px">Descrição</th>
+                                                <th style="min-width:120px">R$ Nível 1</th>
+                                                <th style="min-width:120px">R$ Nível 2</th>
+                                                <th style="min-width:120px">R$ Nível 3</th>
+                                                <th style="min-width:120px">R$ Nível 4</th>
+                                                <th style="min-width:120px">R$ Nível 5</th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                            <td>{{ mdl.nuAnoVigencia }}</td>
+                                            <td>{{ mdl.nuCodInterno }}</td>
+                                            <td>{{ mdl.stDesc }}</td>
+                                            <td>{{ mdl.svrNivel1 }}</td>
+                                            <td>{{ mdl.svrNivel2 }}</td>
+                                            <td>{{ mdl.svrNivel3 }}</td>
+                                            <td>{{ mdl.svrNivel4 }}</td>
+                                            <td>{{ mdl.svrNivel5 }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-if="campos.tipo == 2">
+
+                <table class="widget" style="color:white">
+                    <tr height="22px"> </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Código Material</b></td>
+                        <td width="220px">
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                        </td>
+                        <td width="60px"></td>
+                        <td width="110px"><b></b></td>
+                        <td width="220px">
+                            <button type="submit" class="btn btn-primary" ng-click="searchMaterial()">Pesquisa</button>
+                        </td>
+                        <td width="25px"></td>
+                    </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Descrição</b></td>
+                        <td width="220px">
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                        </td>
+                    </tr>
+                    <tr height="12px" />
+                </table>
+
+                <div style="overflow-x:scroll;overflow:auto;">
+                    <table>
+                        <tr>
+                            <td valign="top">
+                                <div ng-show="list.length == 0">
+                                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    <br />
+                                    <br />
+                                </div>
+                                <div ng-show="list.length > 0 && campos.selecionado != undefined">
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano <br /></th>
+                                                <th style="min-width:80px">Código<br /></th>
+                                                <th style="min-width:200px">Descrição <br /></th>
+                                                <th style="min-width:200px">Descrição <br />Comercial</th>
+                                                <th style="min-width:200px">Fabricante<br /></th>
+                                                <th style="min-width:90px">Unidade <br /></th>
+                                                <th style="min-width:90px">Valor<br />Fração</th>
+                                                <th style="min-width:90px">Fracionar <br /></th>
+                                                <th style="min-width:90px">Valor<br /></th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
+                                            <td>{{ campos.selecionado.nuCodInterno }}</td>
+                                            <td>{{ campos.selecionado.stDesc }}</td>
+                                            <td>{{ campos.selecionado.stComercial }}</td>
+                                            <td>{{ campos.selecionado.sfkFabricanteMaterial }}</td>
+                                            <td>{{ campos.selecionado.sfkUnidade }}</td>
+                                            <td>{{ campos.selecionado.svrFracao }}</td>
+                                            <td>{{ campos.selecionado.sbFracionar }}</td>
+                                            <td>{{ campos.selecionado.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div ng-show="list.length > 0 && campos.selecionado == undefined">
+                                    <ng-paginacao carregar="loadMaterial" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorMaterial"></ng-paginacao>
+                                    <br />
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano <br /></th>
+                                                <th style="min-width:80px">Código<br /></th>
+                                                <th style="min-width:200px">Descrição <br /></th>
+                                                <th style="min-width:200px">Descrição <br />Comercial</th>
+                                                <th style="min-width:200px">Fabricante<br /></th>
+                                                <th style="min-width:90px">Unidade <br /></th>
+                                                <th style="min-width:90px">Valor<br />Fração</th>
+                                                <th style="min-width:90px">Fracionar <br /></th>
+                                                <th style="min-width:90px">Valor<br /></th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                            <td>{{ mdl.nuAnoVigencia }}</td>
+                                            <td>{{ mdl.nuCodInterno }}</td>
+                                            <td>{{ mdl.stDesc }}</td>
+                                            <td>{{ mdl.stComercial }}</td>
+                                            <td>{{ mdl.sfkFabricanteMaterial }}</td>
+                                            <td>{{ mdl.sfkUnidade }}</td>
+                                            <td>{{ mdl.svrFracao }}</td>
+                                            <td>{{ mdl.sbFracionar }}</td>
+                                            <td>{{ mdl.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-if="campos.tipo == 3">
+
+                <table class="widget" style="color:white">
+                    <tr height="22px"> </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Cód. Medicamento</b></td>
+                        <td width="220px">
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                        </td>
+                        <td width="60px"></td>
+                        <td width="110px"><b></b></td>
+                        <td width="220px">
+                            <button type="submit" class="btn btn-primary" ng-click="searchMed()">Pesquisa</button>
+                        </td>
+                        <td width="25px"></td>
+                    </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Descrição</b></td>
+                        <td width="220px">
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                        </td>
+                    </tr>
+                    <tr height="12px" />
+                </table>
+
+                <div style="overflow-x:scroll;overflow:auto;">
+                    <table>
+                        <tr>
+                            <td valign="top">
+                                <div ng-show="list.length == 0">
+                                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    <br />
+                                    <br />
+                                </div>
+
+                                <div ng-show="campos.selecionado != undefined">
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano <br /></th>
+                                                <th style="min-width:80px">Código<br /></th>
+                                                <th style="min-width:200px">Descrição <br /></th>
+                                                <th style="min-width:200px">Descrição <br />Comercial</th>
+                                                <th style="min-width:200px">Fabricante<br /></th>
+                                                <th style="min-width:90px">Unidade <br /></th>
+                                                <th style="min-width:90px">Valor<br />Fração</th>
+                                                <th style="min-width:90px">Fracionar <br /></th>
+                                                <th style="min-width:90px">Valor<br /></th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
+                                            <td>{{ campos.selecionado.nuCodInterno }}</td>
+                                            <td>{{ campos.selecionado.stDesc }}</td>
+                                            <td>{{ campos.selecionado.stComercial }}</td>
+                                            <td>{{ campos.selecionado.sfkFabricanteMedicamento }}</td>
+                                            <td>{{ campos.selecionado.sfkUnidade }}</td>
+                                            <td>{{ campos.selecionado.svrFracao }}</td>
+                                            <td>{{ campos.selecionado.sbFracionar }}</td>
+                                            <td>{{ campos.selecionado.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div ng-show="list.length > 0 && campos.selecionado == undefined">
+                                    <ng-paginacao carregar="loadMed" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorMed"></ng-paginacao>
+                                    <br />
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano <br /></th>
+                                                <th style="min-width:80px">Código<br /></th>
+                                                <th style="min-width:200px">Descrição <br /></th>
+                                                <th style="min-width:200px">Descrição <br />Comercial</th>
+                                                <th style="min-width:200px">Fabricante<br /></th>
+                                                <th style="min-width:90px">Unidade <br /></th>
+                                                <th style="min-width:90px">Valor<br />Fração</th>
+                                                <th style="min-width:90px">Fracionar <br /></th>
+                                                <th style="min-width:90px">Valor<br /></th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                            <td>{{ mdl.nuAnoVigencia }}</td>
+                                            <td>{{ mdl.nuCodInterno }}</td>
+                                            <td>{{ mdl.stDesc }}</td>
+                                            <td>{{ mdl.stComercial }}</td>
+                                            <td>{{ mdl.sfkFabricanteMedicamento }}</td>
+                                            <td>{{ mdl.sfkUnidade }}</td>
+                                            <td>{{ mdl.svrFracao }}</td>
+                                            <td>{{ mdl.sbFracionar }}</td>
+                                            <td>{{ mdl.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div ng-if="campos.tipo == 4">
+
+                <table class="widget" style="color:white">
+                    <tr height="22px"> </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Cód. Não Médicos</b></td>
+                        <td width="220px">
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                        </td>
+                        <td width="60px"></td>
+                        <td width="110px"><b></b></td>
+                        <td width="220px">
+                            <button type="submit" class="btn btn-primary" ng-click="searchNaoMed()">Pesquisa</button>
+                        </td>
+                        <td width="25px"></td>
+                    </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Descrição</b></td>
+                        <td width="220px">
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                        </td>
+                    </tr>
+                    <tr height="12px" />
+                </table>
+
+                <div style="overflow-x:scroll;overflow:auto;">
+                    <table>
+                        <tr>
+                            <td valign="top">
+                                <div ng-show="list.length == 0">
+                                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    <br />
+                                    <br />
+                                </div>
+
+                                <div ng-show="campos.selecionado != undefined">
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano <br /></th>
+                                                <th style="min-width:80px">Código<br /></th>
+                                                <th style="min-width:200px">Descrição <br /></th>
+                                                <th style="min-width:90px">Valor<br /></th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
+                                            <td>{{ campos.selecionado.nuCodInterno }}</td>
+                                            <td>{{ campos.selecionado.stDesc }}</td>
+                                            <td>{{ campos.selecionado.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div ng-show="list.length > 0 && campos.selecionado == undefined">
+                                    <ng-paginacao carregar="loadNaoMed" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorNaoMed"></ng-paginacao>
+                                    <br />
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano <br /></th>
+                                                <th style="min-width:80px">Código<br /></th>
+                                                <th style="min-width:200px">Descrição <br /></th>
+                                                <th style="min-width:90px">Valor<br /></th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                            <td>{{ mdl.nuAnoVigencia }}</td>
+                                            <td>{{ mdl.nuCodInterno }}</td>
+                                            <td>{{ mdl.stDesc }}</td>
+                                            <td>{{ mdl.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-if="campos.tipo == 5">
+
+                <table class="widget" style="color:white">
+                    <tr height="22px"> </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Código OPME</b></td>
+                        <td width="220px">
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                        </td>
+                        <td width="60px"></td>
+                        <td width="110px"><b></b></td>
+                        <td width="220px">
+                            <button type="submit" class="btn btn-primary" ng-click="searchOPME()">Pesquisa</button>
+                        </td>
+                        <td width="25px"></td>
+                    </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Descrição</b></td>
+                        <td width="220px">
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                        </td>
+                    </tr>
+                    <tr height="12px" />
+                </table>
+
+                <div style="overflow-x:scroll;overflow:auto;">
+                    <table>
+                        <tr>
+                            <td valign="top">
+                                <div ng-show="list.length == 0">
+                                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    <br />
+                                    <br />
+                                </div>
+
+                                <div ng-show="campos.selecionado != undefined">
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano <br /></th>
+                                                <th style="min-width:80px">Código<br /></th>
+                                                <th style="min-width:200px">Descrição <br /></th>
+                                                <th style="min-width:200px">Classificação <br /></th>
+                                                <th style="min-width:200px">Especialidade <br /></th>
+                                                <th style="min-width:90px">Valor<br /></th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
+                                            <td>{{ campos.selecionado.nuCodInterno }}</td>
+                                            <td>{{ campos.selecionado.stDesc }}</td>
+                                            <td>{{ campos.selecionado.sfkClassificacao }}</td>
+                                            <td>{{ campos.selecionado.sfkEspecialidade }}</td>
+                                            <td>{{ campos.selecionado.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div ng-show="list.length > 0 && campos.selecionado == undefined">
+                                    <ng-paginacao carregar="loadOPME" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorOPME"></ng-paginacao>
+                                    <br />
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano <br /></th>
+                                                <th style="min-width:80px">Código<br /></th>
+                                                <th style="min-width:200px">Descrição <br /></th>
+                                                <th style="min-width:200px">Classificação <br /></th>
+                                                <th style="min-width:200px">Especialidade <br /></th>
+                                                <th style="min-width:90px">Valor<br /></th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                            <td>{{ mdl.nuAnoVigencia }}</td>
+                                            <td>{{ mdl.nuCodInterno }}</td>
+                                            <td>{{ mdl.stDesc }}</td>
+                                            <td>{{ mdl.sfkClassificacao }}</td>
+                                            <td>{{ mdl.sfkEspecialidade }}</td>
+                                            <td>{{ mdl.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div ng-if="campos.tipo == 6">
+
+                <table class="widget" style="color:white">
+                    <tr height="22px"> </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="110px"><b>Código Pacote</b></td>
+                        <td width="220px">
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" />
+                        </td>
+                        <td width="60px"></td>
+                        <td width="110px"><b></b></td>
+                        <td width="220px">
+                            <button type="submit" class="btn btn-primary" ng-click="searchPacote()">Pesquisa</button>
+                        </td>
+                        <td width="25px"></td>
+                    </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Descrição</b></td>
+                        <td width="220px">
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" />
+                        </td>
+                    </tr>
+                    <tr height="12px" />
+                </table>
+
+                <div style="overflow-x:scroll;overflow:auto;">
+                    <table>
+                        <tr>
+                            <td valign="top">
+                                <div ng-show="list.length == 0">
+                                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    <br />
+                                    <br />
+                                </div>
+                                <div ng-show="campos.selecionado != undefined">
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano</th>
+                                                <th style="min-width:80px">Código</th>
+                                                <th style="min-width:600px">Descrição</th>
+                                                <th style="min-width:90px">Valor</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
+                                            <td>{{ campos.selecionado.nuCodInterno }}</td>
+                                            <td>{{ campos.selecionado.stDesc }}</td>
+                                            <td>{{ campos.selecionado.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div ng-show="list.length > 0 && campos.selecionado == undefined">
+                                    <ng-paginacao carregar="loadPacote" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorPacote"></ng-paginacao>
+                                    <br />
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px">Ano</th>
+                                                <th style="min-width:80px">Código</th>
+                                                <th style="min-width:600px">Descrição</th>
+                                                <th style="min-width:90px">Valor</th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                            <td>{{ mdl.nuAnoVigencia }}</td>
+                                            <td>{{ mdl.nuCodInterno }}</td>
+                                            <td>{{ mdl.stDesc }}</td>
+                                            <td>{{ mdl.svrValor }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div ng-if="campos.selecionado != undefined">
+                <br />
+                <button type="submit" class="btn btn-lg btn-success" ng-click="addDespesa()">Adicionar Autorização de despesa</button>
+            </div>
+
+            <br />
+            <br />
+            <br />
+    </section>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

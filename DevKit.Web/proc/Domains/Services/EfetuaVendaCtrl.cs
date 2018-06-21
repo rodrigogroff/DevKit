@@ -156,83 +156,83 @@ namespace DevKit.Web.Controllers
                                 return BadRequest("Transação em duplicidade de valor");
                         }
                 }
-                                
+                
+                #region - autorizador interno -
+
+                var cartPortador = db.T_Cartao.FirstOrDefault(y => y.i_unique == idCartao);
+
+                var v = new DataModel.VendaEmpresarial();
+
+                v.input_cont_pe.st_terminal = terminal;
+                v.input_cont_pe.st_empresa = empresa;
+                v.input_cont_pe.st_matricula = matricula;
+                v.input_cont_pe.st_titularidade = cartPortador.st_titularidade;
+                v.input_cont_pe.nu_parcelas = parcelas.ToString().PadLeft(2,'0');
+                v.input_cont_pe.vr_valor = valor.ToString();
+                v.input_cont_pe.st_valores = "";
+                v.input_cont_pe.tipoWeb = tipoWeb;
+
+                if (parcelas >= 1) v.input_cont_pe.st_valores += p1.ToString().PadLeft(12, '0');
+                if (parcelas >= 2) v.input_cont_pe.st_valores += p2.ToString().PadLeft(12, '0');
+                if (parcelas >= 3) v.input_cont_pe.st_valores += p3.ToString().PadLeft(12, '0');
+                if (parcelas >= 4) v.input_cont_pe.st_valores += p4.ToString().PadLeft(12, '0');
+                if (parcelas >= 5) v.input_cont_pe.st_valores += p5.ToString().PadLeft(12, '0');
+                if (parcelas >= 6) v.input_cont_pe.st_valores += p6.ToString().PadLeft(12, '0');
+                if (parcelas >= 7) v.input_cont_pe.st_valores += p7.ToString().PadLeft(12, '0');
+                if (parcelas >= 8) v.input_cont_pe.st_valores += p8.ToString().PadLeft(12, '0');
+                if (parcelas >= 9) v.input_cont_pe.st_valores += p9.ToString().PadLeft(12, '0');
+                if (parcelas >= 10) v.input_cont_pe.st_valores += p10.ToString().PadLeft(12, '0');
+                if (parcelas >= 11) v.input_cont_pe.st_valores += p11.ToString().PadLeft(12, '0');
+                if (parcelas >= 12) v.input_cont_pe.st_valores += p12.ToString().PadLeft(12, '0');
+
+                if (senha != null)
+                    v.input_cont_pe.st_senha = new DataModel.BaseVenda().DESCript(senha.PadLeft(8, '*'), "12345678");
+
+                v.Run(db);
+
+                var cdResp = v.output_cont_pr.st_codResp;
+
+                if (cdResp != "0000")
                 {
-                    #region - autorizador interno -
-
-                    var cartPortador = db.T_Cartao.FirstOrDefault(y => y.i_unique == idCartao);
-
-                    var v = new DataModel.VendaEmpresarial();
-
-                    v.input_cont_pe.st_terminal = terminal;
-                    v.input_cont_pe.st_empresa = empresa;
-                    v.input_cont_pe.st_matricula = matricula;
-                    v.input_cont_pe.st_titularidade = cartPortador.st_titularidade;
-                    v.input_cont_pe.nu_parcelas = parcelas.ToString().PadLeft(2,'0');
-                    v.input_cont_pe.vr_valor = valor.ToString();
-                    v.input_cont_pe.st_valores = "";
-                    v.input_cont_pe.tipoWeb = tipoWeb;
-
-                    if (parcelas >= 1) v.input_cont_pe.st_valores += p1.ToString().PadLeft(12, '0');
-                    if (parcelas >= 2) v.input_cont_pe.st_valores += p2.ToString().PadLeft(12, '0');
-                    if (parcelas >= 3) v.input_cont_pe.st_valores += p3.ToString().PadLeft(12, '0');
-                    if (parcelas >= 4) v.input_cont_pe.st_valores += p4.ToString().PadLeft(12, '0');
-                    if (parcelas >= 5) v.input_cont_pe.st_valores += p5.ToString().PadLeft(12, '0');
-                    if (parcelas >= 6) v.input_cont_pe.st_valores += p6.ToString().PadLeft(12, '0');
-                    if (parcelas >= 7) v.input_cont_pe.st_valores += p7.ToString().PadLeft(12, '0');
-                    if (parcelas >= 8) v.input_cont_pe.st_valores += p8.ToString().PadLeft(12, '0');
-                    if (parcelas >= 9) v.input_cont_pe.st_valores += p9.ToString().PadLeft(12, '0');
-                    if (parcelas >= 10) v.input_cont_pe.st_valores += p10.ToString().PadLeft(12, '0');
-                    if (parcelas >= 11) v.input_cont_pe.st_valores += p11.ToString().PadLeft(12, '0');
-                    if (parcelas >= 12) v.input_cont_pe.st_valores += p12.ToString().PadLeft(12, '0');
-
-                    if (senha != null)
-                        v.input_cont_pe.st_senha = new DataModel.BaseVenda().DESCript(senha.PadLeft(8, '*'), "12345678");
-
-                    v.Run(db);
-
-                    var cdResp = v.output_cont_pr.st_codResp;
-
-                    if (cdResp != "0000")
+                    if (cdResp == "0505")
                     {
-                        if (cdResp == "0505")
+                        return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
+                    }
+                    else if (cdResp == "4343")
+                    {
+                        var numErros = (from e in db.T_Cartao
+                                        where e.i_unique == associadoPrincipal.i_unique
+                                        select e.nu_senhaErrada).
+                                        FirstOrDefault();
+
+                        if (numErros == 3)
+                        {
+                            // ultima!
+                            return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
+                        }
+                        else if (numErros >= 4)
                         {
                             return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
                         }
-                        else if (cdResp == "4343")
-                        {
-                            var numErros = (from e in db.T_Cartao
-                                            where e.i_unique == associadoPrincipal.i_unique
-                                            select e.nu_senhaErrada).
-                                            FirstOrDefault();
-
-                            if (numErros == 3)
-                            {
-                                // ultima!
-                                return BadRequest("(44) Senha inválida. A próxima senha inválida irá bloquear o cartão!");
-                            }
-                            else if (numErros >= 4)
-                            {
-                                return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
-                            }
-                            else
-                            {
-                                var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
-
-                                return BadRequest("(43) Senha inválida! " + tentativas);
-                            }
-                        }
                         else
-                            return BadRequest("Falha VC (0xE" + cdResp + " - " + v.output_st_msg + " )");
+                        {
+                            var tentativas = "Você ainda tem (" + (4 - numErros) + ") tentativas";
+
+                            return BadRequest("(43) Senha inválida! " + tentativas);
+                        }
                     }
-
-                    var vc = new DataModel.VendaEmpresarialConfirmacao();
-
-                    vc.Run(db, v.output_cont_pr.st_nsuRcb);
-
-                    #endregion
+                    else
+                        return BadRequest("Falha VC (0xE" + cdResp + " - " + v.output_st_msg + " )");
                 }
 
+                nsu_retorno = v.output_cont_pr.st_nsuRcb;
+
+                var vc = new DataModel.VendaEmpresarialConfirmacao();
+
+                vc.Run(db, v.output_cont_pr.st_nsuRcb);
+
+                #endregion
+                
                 var cupom = new Cupom().
                        Venda(db,
                                associadoPrincipal,
@@ -243,10 +243,6 @@ namespace DevKit.Web.Controllers
                                (int)parcelas,
                                valor,
                                p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
-
-                // -----------------------------------------
-                // encerra
-                // -----------------------------------------
 
                 return Ok(new
                 {
@@ -259,78 +255,5 @@ namespace DevKit.Web.Controllers
                 return BadRequest(ex.ToString());
             }
         }
-
-        //public string MontaVendaDigitada(int titularidade)
-        //{
-        //    var reg = "09"; 
-                
-        //    if (senha != null)
-        //        reg += "CECE";
-        //    else
-        //        reg += "DICE";
-
-        //    reg += terminal.PadRight(8, ' ');
-
-        //    reg += "000000";
-
-        //    reg += empresa.PadLeft(6, '0');
-        //    reg += matricula.PadLeft(6, '0');
-        //    reg += titularidade.ToString().PadLeft(2, '0');
-        //    reg += "       ";
-
-        //    if (senha != null)
-        //    {
-        //        reg += new Criptografia().DESCript(senha);
-        //    }
-        //    else
-        //    {
-        //        reg += "            ";
-        //        reg += codAcesso;
-        //    }
-            
-        //    reg += valor.ToString().PadLeft(12, '0');
-        //    reg += parcelas.ToString().PadLeft(2, '0');
-            
-        //    string valores = "";
-
-        //    if (parcelas >= 1) valores += p1.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 2) valores += p2.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 3) valores += p3.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 4) valores += p4.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 5) valores += p5.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 6) valores += p6.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 7) valores += p7.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 8) valores += p8.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 9) valores += p9.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 10) valores += p10.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 11) valores += p11.ToString().PadLeft(12, '0');
-        //    if (parcelas >= 12) valores += p12.ToString().PadLeft(12, '0');
-
-        //    reg += valores;
-
-        //    return reg;
-        //}
-
-        public string ObtemNsuRetorno(string message)
-        {
-            return message.Substring(7,6).TrimStart('0');
-        }
-
-        //public string MontaConfirmacao(int titularidade)
-        //{
-        //    var reg = "09CECC";
-
-        //    reg += terminal.PadRight(8, ' ');
-
-        //    reg += "000000";
-
-        //    reg += empresa.PadLeft(6, '0');
-        //    reg += matricula.PadLeft(6, '0');
-        //    reg += titularidade.ToString().PadLeft(2, '0');
-        //    reg += "       ";
-        //    reg += nsu_retorno;
-            
-        //    return reg.PadRight(100, ' ');
-        //}
     }
 }

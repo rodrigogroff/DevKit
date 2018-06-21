@@ -24,9 +24,23 @@
                         <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.matricula" ng-keyup="$event.keyCode == 13 && buscaCartao()" />
                     </td>
                     <td width="20px"></td>
+                    <td width="350px">
+                        <span class="btn btn-default" ng-if="campos.nomeAssociado != ''">{{campos.nomeAssociado}}</span>
+                    </td>
+                </tr>
+                <tr height="40px">
+                    <td width="120px">
+                        Credenciado
+                    </td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="cred_fail">!</button>
+                    </td>
+                    <td width="180px">
+                        <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.credenciado" ng-keyup="$event.keyCode == 13 && buscaCredenciado()" />
+                    </td>
+                    <td width="20px"></td>
                     <td width="200px">
-                        <span class="btn-lg btn-success" ng-if="campos.nomeAssociado != ''">{{campos.nomeAssociado}}</span>
-                        
+                        <span class="btn btn-default" ng-if="campos.nomeCredenciado != ''">{{campos.nomeCredenciado}}</span>
                     </td>
                 </tr>
                 <tr height="40px">
@@ -45,13 +59,21 @@
                         <button class="btn btn-xs btn-danger" ng-show="vr_fail">!</button>
                     </td>
                     <td>
-                        <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="2" ng-model="campos.valor">
+                        <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="10" ng-model="campos.valor">
+                    </td>
+                </tr>
+                <tr height="40px">
+                    <td>Parcelas</td>
+                    <td>
+                        <button class="btn btn-xs btn-danger" ng-show="nu_parc_fail">!</button>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="2" ng-model="campos.parcelas">
                     </td>
                 </tr>
                 <tr height="40px">
                     <td>Tipo Despesa</td>
-                    <td>
-                    </td>
+                    <td></td>
                     <td>
                         <input type="hidden" style="width:100%" ui-select2="campos.selectTipoAutorizacao" data-placeholder="(Selecione)" ng-model="campos.tipo" />
                     </td>

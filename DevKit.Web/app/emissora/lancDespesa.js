@@ -13,8 +13,10 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
         $scope.campos =
             {
                 valor: '0,00',
+                parcelas: '1',
                 codigo: '',
                 nomeAssociado: '',
+                nomeCredenciado: '',
                 tipo: '',
                 selectTipoAutorizacao: ngSelects.obterConfiguracao(Api.TipoAutorizacaoCombo, {})
             };
@@ -50,6 +52,24 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
                 $scope.campos.nomeAssociado = data.results[0].stName;
             }
             $scope.loading = false;
+
+            $scope.assoc_fail = invalidCheck($scope.campos.matricula) || $scope.campos.nomeAssociado == '';
+        });
+    }
+
+    $scope.buscaCredenciado = function () {
+        $scope.loading = true;
+        $scope.campos.nomeCredenciado = '';
+
+        var opcoes = { skip: 0, take: 1, codigo: $scope.campos.credenciado };
+
+        Api.Credenciado.listPage(opcoes, function (data) {
+            if (data.results.length > 0) {
+                $scope.campos.nomeCredenciado = data.results[0].stNome;
+            }
+            $scope.loading = false;
+
+            $scope.cred_fail = invalidCheck($scope.campos.credenciado) || $scope.campos.nomeCredenciado == '';    
         });
     }
 
@@ -74,11 +94,17 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
     $scope.salvar = function ()
     {
         $scope.assoc_fail = invalidCheck($scope.campos.matricula) || $scope.campos.nomeAssociado == '';
+        $scope.cred_fail = invalidCheck($scope.campos.credenciado) || $scope.campos.nomeCredenciado == '';
         $scope.dt_fail = invalidCheck($scope.campos.dt);
         $scope.vr_fail = invalidCheck($scope.campos.valor);
+        $scope.nu_parc_fail = invalidCheck($scope.campos.parcelas);
                 
         if ($scope.campos.valor == "0,00")
             $scope.vr_fail = true;
+
+        if (!$scope.assoc_fail && !$scope.dt_fail && !$scope.vr_fail && !$scope.nu_parc_fail) {
+
+        }
     }
 
     // ------------------

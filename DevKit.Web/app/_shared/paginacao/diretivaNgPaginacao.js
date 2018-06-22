@@ -9,7 +9,8 @@ angular.module('app.directives').directive('ngPaginacao', function () {
 		scope: {
 			carregar: '=',
 			list: '=',
-			total: '=',
+            total: '=',
+            preto: '=',
 			itensporpagina: '=',
 			paginador: '=',
 			ehModalParam: '@?',

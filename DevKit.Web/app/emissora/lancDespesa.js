@@ -4,12 +4,15 @@ angular.module('app.controllers').controller('EmissoraLancDespesaController',
 function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
 {
 	$rootScope.exibirMenu = true;
-	$scope.loading = false;
+    $scope.loading = false;
 
 	init();
 
 	function init()
     {
+        $scope.pesquisarCred = false;
+        $scope.pesquisarAssoc = false;
+
         $scope.campos =
             {
                 valor: '0,00',
@@ -24,7 +27,8 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
         $scope.itensporpagina = 15;        
 	}
 
-    $scope.$watch('campos.tipo', function (newState, oldState) {
+    $scope.$watch('campos.tipo', function (newState, oldState)
+    {
         if (newState !== oldState)
         {
             $scope.list = undefined;
@@ -41,7 +45,110 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
         }            
     });
 
-    $scope.buscaCartao = function () {
+    // ---------------------------
+    // buscar credenciados
+    // ---------------------------
+
+    $scope.buscaCredenciado = function ()
+    {
+        $scope.loading = true;
+        $scope.campos.nomeCredenciado = '';
+
+        var opcoes = { skip: 0, take: 1, codigo: $scope.campos.credenciado };
+
+        Api.Credenciado.listPage(opcoes, function (data)
+        {
+            if (data.results.length > 0) 
+                $scope.campos.nomeCredenciado = data.results[0].stNome;
+            
+            $scope.loading = false;
+            $scope.cred_fail = invalidCheck($scope.campos.credenciado) || $scope.campos.nomeCredenciado == '';
+        });
+    }
+
+    $scope.buscaCred = function ()
+    {
+        $scope.pesquisarCred = true;
+        $scope.campos.nomeCredenciado = '';
+    }
+
+    $scope.fechar_buscaCred = function ()
+    {
+        $scope.pesquisarCred = false;
+        $scope.list = undefined;
+    }
+
+    $scope.searchCredenciado = function ()
+    {
+        $scope.loadCredenciado(0, $scope.itensporpagina);        
+        if ($scope.paginadorCredenciado != undefined) $scope.paginadorCredenciado.reiniciar();
+    }
+
+    $scope.loadCredenciado = function (skip, take)
+    {
+        $scope.loading = true;
+
+        var opcoes = { skip: skip, take: take, nome: $scope.campos.buscacred_nome };
+
+        Api.EmissorListagemCredenciado.listPage(opcoes, function (data) {
+            $scope.list = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        });
+    }
+
+    $scope.selecionarCredenciado = function (mdl) {
+        $scope.list = undefined;
+        $scope.pesquisarCred = false;
+        $scope.campos.credenciado = mdl.nuCodigo;
+        $scope.buscaCredenciado();        
+    }
+
+    // ---------------------------
+    // buscar asssociado
+    // ---------------------------
+
+    $scope.buscaAssoc = function () {
+        $scope.pesquisarAssoc = true;
+        $scope.campos.nomeAssociado = '';
+        
+    }
+
+    $scope.fechar_buscaAssoc = function () {
+        $scope.pesquisarAssoc = false;
+        $scope.list = undefined;
+    }
+
+    $scope.searchAssociado = function () {
+        $scope.loadAssociado(0, $scope.itensporpagina);
+        if ($scope.paginadorCredenciado != undefined) $scope.paginadorCredenciado.reiniciar();
+    }
+
+    $scope.loadAssociado = function (skip, take) {
+        $scope.loading = true;
+
+        var opcoes = {
+            skip: skip,
+            take: take,
+            busca: $scope.campos.busca,
+        };
+
+        Api.Associado.listPage(opcoes, function (data) {
+            $scope.list = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        });
+    }
+
+    $scope.selecionarAssociado = function (mdl) {
+        $scope.list = undefined;
+        $scope.pesquisarAssoc = false;
+        $scope.campos.matricula = mdl.nuMatricula;
+        $scope.buscaCartao();
+    }
+
+    $scope.buscaCartao = function ()
+    {
         $scope.loading = true;
         $scope.campos.nomeAssociado = '';
 
@@ -57,21 +164,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
         });
     }
 
-    $scope.buscaCredenciado = function () {
-        $scope.loading = true;
-        $scope.campos.nomeCredenciado = '';
-
-        var opcoes = { skip: 0, take: 1, codigo: $scope.campos.credenciado };
-
-        Api.Credenciado.listPage(opcoes, function (data) {
-            if (data.results.length > 0) {
-                $scope.campos.nomeCredenciado = data.results[0].stNome;
-            }
-            $scope.loading = false;
-
-            $scope.cred_fail = invalidCheck($scope.campos.credenciado) || $scope.campos.nomeCredenciado == '';    
-        });
-    }
+    // fim
 
     $scope.show = function (mdl) {
         $scope.campos.selecionado = mdl;

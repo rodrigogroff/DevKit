@@ -12,7 +12,134 @@
         </legend>
         <div class="divWebForm" style="max-width:95%;min-width:95%">
 
-            <table style="">
+            <div class="modal-backdrop" ng-if="pesquisarAssoc == true" style="background: rgba(55, 55, 55, 0.5 );">
+                <div class="modal-dialog" style="width:900px">
+                    <br />
+                    <div class="modal-content" style="color:black">
+                        <legend style="color:black">
+                            Seleção de associados
+                            <button class="btn btn-transparent btn-lg pull-right" ng-click="fechar_buscaAssoc()"> X </button> &nbsp;
+                        </legend>
+                        <br />
+                        <table>
+                            <tr>
+                                <td width="20px"></td>
+                                <td width="180px">Nome do associado</td>
+                                <td width="120px">
+                                    <input type="text" ng-model="campos.buscaassoc_nome" style="background-color:lightgray" />
+                                </td>
+                                <td width="20px"></td>
+                                <td width="90px">
+                                    <button class="btn btn-success" ng-click="searchAssociado()"> Pesquisar </button>
+                                </td>
+                            </tr>
+                            <tr height="22px"></tr>
+                        </table>
+
+                        <div ng-show="list.length == 0">
+                            <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <br />
+                            <br />
+                        </div>
+
+                        <div ng-show="list.length > 0" style="max-height:350px;overflow-y:scroll;overflow:auto;">                            
+                            <br />
+                            <div ng-show="list.length > 0">
+                                <ng-paginacao carregar="loadAssociado" preto="true" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorAssociado"></ng-paginacao>
+                                <br />
+                                <table class="table table-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="min-width:180px">Seção</th>
+                                            <th style="min-width:300px">Nome</th>
+                                            <th style="min-width:90px">Matrícula</th>
+                                            <th style="min-width:90px">Mat. Saude</th>
+                                            <th style="min-width:80px">Tit.</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-click="selecionarAssociado(mdl)" data-ng-repeat="mdl in list">
+                                        <td><span style="color:black">{{ mdl.sfkSecao }}</span></td>
+                                        <td><span style="color:black">{{ mdl.stName }}</span></td>
+                                        <td><span style="color:black">{{ mdl.nuMatricula }}</span></td>
+                                        <td><span style="color:black">{{ mdl.nuMatSaude }}</span></td>
+                                        <td><span style="color:black">{{ mdl.nuTitularidade }}</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-backdrop" ng-if="pesquisarCred == true" style="background: rgba(55, 55, 55, 0.5 );">
+                <div class="modal-dialog" style="width:900px">
+                    <br />
+                    <div class="modal-content" style="color:black">
+                        <legend style="color:black">
+                            Seleção de credenciados
+                            <button class="btn btn-transparent btn-lg pull-right" ng-click="fechar_buscaCred()"> X </button> &nbsp;
+                        </legend>
+                        <br />
+                        <table>
+                            <tr>
+                                <td width="20px"></td>
+                                <td width="180px">Nome do credenciado</td>
+                                <td width="120px">
+                                    <input type="text" ng-model="campos.buscacred_nome" style="background-color:lightgray" />
+                                </td>
+                                <td width="20px"></td>
+                                <td width="90px">
+                                    <button class="btn btn-success" ng-click="searchCredenciado()"> Pesquisar </button>
+                                </td>
+                            </tr>
+                            <tr height="22px"></tr>
+                        </table>
+
+                        <div ng-show="list.length == 0">
+                            <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                            <br />
+                            <br />
+                        </div>
+
+                        <div ng-show="list.length > 0" style="max-height:350px;overflow-y:scroll;overflow:auto;">
+                            <ng-paginacao carregar="loadCredenciado" preto="true" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorCredenciado"></ng-paginacao>                            
+                            <br />
+                            <table class="table table-hover" style="width:850px">
+                                <thead>
+                                    <tr>
+                                        <th width="120px">Código</th>
+                                        <th width="250px">Nome</th>
+                                        <th width="250px">Especialidade</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-click="selecionarCredenciado(mdl)" data-ng-repeat="mdl in list">
+                                    <td><span style="color:black">{{ mdl.nuCodigo }}</span></td>
+                                    <td><span style="color:black">{{ mdl.stNome }}</span></td>
+                                    <td><span style="color:black">{{ mdl.sfkEspecialidade }}</span></td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <table>
                 <tr height="40px">
                     <td width="120px">
                         Matricula
@@ -25,22 +152,34 @@
                     </td>
                     <td width="20px"></td>
                     <td width="350px">
-                        <span class="btn btn-default" ng-if="campos.nomeAssociado != ''">{{campos.nomeAssociado}}</span>
+                        <table>
+                            <tr>
+                                <td width="90px"><button type="submit" class="btn btn-primary" ng-click="buscaAssoc()">Pesquisa</button></td>
+                                <td width="20px"></td>
+                                <td width="220px"><span class="btn btn-default" ng-if="campos.nomeAssociado != ''">{{campos.nomeAssociado}}</span></td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr height="40px">
-                    <td width="120px">
+                    <td>
                         Credenciado
                     </td>
-                    <td width="20px">
+                    <td >
                         <button class="btn btn-xs btn-danger" ng-show="cred_fail">!</button>
                     </td>
-                    <td width="180px">
+                    <td >
                         <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.credenciado" ng-keyup="$event.keyCode == 13 && buscaCredenciado()" />
                     </td>
-                    <td width="20px"></td>
-                    <td width="200px">
-                        <span class="btn btn-default" ng-if="campos.nomeCredenciado != ''">{{campos.nomeCredenciado}}</span>
+                    <td ></td>
+                    <td >
+                        <table>
+                            <tr>
+                                <td width="90px"><button type="submit" class="btn btn-primary" ng-click="buscaCred()">Pesquisa</button></td>
+                                <td width="20px"></td>
+                                <td width="220px"><span class="btn btn-default" ng-if="campos.nomeCredenciado != ''">{{campos.nomeCredenciado}}</span></td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr height="40px">
@@ -89,7 +228,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Código Diária</b></td>
                         <td width="220px">
-                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchDiaria()"/>
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchDiaria()" />
                         </td>
                         <td width="60px"></td>
                         <td width="110px"><b></b></td>
@@ -389,7 +528,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Cód. Não Médicos</b></td>
                         <td width="220px">
-                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchNaoMed()"/>
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchNaoMed()" />
                         </td>
                         <td width="60px"></td>
                         <td width="110px"><b></b></td>
@@ -402,7 +541,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Descrição</b></td>
                         <td width="220px">
-                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchNaoMed()"/>
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchNaoMed()" />
                         </td>
                     </tr>
                     <tr height="12px" />
@@ -484,7 +623,7 @@
                         <td width="25px"></td>
                         <td width="150px"><b>Descrição</b></td>
                         <td width="220px">
-                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchOPME()"/>
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchOPME()" />
                         </td>
                     </tr>
                     <tr height="12px" />
@@ -644,7 +783,7 @@
             <br />
             <br />
             <br />
-    </section>
+</section>
 
     <br />
     <br />

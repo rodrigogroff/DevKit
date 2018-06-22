@@ -1,9 +1,16 @@
 ﻿<div class="table-pagination">
 	<table style="color:white;font-size:13px">
 		<tr height="52px">
-			<td>
-				Exibindo resultados <b>{{itemInicial}}</b> a <b>{{itemFinal}}</b> de {{total}} itens
-			</td>
+            <td>
+                <div ng-if="preto == undefined">
+                    Exibindo resultados <b>{{itemInicial}}</b> a <b>{{itemFinal}}</b> de {{total}} itens
+                </div>
+                <div ng-if="preto != undefined">
+                    <span style="color:black">
+                        Exibindo resultados <b>{{itemInicial}}</b> a <b>{{itemFinal}}</b> de {{total}} itens
+                    </span>                    
+                </div>
+            </td>
 			<td width="50px;" valign="middle"></td>	
 			<!--<td valign="middle">
 				Mostrar &nbsp;&nbsp;

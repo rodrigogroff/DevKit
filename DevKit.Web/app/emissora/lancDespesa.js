@@ -70,6 +70,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
     $scope.buscaCred = function ()
     {
         $scope.pesquisarCred = true;
+        $scope.list = undefined;
         $scope.campos.nomeCredenciado = '';
     }
 
@@ -111,8 +112,8 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
 
     $scope.buscaAssoc = function () {
         $scope.pesquisarAssoc = true;
-        $scope.campos.nomeAssociado = '';
-        
+        $scope.list = undefined;
+        $scope.campos.nomeAssociado = '';        
     }
 
     $scope.fechar_buscaAssoc = function () {
@@ -131,7 +132,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
         var opcoes = {
             skip: skip,
             take: take,
-            busca: $scope.campos.busca,
+            busca: $scope.campos.buscaassoc_nome,
         };
 
         Api.Associado.listPage(opcoes, function (data) {

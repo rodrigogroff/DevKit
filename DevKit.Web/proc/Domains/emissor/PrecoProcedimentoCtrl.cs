@@ -10,14 +10,14 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var filter = new PrecoProcedimentoFilter
-            {                
+            return Ok(new SaudeValorProcedimento().Listagem(db, new PrecoProcedimentoFilter
+            {
                 skip = Request.GetQueryStringValue("skip", 0),
                 take = Request.GetQueryStringValue("take", 15),
                 codigo = Request.GetQueryStringValue("codigo"),
-            };
-
-            return Ok(new SaudeValorProcedimento().Listagem(db, filter));
+                desc = Request.GetQueryStringValue("desc"),
+                ano = Request.GetQueryStringValue("ano"),
+            }));
         }
 	}
 }

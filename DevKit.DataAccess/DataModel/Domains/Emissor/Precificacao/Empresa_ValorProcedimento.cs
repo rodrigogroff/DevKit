@@ -9,7 +9,7 @@ namespace DataModel
 {
     public class PrecoProcedimentoFilter
     {
-        public string codigo = "";
+        public string codigo = "", desc = "", ano = "";
 
         public int skip, take;
     }
@@ -40,6 +40,17 @@ namespace DataModel
             var query = from e in db.SaudeValorProcedimento
                         where e.fkEmpresa == db.currentUser.fkEmpresa
                         select e;
+
+            if (!string.IsNullOrEmpty(filter.codigo))
+                query = query.Where(y => y.nuCodInterno.ToString() == filter.codigo);
+
+            if (!string.IsNullOrEmpty(filter.desc))
+                query = query.Where(y => y.stDesc.ToUpper().Contains(filter.desc));
+
+            if (!string.IsNullOrEmpty(filter.ano))
+                query = query.Where(y => y.nuAnoVigencia.ToString() == filter.ano);
+            else
+                query = query.Where(y => y.nuAnoVigencia == DateTime.Now.Year);
 
             ret.count = query.Count();
             ret.results = (query.Skip(filter.skip).Take(filter.take)).ToList();

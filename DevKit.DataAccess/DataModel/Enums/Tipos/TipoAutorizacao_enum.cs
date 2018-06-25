@@ -10,12 +10,13 @@ namespace DataModel
 
 		public EnumTipoAutorizacao()
 		{
-			itens.Add(new BaseComboResponse() { id = 1, stName = "Diária" });
-			itens.Add(new BaseComboResponse() { id = 2, stName = "Materiais" });
-            itens.Add(new BaseComboResponse() { id = 3, stName = "Medicamentos" });
-            itens.Add(new BaseComboResponse() { id = 4, stName = "Não médicos" });
-            itens.Add(new BaseComboResponse() { id = 5, stName = "OPME" });
-            itens.Add(new BaseComboResponse() { id = 6, stName = "Pacote Serviços" });
+            itens.Add(new BaseComboResponse() { id = 1, stName = "Procedimentos" });
+            itens.Add(new BaseComboResponse() { id = 2, stName = "Diária" });
+			itens.Add(new BaseComboResponse() { id = 3, stName = "Materiais" });
+            itens.Add(new BaseComboResponse() { id = 4, stName = "Medicamentos" });
+            itens.Add(new BaseComboResponse() { id = 5, stName = "Não médicos" });
+            itens.Add(new BaseComboResponse() { id = 6, stName = "OPME" });
+            itens.Add(new BaseComboResponse() { id = 7, stName = "Pacote Serviços" });
 		}
 
 		public BaseComboResponse Get(long _id)

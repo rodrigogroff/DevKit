@@ -40,6 +40,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
             if ($scope.paginadorNaoMed != undefined) $scope.paginadorNaoMed.reiniciar();
             if ($scope.paginadorOPME != undefined) $scope.paginadorOPME.reiniciar();
             if ($scope.paginadorPacote != undefined) $scope.paginadorPacote.reiniciar();
+            if ($scope.paginadorProc != undefined) $scope.paginadorProc.reiniciar();
 
             ngHistoricoFiltro.filtro.paginaAtual = 0;
         }            
@@ -200,6 +201,34 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
         }
     }
 
+    // ----------------------
+    // Procedimentos
+    // ----------------------
+
+    $scope.searchProc = function () {
+        $scope.loadProc(0, $scope.itensporpagina);
+        $scope.paginador.reiniciar();
+    }
+
+    $scope.loadProc = function (skip, take) {
+        $scope.loading = true;
+
+        var opcoes = {
+            skip: skip,
+            take: take,
+            codigo: $scope.campos.codigo,
+        };
+
+        Api.PrecoProcedimento.listPage(opcoes, function (data) {
+            $scope.list = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        },
+            function (response) {
+                $scope.loading = false;
+            });
+    }
+    
     // ------------------
     // DIARIA
     // ------------------

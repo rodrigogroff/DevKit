@@ -42,7 +42,7 @@
                             <br />
                         </div>
 
-                        <div ng-show="list.length > 0" style="max-height:350px;overflow-y:scroll;overflow:auto;">                            
+                        <div ng-show="list.length > 0" style="max-height:350px;overflow-y:scroll;overflow:auto;">
                             <br />
                             <div ng-show="list.length > 0">
                                 <ng-paginacao carregar="loadAssociado" preto="true" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorAssociado"></ng-paginacao>
@@ -110,7 +110,7 @@
                         </div>
 
                         <div ng-show="list.length > 0" style="max-height:350px;overflow-y:scroll;overflow:auto;">
-                            <ng-paginacao carregar="loadCredenciado" preto="true" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorCredenciado"></ng-paginacao>                            
+                            <ng-paginacao carregar="loadCredenciado" preto="true" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorCredenciado"></ng-paginacao>
                             <br />
                             <table class="table table-hover" style="width:850px">
                                 <thead>
@@ -165,14 +165,14 @@
                     <td>
                         Credenciado
                     </td>
-                    <td >
+                    <td>
                         <button class="btn btn-xs btn-danger" ng-show="cred_fail">!</button>
                     </td>
-                    <td >
+                    <td>
                         <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.credenciado" ng-keyup="$event.keyCode == 13 && buscaCredenciado()" />
                     </td>
-                    <td ></td>
-                    <td >
+                    <td></td>
+                    <td>
                         <table>
                             <tr>
                                 <td width="90px"><button type="submit" class="btn btn-primary" ng-click="buscaCred()">Pesquisa</button></td>
@@ -222,6 +222,117 @@
             <br />
 
             <div ng-if="campos.tipo == 1">
+                <table class="widget" style="color:white">
+                    <tr height="22px"> </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Código TUSS</b></td>
+                        <td width="220px">
+                            <input type="text" class="form-control input-transparent" ng-model="campos.codigo" ng-keyup="$event.keyCode == 13 && searchProc()" />
+                        </td>
+                        <td width="60px"></td>
+                        <td width="110px"><b></b></td>
+                        <td width="220px">
+                            <button type="submit" class="btn btn-primary" ng-click="searchProc()">Pesquisa</button>
+                        </td>
+                        <td width="25px"></td>
+                    </tr>
+                    <tr height="36px">
+                        <td width="25px"></td>
+                        <td width="150px"><b>Descrição</b></td>
+                        <td width="220px">
+                            <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.desc" ng-keyup="$event.keyCode == 13 && searchProc()" />
+                        </td>
+                    </tr>
+                    <tr height="12px" />
+                </table>
+
+                <div style="overflow-x:scroll;overflow:auto;">
+                    <table>
+                        <tr>
+                            <td valign="top">
+                                <div ng-show="list.length == 0">
+                                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                    <br />
+                                    <br />
+                                </div>
+                                <div ng-show="campos.selecionado != undefined">
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:80px">Código</th>
+                                                <th style="min-width:80px">Ano</th>
+                                                <th style="min-width:600px">Descrição</th>
+                                                <th style="min-width:170px">Valor Total</th>
+                                                <th style="min-width:170px">Porte</th>
+                                                <th style="min-width:170px">Valor HM</th>
+                                                <th style="min-width:170px">Valor CO</th>
+                                                <th style="min-width:170px">Auxiliares</th>
+                                                <th style="min-width:170px">Porte Anestésico</th>
+                                                <th style="min-width:170px">Valor Porte</th>
+                                                <th style="min-width:170px">Filme m2</th>
+                                                <th style="min-width:170px">Valor filme</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>{{ campos.selecionado.nuCodInterno }}</td>
+                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
+                                            <td>{{ campos.selecionado.stDesc }}</td>
+                                            <td>{{ campos.selecionado.svrTotalHMCO }}</td>
+                                            <td>{{ campos.selecionado.sfkSaudePorteProcedimento }}</td>
+                                            <td>{{ campos.selecionado.svrValorHM }}</td>
+                                            <td>{{ campos.selecionado.svrValorCO }}</td>
+                                            <td>{{ campos.selecionado.snuAux }}</td>
+                                            <td>{{ campos.selecionado.snuAnestesistas }}</td>
+                                            <td>{{ campos.selecionado.svrPorteAnestesista }}</td>
+                                            <td>{{ campos.selecionado.snuFilme4C }}</td>
+                                            <td>{{ campos.selecionado.svrFilme }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div ng-show="list.length > 0 && campos.selecionado == undefined">
+                                    <ng-paginacao carregar="loadProc" list="list" total="total" itensporpagina="itensporpagina" paginador="paginadorProc"></ng-paginacao>
+                                    <br />
+                                    <table class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:80px">Código</th>
+                                                <th style="min-width:80px">Ano</th>
+                                                <th style="min-width:600px">Descrição</th>
+                                                <th style="min-width:170px">Valor Total</th>
+                                                <th style="min-width:170px">Porte</th>
+                                                <th style="min-width:170px">Valor HM</th>
+                                                <th style="min-width:170px">Valor CO</th>
+                                                <th style="min-width:170px">Auxiliares</th>
+                                                <th style="min-width:170px">Porte Anestésico</th>
+                                                <th style="min-width:170px">Valor Porte</th>
+                                                <th style="min-width:170px">Filme m2</th>
+                                                <th style="min-width:170px">Valor filme</th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                            <td>{{ mdl.nuCodInterno }}</td>
+                                            <td>{{ mdl.nuAnoVigencia }}</td>
+                                            <td>{{ mdl.stDesc }}</td>
+                                            <td>{{ mdl.svrTotalHMCO }}</td>
+                                            <td>{{ mdl.sfkSaudePorteProcedimento }}</td>
+                                            <td>{{ mdl.svrValorHM }}</td>
+                                            <td>{{ mdl.svrValorCO }}</td>
+                                            <td>{{ mdl.snuAux }}</td>
+                                            <td>{{ mdl.snuAnestesistas }}</td>
+                                            <td>{{ mdl.svrPorteAnestesista }}</td>
+                                            <td>{{ mdl.snuFilme4C }}</td>
+                                            <td>{{ mdl.svrFilme }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-if="campos.tipo == 2">
                 <table class="widget" style="color:white">
                     <tr height="22px"> </tr>
                     <tr height="36px">
@@ -316,7 +427,7 @@
                 </div>
             </div>
 
-            <div ng-if="campos.tipo == 2">
+            <div ng-if="campos.tipo == 3">
 
                 <table class="widget" style="color:white">
                     <tr height="22px"> </tr>
@@ -417,7 +528,7 @@
                 </div>
             </div>
 
-            <div ng-if="campos.tipo == 3">
+            <div ng-if="campos.tipo == 4">
 
                 <table class="widget" style="color:white">
                     <tr height="22px"> </tr>
@@ -520,7 +631,7 @@
 
             </div>
 
-            <div ng-if="campos.tipo == 4">
+            <div ng-if="campos.tipo == 5">
 
                 <table class="widget" style="color:white">
                     <tr height="22px"> </tr>
@@ -602,7 +713,7 @@
                 </div>
             </div>
 
-            <div ng-if="campos.tipo == 5">
+            <div ng-if="campos.tipo == 6">
 
                 <table class="widget" style="color:white">
                     <tr height="22px"> </tr>
@@ -693,7 +804,7 @@
 
             </div>
 
-            <div ng-if="campos.tipo == 6">
+            <div ng-if="campos.tipo == 7">
 
                 <table class="widget" style="color:white">
                     <tr height="22px"> </tr>
@@ -783,7 +894,7 @@
             <br />
             <br />
             <br />
-</section>
+    </section>
 
     <br />
     <br />

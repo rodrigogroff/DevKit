@@ -14,7 +14,7 @@ namespace DevKit.Web.Controllers
             {
                 matricula = Request.GetQueryStringValue<long?>("matricula", null),
                 credenciado = Request.GetQueryStringValue<long?>("credenciado", null),
-                vrValor = Request.GetQueryStringValue<long?>("vrValor", null),
+                vrValor = ObtemValor(Request.GetQueryStringValue("vrValor")),
                 dataLanc = ObtemData(Request.GetQueryStringValue("dataLanc")),
                 nuTipo = Request.GetQueryStringValue<long?>("nuTipo", null),
                 fkPrecificacao = Request.GetQueryStringValue<long?>("fkPrecificacao", null),

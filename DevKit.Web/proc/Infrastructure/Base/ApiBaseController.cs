@@ -146,15 +146,32 @@ namespace DevKit.Web.Controllers
             return true;
         }
 
-        public DateTime ObtemData(string valor)
+        [NonAction]
+        public string ObtemData(DateTime? valor)
         {
             try
             {
                 if (valor == null)
-                    return new DateTime();
+                    return "";
+
+                return Convert.ToDateTime(valor).ToString("dd/MM/yyyy HH:mm");
+            }
+            catch (SystemException ex)
+            {
+                return null;
+            }
+        }
+
+        [NonAction]
+        public DateTime? ObtemData(string valor)
+        {
+            try
+            {
+                if (valor == null)
+                    return null;
 
                 if (valor.Length < 8)
-                    return new DateTime();
+                    return null;
 
                 if (valor.Length == 8)
                     valor = valor.Substring(0, 2) + "/" +
@@ -167,8 +184,55 @@ namespace DevKit.Web.Controllers
             }
             catch (SystemException ex)
             {
-                ex.ToString();
-                return new DateTime();
+                return null;
+            }
+        }
+
+        [NonAction]
+        public long ObtemValor(string valor)
+        {
+            try
+            {
+                if (valor == null)
+                    return 0;
+
+                if (valor == "")
+                    valor = "0";
+
+                var iValor = 0;
+
+                if (!valor.Contains(","))
+                    valor += ",00";
+
+                valor = valor.Replace(",", "").Replace(".", "");
+                iValor = Convert.ToInt32(valor);
+
+                return iValor;
+            }
+            catch (SystemException ex)
+            {
+                return 0;
+            }
+        }
+
+        [NonAction]
+        public int? LimpaValor(string valor)
+        {
+            try
+            {
+                if (valor == null)
+                    return 0;
+
+                if (valor == "")
+                    return 0;
+
+                int? iValor = Convert.ToInt32(valor.Replace(",", "").Replace(".", ""));
+
+                return iValor;
+            }
+            catch (SystemException ex)
+            {
+                return null;
             }
         }
     }

@@ -86,6 +86,26 @@ namespace GetStarted
 
                     switch (opt)
                     {
+                        case "fixAutorizacao":
+                            {
+                                foreach (var item in db.Autorizacao.ToList())
+                                {
+                                    var i = db.Autorizacao.FirstOrDefault(y=> y.id == item.id);
+
+                                    if (i != null)
+                                    {
+                                        i.nuTipoAutorizacao = 1;
+                                        i.fkPrecificacao = i.fkProcedimento;
+
+                                        db.Update(i);
+
+                                        Console.WriteLine("Aut -> " + item.id);
+                                    }
+                                }
+
+                                break;
+                            }
+
                         case "fixCPF":
                             {
                                 

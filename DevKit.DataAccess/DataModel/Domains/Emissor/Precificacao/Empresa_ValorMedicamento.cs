@@ -59,10 +59,10 @@ namespace DataModel
             var mon = new money();
 
             if (fkFabricanteMedicamento != null)
-                sfkFabricanteMedicamento = db.SaudeFabricanteMedicamentoEmpresa.FirstOrDefault(y => y.id == this.id).stNome;
+                sfkFabricanteMedicamento = db.SaudeFabricanteMedicamentoEmpresa.FirstOrDefault(y => y.id == this.fkFabricanteMedicamento).stNome;
 
             if (fkUnidade != null)
-                sfkUnidade = db.SaudeUnidadeEmpresa.FirstOrDefault(y => y.id == this.id).stNome;
+                sfkUnidade = db.SaudeUnidadeEmpresa.FirstOrDefault(y => y.id == this.fkUnidade).stNome;
 
             if (bFracionar == true) sbFracionar = "Sim"; else sbFracionar = "Não";
 

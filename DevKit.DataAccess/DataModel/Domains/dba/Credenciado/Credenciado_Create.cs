@@ -13,16 +13,22 @@ namespace DataModel
     {
 		public bool Create(DevKitDB db, ref string apiError)
 		{
+            if (db.Credenciado.Any ( y=> y.stCnpj == this.stCnpj))
+            {
+                apiError = "CPF / CNPJ já utilizado!";
+                return false;
+            }
+
             if (this.nuCodigo == null || this.nuCodigo == 0)
             {
-                long cod = 0;
+                long cod = 2190;
 
                 while (true)
                 {
-                    cod = Convert.ToInt64(new Util().GetRandomString(4));
-
                     if (!db.Credenciado.Any(y => y.nuCodigo == cod))
                         break;
+
+                    cod++;
                 }
 
                 this.nuCodigo = cod;

@@ -33,6 +33,8 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
         {
             $scope.list = undefined;
             $scope.campos.selecionado = undefined;
+            $scope.campos.codigo = undefined;
+            $scope.campos.desc = undefined;
 
             if ($scope.paginadorMaterial != undefined) $scope.paginadorMaterial.reiniciar();
             if ($scope.paginadorDiaria != undefined) $scope.paginadorDiaria.reiniciar();
@@ -206,9 +208,13 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
     // Procedimentos
     // ----------------------
 
-    $scope.searchProc = function () {
+    $scope.searchProc = function ()
+    {
+        $scope.list = undefined;
+        $scope.campos.selecionado = undefined;
         $scope.loadProc(0, $scope.itensporpagina);
-        $scope.paginador.reiniciar();
+        if ($scope.paginadorProc != undefined)
+            $scope.paginadorProc.reiniciar();
     }
 
     $scope.loadProc = function (skip, take) {
@@ -218,6 +224,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
             skip: skip,
             take: take,
             codigo: $scope.campos.codigo,
+            desc: $scope.campos.desc,
         };
 
         Api.PrecoProcedimento.listPage(opcoes, function (data) {
@@ -236,6 +243,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
 
 	$scope.searchDiaria = function ()
     {
+        $scope.list = undefined;
         $scope.campos.selecionado = undefined;
         $scope.loadDiaria(0, $scope.itensporpagina);
         if ($scope.paginadorDiaria != undefined)
@@ -271,6 +279,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
     // ------------------
 
     $scope.searchMaterial = function () {
+        $scope.list = undefined;
         $scope.campos.selecionado = undefined;
         $scope.loadMaterial(0, $scope.itensporpagina);
         if ($scope.paginadorMaterial != undefined)
@@ -302,6 +311,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
     // ------------------
 
     $scope.searchMed = function () {
+        $scope.list = undefined;
         $scope.campos.selecionado = undefined;
         $scope.loadMed(0, $scope.itensporpagina);
         if ($scope.paginadorMed != undefined)
@@ -333,6 +343,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
     // ------------------
 
     $scope.searchNaoMed = function () {
+        $scope.list = undefined;
         $scope.campos.selecionado = undefined;
         $scope.loadNaoMed(0, $scope.itensporpagina);
         if ($scope.paginadorNaoMed != undefined)
@@ -364,6 +375,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
     // ------------------
 
     $scope.searchOPME = function () {
+        $scope.list = undefined;
         $scope.campos.selecionado = undefined;
         $scope.loadOPME(0, $scope.itensporpagina);
         if ($scope.paginadorOPME != undefined)
@@ -395,6 +407,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
     // --------------
 
     $scope.searchPacote = function () {
+        $scope.list = undefined;
         $scope.campos.selecionado = undefined;
         $scope.loadPacote(0, $scope.itensporpagina);
         if ($scope.paginadorPacote != undefined)

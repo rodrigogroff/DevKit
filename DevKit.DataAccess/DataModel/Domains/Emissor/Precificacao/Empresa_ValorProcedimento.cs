@@ -45,7 +45,7 @@ namespace DataModel
                 query = query.Where(y => y.nuCodInterno.ToString() == filter.codigo);
 
             if (!string.IsNullOrEmpty(filter.desc))
-                query = query.Where(y => y.stDesc.ToUpper().Contains(filter.desc));
+                query = query.Where(y => y.stDesc.ToUpper().Contains(filter.desc.ToUpper()));
 
             if (!string.IsNullOrEmpty(filter.ano))
                 query = query.Where(y => y.nuAnoVigencia.ToString() == filter.ano);

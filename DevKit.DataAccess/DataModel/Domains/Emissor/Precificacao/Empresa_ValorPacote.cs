@@ -37,7 +37,7 @@ namespace DataModel
                 query = query.Where(y => y.nuCodInterno.ToString() == filter.codigo);
 
             if (!string.IsNullOrEmpty(filter.desc))
-                query = query.Where(y => y.stDesc.ToUpper() == filter.desc.ToUpper());
+                query = query.Where(y => y.stDesc.ToUpper().Contains(filter.desc.ToUpper()));
 
             ret.count = query.Count();
             ret.results = (query.Skip(filter.skip).Take(filter.take)).ToList();

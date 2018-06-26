@@ -16,7 +16,7 @@ namespace DataModel
                         vrTotal,
                         nuParcelas;
 
-        public string dataLanc = "";
+        public DateTime? dataLanc;
     }
            
     public partial class Empresa
@@ -55,7 +55,8 @@ namespace DataModel
             if ( _params.nuTipo == 0)
                 return "Tipo de precificação inválido";
 
-            
+            if (_params.dataLanc == null)
+                return "Data inválida";
 
             return "";
 		}

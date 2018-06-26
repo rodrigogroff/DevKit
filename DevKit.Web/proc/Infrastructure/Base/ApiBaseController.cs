@@ -8,6 +8,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using System;
 
 namespace DevKit.Web.Controllers
 {
@@ -143,6 +144,32 @@ namespace DevKit.Web.Controllers
                 }
 
             return true;
+        }
+
+        public DateTime ObtemData(string valor)
+        {
+            try
+            {
+                if (valor == null)
+                    return new DateTime();
+
+                if (valor.Length < 8)
+                    return new DateTime();
+
+                if (valor.Length == 8)
+                    valor = valor.Substring(0, 2) + "/" +
+                            valor.Substring(2, 2) + "/" +
+                            valor.Substring(4, 4);
+
+                return new DateTime(Convert.ToInt32(valor.Substring(6, 4)),
+                                    Convert.ToInt32(valor.Substring(3, 2)),
+                                    Convert.ToInt32(valor.Substring(0, 2)), 0, 0, 0);
+            }
+            catch (SystemException ex)
+            {
+                ex.ToString();
+                return new DateTime();
+            }
         }
     }
 }

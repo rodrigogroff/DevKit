@@ -53,14 +53,31 @@
                             <tr height="40px">
                                 <td></td>
                                 <td>
-                                    <b>CPF</b>
+                                    <b>CPF / CNPJ</b>
                                 </td>
                                 <td>
                                     <button class="btn btn-xs btn-danger" ng-show="cpf_fail">!</button>
                                 </td>
-                                <td >
-                                    <input type="text" class="form-control input-transparent" name="cnpj" id="cpf" ng-model="viewModel.stCnpj"
-                                           maxlength="14" ui-mask="999.999.999-99" ui-mask-placeholder ui-mask-placeholder-char="_">
+                                <td>
+                                    <br />
+                                    <table>
+                                        <tr>
+                                            <td width="20px"><input type="radio" value="true" ng-model="viewModel.tgPJ" /></td>
+                                            <td> Jurídica </td>
+                                            <td width="20px"></td>
+                                            <td width="20px"><input type="radio" value="false" ng-model="viewModel.tgPJ" /></td>
+                                            <td> Física</td>
+                                        </tr>
+                                    </table>                                                                        
+                                    <div ng-if="viewModel.tgPJ == 'false'">
+                                        <input type="text" class="form-control input-transparent" name="cnpj" id="cpf" ng-model="viewModel.stCnpj"
+                                               maxlength="14" ui-mask="999.999.999-99" ui-mask-placeholder ui-mask-placeholder-char="_">
+                                    </div>
+                                    <div ng-if="viewModel.tgPJ == 'true'">
+                                        <input type="text" class="form-control input-transparent" name="cnpj" id="cpf" ng-model="viewModel.stCnpj"
+                                               maxlength="19" ui-mask="99.999.999/9999-99" ui-mask-placeholder ui-mask-placeholder-char="_">
+
+                                    </div>
                                 </td>                                
                                 <td></td>
                             </tr>

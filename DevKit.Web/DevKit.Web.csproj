@@ -913,6 +913,7 @@
     <Compile Include="proc\Domains\dba\EspecialidadeCtrl.cs" />
     <Compile Include="proc\Domains\dba\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\dba\LotesGraficaCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\EmissorLancaDespesaCtrl.cs" />
     <Compile Include="proc\Domains\emissor\EmissorListagemAutorizacaoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\PrecoProcedimentoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\PrecoPacoteCtrl.cs" />

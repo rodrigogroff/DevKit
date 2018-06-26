@@ -199,8 +199,37 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
         if ($scope.campos.valor == "0,00")
             $scope.vr_fail = true;
 
-        if (!$scope.assoc_fail && !$scope.dt_fail && !$scope.vr_fail && !$scope.nu_parc_fail) {
+        if (!$scope.assoc_fail && !$scope.dt_fail && !$scope.vr_fail && !$scope.nu_parc_fail)
+        {
+            $scope.loading = true;
 
+            /*
+             *  fkAssociado = Request.GetQueryStringValue<long?>("fkAssociado", null),
+                fkCredenciado = Request.GetQueryStringValue<long?>("fkCredenciado", null),
+                vrValor = Request.GetQueryStringValue<long?>("vrValor", null),
+                nuTipo = Request.GetQueryStringValue<long?>("nuTipo", null),
+                fkPrecificacao = Request.GetQueryStringValue<long?>("fkPrecificacao", null),
+                nuParcelas = Request.GetQueryStringValue<long?>("nuParcelas", null),
+                */
+
+            var opcoes = {
+                matricula: $scope.campos.matricula,
+                credenciado: $scope.campos.credenciado,
+                dataLanc: $scope.campos.dt,
+                vrValor: $scope.campos.valor,
+                nuTipo: $scope.campos.tipo,
+                fkPrecificacao: $scope.campos.selecionado.id,
+                nuParcelas: $scope.campos.parcelas
+            };
+
+            Api.PrecoPacote.listPage(opcoes, function (data) {
+                $scope.list = data.results;
+                $scope.total = data.count;
+                $scope.loading = false;
+            },
+                function (response) {
+                    $scope.loading = false;
+                });
         }
     }
 

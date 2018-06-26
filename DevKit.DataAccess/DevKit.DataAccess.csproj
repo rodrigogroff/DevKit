@@ -154,6 +154,7 @@
     <Compile Include="DataModel\Domains\credenciado\Autorização\Autorizacao_LoadAssociations.cs" />
     <Compile Include="DataModel\Domains\credenciado\Autorização\Credenciado_ListagemAutorizacao.cs" />
     <Compile Include="DataModel\Domains\credenciado\Autorização\Credenciado_Autoriza.cs" />
+    <Compile Include="DataModel\Domains\Emissor\Services\Empresa_LancaDespesa.cs" />
     <Compile Include="DataModel\Domains\Util.cs" />
     <Compile Include="DataModel\Enums\Template\AccumulatorType_enum.cs" />
     <Compile Include="DataModel\Enums\Tipos\TipoExpedicao_enum.cs" />

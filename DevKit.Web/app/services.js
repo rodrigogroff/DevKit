@@ -91,6 +91,7 @@ angular.module('app.services', ['ngResource'])
         AutorizaProc: $resource('api/autorizaproc/:id', {}, opcoes),
         EmpresaSecaoCombo: $resource('api/empresasecaocombo/:id', {}, opcoes),
         CredenciadoListagemAutorizacao: $resource('api/credenciadolistagemautorizacao/:id', {}, opcoes),
+        EmissorLancaDespesa: $resource('api/emissorlancadespesa/:id', {}, opcoes),
         EmissorListagemAutorizacao: $resource('api/emissorlistagemautorizacao/:id', {}, opcoes),
         EmissorListagemCredenciado: $resource('api/emissorlistagemcredenciado/:id', {}, opcoes),
         EmissorListagemFechamento: $resource('api/emissorlistagemfechamento/:id', {}, opcoes),

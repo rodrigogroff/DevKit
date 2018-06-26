@@ -336,6 +336,8 @@
 
             $scope.confirmarMobile = function () {
 
+                $scope.processandoVenda = true;
+
                 var stA = $scope.viewModel.stAcesso.toString();
                 var stV = $scope.viewModel.stVencimento.toString();
 
@@ -373,6 +375,7 @@
                         $scope.mostraModalMobileAutorizado = true;
                         $scope.viewModel.parcelas = 1;
                         $scope.viewModel.valor = '0,00';
+                        $scope.processandoVenda = false;
                     },
                     function (response) {
                         $scope.falhaVendaMsg = response.data.message;

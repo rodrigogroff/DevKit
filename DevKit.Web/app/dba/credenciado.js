@@ -46,14 +46,15 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
         $scope.permModel = {};
         $scope.permID = 102;
         $scope.auditLogPerm = 112;
+        $scope.idEmpresa = 0;
 
         $scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
         $scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, {});
         $scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'newEnd.fkEstado' } });
 
-    //    CheckPermissions();
-      //  loadSetup();
+        $scope.selectEmpresa = ngSelects.obterConfiguracao(Api.Empresa, { combo: true});
+
         loadEntity();
     }
 

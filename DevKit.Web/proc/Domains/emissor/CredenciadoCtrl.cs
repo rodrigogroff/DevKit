@@ -23,7 +23,7 @@ namespace DevKit.Web.Controllers
                 nome = Request.GetQueryStringValue("nome"),
                 nuCodigo = Request.GetQueryStringValue("codigo", 0),
                 especialidade = Request.GetQueryStringValue("especialidade"),
-            }));                        
+            }));
         }
             
         public IHttpActionResult Get(long id)

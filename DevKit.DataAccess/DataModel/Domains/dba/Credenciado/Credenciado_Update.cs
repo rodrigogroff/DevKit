@@ -11,6 +11,19 @@ namespace DataModel
 		{            
 			switch (updateCommand)
 			{
+                case "newEmpresa":
+                    {
+                        var ent = JsonConvert.DeserializeObject<CredenciadoEmpresa>(anexedEntity.ToString());
+
+                        if (!db.CredenciadoEmpresa.Any(y=>y.fkCredenciado == this.id && y.fkEmpresa == ent.fkEmpresa))
+                        {
+                            ent.fkCredenciado = this.id;
+                            db.Insert(ent);
+                        }
+                        
+                        return true;
+                    }
+
                 case "newProcedimentoViaEmissor":
                     {
                         var ent = JsonConvert.DeserializeObject<CredenciadoEmpresaTuss>(anexedEntity.ToString());

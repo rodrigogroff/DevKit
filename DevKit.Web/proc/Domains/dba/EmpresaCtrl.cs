@@ -22,7 +22,24 @@ namespace DevKit.Web.Controllers
                 take = Request.GetQueryStringValue("take", 15),
             };
 
-            return Ok(new Empresa().ComposedFilters(db, filter));                        
+            if (Request.GetQueryStringValue<bool?>("combo") == true)
+            {
+                var resp = new Empresa().ComposedFilters(db, filter);
+
+                return Ok(new
+                {
+                    resp.count,
+                    results = (from e in resp.results
+                               select new BaseComboResponse
+                               {
+                                   id = e.id,
+                                   stName = e.stNome
+                               }).
+                               ToList()
+                });
+            }
+            else
+                return Ok(new Empresa().ComposedFilters(db, filter));
         }
             
         public IHttpActionResult Get(long id)

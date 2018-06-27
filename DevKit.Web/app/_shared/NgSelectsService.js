@@ -94,7 +94,9 @@ function (Api, $rootScope)
 					objFiltro.busca = query.term;
 				
 				if (parametros && parametros.opcoesApi) 
-					opcoes[parametros.opcoesApi.campo] = parametros.opcoesApi.valor;
+                    opcoes[parametros.opcoesApi.campo] = parametros.opcoesApi.valor;
+
+                objFiltro.combo = true;
 				
 				if (parametros && parametros.tamanhoPagina)
 				{

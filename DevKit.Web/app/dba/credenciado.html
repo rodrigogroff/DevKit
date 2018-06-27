@@ -186,13 +186,13 @@
                                                     <table>
                                                         <tr height="42px">
                                                             <td width="120px">
-                                                                <b>Nome empresa</b>
+                                                                <b>Empresa</b>
                                                             </td>
                                                             <td width="20px">
-                                                                <button class="btn btn-xs btn-danger" ng-show="stPhone_fail">!</button>
+                                                                <button class="btn btn-xs btn-danger" ng-show="idEmpresa_fail">!</button>
                                                             </td>
                                                             <td width="200px">
-                                                                select
+                                                                <input type="hidden" style="width:100%" ui-select2="selectEmpresa" data-placeholder="(Selecione)" ng-model="newEmpresa.fkEmpresa" />
                                                             </td>
                                                         </tr>
                                                     </table>

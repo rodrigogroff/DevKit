@@ -67,9 +67,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
             Api.Credenciado.get({ id: id }, function (data)
 			{
                 $scope.viewModel = data;
-
-                console.log($scope.viewModel.stCnpj.length);
-
+                
                 if ($scope.viewModel.stCnpj.length > 13) 
                     $scope.viewModel.tgPJ = 'true';                
                 else
@@ -133,6 +131,7 @@ function ($scope, $state, $stateParams, $rootScope, Api, ngSelects)
                     Api.Credenciado.update({ id: id }, $scope.viewModel, function (data)
 					{
                         toastr.success('Dados atualizados!', 'Sucesso');
+                        $scope.viewModel.id = data.id;
 					},
 					function (response) {
 						toastr.error(response.data.message, 'Error');

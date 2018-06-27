@@ -27,6 +27,7 @@ namespace DataModel
 
         public string   sfkEspecialidade,
                         snuTipo,
+                        sMaskCpfCnpj,
                         updateCommand = "";
 
         public List<CredenciadoEmpresaTuss> procedimentos;

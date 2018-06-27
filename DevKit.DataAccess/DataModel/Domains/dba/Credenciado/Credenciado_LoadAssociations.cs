@@ -16,6 +16,8 @@ namespace DataModel
                                       FirstOrDefault().
                                       stNome;
 
+            sMaskCpfCnpj = stCnpj.Length > 11 ? FormataCNPJ() : FormataCPF();
+
             switch (nuTipo)
             {
                 case TipoCredenciado.Medico: snuTipo = "Médico"; break;
@@ -31,6 +33,30 @@ namespace DataModel
 
             return this;
 		}
+
+        public string FormataCPF()
+        {
+            var ret = "";
+
+            if (stCnpj.Length < 10)
+                return stCnpj;
+
+            ret += stCnpj.Substring(0, 3) + "." + stCnpj.Substring(3, 3) + "." + stCnpj.Substring(6, 3) + "-" + stCnpj.Substring(9);
+
+            return ret;
+        }
+
+        public string FormataCNPJ()
+        {
+            var ret = "";
+
+            if (stCnpj.Length < 14)
+                return stCnpj;
+
+            ret += stCnpj.Substring(0, 2) + "." + stCnpj.Substring(2, 3) + "." + stCnpj.Substring(5, 3) + "." + stCnpj.Substring(8,4) + "/" + stCnpj.Substring(13, 2);
+
+            return ret;
+        }
 
         List<CredenciadoEmpresaTuss> LoadProcedimentos(DevKitDB db)
         {

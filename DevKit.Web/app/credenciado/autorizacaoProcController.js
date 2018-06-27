@@ -44,7 +44,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             function (response) {
                 $scope.associado = undefined;
                 $scope.loading = false;
-                toastr.error(response.message, 'Verificação');
+                toastr.error(response.data.message, 'Verificação');
             });
     }
 

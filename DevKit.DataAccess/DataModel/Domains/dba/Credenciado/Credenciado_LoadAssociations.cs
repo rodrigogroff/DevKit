@@ -50,10 +50,14 @@ namespace DataModel
         {
             var ret = "";
 
-            if (stCnpj.Length < 14)
+            if (stCnpj.Length < 13)
                 return stCnpj;
 
-            ret += stCnpj.Substring(0, 2) + "." + stCnpj.Substring(2, 3) + "." + stCnpj.Substring(5, 3) + "." + stCnpj.Substring(8,4) + "/" + stCnpj.Substring(13, 2);
+            ret +=  stCnpj.Substring(0, 2) + "." + 
+                    stCnpj.Substring(2, 3) + "." + 
+                    stCnpj.Substring(5, 3) + "." + 
+                    stCnpj.Substring(8,4) + "/" + 
+                    stCnpj.Substring(13);
 
             return ret;
         }

@@ -19,6 +19,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.selecionouProc = null;
         $scope.associado = undefined;
         $scope.pedirSenha = false;
+        $scope.configSenha = false;
         $scope.mostraGuia = false;
 	}
 
@@ -37,17 +38,44 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             titVia: $scope.campos.cartTitVia,
         };
 
-        Api.Cartao.listPage(opcoes, function (data) {
+        Api.Cartao.listPage(opcoes, function (data)
+        {
             $scope.associado = data;
             $scope.loading = false;
+            if (data.bConfigSenha == true)
+                $scope.configSenha = true;            
         },
-            function (response) {
-                $scope.associado = undefined;
-                $scope.loading = false;
-                toastr.error(response.data.message, 'Verificação');
-            });
+        function (response) {
+            $scope.associado = undefined;
+            $scope.loading = false;
+            toastr.error(response.data.message, 'Verificação');
+        });
     }
 
+    $scope.configurarSenha = function ()
+    {
+        $scope.loading = true;
+        
+        var opcoes = {
+            emp: $scope.campos.cartEmp,
+            mat: $scope.campos.cartMat,
+            ca: $scope.campos.cartCA,
+            titVia: $scope.campos.cartTitVia,
+            senha: $scope.campos.senhaCartao,
+        };
+
+        Api.ConfigSenha.listPage(opcoes, function (data) {
+            $scope.loading = false;
+            toastr.success('Senha configurada com sucesso!', 'Sistema');
+        },
+        function (response) {
+            $scope.loading = false;
+            toastr.error(response.data.message, 'Verificação');
+        });
+
+        $scope.configSenha = false; 
+    }
+    
 	$scope.search = function ()
 	{
 		$scope.load(0, $scope.itensporpagina);
@@ -108,6 +136,10 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.pedirSenha = false;
     }
 
+    $scope.closeModalConfigSenha = function () {
+        $scope.configSenha = false;
+    }
+    
     $scope.autorizar = function ()
     {
         var opcoes = {

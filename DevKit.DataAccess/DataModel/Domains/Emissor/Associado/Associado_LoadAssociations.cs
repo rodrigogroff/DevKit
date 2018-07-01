@@ -10,9 +10,14 @@ namespace DataModel
     {
         public Associado LoadAssociationsMini(DevKitDB db)
         {
-            var mon = new money();
+            var emp = db.Empresa.FirstOrDefault(y => y.id == this.fkEmpresa);
 
-            svrMaxEmp = mon.setMoneyFormat((long)db.Empresa.FirstOrDefault(y => y.id == this.fkEmpresa).vrMaxProcSemAut);
+            if(emp!=null)
+                if (emp.vrMaxProcSemAut != null)
+                    svrMaxEmp = new money().setMoneyFormat((long)db.Empresa.FirstOrDefault(y => y.id == this.fkEmpresa).vrMaxProcSemAut);
+
+            if (string.IsNullOrEmpty(this.stSenha))
+                bConfigSenha = true;
 
             return this;
         }

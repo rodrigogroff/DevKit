@@ -45,6 +45,7 @@ angular.module('app.services', ['ngResource'])
         Credenciado: $resource('api/credenciado/:id', {}, opcoes),
         Especialidade: $resource('api/especialidade/:id', {}, opcoes),
         TUSS: $resource('api/tuss/:id', {}, opcoes),
+        ConfigSenha: $resource('api/configsenha/:id', {}, opcoes),
 		Profile: $resource('api/profile/:id', {}, opcoes),
         Permission: $resource('api/permission/:id', {}, opcoes),
 		Project: $resource('api/project/:id', {}, opcoes),

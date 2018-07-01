@@ -30,39 +30,39 @@
                                         <tr>
                                             <td width="90px"><b>Dígitos:</b></td>
                                             <td width="90px">
-                                                <input type="text" 
-                                                       focus="true" 
-                                                       class="form-control input-transparent" 
-                                                       ng-model="campos.cartEmp" 
-                                                       maxlength="6" 
-                                                       ng-keyup="$event.keyCode == 13 && pulaMatricula()"/>
+                                                <input type="text"
+                                                       focus="true"
+                                                       class="form-control input-transparent"
+                                                       ng-model="campos.cartEmp"
+                                                       maxlength="6"
+                                                       ng-keyup="$event.keyCode == 13 && pulaMatricula()" />
                                             </td>
                                             <td width="30px"></td>
                                             <td width="90px">
-                                                <input type="text" 
-                                                       class="form-control input-transparent" 
-                                                       ng-model="campos.cartMat" 
-                                                       id="cartMat" 
-                                                       maxlength="6" 
-                                                       ng-keyup="$event.keyCode == 13 && pulaAcesso()"/>
+                                                <input type="text"
+                                                       class="form-control input-transparent"
+                                                       ng-model="campos.cartMat"
+                                                       id="cartMat"
+                                                       maxlength="6"
+                                                       ng-keyup="$event.keyCode == 13 && pulaAcesso()" />
                                             </td>
                                             <td width="30px"></td>
                                             <td width="70px">
                                                 <input type="text"
-                                                       class="form-control input-transparent" 
-                                                       ng-model="campos.cartCA" 
+                                                       class="form-control input-transparent"
+                                                       ng-model="campos.cartCA"
                                                        maxlength="4"
-                                                       id="cartAcesso" 
-                                                       ng-keyup="$event.keyCode == 13 && pulaVenc()"/>
+                                                       id="cartAcesso"
+                                                       ng-keyup="$event.keyCode == 13 && pulaVenc()" />
                                             </td>
                                             <td width="30px"></td>
                                             <td width="70px">
-                                                <input type="text" 
-                                                       class="form-control input-transparent" 
-                                                       ng-model="campos.cartTitVia" 
+                                                <input type="text"
+                                                       class="form-control input-transparent"
+                                                       ng-model="campos.cartTitVia"
                                                        maxlength="4"
                                                        id="cartVenc"
-                                                       ng-keyup="$event.keyCode == 13 && buscarCartao()"/>
+                                                       ng-keyup="$event.keyCode == 13 && buscarCartao()" />
                                             </td>
                                         </tr>
                                     </table>
@@ -186,6 +186,56 @@
                                 </tr>
                             </table>
                             <button ng-if="associado != undefined" type="submit" class="btn btn-lg btn-success" ng-click="abreSenha()">Autorizar Procedimento</button>
+                        </div>
+
+                        <div class="modal-backdrop"
+                             ng-if="configSenha == true"
+                             style="background: rgba(55, 55, 55, 0.5 );">
+                            <div class="modal-dialog" style="width:500px">
+                                <br />
+                                <br />
+                                <br />
+                                <div class="modal-content" style="color:black">
+                                    <legend style="color:black">
+                                        Configuração de senha
+                                        <button class="btn btn-transparent btn-lg pull-right" ng-click="closeModalConfigSenha()"> X </button> &nbsp;
+                                    </legend>
+
+                                    <br />
+                                    Seu cartão estará pronto para primeiro uso <br />
+                                    depois de configurar sua senha.<br />
+                                    <br />
+                                    <br />
+                                    <table class="widget">
+                                        <tr height="22px"></tr>
+                                        <tr>
+                                            <td width="20px"></td>
+                                            <td width="120px">Senha</td>
+                                            <td width="90px">
+                                                <input type="password" ng-model="campos.senhaCartao" />
+                                            </td>
+                                            <td width="20px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20px"></td>
+                                            <td width="120px">Confirmação</td>
+                                            <td width="90px">
+                                                <input type="password" ng-model="campos.senhaCartaoConfig" />
+                                            </td>
+                                            <td width="20px"></td>
+                                        </tr>
+                                        <tr height="22px"></tr>
+                                    </table>
+                                    <br />
+
+                                    <div class="pull-right">
+                                        <button class="btn btn-default" ng-click="closeModalConfigSenha()"> Cancelar </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-success" ng-if="campos.senhaCartao == campos.senhaCartaoConfig && campos.senhaCartaoConfig != ''" ng-click="configurarSenha()"> Configurar </button>
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                            </div>
                         </div>
 
                         <div class="modal-backdrop"

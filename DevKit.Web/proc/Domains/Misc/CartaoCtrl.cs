@@ -69,7 +69,7 @@ namespace DevKit.Web.Controllers
 
                 return Ok(associado);
             }
-            catch (SystemException ex)
+        catch (SystemException ex)
             {
                 util.SetupFile();
 

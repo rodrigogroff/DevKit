@@ -926,6 +926,7 @@
     <Compile Include="proc\Domains\emissor\EmissorListagemCredenciadoCtrl.cs" />
     <Compile Include="proc\Domains\credenciado\CredenciadoListagemAutorizacaoCtrl.cs" />
     <Compile Include="proc\Domains\credenciado\AutorizaProcCtrl.cs" />
+    <Compile Include="proc\Domains\Misc\ConfigSenhaCtrl.cs" />
     <Compile Include="proc\Domains\Misc\CartaoCtrl.cs" />
     <Compile Include="proc\Enums\Template\ContactFormCtrl.cs" />
     <Compile Include="proc\Enums\Template\DayMonthCtrl.cs" />

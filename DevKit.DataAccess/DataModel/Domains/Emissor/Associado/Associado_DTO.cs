@@ -36,6 +36,8 @@ namespace DataModel
 		public List<AssociadoEmail> emails;
         public List<AssociadoEndereco> enderecos;
         public List<AssociadoDependente> dependentes;
+
+        public bool bConfigSenha = false;
     }
 
     public class AssociadoReport

@@ -377,7 +377,7 @@ namespace DataModel
                     }
 
                     cupom.tuss = proc.nuTUSS.ToString();
-                    cupom.procedimento = proc.stProcedimento;
+                    cupom.procedimento = tuss.stProcedimento;
 
                     cupom.vrIntegral = new money().setMoneyFormat((long)proc.vrProcedimento);
                     cupom.vrCoPart = new money().setMoneyFormat((long)proc.vrCoPart);

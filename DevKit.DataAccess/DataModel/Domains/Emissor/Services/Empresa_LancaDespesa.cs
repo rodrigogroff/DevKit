@@ -101,7 +101,7 @@ namespace DataModel
                 nuIndice = 1,
                 nuTotParcelas = 1,
                 vrProcedimento = _params.vrValor,
-                vrParcela = 1,
+                vrParcela = _params.vrValor,
                 vrCoPart = 0,
                 vrParcelaCoPart = 0,
                 fkAssociadoPortador = assoc.id,

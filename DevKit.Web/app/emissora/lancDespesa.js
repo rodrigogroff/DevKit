@@ -203,15 +203,6 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
         {
             $scope.loading = true;
 
-            /*
-             *  fkAssociado = Request.GetQueryStringValue<long?>("fkAssociado", null),
-                fkCredenciado = Request.GetQueryStringValue<long?>("fkCredenciado", null),
-                vrValor = Request.GetQueryStringValue<long?>("vrValor", null),
-                nuTipo = Request.GetQueryStringValue<long?>("nuTipo", null),
-                fkPrecificacao = Request.GetQueryStringValue<long?>("fkPrecificacao", null),
-                nuParcelas = Request.GetQueryStringValue<long?>("nuParcelas", null),
-                */
-
             var opcoes = {
                 matricula: $scope.campos.matricula,
                 credenciado: $scope.campos.credenciado,
@@ -222,9 +213,8 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
                 nuParcelas: $scope.campos.parcelas
             };
 
-            Api.PrecoPacote.listPage(opcoes, function (data) {
-                $scope.list = data.results;
-                $scope.total = data.count;
+            Api.EmissorLancaDespesa.listPage(opcoes, function (data) {
+                toastr.success('lixo', 'lixo');
                 $scope.loading = false;
             },
                 function (response) {

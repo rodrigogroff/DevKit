@@ -156,7 +156,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             mat: $scope.campos.cartMat,
             ca: $scope.campos.cartCA,            
             titVia: $scope.campos.cartTitVia,
-            senha: $scope.campos.senhaCartao,
+            senha: 'NULO',
             codigoCred: $scope.selecionouCred,
             tuss: $scope.selecionouProc,
         };

@@ -137,7 +137,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
     }
 
     $scope.closeModalConfigSenha = function () {
-        $scope.configSenha = false;
+        init();
     }
     
     $scope.autorizar = function ()
@@ -154,8 +154,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         Api.AutorizaProc.listPage(opcoes, function (data)
         {
             $scope.cupom = data;
-            $scope.closeModalSenha();
-            
+            $scope.configSenha = false;            
             $scope.mostraGuia = true;
         },
         function (response) {

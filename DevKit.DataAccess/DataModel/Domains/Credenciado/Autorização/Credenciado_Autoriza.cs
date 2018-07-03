@@ -239,16 +239,17 @@ namespace DataModel
                 util.Registry("_params.senha != associadoTit.stSenha");
                 util.Registry(_params.senha + " != " + associadoTit.stSenha);
 
-                if ( _params.senha != associadoTit.stSenha )
-                {
-                    cupom.ok = false;
-                    cupom.resp = "Senha inválida!";
+                if (_params.senha != "NULO")
+                    if ( _params.senha != associadoTit.stSenha )
+                    {
+                        cupom.ok = false;
+                        cupom.resp = "Senha inválida!";
 
-                    util.ErrorRegistry(cupom.resp);
-                    util.CloseFile();
+                        util.ErrorRegistry(cupom.resp);
+                        util.CloseFile();
 
-                    return cupom;
-                }
+                        return cupom;
+                    }
 
                 util.Registry("associadoPortador.tgStatus: " + (associadoPortador.tgStatus == null ? "NULO" : associadoPortador.tgStatus.ToString()));
 

@@ -23,11 +23,32 @@ namespace DataModel
                         tuss;
     }
 
+    public class FechAssocAnalDetalheExtra
+    {
+        public string   serial,
+                        nsu,
+                        portador,
+                        cnpj,
+                        credenciado,
+                        dtSolicitacao,
+                        codCred,
+                        vlr,
+                        parcela,
+                        tipo,
+                        desc;
+    }
+
     public class FechAssocAnalitico
     {
         public long     totVlr = 0,
                         totVlrConsulta = 0,
-                        totCoPart = 0;
+                        totCoPart = 0,
+                        totExtra_diaria = 0,
+                        totExtra_mat = 0,
+                        totExtra_meds = 0,
+                        totExtra_naomed = 0,
+                        totExtra_opme = 0,
+                        totExtra_pacserv = 0;
 
         public string   secao,
                         matricula,
@@ -36,9 +57,16 @@ namespace DataModel
                         stotVlr,
                         stotVlrConsulta,
                         stotCoPart, 
-                        tuss;
+                        tuss,
+                        stotExtra_diaria,
+                        stotExtra_mat,
+                        stotExtra_meds,
+                        stotExtra_naomed,
+                        stotExtra_opme,
+                        stotExtra_pacserv;
 
         public List<FechAssocAnalDetalhe> results = new List<FechAssocAnalDetalhe>();
+        public List<FechAssocAnalDetalheExtra> resultsExtras = new List<FechAssocAnalDetalheExtra>();
     }
 
     public class EmissorFechamentoAssocAnaliticoReport
@@ -49,12 +77,24 @@ namespace DataModel
                     totAssociados = 0,
                     totVlr = 0,
                     totVlrConsulta = 0,
-                    totCoPart = 0;            
+                    totCoPart = 0,
+                    totExtra_diaria = 0,
+                        totExtra_mat = 0,
+                        totExtra_meds = 0,
+                        totExtra_naomed = 0,
+                        totExtra_opme = 0,
+                        totExtra_pacserv = 0;
 
-        public string   stotVlr,
+        public string stotVlr,
                         stotVlrConsulta,
                         stotCoPart,
-                        mesAno;
+                        mesAno,
+                        stotExtra_diaria,
+                        stotExtra_mat,
+                        stotExtra_meds,
+                        stotExtra_naomed,
+                        stotExtra_opme,
+                        stotExtra_pacserv;
 
         public List<FechAssocAnalitico> results = new List<FechAssocAnalitico>();
     }
@@ -137,7 +177,17 @@ namespace DataModel
 
                     long qtConsulta = 0;
 
-                    foreach (var aut in auts.Where(y => y.fkAssociado == assocTb.id).OrderBy(y => y.dtSolicitacao).ToList())
+                    // --------------------
+                    // Procedimentos
+                    // --------------------
+
+                    #region - code - 
+
+                    foreach (var aut in auts.
+                                        Where(y => y.fkAssociado == assocTb.id).
+                                        Where( y=> y.nuTipoAutorizacao == 1).
+                                        OrderBy(y => y.dtSolicitacao).
+                                        ToList())
                     {
                         var cred = lstCreds.
                                     Where(y => y.id == aut.fkCredenciado).
@@ -192,21 +242,116 @@ namespace DataModel
                         resultAssoc.totCoPart += (long)aut.vrParcelaCoPart;
                     }
 
+                    #endregion
+                    
+                    // --------------
+                    // Extras
+                    // --------------
+
+                    #region - code - 
+
+                    foreach (var aut in auts.
+                                        Where(y => y.fkAssociado == assocTb.id).
+                                        Where(y => y.nuTipoAutorizacao > 1).
+                                        OrderBy(y => y.dtSolicitacao).
+                                        ToList())
+                    {
+                        var cred = lstCreds.Where(y => y.id == aut.fkCredenciado).FirstOrDefault();
+                        var portador = db.Associado.Where(y => y.id == aut.fkAssociadoPortador).FirstOrDefault();
+
+                        var e = new FechAssocAnalDetalheExtra
+                        {
+                            serial = serial.ToString(),
+                            nsu = aut.nuNSU != null ? aut.nuNSU.ToString() : "",
+                            portador = portador != null ? portador.stName : "",
+                            cnpj = cred.stCnpj,
+                            codCred = cred.nuCodigo.ToString(),
+                            credenciado = cred.stNome,
+                            parcela = aut.nuIndice + " / " + aut.nuTotParcelas,
+                            dtSolicitacao = Convert.ToDateTime(aut.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
+                            vlr = mon.setMoneyFormat((long)aut.vrParcela),
+                        };
+
+                        switch (aut.nuTipoAutorizacao)
+                        {
+                            case 2: e.tipo = "Diária"; break;
+                            case 3: e.tipo = "Materiais"; break;
+                            case 4: e.tipo = "Medicamentos"; break;
+                            case 5: e.tipo = "Não médicos"; break;
+                            case 6: e.tipo = "OPME"; break;
+                            case 7: e.tipo = "Pacote Serviços"; break;
+                        }
+
+                        switch (aut.nuTipoAutorizacao)
+                        {
+                            case 2: e.desc = db.SaudeValorDiaria.Where(y=> y.id == aut.fkPrecificacao).Select ( y=> y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 3: e.desc = db.SaudeValorMaterial.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 4: e.desc = db.SaudeValorMedicamento.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 5: e.desc = db.SaudeValorNaoMedico.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 6: e.desc = db.SaudeValorOPME.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 7: e.desc = db.SaudeValorPacote.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                        }
+
+                        resultAssoc.totVlr += (long)aut.vrParcela;
+
+                        switch (aut.nuTipoAutorizacao)
+                        {
+                            case 2: resultAssoc.totExtra_diaria += (long)aut.vrParcela; break;
+                            case 3: resultAssoc.totExtra_mat += (long)aut.vrParcela; break;
+                            case 4: resultAssoc.totExtra_meds += (long)aut.vrParcela; break;
+                            case 5: resultAssoc.totExtra_naomed += (long)aut.vrParcela; break;
+                            case 6: resultAssoc.totExtra_opme += (long)aut.vrParcela; break;
+                            case 7: resultAssoc.totExtra_pacserv += (long)aut.vrParcela; break;
+                        }
+
+                        resultAssoc.resultsExtras.Add(e);
+                    }
+
+                    #endregion
+
+                    // ------------------------------
+                    // totais do associado
+                    // ------------------------------
+
                     resultAssoc.stotVlr = mon.setMoneyFormat(resultAssoc.totVlr);
                     resultAssoc.stotVlrConsulta = mon.setMoneyFormat(resultAssoc.totVlrConsulta);
                     resultAssoc.stotCoPart = mon.setMoneyFormat(resultAssoc.totCoPart);
+                    resultAssoc.stotExtra_diaria = mon.setMoneyFormat(resultAssoc.totExtra_diaria);
+                    resultAssoc.stotExtra_mat = mon.setMoneyFormat(resultAssoc.totExtra_mat);
+                    resultAssoc.stotExtra_meds = mon.setMoneyFormat(resultAssoc.totExtra_meds);
+                    resultAssoc.stotExtra_naomed = mon.setMoneyFormat(resultAssoc.totExtra_naomed);
+                    resultAssoc.stotExtra_opme = mon.setMoneyFormat(resultAssoc.totExtra_opme);
+                    resultAssoc.stotExtra_pacserv = mon.setMoneyFormat(resultAssoc.totExtra_pacserv);
+
+                    // ------------------------------
+                    // totais do resultado
+                    // ------------------------------
 
                     resultado.totVlr += resultAssoc.totVlr;
                     resultado.totVlrConsulta += resultAssoc.totVlrConsulta;
                     resultado.totCoPart += resultAssoc.totCoPart;
+                    resultado.totExtra_diaria += resultAssoc.totExtra_diaria;
+                    resultado.totExtra_mat += resultAssoc.totExtra_mat;
+                    resultado.totExtra_meds += resultAssoc.totExtra_meds;
+                    resultado.totExtra_naomed += resultAssoc.totExtra_naomed;
+                    resultado.totExtra_opme += resultAssoc.totExtra_opme;
+                    resultado.totExtra_pacserv += resultAssoc.totExtra_pacserv;
                     
                     resultado.results.Add(resultAssoc);
                 }
             }
 
+            // valores em dinheiro
+
             resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);
             resultado.stotVlrConsulta = mon.setMoneyFormat(resultado.totVlrConsulta);
             resultado.stotCoPart = mon.setMoneyFormat(resultado.totCoPart);
+            resultado.stotExtra_diaria = mon.setMoneyFormat(resultado.totExtra_diaria);
+            resultado.stotExtra_mat = mon.setMoneyFormat(resultado.totExtra_mat);
+            resultado.stotExtra_meds = mon.setMoneyFormat(resultado.totExtra_meds);
+            resultado.stotExtra_naomed = mon.setMoneyFormat(resultado.totExtra_naomed);
+            resultado.stotExtra_opme = mon.setMoneyFormat(resultado.totExtra_opme);
+            resultado.stotExtra_pacserv = mon.setMoneyFormat(resultado.totExtra_pacserv);
         }
     }
 }

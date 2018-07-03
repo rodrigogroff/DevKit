@@ -54,7 +54,7 @@ namespace DevKit.Web.Controllers
                                                         associado.stCPF);
 
                 if (ca != caCalc)
-                    return BadRequest("Cartão inválido");
+                    return BadRequest("Cartão inválido CA " + caCalc );
 
                 if (db.currentCredenciado != null)
                 {

@@ -61,7 +61,8 @@ function ($scope, $rootScope, AuthService, $state, $stateParams, ngHistoricoFilt
 
             var opcoes = {
                 fkSecao: $scope.campos.fkSecao,
-                matricula: $scope.campos.mat
+                matricula: $scope.campos.mat,
+                titularidade: '1',
             };
 
             Api.Associado.listPage(opcoes, function (data)

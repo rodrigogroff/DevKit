@@ -7,7 +7,7 @@ namespace DataModel
 {
 	public class AssociadoFilter : BaseFilter
     {
-        public string matricula,
+        public string matricula, titularidade,
                         matSaude,
                         fkSecao,
                         email,
@@ -58,6 +58,11 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.fkSecao))
                 query = from e in query
                         where e.fkSecao.ToString() == filter.fkSecao
+                        select e;
+
+            if (!string.IsNullOrEmpty(filter.titularidade))
+                query = from e in query
+                        where e.nuTitularidade.ToString() == filter.titularidade
                         select e;
 
             if (!string.IsNullOrEmpty(filter.cpf))

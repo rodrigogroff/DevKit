@@ -19,6 +19,7 @@ namespace DevKit.Web.Controllers
                 fkSecao = Request.GetQueryStringValue("fkSecao"),
                 matSaude = Request.GetQueryStringValue("matSaude"),
                 matricula = Request.GetQueryStringValue("matricula"),
+                titularidade = Request.GetQueryStringValue("titularidade"),
                 busca = Request.GetQueryStringValue("busca")?.ToUpper(),
                 email = Request.GetQueryStringValue("email")?.ToUpper(),
                 cpf = Request.GetQueryStringValue("cpf"),

@@ -10,8 +10,7 @@ namespace DataModel
 	public partial class Autorizacao
     {
 		public Autorizacao LoadAssociations(DevKitDB db)
-		{
-            var proc = db.TUSS.Where(y => y.id == fkProcedimento).FirstOrDefault();
+		{            
             var assoc = db.Associado.Where(y => y.id == this.fkAssociado).FirstOrDefault();
             var assocPortador = db.Associado.Where(y => y.id == fkAssociadoPortador).FirstOrDefault();
             var cred = db.Credenciado.Where(y => y.id == fkCredenciado).FirstOrDefault();
@@ -19,7 +18,9 @@ namespace DataModel
             if (cred != null)
             {
                 var espec = db.Especialidade.Where(y => y.id == cred.fkEspecialidade).FirstOrDefault();
-                sfkEspecialidade = espec.stNome;
+
+                if (espec != null)
+                    sfkEspecialidade = espec.stNome;
 
                 snuCodigoCredenciado = cred.nuCodigo.ToString();
                 sfkCredenciado = cred.stNome;
@@ -29,10 +30,14 @@ namespace DataModel
 
             sfkEmpresa = db.EmpresaSecao.Where(y => y.id == assoc.fkSecao).Select (y=> y.nuEmpresa + " - " + y.stDesc).FirstOrDefault();
 
-            if (proc != null)
+            if (fkProcedimento != null)
+            {
+                var proc = db.TUSS.Where(y => y.id == fkProcedimento).FirstOrDefault();
                 sfkProcedimento = proc.nuCodTUSS.ToString();// + " - " + proc.stProcedimento;
+            }
 
-            sfkAssociado = assoc.stName;
+            if (assoc != null)
+                sfkAssociado = assoc.stName;
 
             if (assocPortador != null)
             {
@@ -75,19 +80,27 @@ namespace DataModel
             else
                 cred = null;
 
-            if (this.fkProcedimento != null)
+            if (this.nuTipoAutorizacao == 1)
             {
-                tuss = db.TUSS.FirstOrDefault(y => y.id == this.fkProcedimento);
+                if (this.fkProcedimento != null)
+                {
+                    tuss = db.TUSS.FirstOrDefault(y => y.id == this.fkProcedimento);
 
-                if (tuss != null)
-                    cet = db.CredenciadoEmpresaTuss.FirstOrDefault(y => y.fkCredenciado == this.fkCredenciado &&
-                                                                    y.fkEmpresa == portador.fkEmpresa &&
-                                                                    y.nuTUSS == tuss.nuCodTUSS);
+                    if (tuss != null)
+                        cet = db.CredenciadoEmpresaTuss.FirstOrDefault(y => y.fkCredenciado == this.fkCredenciado &&
+                                                                        y.fkEmpresa == portador.fkEmpresa &&
+                                                                        y.nuTUSS == tuss.nuCodTUSS);
+                    else
+                        cet = null;
+                }
                 else
-                    cet = null;
+                    tuss = null;
             }
             else
+            {
                 tuss = null;
+                cet = null;
+            }                
 
             var dtSol = Convert.ToDateTime(this.dtSolicitacao);
 

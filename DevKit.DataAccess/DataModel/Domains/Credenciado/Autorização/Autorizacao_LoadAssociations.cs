@@ -33,7 +33,9 @@ namespace DataModel
             if (fkProcedimento != null)
             {
                 var proc = db.TUSS.Where(y => y.id == fkProcedimento).FirstOrDefault();
-                sfkProcedimento = proc.nuCodTUSS.ToString();// + " - " + proc.stProcedimento;
+
+                if (proc != null)
+                    sfkProcedimento = proc.nuCodTUSS.ToString();// + " - " + proc.stProcedimento;
             }
 
             if (assoc != null)

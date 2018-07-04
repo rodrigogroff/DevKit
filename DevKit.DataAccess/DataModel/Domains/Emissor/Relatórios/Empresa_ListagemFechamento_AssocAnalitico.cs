@@ -194,32 +194,36 @@ namespace DataModel
                                     Where(y => y.id == aut.fkCredenciado).
                                     FirstOrDefault();
                         
-                        var fkProc = procsTuus.Where(y => y.id == aut.fkProcedimento).FirstOrDefault();
+                        var _proc = procsTuus.Where(y => y.id == aut.fkProcedimento).FirstOrDefault();
 
                         var portador = db.Associado.Where(y => y.id == aut.fkAssociadoPortador).FirstOrDefault();
 
-                        switch (fkProc.nuCodTUSS)
-                        {
-                            case 10101012: case 10101039: case 10102019: case 10103015: case 10103023: case 10103031:
-                            case 10104011: case 10104020: case 10106014: case 10106030: case 10106049: case 90000001:
-                                qtConsulta++;
-                                break;
-                        }
+                        if (_proc != null)
+                            switch (_proc.nuCodTUSS)
+                            {
+                                case 10101012: case 10101039: case 10102019: case 10103015: case 10103023: case 10103031:
+                                case 10104011: case 10104020: case 10106014: case 10106030: case 10106049: case 90000001:
+                                    qtConsulta++;
+                                    break;
+                            }
 
                         long _vlrCons = 0;
 
-                        switch (qtConsulta)
-                        {
-                            case 1: _vlrCons = (long)empConsultaValores.vrPreco1; break;
-                            case 2: _vlrCons = (long)empConsultaValores.vrPreco2; break;
-                            case 3: _vlrCons = (long)empConsultaValores.vrPreco3; break;
-                            case 4: _vlrCons = (long)empConsultaValores.vrPreco4; break;
-                            case 5: _vlrCons = (long)empConsultaValores.vrPreco5; break;
-                            case 6: _vlrCons = (long)empConsultaValores.vrPreco6; break;
-                            case 7: _vlrCons = (long)empConsultaValores.vrPreco7; break;
-                            case 8: _vlrCons = (long)empConsultaValores.vrPreco8; break;
-                            case 9: _vlrCons = (long)empConsultaValores.vrPreco9; break;
-                        }
+                        if (_proc != null)
+                            switch (qtConsulta)
+                            {
+                                case 1: _vlrCons = (long)empConsultaValores.vrPreco1; break;
+                                case 2: _vlrCons = (long)empConsultaValores.vrPreco2; break;
+                                case 3: _vlrCons = (long)empConsultaValores.vrPreco3; break;
+                                case 4: _vlrCons = (long)empConsultaValores.vrPreco4; break;
+                                case 5: _vlrCons = (long)empConsultaValores.vrPreco5; break;
+                                case 6: _vlrCons = (long)empConsultaValores.vrPreco6; break;
+                                case 7: _vlrCons = (long)empConsultaValores.vrPreco7; break;
+                                case 8: _vlrCons = (long)empConsultaValores.vrPreco8; break;
+                                case 9: _vlrCons = (long)empConsultaValores.vrPreco9; break;
+                            }
+
+                        var especTb = lstEspecialidade.Where(y => y.id == cred.fkEspecialidade).FirstOrDefault();
 
                         resultAssoc.results.Add(new FechAssocAnalDetalhe
                         {
@@ -229,13 +233,13 @@ namespace DataModel
                             cnpj = cred.stCnpj,
                             codCred = cred.nuCodigo.ToString(),
                             credenciado = cred.stNome,
-                            especialidade = lstEspecialidade.Where (y=> y.id == cred.fkEspecialidade).FirstOrDefault().stNome,
+                            especialidade = especTb != null ? especTb.stNome : "",
                             parcela = aut.nuIndice + " / " + aut.nuTotParcelas,
                             dtSolicitacao = Convert.ToDateTime(aut.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),                            
                             vlr = mon.setMoneyFormat((long)aut.vrParcela),
                             vlrCoPart = mon.setMoneyFormat((long)aut.vrParcelaCoPart),
                             vlrConsulta = mon.setMoneyFormat(_vlrCons),
-                            tuss = fkProc.nuCodTUSS + " - " + fkProc.stProcedimento
+                            tuss = _proc != null ? _proc.nuCodTUSS + " - " + _proc.stProcedimento : ""
                         });
 
                         resultAssoc.totVlr += (long)aut.vrParcela;

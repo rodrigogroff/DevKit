@@ -14,6 +14,7 @@ namespace DataModel
                    situacao;
 
         public string   tuss, 
+                        nsu,
                         espec,
                         mes, ano,
                         nomeAssociado, 

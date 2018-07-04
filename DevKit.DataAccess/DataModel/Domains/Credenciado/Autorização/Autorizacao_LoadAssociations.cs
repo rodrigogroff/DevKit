@@ -51,13 +51,7 @@ namespace DataModel
 
             snuMatriculaAssociado = assoc.nuMatricula.ToString();
 
-            switch (tgSituacao)
-            {
-                case TipoSitAutorizacao.Autorizado: stgSituacao = "Autorizado"; break;
-                case TipoSitAutorizacao.Confirmado: stgSituacao = "Confirmado"; break;
-                case TipoSitAutorizacao.Glosado:    stgSituacao = "Glosado"; break;
-                case TipoSitAutorizacao.Rejeitado:  stgSituacao = "Rejeitado"; break;
-            }
+            stgSituacao = new EnumTipoSituacaoAutorizacao().Get((long)this.tgSituacao).stName;
 
             LoadCupom(db);
 

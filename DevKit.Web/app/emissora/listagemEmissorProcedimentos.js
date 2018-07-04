@@ -32,7 +32,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
         $scope.selectSecao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
-
+        $scope.selectSituacaoAutorizacao = ngSelects.obterConfiguracao(Api.TipoSituacaoAutorizacaoCombo, {});
+        
         CheckPermissions();
 	}
 

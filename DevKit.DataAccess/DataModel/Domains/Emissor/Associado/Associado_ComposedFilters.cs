@@ -29,6 +29,7 @@ namespace DataModel
             ret.Append(take + ",");            
             ret.Append(busca + ",");
             ret.Append(fkEmpresa + ",");
+            ret.Append(titularidade + ",");
             ret.Append(fkSecao + ",");
             ret.Append(matricula + ",");
             ret.Append(matSaude + ",");

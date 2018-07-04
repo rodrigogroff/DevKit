@@ -6,7 +6,7 @@ namespace DataModel
 {
 	public class CredenciadoFilter : BaseFilter
     {
-		public long? nuCodigo;
+		public long? nuCodigo, fkSecao;
         public string nome, especialidade;
     }
 
@@ -29,6 +29,17 @@ namespace DataModel
             {
                 query = from e in query
                         where e.nuCodigo == filter.nuCodigo
+                        select e;
+            }
+
+            if (filter.fkSecao != null && filter.fkSecao > 0)
+            {
+                var emp = db.EmpresaSecao.Where(y => y.id == filter.fkSecao).FirstOrDefault().fkEmpresa;
+
+                query = from e in query
+                        join convenio in db.CredenciadoEmpresa on e.id equals convenio.fkCredenciado
+                        where convenio.fkCredenciado == e.id
+                        where convenio.fkEmpresa == emp
                         select e;
             }
 

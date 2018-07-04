@@ -123,6 +123,7 @@ namespace DevKit.Web
                 "~/app/emissora/listagemCredenciados.js",
                 "~/app/emissora/credenciado.js",
                 "~/app/emissora/AutorizacaoProcController.js",
+                "~/app/emissora/autorizacaoCanc.js",
                 "~/app/credenciado/CredenciadoPasswordController.js",
                 "~/app/credenciado/ListagemCredenciadoProcedimentosController.js",
                 "~/app/credenciado/AutorizacaoProcController.js",

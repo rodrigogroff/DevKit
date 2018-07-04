@@ -20,6 +20,13 @@
                         <input type="hidden" style="width:100%" ui-select2="selectSecao" data-placeholder="(Selecione)"
                                ng-model="campos.fkSecao" />
                     </td>
+                    <td></td>
+                    <td><b>Situação</b></td>
+                    <td>
+                        <input type="hidden" style="width:100%" ui-select2="selectSituacaoAutorizacao" data-placeholder="(Selecione)"
+                               ng-model="campos.tgSituacao" />
+                    </td>
+                    <td></td>
                 </tr>
                 <tr height="36px">
                     <td></td>
@@ -113,16 +120,15 @@
                                 <table class="table table-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="min-width:150px">Data Solicitação</th>
+                                            <th style="min-width:140px">Data Solicitação</th>
                                             <th style="min-width:90px">NSU</th>
-                                            <th style="min-width:90px">Situação</th>
+                                            <th style="min-width:130px">Situação</th>
                                             <th style="min-width:200px">Associado</th>
-                                            <th style="min-width:200px">Credenciado</th>
-                                            <th style="min-width:150px">Especialidade</th>
+                                            <th style="min-width:180px">Credenciado</th>
+                                            <th style="min-width:140px">Especialidade</th>
                                             <th style="min-width:90px">Parcela</th>
                                             <th style="min-width:90px">Mês / Ano</th>
-                                            <!--<th style="min-width:300px">TUSS - Procedimento</th>-->
-                                            <th style="min-width:150px">Comprovante</th>
+                                            <th style="min-width:130px">Comprovante</th>
                                         </tr>
                                     </thead>
                                     <tr data-ng-repeat="mdl in list">

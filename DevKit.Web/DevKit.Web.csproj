@@ -244,6 +244,8 @@
     <Content Include="app\dba\listingLotes.js" />
     <Content Include="app\dba\novoLote.html" />
     <Content Include="app\dba\novoLote.js" />
+    <Content Include="app\emissora\autorizacaoCanc.html" />
+    <Content Include="app\emissora\autorizacaoCanc.js" />
     <Content Include="app\emissora\lancDespesa.html" />
     <Content Include="app\emissora\lancDespesa.js" />
     <Content Include="app\emissora\precoProcedimento.html" />
@@ -913,6 +915,7 @@
     <Compile Include="proc\Domains\dba\EspecialidadeCtrl.cs" />
     <Compile Include="proc\Domains\dba\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\dba\LotesGraficaCtrl.cs" />
+    <Compile Include="proc\Domains\emissor\EmissorCancelamentoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\EmissorLancaDespesaCtrl.cs" />
     <Compile Include="proc\Domains\emissor\EmissorListagemAutorizacaoCtrl.cs" />
     <Compile Include="proc\Domains\emissor\PrecoProcedimentoCtrl.cs" />
@@ -935,7 +938,7 @@
     <Compile Include="proc\Domains\emissor\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />
     <Compile Include="proc\Definitions\OperationTags.cs" />
-    <Compile Include="proc\Enums\Tipos\TipoAutorizacaoCtrl.cs" />
+    <Compile Include="proc\Enums\Tipos\TipoSituacaoAutorizacaoComboCtrl.cs" />
     <Compile Include="proc\Enums\Tipos\TipoExpedicaoCtrl.cs" />
     <Compile Include="proc\Enums\Tipos\TipoSituacaoCtrl.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />

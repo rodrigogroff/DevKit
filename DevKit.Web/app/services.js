@@ -39,6 +39,7 @@ angular.module('app.services', ['ngResource'])
 
     return {
 
+        EmissorCancelamento: $resource('api/emissorcancelamento/:id', {}, opcoes),
         Setup: $resource('api/setup/:id', {}, opcoes),
         User: $resource('api/user/:id', {}, opcoes),
         Empresa: $resource('api/empresa/:id', {}, opcoes),
@@ -76,6 +77,7 @@ angular.module('app.services', ['ngResource'])
         MonthCombo: $resource('api/month/:id', {}, opcoes),
         DayMonthCombo: $resource('api/daymonth/:id', {}, opcoes),		
         EstadoCombo: $resource('api/estadocombo/:id', {}, opcoes),
+        TipoSituacaoAutorizacaoCombo: $resource('api/tiposituacaoautorizacaocombo/:id', {}, opcoes),
         CidadeCombo: $resource('api/cidadecombo/:id', {}, opcoes),
         ClientCombo: $resource('api/clientcombo/:id', {}, opcoes),
         ClientGroupCombo: $resource('api/clientgroupcombo/:id', {}, opcoes),

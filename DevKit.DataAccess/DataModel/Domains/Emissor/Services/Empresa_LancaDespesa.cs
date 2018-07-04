@@ -7,7 +7,7 @@ namespace DataModel
 {
     public class LancaDespesa_PARAMS
     {
-        public long?    matricula,
+        public long? matricula,
                         credenciado,
                         vrValor,
                         nuTipo,
@@ -17,11 +17,11 @@ namespace DataModel
 
         public DateTime? dataLanc;
     }
-           
+
     public partial class Empresa
     {
-		public string LancaDespesa( DevKitDB db, LancaDespesa_PARAMS _params )
-		{
+        public string LancaDespesa(DevKitDB db, LancaDespesa_PARAMS _params)
+        {
             if (_params.dataLanc == null)
                 return "Data inválida";
 
@@ -57,15 +57,15 @@ namespace DataModel
 
             if (cred == null)
                 return "Credenciado inválido";
-            
+
             #endregion
 
-            if ( _params.nuTipo == 0)
+            if (_params.nuTipo == 0)
                 return "Tipo de precificação inválido";
 
             switch (_params.nuTipo)
             {
-                case 1: if (!db.SaudeValorProcedimento.Any ( y=> y.id == _params.fkPrecificacao)) return "Procedimento inválido"; break;
+                case 1: if (!db.SaudeValorProcedimento.Any(y => y.id == _params.fkPrecificacao)) return "Procedimento inválido"; break;
                 case 2: if (!db.SaudeValorDiaria.Any(y => y.id == _params.fkPrecificacao)) return "Diária inválida"; break;
                 case 3: if (!db.SaudeValorMaterial.Any(y => y.id == _params.fkPrecificacao)) return "Material inválida"; break;
                 case 4: if (!db.SaudeValorMedicamento.Any(y => y.id == _params.fkPrecificacao)) return "Material inválida"; break;
@@ -96,7 +96,7 @@ namespace DataModel
                 nuAno = dt.Year,
                 nuMes = dt.Month,
                 nuNSU = nsu,
-                tgSituacao = TipoSitAutorizacao.Autorizado,
+                tgSituacao = TipoSitAutorizacao.EmAberto,
                 fkAutOriginal = null,
                 nuIndice = 1,
                 nuTotParcelas = 1,
@@ -131,7 +131,7 @@ namespace DataModel
                         nuAno = dt.Year,
                         nuMes = dt.Month,
                         nuNSU = nsu,
-                        tgSituacao = TipoSitAutorizacao.Autorizado,
+                        tgSituacao = TipoSitAutorizacao.EmAberto,
                         fkAutOriginal = aut.id,
                         nuIndice = nuParc,
                         nuTotParcelas = aut.nuTotParcelas,
@@ -147,6 +147,6 @@ namespace DataModel
             }
 
             return "";
-		}
+        }
     }
 }

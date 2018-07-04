@@ -27,10 +27,18 @@ namespace DevKit.DataAccess
 
     public class TipoSitAutorizacao
     {
-        public const int Autorizado = 1,
-                         Confirmado = 2,
-                         Glosado = 3,
-                         Rejeitado = 4;
+
+        /*
+         *  'Em aberto', 'Em revisão', 'Aprovado emissor', 'Cancelada emissor', 'Cancelada plano' */
+
+        public const int EmAberto = 1,
+                         EmRevisao = 2,
+                         AprovadoEmissor = 3,
+                         CanceladaEmissor = 4,
+                         GlosadoPlano = 5,
+                         AprovadoPlano = 6,
+                         RejeitadoPlano = 7,
+                         ErroAutorizador = 8;
     }
     
     public class TipoCredenciado

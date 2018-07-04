@@ -19,6 +19,7 @@ namespace DevKit.Web.Controllers
                 take = Request.GetQueryStringValue("take", 15),
                 nome = Request.GetQueryStringValue("nome"),
                 nuCodigo = Request.GetQueryStringValue<long?>("codigo", null),
+                fkSecao = Request.GetQueryStringValue<long?>("fkSecao", null),
                 especialidade = Request.GetQueryStringValue("especialidade"),
             }));                        
         }

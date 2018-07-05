@@ -16,11 +16,13 @@ namespace DataModel
         public string   tuss, 
                         nsu,
                         espec,
-                        mes, ano,
+                        mes,
+                        ano,
                         nomeAssociado, 
                         nomeCredenciado, 
                         codCredenciado,
                         tgSituacao,
+                        nuTipo,
                         matricula, 
                         dtInicial, 
                         dtFim;
@@ -41,6 +43,7 @@ namespace DataModel
             var query = from e in db.Autorizacao
                         where e.fkEmpresa == db.currentUser.fkEmpresa
                         where filter.tgSituacao == null || e.tgSituacao.ToString() == filter.tgSituacao
+                        where filter.nuTipo == null || e.nuTipoAutorizacao.ToString() == filter.nuTipo
                         select e;
 
             if (!string.IsNullOrEmpty(filter.tuss))

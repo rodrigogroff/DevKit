@@ -33,7 +33,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.selectSecao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
         $scope.selectSituacaoAutorizacao = ngSelects.obterConfiguracao(Api.TipoSituacaoAutorizacaoCombo, {});
-        
+        $scope.selectTipoAutorizacao = ngSelects.obterConfiguracao(Api.TipoAutorizacaoCombo, {});
+
         CheckPermissions();
 	}
 
@@ -60,6 +61,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             codCredenciado: $scope.campos.codCredenciado,
             matricula: $scope.campos.matricula,
             tgSituacao: $scope.campos.tgSituacao,
+            nuTipo: $scope.campos.nuTipo,
             dtInicial: $scope.campos.dtInicial,
             dtFim: $scope.campos.dtFim,
         };

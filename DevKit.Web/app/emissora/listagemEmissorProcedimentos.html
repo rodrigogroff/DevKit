@@ -20,6 +20,14 @@
                         <input type="hidden" style="width:100%" ui-select2="selectSecao" data-placeholder="(Selecione)"
                                ng-model="campos.fkSecao" />
                     </td>
+                </tr>
+                <tr height="36px">
+                    <td></td>
+                    <td><b>Tipo</b></td>
+                    <td>
+                        <input type="hidden" style="width:100%" ui-select2="selectTipoAutorizacao" data-placeholder="(Selecione)"
+                               ng-model="campos.nuTipo" />
+                    </td>
                     <td></td>
                     <td><b>Situação</b></td>
                     <td>
@@ -144,7 +152,7 @@
                                         <td>{{ mdl.sfkEspecialidade }}</td>
                                         <td>{{ mdl.nuIndice }} / {{ mdl.nuTotParcelas }}</td>
                                         <td>{{ mdl.nuMes }} / {{ mdl.nuAno }}</td>
-                                        <td><a ng-click="show(mdl)">Re-imprimir</a></td>
+                                        <td><a ng-if="mdl.nuTipoAutorizacao == 1 || mdl.nuTipoAutorizacao == null" ng-click="show(mdl)">Re-imprimir</a></td>
                                     </tr>
                                 </table>
                                 <br />

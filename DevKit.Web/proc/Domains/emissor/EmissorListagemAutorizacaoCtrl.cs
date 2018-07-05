@@ -25,6 +25,7 @@ namespace DevKit.Web.Controllers
                 matricula = Request.GetQueryStringValue("matricula"),
                 dtInicial = Request.GetQueryStringValue("dtInicial"),
                 tgSituacao = Request.GetQueryStringValue("tgSituacao"),
+                nuTipo = Request.GetQueryStringValue("nuTipo"),
                 dtFim = Request.GetQueryStringValue("dtFim"),
                 nsu = Request.GetQueryStringValue("nsu"),
             }));

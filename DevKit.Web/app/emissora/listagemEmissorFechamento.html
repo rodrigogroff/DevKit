@@ -18,10 +18,19 @@
                         <td>
                             <table style="color:white">
                                 <tr height="22px"> </tr>
-                                <tr height="36px">
+                                <tr height="46px">
                                     <td width="25px"></td>
-                                    <td width="150px" valign="top"><b>Selecione o tipo:</b></td>
-                                    <td width="120px" valign="top">
+                                    <td width="150px" valign="top"><b>Situação:</b></td>
+                                    <td width="180px" valign="top">
+                                        <input type="hidden" style="width:100%" ui-select2="selectSituacaoAutorizacao" data-placeholder="(Selecione)"
+                                               ng-model="campos.tgSituacao" />
+                                    </td>
+                                    <td width="60px"></td>
+                                </tr>
+                                <tr height="36px">
+                                    <td ></td>
+                                    <td valign="top"><b>Selecione o tipo:</b></td>
+                                    <td valign="top">
                                         <table>
                                             <tr>
                                                 <td width="20px"><input type="radio" value="1" ng-model="campos.tipo" /></td>

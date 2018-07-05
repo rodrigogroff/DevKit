@@ -80,6 +80,7 @@ namespace DataModel
                         Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
                         Where(y => y.nuMes == filter.mes).
                         Where(y => y.nuAno == filter.ano).
+                        Where(y => y.tgSituacao == filter.tgSituacao).
                         ToList();
 
             var secoes = db.EmpresaSecao.Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).ToList();

@@ -13,6 +13,8 @@ namespace DataModel
                         nsu;
 
         public DateTime? dt;
+
+        public bool? lote;
     }
 
     public partial class Empresa
@@ -28,7 +30,7 @@ namespace DataModel
 
             var cred = db.Credenciado.FirstOrDefault(y => y.nuCodigo.ToString() == _params.codCredenciado);
 
-            var dtFim = Convert.ToDateTime(_params.dt).AddDays(1);
+            //var dtFim = Convert.ToDateTime(_params.dt).AddDays(1);
 
             var aut = db.Autorizacao.Where(y => associadoLst.Contains((long)y.fkAssociadoPortador) &&
                                                 y.fkCredenciado == cred.id &&

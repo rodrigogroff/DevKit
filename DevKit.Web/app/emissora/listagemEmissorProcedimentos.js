@@ -76,6 +76,60 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.mostraGuia = true;
     }
 
+    $scope.marca = function (mdl) {
+        if (mdl.selecionado == undefined)
+            mdl.selecionado = true;
+        else
+            mdl.selecionado = !mdl.selecionado;
+    }
+
+    $scope.cancelar = function () {
+
+        $scope.listCanc = [];
+        var num = 0;
+        for (var i = 0; i < $scope.list.length; i++)
+            if ($scope.list[i].selecionado == true) {
+                $scope.listCanc.push($scope.list[i]);
+                num++;
+            }
+                
+        if (num > 0)
+            $scope.mostraCancel = true;
+    }
+
+    $scope.cancelarModal = function () {
+        $scope.mostraCancel = false;
+    }
+
+    $scope.cancelarAutorizacoes = function ()
+    {
+        for (var i = 0; i < $scope.listCanc.length; i++)
+        {
+            var f = $scope.listCanc[i];
+
+            $scope.loading = true;
+
+            var opcoes = {
+                codCredenciado: f.snuCodigoCredenciado,
+                matricula: f.snuMatriculaAssociado,
+                dt: f.sdtSolicitacao,
+                fkSecao: f.sfkSecao,
+                nsu: f.nuNSU,
+            };
+
+            Api.EmissorCancelamento.listPage(opcoes, function (data) {
+                $scope.loading = false;
+            });
+        }
+
+        $scope.list = undefined;
+        $scope.total = undefined;
+
+        toastr.success('Cancelamentos efetuados com sucesso!', 'Sistema');
+
+        $scope.mostraCancel = false;
+    }
+
     $scope.cancelarGuia = function () {
         $scope.mostraGuia = false;
     }

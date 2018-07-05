@@ -120,6 +120,7 @@
                                 <table class="table table-hover" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th style="min-width:20px"></th>
                                             <th style="min-width:140px">Data Solicitação</th>
                                             <th style="min-width:90px">NSU</th>
                                             <th style="min-width:130px">Situação</th>
@@ -132,6 +133,7 @@
                                         </tr>
                                     </thead>
                                     <tr data-ng-repeat="mdl in list">
+                                        <td><input type="checkbox" ng-click="marca(mdl)" ng-checked="mdl.selecionado" /></td>
                                         <td>{{ mdl.sdtSolicitacao }}</td>
                                         <td>{{ mdl.nuNSU }}</td>
                                         <td>{{ mdl.stgSituacao }}</td>
@@ -140,14 +142,17 @@
                                         <td>{{ mdl.sfkEspecialidade }}</td>
                                         <td>{{ mdl.nuIndice }} / {{ mdl.nuTotParcelas }}</td>
                                         <td>{{ mdl.nuMes }} / {{ mdl.nuAno }}</td>
-                                        <!--<td>{{ mdl.sfkProcedimento }}</td>-->
                                         <td><a ng-click="show(mdl)">Re-imprimir</a></td>
                                     </tr>
                                 </table>
+                                <br />
+                                <button type="submit" class="btn btn-danger" ng-click="cancelar()">Cancelar autorizações</button><br />
+                                <br />
                             </div>
                         </td>
                     </tr>
                 </table>
+
             </div>
 
             <br />
@@ -236,6 +241,47 @@
                 </div>
             </div>
 
+            <div class="modal-backdrop"
+                 ng-if="mostraCancel == true"
+                 style="background: rgba(55, 55, 55, 0.5 );">
+                <div class="modal-dialog" style="width:800px">
+                    <br />
+                    <div class="modal-content" style="color:black">
+                        <legend style="color:black">
+                            Guias de selecionadas para cancelamento
+                        </legend>
+                        <br />
+                        Autorizações selecionadas:<br />
+                        <br />
+                        <table class="table table-hover" style="width:800px">
+                            <thead>
+                                <tr>
+                                    <th style="min-width:120px">Solicitação</th>
+                                    <th style="min-width:90px">NSU</th>
+                                    <th style="min-width:170px">Associado / Credenciado</th>
+                                    <th style="min-width:90px">Parcela</th>
+                                    <th style="min-width:90px">Mês / Ano</th>
+                                </tr>
+                            </thead>
+                            <tr data-ng-repeat="mdl in listCanc">
+                                <td><span style="color:black">{{ mdl.sdtSolicitacao }}</span></td>
+                                <td><span style="color:black">{{ mdl.nuNSU }}</span></td>
+                                <td><span style="color:black">{{ mdl.snuMatriculaAssociado }} - {{ mdl.sfkAssociadoPortador }}<br />{{ mdl.snuCodigoCredenciado }} - {{ mdl.sfkCredenciado }}</span></td>
+                                <td><span style="color:black">{{ mdl.nuIndice }} / {{ mdl.nuTotParcelas }}</span></td>
+                                <td><span style="color:black">{{ mdl.nuMes }} / {{ mdl.nuAno }}</span></td>
+                            </tr>
+                        </table>
+                        <br />
+                        <br />
+
+                        <div align="center">
+                            <button class="btn btn-default" ng-click="cancelarModal()"> Cancelar </button> &nbsp;&nbsp;
+                            <button class="btn btn-danger" ng-click="cancelarAutorizacoes()"> Confirmar </button> &nbsp;&nbsp;
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     <br />
     <br />

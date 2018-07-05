@@ -28,6 +28,7 @@ namespace DataModel
 
             sdtSolicitacao = Convert.ToDateTime(dtSolicitacao).ToString("dd/MM/yyyy HH:mm");
 
+            sfkSecao = assoc.fkSecao.ToString();
             sfkEmpresa = db.EmpresaSecao.Where(y => y.id == assoc.fkSecao).Select (y=> y.nuEmpresa + " - " + y.stDesc).FirstOrDefault();
 
             if (fkProcedimento != null)

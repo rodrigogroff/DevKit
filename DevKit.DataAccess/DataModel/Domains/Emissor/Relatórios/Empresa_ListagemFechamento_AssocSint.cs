@@ -87,7 +87,7 @@ namespace DataModel
                         Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
                         Where(y => y.nuMes == filter.mes).
                         Where(y => y.nuAno == filter.ano).
-                        Where(y => y.tgSituacao == 1 || y.tgSituacao == 2 || y.tgSituacao == 3).
+                        Where(y => y.tgSituacao == filter.tgSituacao).
                         ToList();
 
             resultado.failed = !auts.Any();

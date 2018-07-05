@@ -11,10 +11,11 @@ namespace DataModel
     {
         public long? fkEmpresa, fkCredenciado;
 
-        public int mes, 
+        public int mes,
                    ano,
                    tipo,
-                   modo;
+                   modo,
+                   tgSituacao;
     }
 
     public class FechCredSint
@@ -72,6 +73,7 @@ namespace DataModel
                         Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
                         Where(y => y.nuMes == filter.mes).
                         Where(y => y.nuAno == filter.ano).
+                        Where(y => y.tgSituacao == filter.tgSituacao).
                         ToList();
 
             resultado.failed = !auts.Any();
@@ -106,7 +108,7 @@ namespace DataModel
                     cpfcnpj = cred.stCnpj,
                     codigoCred = cred.nuCodigo.ToString(),
                     nomeCred = cred.stNome,
-                    especialidade = lstEspecs.Where (y=> y.id == cred.fkEspecialidade).FirstOrDefault().stNome,
+                    especialidade = cred.fkEspecialidade != null ? lstEspecs.Where (y=> y.id == cred.fkEspecialidade).FirstOrDefault().stNome : "",
                     qtdAutos = auts.Where(y => y.fkCredenciado == cred.id).Count().ToString()
                 };
 

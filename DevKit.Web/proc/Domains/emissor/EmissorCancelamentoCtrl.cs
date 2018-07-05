@@ -15,12 +15,13 @@ namespace DevKit.Web.Controllers
                 codCredenciado = Request.GetQueryStringValue("codCredenciado"),
                 matricula = Request.GetQueryStringValue("matricula"),
                 fkSecao = Request.GetQueryStringValue("fkSecao"),
+                lote = Request.GetQueryStringValue<bool?>("lote", null),
                 dt = ObtemData(Request.GetQueryStringValue("dt")),
-                nsu = Request.GetQueryStringValue("nsu"),              
+                nsu = Request.GetQueryStringValue("nsu"),
             });
 
             if (!string.IsNullOrEmpty(ret))
-                return BadRequest(ret);                
+                return BadRequest(ret);
             else
                 return Ok();
         }

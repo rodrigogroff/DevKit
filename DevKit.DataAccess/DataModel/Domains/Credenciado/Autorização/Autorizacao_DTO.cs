@@ -13,6 +13,7 @@ namespace DataModel
                         snuCodigoCredenciado,
                         sfkEspecialidade,
                         sfkEmpresa,
+                        sfkSecao,
                         sfkProcedimento,
                         snuMatriculaAssociado,
                         sfkAssociado,

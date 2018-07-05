@@ -59,6 +59,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             nomeCredenciado: $scope.campos.nomeCredenciado,
             codCredenciado: $scope.campos.codCredenciado,
             matricula: $scope.campos.matricula,
+            tgSituacao: $scope.campos.tgSituacao,
             dtInicial: $scope.campos.dtInicial,
             dtFim: $scope.campos.dtFim,
         };

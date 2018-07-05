@@ -24,6 +24,7 @@ namespace DevKit.Web.Controllers
                 codCredenciado = Request.GetQueryStringValue("codCredenciado"),
                 matricula = Request.GetQueryStringValue("matricula"),
                 dtInicial = Request.GetQueryStringValue("dtInicial"),
+                tgSituacao = Request.GetQueryStringValue("tgSituacao"),
                 dtFim = Request.GetQueryStringValue("dtFim"),
                 nsu = Request.GetQueryStringValue("nsu"),
             }));

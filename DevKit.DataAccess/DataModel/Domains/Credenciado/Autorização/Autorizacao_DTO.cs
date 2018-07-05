@@ -15,6 +15,7 @@ namespace DataModel
                         sfkEmpresa,
                         sfkSecao,
                         sfkProcedimento,
+                        snuTipoAutorizacao,
                         snuMatriculaAssociado,
                         sfkAssociado,
                         sfkAssociadoPortador,

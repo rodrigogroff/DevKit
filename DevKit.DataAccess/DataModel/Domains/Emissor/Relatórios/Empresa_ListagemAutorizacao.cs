@@ -19,7 +19,8 @@ namespace DataModel
                         mes, ano,
                         nomeAssociado, 
                         nomeCredenciado, 
-                        codCredenciado, 
+                        codCredenciado,
+                        tgSituacao,
                         matricula, 
                         dtInicial, 
                         dtFim;
@@ -39,6 +40,7 @@ namespace DataModel
 
             var query = from e in db.Autorizacao
                         where e.fkEmpresa == db.currentUser.fkEmpresa
+                        where filter.tgSituacao == null || e.tgSituacao.ToString() == filter.tgSituacao
                         select e;
 
             if (!string.IsNullOrEmpty(filter.tuss))

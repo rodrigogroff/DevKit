@@ -54,6 +54,11 @@ namespace DataModel
 
             stgSituacao = new EnumTipoSituacaoAutorizacao().Get((long)this.tgSituacao).stName;
 
+            if (nuTipoAutorizacao == null)
+                nuTipoAutorizacao = 1;
+
+            snuTipoAutorizacao = new EnumTipoAutorizacao().Get((long)this.nuTipoAutorizacao).stName;
+
             LoadCupom(db);
 
             if (nuTotParcelas == 0)

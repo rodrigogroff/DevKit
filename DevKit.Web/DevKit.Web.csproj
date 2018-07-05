@@ -940,6 +940,7 @@
     <Compile Include="proc\Definitions\OperationTags.cs" />
     <Compile Include="proc\Enums\Tipos\TipoSituacaoAutorizacaoComboCtrl.cs" />
     <Compile Include="proc\Enums\Tipos\TipoExpedicaoCtrl.cs" />
+    <Compile Include="proc\Enums\Tipos\TipoAutorizacaoComboCtrl.cs" />
     <Compile Include="proc\Enums\Tipos\TipoSituacaoCtrl.cs" />
     <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
     <Compile Include="proc\Services\Cache\CacheClean.cs" />

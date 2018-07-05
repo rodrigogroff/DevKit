@@ -15,7 +15,8 @@ namespace DataModel
                    ano,
                    tipo,
                    modo,
-                   tgSituacao;
+                   tgSituacao,
+                   fkSecao;
     }
 
     public class FechCredSint

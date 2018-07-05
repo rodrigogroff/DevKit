@@ -17,6 +17,7 @@ namespace DevKit.Web.Controllers
                 tipo = Request.GetQueryStringValue("tipo", 0),
                 modo = Request.GetQueryStringValue("modo", 0),
                 tgSituacao = Request.GetQueryStringValue("tgSituacao", 1),
+                fkSecao = Request.GetQueryStringValue("fkSecao", 0),
             };
 
             if (db.currentCredenciado != null)

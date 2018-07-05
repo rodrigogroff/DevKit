@@ -26,6 +26,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
         $scope.selectSituacaoAutorizacao = ngSelects.obterConfiguracao(Api.TipoSituacaoAutorizacaoCombo, {});
+        $scope.selectSecao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
 
         $scope.itensporpagina = 15;
 
@@ -53,6 +54,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             tipo: $scope.campos.tipo,
             modo: $scope.campos.modo,
             tgSituacao: $scope.campos.tgSituacao,
+            fkSecao: $scope.campos.fkSecao,
         };
         
 		Api.EmissorListagemFechamento.listPage(opcoes, function (data)

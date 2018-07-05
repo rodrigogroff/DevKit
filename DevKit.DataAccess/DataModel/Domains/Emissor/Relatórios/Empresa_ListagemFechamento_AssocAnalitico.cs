@@ -107,6 +107,7 @@ namespace DataModel
             
             var query = from e in db.Associado                        
                         where e.fkEmpresa == db.currentUser.fkEmpresa
+                        where e.fkSecao == filter.fkSecao || filter.fkSecao == 0
                         orderby e.stName
                         select e;
 
@@ -186,7 +187,7 @@ namespace DataModel
 
                     foreach (var aut in auts.
                                         Where(y => y.fkAssociado == assocTb.id).
-                                        Where( y=> y.nuTipoAutorizacao == 1).
+                                        Where( y=> y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null).
                                         OrderBy(y => y.dtSolicitacao).
                                         ToList())
                     {

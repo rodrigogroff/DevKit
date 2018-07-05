@@ -69,6 +69,7 @@ namespace DataModel
             
             var query = from e in db.Associado
                         where e.fkEmpresa == db.currentUser.fkEmpresa
+                        where e.fkSecao == filter.fkSecao || filter.fkSecao == 0
                         where e.nuTitularidade == 1
                         orderby e.stName
                         select e;
@@ -112,6 +113,8 @@ namespace DataModel
             resultado.totCreds = auts.Select(y => y.fkCredenciado).Distinct().Count();
             resultado.totAssocs = auts.Select(y => y.fkAssociado).Distinct().Count();
 
+            var secoes = db.EmpresaSecao.ToList();
+
             var empConsultaValores = db.EmpresaConsultaAno.
                                         Where(y => y.nuAno == filter.ano && y.fkEmpresa == db.currentUser.fkEmpresa).
                                         FirstOrDefault();
@@ -128,7 +131,7 @@ namespace DataModel
                 var item = new FechAssocSint
                 {
                     serial = serial.ToString(),
-                    secao = db.EmpresaSecao.Where (y=>y.id == assoc.fkSecao).Select(y=> y.nuEmpresa + " - " + y.stDesc ).FirstOrDefault(),
+                    secao = secoes.Where (y=>y.id == assoc.fkSecao).Select(y=> y.nuEmpresa + " - " + y.stDesc ).FirstOrDefault(),
                     matricula = assoc.nuMatricula.ToString(),
                     associado = assoc.stName,
                     qtdAutos = auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString()
@@ -141,12 +144,19 @@ namespace DataModel
                      totCoPart = 0,
                      qtConsulta = 0;
 
-                foreach (var aut in auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado) && y.nuTipoAutorizacao == 1).ToList())
+                foreach (var aut in auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado) &&
+                                                    (y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null)).ToList())
                 {
+                    found = true;
+
+                    if (aut.fkPrecificacao == null)
+                        continue;
+
                     var fkProc = procsTuus.
                                    Where(y => y.id == aut.fkPrecificacao).
                                    FirstOrDefault();
 
+                    if (fkProc != null)
                     switch (fkProc.nuCodTUSS)
                     {
                         case 10101012: case 10101039: case 10102019: case 10103015: case 10103023: case 10103031:
@@ -174,7 +184,7 @@ namespace DataModel
 
                 item.ncads = "";
                 
-                foreach (var aut in auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado) && y.nuTipoAutorizacao == 1).ToList())
+                foreach (var aut in auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado) && y.nuTipoAutorizacao > 1).ToList())
                 {
                     found = true;
 
@@ -212,11 +222,8 @@ namespace DataModel
                     item.vlrConsulta = mon.setMoneyFormat(totVlrConsulta);
                     item.vlrAutos = mon.setMoneyFormat(totVlr);
                     item.vlrCoPart = mon.setMoneyFormat(totCoPart);
-
-                    resultado.results.Add(item);
-                    serial++;
                 }
-
+                
                 long vr = 0;
 
                 vr = auts.Where(y => y.nuTipoAutorizacao == 2).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Sum(y => (long)y.vrParcela);
@@ -258,6 +265,17 @@ namespace DataModel
 
                 item.vlrServ = mon.setMoneyFormat(vr);
                 item.qtdServ = auts.Where(y => y.nuTipoAutorizacao == 7).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString();
+
+                if (found || Convert.ToInt32(item.qtdDiaria) > 0
+                    || Convert.ToInt32(item.qtdMateriais) > 0
+                    || Convert.ToInt32(item.qtdMeds) > 0
+                    || Convert.ToInt32(item.qtdNM) > 0
+                    || Convert.ToInt32(item.qtdOPME) > 0
+                    || Convert.ToInt32(item.qtdServ) > 0)
+                {
+                    resultado.results.Add(item);
+                    serial++;
+                }                
             }
 
             resultado.stotVlrConsulta = mon.setMoneyFormat(resultado.totVlrConsulta);

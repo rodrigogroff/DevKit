@@ -68,6 +68,38 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
 			$scope.loading = false;
 		});
-	}
+    }
 
+    $scope.marca = function (mdl)
+    {
+        if (mdl.selecionado == undefined)
+            mdl.selecionado = false;
+
+        mdl.selecionado = !mdl.selecionado;
+    }
+
+    $scope.operacoesLote = function ()
+    {
+        $scope.listLote = [];
+
+        for (var i = 0; i < $scope.list.length; i++)
+        {
+            var mdl = $scope.list[i];
+
+            if (mdl.selecionado == true) 
+                $scope.listLote.push(mdl);            
+        }
+
+        if ($scope.listLote.length > 0)
+            $scope.mostraLote = true;
+    }
+
+    $scope.cancelarModal = function () {
+        $scope.mostraLote = false;
+    }
+
+    $scope.confirmaLote = function () {
+        $scope.mostraLote = false;
+    }
+    
 }]);

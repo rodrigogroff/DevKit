@@ -467,7 +467,6 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th width="20px"></th>
                                                     <th width="70px">NSU</th>
                                                     <th width="150px">Solicitação</th>
                                                     <th width="320px">Credenciado</th>
@@ -481,7 +480,6 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.results">
-                                                <td><input type="checkbox" ng-click="marca(mdl)" ng-checked="mdl.selecionado" /></td>
                                                 <td>{{ m.serial }}</td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.dtSolicitacao }}</td>
@@ -501,7 +499,6 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th width="20px"></th>
                                                     <th width="70px">NSU</th>
                                                     <th width="110px">Tipo</th>
                                                     <th width="220px">Descrição</th>
@@ -512,7 +509,6 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.resultsExtras">
-                                                <td><input type="checkbox" ng-click="marca(mdl)" ng-checked="mdl.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.tipo }}</td>
                                                 <td>{{ m.desc }}</td>
@@ -528,7 +524,63 @@
                         </td>
                     </tr>
                 </table>
+                
+                <div class="modal-backdrop"
+                     ng-if="mostraLote == true"
+                     style="background: rgba(55, 55, 55, 0.5 );">
+                    <div class="modal-dialog" style="width:800px">
+                        <br />
+                        <div class="modal-content" style="color:black">
+                            <legend style="color:black">
+                                Autorizações selecionadas para operações em lote
+                            </legend>
+                            <br />
+                            <table class="table table-hover" style="width:800px">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width:120px">Solicitação</th>
+                                        <th style="min-width:90px">NSU</th>
+                                        <th style="min-width:170px">Associado</th>
+                                        <th style="min-width:90px">Parcela</th>
+                                        <th style="min-width:90px">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tr data-ng-repeat="mdl in listLote">
+                                    <td><span style="color:black">{{ mdl.sdtSolicitacao }}</span></td>
+                                    <td><span style="color:black">{{ mdl.nuNSU }}</span></td>
+                                    <td><span style="color:black">{{ mdl.portador }}</span></td>
+                                    <td><span style="color:black">{{ mdl.parcela }}</span></td>
+                                    <td><span style="color:black">{{ mdl.vlr }}</span></td>
+                                </tr>
+                            </table>
+                            <table style="color:white" align="left">
+                                <tr height="22px"> </tr>
+                                <tr height="36px">
+                                    <td width="150px" valign="top"><span style="color:black"><b>Nova Situação</b></span></td>
+                                    <td width="250px" valign="top">
+                                        <input type="hidden" style="width:100%" ui-select2="selectSituacaoAutorizacao" data-placeholder="(Selecione)"
+                                               ng-model="campos.tgSituacaoLote" />
+                                    </td>
+                                    <td width="60px"></td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
 
+                            <div align="center">
+                                <button class="btn btn-default" ng-click="cancelarModal()"> Cancelar </button> &nbsp;&nbsp;
+                                <button class="btn btn-danger" ng-click="confirmaLote()"> Confirmar </button> &nbsp;&nbsp;
+                            </div>
+                            <br />
+                            <br />
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <br />

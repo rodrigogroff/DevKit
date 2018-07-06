@@ -104,6 +104,7 @@ namespace DataModel
                         where filter.fkEmpresa == null || (filter.fkEmpresa != null && ce.fkEmpresa == filter.fkEmpresa)
                         where filter.fkCredenciado == null || (filter.fkCredenciado != null && e.id == filter.fkCredenciado)
                         where es.id == filter.fkSecao
+                        where filter.codCred == null || e.nuCodigo.ToString() == filter.codCred
                         orderby e.stNome
                         select e;
 

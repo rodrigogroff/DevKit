@@ -18,6 +18,8 @@ namespace DevKit.Web.Controllers
                 modo = Request.GetQueryStringValue("modo", 0),
                 tgSituacao = Request.GetQueryStringValue("tgSituacao", 1),
                 fkSecao = Request.GetQueryStringValue("fkSecao", 0),
+                codCred = Request.GetQueryStringValue("codCred"),
+                mat = Request.GetQueryStringValue("mat"),
             };
 
             if (db.currentCredenciado != null)

@@ -55,6 +55,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             modo: $scope.campos.modo,
             tgSituacao: $scope.campos.tgSituacao,
             fkSecao: $scope.campos.fkSecao,
+            codCred: $scope.campos.codCred,
+            mat: $scope.campos.mat,
         };
         
 		Api.EmissorListagemFechamento.listPage(opcoes, function (data)

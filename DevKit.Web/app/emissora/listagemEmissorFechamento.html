@@ -82,7 +82,7 @@
                             <table>
                                 <tr height="36px" ng-if="campos.modo > 0">
                                     <td></td>
-                                    <td width="90px"><b>Mês</b></td>
+                                    <td width="120px"><b>Mês</b></td>
                                     <td width="120px">
                                         <input type="hidden" style="width:100%" ui-select2="selectMonths" data-placeholder="(Selecione)" ng-model="campos.mes" />
                                     </td>
@@ -97,6 +97,26 @@
                                     </td>
                                     <td width="60px"></td>
                                 </tr>
+                                <tr height="12px"></tr>
+
+                                <tr height="36px" ng-if="campos.modo > 0 && campos.tipo == 1">
+                                    <td></td>
+                                    <td><b>Credenciado</b></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" ng-model="campos.codCred" />
+                                    </td>
+                                    <td width="60px"></td>
+                                </tr>
+
+                                <tr height="36px" ng-if="campos.modo > 0 && campos.tipo == 2">
+                                    <td></td>
+                                    <td><b>Matrícula</b></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" ng-model="campos.mat" />
+                                    </td>
+                                    <td width="60px"></td>
+                                </tr>
+
                             </table>
                         </td>
                         <td width="20px"></td>
@@ -215,11 +235,12 @@
                                             Total Não-Médicos: R$ <b>{{result.stotExtra_naomed}}</b><br />
                                             Total OPME: R$ <b>{{result.stotExtra_opme}}</b><br />
                                             Total Pac. Serviços: R$ <b>{{result.stotExtra_pacserv}}</b><br />
+                                            <br />
                                         </td>
                                     </tr>
                                 </table>
                                 <div data-ng-repeat="mdl in list">
-                                    <h3>{{mdl.codCredenciado}} - {{mdl.nomeCredenciado}}</h3>
+                                    <span class="btn btn-default btn-lg">{{mdl.codCredenciado}} - {{mdl.nomeCredenciado}}</span><br /><br />
                                     <table>
                                         <tr>
                                             <td width="280px" valign="top">
@@ -245,7 +266,7 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th width="70px">Serial</th>
+                                                    <th width="20px"></th>
                                                     <th width="70px">NSU</th>
                                                     <th width="150px">Data Solicitação</th>
                                                     <th width="180px">Empresa / Seção</th>
@@ -259,7 +280,7 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.results">
-                                                <td>{{ m.serial }}</td>
+                                                <td><input type="checkbox" ng-click="marca(mdl)" ng-checked="mdl.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.dtSolicitacao }}</td>
                                                 <td>{{ m.secao }}</td>
@@ -278,7 +299,7 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th width="70px">Serial</th>
+                                                    <th width="20px"></th>
                                                     <th width="70px">NSU</th>
                                                     <th width="110px">Tipo</th>
                                                     <th width="220px">Descrição</th>
@@ -289,7 +310,7 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.resultsExtras">
-                                                <td>{{ m.serial }}</td>
+                                                <td><input type="checkbox" ng-click="marca(mdl)" ng-checked="mdl.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.tipo }}</td>
                                                 <td>{{ m.desc }}</td>
@@ -301,6 +322,9 @@
                                         </table>
                                     </div>
                                 </div>
+                                <br />
+                                <button type="submit" class="btn btn-success btn-lg" ng-click="operacoesLote()">Operações Lote</button><br />
+                                <br />
                             </div>
                         </td>
                     </tr>
@@ -403,6 +427,7 @@
                                             Total consulta: R$ <b>{{result.stotVlrConsulta}}</b><br />
                                             Total valor: R$ <b>{{result.stotVlr}}</b><br />
                                             Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
+                                            <br />
                                         </td>
                                         <td width="20px"></td>
                                         <td valign="top" width="300px">
@@ -412,13 +437,13 @@
                                             Total Não-Médicos: R$ <b>{{result.stotExtra_naomed}}</b><br />
                                             Total OPME: R$ <b>{{result.stotExtra_opme}}</b><br />
                                             Total Pac. Serviços: R$ <b>{{result.stotExtra_pacserv}}</b><br />
+                                            <br />
                                         </td>
                                     </tr>
                                 </table>
                                 <div data-ng-repeat="mdl in list">
-                                    <h3>{{mdl.matricula}} - {{mdl.nome}}</h3>
+                                    <span class="btn btn-default btn-lg">{{mdl.matricula}} - {{mdl.nome}}</span><br /><br />
                                     <table>
-                                        <tr height="10px"></tr>
                                         <tr>
                                             <td width="230px" valign="top">
                                                 CPF: <b>{{mdl.cpf}}</b><br />
@@ -442,7 +467,7 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th width="70px">Serial</th>
+                                                    <th width="20px"></th>
                                                     <th width="70px">NSU</th>
                                                     <th width="150px">Solicitação</th>
                                                     <th width="320px">Credenciado</th>
@@ -456,6 +481,7 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.results">
+                                                <td><input type="checkbox" ng-click="marca(mdl)" ng-checked="mdl.selecionado" /></td>
                                                 <td>{{ m.serial }}</td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.dtSolicitacao }}</td>
@@ -475,7 +501,7 @@
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th width="70px">Serial</th>
+                                                    <th width="20px"></th>
                                                     <th width="70px">NSU</th>
                                                     <th width="110px">Tipo</th>
                                                     <th width="220px">Descrição</th>
@@ -486,7 +512,7 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.resultsExtras">
-                                                <td>{{ m.serial }}</td>
+                                                <td><input type="checkbox" ng-click="marca(mdl)" ng-checked="mdl.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.tipo }}</td>
                                                 <td>{{ m.desc }}</td>

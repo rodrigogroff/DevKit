@@ -17,6 +17,8 @@ namespace DataModel
                    modo,
                    tgSituacao,
                    fkSecao;
+
+        public string codCred, mat;
     }
 
     public class FechCredSint

@@ -28,32 +28,20 @@ namespace DevKit.Web.Controllers
 
             switch (filter.tipo)
             {
-                // ==================
-                // credenciado
-                // ==================
-
                 case 1: 
-
-                    switch (filter.modo)
+                    switch (filter.modo) // credenciado
                     {
                         case 1: return Ok(new Empresa().ListagemFechamento_CredSint(db, filter));
                         case 2: return Ok(new Empresa().ListagemFechamento_CredAnalitico(db, filter));
                     }
-
                     break;
 
-                // ==================
-                // Associado
-                // ==================
-
-                case 2: // Associado
-
-                    switch (filter.modo)
+                case 2: 
+                    switch (filter.modo) // Associado
                     {
                         case 1: return Ok(new Empresa().ListagemFechamento_AssocSint(db, filter));
                         case 2: return Ok(new Empresa().ListagemFechamento_AssocAnalitico(db, filter));
                     }
-
                     break;
             }
 

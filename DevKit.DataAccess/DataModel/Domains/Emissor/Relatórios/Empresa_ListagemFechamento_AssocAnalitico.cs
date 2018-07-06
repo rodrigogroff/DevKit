@@ -352,6 +352,7 @@ namespace DataModel
             resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);
             resultado.stotVlrConsulta = mon.setMoneyFormat(resultado.totVlrConsulta);
             resultado.stotCoPart = mon.setMoneyFormat(resultado.totCoPart);
+
             resultado.stotExtra_diaria = mon.setMoneyFormat(resultado.totExtra_diaria);
             resultado.stotExtra_mat = mon.setMoneyFormat(resultado.totExtra_mat);
             resultado.stotExtra_meds = mon.setMoneyFormat(resultado.totExtra_meds);

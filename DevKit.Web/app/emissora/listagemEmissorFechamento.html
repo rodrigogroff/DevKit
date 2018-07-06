@@ -13,6 +13,7 @@
         <div class="divWebForm" style="max-width:95%;min-width:95%">
             <div style="overflow-x:scroll;overflow:auto;">
 
+                <!--filtros de pesquisa-->
                 <table class="widget" style="color:white">
                     <tr>
                         <td>
@@ -75,9 +76,7 @@
                             </table>
                             <br />
                         </td>
-
                         <td width="20px"></td>
-
                         <td width="290px" valign="top">
                             <br />
                             <table>
@@ -100,9 +99,7 @@
                                 </tr>
                             </table>
                         </td>
-
                         <td width="20px"></td>
-
                         <td width="120px" valign="top" ng-if="campos.modo > 0">
                             <br />
                             <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
@@ -121,26 +118,48 @@
                             </div>
                             <div ng-show="list.length > 0">
                                 <h2>Demonstrativo de fechamento ConveyNET</h2>
-                                Período fechamento: <b>{{result.mesAno}}</b><br />
-                                Credenciados ativos: <b>{{result.totCreds}}</b><br />
-                                Associados ativos: <b>{{result.totAssociados}}</b><br />
-                                Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
-                                Total valor: R$ <b>{{result.stotVlr}}</b><br />
-                                Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
-                                <br />
-                                <table class="table table-hover" style="width:100%">
+                                <table>
+                                    <tr>
+                                        <td width="250px" valign="top">
+                                            Período fechamento: <b>{{result.mesAno}}</b><br />
+                                            Credenciados ativos: <b>{{result.totCreds}}</b><br />
+                                            Associados ativos: <b>{{result.totAssociados}}</b><br />
+                                            Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
+                                            Total valor: R$ <b>{{result.stotVlr}}</b><br />
+                                            Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
+                                            <br />
+                                        </td>
+                                        <td width="20px"></td>
+                                        <td width="300px" valign="top">
+                                            Total Diárias: R$ <b>{{result.stot_Diaria}}</b><br />
+                                            Total Materiais: R$ <b>{{result.stot_Materiais}}</b><br />
+                                            Total Medicamentos: R$ <b>{{result.stot_Meds}}</b><br />
+                                            Total Não medicos: R$ <b>{{result.stot_NM}}</b><br />
+                                            Total OPME: R$ <b>{{result.stot_OPME}}</b><br />
+                                            Total Pacotes Serv.: R$ <b>{{result.stot_Serv}}</b><br />
+                                            <br />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th width="70px">Serial</th>
-                                            <th width="120px">CPF/CNPJ</th>
-                                            <th width="90px">Código</th>
-                                            <th width="300px">Credenciado</th>
-                                            <th width="150px">Especialidade</th>
-                                            <th width="99px">Autorizações</th>
-                                            <th width="99px">Total R$</th>
-                                            <th width="99px">Co-part. R$</th>
-                                            <th width="200px">TUSS PROCEDIMENTOS</th>
-                                            <th width="150px">TUSS NOK</th>
+                                            <th style="min-width:70px">Serial</th>
+                                            <th style="min-width:100px">CPF/CNPJ</th>
+                                            <th style="min-width:100px">Código</th>
+                                            <th style="min-width:200px">Credenciado</th>
+                                            <th style="min-width:160px">Especialidade</th>
+                                            <th style="min-width:100px">Autorizações</th>
+                                            <th style="min-width:100px">Total R$</th>
+                                            <th style="min-width:100px">Co-part. R$</th>
+                                            <th style="min-width:200px">TUSS PROCEDIMENTOS</th>
+                                            <th style="min-width:200px">TUSS NOK</th>
+                                            <th style="min-width:130px">Diárias</th>
+                                            <th style="min-width:130px">Materiais</th>
+                                            <th style="min-width:130px">Medicamentos</th>
+                                            <th style="min-width:130px">Não medicamentos</th>
+                                            <th style="min-width:130px">OPME</th>
+                                            <th style="min-width:130px">Pacotes serv.</th>
                                         </tr>
                                     </thead>
                                     <tr data-ng-repeat="mdl in list">
@@ -154,6 +173,12 @@
                                         <td>{{ mdl.vlrCoPart }}</td>
                                         <td>{{ mdl.pcads }}</td>
                                         <td>{{ mdl.ncads }}</td>
+                                        <td>{{ mdl.vlrDiaria }} [{{mdl.qtdDiaria}}]</td>
+                                        <td>{{ mdl.vlrMateriais }} [{{mdl.qtdMateriais}}]</td>
+                                        <td>{{ mdl.vlrMeds }} [{{mdl.qtdMeds}}]</td>
+                                        <td>{{ mdl.vlrNM }} [{{mdl.qtdNM}}]</td>
+                                        <td>{{ mdl.vlrOPME }} [{{mdl.qtdOPME}}]</td>
+                                        <td>{{ mdl.vlrServ }} [{{mdl.qtdServ}}]</td>
                                     </tr>
                                 </table>
                             </div>
@@ -172,54 +197,110 @@
                             </div>
                             <div ng-show="list.length > 0">
                                 <h2>Demonstrativo de fechamento ConveyNET</h2>
-                                Período fechamento: <b>{{result.mesAno}}</b><br />
-                                Credenciados ativos: <b>{{result.totCreds}}</b><br />
-                                Associados ativos: <b>{{result.totAssociados}}</b><br />
-                                Total valor: R$ <b>{{result.stotVlr}}</b><br />
-                                Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
-                                <br />
-
+                                <table>
+                                    <tr>
+                                        <td valign="top" width="300px">
+                                            Período fechamento: <b>{{result.mesAno}}</b><br />
+                                            Credenciados ativos: <b>{{result.totCreds}}</b><br />
+                                            Associados ativos: <b>{{result.totAssociados}}</b><br />
+                                            Total valor: R$ <b>{{result.stotVlr}}</b><br />
+                                            Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
+                                            <br />
+                                        </td>
+                                        <td width="20px"></td>
+                                        <td valign="top" width="300px">
+                                            Total Diárias: R$ <b>{{result.stotExtra_diaria}}</b><br />
+                                            Total Materiais: R$ <b>{{result.stotExtra_mat}}</b><br />
+                                            Total Medicamentos: R$ <b>{{result.stotExtra_meds}}</b><br />
+                                            Total Não-Médicos: R$ <b>{{result.stotExtra_naomed}}</b><br />
+                                            Total OPME: R$ <b>{{result.stotExtra_opme}}</b><br />
+                                            Total Pac. Serviços: R$ <b>{{result.stotExtra_pacserv}}</b><br />
+                                        </td>
+                                    </tr>
+                                </table>
                                 <div data-ng-repeat="mdl in list">
-
                                     <h3>{{mdl.codCredenciado}} - {{mdl.nomeCredenciado}}</h3>
-                                    CNPJ: <b>{{mdl.cnpj}}</b><br />
-                                    Valor total procedimento: <b>{{mdl.stotVlr}}</b><br />
-                                    Valor total co-participação: <b>{{mdl.stotCoPart}}</b><br />
-                                    Dados bancários: <b>{{mdl.sDadosBancarios}}</b><br />
-                                    <br />
-
-                                    <table class="table table-hover" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th width="70px">Serial</th>
-                                                <th width="70px">NSU</th>
-                                                <th width="150px">Data Solicitação</th>
-                                                <th width="180px">Empresa / Seção</th>
-                                                <th width="180px">CPF</th>
-                                                <th width="90px">Matrícula</th>
-                                                <th width="300px">Associado</th>
-                                                <th width="90px">Parcela</th>
-                                                <th width="120px">Valor</th>
-                                                <th width="120px">Co-Part.</th>
-                                                <th width="300px">PROCEDIMENTO TUSS</th>
-                                            </tr>
-                                        </thead>
-                                        <tr data-ng-repeat="m in mdl.results">
-                                            <td>{{ m.serial }}</td>
-                                            <td>{{ m.nsu }}</td>
-                                            <td>{{ m.dtSolicitacao }}</td>
-                                            <td>{{ m.secao }}</td>
-                                            <td>{{ m.cpf }}</td>
-                                            <td>{{ m.matricula }}</td>
-                                            <td>{{ m.associado }}</td>
-                                            <td>{{ m.parcela }}</td>
-                                            <td>{{ m.vlr }}</td>
-                                            <td>{{ m.vlrCoPart }}</td>
-                                            <td>{{ m.tuss }}</td>
+                                    <table>
+                                        <tr>
+                                            <td width="280px" valign="top">
+                                                CNPJ: <b>{{mdl.cnpj}}</b><br />
+                                                Valor total procedimento: <b>{{mdl.stotVlr}}</b><br />
+                                                Valor total co-participação: <b>{{mdl.stotCoPart}}</b><br />
+                                                Dados bancários:<br /> <b>{{mdl.sDadosBancarios}}</b><br />
+                                                <br />
+                                            </td>
+                                            <td width="20px"></td>
+                                            <td width="200px" valign="top">
+                                                Valor Diárias: R$ <b>{{mdl.stotExtra_diaria}}</b><br />
+                                                Valor Materiais: R$ <b>{{mdl.stotExtra_mat}}</b><br />
+                                                Valor Medicamentos: R$ <b>{{mdl.stotExtra_meds}}</b><br />
+                                                Valor Não-Médicos: R$ <b>{{mdl.stotExtra_naomed}}</b><br />
+                                                Valor OPME: R$ <b>{{mdl.stotExtra_opme}}</b><br />
+                                                Valor Pac. Serviços: R$ <b>{{mdl.stotExtra_pacserv}}</b><br />
+                                                <br />
+                                            </td>
                                         </tr>
                                     </table>
+                                    <div ng-if="mdl.results.length > 0">
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th width="70px">Serial</th>
+                                                    <th width="70px">NSU</th>
+                                                    <th width="150px">Data Solicitação</th>
+                                                    <th width="180px">Empresa / Seção</th>
+                                                    <th width="180px">CPF</th>
+                                                    <th width="90px">Matrícula</th>
+                                                    <th width="300px">Associado</th>
+                                                    <th width="90px">Parcela</th>
+                                                    <th width="120px">Valor</th>
+                                                    <th width="120px">Co-Part.</th>
+                                                    <th width="300px">PROCEDIMENTO TUSS</th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="m in mdl.results">
+                                                <td>{{ m.serial }}</td>
+                                                <td>{{ m.nsu }}</td>
+                                                <td>{{ m.dtSolicitacao }}</td>
+                                                <td>{{ m.secao }}</td>
+                                                <td>{{ m.cpf }}</td>
+                                                <td>{{ m.matricula }}</td>
+                                                <td>{{ m.associado }}</td>
+                                                <td>{{ m.parcela }}</td>
+                                                <td>{{ m.vlr }}</td>
+                                                <td>{{ m.vlrCoPart }}</td>
+                                                <td>{{ m.tuss }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div ng-if="mdl.resultsExtras.length > 0">
+                                        <h4><b>Custos Extras</b></h4><br />
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th width="70px">Serial</th>
+                                                    <th width="70px">NSU</th>
+                                                    <th width="110px">Tipo</th>
+                                                    <th width="220px">Descrição</th>
+                                                    <th width="150px">Data Solicitação</th>
+                                                    <th width="220px">Portador</th>
+                                                    <th width="90px">Parcela</th>
+                                                    <th width="120px">Valor R$</th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="m in mdl.resultsExtras">
+                                                <td>{{ m.serial }}</td>
+                                                <td>{{ m.nsu }}</td>
+                                                <td>{{ m.tipo }}</td>
+                                                <td>{{ m.desc }}</td>
+                                                <td>{{ m.dtSolicitacao }}</td>
+                                                <td>{{ m.portador}}<br />CPF: {{ m.cpf }}</td>
+                                                <td>{{ m.parcela }}</td>
+                                                <td>{{ m.vlr }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-
                             </div>
                         </td>
                     </tr>
@@ -237,7 +318,7 @@
                             <div ng-show="list.length > 0">
                                 <table>
                                     <tr>
-                                        <td width="280px">
+                                        <td width="280px" valign="top">
                                             Associados ativos: <b>{{result.totAssocs}}</b><br />
                                             Credenciados ativos: <b>{{result.totCreds}}</b><br />
                                             Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
@@ -247,7 +328,7 @@
                                             <br />
                                         </td>
                                         <td width="20px"></td>
-                                        <td width="280px">
+                                        <td width="280px" valign="top">
                                             Total Diárias: R$ <b>{{result.stot_Diaria}}</b><br />
                                             Total Materiais: R$ <b>{{result.stot_Materiais}}</b><br />
                                             Total Medicamentos: R$ <b>{{result.stot_Meds}}</b><br />
@@ -357,9 +438,7 @@
                                             </td>
                                         </tr>
                                     </table>
-
                                     <div ng-if="mdl.results.length > 0">
-
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
@@ -391,7 +470,6 @@
                                             </tr>
                                         </table>
                                     </div>
-
                                     <div ng-if="mdl.resultsExtras.length > 0">
                                         <h4><b>Custos Extras</b></h4><br />
                                         <table class="table table-hover" style="width:100%">
@@ -420,7 +498,6 @@
                                         </table>
                                     </div>
                                 </div>
-
                             </div>
                         </td>
                     </tr>

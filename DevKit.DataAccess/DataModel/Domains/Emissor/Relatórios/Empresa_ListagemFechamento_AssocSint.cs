@@ -187,28 +187,7 @@ namespace DataModel
                 foreach (var aut in auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado) && y.nuTipoAutorizacao > 1).ToList())
                 {
                     found = true;
-
-                    var fkProc = procsTuus.
-                                    Where(y => y.id == aut.fkProcedimento).
-                                    FirstOrDefault();
-
-                    if (fkProc != null)
-                    {
-                        var cfgTuss = procsCredTuus.
-                                        Where(y => y.fkCredenciado == aut.fkCredenciado).
-                                        Where(y => y.nuTUSS == fkProc.nuCodTUSS).
-                                        FirstOrDefault();
-
-                        item.ncads += fkProc.nuCodTUSS + ", ";
-
-                        if (cfgTuss != null)
-                        {
-                            totVlr += (long)cfgTuss.vrProcedimento;
-                            totCoPart += (long)cfgTuss.vrCoPart;
-                        }
-                        else
-                            resultado.procsNCad++;
-                    }
+                    totVlr += (long)aut.vrParcela;                    
                 }
 
                 if (found)
@@ -266,12 +245,7 @@ namespace DataModel
                 item.vlrServ = mon.setMoneyFormat(vr);
                 item.qtdServ = auts.Where(y => y.nuTipoAutorizacao == 7).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString();
 
-                if (found || Convert.ToInt32(item.qtdDiaria) > 0
-                    || Convert.ToInt32(item.qtdMateriais) > 0
-                    || Convert.ToInt32(item.qtdMeds) > 0
-                    || Convert.ToInt32(item.qtdNM) > 0
-                    || Convert.ToInt32(item.qtdOPME) > 0
-                    || Convert.ToInt32(item.qtdServ) > 0)
+                if (found)
                 {
                     resultado.results.Add(item);
                     serial++;

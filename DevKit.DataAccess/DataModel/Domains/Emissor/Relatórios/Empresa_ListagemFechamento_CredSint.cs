@@ -30,7 +30,21 @@ namespace DataModel
                         vlrAutos,
                         vlrCoPart,
                         pcads,
-                        ncads;
+                        ncads,
+
+                        vlrDiaria,
+                        vlrMateriais,
+                        vlrMeds,
+                        vlrNM,
+                        vlrOPME,
+                        vlrServ,
+
+                        qtdDiaria,
+                        qtdMateriais,
+                        qtdMeds,
+                        qtdNM,
+                        qtdOPME,
+                        qtdServ;
     }
 
     public class EmissorFechamentoCredSintReport
@@ -43,7 +57,16 @@ namespace DataModel
                     totAssociados = 0,
                     procsNCad = 0;
 
-        public string stotVlr, stotCoPart, mesAno;
+        public string   stotVlr, 
+                        stotCoPart,
+                        mesAno,                        
+
+                        stot_Diaria,
+                        stot_Materiais,
+                        stot_Meds,
+                        stot_NM,
+                        stot_OPME,
+                        stot_Serv;
 
         public List<FechCredSint> results = new List<FechCredSint>();
     }
@@ -120,7 +143,7 @@ namespace DataModel
                 item.pcads = "";
                 item.ncads = "";
                 
-                foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id).ToList())
+                foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id && (y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null) ).ToList())
                 {
                     found = true;
 
@@ -154,6 +177,54 @@ namespace DataModel
                     }
                 }
 
+                foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id && y.nuTipoAutorizacao > 1).ToList())
+                {
+                    found = true;
+                    totVlr += (long)aut.vrParcela;
+                }
+
+                long vr = 0;
+
+                vr = auts.Where(y => y.nuTipoAutorizacao == 2).Where(y => y.fkCredenciado == cred.id).Sum(y => (long)y.vrParcela);
+
+                item.vlrDiaria = mon.setMoneyFormat(vr);
+                item.qtdDiaria = auts.Where(y => y.nuTipoAutorizacao == 2).Where(y => y.fkCredenciado == cred.id).Count().ToString();
+
+                // ------------------------
+
+                vr = auts.Where(y => y.nuTipoAutorizacao == 3).Where(y => y.fkCredenciado == cred.id).Sum(y => (long)y.vrParcela);
+
+                item.vlrMateriais = mon.setMoneyFormat(vr);
+                item.qtdMateriais = auts.Where(y => y.nuTipoAutorizacao == 3).Where(y => y.fkCredenciado == cred.id).Count().ToString();
+
+                // ------------------------
+
+                vr = auts.Where(y => y.nuTipoAutorizacao == 4).Where(y => y.fkCredenciado == cred.id).Sum(y => (long)y.vrParcela);
+
+                item.vlrMeds = mon.setMoneyFormat(vr);
+                item.qtdMeds = auts.Where(y => y.nuTipoAutorizacao == 4).Where(y => y.fkCredenciado == cred.id).Count().ToString();
+
+                // ------------------------
+
+                vr = auts.Where(y => y.nuTipoAutorizacao == 5).Where(y => y.fkCredenciado == cred.id).Sum(y => (long)y.vrParcela);
+
+                item.vlrNM = mon.setMoneyFormat(vr);
+                item.qtdNM = auts.Where(y => y.nuTipoAutorizacao == 5).Where(y => y.fkCredenciado == cred.id).Count().ToString();
+
+                // ------------------------
+
+                vr = auts.Where(y => y.nuTipoAutorizacao == 6).Where(y => y.fkCredenciado == cred.id).Sum(y => (long)y.vrParcela);
+
+                item.vlrOPME = mon.setMoneyFormat(vr);
+                item.qtdOPME = auts.Where(y => y.nuTipoAutorizacao == 6).Where(y => y.fkCredenciado == cred.id).Count().ToString();
+
+                // ------------------------
+
+                vr = auts.Where(y => y.nuTipoAutorizacao == 7).Where(y => y.fkCredenciado == cred.id).Sum(y => (long)y.vrParcela);
+
+                item.vlrServ = mon.setMoneyFormat(vr);
+                item.qtdServ = auts.Where(y => y.nuTipoAutorizacao == 7).Where(y => y.fkCredenciado == cred.id).Count().ToString();
+
                 if (found)
                 {
                     item.pcads = item.pcads.Trim().TrimEnd(',');
@@ -172,6 +243,13 @@ namespace DataModel
 
             resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);
             resultado.stotCoPart = mon.setMoneyFormat(resultado.totCoPart);
+
+            resultado.stot_Diaria = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 2).Sum(y => (long)y.vrParcela));
+            resultado.stot_Materiais = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 3).Sum(y => (long)y.vrParcela));
+            resultado.stot_Meds = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 4).Sum(y => (long)y.vrParcela));
+            resultado.stot_NM = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 5).Sum(y => (long)y.vrParcela));
+            resultado.stot_OPME = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 6).Sum(y => (long)y.vrParcela));
+            resultado.stot_Serv = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 7).Sum(y => (long)y.vrParcela));
         }
     }
 }

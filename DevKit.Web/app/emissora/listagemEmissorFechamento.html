@@ -280,7 +280,7 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.results">
-                                                <td><input type="checkbox" ng-click="marca(mdl)" ng-checked="mdl.selecionado" /></td>
+                                                <td><input type="checkbox" ng-click="marca(m)" ng-checked="mdl.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.dtSolicitacao }}</td>
                                                 <td>{{ m.secao }}</td>
@@ -310,7 +310,7 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.resultsExtras">
-                                                <td><input type="checkbox" ng-click="marca(mdl)" ng-checked="mdl.selecionado" /></td>
+                                                <td><input type="checkbox" ng-click="marca(m)" ng-checked="mdl.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.tipo }}</td>
                                                 <td>{{ m.desc }}</td>
@@ -543,18 +543,28 @@
                                         <th style="min-width:170px">Associado</th>
                                         <th style="min-width:90px">Parcela</th>
                                         <th style="min-width:90px">Valor</th>
+                                        <th style="min-width:20px">Fechar</th>
                                     </tr>
                                 </thead>
-                                <tr data-ng-repeat="mdl in listLote">
-                                    <td><span style="color:black">{{ mdl.sdtSolicitacao }}</span></td>
-                                    <td><span style="color:black">{{ mdl.nuNSU }}</span></td>
-                                    <td><span style="color:black">{{ mdl.portador }}</span></td>
+                                <tr data-ng-repeat="mdl in listLote" ng-if="mdl.selecionado == true">
+                                    <td><span style="color:black">{{ mdl.dtSolicitacao }}</span></td>
+                                    <td><span style="color:black">{{ mdl.nsu }}</span></td>
+                                    <td><span style="color:black">{{ mdl.matricula }} - {{ mdl.associado }}</span></td>
                                     <td><span style="color:black">{{ mdl.parcela }}</span></td>
                                     <td><span style="color:black">{{ mdl.vlr }}</span></td>
+                                    <td><button class="btn btn-primary" ng-click="marca(mdl)"> X </button></td>
                                 </tr>
                             </table>
                             <table style="color:white" align="left">
                                 <tr height="22px"> </tr>
+                                <tr height="36px">
+                                    <td width="150px" valign="top"><span style="color:black"><b>Situação atual</b></span></td>
+                                    <td width="250px" valign="top">
+                                        <input type="hidden" style="width:100%" ui-select2="selectSituacaoAutorizacao" data-placeholder="(Selecione)" ng-disabled="true"
+                                               ng-model="campos.tgSituacao" />
+                                    </td>
+                                    <td width="60px"></td>
+                                </tr>
                                 <tr height="36px">
                                     <td width="150px" valign="top"><span style="color:black"><b>Nova Situação</b></span></td>
                                     <td width="250px" valign="top">

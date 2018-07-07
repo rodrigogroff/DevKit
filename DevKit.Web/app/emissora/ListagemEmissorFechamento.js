@@ -38,8 +38,9 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
 	$scope.search = function ()
 	{
-		$scope.load(0, $scope.itensporpagina);
-		$scope.paginador.reiniciar();
+        $scope.load(0, $scope.itensporpagina);
+        if ($scope.paginador != undefined)
+		    $scope.paginador.reiniciar();
 	}
 
 	$scope.load = function (skip, take)
@@ -70,12 +71,12 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 		});
     }
 
-    $scope.marca = function (mdl)
+    $scope.marca = function (m)
     {
-        if (mdl.selecionado == undefined)
-            mdl.selecionado = false;
+        if (m.selecionado == undefined)
+            m.selecionado = false;
 
-        mdl.selecionado = !mdl.selecionado;
+        m.selecionado = !m.selecionado;
     }
 
     $scope.operacoesLote = function ()
@@ -86,8 +87,13 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         {
             var mdl = $scope.list[i];
 
-            if (mdl.selecionado == true) 
-                $scope.listLote.push(mdl);            
+            for (var t = 0; t < mdl.results.length; t++)
+            {
+                var m = mdl.results[t];
+
+                if (m.selecionado == true)
+                    $scope.listLote.push(m);            
+            }            
         }
 
         if ($scope.listLote.length > 0)
@@ -98,8 +104,32 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.mostraLote = false;
     }
 
-    $scope.confirmaLote = function () {
-        $scope.mostraLote = false;
+    $scope.confirmaLote = function ()
+    {
+        var nsus = '';
+
+        for (var i = 0; i < $scope.listLote.length; i++) {
+            var m = $scope.listLote[i];
+            if (m.selecionado == true) {
+                nsus += m.nsu + ','
+            }
+        }
+
+        $scope.loading = true;
+
+        var opcoes = {
+            oper: 'mudaSituacao',
+            nsu: nsus,
+            tgSituacaoLote: $scope.campos.tgSituacaoLote,            
+        };
+
+        Api.EmissorFechamentoOper.listPage(opcoes, function (data)
+        {
+            toastr.success('Autorizações convertidas com sucesso!', 'Sistema');
+
+            $scope.mostraLote = false;
+            $scope.loading = false;            
+        });       
     }
     
 }]);

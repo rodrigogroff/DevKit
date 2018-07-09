@@ -278,6 +278,7 @@
                                                     <th min-width="120px">Valor</th>
                                                     <th min-width="120px">Co-Part.</th>
                                                     <th min-width="300px">PROCEDIMENTO TUSS</th>
+                                                    <th min-width="20px"></th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.results">
@@ -298,6 +299,7 @@
                                                         {{ m.tuss }}<br />
                                                     </div>
                                                 </td>
+                                                <td><a href="" role="button" title="Editar" ng-click="editarAut(m)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -315,6 +317,7 @@
                                                     <th width="220px">Portador</th>
                                                     <th width="90px">Parcela</th>
                                                     <th width="120px">Valor R$</th>
+                                                    <th width="20px"></th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.resultsExtras">
@@ -327,6 +330,7 @@
                                                 <td>{{ m.portador}}<br />CPF: {{ m.cpf }}</td>
                                                 <td>{{ m.parcela }}</td>
                                                 <td>{{ m.vlr }}</td>
+                                                <td><a href="" role="button" title="Editar" ng-click="editarAut(m)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a></td>
                                             </tr>
                                         </table>
                                     </div>

@@ -44,7 +44,8 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
             if ($scope.paginadorPacote != undefined) $scope.paginadorPacote.reiniciar();
             if ($scope.paginadorProc != undefined) $scope.paginadorProc.reiniciar();
 
-            ngHistoricoFiltro.filtro.paginaAtual = 0;
+            if (ngHistoricoFiltro != undefined)
+                ngHistoricoFiltro.filtro.paginaAtual = 0;
         }            
     });
 

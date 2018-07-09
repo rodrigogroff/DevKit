@@ -27,6 +27,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
         $scope.selectSituacaoAutorizacao = ngSelects.obterConfiguracao(Api.TipoSituacaoAutorizacaoCombo, {});
         $scope.selectSecao = ngSelects.obterConfiguracao(Api.EmpresaSecaoCombo, {});
+        $scope.selectTipoAutorizacao = ngSelects.obterConfiguracao(Api.TipoAutorizacaoCombo, {});
 
         $scope.itensporpagina = 15;
 
@@ -69,6 +70,16 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
 			$scope.loading = false;
 		});
+    }
+
+    $scope.searchCredSelect = function (m) {
+
+        if ($scope.campos.codCred != m.codCredenciado)
+            $scope.campos.codCred = m.codCredenciado;
+        else
+            $scope.campos.codCred = '';
+
+        $scope.search();
     }
 
     $scope.marca = function (m)
@@ -131,5 +142,265 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             $scope.loading = false;            
         });       
     }
-    
+
+    $scope.lancDespModal = function (m, mdl) {
+        $scope.mostraLancDesp = true;
+
+        $scope.camposLanc =
+            {
+                matricula : m.matricula + " - " + m.associado,
+                credenciado : mdl.codCredenciado + " - " + mdl.nomeCredenciado,
+                dt : m.dtSolicitacao,
+                nsu : m.nsu,
+            };
+
+    }
+
+    $scope.$watch('camposLanc.tipo', function (newState, oldState)
+    {
+        if (newState !== oldState)
+        {
+            $scope.listLanc = undefined;
+            $scope.camposLanc.selecionado = undefined;
+            $scope.camposLanc.codigo = undefined;
+            $scope.camposLanc.desc = undefined;
+
+            if ($scope.paginadorMaterial != undefined) $scope.paginadorMaterial.reiniciar();
+            if ($scope.paginadorDiaria != undefined) $scope.paginadorDiaria.reiniciar();
+            if ($scope.paginadorMed != undefined) $scope.paginadorMed.reiniciar();
+            if ($scope.paginadorNaoMed != undefined) $scope.paginadorNaoMed.reiniciar();
+            if ($scope.paginadorOPME != undefined) $scope.paginadorOPME.reiniciar();
+            if ($scope.paginadorPacote != undefined) $scope.paginadorPacote.reiniciar();
+            if ($scope.paginadorProc != undefined) $scope.paginadorProc.reiniciar();
+
+            if (ngHistoricoFiltro != undefined)
+                ngHistoricoFiltro.filtro.paginaAtual = 0;
+
+            $scope.camposLanc.tipo_desp_fail = false;
+        }
+    });
+
+    $scope.cancelarModalLanc = function () {
+        $scope.mostraLancDesp = false;
+    }    
+
+    var invalidCheck = function (element) {
+        if (element == undefined)
+            return true;
+        else
+            if (element.length == 0)
+                return true;
+
+        return false;
+    }
+
+    $scope.confirmarModalLanc = function ()
+    {
+        $scope.camposLanc.vr_fail = invalidCheck($scope.camposLanc.valor);
+        $scope.camposLanc.nu_parc_fail = invalidCheck($scope.camposLanc.parcelas);
+
+        if ($scope.campos.valor == "0,00")
+            $scope.vr_fail = true;
+
+        $scope.camposLanc.tipo_desp_fail = $scope.camposLanc.tipo == undefined || $scope.camposLanc.tipo == 1;        
+    }
+
+    $scope.show = function (mdl) {
+        $scope.camposLanc.selecionado = mdl;
+    }
+
+    // ------------------
+    // DIARIA
+    // ------------------
+
+    $scope.searchDiaria = function () {
+        $scope.listLanc = undefined;
+        $scope.camposLanc.selecionado = undefined;
+        $scope.loadDiaria(0, $scope.itensporpagina);
+        if ($scope.paginadorDiaria != undefined)
+            $scope.paginadorDiaria.reiniciar();
+
+        $scope.paginaAtual = 1;
+    }
+
+    $scope.loadDiaria = function (skip, take) {
+        $scope.loading = true;
+
+        var opcoes = {
+            skip: skip,
+            take: take,
+            codigo: $scope.campos.codigo,
+            desc: $scope.campos.desc,
+        };
+
+        Api.PrecoDiaria.listPage(opcoes, function (data) {
+            $scope.listLanc = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        },
+            function (response) {
+                $scope.loading = false;
+            });
+    }
+
+    // ------------------
+    // MATERIAL
+    // ------------------
+
+    $scope.searchMaterial = function () {
+        $scope.listLanc = undefined;
+        $scope.camposLanc.selecionado = undefined;
+        $scope.loadMaterial(0, $scope.itensporpagina);
+        if ($scope.paginadorMaterial != undefined)
+            $scope.paginadorMaterial.reiniciar();
+    }
+
+    $scope.loadMaterial = function (skip, take) {
+        $scope.loading = true;
+
+        var opcoes = {
+            skip: skip,
+            take: take,
+            codigo: $scope.campos.codigo,
+            desc: $scope.campos.desc,
+        };
+
+        Api.PrecoMaterial.listPage(opcoes, function (data) {
+            $scope.listLanc = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        },
+            function (response) {
+                $scope.loading = false;
+            });
+    }
+
+    // ------------------
+    // MEDICAMENTOS
+    // ------------------
+
+    $scope.searchMed = function () {
+        $scope.listLanc = undefined;
+        $scope.camposLanc.selecionado = undefined;
+        $scope.loadMed(0, $scope.itensporpagina);
+        if ($scope.paginadorMed != undefined)
+            $scope.paginadorMed.reiniciar();
+    }
+
+    $scope.loadMed = function (skip, take) {
+        $scope.loading = true;
+
+        var opcoes = {
+            skip: skip,
+            take: take,
+            codigo: $scope.campos.codigo,
+            desc: $scope.campos.desc,
+        };
+
+        Api.PrecoMedicamento.listPage(opcoes, function (data) {
+            $scope.listLanc = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        },
+            function (response) {
+                $scope.loading = false;
+            });
+    }
+
+    // ------------------
+    // Nao medicos
+    // ------------------
+
+    $scope.searchNaoMed = function () {
+        $scope.listLanc = undefined;
+        $scope.camposLanc.selecionado = undefined;
+        $scope.loadNaoMed(0, $scope.itensporpagina);
+        if ($scope.paginadorNaoMed != undefined)
+            $scope.paginadorNaoMed.reiniciar();
+    }
+
+    $scope.loadNaoMed = function (skip, take) {
+        $scope.loading = true;
+
+        var opcoes = {
+            skip: skip,
+            take: take,
+            codigo: $scope.campos.codigo,
+            desc: $scope.campos.desc,
+        };
+
+        Api.PrecoNaoMedico.listPage(opcoes, function (data) {
+            $scope.listLanc = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        },
+            function (response) {
+                $scope.loading = false;
+            });
+    }
+
+    // ------------------
+    // OPME
+    // ------------------
+
+    $scope.searchOPME = function () {
+        $scope.listLanc = undefined;
+        $scope.camposLanc.selecionado = undefined;
+        $scope.loadOPME(0, $scope.itensporpagina);
+        if ($scope.paginadorOPME != undefined)
+            $scope.paginadorOPME.reiniciar();
+    }
+
+    $scope.loadOPME = function (skip, take) {
+        $scope.loading = true;
+
+        var opcoes = {
+            skip: skip,
+            take: take,
+            codigo: $scope.campos.codigo,
+            desc: $scope.campos.desc,
+        };
+
+        Api.PrecoOPME.listPage(opcoes, function (data) {
+            $scope.listLanc = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        },
+            function (response) {
+                $scope.loading = false;
+            });
+    }
+
+    // --------------
+    // PACOTE
+    // --------------
+
+    $scope.searchPacote = function () {
+        $scope.listLanc = undefined;
+        $scope.camposLanc.selecionado = undefined;
+        $scope.loadPacote(0, $scope.itensporpagina);
+        if ($scope.paginadorPacote != undefined)
+            $scope.paginadorPacote.reiniciar();
+    }
+
+    $scope.loadPacote = function (skip, take) {
+        $scope.loading = true;
+
+        var opcoes = {
+            skip: skip,
+            take: take,
+            codigo: $scope.campos.codigo,
+            desc: $scope.campos.desc,
+        };
+
+        Api.PrecoPacote.listPage(opcoes, function (data) {
+            $scope.listLanc = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        },
+            function (response) {
+                $scope.loading = false;
+            });
+    }
+
 }]);

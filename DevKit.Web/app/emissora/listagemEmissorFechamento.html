@@ -308,6 +308,7 @@
                                                 <tr>
                                                     <th width="20px"></th>
                                                     <th width="70px">NSU</th>
+                                                    <th width="70px">NSU Ref.</th>
                                                     <th width="110px">Tipo</th>
                                                     <th width="220px">Descrição</th>
                                                     <th width="150px">Data Solicitação</th>
@@ -319,6 +320,7 @@
                                             <tr data-ng-repeat="m in mdl.resultsExtras">
                                                 <td><input type="checkbox" ng-click="marca(m)" ng-checked="mdl.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
+                                                <td>{{ m.nsuRef }}</td>
                                                 <td>{{ m.tipo }}</td>
                                                 <td>{{ m.desc }}</td>
                                                 <td>{{ m.dtSolicitacao }}</td>
@@ -551,7 +553,7 @@
                                         <th style="min-width:170px">Associado</th>
                                         <th style="min-width:90px">Parcela</th>
                                         <th style="min-width:90px">Valor</th>
-                                        <th style="min-width:20px">Fechar</th>
+                                        <th style="min-width:20px"></th>
                                     </tr>
                                 </thead>
                                 <tr data-ng-repeat="mdl in listLote" ng-if="mdl.selecionado == true">
@@ -560,7 +562,7 @@
                                     <td><span style="color:black">{{ mdl.matricula }} - {{ mdl.associado }}</span></td>
                                     <td><span style="color:black">{{ mdl.parcela }}</span></td>
                                     <td><span style="color:black">{{ mdl.vlr }}</span></td>
-                                    <td><button class="btn btn-primary" ng-click="marca(mdl)"> X </button></td>
+                                    <td><a href="" role="button" ng-click="marca(mdl)"><i class="glyphicon glyphicon-remove" style="color:white"></i></a></td>
                                 </tr>
                             </table>
                             <table style="color:white" align="left">
@@ -1205,11 +1207,12 @@
 
                                 </div>
                             </div>
+
                             <div align="center" ng-if="listLanc.length > 0 && camposLanc.selecionado != undefined || listLanc == undefined">
                                 <br />
                                 <br />
-                                <button class="btn btn-default" ng-click="cancelarModalLanc()"> Cancelar </button> &nbsp;&nbsp;
-                                <button class="btn btn-danger" ng-click="confirmarModalLanc()"> Confirmar </button> &nbsp;&nbsp;
+                                <button class="btn btn-default" ng-click="cancelarModalLanc()"> Fechar </button> &nbsp;&nbsp;
+                                <button class="btn btn-danger" ng-click="confirmarModalLanc()"> Adicionar </button> &nbsp;&nbsp;
                                 <br />
                                 <br />
                             </div>

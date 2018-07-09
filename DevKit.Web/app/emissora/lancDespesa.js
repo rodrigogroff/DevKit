@@ -215,7 +215,7 @@ function ($scope, $rootScope, $state, Api, ngSelects, ngHistoricoFiltro )
             };
 
             Api.EmissorLancaDespesa.listPage(opcoes, function (data) {
-                toastr.success('lixo', 'lixo');
+                toastr.success('Despesa lançada com sucesso', 'Sistema');
                 $scope.loading = false;
             },
                 function (response) {

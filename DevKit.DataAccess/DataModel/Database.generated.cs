@@ -15,7 +15,7 @@ namespace DataModel
 	/// <summary>
 	/// Database       : DevKit
 	/// Data Source    : tcp://localhost:5432
-	/// Server Version : 9.6.1
+	/// Server Version : 9.6.9
 	/// </summary>
 	public partial class DevKitDB : LinqToDB.Data.DataConnection
 	{
@@ -215,16 +215,17 @@ namespace DataModel
 		[Column,     Nullable] public long?     tgSituacao          { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAutOriginal       { get; set; } // bigint
 		[Column,     Nullable] public long?     vrProcedimento      { get; set; } // bigint
+		[Column,     Nullable] public long?     vrCoPart            { get; set; } // bigint
 		[Column,     Nullable] public long?     vrParcela           { get; set; } // bigint
+		[Column,     Nullable] public long?     vrParcelaCoPart     { get; set; } // bigint
 		[Column,     Nullable] public long?     nuTotParcelas       { get; set; } // bigint
 		[Column,     Nullable] public long?     nuIndice            { get; set; } // bigint
-		[Column,     Nullable] public long?     vrCoPart            { get; set; } // bigint
-		[Column,     Nullable] public long?     vrParcelaCoPart     { get; set; } // bigint
 		[Column,     Nullable] public long?     fkAssociadoPortador { get; set; } // bigint
 		[Column,     Nullable] public long?     nuNSU               { get; set; } // bigint
 		[Column,     Nullable] public long?     nuTipoAutorizacao   { get; set; } // bigint
 		[Column,     Nullable] public long?     fkPrecificacao      { get; set; } // bigint
 		[Column,     Nullable] public long?     vrValorOutroTipo    { get; set; } // bigint
+		[Column,     Nullable] public long?     nuNSURef            { get; set; } // bigint
 	}
 
 	[Table(Schema="public", Name="Cidade")]

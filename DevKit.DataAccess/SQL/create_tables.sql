@@ -475,6 +475,7 @@ ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAssociado" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuMes" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuAno" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuNSU" bigint;
+ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "nuNSURef" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "tgSituacao" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "fkAutOriginal" bigint;
 ALTER TABLE public."Autorizacao" ADD COLUMN if not exists "vrProcedimento" bigint;

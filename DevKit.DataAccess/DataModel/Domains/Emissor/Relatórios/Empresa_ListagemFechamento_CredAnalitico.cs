@@ -25,6 +25,7 @@ namespace DataModel
     {
         public string serial,
                         nsu,
+                        nsuRef,
                         portador,
                         cpf,                        
                         dtSolicitacao,                        
@@ -214,6 +215,7 @@ namespace DataModel
                         {
                             serial = serial.ToString(),
                             nsu = aut.nuNSU != null ? aut.nuNSU.ToString() : "",
+                            nsuRef = aut.nuNSURef != null ? aut.nuNSURef.ToString() : "",
                             portador = portador != null ? portador.stName : "",
                             cpf = portador.stCPF,
                             parcela = aut.nuIndice + " / " + aut.nuTotParcelas,

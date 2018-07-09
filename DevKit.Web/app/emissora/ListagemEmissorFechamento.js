@@ -22,7 +22,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
 	function init()
     {
-        $scope.campos = { tgSituacao: 1};
+        $scope.campos = { tgSituacao: 1, ano: (new Date()).getFullYear()};
 
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
         $scope.selectSituacaoAutorizacao = ngSelects.obterConfiguracao(Api.TipoSituacaoAutorizacaoCombo, {});
@@ -150,10 +150,10 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             {
                 matricula : m.matricula + " - " + m.associado,
                 credenciado : mdl.codCredenciado + " - " + mdl.nomeCredenciado,
-                dt : m.dtSolicitacao,
+                dt: m.dtSolicitacao,
+                parcelas: 1,
                 nsu : m.nsu,
             };
-
     }
 
     $scope.$watch('camposLanc.tipo', function (newState, oldState)
@@ -193,20 +193,51 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
         return false;
     }
+    
+    $scope.show = function (mdl) {
+        $scope.camposLanc.selecionado = mdl;
+        if ($scope.camposLanc.tipo == 2) 
+            $scope.camposLanc.valor = mdl.svrNivel1;
+        else 
+            $scope.camposLanc.valor = mdl.svrValor;
+    }
 
     $scope.confirmarModalLanc = function ()
     {
         $scope.camposLanc.vr_fail = invalidCheck($scope.camposLanc.valor);
         $scope.camposLanc.nu_parc_fail = invalidCheck($scope.camposLanc.parcelas);
 
-        if ($scope.campos.valor == "0,00")
-            $scope.vr_fail = true;
+        if ($scope.camposLanc.valor == "0,00")
+            $scope.camposLanc.vr_fail = true;
 
-        $scope.camposLanc.tipo_desp_fail = $scope.camposLanc.tipo == undefined || $scope.camposLanc.tipo == 1;        
-    }
+        $scope.camposLanc.tipo_desp_fail = $scope.camposLanc.selecionado == undefined;
 
-    $scope.show = function (mdl) {
-        $scope.camposLanc.selecionado = mdl;
+        if ($scope.camposLanc.vr_fail == false &&
+            $scope.camposLanc.nu_parc_fail == false &&
+            $scope.camposLanc.tipo_desp_fail == false)
+        {
+            $scope.loading = true;
+
+            var opcoes = {
+                nsuRef: $scope.camposLanc.nsu,
+                vrValor: $scope.camposLanc.valor,
+                nuTipo: $scope.camposLanc.tipo,
+                fkPrecificacao: $scope.camposLanc.selecionado.id,
+                nuParcelas: $scope.camposLanc.parcelas
+            };
+
+            Api.EmissorLancaDespesa.listPage(opcoes, function (data) {
+                toastr.success('Despesa lançada com sucesso', 'Sistema');
+                $scope.loading = false;
+                $scope.search();
+                $scope.camposLanc.valor = '';
+                $scope.camposLanc.listLanc = undefined;
+                $scope.camposLanc.tipo = undefined;
+            },
+            function (response) {
+                $scope.loading = false;
+            });
+        }
     }
 
     // ------------------

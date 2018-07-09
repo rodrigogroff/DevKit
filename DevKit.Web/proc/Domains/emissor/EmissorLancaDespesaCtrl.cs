@@ -17,6 +17,7 @@ namespace DevKit.Web.Controllers
                 vrValor = ObtemValor(Request.GetQueryStringValue("vrValor")),
                 dataLanc = ObtemData(Request.GetQueryStringValue("dataLanc")),
                 nuTipo = Request.GetQueryStringValue<long?>("nuTipo", null),
+                nsuRef = Request.GetQueryStringValue<long?>("nsuRef", null),
                 fkPrecificacao = Request.GetQueryStringValue<long?>("fkPrecificacao", null),
                 nuParcelas = Request.GetQueryStringValue<long?>("nuParcelas", null),
             });

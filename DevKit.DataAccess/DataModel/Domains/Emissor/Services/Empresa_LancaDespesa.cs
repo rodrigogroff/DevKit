@@ -11,6 +11,7 @@ namespace DataModel
                         credenciado,
                         vrValor,
                         nuTipo,
+                        nsuRef,
                         fkPrecificacao,
                         vrTotal,
                         nuParcelas;
@@ -22,23 +23,37 @@ namespace DataModel
     {
         public string LancaDespesa(DevKitDB db, LancaDespesa_PARAMS _params)
         {
-            if (_params.dataLanc == null)
-                return "Data inválida";
+            Autorizacao refAut = null;
 
-            if (_params.vrValor == null || _params.vrValor == 0)
-                return "Valor inválido";
+            if (_params.nsuRef != null)
+                refAut = db.Autorizacao.Where(y => y.nuNSU == _params.nsuRef).FirstOrDefault();
 
-            if (_params.nuParcelas == null || _params.nuParcelas == 0 || _params.nuParcelas > 12)
-                return "Numero parcelas inválido";
+            if (refAut == null)
+                if (_params.dataLanc == null)
+                    return "Data inválida";
+
+            if (refAut == null)
+                if (_params.vrValor == null || _params.vrValor == 0)
+                    return "Valor inválido";
+
+            if (refAut == null)
+                if (_params.nuParcelas == null || _params.nuParcelas == 0 || _params.nuParcelas > 12)
+                    return "Numero parcelas inválido";
 
             #region - associado - 
 
-            if (_params.matricula == 0)
-                return "Matrícula inválida";
+            if (refAut == null)
+                if (_params.matricula == 0)
+                    return "Matrícula inválida";
 
-            var assoc = db.Associado.FirstOrDefault(y => y.fkEmpresa == db.currentUser.fkEmpresa &&
+            Associado assoc = null;
+
+            if (refAut == null)
+                assoc = db.Associado.FirstOrDefault(y => y.fkEmpresa == db.currentUser.fkEmpresa &&
                                             y.nuMatricula == _params.matricula &&
                                             y.nuTitularidade == 1);
+            else
+                assoc = db.Associado.FirstOrDefault(y => y.id == refAut.fkAssociado);
 
             if (assoc == null)
                 return "Matrícula inválida";
@@ -50,10 +65,16 @@ namespace DataModel
 
             #region - credenciado -
 
-            if (_params.credenciado == 0)
-                return "Credenciado inválido";
+            Credenciado cred = null;
 
-            var cred = db.Credenciado.FirstOrDefault(y => y.nuCodigo == _params.credenciado);
+            if (refAut == null)
+                if (_params.credenciado == 0)
+                    return "Credenciado inválido";
+
+            if (refAut == null)
+                cred = db.Credenciado.FirstOrDefault(y => y.nuCodigo == _params.credenciado);
+            else
+                cred = db.Credenciado.FirstOrDefault(y => y.id == refAut.fkCredenciado);
 
             if (cred == null)
                 return "Credenciado inválido";
@@ -86,6 +107,9 @@ namespace DataModel
 
             var dt = Convert.ToDateTime(_params.dataLanc);
 
+            if (refAut != null)
+                dt = Convert.ToDateTime(refAut.dtSolicitacao);
+
             var aut = new Autorizacao
             {
                 dtSolicitacao = dt,
@@ -96,6 +120,7 @@ namespace DataModel
                 nuAno = dt.Year,
                 nuMes = dt.Month,
                 nuNSU = nsu,
+                nuNSURef = _params.nsuRef,
                 tgSituacao = TipoSitAutorizacao.EmAberto,
                 fkAutOriginal = null,
                 nuIndice = 1,
@@ -108,6 +133,9 @@ namespace DataModel
                 fkPrecificacao = _params.fkPrecificacao,
                 nuTipoAutorizacao = _params.nuTipo
             };
+
+            if (refAut != null)
+                aut.tgSituacao = refAut.tgSituacao;
 
             aut.id = Convert.ToInt64(db.InsertWithIdentity(aut));
 

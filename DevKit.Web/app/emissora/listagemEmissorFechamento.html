@@ -274,23 +274,21 @@
                                                 <tr>
                                                     <th min-width="20px"></th>
                                                     <th min-width="70px">NSU</th>
-                                                    <th min-width="150px">Data Solicitação</th>
-                                                    <th min-width="180px">Empresa / Seção</th>
+                                                    <th min-width="150px">Solicitação</th>                                                    
                                                     <th min-width="180px">CPF</th>
                                                     <th min-width="90px">Matrícula</th>
                                                     <th min-width="300px">Associado</th>
                                                     <th min-width="90px">Parcela</th>
                                                     <th min-width="120px">Valor</th>
                                                     <th min-width="120px">Co-Part.</th>
-                                                    <th min-width="300px">PROCEDIMENTO TUSS</th>
+                                                    <th min-width="250px">PROCEDIMENTO TUSS</th>
                                                     <th min-width="20px"></th>
                                                 </tr>
                                             </thead>
                                             <tr ng-repeat-start="m in mdl.results">
                                                 <td><input type="checkbox" ng-click="marca(m)" ng-checked="m.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
-                                                <td>{{ m.dtSolicitacao }}</td>
-                                                <td>{{ m.secao }}</td>
+                                                <td>{{ m.dtSolicitacao }}</td>                                                
                                                 <td>{{ m.cpf }}</td>
                                                 <td>{{ m.matricula }}</td>
                                                 <td>{{ m.associado }}</td>
@@ -298,7 +296,7 @@
                                                 <td>{{ m.vlr }}</td>
                                                 <td>{{ m.vlrCoPart }}</td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-primary" ng-click="lancDespModal(m, mdl)">Lançar despesas</button>
+                                                    <button type="submit" class="btn btn-primary" ng-click="lancDespModal(m, mdl)">Lançar serviços</button>
                                                     <div ng-if="m.tuss.length > 0">
                                                         <br />
                                                         {{ m.tuss }}<br />
@@ -307,8 +305,8 @@
                                                 <td><a href="" role="button" title="Editar" ng-click="editarAut(m)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a></td>
                                             </tr>
                                             <tr ng-repeat-end="m in mdl.results">
-                                                <td colspan="12" ng-if="m.resultsExtras.length > 0">
-                                                    <h4>Despesas extras deste procedimento</h4>
+                                                <td colspan="12" ng-if="m.resultsExtras.length > 0" style="background-color:black">
+                                                    <h4 style="color:white">Serviços extras deste procedimento</h4>
                                                     <table class="table table-hover" style="width:100%">
                                                         <thead>
                                                             <tr>
@@ -316,7 +314,7 @@
                                                                 <th>NSU</th>
                                                                 <th>Tipo</th>
                                                                 <th>Descrição</th>
-                                                                <th>Data Solicitação</th>
+                                                                <th>Solicitação</th>
                                                                 <th>Portador</th>
                                                                 <th>Parcela</th>
                                                                 <th>Valor R$</th>
@@ -340,7 +338,7 @@
                                         </table>
                                     </div>
                                     <div ng-if="mdl.resultsExtras.length > 0">
-                                        <h4><b>Despesas avulsas</b></h4><br />
+                                        <h4><b>Serviços avulsos</b></h4><br />
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
@@ -348,7 +346,7 @@
                                                     <th width="70px">NSU</th>
                                                     <th width="110px">Tipo</th>
                                                     <th width="220px">Descrição</th>
-                                                    <th width="150px">Data Solicitação</th>
+                                                    <th width="150px">Solicitação</th>
                                                     <th width="220px">Portador</th>
                                                     <th width="90px">Parcela</th>
                                                     <th width="120px">Valor R$</th>
@@ -653,7 +651,7 @@
                         <div class="modal-content" style="color:black;height:590px">
 
                             <legend style="color:black">
-                                Lançamentos de despesas extras do associado
+                                Lançamentos de serviços extras do associado
                             </legend>
 
                             <table>
@@ -679,7 +677,7 @@
                                                 </td>
                                             </tr>
                                             <tr height="44px">
-                                                <td width="90px"><b>Despesa</b></td>
+                                                <td width="90px"><b>Serviço</b></td>
                                                 <td width="20px">
                                                     <button class="btn btn-xs btn-danger" ng-show="camposLanc.tipo_desp_fail">!</button>
                                                 </td>

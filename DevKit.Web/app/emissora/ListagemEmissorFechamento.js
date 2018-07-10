@@ -108,7 +108,15 @@ function ($scope, $rootScope, $state, Api, ngSelects )
                 var m = mdl.results[t];
 
                 if (m.selecionado == true)
-                    $scope.listLote.push(m);            
+                    $scope.listLote.push(m);   
+
+                for (var y = 0; y < m.resultsExtras.length; y++) {
+
+                    var k = m.resultsExtras[y];
+
+                    if (k.selecionado == true)
+                        $scope.listLote.push(k);   
+                }
             }            
         }
 
@@ -128,6 +136,15 @@ function ($scope, $rootScope, $state, Api, ngSelects )
                     m.credenciado = mdl.nomeCredenciado;
 
                     $scope.listLote.push(m);
+
+                    for (var y = 0; y < m.resultsExtras.length; y++) {
+
+                        var k = m.resultsExtras[y];
+
+                        k.selecionado = true;
+                        
+                        $scope.listLote.push(k);
+                    }
                 }
 
                 for (var t = 0; t < mdl.resultsExtras.length; t++) {

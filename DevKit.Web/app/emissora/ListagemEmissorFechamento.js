@@ -22,7 +22,12 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
 	function init()
     {
-        $scope.campos = { tgSituacao: 1, ano: (new Date()).getFullYear()};
+        $scope.campos = {
+            tgSituacao: 1,
+            ano: (new Date()).getFullYear(),
+            tipo: 1,
+            modo: 2
+        };
 
         $scope.selectMonths = ngSelects.obterConfiguracao(Api.MonthCombo, {});
         $scope.selectSituacaoAutorizacao = ngSelects.obterConfiguracao(Api.TipoSituacaoAutorizacaoCombo, {});
@@ -109,9 +114,50 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
         if ($scope.listLote.length > 0)
             $scope.mostraLote = true;
+        else {
+            // vai tudo
+
+            for (var i = 0; i < $scope.list.length; i++) {
+                var mdl = $scope.list[i];
+
+                for (var t = 0; t < mdl.results.length; t++) {
+                    var m = mdl.results[t];
+
+                    m.selecionado = true;
+                    m.codCred = mdl.codCredenciado;
+                    m.credenciado = mdl.nomeCredenciado;
+
+                    $scope.listLote.push(m);
+                }
+
+                for (var t = 0; t < mdl.resultsExtras.length; t++) {
+                    var m = mdl.resultsExtras[t];
+
+                    m.selecionado = true;
+                    m.codCred = mdl.codCredenciado;
+                    m.credenciado = mdl.nomeCredenciado;
+
+                    $scope.listLote.push(m);
+                }
+            }
+
+            if ($scope.listLote.length > 0)
+                $scope.mostraLote = true;
+            else 
+                toastr.error('Nenhuma autorização encontrada', 'Sistema');
+        }
     }
 
-    $scope.cancelarModal = function () {
+    $scope.cancelarModal = function ()
+    {
+        for (var i = 0; i < $scope.list.length; i++) {
+            var mdl = $scope.list[i];
+            for (var t = 0; t < mdl.results.length; t++)
+                mdl.results[t].selecionado = false;
+            for (var t = 0; t < mdl.resultsExtras.length; t++)
+                mdl.resultsExtras[t].selecionado = false;
+        }
+
         $scope.mostraLote = false;
     }
 

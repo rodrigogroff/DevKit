@@ -101,10 +101,8 @@ namespace DataModel
             
             var query = from e in db.Credenciado
                         join ce in db.CredenciadoEmpresa on e.id equals ce.fkCredenciado
-                        join es in db.EmpresaSecao on ce.fkEmpresa equals es.fkEmpresa
                         where filter.fkEmpresa == null || (filter.fkEmpresa != null && ce.fkEmpresa == filter.fkEmpresa)
                         where filter.fkCredenciado == null || (filter.fkCredenciado != null && e.id == filter.fkCredenciado)
-                        where es.id == filter.fkSecao
                         where filter.codCred == null || e.nuCodigo.ToString() == filter.codCred
                         orderby e.stNome
                         select e;
@@ -178,6 +176,9 @@ namespace DataModel
                             assoc = lstAssocs.
                                     Where(y => y.id == aut.fkAssociado).
                                     FirstOrDefault();
+
+                        if (filter.fkSecao != assoc.fkSecao)
+                            continue;
 
                         var secao = secoes.Where(y => y.id == assoc.fkSecao).FirstOrDefault();
                         var proc = procsTuus.Where(y => y.id == aut.fkProcedimento).FirstOrDefault();

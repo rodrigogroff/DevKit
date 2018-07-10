@@ -286,8 +286,8 @@
                                                     <th min-width="20px"></th>
                                                 </tr>
                                             </thead>
-                                            <tr data-ng-repeat="m in mdl.results">
-                                                <td><input type="checkbox" ng-click="marca(m)" ng-checked="mdl.selecionado" /></td>
+                                            <tr ng-repeat-start="m in mdl.results">
+                                                <td><input type="checkbox" ng-click="marca(m)" ng-checked="m.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.dtSolicitacao }}</td>
                                                 <td>{{ m.secao }}</td>
@@ -306,16 +306,46 @@
                                                 </td>
                                                 <td><a href="" role="button" title="Editar" ng-click="editarAut(m)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a></td>
                                             </tr>
+                                            <tr ng-repeat-end="m in mdl.results">
+                                                <td colspan="12" ng-if="m.resultsExtras.length > 0">
+                                                    <h4>Despesas extras deste procedimento</h4>
+                                                    <table class="table table-hover" style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>NSU</th>
+                                                                <th>Tipo</th>
+                                                                <th>Descrição</th>
+                                                                <th>Data Solicitação</th>
+                                                                <th>Portador</th>
+                                                                <th>Parcela</th>
+                                                                <th>Valor R$</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tr data-ng-repeat="a in m.resultsExtras" style="background-color:#0F3D4B">
+                                                            <td><input type="checkbox" ng-click="marca(a)" ng-checked="a.selecionado" /></td>
+                                                            <td>{{ a.nsu }}</td>
+                                                            <td>{{ a.tipo }}</td>
+                                                            <td>{{ a.desc }}</td>
+                                                            <td>{{ a.dtSolicitacao }}</td>
+                                                            <td>{{ a.portador}}<br />CPF: {{ a.cpf }}</td>
+                                                            <td>{{ a.parcela }}</td>
+                                                            <td>{{ a.vlr }}</td>
+                                                            <td><a href="" role="button" title="Editar" ng-click="editarAut(a)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>                                            
                                         </table>
                                     </div>
                                     <div ng-if="mdl.resultsExtras.length > 0">
-                                        <h4><b>Custos Extras</b></h4><br />
+                                        <h4><b>Despesas avulsas</b></h4><br />
                                         <table class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th width="20px"></th>
                                                     <th width="70px">NSU</th>
-                                                    <th width="70px">NSU Ref.</th>
                                                     <th width="110px">Tipo</th>
                                                     <th width="220px">Descrição</th>
                                                     <th width="150px">Data Solicitação</th>
@@ -326,9 +356,8 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.resultsExtras">
-                                                <td><input type="checkbox" ng-click="marca(m)" ng-checked="mdl.selecionado" /></td>
+                                                <td><input type="checkbox" ng-click="marca(m)" ng-checked="m.selecionado" /></td>
                                                 <td>{{ m.nsu }}</td>
-                                                <td>{{ m.nsuRef }}</td>
                                                 <td>{{ m.tipo }}</td>
                                                 <td>{{ m.desc }}</td>
                                                 <td>{{ m.dtSolicitacao }}</td>

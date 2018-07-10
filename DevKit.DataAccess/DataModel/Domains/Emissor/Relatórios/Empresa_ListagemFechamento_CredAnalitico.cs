@@ -1,6 +1,7 @@
 ﻿using LinqToDB;
 using SyCrafEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +20,8 @@ namespace DataModel
                         vlr,
                         vlrCoPart,
                         tuss;
+
+        public List<FechCredAnalDetalheExtra> resultsExtras = new List<FechCredAnalDetalheExtra>();
     }
 
     public class FechCredAnalDetalheExtra
@@ -163,10 +166,14 @@ namespace DataModel
                         sDadosBancarios = "=> Banco: " + cred.stBanco + " Agência " + cred.stAgencia + " Conta " + cred.stConta
                     };
 
-                    foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id).
-                                             Where (y=> y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null).
+                    var auts_principais = auts.Where(y => y.fkCredenciado == cred.id).
+                                             Where(y => y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null).
                                              OrderBy(y => y.dtSolicitacao).
-                                             ToList())
+                                             ToList();
+
+                    var hshNsusExtras = new Hashtable();
+
+                    foreach (var aut in auts_principais)
                     {
                         var assoc = lstAssocs.
                                     Where(y => y.id == aut.fkAssociadoPortador).
@@ -183,7 +190,7 @@ namespace DataModel
                         var secao = secoes.Where(y => y.id == assoc.fkSecao).FirstOrDefault();
                         var proc = procsTuus.Where(y => y.id == aut.fkProcedimento).FirstOrDefault();
 
-                        resultCred.results.Add(new FechCredAnalDetalhe
+                        var det = new FechCredAnalDetalhe
                         {
                             serial = serial.ToString(),
                             nsu = aut.nuNSU != null ? aut.nuNSU.ToString() : "",
@@ -196,10 +203,72 @@ namespace DataModel
                             vlr = mon.setMoneyFormat((long)aut.vrParcela),
                             vlrCoPart = mon.setMoneyFormat((long)aut.vrParcelaCoPart),
                             tuss = proc != null ? proc.nuCodTUSS + " - " + proc.stProcedimento : ""
-                        });
+                        };
+
+                        resultCred.results.Add(det);
 
                         resultCred.totVlr += (long)aut.vrParcela;
                         resultCred.totCoPart += (long)aut.vrParcelaCoPart;
+
+                        var lstExtras = auts.
+                                        Where(y => y.fkCredenciado == cred.id).
+                                        Where(y => y.nuNSURef == aut.nuNSU).
+                                        Where(y => y.nuTipoAutorizacao > 1).                                        
+                                        OrderBy(y => y.dtSolicitacao).
+                                        ToList();
+
+                        foreach (var autExtra in lstExtras)
+                        {
+                            var portador = db.Associado.Where(y => y.id == autExtra.fkAssociadoPortador).FirstOrDefault();
+
+                            hshNsusExtras[autExtra.nuNSU] = true;
+
+                            var extra = new FechCredAnalDetalheExtra
+                            {
+                                serial = serial.ToString(),
+                                nsu = autExtra.nuNSU != null ? autExtra.nuNSU.ToString() : "",
+                                nsuRef = autExtra.nuNSURef != null ? autExtra.nuNSURef.ToString() : "",
+                                portador = portador != null ? portador.stName : "",
+                                cpf = portador.stCPF,
+                                parcela = autExtra.nuIndice + " / " + autExtra.nuTotParcelas,
+                                dtSolicitacao = Convert.ToDateTime(autExtra.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
+                                vlr = mon.setMoneyFormat((long)autExtra.vrParcela),
+                            };
+
+                            switch (autExtra.nuTipoAutorizacao)
+                            {
+                                case 2: extra.tipo = "Diária"; break;
+                                case 3: extra.tipo = "Materiais"; break;
+                                case 4: extra.tipo = "Medicamentos"; break;
+                                case 5: extra.tipo = "Não médicos"; break;
+                                case 6: extra.tipo = "OPME"; break;
+                                case 7: extra.tipo = "Pacote Serviços"; break;
+                            }
+
+                            switch (autExtra.nuTipoAutorizacao)
+                            {
+                                case 2: extra.desc = db.SaudeValorDiaria.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                                case 3: extra.desc = db.SaudeValorMaterial.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                                case 4: extra.desc = db.SaudeValorMedicamento.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                                case 5: extra.desc = db.SaudeValorNaoMedico.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                                case 6: extra.desc = db.SaudeValorOPME.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                                case 7: extra.desc = db.SaudeValorPacote.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            }
+
+                            resultCred.totVlr += (long)autExtra.vrParcela;
+
+                            switch (autExtra.nuTipoAutorizacao)
+                            {
+                                case 2: resultCred.totExtra_diaria += (long)autExtra.vrParcela; break;
+                                case 3: resultCred.totExtra_mat += (long)autExtra.vrParcela; break;
+                                case 4: resultCred.totExtra_meds += (long)autExtra.vrParcela; break;
+                                case 5: resultCred.totExtra_naomed += (long)autExtra.vrParcela; break;
+                                case 6: resultCred.totExtra_opme += (long)autExtra.vrParcela; break;
+                                case 7: resultCred.totExtra_pacserv += (long)autExtra.vrParcela; break;
+                            }
+
+                            det.resultsExtras.Add(extra);
+                        }
                     }
 
                     #region - code - 
@@ -210,6 +279,9 @@ namespace DataModel
                                         OrderBy(y => y.dtSolicitacao).
                                         ToList())
                     {
+                        if (hshNsusExtras[aut.nuNSU] != null)
+                            continue;
+
                         var portador = db.Associado.Where(y => y.id == aut.fkAssociadoPortador).FirstOrDefault();
 
                         var e = new FechCredAnalDetalheExtra

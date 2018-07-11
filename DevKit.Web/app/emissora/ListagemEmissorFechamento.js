@@ -128,7 +128,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
         if ($scope.listLote.length > 0)
             $scope.mostraLote = true;
-        else {
+        else
+        {
             // vai tudo
 
             for (var i = 0; i < $scope.list.length; i++) {
@@ -155,16 +156,6 @@ function ($scope, $rootScope, $state, Api, ngSelects )
                         $scope.listLote.push(k);
                     }
                 }
-
-                for (var t = 0; t < mdl.resultsExtras.length; t++) {
-                    var m = mdl.resultsExtras[t];
-
-                    m.selecionado = true;
-                    m.codCred = mdl.codCredenciado;
-                    m.credenciado = mdl.nomeCredenciado;
-
-                    $scope.listLote.push(m);
-                }
             }
 
             if ($scope.listLote.length > 0)
@@ -176,12 +167,19 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
     $scope.cancelarModal = function ()
     {
-        for (var i = 0; i < $scope.list.length; i++) {
+        for (var i = 0; i < $scope.list.length; i++)
+        {
             var mdl = $scope.list[i];
+
             for (var t = 0; t < mdl.results.length; t++)
-                mdl.results[t].selecionado = false;
-            for (var t = 0; t < mdl.resultsExtras.length; t++)
-                mdl.resultsExtras[t].selecionado = false;
+            {
+                var oo = mdl.results[t];
+
+                oo.selecionado = false;
+
+                for (var j = 0; j < oo.resultsExtras.length; j++)
+                    oo.resultsExtras[j].selecionado = false;                
+            }
         }
 
         $scope.mostraLote = false;
@@ -244,9 +242,9 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             if ($scope.paginadorOPME != undefined) $scope.paginadorOPME.reiniciar();
             if ($scope.paginadorPacote != undefined) $scope.paginadorPacote.reiniciar();
             if ($scope.paginadorProc != undefined) $scope.paginadorProc.reiniciar();
-
-            if (ngHistoricoFiltro != undefined)
-                ngHistoricoFiltro.filtro.paginaAtual = 0;
+            
+            if ($scope.ngHistoricoFiltro != undefined)
+                $scope.ngHistoricoFiltro.filtro.paginaAtual = 0;
 
             $scope.camposLanc.tipo_desp_fail = false;
         }
@@ -270,7 +268,9 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.camposLanc.selecionado = mdl;
         if ($scope.camposLanc.tipo == 2) 
             $scope.camposLanc.valor = mdl.svrNivel1;
-        else 
+        else if ($scope.camposLanc.tipo == 1) 
+            $scope.camposLanc.valor = mdl.svrTotalHMCO;
+        else
             $scope.camposLanc.valor = mdl.svrValor;
     }
 
@@ -312,6 +312,38 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         }
     }
 
+    // -------------------
+    // procedimentos
+    // -------------------
+
+    $scope.searchProc = function () {
+        $scope.listLanc = undefined;
+        $scope.camposLanc.selecionado = undefined;
+        $scope.loadProc(0, $scope.itensporpagina);
+        if ($scope.paginadorProc != undefined)
+            $scope.paginadorProc.reiniciar();
+    }
+
+    $scope.loadProc = function (skip, take) {
+        $scope.loading = true;
+
+        var opcoes = {
+            skip: skip,
+            take: take,
+            codigo: $scope.campos.codigo,
+            desc: $scope.campos.desc,
+        };
+
+        Api.PrecoProcedimento.listPage(opcoes, function (data) {
+            $scope.listLanc = data.results;
+            $scope.total = data.count;
+            $scope.loading = false;
+        },
+            function (response) {
+                $scope.loading = false;
+            });
+    }
+
     // ------------------
     // DIARIA
     // ------------------
@@ -332,8 +364,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         var opcoes = {
             skip: skip,
             take: take,
-            codigo: $scope.campos.codigo,
-            desc: $scope.campos.desc,
+            codigo: $scope.camposLanc.codigo,
+            desc: $scope.camposLanc.desc,
         };
 
         Api.PrecoDiaria.listPage(opcoes, function (data) {
@@ -364,8 +396,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         var opcoes = {
             skip: skip,
             take: take,
-            codigo: $scope.campos.codigo,
-            desc: $scope.campos.desc,
+            codigo: $scope.camposLanc.codigo,
+            desc: $scope.camposLanc.desc,
         };
 
         Api.PrecoMaterial.listPage(opcoes, function (data) {
@@ -396,8 +428,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         var opcoes = {
             skip: skip,
             take: take,
-            codigo: $scope.campos.codigo,
-            desc: $scope.campos.desc,
+            codigo: $scope.camposLanc.codigo,
+            desc: $scope.camposLanc.desc,
         };
 
         Api.PrecoMedicamento.listPage(opcoes, function (data) {
@@ -460,8 +492,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         var opcoes = {
             skip: skip,
             take: take,
-            codigo: $scope.campos.codigo,
-            desc: $scope.campos.desc,
+            codigo: $scope.camposLanc.codigo,
+            desc: $scope.camposLanc.desc,
         };
 
         Api.PrecoOPME.listPage(opcoes, function (data) {
@@ -492,8 +524,8 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         var opcoes = {
             skip: skip,
             take: take,
-            codigo: $scope.campos.codigo,
-            desc: $scope.campos.desc,
+            codigo: $scope.camposLanc.codigo,
+            desc: $scope.camposLanc.desc,
         };
 
         Api.PrecoPacote.listPage(opcoes, function (data) {

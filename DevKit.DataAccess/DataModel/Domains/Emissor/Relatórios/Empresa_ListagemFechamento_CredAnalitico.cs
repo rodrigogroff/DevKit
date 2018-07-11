@@ -44,6 +44,8 @@ namespace DataModel
     {
         public long     totVlr = 0, 
                         totCoPart = 0,
+
+                        totExtra_procs = 0,
                         totExtra_diaria = 0,
                         totExtra_mat = 0,
                         totExtra_meds = 0,
@@ -58,6 +60,8 @@ namespace DataModel
                         stotCoPart,
                         sDadosBancarios,
                         tuss,
+
+                        stotExtra_procs,
                         stotExtra_diaria,
                         stotExtra_mat,
                         stotExtra_meds,
@@ -66,7 +70,6 @@ namespace DataModel
                         stotExtra_pacserv;
 
         public List<FechCredAnalDetalhe> results = new List<FechCredAnalDetalhe>();
-        public List<FechCredAnalDetalheExtra> resultsExtras = new List<FechCredAnalDetalheExtra>();
     }
 
     public class EmissorFechamentoCredAnaliticoReport
@@ -77,6 +80,8 @@ namespace DataModel
                         totAssociados = 0,
                         totVlr = 0,
                         totCoPart = 0,
+
+                        totExtra_procs = 0,
                         totExtra_diaria = 0,
                         totExtra_mat = 0,
                         totExtra_meds = 0,
@@ -87,7 +92,8 @@ namespace DataModel
         public string   stotVlr, 
                         stotCoPart,
                         mesAno,
-                        
+
+                        stotExtra_procs,
                         stotExtra_diaria,
                         stotExtra_mat,
                         stotExtra_meds,
@@ -169,11 +175,9 @@ namespace DataModel
                     };
 
                     var auts_principais = auts.Where(y => y.fkCredenciado == cred.id).
-                                             Where(y => y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null).
+                                             Where(y => y.nuNSURef == null).
                                              OrderBy(y => y.dtSolicitacao).
                                              ToList();
-
-                    var hshNsusExtras = new Hashtable();
 
                     foreach (var aut in auts_principais)
                     {
@@ -216,16 +220,13 @@ namespace DataModel
 
                         var lstExtras = auts.
                                         Where(y => y.fkCredenciado == cred.id).
-                                        Where(y => y.nuNSURef == aut.nuNSU).
-                                        Where(y => y.nuTipoAutorizacao > 1).                                        
+                                        Where(y => y.nuNSURef == aut.nuNSU).                                        
                                         OrderBy(y => y.dtSolicitacao).
                                         ToList();
 
                         foreach (var autExtra in lstExtras)
                         {
                             var portador = db.Associado.Where(y => y.id == autExtra.fkAssociadoPortador).FirstOrDefault();
-
-                            hshNsusExtras[autExtra.nuNSU] = true;
 
                             var extra = new FechCredAnalDetalheExtra
                             {
@@ -244,7 +245,8 @@ namespace DataModel
 
                             switch (autExtra.nuTipoAutorizacao)
                             {
-                                case 2: extra.tipo = "Diária"; break;
+                                case 1: extra.tipo = "Procedimentos"; break;
+                                case 2: extra.tipo = "Diárias"; break;
                                 case 3: extra.tipo = "Materiais"; break;
                                 case 4: extra.tipo = "Medicamentos"; break;
                                 case 5: extra.tipo = "Não médicos"; break;
@@ -254,6 +256,7 @@ namespace DataModel
 
                             switch (autExtra.nuTipoAutorizacao)
                             {
+                                case 1: extra.desc = db.SaudeValorProcedimento.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
                                 case 2: extra.desc = db.SaudeValorDiaria.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
                                 case 3: extra.desc = db.SaudeValorMaterial.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
                                 case 4: extra.desc = db.SaudeValorMedicamento.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
@@ -266,6 +269,7 @@ namespace DataModel
 
                             switch (autExtra.nuTipoAutorizacao)
                             {
+                                case 1: resultCred.totExtra_procs += (long)autExtra.vrParcela; break;
                                 case 2: resultCred.totExtra_diaria += (long)autExtra.vrParcela; break;
                                 case 3: resultCred.totExtra_mat += (long)autExtra.vrParcela; break;
                                 case 4: resultCred.totExtra_meds += (long)autExtra.vrParcela; break;
@@ -280,71 +284,10 @@ namespace DataModel
                         det.vlrTotal = mon.setMoneyFormat(_vlrTotal);
                     }
 
-                    #region - code - 
-
-                    foreach (var aut in auts.
-                                        Where(y => y.fkCredenciado == cred.id).
-                                        Where(y => y.nuTipoAutorizacao > 1).
-                                        OrderBy(y => y.dtSolicitacao).
-                                        ToList())
-                    {
-                        if (hshNsusExtras[aut.nuNSU] != null)
-                            continue;
-
-                        var portador = db.Associado.Where(y => y.id == aut.fkAssociadoPortador).FirstOrDefault();
-
-                        var e = new FechCredAnalDetalheExtra
-                        {
-                            serial = serial.ToString(),
-                            nsu = aut.nuNSU != null ? aut.nuNSU.ToString() : "",
-                            nsuRef = aut.nuNSURef != null ? aut.nuNSURef.ToString() : "",
-                            portador = portador != null ? portador.stName : "",
-                            cpf = portador.stCPF,
-                            parcela = aut.nuIndice + " / " + aut.nuTotParcelas,
-                            dtSolicitacao = Convert.ToDateTime(aut.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
-                            vlr = mon.setMoneyFormat((long)aut.vrParcela),
-                        };
-
-                        switch (aut.nuTipoAutorizacao)
-                        {
-                            case 2: e.tipo = "Diária"; break;
-                            case 3: e.tipo = "Materiais"; break;
-                            case 4: e.tipo = "Medicamentos"; break;
-                            case 5: e.tipo = "Não médicos"; break;
-                            case 6: e.tipo = "OPME"; break;
-                            case 7: e.tipo = "Pacote Serviços"; break;
-                        }
-
-                        switch (aut.nuTipoAutorizacao)
-                        {
-                            case 2: e.desc = db.SaudeValorDiaria.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
-                            case 3: e.desc = db.SaudeValorMaterial.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
-                            case 4: e.desc = db.SaudeValorMedicamento.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
-                            case 5: e.desc = db.SaudeValorNaoMedico.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
-                            case 6: e.desc = db.SaudeValorOPME.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
-                            case 7: e.desc = db.SaudeValorPacote.Where(y => y.id == aut.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
-                        }
-
-                        resultCred.totVlr += (long)aut.vrParcela;
-
-                        switch (aut.nuTipoAutorizacao)
-                        {
-                            case 2: resultCred.totExtra_diaria += (long)aut.vrParcela; break;
-                            case 3: resultCred.totExtra_mat += (long)aut.vrParcela; break;
-                            case 4: resultCred.totExtra_meds += (long)aut.vrParcela; break;
-                            case 5: resultCred.totExtra_naomed += (long)aut.vrParcela; break;
-                            case 6: resultCred.totExtra_opme += (long)aut.vrParcela; break;
-                            case 7: resultCred.totExtra_pacserv += (long)aut.vrParcela; break;
-                        }
-
-                        resultCred.resultsExtras.Add(e);
-                    }
-
-                    #endregion
-
                     resultCred.stotVlr = mon.setMoneyFormat(resultCred.totVlr);
                     resultCred.stotCoPart = mon.setMoneyFormat(resultCred.totCoPart);
 
+                    resultCred.stotExtra_procs = mon.setMoneyFormat(resultCred.totExtra_procs);
                     resultCred.stotExtra_diaria = mon.setMoneyFormat(resultCred.totExtra_diaria);
                     resultCred.stotExtra_mat = mon.setMoneyFormat(resultCred.totExtra_mat);
                     resultCred.stotExtra_meds = mon.setMoneyFormat(resultCred.totExtra_meds);
@@ -355,6 +298,7 @@ namespace DataModel
                     resultado.totVlr += resultCred.totVlr;
                     resultado.totCoPart += resultCred.totCoPart;
 
+                    resultado.totExtra_procs += resultCred.totExtra_procs;
                     resultado.totExtra_diaria += resultCred.totExtra_diaria;
                     resultado.totExtra_mat += resultCred.totExtra_mat;
                     resultado.totExtra_meds += resultCred.totExtra_meds;
@@ -369,6 +313,7 @@ namespace DataModel
             resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);
             resultado.stotCoPart = mon.setMoneyFormat(resultado.totCoPart);
 
+            resultado.stotExtra_procs = mon.setMoneyFormat(resultado.totExtra_procs);
             resultado.stotExtra_diaria = mon.setMoneyFormat(resultado.totExtra_diaria);
             resultado.stotExtra_mat = mon.setMoneyFormat(resultado.totExtra_mat);
             resultado.stotExtra_meds = mon.setMoneyFormat(resultado.totExtra_meds);

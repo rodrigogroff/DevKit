@@ -229,6 +229,7 @@
                                         </td>
                                         <td width="20px"></td>
                                         <td valign="top" width="300px">
+                                            Total Procedimentos: R$ <b>{{result.stotExtra_procs}}</b><br />
                                             Total Diárias: R$ <b>{{result.stotExtra_diaria}}</b><br />
                                             Total Materiais: R$ <b>{{result.stotExtra_mat}}</b><br />
                                             Total Medicamentos: R$ <b>{{result.stotExtra_meds}}</b><br />
@@ -258,6 +259,7 @@
                                             </td>
                                             <td width="20px"></td>
                                             <td width="200px" valign="top">
+                                                Valor Procedimentos: R$ <b>{{mdl.stotExtra_procs}}</b><br />
                                                 Valor Diárias: R$ <b>{{mdl.stotExtra_diaria}}</b><br />
                                                 Valor Materiais: R$ <b>{{mdl.stotExtra_mat}}</b><br />
                                                 Valor Medicamentos: R$ <b>{{mdl.stotExtra_meds}}</b><br />
@@ -339,37 +341,7 @@
                                             </tr>                                            
                                         </table>
                                     </div>
-                                    <div ng-if="mdl.resultsExtras.length > 0">
-                                        <h4><b>Serviços avulsos</b></h4><br />
-                                        <table class="table table-hover" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th width="20px"></th>
-                                                    <th width="70px">NSU</th>
-                                                    <th width="110px">Tipo</th>
-                                                    <th width="220px">Descrição</th>
-                                                    <th width="150px">Solicitação</th>
-                                                    <th width="220px">Portador</th>
-                                                    <th width="90px">Parcela</th>
-                                                    <th width="120px">Valor R$</th>
-                                                    <th width="20px"></th>
-                                                </tr>
-                                            </thead>
-                                            <tr data-ng-repeat="m in mdl.resultsExtras">
-                                                <td><input type="checkbox" ng-click="marca(m)" ng-checked="m.selecionado" /></td>
-                                                <td>{{ m.nsu }}</td>
-                                                <td>{{ m.tipo }}</td>
-                                                <td>{{ m.desc }}</td>
-                                                <td>{{ m.dtSolicitacao }}</td>
-                                                <td>{{ m.portador}}<br />CPF: {{ m.cpf }}</td>
-                                                <td>{{ m.parcela }}</td>
-                                                <td>{{ m.vlr }}</td>
-                                                <td><a href="" role="button" title="Editar" ng-click="editarAut(m)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a></td>
-                                            </tr>
-                                        </table>
-                                    </div>
                                 </div>
-
                             </div>
                         </td>
                     </tr>
@@ -719,6 +691,113 @@
 
                             <div style="overflow-y:scroll;overflow:auto;max-height:260px">
 
+                                <div ng-if="camposLanc.tipo == 1">
+                                    <table class="widget" style="color:black">
+                                        <tr height="12px"> </tr>
+                                        <tr>
+                                            <td width="25px"></td>
+                                            <td width="150px"><b>Cd. Procedimento</b></td>
+                                            <td width="220px">
+                                                <input type="text" class="form-control input-transparent" ng-model="camposLanc.codigo" ng-keyup="$event.keyCode == 13 && searchProc()" />
+                                            </td>
+                                            <td width="25px"></td>
+                                            <td width="150px"><b>Descrição</b></td>
+                                            <td width="220px">
+                                                <input type="text" focus="true" class="form-control input-transparent" ng-model="camposLanc.desc" ng-keyup="$event.keyCode == 13 && searchProc()" />
+                                            </td>
+                                            <td width="60px"></td>
+                                            <td width="120px">
+                                                <button type="submit" class="btn btn-primary" ng-click="searchProc()">Pesquisa</button>
+                                            </td>
+                                        </tr>
+                                        <tr height="12px"> </tr>
+                                    </table>
+
+                                    <div style="overflow-x:scroll;overflow:auto;">
+                                        <table>
+                                            <tr>
+                                                <td valign="top">
+                                                    <div ng-show="listLanc.length == 0">
+                                                        <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                                        <br />
+                                                        <br />
+                                                    </div>
+                                                    <div ng-show="camposLanc.selecionado != undefined">
+                                                        <table class="table table-hover" style="width:100%;color:black">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="min-width:80px">Código</th>
+                                                                    <th style="min-width:80px">Ano</th>
+                                                                    <th style="min-width:600px">Descrição</th>
+                                                                    <th style="min-width:170px">Valor Total</th>
+                                                                    <th style="min-width:170px">Porte</th>
+                                                                    <th style="min-width:170px">Valor HM</th>
+                                                                    <th style="min-width:170px">Valor CO</th>
+                                                                    <th style="min-width:170px">Auxiliares</th>
+                                                                    <th style="min-width:170px">Porte Anestésico</th>
+                                                                    <th style="min-width:170px">Valor Porte</th>
+                                                                    <th style="min-width:170px">Filme m2</th>
+                                                                    <th style="min-width:170px">Valor filme</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tr>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.nuCodInterno }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.nuAnoVigencia }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.stDesc }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.svrTotalHMCO }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.sfkSaudePorteProcedimento }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.svrValorHM }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.svrValorCO }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.snuAux }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.snuAnestesistas }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.svrPorteAnestesista }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.snuFilme4C }}</span></td>
+                                                                <td><span style="color:black">{{ camposLanc.selecionado.svrFilme }}</span></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div ng-show="listLanc.length > 0 && camposLanc.selecionado == undefined">
+                                                        <ng-paginacao preto="true" carregar="loadProc" list="listLanc" total="total" itensporpagina="itensporpagina" paginador="paginadorProc"></ng-paginacao>
+                                                        <br />
+                                                        <table class="table table-hover" style="width:100%;color:black">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="min-width:80px">Código</th>
+                                                                    <th style="min-width:80px">Ano</th>
+                                                                    <th style="min-width:600px">Descrição</th>
+                                                                    <th style="min-width:170px">Valor Total</th>
+                                                                    <th style="min-width:170px">Porte</th>
+                                                                    <th style="min-width:170px">Valor HM</th>
+                                                                    <th style="min-width:170px">Valor CO</th>
+                                                                    <th style="min-width:170px">Auxiliares</th>
+                                                                    <th style="min-width:170px">Porte Anestésico</th>
+                                                                    <th style="min-width:170px">Valor Porte</th>
+                                                                    <th style="min-width:170px">Filme m2</th>
+                                                                    <th style="min-width:170px">Valor filme</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">
+                                                                <td><span style="color:black">{{ mdl.nuCodInterno }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.nuAnoVigencia }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.stDesc }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.svrTotalHMCO }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.sfkSaudePorteProcedimento }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.svrValorHM }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.svrValorCO }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.snuAux }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.snuAnestesistas }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.svrPorteAnestesista }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.snuFilme4C }}</span></td>
+                                                                <td><span style="color:black">{{ mdl.svrFilme }}</span></td>
+                                                            </tr>                                                            
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
                                 <div ng-if="camposLanc.tipo == 2">
                                     <table class="widget" style="color:black">
                                         <tr height="12px"> </tr>
@@ -811,7 +890,7 @@
                                 </div>
 
                                 <div ng-if="camposLanc.tipo == 3">
-                                    
+
                                     <table class="widget" style="color:black">
                                         <tr height="12px"> </tr>
                                         <tr>
@@ -832,7 +911,7 @@
                                         </tr>
                                         <tr height="12px"> </tr>
                                     </table>
-                                    
+
                                     <div style="overflow-x:scroll;overflow:auto;">
                                         <table>
                                             <tr>

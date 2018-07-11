@@ -274,11 +274,12 @@
                                                 <tr>
                                                     <th min-width="20px"></th>
                                                     <th min-width="70px">NSU</th>
-                                                    <th min-width="150px">Solicitação</th>                                                    
+                                                    <th min-width="150px">Solicitação</th>
                                                     <th min-width="180px">CPF</th>
                                                     <th min-width="90px">Matrícula</th>
                                                     <th min-width="300px">Associado</th>
                                                     <th min-width="90px">Parcela</th>
+                                                    <th min-width="120px">Total Guia</th>
                                                     <th min-width="120px">Valor</th>
                                                     <th min-width="120px">Co-Part.</th>
                                                     <th min-width="250px">PROCEDIMENTO TUSS</th>
@@ -293,10 +294,11 @@
                                                 <td>{{ m.matricula }}</td>
                                                 <td>{{ m.associado }}</td>
                                                 <td>{{ m.parcela }}</td>
+                                                <td><span class="btn btn-success">{{ m.vlrTotal }}</span></td>                                                
                                                 <td>{{ m.vlr }}</td>
                                                 <td>{{ m.vlrCoPart }}</td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-primary" ng-click="lancDespModal(m, mdl)">Lançar serviços</button>
+                                                    <button type="submit" class="btn btn-warning" ng-click="lancDespModal(m, mdl)" style="color:black">Lançar serviços</button>
                                                     <div ng-if="m.tuss.length > 0">
                                                         <br />
                                                         {{ m.tuss }}<br />

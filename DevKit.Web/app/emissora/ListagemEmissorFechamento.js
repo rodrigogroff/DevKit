@@ -114,8 +114,14 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 
                     var k = m.resultsExtras[y];
 
-                    if (k.selecionado == true)
+                    if (k.selecionado == true) {
+
+                        k.codCred = mdl.codCredenciado;
+                        k.credenciado = mdl.nomeCredenciado;
+                        k.associado = k.portador;
+
                         $scope.listLote.push(k);   
+                    }
                 }
             }            
         }
@@ -142,6 +148,9 @@ function ($scope, $rootScope, $state, Api, ngSelects )
                         var k = m.resultsExtras[y];
 
                         k.selecionado = true;
+                        k.codCred = mdl.codCredenciado;
+                        k.credenciado = mdl.nomeCredenciado;
+                        k.associado = k.portador;
                         
                         $scope.listLote.push(k);
                     }

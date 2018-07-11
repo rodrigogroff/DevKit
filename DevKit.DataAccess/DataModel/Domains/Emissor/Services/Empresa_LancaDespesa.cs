@@ -159,6 +159,7 @@ namespace DataModel
                         nuAno = dt.Year,
                         nuMes = dt.Month,
                         nuNSU = nsu,
+                        nuNSURef = _params.nsuRef,
                         tgSituacao = TipoSitAutorizacao.EmAberto,
                         fkAutOriginal = aut.id,
                         nuIndice = nuParc,

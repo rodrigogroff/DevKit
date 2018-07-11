@@ -30,11 +30,9 @@ namespace DataModel
 
             var cred = db.Credenciado.FirstOrDefault(y => y.nuCodigo.ToString() == _params.codCredenciado);
 
-            //var dtFim = Convert.ToDateTime(_params.dt).AddDays(1);
-
             var aut = db.Autorizacao.Where(y => associadoLst.Contains((long)y.fkAssociadoPortador) &&
                                                 y.fkCredenciado == cred.id &&
-                                                y.nuNSU.ToString() == _params.nsu ).
+                                                y.nuNSU.ToString() == _params.nsu  || y.nuNSURef.ToString() == _params.nsu).
                                                 ToList();
             
             if (aut.Count() > 0)
@@ -54,7 +52,7 @@ namespace DataModel
                 return "";
             }
 
-            return "Erro nos parâmetros";
+            return "Nenhuma autorização encontrada!";
         }
     }
 }

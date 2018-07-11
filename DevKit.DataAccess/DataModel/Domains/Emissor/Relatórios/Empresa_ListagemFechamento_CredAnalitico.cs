@@ -18,6 +18,7 @@ namespace DataModel
                         associado,
                         parcela,
                         vlr,
+                        vlrTotal,
                         vlrCoPart,
                         tuss;
 
@@ -30,6 +31,7 @@ namespace DataModel
                         nsu,
                         nsuRef,
                         portador,
+                        matricula,
                         cpf,                        
                         dtSolicitacao,                        
                         vlr,
@@ -190,6 +192,8 @@ namespace DataModel
                         var secao = secoes.Where(y => y.id == assoc.fkSecao).FirstOrDefault();
                         var proc = procsTuus.Where(y => y.id == aut.fkProcedimento).FirstOrDefault();
 
+                        long _vlrTotal = (long) aut.vrParcela;
+
                         var det = new FechCredAnalDetalhe
                         {
                             serial = serial.ToString(),
@@ -200,7 +204,7 @@ namespace DataModel
                             parcela = aut.nuIndice + " / " + aut.nuTotParcelas,
                             dtSolicitacao = Convert.ToDateTime(aut.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
                             matricula = assoc.nuMatricula.ToString(),
-                            vlr = mon.setMoneyFormat((long)aut.vrParcela),
+                            vlr = mon.setMoneyFormat((long)aut.vrParcela),                            
                             vlrCoPart = mon.setMoneyFormat((long)aut.vrParcelaCoPart),
                             tuss = proc != null ? proc.nuCodTUSS + " - " + proc.stProcedimento : ""
                         };
@@ -229,11 +233,14 @@ namespace DataModel
                                 nsu = autExtra.nuNSU != null ? autExtra.nuNSU.ToString() : "",
                                 nsuRef = autExtra.nuNSURef != null ? autExtra.nuNSURef.ToString() : "",
                                 portador = portador != null ? portador.stName : "",
+                                matricula = portador != null ? portador.nuMatricula.ToString() : "",
                                 cpf = portador.stCPF,
                                 parcela = autExtra.nuIndice + " / " + autExtra.nuTotParcelas,
                                 dtSolicitacao = Convert.ToDateTime(autExtra.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
                                 vlr = mon.setMoneyFormat((long)autExtra.vrParcela),
                             };
+
+                            _vlrTotal += (long) autExtra.vrParcela;
 
                             switch (autExtra.nuTipoAutorizacao)
                             {
@@ -269,6 +276,8 @@ namespace DataModel
 
                             det.resultsExtras.Add(extra);
                         }
+
+                        det.vlrTotal = mon.setMoneyFormat(_vlrTotal);
                     }
 
                     #region - code - 

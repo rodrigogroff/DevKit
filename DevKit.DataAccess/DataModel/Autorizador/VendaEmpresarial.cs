@@ -83,6 +83,8 @@ namespace DataModel
             }
             catch (SystemException ex)
             {
+                var_codResp = "9090";
+
                 Registry("-------------------------");
                 Registry("*ERROR! " + ex.ToString());
                 Registry("-------------------------");
@@ -696,6 +698,9 @@ namespace DataModel
                         output_st_msg = "SITEF";
                 }
             }
+
+            output_st_msg = output_st_msg.PadRight(50, ' ').Substring(0, 50);
+            var_operacaoCartao = var_operacaoCartao.PadRight(10, ' ').Substring(0, 10);
 
             var l_tr = new LOG_Transaco
             {

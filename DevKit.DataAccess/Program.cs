@@ -14,7 +14,9 @@ namespace GetStarted
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Patch?");
+            Console.WriteLine("------------------------");
+            Console.WriteLine("(0.21) Patch?");
+            Console.WriteLine("------------------------");
 
             using (var db = new AutorizadorCNDB())
             {
@@ -24,6 +26,87 @@ namespace GetStarted
 
                 switch (strPatch)
                 {
+                    default:
+                    case "semTrans":
+                        {
+                            var lstParcs = db.T_Parcelas.Where(y => y.fk_log_transacoes == null).ToList();
+
+                            var nsuLst = lstParcs.Select(y => y.nu_nsu).Distinct().ToList();
+
+                            foreach (var nsu in nsuLst)
+                            {
+                                var t_parcOriginal = lstParcs.FirstOrDefault(y => y.nu_nsu == nsu && y.nu_indice == 1);
+
+                                var novaTrans = new LOG_Transaco
+                                {
+                                    dt_transacao = t_parcOriginal.dt_inclusao,
+                                    en_operacao = "0",
+                                    fk_cartao = t_parcOriginal.fk_cartao,
+                                    fk_empresa = t_parcOriginal.fk_empresa,
+                                    fk_loja = t_parcOriginal.fk_loja,
+                                    fk_terminal = t_parcOriginal.fk_terminal,
+                                    nu_cod_erro = 0,
+                                    nu_nsu = t_parcOriginal.nu_nsu,
+                                    nu_nsuOrig = 0,
+                                    nu_parcelas = lstParcs.Count(y => y.nu_nsu == nsu),
+                                    st_doc = "",
+                                    st_msg_transacao = "Corrigida",
+                                    tg_confirmada = '1',
+                                    tg_contabil = '1',
+                                    vr_saldo_disp = 0,
+                                    vr_saldo_disp_tot = 0,
+                                    vr_total = lstParcs.Sum(y => y.vr_valor)
+                                };
+
+                                // --------------------------------------------------------------------------------------
+                                // insere a LOG_TRANSACAO Faltante
+                                // --------------------------------------------------------------------------------------
+
+                                novaTrans.i_unique = Convert.ToDecimal(db.InsertWithIdentity(novaTrans));
+
+                                foreach (var parc in lstParcs.Where (y => y.nu_nsu == nsu))
+                                {
+                                    var parcUpd = db.T_Parcelas.Find(parc.i_unique);
+
+                                    parcUpd.fk_log_transacoes = Convert.ToInt32(novaTrans.i_unique);
+                                    parcUpd.nu_parcela--;
+
+                                    // --------------------------------------------------------------------------------------
+                                    // atualiza nas T_Parcelas a LOG_TRANS correspondente 
+                                    // --------------------------------------------------------------------------------------
+
+                                    db.Update(parcUpd);
+                                }
+
+                                // insere a LOG_FECHAMENTO (só uma) de acordo
+
+                                foreach (var parc in lstParcs.Where(y => y.nu_nsu == nsu && y.nu_indice == 1))
+                                {
+                                    var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == parc.fk_cartao);
+
+                                    var fechNew = new LOG_Fechamento
+                                    {
+                                        dt_compra = parc.dt_inclusao,
+                                        dt_fechamento = DateTime.Now,
+                                        fk_cartao = parc.fk_cartao,
+                                        fk_empresa = parc.fk_empresa,
+                                        fk_loja = parc.fk_loja,
+                                        fk_parcela = Convert.ToInt32(parc.i_unique),
+                                        nu_parcela = 1,
+                                        st_afiliada = "",
+                                        st_ano = "2018",
+                                        st_mes = "06",
+                                        st_cartao = cart.st_empresa + cart.st_matricula + cart.st_titularidade,
+                                        vr_valor = parc.vr_valor
+                                    };
+
+                                    fechNew.i_unique = Convert.ToDecimal(db.InsertWithIdentity(fechNew));
+                                }
+                            }
+
+                            break;
+                        }
+
                     case "TESTEEMAIL":
                         {
                             var param_usuario = "conveynet@conveynet.com.br";

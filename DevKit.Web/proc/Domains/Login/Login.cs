@@ -292,7 +292,7 @@ namespace DevKit.Web
                             var dados = UserName.Split('.');
 
                             string empresa = dados[1].PadLeft(6, '0'),
-                                    usuario = dados[2].PadLeft(6, '0');
+                                    usuario = dados[2];
 
                             var tEmp = (from e in db.T_Empresa
                                         where e.st_empresa == empresa

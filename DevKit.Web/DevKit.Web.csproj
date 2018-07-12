@@ -942,8 +942,8 @@
     <Compile Include="proc\Enums\Tipos\TipoExpedicaoCtrl.cs" />
     <Compile Include="proc\Enums\Tipos\TipoAutorizacaoComboCtrl.cs" />
     <Compile Include="proc\Enums\Tipos\TipoSituacaoCtrl.cs" />
-    <Compile Include="proc\Services\Cache\StartupPreCacheService.cs" />
-    <Compile Include="proc\Services\Cache\CacheClean.cs" />
+    <Compile Include="proc\Infrastructure\StartupPreCacheService.cs" />
+    <Compile Include="proc\Infrastructure\CacheClean.cs" />
     <Compile Include="proc\Definitions\CacheTags.cs" />
     <Compile Include="proc\Infrastructure\Base\Cache\MemCacheController.cs" />
     <Compile Include="proc\Domains\Template\Configuration\SurveyCtrl.cs" />
@@ -985,7 +985,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proc\Domains\System\Login.cs" />
-    <Compile Include="proc\Services\Cache\CacheControlService.cs" />
+    <Compile Include="proc\Infrastructure\CacheControlService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup />

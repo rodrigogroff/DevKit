@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\linq2db.SqlServer.2.1.0\build\linq2db.SqlServer.props" Condition="Exists('..\packages\linq2db.SqlServer.2.1.0\build\linq2db.SqlServer.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,11 +9,12 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ServerISO</RootNamespace>
     <AssemblyName>ServerISO</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,8 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="linq2db, Version=1.10.2.0, Culture=neutral, PublicKeyToken=f19f8aed7feff67e, processorArchitecture=MSIL">
-      <HintPath>..\packages\linq2db.1.10.2\lib\net45\linq2db.dll</HintPath>
+    <Reference Include="linq2db, Version=2.1.0.0, Culture=neutral, PublicKeyToken=e41013125f9e410a, processorArchitecture=MSIL">
+      <HintPath>..\packages\linq2db.2.1.0\lib\net45\linq2db.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="LinqToDB.Templates\DataAnnotations.ttinclude" />
     <None Include="LinqToDB.Templates\DataModel.ttinclude" />
     <None Include="LinqToDB.Templates\EditableObject.ttinclude" />
     <None Include="LinqToDB.Templates\Humanizer.ttinclude" />
@@ -77,9 +80,11 @@
     <None Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.Tools.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.SqlServer.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SqlServer.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.Sybase.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.Tools.ttinclude" />
     <None Include="LinqToDB.Templates\LinqToDB.ttinclude" />
+    <None Include="LinqToDB.Templates\MultipleFiles.ttinclude" />
     <None Include="LinqToDB.Templates\NotifyDataErrorInfo.ttinclude" />
     <None Include="LinqToDB.Templates\NotifyPropertyChanged.ttinclude" />
     <None Include="LinqToDB.Templates\ObsoleteAttributes.ttinclude" />
@@ -99,4 +104,10 @@
     <Content Include="LinqToDB.Templates\CopyMe.SqlServer.tt.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\linq2db.SqlServer.2.1.0\build\linq2db.SqlServer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\linq2db.SqlServer.2.1.0\build\linq2db.SqlServer.props'))" />
+  </Target>
 </Project>

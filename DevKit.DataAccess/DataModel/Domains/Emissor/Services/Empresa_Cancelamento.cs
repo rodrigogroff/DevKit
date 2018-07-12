@@ -21,18 +21,18 @@ namespace DataModel
     {
         public string CancelamentoAutorizacao(DevKitDB db, Cancelamento_PARAMS _params)
         {
-            var emp = db.EmpresaSecao.FirstOrDefault(y => y.id.ToString() == _params.fkSecao);
+            var emp = db.EmpresaSecao.FirstOrDefault(y => y.id == Convert.ToInt64(_params.fkSecao));
 
-            var associadoLst = db.Associado.Where ( y =>  y.fkSecao.ToString() == _params.fkSecao &&
-                                                          y.nuMatricula.ToString() == _params.matricula).
+            var associadoLst = db.Associado.Where ( y =>  y.fkSecao == Convert.ToInt64(_params.fkSecao) &&
+                                                          y.nuMatricula == Convert.ToInt64(_params.matricula)).
                                                           Select ( y=> y.id).
                                                           ToList();
 
-            var cred = db.Credenciado.FirstOrDefault(y => y.nuCodigo.ToString() == _params.codCredenciado);
+            var cred = db.Credenciado.FirstOrDefault(y => y.nuCodigo == Convert.ToInt64(_params.codCredenciado));
 
             var aut = db.Autorizacao.Where(y => associadoLst.Contains((long)y.fkAssociadoPortador) &&
                                                 y.fkCredenciado == cred.id &&
-                                                y.nuNSU.ToString() == _params.nsu  || y.nuNSURef.ToString() == _params.nsu).
+                                                y.nuNSU == Convert.ToInt64(_params.nsu)  || y.nuNSURef == Convert.ToInt64(_params.nsu)).
                                                 ToList();
             
             if (aut.Count() > 0)

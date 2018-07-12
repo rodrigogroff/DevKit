@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace DataModel
 {
@@ -7,7 +8,7 @@ namespace DataModel
 		public User Login(DevKitDB db, string emp, string login, string password)
 		{
             empresa = (from e in db.Empresa
-                       where e.nuEmpresa.ToString() == emp
+                       where e.nuEmpresa == Convert.ToInt64(emp)
                        select e).
                        FirstOrDefault();
             

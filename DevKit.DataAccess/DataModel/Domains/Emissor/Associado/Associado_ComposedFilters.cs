@@ -58,12 +58,12 @@ namespace DataModel
 
             if (!string.IsNullOrEmpty(filter.fkSecao))
                 query = from e in query
-                        where e.fkSecao.ToString() == filter.fkSecao
+                        where e.fkSecao == Convert.ToInt64(filter.fkSecao)
                         select e;
 
             if (!string.IsNullOrEmpty(filter.titularidade))
                 query = from e in query
-                        where e.nuTitularidade.ToString() == filter.titularidade
+                        where e.nuTitularidade == Convert.ToInt64(filter.titularidade)
                         select e;
 
             if (!string.IsNullOrEmpty(filter.cpf))

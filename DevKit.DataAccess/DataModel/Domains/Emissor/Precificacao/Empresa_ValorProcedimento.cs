@@ -42,13 +42,13 @@ namespace DataModel
                         select e;
 
             if (!string.IsNullOrEmpty(filter.codigo))
-                query = query.Where(y => y.nuCodInterno.ToString() == filter.codigo);
+                query = query.Where(y => y.nuCodInterno == Convert.ToInt64(filter.codigo));
 
             if (!string.IsNullOrEmpty(filter.desc))
                 query = query.Where(y => y.stDesc.ToUpper().Contains(filter.desc.ToUpper()));
 
             if (!string.IsNullOrEmpty(filter.ano))
-                query = query.Where(y => y.nuAnoVigencia.ToString() == filter.ano);
+                query = query.Where(y => y.nuAnoVigencia == Convert.ToInt64(filter.ano));
             else
                 query = query.Where(y => y.nuAnoVigencia == DateTime.Now.Year);
 

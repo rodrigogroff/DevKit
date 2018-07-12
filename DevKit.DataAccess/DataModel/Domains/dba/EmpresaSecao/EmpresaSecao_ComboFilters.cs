@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using System;
 using System.Linq;
 
 namespace DataModel
@@ -12,9 +13,11 @@ namespace DataModel
                         select e;
 
             if (!string.IsNullOrEmpty(filter.busca))
-                query = from e in query
-                        where e.nuEmpresa.ToString().Contains(filter.busca)
-                        select e;
+            {
+                //query = from e in query
+                  //      where e.nuEmpresa == Convert.ToInt64(filter.busca)
+                    //    select e;
+            }
 
             query = from e in query orderby e.nuEmpresa select e;
 

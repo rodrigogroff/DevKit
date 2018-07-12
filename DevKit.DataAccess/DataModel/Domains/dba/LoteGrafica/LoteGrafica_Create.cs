@@ -36,7 +36,7 @@ namespace DataModel
                 foreach (var cart in (from e in db.Associado
                                       where e.tgExpedicao == 0
                                       where e.tgStatus == 0
-                                      where e.fkEmpresa.ToString() == emp
+                                      where e.fkEmpresa == Convert.ToInt64(emp)
                                       select e).
                                       ToList())
                 {

@@ -42,15 +42,15 @@ namespace DataModel
 
             var query = from e in db.Autorizacao
                         where e.fkEmpresa == db.currentUser.fkEmpresa
-                        where filter.tgSituacao == null || e.tgSituacao.ToString() == filter.tgSituacao
-                        where filter.nuTipo == null || e.nuTipoAutorizacao.ToString() == filter.nuTipo
+                        where filter.tgSituacao == null || e.tgSituacao == Convert.ToInt64(filter.tgSituacao)
+                        where filter.nuTipo == null || e.nuTipoAutorizacao == Convert.ToInt64(filter.nuTipo)
                         select e;
 
             if (!string.IsNullOrEmpty(filter.tuss))
             {
                 query = from e in query
                         join proc in db.TUSS on e.fkProcedimento equals proc.id
-                        where proc.nuCodTUSS.ToString() == filter.tuss
+                        where proc.nuCodTUSS == Convert.ToInt64(filter.tuss)
                         select e;
             }
 
@@ -82,7 +82,7 @@ namespace DataModel
             {
                 query = from e in query
                         join med in db.Credenciado on e.fkCredenciado equals med.id
-                        where med.nuCodigo.ToString() == filter.codCredenciado
+                        where med.nuCodigo == Convert.ToInt64(filter.codCredenciado)
                         select e;
             }
 
@@ -90,21 +90,21 @@ namespace DataModel
             {
                 query = from e in query
                         join assoc in db.Associado on e.fkAssociado equals assoc.id
-                        where assoc.nuMatricula.ToString() == filter.matricula
+                        where assoc.nuMatricula == Convert.ToInt64(filter.matricula)
                         select e;
             }
 
             if (!string.IsNullOrEmpty(filter.mes))
             {
                 query = from e in query
-                        where e.nuMes.ToString() == filter.mes             
+                        where e.nuMes == Convert.ToInt64(filter.mes)
                         select e;
             }
 
             if (!string.IsNullOrEmpty(filter.ano))
             {
                 query = from e in query
-                        where e.nuAno.ToString() == filter.ano
+                        where e.nuAno == Convert.ToInt64(filter.ano)
                         select e;
             }
 

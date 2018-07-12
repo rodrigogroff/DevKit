@@ -159,7 +159,7 @@ namespace DataModel
 
                         var cfgTuss = procsCredTuus.
                                         Where(y => y.fkCredenciado == cred.id).
-                                        Where(y => y.nuTUSS.ToString() == strTUSs).
+                                        Where(y => y.nuTUSS == fkProc.nuCodTUSS).
                                         FirstOrDefault();
 
                         if (cfgTuss != null)

@@ -19,13 +19,13 @@ namespace DataModel
             foreach (var loteID in lstLotes)
             {
                 var loteUpd = db.LoteGrafica.
-                                Where(y => y.id.ToString() == loteID).
+                                Where(y => y.id == Convert.ToInt64(loteID)).
                                 FirstOrDefault();
 
                 loteUpd.tgAtivo = 1;
 
                 foreach (var cart in (from e in db.LoteGraficaCartao
-                                      where e.fkLoteGrafica.ToString() == loteID
+                                      where e.fkLoteGrafica == Convert.ToInt64(loteID)
                                       select e.fkAssociado).
                                       ToList())
                 {

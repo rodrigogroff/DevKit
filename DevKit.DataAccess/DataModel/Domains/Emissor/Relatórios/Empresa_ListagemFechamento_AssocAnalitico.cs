@@ -108,7 +108,7 @@ namespace DataModel
             var query = from e in db.Associado                        
                         where e.fkEmpresa == db.currentUser.fkEmpresa
                         where e.fkSecao == filter.fkSecao || filter.fkSecao == 0
-                        where filter.mat == null || e.nuMatricula.ToString() == filter.mat
+                        where filter.mat == null || e.nuMatricula == Convert.ToInt64(filter.mat)
                         orderby e.stName
                         select e;
 

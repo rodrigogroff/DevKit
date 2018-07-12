@@ -88,6 +88,8 @@ namespace GetStarted
                     {
                         case "fixAutorizacao":
                             {
+                                var usr = db.User.FirstOrDefault();
+
                                 foreach (var item in db.Autorizacao.ToList())
                                 {
                                     var i = db.Autorizacao.FirstOrDefault(y=> y.id == item.id);
@@ -1442,7 +1444,7 @@ namespace GetStarted
                                     if (matCartao == "")
                                         continue;
 
-                                    var cartTit = db.Associado.FirstOrDefault(y => y.nuMatricula.ToString() == matCartao);
+                                    var cartTit = db.Associado.FirstOrDefault(y => y.nuMatricula == Convert.ToInt64(matCartao));
 
                                     if (cartTit == null)
                                     {

@@ -20,7 +20,7 @@ namespace DataModel
             using (var sw = new StreamWriter(file, false, Encoding.Default))
             {
                 var query = from e in db.LoteGraficaCartao
-                            where e.fkLoteGrafica.ToString() == idLote
+                            where e.fkLoteGrafica == Convert.ToInt64(idLote)
                             select e;
 
                 var lstAssoc = (from e in query

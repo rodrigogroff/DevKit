@@ -23,7 +23,7 @@ namespace DataModel
 
                     foreach (var item in lst)
                     {
-                        var aut = db.Autorizacao.FirstOrDefault(y => y.nuNSU.ToString() == item);
+                        var aut = db.Autorizacao.FirstOrDefault(y => y.nuNSU == Convert.ToInt64(item));
 
                         aut.tgSituacao = Convert.ToInt32(_params.tgSituacaoLote);
 

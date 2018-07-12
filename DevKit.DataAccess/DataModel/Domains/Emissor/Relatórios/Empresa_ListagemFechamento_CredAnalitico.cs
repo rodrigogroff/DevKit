@@ -114,7 +114,7 @@ namespace DataModel
                         join ce in db.CredenciadoEmpresa on e.id equals ce.fkCredenciado
                         where filter.fkEmpresa == null || (filter.fkEmpresa != null && ce.fkEmpresa == filter.fkEmpresa)
                         where filter.fkCredenciado == null || (filter.fkCredenciado != null && e.id == filter.fkCredenciado)
-                        where filter.codCred == null || e.nuCodigo.ToString() == filter.codCred
+                        where filter.codCred == null || e.nuCodigo == Convert.ToInt64(filter.codCred)
                         orderby e.stNome
                         select e;
 

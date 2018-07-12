@@ -28,7 +28,7 @@ namespace DataModel
             if (filter.codigoCred != null && (filter.aut != null && filter.aut == true))
             {
                 var cred = db.Credenciado.
-                            Where(y => y.nuCodigo.ToString() == filter.codigoCred).
+                            Where(y => y.nuCodigo == Convert.ToInt64(filter.codigoCred)).
                             FirstOrDefault();
 
                 lstTUSSCred = db.CredenciadoEmpresaTuss.
@@ -43,14 +43,14 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.busca))
             {
                 query = from e in query
-                        where e.nuCodTUSS.ToString() == filter.busca || e.stProcedimento.Contains(filter.busca)
+                        where e.stProcedimento.Contains(filter.busca)
                         select e;
             }
 
             if (!string.IsNullOrEmpty(filter.codigo))
             {
                 query = from e in query
-                        where e.nuCodTUSS.ToString() == filter.codigo
+                        where e.nuCodTUSS == Convert.ToInt64(filter.codigo)
                         select e;
             }
 

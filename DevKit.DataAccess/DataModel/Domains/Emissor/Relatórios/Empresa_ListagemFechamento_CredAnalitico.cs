@@ -243,6 +243,12 @@ namespace DataModel
 
                             _vlrTotal += (long) autExtra.vrParcela;
 
+                            if (autExtra.nuTipoAutorizacao == 1)
+                            {
+                                extra.vlr = mon.setMoneyFormat((long)autExtra.vrParcela) + " / " + mon.setMoneyFormat((long)autExtra.vrCoPart);
+                                resultCred.totCoPart += (long)autExtra.vrCoPart;
+                            }                                
+
                             switch (autExtra.nuTipoAutorizacao)
                             {
                                 case 1: extra.tipo = "Procedimentos"; break;

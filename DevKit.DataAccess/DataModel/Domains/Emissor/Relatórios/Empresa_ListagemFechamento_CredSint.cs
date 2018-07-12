@@ -145,7 +145,7 @@ namespace DataModel
                 item.pcads = "";
                 item.ncads = "";
                 
-                foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id && (y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null) ).ToList())
+                foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id ).ToList())
                 {
                     found = true;
 
@@ -178,12 +178,7 @@ namespace DataModel
                         }                            
                     }
                 }
-
-                foreach (var aut in auts.Where(y => y.fkCredenciado == cred.id && y.nuTipoAutorizacao > 1).ToList())
-                {
-                    found = true;
-                    totVlr += (long)aut.vrParcela;
-                }
+                                
 
                 long vr = 0;
 

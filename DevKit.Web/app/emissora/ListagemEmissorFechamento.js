@@ -266,10 +266,13 @@ function ($scope, $rootScope, $state, Api, ngSelects )
     
     $scope.show = function (mdl) {
         $scope.camposLanc.selecionado = mdl;
-        if ($scope.camposLanc.tipo == 2) 
+        if ($scope.camposLanc.tipo == 2)
             $scope.camposLanc.valor = mdl.svrNivel1;
-        else if ($scope.camposLanc.tipo == 1) 
+        else if ($scope.camposLanc.tipo == 1) {
             $scope.camposLanc.valor = mdl.svrTotalHMCO;
+            $scope.camposLanc.valorCO = mdl.svrValorCO;
+        }
+            
         else
             $scope.camposLanc.valor = mdl.svrValor;
     }
@@ -277,6 +280,10 @@ function ($scope, $rootScope, $state, Api, ngSelects )
     $scope.confirmarModalLanc = function ()
     {
         $scope.camposLanc.vr_fail = invalidCheck($scope.camposLanc.valor);
+
+        if ($scope.camposLanc.tipo == "1")
+            $scope.camposLanc.vc_co_fail = invalidCheck($scope.camposLanc.valorCO);
+
         $scope.camposLanc.nu_parc_fail = invalidCheck($scope.camposLanc.parcelas);
 
         if ($scope.camposLanc.valor == "0,00")
@@ -285,6 +292,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
         $scope.camposLanc.tipo_desp_fail = $scope.camposLanc.selecionado == undefined;
 
         if ($scope.camposLanc.vr_fail == false &&
+            ($scope.camposLanc.tipo != "1" || ($scope.camposLanc.tipo == "1" && $scope.camposLanc.vc_co_fail == false)) &&
             $scope.camposLanc.nu_parc_fail == false &&
             $scope.camposLanc.tipo_desp_fail == false)
         {
@@ -293,6 +301,7 @@ function ($scope, $rootScope, $state, Api, ngSelects )
             var opcoes = {
                 nsuRef: $scope.camposLanc.nsu,
                 vrValor: $scope.camposLanc.valor,
+                vrValorCO: $scope.camposLanc.valorCO,
                 nuTipo: $scope.camposLanc.tipo,
                 fkPrecificacao: $scope.camposLanc.selecionado.id,
                 nuParcelas: $scope.camposLanc.parcelas

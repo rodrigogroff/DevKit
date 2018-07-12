@@ -15,6 +15,7 @@ namespace DevKit.Web.Controllers
                 matricula = Request.GetQueryStringValue<long?>("matricula", null),
                 credenciado = Request.GetQueryStringValue<long?>("credenciado", null),
                 vrValor = ObtemValor(Request.GetQueryStringValue("vrValor")),
+                vrValorCO = ObtemValor(Request.GetQueryStringValue("vrValorCO")),
                 dataLanc = ObtemData(Request.GetQueryStringValue("dataLanc")),
                 nuTipo = Request.GetQueryStringValue<long?>("nuTipo", null),
                 nsuRef = Request.GetQueryStringValue<long?>("nsuRef", null),

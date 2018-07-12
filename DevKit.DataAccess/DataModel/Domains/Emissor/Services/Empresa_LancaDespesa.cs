@@ -10,6 +10,7 @@ namespace DataModel
         public long? matricula,
                         credenciado,
                         vrValor,
+                        vrValorCO,
                         nuTipo,
                         nsuRef,
                         fkPrecificacao,
@@ -112,7 +113,7 @@ namespace DataModel
 
             var aut = new Autorizacao
             {
-                dtSolicitacao = dt,
+                dtSolicitacao = DateTime.Now,
                 fkAssociado = assoc.id,
                 fkCredenciado = cred.id,
                 fkEmpresa = assoc.fkEmpresa,
@@ -127,7 +128,7 @@ namespace DataModel
                 nuTotParcelas = 1,
                 vrProcedimento = _params.vrValor,
                 vrParcela = _params.vrValor,
-                vrCoPart = 0,
+                vrCoPart = _params.vrValorCO,
                 vrParcelaCoPart = 0,
                 fkAssociadoPortador = assoc.id,
                 fkPrecificacao = _params.fkPrecificacao,
@@ -166,7 +167,7 @@ namespace DataModel
                         nuTotParcelas = aut.nuTotParcelas,
                         vrProcedimento = 0,
                         vrParcela = _params.vrValor / _params.nuParcelas,
-                        vrCoPart = 0,
+                        vrCoPart = _params.vrValorCO / _params.nuParcelas,
                         vrParcelaCoPart = 0,
                         fkAssociadoPortador = aut.fkAssociadoPortador,
                         fkPrecificacao = aut.fkPrecificacao,

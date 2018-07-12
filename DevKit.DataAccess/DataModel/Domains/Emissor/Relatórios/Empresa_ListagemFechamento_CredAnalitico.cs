@@ -251,7 +251,7 @@ namespace DataModel
 
                             switch (autExtra.nuTipoAutorizacao)
                             {
-                                case 1: extra.tipo = "Procedimentos"; break;
+                                case 1: extra.tipo = "Serviços"; break;
                                 case 2: extra.tipo = "Diárias"; break;
                                 case 3: extra.tipo = "Materiais"; break;
                                 case 4: extra.tipo = "Medicamentos"; break;

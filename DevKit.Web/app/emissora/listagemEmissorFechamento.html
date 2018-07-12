@@ -229,7 +229,7 @@
                                         </td>
                                         <td width="20px"></td>
                                         <td valign="top" width="300px">
-                                            Total Procedimentos: R$ <b>{{result.stotExtra_procs}}</b><br />
+                                            Total Serviços: R$ <b>{{result.stotExtra_procs}}</b><br />
                                             Total Diárias: R$ <b>{{result.stotExtra_diaria}}</b><br />
                                             Total Materiais: R$ <b>{{result.stotExtra_mat}}</b><br />
                                             Total Medicamentos: R$ <b>{{result.stotExtra_meds}}</b><br />
@@ -252,14 +252,14 @@
                                         <tr>
                                             <td width="280px" valign="top">
                                                 CNPJ: <b>{{mdl.cnpj}}</b><br />
-                                                Valor total procedimento: <b>{{mdl.stotVlr}}</b><br />
+                                                Valor total serviços: <b>{{mdl.stotVlr}}</b><br />
                                                 Valor total co-participação: <b>{{mdl.stotCoPart}}</b><br />
                                                 Dados bancários:<br /> <b>{{mdl.sDadosBancarios}}</b><br />
                                                 <br />
                                             </td>
                                             <td width="20px"></td>
                                             <td width="200px" valign="top">
-                                                Valor Procedimentos: R$ <b>{{mdl.stotExtra_procs}}</b><br />
+                                                Valor Serviços: R$ <b>{{mdl.stotExtra_procs}}</b><br />
                                                 Valor Diárias: R$ <b>{{mdl.stotExtra_diaria}}</b><br />
                                                 Valor Materiais: R$ <b>{{mdl.stotExtra_mat}}</b><br />
                                                 Valor Medicamentos: R$ <b>{{mdl.stotExtra_meds}}</b><br />
@@ -310,7 +310,7 @@
                                             </tr>
                                             <tr ng-repeat-end="m in mdl.results">
                                                 <td colspan="12" ng-if="m.resultsExtras.length > 0" style="background-color:black">
-                                                    <h4 style="color:white">Serviços deste procedimento</h4>
+                                                    <h4 style="color:white">Serviços extras da autorização principal</h4>
                                                     <table class="table table-hover" style="width:100%">
                                                         <thead>
                                                             <tr>
@@ -708,7 +708,7 @@
                                         <tr height="12px"> </tr>
                                         <tr>
                                             <td width="25px"></td>
-                                            <td width="150px"><b>Cd. Procedimento</b></td>
+                                            <td width="150px"><b>Cd. Serviço</b></td>
                                             <td width="220px">
                                                 <input type="text" class="form-control input-transparent" ng-model="camposLanc.codigo" ng-keyup="$event.keyCode == 13 && searchProc()" />
                                             </td>

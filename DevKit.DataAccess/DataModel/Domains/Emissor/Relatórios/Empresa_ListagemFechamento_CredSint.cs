@@ -214,8 +214,7 @@ namespace DataModel
 
                 if (found)
                 {
-                    var q = auts.Where(y => y.fkCredenciado == cred.id).
-                                 Where (y=> y.tgSituacao == filter.tgSituacao).
+                    var q = auts.Where(y => y.fkCredenciado == cred.id).                               
                                  ToList();
 
                     var q1 = q.Where(y => y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null).ToList();

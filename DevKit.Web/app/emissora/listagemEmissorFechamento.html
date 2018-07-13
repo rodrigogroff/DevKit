@@ -394,15 +394,15 @@
                                     <tr>
                                         <td width="280px" valign="top">
                                             Associados ativos: <b>{{result.totAssocs}}</b><br />
-                                            Credenciados ativos: <b>{{result.totCreds}}</b><br />
-                                            Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
-                                            Total consulta: R$ <b>{{result.stotVlrConsulta}}</b><br />
-                                            Total valor: R$ <b>{{result.stotVlr}}</b><br />
+                                            Credenciados ativos: <b>{{result.totCreds}}</b><br />                                            
+                                            Total: R$ <b>{{result.stotVlr}}</b><br />
+                                            Total consultas: R$ <b>{{result.stotVlrConsulta}}</b><br />
                                             Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
                                             <br />
                                         </td>
                                         <td width="20px"></td>
                                         <td width="280px" valign="top">
+                                            Total Serviços: R$ <b>{{result.stot_Procs}}</b><br />
                                             Total Diárias: R$ <b>{{result.stot_Diaria}}</b><br />
                                             Total Materiais: R$ <b>{{result.stot_Materiais}}</b><br />
                                             Total Medicamentos: R$ <b>{{result.stot_Meds}}</b><br />
@@ -417,13 +417,11 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th style="min-width:100px">Serial</th>
-                                            <th style="min-width:150px">Seção</th>
-                                            <th style="min-width:100px">Matrícula</th>
-                                            <th style="min-width:200px">Nome Associado</th>
+                                            <th style="min-width:60px">Serial</th>                                            
+                                            <th style="min-width:300px">Associado</th>
                                             <th style="min-width:100px">Autorizações</th>
-                                            <th style="min-width:120px">Consulta R$</th>
                                             <th style="min-width:130px">Total R$</th>
+                                            <th style="min-width:120px">Consulta R$</th>                                            
                                             <th style="min-width:130px">Co-part. R$</th>
                                             <th style="min-width:130px">Não cadastrados</th>
                                             <th style="min-width:130px">Diárias</th>
@@ -436,12 +434,10 @@
                                     </thead>
                                     <tr data-ng-repeat="mdl in list">
                                         <td>{{ mdl.serial }}</td>
-                                        <td>{{ mdl.secao }}</td>
-                                        <td>{{ mdl.matricula }}</td>
-                                        <td>{{ mdl.associado }}</td>
+                                        <td>{{ mdl.matricula }} - {{ mdl.associado }}</td>
                                         <td>{{ mdl.qtdAutos }}</td>
-                                        <td>{{ mdl.vlrConsulta }}</td>
                                         <td>{{ mdl.vlrAutos }}</td>
+                                        <td>{{ mdl.vlrConsulta }}</td>                                        
                                         <td>{{ mdl.vlrCoPart }}</td>
                                         <td>{{ mdl.ncads }}</td>
                                         <td>{{ mdl.vlrDiaria }} [{{mdl.qtdDiaria}}]</td>

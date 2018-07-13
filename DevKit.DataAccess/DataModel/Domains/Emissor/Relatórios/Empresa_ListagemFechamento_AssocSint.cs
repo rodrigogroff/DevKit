@@ -8,6 +8,14 @@ namespace DataModel
 {
     public class FechAssocSint
     {
+        public long     _vlrProcs,                        
+                        _vlrDiaria,
+                        _vlrMateriais,
+                        _vlrMeds,
+                        _vlrNM,
+                        _vlrOPME,
+                        _vlrServ;
+
         public string   serial,
                         secao,
                         matricula,
@@ -17,6 +25,7 @@ namespace DataModel
                         vlrAutos,
                         vlrCoPart,
 
+                        vlrProcs,
                         vlrDiaria,
                         vlrMateriais,
                         vlrMeds,
@@ -24,6 +33,7 @@ namespace DataModel
                         vlrOPME,
                         vlrServ,
 
+                        qtdProcs,
                         qtdDiaria,
                         qtdMateriais,
                         qtdMeds,
@@ -43,14 +53,22 @@ namespace DataModel
                     totVlrConsulta = 0,
                     totVlr = 0,
                     totCoPart = 0,
+
+                    _vlrProcs = 0,
+                    _vlrDiaria = 0,
+                    _vlrMateriais = 0,
+                    _vlrMeds = 0,
+                    _vlrNM = 0,
+                    _vlrOPME = 0,
+                    _vlrServ = 0,
+
                     procsNCad = 0;
 
         public string stotVlrConsulta,
                         stotVlr,
                         stotCoPart,
 
-                        // Procedimentos, diária, Materiais,Medicamentos,Não médicos,OPME,Pacote Serviços
-
+                        stot_Procs,
                         stot_Diaria,
                         stot_Materiais,
                         stot_Meds,
@@ -69,7 +87,7 @@ namespace DataModel
             
             var query = from e in db.Associado
                         where e.fkEmpresa == db.currentUser.fkEmpresa
-                        where e.fkSecao == filter.fkSecao || filter.fkSecao == 0
+                        where e.fkSecao == filter.fkSecao 
                         where e.nuTitularidade == 1
                         orderby e.stName
                         select e;
@@ -82,23 +100,22 @@ namespace DataModel
         public void LoaderAssocSint ( DevKitDB db, 
                                       List<Associado> lst,
                                       ListagemFechamentoFilter filter,
-                                      ref EmissorFechamentoAssocSintReport resultado )
+                                      ref EmissorFechamentoAssocSintReport resGeral )
         {
+            var lstIdsSecao = lst.Select(y => y.id).ToList();
+
             var auts = db.Autorizacao.
                         Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
+                        Where( y=> lstIdsSecao.Contains ((long)y.fkAssociado)).
                         Where(y => y.nuMes == filter.mes).
                         Where(y => y.nuAno == filter.ano).
                         Where(y => y.tgSituacao == filter.tgSituacao).
                         ToList();
 
-            resultado.failed = !auts.Any();
+            resGeral.failed = !auts.Any();
 
-            if (resultado.failed)
+            if (resGeral.failed)
                 return;
-
-            var lstTitDeps = db.Associado.
-                                Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
-                                ToList();
 
             var procsCredTuus = db.CredenciadoEmpresaTuss.
                                     Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).
@@ -110,8 +127,8 @@ namespace DataModel
 
             var mon = new money();
 
-            resultado.totCreds = auts.Select(y => y.fkCredenciado).Distinct().Count();
-            resultado.totAssocs = auts.Select(y => y.fkAssociado).Distinct().Count();
+            resGeral.totCreds = auts.Select(y => y.fkCredenciado).Distinct().Count();
+            resGeral.totAssocs = auts.Select(y => y.fkAssociado).Distinct().Count();
 
             var secoes = db.EmpresaSecao.ToList();
 
@@ -119,33 +136,24 @@ namespace DataModel
                                         Where(y => y.nuAno == filter.ano && y.fkEmpresa == db.currentUser.fkEmpresa).
                                         FirstOrDefault();
 
-            resultado.results = new List<FechAssocSint>();
+            resGeral.results = new List<FechAssocSint>();
 
             foreach (var assoc in lst)
             {
-                var tLstTitDeps = lstTitDeps.
-                                    Where(y => y.nuMatricula == assoc.nuMatricula).
-                                    Select (y=> y.id).
-                                    ToList();
-
-                var item = new FechAssocSint
+                var resAssociadoSint = new FechAssocSint
                 {
                     serial = serial.ToString(),
                     secao = secoes.Where (y=>y.id == assoc.fkSecao).Select(y=> y.nuEmpresa + " - " + y.stDesc ).FirstOrDefault(),
                     matricula = assoc.nuMatricula.ToString(),
                     associado = assoc.stName,
-                    qtdAutos = auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString()
+                    qtdAutos = auts.Where(y => y.fkAssociado == assoc.id).Count().ToString()
                 };
 
                 bool found = false;
 
-                long totVlrConsulta = 0, 
-                     totVlr = 0,
-                     totCoPart = 0,
-                     qtConsulta = 0;
+                long totVlrConsulta = 0, qtConsulta = 0;                     
 
-                foreach (var aut in auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado) &&
-                                                    (y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null)).ToList())
+                foreach (var aut in auts.Where(y => y.fkAssociado == assoc.id && (y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null)).ToList())
                 {
                     found = true;
 
@@ -166,102 +174,78 @@ namespace DataModel
                     }
                 }
 
-                for (int t = 1; t <= qtConsulta; ++t)
+                resAssociadoSint.ncads = "";
+                
+                if (found)
                 {
-                    switch (t)
+                    for (int t = 1; t <= qtConsulta; ++t)
                     {
-                        case 1: totVlrConsulta += (long)empConsultaValores.vrPreco1; break;
-                        case 2: totVlrConsulta += (long)empConsultaValores.vrPreco2; break;
-                        case 3: totVlrConsulta += (long)empConsultaValores.vrPreco3; break;
-                        case 4: totVlrConsulta += (long)empConsultaValores.vrPreco4; break;
-                        case 5: totVlrConsulta += (long)empConsultaValores.vrPreco5; break;
-                        case 6: totVlrConsulta += (long)empConsultaValores.vrPreco6; break;
-                        case 7: totVlrConsulta += (long)empConsultaValores.vrPreco7; break;
-                        case 8: totVlrConsulta += (long)empConsultaValores.vrPreco8; break;
-                        case 9: totVlrConsulta += (long)empConsultaValores.vrPreco9; break;
+                        switch (t)
+                        {
+                            case 1: totVlrConsulta += (long)empConsultaValores.vrPreco1; break;
+                            case 2: totVlrConsulta += (long)empConsultaValores.vrPreco2; break;
+                            case 3: totVlrConsulta += (long)empConsultaValores.vrPreco3; break;
+                            case 4: totVlrConsulta += (long)empConsultaValores.vrPreco4; break;
+                            case 5: totVlrConsulta += (long)empConsultaValores.vrPreco5; break;
+                            case 6: totVlrConsulta += (long)empConsultaValores.vrPreco6; break;
+                            case 7: totVlrConsulta += (long)empConsultaValores.vrPreco7; break;
+                            case 8: totVlrConsulta += (long)empConsultaValores.vrPreco8; break;
+                            case 9: totVlrConsulta += (long)empConsultaValores.vrPreco9; break;
+                        }
                     }
-                }
 
-                item.ncads = "";
-                
-                foreach (var aut in auts.Where(y => tLstTitDeps.Contains((long)y.fkAssociado) && y.nuTipoAutorizacao > 1).ToList())
-                {
-                    found = true;
-                    totVlr += (long)aut.vrParcela;                    
-                }
+                    resAssociadoSint.ncads = resAssociadoSint.ncads.Trim().TrimEnd(',');
 
-                if (found)
-                {
-                    item.ncads = item.ncads.Trim().TrimEnd(',');
+                    var q = auts.Where(y => y.fkAssociado == assoc.id).ToList();
 
-                    resultado.totVlrConsulta += totVlrConsulta;
-                    resultado.totVlr += totVlr;
-                    resultado.totCoPart += totCoPart;
+                    var q1 = q.Where(y => y.nuTipoAutorizacao == 1 || y.nuTipoAutorizacao == null).ToList();
+                    var q2 = q.Where(y => y.nuTipoAutorizacao == 2).ToList();
+                    var q3 = q.Where(y => y.nuTipoAutorizacao == 3).ToList();
+                    var q4 = q.Where(y => y.nuTipoAutorizacao == 4).ToList();
+                    var q5 = q.Where(y => y.nuTipoAutorizacao == 5).ToList();
+                    var q6 = q.Where(y => y.nuTipoAutorizacao == 6).ToList();
+                    var q7 = q.Where(y => y.nuTipoAutorizacao == 7).ToList();
 
-                    item.vlrConsulta = mon.setMoneyFormat(totVlrConsulta);
-                    item.vlrAutos = mon.setMoneyFormat(totVlr);
-                    item.vlrCoPart = mon.setMoneyFormat(totCoPart);
-                }
-                
-                long vr = 0;
+                    resAssociadoSint._vlrProcs = q1.Sum(y => (long)y.vrParcela); 
+                    resAssociadoSint.qtdProcs = q1.Count().ToString();
+                    resAssociadoSint._vlrDiaria = q2.Sum(y => (long)y.vrParcela);
+                    resAssociadoSint.qtdDiaria = q2.Count().ToString();
+                    resAssociadoSint._vlrMateriais = q3.Sum(y => (long)y.vrParcela);
+                    resAssociadoSint.qtdMateriais = q3.Count().ToString();
+                    resAssociadoSint._vlrMeds = q4.Sum(y => (long)y.vrParcela);
+                    resAssociadoSint.qtdMeds = q4.Count().ToString();
+                    resAssociadoSint._vlrNM = q5.Sum(y => (long)y.vrParcela);
+                    resAssociadoSint.qtdNM = q5.Count().ToString();
+                    resAssociadoSint._vlrOPME = q6.Sum(y => (long)y.vrParcela);
+                    resAssociadoSint.qtdOPME = q6.Count().ToString();
+                    resAssociadoSint._vlrServ = q7.Sum(y => (long)y.vrParcela);
+                    resAssociadoSint.qtdServ = q7.Count().ToString();
 
-                vr = auts.Where(y => y.nuTipoAutorizacao == 2).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Sum(y => (long)y.vrParcela);
+                    resGeral._vlrProcs += resAssociadoSint._vlrProcs;
+                    resGeral._vlrDiaria += resAssociadoSint._vlrDiaria;
+                    resGeral._vlrMateriais += resAssociadoSint._vlrMateriais;
+                    resGeral._vlrMeds += resAssociadoSint._vlrMeds;
+                    resGeral._vlrNM += resAssociadoSint._vlrNM;
+                    resGeral._vlrOPME += resAssociadoSint._vlrOPME;
+                    resGeral._vlrServ += resAssociadoSint._vlrServ;
 
-                item.vlrDiaria = mon.setMoneyFormat(vr);
-                item.qtdDiaria = auts.Where(y => y.nuTipoAutorizacao == 2).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString();
+                    resGeral.results.Add(resAssociadoSint);
 
-                // ------------------------
-
-                vr = auts.Where(y => y.nuTipoAutorizacao == 3).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Sum(y => (long)y.vrParcela);
-
-                item.vlrMateriais = mon.setMoneyFormat(vr);
-                item.qtdMateriais = auts.Where(y => y.nuTipoAutorizacao == 3).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString();
-
-                // ------------------------
-
-                vr = auts.Where(y => y.nuTipoAutorizacao == 4).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Sum(y => (long)y.vrParcela);
-
-                item.vlrMeds = mon.setMoneyFormat(vr);
-                item.qtdMeds = auts.Where(y => y.nuTipoAutorizacao == 4).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString();
-
-                // ------------------------
-
-                vr = auts.Where(y => y.nuTipoAutorizacao == 5).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Sum(y => (long)y.vrParcela);
-
-                item.vlrNM = mon.setMoneyFormat(vr);
-                item.qtdNM = auts.Where(y => y.nuTipoAutorizacao == 5).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString();
-
-                // ------------------------
-
-                vr = auts.Where(y => y.nuTipoAutorizacao == 6).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Sum(y => (long)y.vrParcela);
-
-                item.vlrOPME = mon.setMoneyFormat(vr);
-                item.qtdOPME = auts.Where(y => y.nuTipoAutorizacao == 6).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString();
-
-                // ------------------------
-
-                vr = auts.Where(y => y.nuTipoAutorizacao == 7).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Sum(y => (long)y.vrParcela);
-
-                item.vlrServ = mon.setMoneyFormat(vr);
-                item.qtdServ = auts.Where(y => y.nuTipoAutorizacao == 7).Where(y => tLstTitDeps.Contains((long)y.fkAssociado)).Count().ToString();
-
-                if (found)
-                {
-                    resultado.results.Add(item);
                     serial++;
-                }                
+                }
             }
 
-            resultado.stotVlrConsulta = mon.setMoneyFormat(resultado.totVlrConsulta);
-            resultado.stotVlr = mon.setMoneyFormat(resultado.totVlr);            
-            resultado.stotCoPart = mon.setMoneyFormat(resultado.totCoPart);
+            resGeral.stotVlrConsulta = mon.setMoneyFormat(resGeral.totVlrConsulta);
+            resGeral.stotVlr = mon.setMoneyFormat(resGeral.totVlr);            
+            resGeral.stotCoPart = mon.setMoneyFormat(resGeral.totCoPart);
 
-            resultado.stot_Diaria = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 2).Sum(y => (long)y.vrParcela));
-            resultado.stot_Materiais = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 3).Sum(y => (long)y.vrParcela));
-            resultado.stot_Meds = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 4).Sum(y => (long)y.vrParcela));
-            resultado.stot_NM = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 5).Sum(y => (long)y.vrParcela));
-            resultado.stot_OPME = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 6).Sum(y => (long)y.vrParcela));
-            resultado.stot_Serv = mon.setMoneyFormat(auts.Where(y => y.nuTipoAutorizacao == 7).Sum(y => (long)y.vrParcela));
+            resGeral.stot_Procs = mon.setMoneyFormat(resGeral._vlrProcs);
+            resGeral.stot_Diaria = mon.setMoneyFormat(resGeral._vlrDiaria);
+            resGeral.stot_Materiais = mon.setMoneyFormat(resGeral._vlrMateriais);
+            resGeral.stot_Meds = mon.setMoneyFormat(resGeral._vlrMeds);
+            resGeral.stot_NM = mon.setMoneyFormat(resGeral._vlrNM );
+            resGeral.stot_OPME = mon.setMoneyFormat(resGeral._vlrOPME);
+            resGeral.stot_Serv = mon.setMoneyFormat(resGeral._vlrServ);
         }
     }
 }

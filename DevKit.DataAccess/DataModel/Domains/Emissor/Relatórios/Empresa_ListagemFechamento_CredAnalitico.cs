@@ -183,6 +183,8 @@ namespace DataModel
 
                     foreach (var autPrincipal in auts_principais)
                     {
+                        hshDup[autPrincipal.id] = true;
+
                         var assoc = lstAssocs.
                                     Where(y => y.id == autPrincipal.fkAssociadoPortador).
                                     FirstOrDefault();

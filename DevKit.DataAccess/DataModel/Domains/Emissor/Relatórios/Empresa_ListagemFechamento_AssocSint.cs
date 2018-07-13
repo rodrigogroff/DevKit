@@ -60,7 +60,8 @@ namespace DataModel
                     _vlrCoPart = 0,
                     _vlrAutos = 0;
 
-        public string   stotVlrConsulta,
+        public string   mesAno,
+                        stotVlrConsulta,
                         stotVlr,
                         stotCoPart,
                         stot_Procs,
@@ -111,6 +112,8 @@ namespace DataModel
 
             if (resGeral.failed)
                 return;
+
+            resGeral.mesAno = filter.mes.ToString().PadLeft(2, '0') + " / " + filter.ano.ToString();
 
             var procsCredTuus = db.CredenciadoEmpresaTuss.
                                     Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).

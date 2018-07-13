@@ -1,6 +1,5 @@
 ﻿using LinqToDB;
 using SyCrafEngine;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,23 +7,24 @@ namespace DataModel
 {
     public class FechAssocSint
     {
-        public long     _vlrProcs,                        
+        public long     _vlrConsulta, 
+                        _vlrAutos,            
+                        _vlrProcs,                        
                         _vlrDiaria,
                         _vlrMateriais,
                         _vlrMeds,
                         _vlrNM,
                         _vlrOPME,
+                        _vlrCoPart,
                         _vlrServ;
 
         public string   serial,
-                        secao,
                         matricula,
                         associado,
                         qtdAutos,
                         vlrConsulta,
                         vlrAutos,
                         vlrCoPart,
-
                         vlrProcs,
                         vlrDiaria,
                         vlrMateriais,
@@ -32,16 +32,13 @@ namespace DataModel
                         vlrNM,
                         vlrOPME,
                         vlrServ,
-
                         qtdProcs,
                         qtdDiaria,
                         qtdMateriais,
                         qtdMeds,
                         qtdNM,
                         qtdOPME,
-                        qtdServ,
-
-                        ncads;
+                        qtdServ;
     }
 
     public class EmissorFechamentoAssocSintReport
@@ -50,10 +47,8 @@ namespace DataModel
 
         public long totCreds = 0,
                     totAssocs = 0,
-                    totVlrConsulta = 0,
-                    totVlr = 0,
-                    totCoPart = 0,
 
+                    _totCoPart = 0,
                     _vlrProcs = 0,
                     _vlrDiaria = 0,
                     _vlrMateriais = 0,
@@ -61,13 +56,13 @@ namespace DataModel
                     _vlrNM = 0,
                     _vlrOPME = 0,
                     _vlrServ = 0,
+                    _vlrConsultas = 0,
+                    _vlrCoPart = 0,
+                    _vlrAutos = 0;
 
-                    procsNCad = 0;
-
-        public string stotVlrConsulta,
+        public string   stotVlrConsulta,
                         stotVlr,
                         stotCoPart,
-
                         stot_Procs,
                         stot_Diaria,
                         stot_Materiais,
@@ -143,7 +138,6 @@ namespace DataModel
                 var resAssociadoSint = new FechAssocSint
                 {
                     serial = serial.ToString(),
-                    secao = secoes.Where (y=>y.id == assoc.fkSecao).Select(y=> y.nuEmpresa + " - " + y.stDesc ).FirstOrDefault(),
                     matricula = assoc.nuMatricula.ToString(),
                     associado = assoc.stName,
                     qtdAutos = auts.Where(y => y.fkAssociado == assoc.id).Count().ToString()
@@ -174,8 +168,6 @@ namespace DataModel
                     }
                 }
 
-                resAssociadoSint.ncads = "";
-                
                 if (found)
                 {
                     for (int t = 1; t <= qtConsulta; ++t)
@@ -193,8 +185,8 @@ namespace DataModel
                             case 9: totVlrConsulta += (long)empConsultaValores.vrPreco9; break;
                         }
                     }
-
-                    resAssociadoSint.ncads = resAssociadoSint.ncads.Trim().TrimEnd(',');
+                    
+                    resAssociadoSint._vlrConsulta = totVlrConsulta;
 
                     var q = auts.Where(y => y.fkAssociado == assoc.id).ToList();
 
@@ -206,7 +198,8 @@ namespace DataModel
                     var q6 = q.Where(y => y.nuTipoAutorizacao == 6).ToList();
                     var q7 = q.Where(y => y.nuTipoAutorizacao == 7).ToList();
 
-                    resAssociadoSint._vlrProcs = q1.Sum(y => (long)y.vrParcela); 
+                    resAssociadoSint._vlrProcs = q1.Sum(y => (long)y.vrParcela);
+                    resAssociadoSint._vlrCoPart = q1.Sum(y => (long)y.vrParcelaCoPart);
                     resAssociadoSint.qtdProcs = q1.Count().ToString();
                     resAssociadoSint._vlrDiaria = q2.Sum(y => (long)y.vrParcela);
                     resAssociadoSint.qtdDiaria = q2.Count().ToString();
@@ -221,6 +214,22 @@ namespace DataModel
                     resAssociadoSint._vlrServ = q7.Sum(y => (long)y.vrParcela);
                     resAssociadoSint.qtdServ = q7.Count().ToString();
 
+                    resAssociadoSint._vlrAutos = resAssociadoSint._vlrConsulta +
+                                                 resAssociadoSint._vlrProcs +
+                                                 resAssociadoSint._vlrDiaria +
+                                                 resAssociadoSint._vlrMateriais +
+                                                 resAssociadoSint._vlrMeds +
+                                                 resAssociadoSint._vlrNM +
+                                                 resAssociadoSint._vlrOPME +
+                                                 resAssociadoSint._vlrServ;
+
+                    resAssociadoSint.vlrAutos = mon.setMoneyFormat(resAssociadoSint._vlrAutos);
+                    resAssociadoSint.vlrConsulta = mon.setMoneyFormat(resAssociadoSint._vlrConsulta);
+                    resAssociadoSint.vlrCoPart = mon.setMoneyFormat(resAssociadoSint._vlrCoPart);
+
+                    resGeral._vlrAutos += resAssociadoSint._vlrAutos;
+                    resGeral._vlrConsultas += resAssociadoSint._vlrConsulta;
+                    resGeral._vlrCoPart += resAssociadoSint._vlrCoPart;
                     resGeral._vlrProcs += resAssociadoSint._vlrProcs;
                     resGeral._vlrDiaria += resAssociadoSint._vlrDiaria;
                     resGeral._vlrMateriais += resAssociadoSint._vlrMateriais;
@@ -235,9 +244,9 @@ namespace DataModel
                 }
             }
 
-            resGeral.stotVlrConsulta = mon.setMoneyFormat(resGeral.totVlrConsulta);
-            resGeral.stotVlr = mon.setMoneyFormat(resGeral.totVlr);            
-            resGeral.stotCoPart = mon.setMoneyFormat(resGeral.totCoPart);
+            resGeral.stotVlr = mon.setMoneyFormat(resGeral._vlrAutos);
+            resGeral.stotVlrConsulta = mon.setMoneyFormat(resGeral._vlrConsultas);
+            resGeral.stotCoPart = mon.setMoneyFormat(resGeral._vlrCoPart);
 
             resGeral.stot_Procs = mon.setMoneyFormat(resGeral._vlrProcs);
             resGeral.stot_Diaria = mon.setMoneyFormat(resGeral._vlrDiaria);

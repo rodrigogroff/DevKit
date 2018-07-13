@@ -151,6 +151,7 @@
                                         </td>
                                         <td width="20px"></td>
                                         <td width="300px" valign="top">
+                                            Total Serviços: R$ <b>{{result.stot_Procs}}</b><br />
                                             Total Diárias: R$ <b>{{result.stot_Diaria}}</b><br />
                                             Total Materiais: R$ <b>{{result.stot_Materiais}}</b><br />
                                             Total Medicamentos: R$ <b>{{result.stot_Meds}}</b><br />
@@ -174,6 +175,7 @@
                                             <th style="min-width:100px">Co-part. R$</th>
                                             <th style="min-width:200px">TUSS PROCEDIMENTOS</th>
                                             <th style="min-width:200px">TUSS NOK</th>
+                                            <th style="min-width:130px">Serviços</th>
                                             <th style="min-width:130px">Diárias</th>
                                             <th style="min-width:130px">Materiais</th>
                                             <th style="min-width:130px">Medicamentos</th>
@@ -189,10 +191,11 @@
                                         <td>{{ mdl.nomeCred }}</td>
                                         <td>{{ mdl.especialidade }}</td>
                                         <td>{{ mdl.qtdAutos }}</td>
-                                        <td>{{ mdl.vlrAutos }}</td>
+                                        <td>{{ mdl.vlrTotal }}</td>
                                         <td>{{ mdl.vlrCoPart }}</td>
                                         <td>{{ mdl.pcads }}</td>
                                         <td>{{ mdl.ncads }}</td>
+                                        <td>{{ mdl.vlrProcs }} [{{mdl.qtdProcs}}]</td>
                                         <td>{{ mdl.vlrDiaria }} [{{mdl.qtdDiaria}}]</td>
                                         <td>{{ mdl.vlrMateriais }} [{{mdl.qtdMateriais}}]</td>
                                         <td>{{ mdl.vlrMeds }} [{{mdl.qtdMeds}}]</td>
@@ -339,6 +342,36 @@
                                                     </table>
                                                 </td>
                                             </tr>                                            
+                                        </table>
+                                    </div>
+
+                                    <div ng-if="mdl.resultsExtras.length > 0">
+                                        <h3>Serviços Avulsos</h3>
+                                        <table class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>NSU</th>
+                                                    <th>Tipo</th>
+                                                    <th>Descrição</th>
+                                                    <th>Solicitação</th>
+                                                    <th>Portador</th>
+                                                    <th>Parcela</th>
+                                                    <th style="min-width:140px">Valor R$</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tr data-ng-repeat="a in mdl.resultsExtras" style="background-color:#0F3D4B">
+                                                <td><input type="checkbox" ng-click="marca(a)" ng-checked="a.selecionado" /></td>
+                                                <td>{{ a.nsu }}</td>
+                                                <td>{{ a.tipo }}</td>
+                                                <td>{{ a.desc }}</td>
+                                                <td>{{ a.dtSolicitacao }}</td>
+                                                <td>{{ a.portador}}<br />CPF: {{ a.cpf }}</td>
+                                                <td>{{ a.parcela }}</td>
+                                                <td>{{ a.vlr }}</td>
+                                                <td><a href="" role="button" title="Editar" ng-click="editarAut(a)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a></td>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>

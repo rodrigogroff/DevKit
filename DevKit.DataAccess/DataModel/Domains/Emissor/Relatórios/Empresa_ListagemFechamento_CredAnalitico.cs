@@ -40,18 +40,17 @@ namespace DataModel
                         desc;
     }
 
-    public class FechCredAnalitico
+    public class FechCredenciadoAnalitico
     {
-        public long     totVlr = 0, 
-                        totCoPart = 0,
-
-                        totExtra_procs = 0,
-                        totExtra_diaria = 0,
-                        totExtra_mat = 0,
-                        totExtra_meds = 0,
-                        totExtra_naomed = 0,
-                        totExtra_opme = 0,
-                        totExtra_pacserv = 0;
+        public long     _totVlr = 0, 
+                        _totCoPart = 0,
+                        _tot_procs = 0,
+                        _tot_diaria = 0,
+                        _tot_mat = 0,
+                        _tot_meds = 0,
+                        _tot_naomed = 0,
+                        _tot_opme = 0,
+                        _tot_pacserv = 0;
 
         public string codCredenciado,
                         nomeCredenciado,
@@ -70,6 +69,7 @@ namespace DataModel
                         stotExtra_pacserv;
 
         public List<FechCredAnalDetalhe> results = new List<FechCredAnalDetalhe>();
+        public List<FechCredAnalDetalheExtra> resultsExtras = new List<FechCredAnalDetalheExtra>();
     }
 
     public class EmissorFechamentoCredAnaliticoReport
@@ -101,7 +101,7 @@ namespace DataModel
                         stotExtra_opme,
                         stotExtra_pacserv;
 
-        public List<FechCredAnalitico> results = new List<FechCredAnalitico>();
+        public List<FechCredenciadoAnalitico> results = new List<FechCredenciadoAnalitico>();
     }
 
     public partial class Empresa
@@ -158,19 +158,19 @@ namespace DataModel
             resultado.totCreds = auts.Select(y => y.fkCredenciado).Distinct().Count();
             resultado.totAssociados = auts.Select(y => y.fkAssociado).Distinct().Count();
 
-            resultado.results = new List<FechCredAnalitico>();
+            resultado.totVlr = 0;
+
+            resultado.results = new List<FechCredenciadoAnalitico>();
 
             foreach (var cred in lst)
             {
                 if (auts.Any(y => y.fkCredenciado == cred.id))
                 {
-                    var resultCred = new FechCredAnalitico
+                    var resultCred = new FechCredenciadoAnalitico
                     {
                         cnpj = cred.stCnpj,
                         codCredenciado = cred.nuCodigo.ToString(),
                         nomeCredenciado = cred.stNome,
-                        totCoPart = 0,
-                        totVlr = 0,
                         sDadosBancarios = "=> Banco: " + cred.stBanco + " Agência " + cred.stAgencia + " Conta " + cred.stConta
                     };
 
@@ -179,53 +179,58 @@ namespace DataModel
                                              OrderBy(y => y.dtSolicitacao).
                                              ToList();
 
-                    foreach (var aut in auts_principais)
+                    var hshDup = new Hashtable();
+
+                    foreach (var autPrincipal in auts_principais)
                     {
                         var assoc = lstAssocs.
-                                    Where(y => y.id == aut.fkAssociadoPortador).
+                                    Where(y => y.id == autPrincipal.fkAssociadoPortador).
                                     FirstOrDefault();
 
                         if (assoc == null)
                             assoc = lstAssocs.
-                                    Where(y => y.id == aut.fkAssociado).
+                                    Where(y => y.id == autPrincipal.fkAssociado).
                                     FirstOrDefault();
 
                         if (filter.fkSecao != assoc.fkSecao)
                             continue;
 
                         var secao = secoes.Where(y => y.id == assoc.fkSecao).FirstOrDefault();
-                        var proc = procsTuus.Where(y => y.id == aut.fkProcedimento).FirstOrDefault();
+                        var proc = procsTuus.Where(y => y.id == autPrincipal.fkProcedimento).FirstOrDefault();
 
-                        long _vlrTotal = (long) aut.vrParcela;
-
-                        var det = new FechCredAnalDetalhe
+                        var itemAutorizado = new FechCredAnalDetalhe
                         {
                             serial = serial.ToString(),
-                            nsu = aut.nuNSU != null ? aut.nuNSU.ToString() : "",
+                            nsu = autPrincipal.nuNSU != null ? autPrincipal.nuNSU.ToString() : "",
                             associado = assoc.stName,
                             cpf = assoc.stCPF,
                             secao = secao.nuEmpresa + " - " + secao.stDesc,
-                            parcela = aut.nuIndice + " / " + aut.nuTotParcelas,
-                            dtSolicitacao = Convert.ToDateTime(aut.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
+                            parcela = autPrincipal.nuIndice + " / " + autPrincipal.nuTotParcelas,
+                            dtSolicitacao = Convert.ToDateTime(autPrincipal.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
                             matricula = assoc.nuMatricula.ToString(),
-                            vlr = mon.setMoneyFormat((long)aut.vrParcela),                            
-                            vlrCoPart = mon.setMoneyFormat((long)aut.vrParcelaCoPart),
+                            vlr = mon.setMoneyFormat((long)autPrincipal.vrParcela),                              
+                            vlrCoPart = mon.setMoneyFormat((long)autPrincipal.vrParcelaCoPart),
+                            vlrTotal = "",
                             tuss = proc != null ? proc.nuCodTUSS + " - " + proc.stProcedimento : ""
                         };
 
-                        resultCred.results.Add(det);
+                        resultCred.results.Add(itemAutorizado);
 
-                        resultCred.totVlr += (long)aut.vrParcela;
-                        resultCred.totCoPart += (long)aut.vrParcelaCoPart;
+                        resultCred._totVlr += (long)autPrincipal.vrParcela;
 
+                        resultCred._tot_procs += (long)autPrincipal.vrParcela;
+                        resultCred._totCoPart += (long)autPrincipal.vrParcelaCoPart;
+                                                
                         var lstExtras = auts.
                                         Where(y => y.fkCredenciado == cred.id).
-                                        Where(y => y.nuNSURef == aut.nuNSU).                                        
+                                        Where(y => y.nuNSURef == autPrincipal.nuNSU).                                        
                                         OrderBy(y => y.dtSolicitacao).
                                         ToList();
 
                         foreach (var autExtra in lstExtras)
                         {
+                            hshDup[autExtra.id] = true;
+
                             var portador = db.Associado.Where(y => y.id == autExtra.fkAssociadoPortador).FirstOrDefault();
 
                             var extra = new FechCredAnalDetalheExtra
@@ -238,16 +243,11 @@ namespace DataModel
                                 cpf = portador.stCPF,
                                 parcela = autExtra.nuIndice + " / " + autExtra.nuTotParcelas,
                                 dtSolicitacao = Convert.ToDateTime(autExtra.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
-                                vlr = mon.setMoneyFormat((long)autExtra.vrParcela),
+                                vlr = mon.setMoneyFormat((long)autExtra.vrParcela),                                
                             };
 
-                            _vlrTotal += (long) autExtra.vrParcela;
-
                             if (autExtra.nuTipoAutorizacao == 1)
-                            {
                                 extra.vlr = mon.setMoneyFormat((long)autExtra.vrParcela) + " / " + mon.setMoneyFormat((long)autExtra.vrCoPart);
-                                resultCred.totCoPart += (long)autExtra.vrCoPart;
-                            }                                
 
                             switch (autExtra.nuTipoAutorizacao)
                             {
@@ -271,46 +271,118 @@ namespace DataModel
                                 case 7: extra.desc = db.SaudeValorPacote.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
                             }
 
-                            resultCred.totVlr += (long)autExtra.vrParcela;
-
                             switch (autExtra.nuTipoAutorizacao)
                             {
-                                case 1: resultCred.totExtra_procs += (long)autExtra.vrParcela; break;
-                                case 2: resultCred.totExtra_diaria += (long)autExtra.vrParcela; break;
-                                case 3: resultCred.totExtra_mat += (long)autExtra.vrParcela; break;
-                                case 4: resultCred.totExtra_meds += (long)autExtra.vrParcela; break;
-                                case 5: resultCred.totExtra_naomed += (long)autExtra.vrParcela; break;
-                                case 6: resultCred.totExtra_opme += (long)autExtra.vrParcela; break;
-                                case 7: resultCred.totExtra_pacserv += (long)autExtra.vrParcela; break;
+                                case 1: resultCred._tot_procs += (long)autExtra.vrParcela;
+                                        resultCred._totCoPart += (long)autExtra.vrParcelaCoPart;
+                                    break;
+
+                                case 2: resultCred._tot_diaria += (long)autExtra.vrParcela; break;
+                                case 3: resultCred._tot_mat += (long)autExtra.vrParcela; break;
+                                case 4: resultCred._tot_meds += (long)autExtra.vrParcela; break;
+                                case 5: resultCred._tot_naomed += (long)autExtra.vrParcela; break;
+                                case 6: resultCred._tot_opme += (long)autExtra.vrParcela; break;
+                                case 7: resultCred._tot_pacserv += (long)autExtra.vrParcela; break;
                             }
 
-                            det.resultsExtras.Add(extra);
+                            resultCred._totVlr += (long)autExtra.vrParcela;
+
+                            itemAutorizado.resultsExtras.Add(extra);
                         }
 
-                        det.vlrTotal = mon.setMoneyFormat(_vlrTotal);
+                        itemAutorizado.vlrTotal = mon.setMoneyFormat(resultCred._totVlr);
                     }
 
-                    resultCred.stotVlr = mon.setMoneyFormat(resultCred.totVlr);
-                    resultCred.stotCoPart = mon.setMoneyFormat(resultCred.totCoPart);
+                    // autorizações extras
 
-                    resultCred.stotExtra_procs = mon.setMoneyFormat(resultCred.totExtra_procs);
-                    resultCred.stotExtra_diaria = mon.setMoneyFormat(resultCred.totExtra_diaria);
-                    resultCred.stotExtra_mat = mon.setMoneyFormat(resultCred.totExtra_mat);
-                    resultCred.stotExtra_meds = mon.setMoneyFormat(resultCred.totExtra_meds);
-                    resultCred.stotExtra_naomed = mon.setMoneyFormat(resultCred.totExtra_naomed);
-                    resultCred.stotExtra_opme = mon.setMoneyFormat(resultCred.totExtra_opme);
-                    resultCred.stotExtra_pacserv = mon.setMoneyFormat(resultCred.totExtra_pacserv);
+                    var lstExtra = auts.Where(y => y.fkCredenciado == cred.id).OrderBy(y => y.dtSolicitacao).ToList();
 
-                    resultado.totVlr += resultCred.totVlr;
-                    resultado.totCoPart += resultCred.totCoPart;
+                    foreach (var autExtra in lstExtra)
+                    {
+                        if (hshDup[autExtra.id] != null)
+                            continue;
 
-                    resultado.totExtra_procs += resultCred.totExtra_procs;
-                    resultado.totExtra_diaria += resultCred.totExtra_diaria;
-                    resultado.totExtra_mat += resultCred.totExtra_mat;
-                    resultado.totExtra_meds += resultCred.totExtra_meds;
-                    resultado.totExtra_naomed += resultCred.totExtra_naomed;
-                    resultado.totExtra_opme += resultCred.totExtra_opme;
-                    resultado.totExtra_pacserv += resultCred.totExtra_pacserv;
+                        var portador = db.Associado.Where(y => y.id == autExtra.fkAssociadoPortador).FirstOrDefault();
+
+                        var extra = new FechCredAnalDetalheExtra
+                        {
+                            serial = serial.ToString(),
+                            nsu = autExtra.nuNSU != null ? autExtra.nuNSU.ToString() : "",
+                            nsuRef = autExtra.nuNSURef != null ? autExtra.nuNSURef.ToString() : "",
+                            portador = portador != null ? portador.stName : "",
+                            matricula = portador != null ? portador.nuMatricula.ToString() : "",
+                            cpf = portador.stCPF,
+                            parcela = autExtra.nuIndice + " / " + autExtra.nuTotParcelas,
+                            dtSolicitacao = Convert.ToDateTime(autExtra.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
+                            vlr = mon.setMoneyFormat((long)autExtra.vrParcela),
+                        };
+
+                        if (autExtra.nuTipoAutorizacao == 1)
+                            extra.vlr = mon.setMoneyFormat((long)autExtra.vrParcela) + " / " + mon.setMoneyFormat((long)autExtra.vrCoPart);
+
+                        switch (autExtra.nuTipoAutorizacao)
+                        {
+                            case null: case 1: extra.tipo = "Serviços"; break;
+                            case 2: extra.tipo = "Diárias"; break;
+                            case 3: extra.tipo = "Materiais"; break;
+                            case 4: extra.tipo = "Medicamentos"; break;
+                            case 5: extra.tipo = "Não médicos"; break;
+                            case 6: extra.tipo = "OPME"; break;
+                            case 7: extra.tipo = "Pacote Serviços"; break;
+                        }
+
+                        switch (autExtra.nuTipoAutorizacao)
+                        {
+                            case null: case 1: extra.desc = db.SaudeValorProcedimento.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 2: extra.desc = db.SaudeValorDiaria.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 3: extra.desc = db.SaudeValorMaterial.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 4: extra.desc = db.SaudeValorMedicamento.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 5: extra.desc = db.SaudeValorNaoMedico.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 6: extra.desc = db.SaudeValorOPME.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                            case 7: extra.desc = db.SaudeValorPacote.Where(y => y.id == autExtra.fkPrecificacao).Select(y => y.nuCodInterno + " - " + y.stDesc).FirstOrDefault(); break;
+                        }
+
+                        switch (autExtra.nuTipoAutorizacao)
+                        {
+                            case null:
+                            case 1:
+                                resultCred._tot_procs += (long)autExtra.vrParcela;
+                                resultCred._totCoPart += (long)autExtra.vrParcelaCoPart;
+                                break;
+
+                            case 2: resultCred._tot_diaria += (long)autExtra.vrParcela; break;
+                            case 3: resultCred._tot_mat += (long)autExtra.vrParcela; break;
+                            case 4: resultCred._tot_meds += (long)autExtra.vrParcela; break;
+                            case 5: resultCred._tot_naomed += (long)autExtra.vrParcela; break;
+                            case 6: resultCred._tot_opme += (long)autExtra.vrParcela; break;
+                            case 7: resultCred._tot_pacserv += (long)autExtra.vrParcela; break;
+                        }
+
+                        resultCred._totVlr += (long)autExtra.vrParcela;
+
+                        resultCred.resultsExtras.Add(extra);
+                    }
+
+                    resultCred.stotVlr = mon.setMoneyFormat(resultCred._totVlr);
+                    resultCred.stotCoPart = mon.setMoneyFormat(resultCred._totCoPart);
+
+                    resultCred.stotExtra_procs = mon.setMoneyFormat(resultCred._tot_procs);
+                    resultCred.stotExtra_diaria = mon.setMoneyFormat(resultCred._tot_diaria);
+                    resultCred.stotExtra_mat = mon.setMoneyFormat(resultCred._tot_mat);
+                    resultCred.stotExtra_meds = mon.setMoneyFormat(resultCred._tot_meds);
+                    resultCred.stotExtra_naomed = mon.setMoneyFormat(resultCred._tot_naomed);
+                    resultCred.stotExtra_opme = mon.setMoneyFormat(resultCred._tot_opme);
+                    resultCred.stotExtra_pacserv = mon.setMoneyFormat(resultCred._tot_pacserv);
+
+                    resultado.totExtra_procs += resultCred._tot_procs;
+                    resultado.totExtra_diaria += resultCred._tot_diaria;
+                    resultado.totExtra_mat += resultCred._tot_mat;
+                    resultado.totExtra_meds += resultCred._tot_meds;
+                    resultado.totExtra_naomed += resultCred._tot_naomed;
+                    resultado.totExtra_opme += resultCred._tot_opme;
+                    resultado.totExtra_pacserv += resultCred._tot_pacserv;
+
+                    resultado.totVlr += resultCred._totVlr;
 
                     resultado.results.Add(resultCred);
                 }

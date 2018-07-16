@@ -30,14 +30,14 @@ namespace DataModel
 
             var cred = db.Credenciado.FirstOrDefault(y => y.nuCodigo == Convert.ToInt64(_params.codCredenciado));
 
-            var aut = db.Autorizacao.Where(y => associadoLst.Contains((long)y.fkAssociadoPortador) &&
+            var listaAuts = db.Autorizacao.Where(y => associadoLst.Contains((long)y.fkAssociadoPortador) &&
                                                 y.fkCredenciado == cred.id &&
                                                 y.nuNSU == Convert.ToInt64(_params.nsu)  || y.nuNSURef == Convert.ToInt64(_params.nsu)).
                                                 ToList();
             
-            if (aut.Count() > 0)
+            if (listaAuts.Count() > 0)
             {
-                foreach (var item in aut)
+                foreach (var item in listaAuts)
                 {
                     var autUpd = db.Autorizacao.FirstOrDefault(y => y.id == item.id);
 

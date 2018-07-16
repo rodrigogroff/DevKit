@@ -145,7 +145,7 @@
                                             Credenciados ativos: <b>{{result.totCreds}}</b><br />
                                             Associados ativos: <b>{{result.totAssociados}}</b><br />
                                             Procedimentos não cadastrados: <b>{{result.procsNCad}}</b><br />
-                                            Total valor: R$ <b>{{result.stotVlr}}</b><br />
+                                            
                                             Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
                                             <br />
                                         </td>
@@ -158,6 +158,8 @@
                                             Total Não medicos: R$ <b>{{result.stot_NM}}</b><br />
                                             Total OPME: R$ <b>{{result.stot_OPME}}</b><br />
                                             Total Pacotes Serv.: R$ <b>{{result.stot_Serv}}</b><br />
+                                            ------------------------------------------------------------<br />
+                                            Total: R$ <b>{{result.stotVlr}}</b><br />
                                             <br />
                                         </td>
                                     </tr>
@@ -397,7 +399,6 @@
                                             Período fechamento: <b>{{result.mesAno}}</b><br />
                                             Associados ativos: <b>{{result.totAssocs}}</b><br />
                                             Credenciados ativos: <b>{{result.totCreds}}</b><br />
-                                            Total: R$ <b>{{result.stotVlr}}</b><br />
                                             Total consultas: R$ <b>{{result.stotVlrConsulta}}</b><br />
                                             Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
                                             <br />
@@ -411,7 +412,8 @@
                                             Total Não medicos: R$ <b>{{result.stot_NM}}</b><br />
                                             Total OPME: R$ <b>{{result.stot_OPME}}</b><br />
                                             Total Pacotes Serv.: R$ <b>{{result.stot_Serv}}</b><br />
-                                            <br />
+                                            ------------------------------------------------------------<br />
+                                            Total: <b>{{result.stotVlr}}</b><br />
                                         </td>
                                     </tr>
                                 </table>
@@ -425,6 +427,7 @@
                                             <th style="min-width:130px">Total R$</th>
                                             <th style="min-width:120px">Consulta R$</th>
                                             <th style="min-width:130px">Co-part. R$</th>
+                                            <th style="min-width:130px">Serviços</th>
                                             <th style="min-width:130px">Diárias</th>
                                             <th style="min-width:130px">Materiais</th>
                                             <th style="min-width:130px">Medicamentos</th>
@@ -437,9 +440,10 @@
                                         <td>{{ mdl.serial }}</td>
                                         <td>{{ mdl.matricula }} - {{ mdl.associado }}</td>
                                         <td>{{ mdl.qtdAutos }}</td>
-                                        <td>{{ mdl.vlrAutos }}</td>
+                                        <td>{{ mdl.vlrGeral }}</td>
                                         <td>{{ mdl.vlrConsulta }}</td>
                                         <td>{{ mdl.vlrCoPart }}</td>
+                                        <td>{{ mdl.vlrProcs }} [{{mdl.qtdProcs}}]</td>
                                         <td>{{ mdl.vlrDiaria }} [{{mdl.qtdDiaria}}]</td>
                                         <td>{{ mdl.vlrMateriais }} [{{mdl.qtdMateriais}}]</td>
                                         <td>{{ mdl.vlrMeds }} [{{mdl.qtdMeds}}]</td>
@@ -463,20 +467,21 @@
                                 <br />
                             </div>
                             <div ng-show="list.length > 0">
-                                <h3>Demonstrativo de fechamento ConveyNET</h3>
+                                <h2>Demonstrativo de fechamento ConveyNET</h2>
                                 <table>
                                     <tr>
                                         <td valign="top" width="300px">
                                             Período fechamento: <b>{{result.mesAno}}</b><br />
                                             Credenciados ativos: <b>{{result.totCreds}}</b><br />
                                             Associados ativos: <b>{{result.totAssociados}}</b><br />
+                                            Total: R$ <b>{{result.stotVlr}}</b><br />
                                             Total consulta: R$ <b>{{result.stotVlrConsulta}}</b><br />
-                                            Total valor: R$ <b>{{result.stotVlr}}</b><br />
                                             Total co-participação: R$ <b>{{result.stotCoPart}}</b><br />
                                             <br />
                                         </td>
                                         <td width="20px"></td>
                                         <td valign="top" width="300px">
+                                            Total Serviços: R$ <b>{{result.stotExtra_procs}}</b><br />
                                             Total Diárias: R$ <b>{{result.stotExtra_diaria}}</b><br />
                                             Total Materiais: R$ <b>{{result.stotExtra_mat}}</b><br />
                                             Total Medicamentos: R$ <b>{{result.stotExtra_meds}}</b><br />
@@ -493,12 +498,13 @@
                                         <tr>
                                             <td width="230px" valign="top">
                                                 CPF: <b>{{mdl.cpf}}</b><br />
-                                                Valor total consulta: <b>{{mdl.stotVlrConsulta}}</b><br />
-                                                Valor total procedimento: <b>{{mdl.stotVlr}}</b><br />
-                                                Valor total co-participação: <b>{{mdl.stotCoPart}}</b><br />
+                                                Valor total: <b>{{mdl.stotVlr}}</b><br />
+                                                Valor consulta: <b>{{mdl.stotVlrConsulta}}</b><br />
+                                                Valor co-participação: <b>{{mdl.stotCoPart}}</b><br />
                                             </td>
                                             <td width="20px"></td>
                                             <td width="230px" valign="top">
+                                                Valor Serviços: R$ <b>{{mdl.stotExtra_procs}}</b><br />
                                                 Valor Diárias: R$ <b>{{mdl.stotExtra_diaria}}</b><br />
                                                 Valor Materiais: R$ <b>{{mdl.stotExtra_mat}}</b><br />
                                                 Valor Medicamentos: R$ <b>{{mdl.stotExtra_meds}}</b><br />
@@ -526,7 +532,6 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="m in mdl.results">
-                                                <td>{{ m.serial }}</td>
                                                 <td>{{ m.nsu }}</td>
                                                 <td>{{ m.dtSolicitacao }}</td>
                                                 <td>{{ m.codCred }} - {{ m.credenciado }}</td>

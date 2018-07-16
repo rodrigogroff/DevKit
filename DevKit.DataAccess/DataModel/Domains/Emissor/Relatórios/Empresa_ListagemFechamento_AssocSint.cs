@@ -8,7 +8,7 @@ namespace DataModel
     public class FechAssocSint
     {
         public long     _vlrConsulta, 
-                        _vlrAutos,            
+                        _vlrGeral,            
                         _vlrProcs,                        
                         _vlrDiaria,
                         _vlrMateriais,
@@ -23,7 +23,7 @@ namespace DataModel
                         associado,
                         qtdAutos,
                         vlrConsulta,
-                        vlrAutos,
+                        vlrGeral,
                         vlrCoPart,
                         vlrProcs,
                         vlrDiaria,
@@ -143,7 +143,6 @@ namespace DataModel
                     serial = serial.ToString(),
                     matricula = assoc.nuMatricula.ToString(),
                     associado = assoc.stName,
-                    qtdAutos = auts.Where(y => y.fkAssociado == assoc.id).Count().ToString()
                 };
 
                 bool found = false;
@@ -173,6 +172,8 @@ namespace DataModel
 
                 if (found)
                 {
+                    resAssociadoSint.qtdAutos = qtConsulta.ToString();
+
                     for (int t = 1; t <= qtConsulta; ++t)
                     {
                         switch (t)
@@ -217,8 +218,7 @@ namespace DataModel
                     resAssociadoSint._vlrServ = q7.Sum(y => (long)y.vrParcela);
                     resAssociadoSint.qtdServ = q7.Count().ToString();
 
-                    resAssociadoSint._vlrAutos = resAssociadoSint._vlrConsulta +
-                                                 resAssociadoSint._vlrProcs +
+                    resAssociadoSint._vlrGeral = resAssociadoSint._vlrProcs +
                                                  resAssociadoSint._vlrDiaria +
                                                  resAssociadoSint._vlrMateriais +
                                                  resAssociadoSint._vlrMeds +
@@ -226,11 +226,18 @@ namespace DataModel
                                                  resAssociadoSint._vlrOPME +
                                                  resAssociadoSint._vlrServ;
 
-                    resAssociadoSint.vlrAutos = mon.setMoneyFormat(resAssociadoSint._vlrAutos);
+                    resAssociadoSint.vlrGeral = mon.setMoneyFormat(resAssociadoSint._vlrGeral);
                     resAssociadoSint.vlrConsulta = mon.setMoneyFormat(resAssociadoSint._vlrConsulta);
                     resAssociadoSint.vlrCoPart = mon.setMoneyFormat(resAssociadoSint._vlrCoPart);
 
-                    resGeral._vlrAutos += resAssociadoSint._vlrAutos;
+                    resAssociadoSint.vlrProcs = mon.setMoneyFormat(resAssociadoSint._vlrProcs);
+                    resAssociadoSint.vlrDiaria = mon.setMoneyFormat(resAssociadoSint._vlrDiaria);
+                    resAssociadoSint.vlrMateriais = mon.setMoneyFormat(resAssociadoSint._vlrMateriais);
+                    resAssociadoSint.vlrMeds  = mon.setMoneyFormat(resAssociadoSint._vlrMeds);
+                    resAssociadoSint.vlrNM = mon.setMoneyFormat(resAssociadoSint._vlrNM);
+                    resAssociadoSint.vlrServ = mon.setMoneyFormat(resAssociadoSint._vlrServ);
+
+                    resGeral._vlrAutos += resAssociadoSint._vlrGeral;
                     resGeral._vlrConsultas += resAssociadoSint._vlrConsulta;
                     resGeral._vlrCoPart += resAssociadoSint._vlrCoPart;
                     resGeral._vlrProcs += resAssociadoSint._vlrProcs;

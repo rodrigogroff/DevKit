@@ -338,11 +338,9 @@
                                                             <td>{{ a.dtSolicitacao }}</td>
                                                             <td>{{ a.portador}}<br />CPF: {{ a.cpf }}</td>
                                                             <td>{{ a.parcela }}</td>
-                                                            <td ng-if="a.nu_tipo==1">{{ a.vlr }} / {{ a.vlrCoPart }} (1)</td>
+                                                            <td ng-if="a.nu_tipo==1">{{ a.vlr }} / {{ a.vlrCoPart }}</td>
                                                             <td ng-if="a.nu_tipo!=1">{{ a.vlr }}</td>
-                                                            <td><a href="" role="button" title="Editar" ng-click="editarAut(a)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a>                                                            
-                                                            {{a}}
-                                                            </td>
+                                                            <td><a href="" role="button" title="Editar" ng-click="editarAut(a)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a></td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -374,7 +372,7 @@
                                                 <td>{{ a.dtSolicitacao }}</td>
                                                 <td>{{ a.portador}}<br />CPF: {{ a.cpf }}</td>
                                                 <td>{{ a.parcela }}</td>
-                                                <td ng-if="a.nu_tipo==1">{{ a.vlr }} / {{ a.vlrCoPart }} (2)</td>
+                                                <td ng-if="a.nu_tipo==1">{{ a.vlr }} / {{ a.vlrCoPart }}</td>
                                                 <td ng-if="a.nu_tipo!=1">{{ a.vlr }}</td>
                                                 <td><a href="" role="button" title="Editar" ng-click="editarAut(a)"><i class="glyphicon glyphicon-edit" style="color:white"></i></a></td>
                                             </tr>

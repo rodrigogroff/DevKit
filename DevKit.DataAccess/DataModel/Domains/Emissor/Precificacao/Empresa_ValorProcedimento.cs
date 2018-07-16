@@ -47,11 +47,6 @@ namespace DataModel
             if (!string.IsNullOrEmpty(filter.desc))
                 query = query.Where(y => y.stDesc.ToUpper().Contains(filter.desc.ToUpper()));
 
-            if (!string.IsNullOrEmpty(filter.ano))
-                query = query.Where(y => y.nuAnoVigencia == Convert.ToInt64(filter.ano));
-            else
-                query = query.Where(y => y.nuAnoVigencia == DateTime.Now.Year);
-
             ret.count = query.Count();
             ret.results = (query.Skip(filter.skip).Take(filter.take)).ToList();
 

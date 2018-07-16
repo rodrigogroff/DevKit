@@ -969,8 +969,7 @@ namespace GetStarted
                                         int currentRow = 2;
 
                                         foreach (var item in db.SaudeValorDiaria.
-                                                    Where(y => y.fkEmpresa == empresa.id &&
-                                                                y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                    Where(y => y.fkEmpresa == empresa.id ).
                                                     ToList())
                                         {
                                             db.Delete(item);
@@ -994,7 +993,6 @@ namespace GetStarted
                                                 db.Insert(new SaudeValorDiaria
                                                 {
                                                     fkEmpresa = empresa.id,
-                                                    nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
                                                     nuCodInterno = Convert.ToInt64(codigo),
                                                     stDesc = desc,
                                                     vrNivel1 = nvl1,
@@ -1065,7 +1063,6 @@ namespace GetStarted
                                                 db.Insert(new SaudeValorMaterial
                                                 {
                                                     fkEmpresa = empresa.id,
-                                                    nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
                                                     nuCodInterno = Convert.ToInt64(codigo),
                                                     stDesc = desc,
                                                     stComercial = nomeCom,
@@ -1091,8 +1088,7 @@ namespace GetStarted
                                         int currentRow = 2;
 
                                         foreach (var item in db.SaudeValorMedicamento.
-                                                    Where(y => y.fkEmpresa == empresa.id &&
-                                                                y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                    Where(y => y.fkEmpresa == empresa.id ).
                                                     ToList())
                                         {
                                             db.Delete(item);
@@ -1137,7 +1133,6 @@ namespace GetStarted
                                                 db.Insert(new SaudeValorMedicamento
                                                 {
                                                     fkEmpresa = empresa.id,
-                                                    nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
                                                     nuCodInterno = Convert.ToInt64(codigo),
                                                     stDesc = desc,
                                                     stComercial = nomeCom,
@@ -1163,8 +1158,7 @@ namespace GetStarted
                                         int currentRow = 2;
 
                                         foreach (var item in db.SaudeValorNaoMedico.
-                                                    Where(y => y.fkEmpresa == empresa.id &&
-                                                                y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                    Where(y => y.fkEmpresa == empresa.id ).
                                                     ToList())
                                         {
                                             db.Delete(item);
@@ -1183,7 +1177,6 @@ namespace GetStarted
                                                 db.Insert(new SaudeValorNaoMedico
                                                 {
                                                     fkEmpresa = empresa.id,
-                                                    nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
                                                     nuCodInterno = Convert.ToInt64(codigo),
                                                     stDesc = desc,
                                                     vrValor = vlr
@@ -1204,8 +1197,7 @@ namespace GetStarted
                                         int currentRow = 2;
 
                                         foreach (var item in db.SaudeValorOPME.
-                                                    Where(y => y.fkEmpresa == empresa.id &&
-                                                                y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                    Where(y => y.fkEmpresa == empresa.id ).
                                                     ToList())
                                         {
                                             db.Delete(item);
@@ -1247,7 +1239,6 @@ namespace GetStarted
                                                 db.Insert(new SaudeValorOPME
                                                 {
                                                     fkEmpresa = empresa.id,
-                                                    nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
                                                     nuCodInterno = Convert.ToInt64(codigo),
                                                     stDesc = desc,
                                                     vrValor = vlr,
@@ -1271,8 +1262,7 @@ namespace GetStarted
                                         int currentRow = 2;
 
                                         foreach (var item in db.SaudeValorPacote.
-                                                    Where(y => y.fkEmpresa == empresa.id &&
-                                                                y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                    Where(y => y.fkEmpresa == empresa.id ).
                                                     ToList())
                                         {
                                             db.Delete(item);
@@ -1291,7 +1281,6 @@ namespace GetStarted
                                                 db.Insert(new SaudeValorPacote
                                                 {
                                                     fkEmpresa = empresa.id,
-                                                    nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
                                                     nuCodInterno = Convert.ToInt64(codigo),
                                                     stDesc = desc,
                                                     vrValor = vlr,
@@ -1312,8 +1301,7 @@ namespace GetStarted
                                         int currentRow = 2;
 
                                         foreach (var item in db.SaudeValorProcedimento.
-                                                    Where(y => y.fkEmpresa == empresa.id &&
-                                                                y.nuAnoVigencia.ToString() == nuAnoAtual).
+                                                    Where(y => y.fkEmpresa == empresa.id ).
                                                     ToList())
                                         {
                                             db.Delete(item);
@@ -1356,7 +1344,6 @@ namespace GetStarted
                                                 db.Insert(new SaudeValorProcedimento
                                                 {
                                                     fkEmpresa = empresa.id,
-                                                    nuAnoVigencia = Convert.ToInt32(nuAnoAtual),
                                                     nuCodInterno = Convert.ToInt64(codigo),
                                                     stDesc = desc,
                                                     vrTotalHMCO = vlrtotal,

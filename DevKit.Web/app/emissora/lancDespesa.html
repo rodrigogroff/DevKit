@@ -260,8 +260,7 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:80px">Código</th>
-                                                <th style="min-width:80px">Ano</th>
+                                                <th style="min-width:80px">Código</th>                                            
                                                 <th style="min-width:600px">Descrição</th>
                                                 <th style="min-width:170px">Valor Total</th>
                                                 <th style="min-width:170px">Porte</th>
@@ -275,8 +274,7 @@
                                             </tr>
                                         </thead>
                                         <tr>
-                                            <td>{{ campos.selecionado.nuCodInterno }}</td>
-                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
+                                            <td>{{ campos.selecionado.nuCodInterno }}</td>                                            
                                             <td>{{ campos.selecionado.stDesc }}</td>
                                             <td>{{ campos.selecionado.svrTotalHMCO }}</td>
                                             <td>{{ campos.selecionado.sfkSaudePorteProcedimento }}</td>
@@ -296,8 +294,7 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:80px">Código</th>
-                                                <th style="min-width:80px">Ano</th>
+                                                <th style="min-width:80px">Código</th>                                                
                                                 <th style="min-width:600px">Descrição</th>
                                                 <th style="min-width:170px">Valor Total</th>
                                                 <th style="min-width:170px">Porte</th>
@@ -312,7 +309,6 @@
                                         </thead>
                                         <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                                             <td>{{ mdl.nuCodInterno }}</td>
-                                            <td>{{ mdl.nuAnoVigencia }}</td>
                                             <td>{{ mdl.stDesc }}</td>
                                             <td>{{ mdl.svrTotalHMCO }}</td>
                                             <td>{{ mdl.sfkSaudePorteProcedimento }}</td>
@@ -370,8 +366,7 @@
                                 <div ng-show="campos.selecionado != undefined">
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
-                                            <tr>
-                                                <th style="min-width:60px">Ano</th>
+                                            <tr>                                                
                                                 <th style="min-width:80px">Código</th>
                                                 <th style="min-width:380px">Descrição</th>
                                                 <th style="min-width:120px">R$ Nível 1</th>
@@ -381,8 +376,7 @@
                                                 <th style="min-width:120px">R$ Nível 5</th>
                                             </tr>
                                         </thead>
-                                        <tr>
-                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
+                                        <tr>                                            
                                             <td>{{ campos.selecionado.nuCodInterno }}</td>
                                             <td>{{ campos.selecionado.stDesc }}</td>
                                             <td>{{ campos.selecionado.svrNivel1 }}</td>
@@ -399,7 +393,6 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano</th>
                                                 <th style="min-width:80px">Código</th>
                                                 <th style="min-width:380px">Descrição</th>
                                                 <th style="min-width:120px">R$ Nível 1</th>
@@ -410,7 +403,6 @@
                                             </tr>
                                         </thead>
                                         <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                            <td>{{ mdl.nuAnoVigencia }}</td>
                                             <td>{{ mdl.nuCodInterno }}</td>
                                             <td>{{ mdl.stDesc }}</td>
                                             <td>{{ mdl.svrNivel1 }}</td>
@@ -467,7 +459,6 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano <br /></th>
                                                 <th style="min-width:80px">Código<br /></th>
                                                 <th style="min-width:200px">Descrição <br /></th>
                                                 <th style="min-width:200px">Descrição <br />Comercial</th>
@@ -479,7 +470,6 @@
                                             </tr>
                                         </thead>
                                         <tr>
-                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
                                             <td>{{ campos.selecionado.nuCodInterno }}</td>
                                             <td>{{ campos.selecionado.stDesc }}</td>
                                             <td>{{ campos.selecionado.stComercial }}</td>
@@ -498,7 +488,6 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano <br /></th>
                                                 <th style="min-width:80px">Código<br /></th>
                                                 <th style="min-width:200px">Descrição <br /></th>
                                                 <th style="min-width:200px">Descrição <br />Comercial</th>
@@ -510,7 +499,6 @@
                                             </tr>
                                         </thead>
                                         <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                            <td>{{ mdl.nuAnoVigencia }}</td>
                                             <td>{{ mdl.nuCodInterno }}</td>
                                             <td>{{ mdl.stDesc }}</td>
                                             <td>{{ mdl.stComercial }}</td>
@@ -569,7 +557,6 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano <br /></th>
                                                 <th style="min-width:80px">Código<br /></th>
                                                 <th style="min-width:200px">Descrição <br /></th>
                                                 <th style="min-width:200px">Descrição <br />Comercial</th>
@@ -581,7 +568,6 @@
                                             </tr>
                                         </thead>
                                         <tr>
-                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
                                             <td>{{ campos.selecionado.nuCodInterno }}</td>
                                             <td>{{ campos.selecionado.stDesc }}</td>
                                             <td>{{ campos.selecionado.stComercial }}</td>
@@ -600,7 +586,6 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano <br /></th>
                                                 <th style="min-width:80px">Código<br /></th>
                                                 <th style="min-width:200px">Descrição <br /></th>
                                                 <th style="min-width:200px">Descrição <br />Comercial</th>
@@ -612,7 +597,6 @@
                                             </tr>
                                         </thead>
                                         <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                            <td>{{ mdl.nuAnoVigencia }}</td>
                                             <td>{{ mdl.nuCodInterno }}</td>
                                             <td>{{ mdl.stDesc }}</td>
                                             <td>{{ mdl.stComercial }}</td>
@@ -672,14 +656,12 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano <br /></th>
                                                 <th style="min-width:80px">Código<br /></th>
                                                 <th style="min-width:200px">Descrição <br /></th>
                                                 <th style="min-width:90px">Valor<br /></th>
                                             </tr>
                                         </thead>
                                         <tr>
-                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
                                             <td>{{ campos.selecionado.nuCodInterno }}</td>
                                             <td>{{ campos.selecionado.stDesc }}</td>
                                             <td>{{ campos.selecionado.svrValor }}</td>
@@ -693,14 +675,12 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano <br /></th>
                                                 <th style="min-width:80px">Código<br /></th>
                                                 <th style="min-width:200px">Descrição <br /></th>
                                                 <th style="min-width:90px">Valor<br /></th>
                                             </tr>
                                         </thead>
                                         <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                            <td>{{ mdl.nuAnoVigencia }}</td>
                                             <td>{{ mdl.nuCodInterno }}</td>
                                             <td>{{ mdl.stDesc }}</td>
                                             <td>{{ mdl.svrValor }}</td>
@@ -754,7 +734,6 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano <br /></th>
                                                 <th style="min-width:80px">Código<br /></th>
                                                 <th style="min-width:200px">Descrição <br /></th>
                                                 <th style="min-width:200px">Classificação <br /></th>
@@ -763,7 +742,6 @@
                                             </tr>
                                         </thead>
                                         <tr>
-                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
                                             <td>{{ campos.selecionado.nuCodInterno }}</td>
                                             <td>{{ campos.selecionado.stDesc }}</td>
                                             <td>{{ campos.selecionado.sfkClassificacao }}</td>
@@ -779,7 +757,6 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano <br /></th>
                                                 <th style="min-width:80px">Código<br /></th>
                                                 <th style="min-width:200px">Descrição <br /></th>
                                                 <th style="min-width:200px">Classificação <br /></th>
@@ -788,7 +765,6 @@
                                             </tr>
                                         </thead>
                                         <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                            <td>{{ mdl.nuAnoVigencia }}</td>
                                             <td>{{ mdl.nuCodInterno }}</td>
                                             <td>{{ mdl.stDesc }}</td>
                                             <td>{{ mdl.sfkClassificacao }}</td>
@@ -844,14 +820,12 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano</th>
                                                 <th style="min-width:80px">Código</th>
                                                 <th style="min-width:600px">Descrição</th>
                                                 <th style="min-width:90px">Valor</th>
                                             </tr>
                                         </thead>
                                         <tr>
-                                            <td>{{ campos.selecionado.nuAnoVigencia }}</td>
                                             <td>{{ campos.selecionado.nuCodInterno }}</td>
                                             <td>{{ campos.selecionado.stDesc }}</td>
                                             <td>{{ campos.selecionado.svrValor }}</td>
@@ -865,14 +839,12 @@
                                     <table class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="min-width:60px">Ano</th>
                                                 <th style="min-width:80px">Código</th>
                                                 <th style="min-width:600px">Descrição</th>
                                                 <th style="min-width:90px">Valor</th>
                                             </tr>
                                         </thead>
                                         <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                            <td>{{ mdl.nuAnoVigencia }}</td>
                                             <td>{{ mdl.nuCodInterno }}</td>
                                             <td>{{ mdl.stDesc }}</td>
                                             <td>{{ mdl.svrValor }}</td>

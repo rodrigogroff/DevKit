@@ -47,6 +47,7 @@ angular.module('app.services', ['ngResource'])
         Especialidade: $resource('api/especialidade/:id', {}, opcoes),
         TUSS: $resource('api/tuss/:id', {}, opcoes),
         ConfigSenha: $resource('api/configsenha/:id', {}, opcoes),
+        EmissorFechamentoEdicaoGuia: $resource('api/emissorfechamentoedicaoguia/:id', {}, opcoes),
         EmissorFechamentoOper: $resource('api/emissorfechamentooper/:id', {}, opcoes),
 		Profile: $resource('api/profile/:id', {}, opcoes),
         Permission: $resource('api/permission/:id', {}, opcoes),

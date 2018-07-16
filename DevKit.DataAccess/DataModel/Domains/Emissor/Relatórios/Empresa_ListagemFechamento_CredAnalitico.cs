@@ -9,14 +9,16 @@ namespace DataModel
 {
     public class FechCredAnalDetalhe
     {
-        public string   serial, 
-                        nsu,
+        public long __id = 0;
+
+        public string   nsu,
                         dtSolicitacao, 
                         cpf,
                         secao,
                         matricula,
                         associado,
                         parcela,
+                        nu_tipo,
                         vlr,
                         vlrTotal,
                         vlrCoPart,
@@ -27,16 +29,19 @@ namespace DataModel
 
     public class FechCredAnalDetalheExtra
     {
-        public string serial,
-                        nsu,
+        public long __id = 0;
+
+        public string   nsu,
                         nsuRef,
                         portador,
                         matricula,
                         cpf,                        
                         dtSolicitacao,                        
                         vlr,
+                        vlrCoPart,
                         parcela,
                         tipo,
+                        nu_tipo,
                         desc;
     }
 
@@ -145,8 +150,6 @@ namespace DataModel
 
             var mon = new money();
 
-            int serial = 1;
-
             var procsCredTuus = db.CredenciadoEmpresaTuss.Where(y => y.fkEmpresa == db.currentUser.fkEmpresa).ToList();
             var procsTuus = db.TUSS.ToList();
             var lstEspecs = db.Especialidade.ToList();
@@ -202,7 +205,7 @@ namespace DataModel
 
                         var itemAutorizado = new FechCredAnalDetalhe
                         {
-                            serial = serial.ToString(),
+                            __id = autPrincipal.id,
                             nsu = autPrincipal.nuNSU != null ? autPrincipal.nuNSU.ToString() : "",
                             associado = assoc.stName,
                             cpf = assoc.stCPF,
@@ -213,7 +216,8 @@ namespace DataModel
                             vlr = mon.setMoneyFormat((long)autPrincipal.vrParcela),                              
                             vlrCoPart = mon.setMoneyFormat((long)autPrincipal.vrParcelaCoPart),
                             vlrTotal = "",
-                            tuss = proc != null ? proc.nuCodTUSS + " - " + proc.stProcedimento : ""
+                            tuss = proc != null ? proc.nuCodTUSS + " - " + proc.stProcedimento : "",
+                            nu_tipo = "1"
                         };
 
                         resultCred.results.Add(itemAutorizado);
@@ -237,7 +241,7 @@ namespace DataModel
 
                             var extra = new FechCredAnalDetalheExtra
                             {
-                                serial = serial.ToString(),
+                                __id = autExtra.id,
                                 nsu = autExtra.nuNSU != null ? autExtra.nuNSU.ToString() : "",
                                 nsuRef = autExtra.nuNSURef != null ? autExtra.nuNSURef.ToString() : "",
                                 portador = portador != null ? portador.stName : "",
@@ -245,11 +249,10 @@ namespace DataModel
                                 cpf = portador.stCPF,
                                 parcela = autExtra.nuIndice + " / " + autExtra.nuTotParcelas,
                                 dtSolicitacao = Convert.ToDateTime(autExtra.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
-                                vlr = mon.setMoneyFormat((long)autExtra.vrParcela),                                
+                                vlr = mon.setMoneyFormat((long)autExtra.vrParcela),
+                                vlrCoPart = mon.setMoneyFormat((long)autExtra.vrParcelaCoPart),
+                                nu_tipo = autExtra.nuTipoAutorizacao.ToString(),
                             };
-
-                            if (autExtra.nuTipoAutorizacao == 1)
-                                extra.vlr = mon.setMoneyFormat((long)autExtra.vrParcela) + " / " + mon.setMoneyFormat((long)autExtra.vrCoPart);
 
                             switch (autExtra.nuTipoAutorizacao)
                             {
@@ -308,7 +311,7 @@ namespace DataModel
 
                         var extra = new FechCredAnalDetalheExtra
                         {
-                            serial = serial.ToString(),
+                            __id = autExtra.id,
                             nsu = autExtra.nuNSU != null ? autExtra.nuNSU.ToString() : "",
                             nsuRef = autExtra.nuNSURef != null ? autExtra.nuNSURef.ToString() : "",
                             portador = portador != null ? portador.stName : "",
@@ -317,14 +320,15 @@ namespace DataModel
                             parcela = autExtra.nuIndice + " / " + autExtra.nuTotParcelas,
                             dtSolicitacao = Convert.ToDateTime(autExtra.dtSolicitacao).ToString("dd/MM/yyyy hh:mm"),
                             vlr = mon.setMoneyFormat((long)autExtra.vrParcela),
+                            nu_tipo = autExtra.nuTipoAutorizacao.ToString()
                         };
-
-                        if (autExtra.nuTipoAutorizacao == 1)
-                            extra.vlr = mon.setMoneyFormat((long)autExtra.vrParcela) + " / " + mon.setMoneyFormat((long)autExtra.vrCoPart);
 
                         switch (autExtra.nuTipoAutorizacao)
                         {
-                            case null: case 1: extra.tipo = "Serviços"; break;
+                            case null: case 1:  extra.tipo = "Serviços";
+                                                extra.vlrCoPart = mon.setMoneyFormat((long)autExtra.vrParcelaCoPart);
+                                                break;
+
                             case 2: extra.tipo = "Diárias"; break;
                             case 3: extra.tipo = "Materiais"; break;
                             case 4: extra.tipo = "Medicamentos"; break;

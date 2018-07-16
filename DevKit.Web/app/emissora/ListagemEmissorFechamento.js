@@ -76,6 +76,34 @@ function ($scope, $rootScope, $state, Api, ngSelects )
 			$scope.loading = false;
 		});
     }
+    
+    $scope.editarAut = function (guia) {        
+        $scope.campos.guiaEdicao = guia;
+        $scope.editarValores = true;
+    }
+
+    $scope.cancelarEdicao = function () {
+        $scope.editarValores = false;
+    }
+
+    $scope.confirmaEdicao = function () {
+
+        $scope.loading = true;
+
+        var opcoes = {
+            idGuia: $scope.campos.guiaEdicao.__id,
+            vlr: $scope.campos.guiaEdicao.vlr,
+            vlrCoPart: $scope.campos.guiaEdicao.vlrCoPart,            
+        };
+
+        $scope.editarValores = false;
+
+        Api.EmissorFechamentoEdicaoGuia.listPage(opcoes, function (data) {
+            toastr.success('Guia editada com sucesso!', 'Sistema');
+            $scope.search();
+            $scope.loading = false;            
+        });
+    }
 
     $scope.searchCredSelect = function (m) {
 

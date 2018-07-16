@@ -156,6 +156,7 @@
     <Compile Include="DataModel\Domains\Emissor\Precificacao\Empresa_ValorDiaria.cs" />
     <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemFechamento_AssocSint.cs" />
     <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemFechamento_AssocAnalitico.cs" />
+    <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemFechamento_EdicaoGuia.cs" />
     <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemFechamento_CredAnalitico.cs" />
     <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemFechamento_CredSint.cs" />
     <Compile Include="DataModel\Domains\Emissor\Relatórios\Empresa_ListagemAutorizacao.cs" />

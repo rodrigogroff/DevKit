@@ -840,7 +840,6 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th style="min-width:80px">Código</th>
-                                                                    <th style="min-width:80px">Ano</th>
                                                                     <th style="min-width:600px">Descrição</th>
                                                                     <th style="min-width:170px">Valor Total</th>
                                                                     <th style="min-width:170px">Porte</th>
@@ -850,7 +849,6 @@
                                                             </thead>
                                                             <tr>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.nuCodInterno }}</span></td>
-                                                                <td><span style="color:black">{{ camposLanc.selecionado.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.svrTotalHMCO }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.sfkSaudePorteProcedimento }}</span></td>
@@ -866,7 +864,6 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th style="min-width:80px">Código</th>
-                                                                    <th style="min-width:80px">Ano</th>
                                                                     <th style="min-width:600px">Descrição</th>
                                                                     <th style="min-width:170px">Valor HM</th>
                                                                     <th style="min-width:170px">Valor CO</th>
@@ -875,7 +872,6 @@
                                                             </thead>
                                                             <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">
                                                                 <td><span style="color:black">{{ mdl.nuCodInterno }}</span></td>
-                                                                <td><span style="color:black">{{ mdl.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.svrValorHM }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.svrValorCO }}</span></td>
@@ -924,7 +920,6 @@
                                                         <table class="table table-hover" style="width:100%;color:black">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="min-width:60px">Ano</th>
                                                                     <th style="min-width:80px">Código</th>
                                                                     <th style="min-width:380px">Descrição</th>
                                                                     <th style="min-width:120px">R$ Nível 1</th>
@@ -935,7 +930,6 @@
                                                                 </tr>
                                                             </thead>
                                                             <tr>
-                                                                <td><span style="color:black">{{ camposLanc.selecionado.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.svrNivel1 }}</span></td>
@@ -951,8 +945,7 @@
                                                         <br />
                                                         <table class="table table-hover" style="width:100%;color:black">
                                                             <thead>
-                                                                <tr>
-                                                                    <th style="min-width:60px">Ano</th>
+                                                                <tr>                                                                    
                                                                     <th style="min-width:80px">Código</th>
                                                                     <th style="min-width:380px">Descrição</th>
                                                                     <th style="min-width:120px">R$ Nível 1</th>
@@ -962,8 +955,7 @@
                                                                     <th style="min-width:120px">R$ Nível 5</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">
-                                                                <td><span style="color:black">{{ mdl.nuAnoVigencia }}</span></td>
+                                                            <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">                                                                
                                                                 <td><span style="color:black">{{ mdl.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.svrNivel1 }}</span></td>
@@ -1015,8 +1007,7 @@
                                                     <div ng-show="listLanc.length > 0 && camposLanc.selecionado != undefined">
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
-                                                                <tr>
-                                                                    <th style="min-width:60px">Ano <br /></th>
+                                                                <tr>                                                                    
                                                                     <th style="min-width:80px">Código<br /></th>
                                                                     <th style="min-width:200px">Descrição <br /></th>
                                                                     <th style="min-width:200px">Descrição <br />Comercial</th>
@@ -1027,8 +1018,7 @@
                                                                     <th style="min-width:90px">Valor<br /></th>
                                                                 </tr>
                                                             </thead>
-                                                            <tr>
-                                                                <td><span style="color:black">{{ camposLanc.selecionado.nuAnoVigencia }}</span></td>
+                                                            <tr>                                                                
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.stComercial }}</span></td>
@@ -1047,7 +1037,6 @@
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="min-width:60px">Ano <br /></th>
                                                                     <th style="min-width:80px">Código<br /></th>
                                                                     <th style="min-width:200px">Descrição <br /></th>
                                                                     <th style="min-width:200px">Descrição <br />Comercial</th>
@@ -1059,7 +1048,6 @@
                                                                 </tr>
                                                             </thead>
                                                             <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">
-                                                                <td><span style="color:black">{{ mdl.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.stComercial }}</span></td>
@@ -1114,7 +1102,6 @@
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="min-width:60px">Ano <br /></th>
                                                                     <th style="min-width:80px">Código<br /></th>
                                                                     <th style="min-width:200px">Descrição <br /></th>
                                                                     <th style="min-width:200px">Descrição <br />Comercial</th>
@@ -1126,7 +1113,6 @@
                                                                 </tr>
                                                             </thead>
                                                             <tr>
-                                                                <td><span style="color:black">{{ camposLanc.selecionado.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.stComercial }}</span></td>
@@ -1145,7 +1131,6 @@
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="min-width:60px">Ano <br /></th>
                                                                     <th style="min-width:80px">Código<br /></th>
                                                                     <th style="min-width:200px">Descrição <br /></th>
                                                                     <th style="min-width:200px">Descrição <br />Comercial</th>
@@ -1157,7 +1142,6 @@
                                                                 </tr>
                                                             </thead>
                                                             <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">
-                                                                <td><span style="color:black">{{ mdl.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.stComercial }}</span></td>
@@ -1213,14 +1197,12 @@
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="min-width:60px">Ano <br /></th>
                                                                     <th style="min-width:80px">Código<br /></th>
                                                                     <th style="min-width:200px">Descrição <br /></th>
                                                                     <th style="min-width:90px">Valor<br /></th>
                                                                 </tr>
                                                             </thead>
                                                             <tr>
-                                                                <td><span style="color:black">{{ camposLanc.selecionado.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.svrValor }}</span></td>
@@ -1234,14 +1216,12 @@
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="min-width:60px">Ano <br /></th>
                                                                     <th style="min-width:80px">Código<br /></th>
                                                                     <th style="min-width:200px">Descrição <br /></th>
                                                                     <th style="min-width:90px">Valor<br /></th>
                                                                 </tr>
                                                             </thead>
                                                             <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">
-                                                                <td><span style="color:black">{{ mdl.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.svrValor }}</span></td>
@@ -1291,7 +1271,6 @@
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="min-width:60px">Ano <br /></th>
                                                                     <th style="min-width:80px">Código<br /></th>
                                                                     <th style="min-width:200px">Descrição <br /></th>
                                                                     <th style="min-width:200px">Classificação <br /></th>
@@ -1300,7 +1279,6 @@
                                                                 </tr>
                                                             </thead>
                                                             <tr>
-                                                                <td><span style="color:black">{{ camposLanc.selecionado.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.sfkClassificacao }}</span></td>
@@ -1315,8 +1293,7 @@
                                                         <br />
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
-                                                                <tr>
-                                                                    <th style="min-width:60px">Ano <br /></th>
+                                                                <tr>                                                                    
                                                                     <th style="min-width:80px">Código<br /></th>
                                                                     <th style="min-width:200px">Descrição <br /></th>
                                                                     <th style="min-width:200px">Classificação <br /></th>
@@ -1324,8 +1301,7 @@
                                                                     <th style="min-width:90px">Valor<br /></th>
                                                                 </tr>
                                                             </thead>
-                                                            <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">
-                                                                <td><span style="color:black">{{ mdl.nuAnoVigencia }}</span></td>
+                                                            <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">                                                                
                                                                 <td><span style="color:black">{{ mdl.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.sfkClassificacao }}</span></td>
@@ -1377,14 +1353,12 @@
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="min-width:60px">Ano</th>
                                                                     <th style="min-width:80px">Código</th>
                                                                     <th style="min-width:600px">Descrição</th>
                                                                     <th style="min-width:90px">Valor</th>
                                                                 </tr>
                                                             </thead>
                                                             <tr>
-                                                                <td><span style="color:black">{{ camposLanc.selecionado.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ camposLanc.selecionado.svrValor }}</span></td>
@@ -1398,14 +1372,12 @@
                                                         <table class="table table-hover" style="width:100%">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="min-width:60px">Ano</th>
                                                                     <th style="min-width:80px">Código</th>
                                                                     <th style="min-width:600px">Descrição</th>
                                                                     <th style="min-width:90px">Valor</th>
                                                                 </tr>
                                                             </thead>
                                                             <tr ng-click="show(mdl)" data-ng-repeat="mdl in listLanc">
-                                                                <td><span style="color:black">{{ mdl.nuAnoVigencia }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.nuCodInterno }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.stDesc }}</span></td>
                                                                 <td><span style="color:black">{{ mdl.svrValor }}</span></td>

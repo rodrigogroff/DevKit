@@ -680,7 +680,7 @@ public partial class ClientHandler
                                         var Iso430 = new ISO8583
                                         {
                                             codigo = "430",
-                                            codResposta = "00",
+                                            codResposta = v.var_codResp,
                                             nsuOrigem = regIso.nsuOrigem,
                                             valor = regIso.valor,
                                             terminal = regIso.terminal,

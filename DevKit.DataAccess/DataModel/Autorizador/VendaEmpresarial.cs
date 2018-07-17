@@ -118,7 +118,7 @@ namespace DataModel
 
             var_nu_nsuAtual = Context.NONE;
             var_nu_nsuEntidade = Context.NONE;
-            var_nu_nsuOrig = Context.NONE;
+            //var_nu_nsuOrig = Context.NONE;
             var_nu_nsuEntOrig = Context.NONE;
             var_vr_total = input_cont_pe.vr_valor;
             var_nu_parcelas = input_cont_pe.nu_parcelas;
@@ -375,7 +375,27 @@ namespace DataModel
                     Registry("(15) T_Cartao => " + _id);
                     lstCartoes.Add(_id);
                 }
-                    
+
+                // verifica se a soma dá o valor total
+                long t_testeValor = 0;
+
+                for (int t = 1, index_pos = 0; t <= tmp_nu_parc; ++t)
+                {
+                    t_testeValor += Convert.ToInt64(valoresParcelados.Substring(index_pos, 12));
+                    index_pos += 12;
+                }
+
+                Registry("(15.5) t_testeValor " + t_testeValor);
+                Registry("(15.5) vr_valor " + vr_valor);
+
+                if (t_testeValor != vr_valor)
+                {
+                    Registry("(15.5!) Parcelas com erro!!! ");
+
+                    var_codResp = "0517";
+                    return false;
+                }
+
                 for (int t = 1, index_pos = 0; t <= tmp_nu_parc; ++t)
                 {
                     long valor_unit_parc = Convert.ToInt64(valoresParcelados.Substring(index_pos, 12));
@@ -716,7 +736,7 @@ namespace DataModel
                 en_operacao = var_operacaoCartao,
                 st_msg_transacao = output_st_msg,
                 fk_loja = term != null ? (int)term.fk_loja : (int?)null,                
-                st_doc = st_doc
+                st_doc = st_doc,                
             };
 
             if (var_codResp != "0000")

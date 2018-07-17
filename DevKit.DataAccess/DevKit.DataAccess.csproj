@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="DataModel\Autorizador\Base.cs" />
     <Compile Include="DataModel\Autorizador\Cancelamento.cs" />
+    <Compile Include="DataModel\Autorizador\Desfazimento.cs" />
     <Compile Include="DataModel\Autorizador\Confirmacao.cs" />
     <Compile Include="DataModel\Autorizador\DTO.cs" />
     <Compile Include="DataModel\Autorizador\VendaEmpresarial.cs" />

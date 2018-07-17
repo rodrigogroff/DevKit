@@ -423,6 +423,8 @@ public partial class ClientHandler
                             {
                                 #region - processa venda normal - 
 
+                                bFinaliza = true;
+
                                 using (var db = new AutorizadorCNDB())
                                 {
                                     #region - monta regras -
@@ -439,6 +441,8 @@ public partial class ClientHandler
 
                                     v.input_cont_pe.st_codLoja = regIso.codLoja;
                                     v.input_cont_pe.st_terminal = regIso.terminal;
+
+                                    v.var_nu_nsuOrig = regIso.nsuOrigem;
 
                                     if (regIso.codProcessamento == "002000")
                                     {
@@ -486,12 +490,13 @@ public partial class ClientHandler
 
                                     enviaDadosEXPRESS(Iso210.registro);
 
+                                    if (Iso210.codResposta == "00")
+                                        bFinaliza = false; // continua depois via 202
+
                                     #endregion
                                 }
-
-                                #endregion
-
-                                bFinaliza = false; // continua depois via 202
+                                
+                                #endregion                                
                             }
 
                             #endregion
@@ -559,7 +564,7 @@ public partial class ClientHandler
 
                                 if (codigoIso == "0402")
                                 {
-                                    #region - cancelamento -
+                                    #region - erro cancelamento -
 
                                     var isoRegistro = new ISO8583
                                     {
@@ -579,7 +584,7 @@ public partial class ClientHandler
                                 }
                                 else
                                 {
-                                    #region - desfazimento -
+                                    #region - erro desfazimento -
                                     
                                     var Iso430 = new ISO8583
                                     {
@@ -658,7 +663,38 @@ public partial class ClientHandler
                                     #endregion
                                 }
                                 else
-                                    Log("Desfaz DESABILITADO");
+                                {
+                                    #region - desfazimento - 
+
+                                    Log("Desfazimento " + regIso.nsuOrigem);
+
+                                    using (var db = new AutorizadorCNDB())
+                                    {
+                                        var v = new VendaEmpresarialDesfazimento
+                                        {
+                                            dirFile = "serveriso_logs",
+                                        };
+
+                                        v.Run(db, regIso.nsuOrigem);
+
+                                        var Iso430 = new ISO8583
+                                        {
+                                            codigo = "430",
+                                            codResposta = "00",
+                                            nsuOrigem = regIso.nsuOrigem,
+                                            valor = regIso.valor,
+                                            terminal = regIso.terminal,
+                                            codLoja = regIso.codLoja,
+                                            bit62 = regIso.nsuOrigem.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0')
+                                        };
+
+                                        Log(Iso430);
+
+                                        enviaDadosEXPRESS(Iso430.registro);
+                                    }
+
+                                    #endregion
+                                }                                    
                             }
 
                             bFinaliza = true;

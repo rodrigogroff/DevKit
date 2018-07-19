@@ -279,6 +279,8 @@
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
+    <Content Include="app\system\admopers\limites.html" />
+    <Content Include="app\system\admopers\limites.js" />
     <Content Include="app\system\admopers\opers.html" />
     <Content Include="app\system\admopers\opers.js" />
     <Content Include="app\system\cancelamento\cancelamento.html" />

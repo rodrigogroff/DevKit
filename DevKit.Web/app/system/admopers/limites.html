@@ -1,0 +1,102 @@
+﻿<div class="webFormPostion">
+    <section class="widgetForm" style="width:975px">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td><i class="fa fa-spinner fa-spin" ng-show="loading"></i> Limites de <b>Associados</b> </td>
+                    <td width="80px"></td>
+                    <td></td>
+                    <td width="20px"></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm">
+
+            <table class="widget" style="color: white" width="500px">
+                <tr height="12px"> </tr>
+                <tr height="56px">
+                    <td width="20px"></td>
+                    <td width="150px"><b>Empresa</b></td>
+                    <td width="420px">
+                        <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.empresa" ng-model="campos.idEmpresa" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="120px"></td>
+                </tr>
+
+                <tr height="11px"></tr>
+
+                <tr height="56px">
+                    <td></td>
+                    <td><b>Limite</b></td>
+                    <td>
+                        <label style="display:block;"><input type="radio" name="tipoLim" id="tipoLim" value="1" ng-model="campos.tipoLim"> Limite mensal</label>
+                        <label style="display:block;"><input type="radio" name="tipoLim" id="tipoLim" value="2" ng-model="campos.tipoLim"> Limite total</label>
+                        <label style="display:block;"><input type="radio" name="tipoLim" id="tipoLim" value="3" ng-model="campos.tipoLim"> Ambos</label>
+                    </td>
+                </tr>
+
+                <tr height="11px"></tr>
+
+                <tr height="56px">
+                    <td></td>
+                    <td><b>Tipo</b></td>
+                    <td>
+                        <label style="display:block;"><input type="radio" name="tipoOper" id="tipoOper" value="1" ng-model="campos.tipoOper"> Fixo</label>
+                        <label style="display:block;"><input type="radio" name="tipoOper" id="tipoOper" value="2" ng-model="campos.tipoOper"> Percentual</label>
+                    </td>
+                </tr>
+
+                <tr height="56px">
+                    <td></td>
+                    <td><b>Valor</b></td>
+                    <td>
+                        <input type="text" 
+                               class="form-control input-transparent" maxlength="11"
+                               onKeyUp="money(this,Valor);"
+                               ng-model="campos.valor" />
+                    </td>
+                </tr>
+
+                <tr height="56px"></tr>
+
+            </table>
+
+            <br />
+            <button class="btn btn-primary" ng-click="search()">Pesquisar</button><br />
+            <br />
+
+        </div>
+
+        <div class="modal-backdrop"
+             ng-if="mostraModal"
+             style="background: rgba(55, 55, 55, 0.5 );">
+            <div class="modal-dialog" style="width:320px;margin-left:32px">
+                <br />
+                <br />
+                <br />
+                <div class="modal-content" style="color:black">
+                    <legend style="color:black">Aviso do Sistema</legend>
+                    <br />
+                    <h3>Confirmar ação?</h3>
+                    <br />
+                    <br />
+                    <table align="center">
+                        <tr>
+                            <td>
+                                <button class="btn btn-default" ng-click="cancelaModal()"> Não </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-success" ng-click="confirmar()"> Sim </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

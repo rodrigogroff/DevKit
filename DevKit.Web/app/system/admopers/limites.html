@@ -15,11 +15,14 @@
         </legend>
         <div class="divWebForm">
 
-            <table class="widget" style="color: white" width="500px">
+            <table class="widget" style="color: white" width="600px">
                 <tr height="12px"> </tr>
                 <tr height="56px">
                     <td width="20px"></td>
                     <td width="150px"><b>Empresa</b></td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="emp_fail">!</button>
+                    </td>
                     <td width="420px">
                         <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.empresa" ng-model="campos.idEmpresa" />
                     </td>
@@ -32,6 +35,7 @@
                 <tr height="56px">
                     <td></td>
                     <td><b>Limite</b></td>
+                    <td></td>                    
                     <td>
                         <label style="display:block;"><input type="radio" name="tipoLim" id="tipoLim" value="1" ng-model="campos.tipoLim"> Limite mensal</label>
                         <label style="display:block;"><input type="radio" name="tipoLim" id="tipoLim" value="2" ng-model="campos.tipoLim"> Limite total</label>
@@ -44,6 +48,7 @@
                 <tr height="56px">
                     <td></td>
                     <td><b>Tipo</b></td>
+                    <td></td>
                     <td>
                         <label style="display:block;"><input type="radio" name="tipoOper" id="tipoOper" value="1" ng-model="campos.tipoOper"> Fixo</label>
                         <label style="display:block;"><input type="radio" name="tipoOper" id="tipoOper" value="2" ng-model="campos.tipoOper"> Percentual</label>
@@ -54,7 +59,10 @@
                     <td></td>
                     <td><b>Valor</b></td>
                     <td>
-                        <input type="text" 
+                        <button class="btn btn-xs btn-danger" ng-show="vlr_fail">!</button>
+                    </td>
+                    <td>
+                        <input type="text"
                                class="form-control input-transparent" maxlength="11"
                                onKeyUp="money(this,Valor);"
                                ng-model="campos.valor" />
@@ -65,8 +73,8 @@
 
             </table>
 
+            <button class="btn btn-primary" ng-click="executar()">Executar</button><br />
             <br />
-            <button class="btn btn-primary" ng-click="search()">Pesquisar</button><br />
             <br />
 
         </div>

@@ -68,6 +68,73 @@ namespace DevKit.Web.Controllers
                             resp = hits.ToString()
                         });
                     }
+
+                case "2":
+                    {
+                        var id_emp = Request.GetQueryStringValue("id_emp");
+                        var tipoLim = Request.GetQueryStringValue("tipoLim");
+                        var tipoOper = Request.GetQueryStringValue("tipoOper");
+                        var valor = ObtemValor(Request.GetQueryStringValue("valor"));
+
+                        var emp = db.T_Empresa.FirstOrDefault(y => y.i_unique == Convert.ToDecimal(id_emp));
+
+                        if (emp == null)
+                            return BadRequest();
+
+                        foreach (var cart in db.T_Cartao.Where (y=> y.st_empresa == emp.st_empresa).ToList())
+                        {
+                            var cartUpd = db.T_Cartao.FirstOrDefault(y => y.i_unique == cart.i_unique);
+
+                            if (tipoLim == "3") // ambos limites
+                            {
+                                if (tipoOper == "1") // fixo
+                                {
+                                    cartUpd.vr_limiteMensal = (int)valor;
+                                    cartUpd.vr_limiteTotal = (int)valor;
+                                }
+                                else // percentual
+                                {
+                                    var pctLM = valor * cartUpd.vr_limiteMensal / 10000;
+
+                                    cartUpd.vr_limiteMensal += (int)pctLM;
+
+                                    var pctLT = valor * cartUpd.vr_limiteTotal / 10000;
+
+                                    cartUpd.vr_limiteTotal += (int)pctLT;
+                                }
+                            }
+                            else if (tipoLim == "2") // total
+                            {
+                                if (tipoOper == "1") // fixo
+                                {
+                                    cartUpd.vr_limiteTotal = (int)valor;
+                                }
+                                else // percentual
+                                {
+                                    var pctLT = valor * cartUpd.vr_limiteTotal / 10000;
+
+                                    cartUpd.vr_limiteTotal += (int)pctLT;
+                                }
+                            }
+                            else if (tipoLim == "1") // mensal
+                            {
+                                if (tipoOper == "1") // fixo
+                                {
+                                    cartUpd.vr_limiteMensal = (int)valor;
+                                }
+                                else // percentual
+                                {
+                                    var pctLM = valor * cartUpd.vr_limiteMensal / 10000;
+
+                                    cartUpd.vr_limiteMensal += (int)pctLM;
+                                }
+                            }
+
+                            db.Update(cartUpd);
+                        }
+
+                        return Ok();
+                    }
             }
 
             return BadRequest();            

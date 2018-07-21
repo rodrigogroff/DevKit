@@ -42,12 +42,18 @@ namespace DevKit.Web.Controllers
     {
         public IHttpActionResult Get()
         {
-            var tipo = Request.GetQueryStringValue("tipo");            
+            var tipo = Request.GetQueryStringValue("tipo");
+            var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
 
             var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
+
+            var curEmp = db.currentEmpresa;
+
+            if (idEmpresa != null)
+                curEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
 
             var mon = new money();
 
@@ -64,20 +70,22 @@ namespace DevKit.Web.Controllers
                         var dtNow = DateTime.Now;
 
                         // lojas vinculadas à empresa
-
                         var hshLojaConvenio = new Hashtable();
 
                         foreach (var item in from e in db.T_Loja
                                              from eConv in db.LINK_LojaEmpresa
-                                             where eConv.fk_empresa == db.currentEmpresa.i_unique
+                                             where eConv.fk_empresa == curEmp.i_unique
                                              where eConv.fk_loja == e.i_unique
                                              select eConv)
                         {
                             hshLojaConvenio[item.fk_loja] = item.tx_admin;
                         }
 
+                        
+
                         var diaFech = (from e in db.I_Scheduler
-                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
+                                       where 
+                                                e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
                                        select e).
                                        FirstOrDefault().
                                        nu_monthly_day;
@@ -91,7 +99,7 @@ namespace DevKit.Web.Controllers
                                                   join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int) ltr.i_unique
                                                   where e.nu_parcela >= 1
                                                   where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                                  where e.fk_empresa == db.currentEmpresa.i_unique
+                                                  where e.fk_empresa == curEmp.i_unique
                                                   select e).
                                                   ToList();
 
@@ -103,7 +111,7 @@ namespace DevKit.Web.Controllers
 
                             var query = (from e in totalParcsEmAberto
                                          where e.nu_parcela == nuParc  
-                                         where e.fk_empresa == db.currentEmpresa.i_unique                                         
+                                         where e.fk_empresa == curEmp.i_unique                                         
                                          select e);
 
                             if (!query.Any())
@@ -149,7 +157,7 @@ namespace DevKit.Web.Controllers
 
                         return Ok(new
                         {
-                            empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                            empresa = curEmp.st_fantasia + " (" + curEmp.st_empresa + ")",
                             total = mon.setMoneyFormat(vrTotalMax),
                             totalBonus = mon.setMoneyFormat(vrBonusMax),
                             totalRep = mon.setMoneyFormat(vrRepasseMax),
@@ -184,7 +192,7 @@ namespace DevKit.Web.Controllers
 
                             foreach (var item in from e in db.T_Loja
                                                  from eConv in db.LINK_LojaEmpresa
-                                                 where eConv.fk_empresa == db.currentEmpresa.i_unique
+                                                 where eConv.fk_empresa == curEmp.i_unique
                                                  where eConv.fk_loja == e.i_unique
                                                  select eConv)
                             {
@@ -192,7 +200,7 @@ namespace DevKit.Web.Controllers
                             }
 
                             var diaFech = (from e in db.I_Scheduler
-                                           where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
+                                           where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
                                            select e).
                                            FirstOrDefault().
                                            nu_monthly_day;
@@ -205,18 +213,19 @@ namespace DevKit.Web.Controllers
                             
                             int nuParc = 1;
 
-                            var target = ano + mes.ToString().PadLeft(2, '0');                        
-                        while (target != dtNow.Year + dtNow.Month.ToString("00"))
-                        {
-                            nuParc++;
-                            dtNow = dtNow.AddMonths(1);
-                        }
+                            var target = ano + mes.ToString().PadLeft(2, '0');   
+                            
+                            while (target != dtNow.Year + dtNow.Month.ToString("00"))
+                            {
+                                nuParc++;
+                                dtNow = dtNow.AddMonths(1);
+                            }
 
                             var totalParcsEmAberto = (from e in db.T_Parcelas
                                                       join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
                                                       where e.nu_parcela == nuParc
                                                       where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                                      where e.fk_empresa == db.currentEmpresa.i_unique
+                                                      where e.fk_empresa == curEmp.i_unique
                                                       select e).
                                                       ToList();
 
@@ -289,7 +298,7 @@ namespace DevKit.Web.Controllers
                             return Ok(new
                             {
                                 results = xlst,
-                                empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                                empresa = curEmp.st_fantasia + " (" + curEmp.st_empresa + ")",
                                 total = mon.setMoneyFormat(vrTotal),
                                 totalBonus = mon.setMoneyFormat(vrBonus),
                                 totalRep = mon.setMoneyFormat(vrRepasse),
@@ -318,13 +327,13 @@ namespace DevKit.Web.Controllers
 
                             var convenio = (from e in db.T_Loja
                                             from eConv in db.LINK_LojaEmpresa
-                                            where eConv.fk_empresa == db.currentEmpresa.i_unique
+                                            where eConv.fk_empresa == curEmp.i_unique
                                             where eConv.fk_loja == lojistaEspecifico.i_unique
                                             select eConv).
                                             FirstOrDefault();
 
                             var diaFech = (from e in db.I_Scheduler
-                                           where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
+                                           where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
                                            select e).
                                            FirstOrDefault().
                                            nu_monthly_day;
@@ -345,7 +354,7 @@ namespace DevKit.Web.Controllers
                                                       join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
                                                       where e.nu_parcela == nuParc
                                                       where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                                      where e.fk_empresa == db.currentEmpresa.i_unique
+                                                      where e.fk_empresa == curEmp.i_unique
                                                       where e.fk_loja == lojistaEspecifico.i_unique
                                                       select e).
                                                       ToList();
@@ -374,9 +383,7 @@ namespace DevKit.Web.Controllers
                             // soma todos os valores
                             // ------------------------------
 
-                            foreach (var item in (from e in totalParcsEmAberto
-                                                  select e.fk_loja).
-                                                    Distinct())
+                            foreach (var item in (from e in totalParcsEmAberto select e.fk_loja).Distinct())
                             {
                                 var t_vrValor = totalParcsEmAberto.
                                                 Where(y => y.fk_loja == item).
@@ -422,7 +429,7 @@ namespace DevKit.Web.Controllers
                             return Ok(new
                             {
                                 results = lst,
-                                empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                                empresa = curEmp.st_fantasia + " (" + curEmp.st_empresa + ")",
                                 lojista = lojistaEspecifico.st_loja + " " + lojistaEspecifico.st_nome + " / " + lojistaEspecifico.st_social,
                                 total = mon.setMoneyFormat(vrTotal),
                                 totalBonus = mon.setMoneyFormat(vrBonus),

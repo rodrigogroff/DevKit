@@ -5,6 +5,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
     $scope.loading = false;
+    $scope.tipo = $rootScope.tipo;
 
     $scope.pesquisa =
         {
@@ -21,6 +22,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         lojista: '',
         selects: {
             mes: ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 }),
+            empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
         }
     };
 
@@ -43,12 +45,19 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.list = [];
         $scope.pesquisa.tipoSel = 0;
 
+        if ($scope.tipo == '5') {
+            $scope.emp_fail = $scope.campos.idEmpresa == undefined;
+            if ($scope.emp_fail == true) 
+                return;
+        }
+
         if ($scope.pesquisa.tipo == 1)
         {
             $scope.loading = true;
 
             var opcoes = {
                 tipo: $scope.pesquisa.tipo,
+                idEmpresa: $scope.campos.idEmpresa,
             };
 
             Api.EmissoraRelRepFinanc.listPage(opcoes, function (data) {
@@ -83,6 +92,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                 mes: $scope.campos.mes_inicial,
                 ano: $scope.campos.ano_inicial,
                 lojista: $scope.campos.lojista,
+                idEmpresa: $scope.campos.idEmpresa,
             };
 
             Api.EmissoraRelRepFinanc.listPage(opcoes, function (data)

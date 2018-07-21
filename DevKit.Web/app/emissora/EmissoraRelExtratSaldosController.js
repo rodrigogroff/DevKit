@@ -5,6 +5,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
     $scope.loading = false;
+    $scope.tipo = $rootScope.tipo;
 
     $scope.pesquisa =
         {
@@ -21,6 +22,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         ano_inicial: $scope.date.getFullYear(),
         selects: {
             mes: ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 }),
+            empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
         }
     };
 
@@ -44,6 +46,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     
     $scope.search = function ()
     {
+        if ($scope.tipo == '5') {
+            $scope.emp_fail = $scope.campos.idEmpresa == undefined;
+            if ($scope.emp_fail == true)
+                return;
+        }
+
         $scope.mat_fail = invalidCheck($scope.campos.matricula);
         $scope.mes_fail = invalidCheck($scope.campos.mes_inicial);
         $scope.ano_fail = invalidCheck($scope.campos.ano_inicial);
@@ -61,7 +69,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                     tipo: $scope.pesquisa.tipo,
                     mat: $scope.campos.matricula,
                     mes: $scope.campos.mes_inicial,
-                    ano: $scope.campos.ano_inicial
+                    ano: $scope.campos.ano_inicial,
+                    idEmpresa: $scope.campos.idEmpresa,
                 };
 
                 Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
@@ -88,7 +97,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
             var opcoes = {
                 tipo: $scope.pesquisa.tipo,
-                mat: $scope.campos.matricula                
+                mat: $scope.campos.matricula,
+                idEmpresa: $scope.campos.idEmpresa,
             };
 
             Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
@@ -119,7 +129,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                     var opcoes = {
                         tipo: $scope.pesquisa.tipo,
                         tipoFut: $scope.pesquisa.tipoFut,
-                        mat: $scope.campos.matricula
+                        mat: $scope.campos.matricula,
+                        idEmpresa: $scope.campos.idEmpresa,
                     };
 
                     Api.EmissoraRelExtratos.listPage(opcoes, function (data) {
@@ -149,6 +160,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
                             mat: $scope.campos.matricula,
                             mes: $scope.campos.mes_inicial,
                             ano: $scope.campos.ano_inicial,
+                            idEmpresa: $scope.campos.idEmpresa,
                         };
 
                         Api.EmissoraRelExtratos.listPage(opcoes, function (data) {

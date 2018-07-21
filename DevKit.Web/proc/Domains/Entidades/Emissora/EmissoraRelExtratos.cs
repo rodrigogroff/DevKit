@@ -32,11 +32,19 @@ namespace DevKit.Web.Controllers
         {
             var tipo = Request.GetQueryStringValue("tipo");            
             var mat = Request.GetQueryStringValue("mat").PadLeft(6,'0');
+            var idEmpresa = Request.GetQueryStringValue<long?>("mat",null);
 
             var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
+
+            var curEmp = db.currentEmpresa;
+
+            if (idEmpresa != null)
+            {
+                curEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
+            }
 
             var mon = new money();
 
@@ -52,7 +60,7 @@ namespace DevKit.Web.Controllers
                         var ano = Request.GetQueryStringValue("ano");
 
                         var cartao = (from e in db.T_Cartao
-                                      where e.st_empresa == db.currentEmpresa.st_empresa
+                                      where e.st_empresa == curEmp.st_empresa
                                       where e.st_matricula == mat
                                       select e).
                                       FirstOrDefault();
@@ -64,7 +72,7 @@ namespace DevKit.Web.Controllers
 
                         var lstFechamento = (from e in db.LOG_Fechamento 
                                              join cart in db.T_Cartao on e.fk_cartao equals (int) cart.i_unique 
-                                             where e.fk_empresa == db.currentEmpresa.i_unique 
+                                             where e.fk_empresa == curEmp.i_unique 
                                              where cart.st_matricula == mat 
                                              where e.st_mes == mes
                                              where e.st_ano == ano
@@ -122,13 +130,13 @@ namespace DevKit.Web.Controllers
                         // -------------------------
 
                         var cartao = (from e in db.T_Cartao
-                                      where e.st_empresa == db.currentEmpresa.st_empresa
+                                      where e.st_empresa == curEmp.st_empresa
                                       where e.st_matricula == mat
                                       select e).
                                       FirstOrDefault();
                         
                         var diaFech = (from e in db.I_Scheduler
-                                          where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
+                                          where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
                                           select e).
                                           FirstOrDefault().
                                           nu_monthly_day;
@@ -197,7 +205,7 @@ namespace DevKit.Web.Controllers
                         var tipoFut = Request.GetQueryStringValue("tipoFut");
                         
                         var cartao = (from e in db.T_Cartao
-                                      where e.st_empresa == db.currentEmpresa.st_empresa
+                                      where e.st_empresa == curEmp.st_empresa
                                       where e.st_matricula == mat
                                       select e).
                                       FirstOrDefault();
@@ -208,7 +216,7 @@ namespace DevKit.Web.Controllers
                                          FirstOrDefault();
 
                         var diaFech = (from e in db.I_Scheduler
-                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
+                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
                                        select e).
                                           FirstOrDefault().
                                           nu_monthly_day;

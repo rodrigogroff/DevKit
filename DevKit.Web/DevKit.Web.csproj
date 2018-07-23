@@ -287,7 +287,9 @@
     <Content Include="app\system\cancelamento\CancelamentoController.js" />
     <Content Include="app\system\loja\LojaMensagensController.js" />
     <Content Include="app\system\loja\lojaMensagens.html" />
+    <Content Include="app\system\relatorios\ListingLojistaPendsController.js" />
     <Content Include="app\system\relatorios\ListingLojistaTransController.js" />
+    <Content Include="app\system\relatorios\listingRelLojistaPends.html" />
     <Content Include="app\system\relatorios\listingRelLojistaTrans.html" />
     <Content Include="app\system\relatorios\listingRelAssociados.html" />
     <Content Include="app\system\relatorios\ListingLojasController.js" />

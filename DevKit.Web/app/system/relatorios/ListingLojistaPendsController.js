@@ -54,7 +54,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         Api.RelLojistaTrans.listPage(opcoes, function (data)
         {
-            toastr.success('Todas as transações foram canceladas', 'Sistema');
+            toastr.success('Todas as transações foram desfeitas', 'Sistema');
+            $scope.list = undefined;
+            $scope.total = 0;
+            $scope.mostraModal = false;
             $scope.loading = false;
         });        
     }    

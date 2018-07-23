@@ -72,7 +72,7 @@ namespace DevKit.Web.Controllers
                     {
                         var tUp = db.LOG_Transacoes.Find(trans.i_unique);
 
-                        tUp.tg_confirmada = Convert.ToChar(TipoConfirmacao.Desfeita);
+                        tUp.tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada);
 
                         db.Update(tUp);
                     }

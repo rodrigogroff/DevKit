@@ -5,7 +5,5 @@ namespace DataModel
 	public partial class AutorizadorCNDB
     {				
 		public Hashtable Cache = new Hashtable();
-
-        //Setup _setup = null;
     }
 }

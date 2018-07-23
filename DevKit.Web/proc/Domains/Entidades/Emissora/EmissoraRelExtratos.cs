@@ -32,7 +32,7 @@ namespace DevKit.Web.Controllers
         {
             var tipo = Request.GetQueryStringValue("tipo");            
             var mat = Request.GetQueryStringValue("mat").PadLeft(6,'0');
-            var idEmpresa = Request.GetQueryStringValue<long?>("mat",null);
+            var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
 
             var meses = ",Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro".Split(',');
 

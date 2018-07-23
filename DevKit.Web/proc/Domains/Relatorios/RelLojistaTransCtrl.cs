@@ -45,7 +45,8 @@ namespace DevKit.Web.Controllers
             var confirmada = Request.GetQueryStringValue<bool?>("confirmada", null);
             var cancelada = Request.GetQueryStringValue<bool?>("cancelada", null);
             var pends = Request.GetQueryStringValue<bool?>("pends", null);
-
+            var pendsConf = Request.GetQueryStringValue<bool?>("pendsConf", null);
+            
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
@@ -55,8 +56,8 @@ namespace DevKit.Web.Controllers
 
             if (pends == true)
             {
-                query = query.Where(y => y.dt_transacao > DateTime.Now.AddDays(-3));
-                query = query.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada);
+                query = query.Where(y => y.dt_transacao > DateTime.Now.AddDays(-4));
+                query = query.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente);
 
                 var totTrans = query.Count();
 
@@ -65,55 +66,69 @@ namespace DevKit.Web.Controllers
                 var mon = new money();
                 var res = new List<RelLojistaTransItem>();
 
-                foreach (var trans in query.Skip(skip).Take(take).ToList())
+                if (pendsConf == true)
                 {
-                    var nomeAssoc = "(não definido)";
-                    var nomeTerm = "";
-
-                    var cart = (from e in db.T_Cartao
-                                where e.i_unique == trans.fk_cartao
-                                select e).
-                                FirstOrDefault();
-
-                    T_Proprietario prop = null;
-
-                    if (cart != null)
+                    foreach (var trans in query.Skip(skip).Take(take).ToList())
                     {
-                        prop = (from e in db.T_Proprietario
-                                where e.i_unique == cart.fk_dadosProprietario
-                                select e).
+                        var tUp = db.LOG_Transacoes.Find(trans.i_unique);
+
+                        tUp.tg_confirmada = Convert.ToChar(TipoConfirmacao.Desfeita);
+
+                        db.Update(tUp);
+                    }
+                }
+                else
+                {
+                    foreach (var trans in query.Skip(skip).Take(take).ToList())
+                    {
+                        var nomeAssoc = "(não definido)";
+                        var nomeTerm = "";
+
+                        var cart = (from e in db.T_Cartao
+                                    where e.i_unique == trans.fk_cartao
+                                    select e).
+                                    FirstOrDefault();
+
+                        T_Proprietario prop = null;
+
+                        if (cart != null)
+                        {
+                            prop = (from e in db.T_Proprietario
+                                    where e.i_unique == cart.fk_dadosProprietario
+                                    select e).
+                                         FirstOrDefault();
+
+                            if (prop != null)
+                            {
+                                nomeAssoc = prop.st_nome;
+                            }
+                        }
+
+                        var term = (from e in db.T_Terminal
+                                    where e.i_unique == trans.fk_terminal
+                                    select e).
                                      FirstOrDefault();
 
-                        if (prop != null)
+                        if (term != null)
+                            nomeTerm = term.nu_terminal;
+
+                        var sit = "Pendente";
+
+                        List<string> cupom = new List<string>();
+
+                        res.Add(new RelLojistaTransItem
                         {
-                            nomeAssoc = prop.st_nome;
-                        }
+                            data = Convert.ToDateTime(trans.dt_transacao).ToString("dd/MM/yyyy HH:mm:ss"),
+                            nsu = trans.nu_nsu.ToString(),
+                            situacao = sit,
+                            associado = nomeAssoc,
+                            valor = mon.setMoneyFormat((long)trans.vr_total),
+                            parcelas = trans.nu_parcelas.ToString(),
+                            terminal = nomeTerm,
+                            totalTransacoes = totTrans.ToString(),
+                            totalValor = mon.setMoneyFormat(totValor),
+                        });
                     }
-
-                    var term = (from e in db.T_Terminal
-                                where e.i_unique == trans.fk_terminal
-                                select e).
-                                 FirstOrDefault();
-
-                    if (term != null)
-                        nomeTerm = term.nu_terminal;
-
-                    var sit = "";
-
-                    List<string> cupom = new List<string>();
-
-                    res.Add(new RelLojistaTransItem
-                    {
-                        data = Convert.ToDateTime(trans.dt_transacao).ToString("dd/MM/yyyy HH:mm:ss"),
-                        nsu = trans.nu_nsu.ToString(),
-                        situacao = sit,
-                        associado = nomeAssoc,
-                        valor = mon.setMoneyFormat((long)trans.vr_total),
-                        parcelas = trans.nu_parcelas.ToString(),
-                        terminal = nomeTerm,
-                        totalTransacoes = totTrans.ToString(),
-                        totalValor = mon.setMoneyFormat(totValor),                        
-                    });
                 }
 
                 return Ok(new { count = query.Count(), results = res });

@@ -98,21 +98,25 @@ namespace DevKit.Web.Controllers
             var lojas = (from e in trans
                          join loja in db.T_Loja on e.fk_loja equals (int)loja.i_unique
                          select loja).
+                         Distinct().
                          ToList();
 
             var cartoes = (from e in trans
                          join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
                          select cart).
+                         Distinct().
                          ToList();
 
             var props = (from e in cartoes
                            join prop in db.T_Proprietario on e.fk_dadosProprietario equals (int)prop.i_unique
                            select prop).
+                           Distinct().
                          ToList();
 
             var terminais = (from e in trans
                              join term in db.T_Terminal on e.fk_terminal equals (int)term.i_unique
                              select term).
+                             Distinct().
                              ToList();
 
             var mon = new money();

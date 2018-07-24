@@ -55,6 +55,9 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.empresa = data.empresa;
             $scope.periodo = data.periodo;
             $scope.vendasConf = data.vendasConf;
+            $scope.qtdConf = data.qtdConf;
+            $scope.qtdPend = data.qtdPend;
+            $scope.qtdCanc = data.qtdCanc;
             $scope.loading = false;
         },
         function (response) {

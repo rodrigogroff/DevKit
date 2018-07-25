@@ -130,7 +130,11 @@ namespace DevKit.Web.Controllers
                     itens = new List<ItensTransLojas>()
                 };
 
-                var lojaTrans = trans.Where(y => y.fk_loja == item.i_unique).ToList();
+                var lojaTrans = trans.Where(y => y.fk_loja == item.i_unique).
+                                        Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                        Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada).
+                                        Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).
+                                        ToList();
 
                 relatLoja.qtdTrans = lojaTrans.Count().ToString();
                 relatLoja.nome = item.st_loja + " - " + item.st_nome;

@@ -22,6 +22,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         idSit: '',
         idExp: '',
         idOrdem: 1,
+
+        selects: {
+            empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
+        }
     };
         
     $scope.situacoes = ngSelects.obterConfiguracao(Api.SituacoesCombo, { tamanhoPagina: 15 });
@@ -44,9 +48,16 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $scope.load = function (skip, take)
     {
+        if ($scope.tipo == '5') {
+            $scope.emp_fail = $scope.campos.idEmpresa == undefined;
+            if ($scope.emp_fail == true)
+                return;
+        }
+
         $scope.loading = true;
 
         var opcoes = {
+            idEmpresa: $scope.campos.idEmpresa,
             skip: skip,
             take: take,            
             nome: $scope.campos.nome,

@@ -62,6 +62,8 @@ namespace DevKit.Web.Controllers
     {
         public IHttpActionResult Get()
         {
+            var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
+
             var nome = Request.GetQueryStringValue("nome");
             var cpf = Request.GetQueryStringValue("cpf");
             var skip = Request.GetQueryStringValue<int>("skip", 0);
@@ -77,8 +79,18 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            var tEmp = db.currentEmpresa;
+
+            if (idEmpresa != null)
+            {
+                tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
+
+                if (tEmp == null)
+                    return BadRequest();
+            }
+
             var query = (from e in db.T_Cartao
-                         where e.st_empresa == userLoggedEmpresa
+                         where e.st_empresa == tEmp.st_empresa
                          select e);
 
             #region - filtros - 

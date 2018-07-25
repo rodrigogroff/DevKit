@@ -33,6 +33,7 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Get()
         {
             var tipo = Request.GetQueryStringValue("tipo");
+            var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa");
             var codigo = Request.GetQueryStringValue("codigo");
             var mes = Request.GetQueryStringValue("mes", 0);
             var ano = Request.GetQueryStringValue("ano", 0);
@@ -49,8 +50,18 @@ namespace DevKit.Web.Controllers
                               select e).
                               FirstOrDefault();
 
+            var tEmp = db.currentEmpresa;
+
+            if (idEmpresa != null)
+            {
+                tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
+            }
+
+            if (tEmp == null)
+                return BadRequest();
+
             var t_txAdmin = (from e in db.LINK_LojaEmpresa
-                             where e.fk_empresa == db.currentEmpresa.i_unique
+                             where e.fk_empresa == tEmp.i_unique 
                              where e.fk_loja == lojistaEsp.i_unique
                              select (long)e.tx_admin).FirstOrDefault();
 
@@ -73,7 +84,7 @@ namespace DevKit.Web.Controllers
                         var lstParcelasEmAberto = (from e in db.T_Parcelas
                                                    join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
                                                    where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                                   where e.fk_empresa == db.currentEmpresa.i_unique
+                                                   where e.fk_empresa == tEmp.i_unique
                                                    where e.fk_loja == lojistaEsp.i_unique
                                                    where e.nu_parcela >= 1
                                                    select e);
@@ -82,7 +93,7 @@ namespace DevKit.Web.Controllers
                             return BadRequest();
 
                         var diaFech = (from e in db.I_Scheduler
-                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentEmpresa.st_empresa)
+                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmp.st_empresa)
                                        select e).
                                        FirstOrDefault().
                                        nu_monthly_day;
@@ -135,7 +146,7 @@ namespace DevKit.Web.Controllers
                             var t = terms.Where(y => y.i_unique == term).FirstOrDefault();
 
                             terminal.nome = t.nu_terminal;
-                            terminal.empresa = db.currentEmpresa.st_fantasia;
+                            terminal.empresa = tEmp.st_fantasia;
 
                             terminal.itens = new List<ItensForn>();
 
@@ -181,7 +192,7 @@ namespace DevKit.Web.Controllers
                         return Ok(new
                         {
                             referencia = meses[mes] + " / " + ano,
-                            empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                            empresa = tEmp.st_fantasia + " (" + tEmp.st_empresa + ")",
                             lojista = lojistaEsp.st_nome + " - " + lojistaEsp.st_social + " - CNPJ: " + lojistaEsp.nu_CNPJ,
                             total = mon.setMoneyFormat(vrTotalMax),
                             totalBonus = mon.setMoneyFormat(vrBonusMax),
@@ -205,7 +216,7 @@ namespace DevKit.Web.Controllers
                                              join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
                                              join ltr in db.LOG_Transacoes on parc.fk_log_transacoes equals (int)ltr.i_unique
                                              where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                             where e.fk_empresa == db.currentEmpresa.i_unique
+                                             where e.fk_empresa == tEmp.i_unique
                                              where e.fk_loja == lojistaEsp.i_unique
                                              where e.st_mes == sMes && e.st_ano == sAno
                                              select e);
@@ -247,7 +258,7 @@ namespace DevKit.Web.Controllers
                             var t = terms.Where(y => y.i_unique == term).FirstOrDefault();
 
                             terminal.nome = t.nu_terminal;
-                            terminal.empresa = db.currentEmpresa.st_fantasia;
+                            terminal.empresa = tEmp.st_fantasia;
 
                             terminal.itens = new List<ItensForn>();
 
@@ -292,7 +303,7 @@ namespace DevKit.Web.Controllers
                         return Ok(new
                         {
                             referencia = meses[mes] + " / " + ano,
-                            empresa = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa + ")",
+                            empresa = tEmp.st_fantasia + " (" + tEmp.st_empresa + ")",
                             lojista = lojistaEsp.st_nome + " - " + lojistaEsp.st_social + " - CNPJ: " + lojistaEsp.nu_CNPJ,
                             total = mon.setMoneyFormat(vrTotalMax),
                             totalBonus = mon.setMoneyFormat(vrBonusMax),

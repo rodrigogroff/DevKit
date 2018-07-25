@@ -34,6 +34,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
+
             var mat = Request.GetQueryStringValue("mat");
             var dtInicial = Request.GetQueryStringValue("dtInicial");
             var dtFinal = Request.GetQueryStringValue("dtFinal");
@@ -61,10 +63,20 @@ namespace DevKit.Web.Controllers
 
             var lstCarts = new List<int>();
 
+            var tEmp = db.currentEmpresa;
+
+            if (idEmpresa != null)
+            {
+                tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
+
+                if (tEmp == null)
+                    return BadRequest();
+            }
+
             if (!string.IsNullOrEmpty(mat))
             {
                 cart = (from e in db.T_Cartao
-                            where e.st_empresa == db.currentEmpresa.st_empresa
+                            where e.st_empresa == tEmp.st_empresa
                             where e.st_matricula == mat.PadLeft(6, '0')
                             where e.st_titularidade == "01"
                             select e).
@@ -74,7 +86,7 @@ namespace DevKit.Web.Controllers
                     return BadRequest("Cartão inválido");
 
                 lstCarts = (from e in db.T_Cartao
-                            where e.st_empresa == db.currentEmpresa.st_empresa
+                            where e.st_empresa == tEmp.st_empresa
                             where e.st_matricula == mat.PadLeft(6, '0')
                             select (int)e.i_unique).
                             ToList();
@@ -86,16 +98,23 @@ namespace DevKit.Web.Controllers
             }
 
             var lstTotCarts = (from e in db.T_Cartao
-                               where e.st_empresa == db.currentEmpresa.st_empresa
+                               where e.st_empresa == tEmp.st_empresa
                                select e).
                                ToList();
 
-            var trans = (from e in db.LOG_Transacoes
-                         where e.fk_empresa == db.currentEmpresa.i_unique
-                         where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
-                         orderby e.dt_transacao descending
-                         select e).
-                        ToList();
+            var q_trans = from e in db.LOG_Transacoes
+                          where e.fk_empresa == tEmp.i_unique
+                          where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
+                          orderby e.dt_transacao descending
+                          select e;
+
+            if (q_trans.Count() > 2000)
+                return BadRequest("Pesquisa excede máximo de 2000 transações");
+
+            if (q_trans.Count() == 0)
+                return Ok( new { fail = true } );
+
+            var trans = q_trans.ToList();
 
             var lojas = (from e in trans
                          join loja in db.T_Loja on e.fk_loja equals (int)loja.i_unique

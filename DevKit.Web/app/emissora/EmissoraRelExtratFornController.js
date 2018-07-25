@@ -18,6 +18,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         ano_inicial: $scope.date.getFullYear(),
         selects: {
             mes: ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 }),
+            empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
         }
     };
 
@@ -37,6 +38,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     
     $scope.search = function ()
     {
+        if ($scope.tipo == '5') {
+            $scope.emp_fail = $scope.campos.idEmpresa == undefined;
+            if ($scope.emp_fail == true)
+                return;
+        }
+
         $scope.cod_fail = invalidCheck($scope.campos.codigo);
         $scope.mes_fail = invalidCheck($scope.campos.mes_inicial);
         $scope.ano_fail = invalidCheck($scope.campos.ano_inicial);
@@ -49,6 +56,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.loading = true;
 
             var opcoes = {
+                idEmpresa: $scope.campos.idEmpresa,
                 tipo: $scope.pesquisa.tipo,
                 codigo: $scope.campos.codigo,
                 mes: $scope.campos.mes_inicial,

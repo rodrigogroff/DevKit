@@ -6,7 +6,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     $rootScope.exibirMenu = true;
     $scope.loading = false;
 
-    $scope.campos = { sit: '1' };
+    $scope.campos = {
+        sit: '1',
+        selects: {
+            empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
+        }
+    };
 
     var invalidCheck = function (element) {
         if (element == undefined)
@@ -20,6 +25,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     
     $scope.search = function ()
     {
+        if ($scope.tipo == '5') {
+            $scope.emp_fail = $scope.campos.idEmpresa == undefined;
+            if ($scope.emp_fail == true)
+                return;
+        }
+
         $scope.list = undefined;
 
         $scope.dtIni_fail = invalidCheck($scope.campos.dtInicial);        
@@ -28,6 +39,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.loading = true;
 
         var opcoes = {
+            idEmpresa: $scope.campos.idEmpresa,
             mat: $scope.campos.mat,
             dtInicial: $scope.campos.dtInicial,
             dtFinal: $scope.campos.dtFinal,
@@ -36,12 +48,20 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         Api.EmissoraRelExtratoTrans.listPage(opcoes, function (data)
         {
-            $scope.list = data.results;
-            $scope.dtEmissao = data.dtEmissao;
-            $scope.cartao = data.cartao;
-            $scope.periodo = data.periodo;
-            $scope.total = data.total;
+            if (data.fail == true) {
+                $scope.list = [];
+            }
+            else
+            {
+                $scope.list = data.results;
+                $scope.dtEmissao = data.dtEmissao;
+                $scope.cartao = data.cartao;
+                $scope.periodo = data.periodo;
+                $scope.total = data.total;                
+            }
+
             $scope.loading = false;
+            
         },
         function (response) {
             $scope.loading = false;

@@ -24,6 +24,8 @@ namespace DevKit.Web.Controllers
     {
         public IHttpActionResult Get()
         {
+            var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
+
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
             var nome = Request.GetQueryStringValue("nome");
@@ -34,9 +36,19 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            var tEmp = db.currentEmpresa;
+
+            if (idEmpresa != null)
+            {
+                tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
+
+                if (tEmp == null)
+                    return BadRequest();
+            }
+
             var query = (from e in db.T_Loja
                          from conv in db.LINK_LojaEmpresa
-                         where conv.fk_empresa == db.currentEmpresa.i_unique
+                         where conv.fk_empresa == tEmp.i_unique
                          where conv.fk_loja == e.i_unique
                          select e);
 
@@ -82,7 +94,7 @@ namespace DevKit.Web.Controllers
 
             var convenios = (from e in page
                              from conv in db.LINK_LojaEmpresa
-                             where conv.fk_empresa == db.currentEmpresa.i_unique
+                             where conv.fk_empresa == tEmp.i_unique
                              select conv).
                              ToList();
 

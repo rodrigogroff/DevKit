@@ -73,10 +73,17 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
     }
 
     $scope.imprimir = function ()
-    {      
+    {
+        if ($scope.tipo == '5') {
+            $scope.emp_fail = $scope.campos.idEmpresa == undefined;
+            if ($scope.emp_fail == true)
+                return;
+        }
+
         $scope.loading = true;
 
         var opcoes = {
+            idEmpresa: $scope.campos.idEmpresa,
             skip: 0,
             take: 90000,
             nome: $scope.campos.nome,

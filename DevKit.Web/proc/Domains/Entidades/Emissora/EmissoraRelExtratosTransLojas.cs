@@ -66,7 +66,7 @@ namespace DevKit.Web.Controllers
             if (!string.IsNullOrEmpty(codLoja))
             {
                 var t_loja = (from e in db.T_Loja
-                              where e.st_loja == codLoja.PadLeft(6, '0')
+                              where e.st_loja == codLoja
                               select e).
                               FirstOrDefault();
 
@@ -123,7 +123,7 @@ namespace DevKit.Web.Controllers
 
             var lst = new List<EmissoraRelExtratosTransLojas>();
 
-            foreach (var item in lojas)
+            foreach (var item in lojas.OrderBy (y=> y.st_nome))
             {
                 var relatLoja = new EmissoraRelExtratosTransLojas
                 {

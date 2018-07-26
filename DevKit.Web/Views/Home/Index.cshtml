@@ -30,8 +30,7 @@
             v_obj.value = v_fun(v_obj.value);
         }
 
-        function trimStart(character, string)
-        {
+        function trimStart(character, string) {
             var startIndex = 0;
 
             while (string[startIndex] === character) {
@@ -41,15 +40,13 @@
             return string.substr(startIndex);
         }
 
-        function cleanup(strMoney)
-        {
+        function cleanup(strMoney) {
             var ret = '';
             var i = 0;
 
             for (; i < strMoney.length; i++) {
                 var va = strMoney[i];
-                if (va == '0') { } else
-                {
+                if (va == '0') { } else {
                     break;
                     ret += va;
                 }
@@ -57,18 +54,16 @@
 
             for (; i < strMoney.length; i++) {
                 var va = strMoney[i];
-                ret += va;                
+                ret += va;
             }
 
             return ret;
         }
 
-        function extractNumbers(strMoney)
-        {
+        function extractNumbers(strMoney) {
             var ret = '';
 
-            for (var i = 0; i < strMoney.length; i++)
-            {
+            for (var i = 0; i < strMoney.length; i++) {
                 var va = strMoney[i];
 
                 if (va == '0' || va == '1' || va == '2' || va == '3' || va == '4' || va == '5' || va == '6' || va == '7' || va == '8' || va == '9')
@@ -78,21 +73,18 @@
             return ret;
         }
 
-        function ValorNum(v)
-        {
+        function ValorNum(v) {
             v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
 
             return v;
         }
 
-        function Valor(v)
-        {
+        function Valor(v) {
             var extract = extractNumbers(v);
             var clean = cleanup(extract);
             var resp = '';
 
-            switch (clean.length)
-            {
+            switch (clean.length) {
                 case 1: resp = '0,0' + clean; break;
                 case 2: resp = '0,' + clean; break;
                 case 3:
@@ -130,7 +122,7 @@
 
                         resp = p1 + '.' + p2 + ',' + p3;
                         break;
-                    }                
+                    }
 
                 case 7:
                     {
@@ -162,20 +154,79 @@
 
                         resp = p1 + '.' + p2 + '.' + p3 + ',' + p4;
                     }
-                
+
                 default: break;
             }
 
-           // console.log('resp: ' + resp);
+            // console.log('resp: ' + resp);
 
             return resp;
         }
 
     </script>
 
-    @*<script src="//cdnjs.cloudflare.com/ajax/libs/trix/0.9.2/trix.js"></script>*@
     @Styles.Render("~/bundles/css")
-    @Scripts.Render("~/bundles/scripts")
+
+    <script src="/scripts/jquery-2.1.0.min.js"></script>
+    <script src="/scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="/scripts/jquery.mousewheel.js"></script>
+    <script src="/scripts/angular.min.js"></script>
+    <script src="/scripts/angular-resource.min.js"></script>
+    <script src="/scripts/i18n/angular-locale_pt-br.js"></script>
+    <script src="/scripts/angular-mocks.js"></script>
+    <script src="/scripts/restful-ng-mock.js"></script>
+    <script src="/scripts/bootstrap.min.js"></script>
+    <script src="/scripts/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="/scripts/angular-animate.min.js"></script>
+    <script src="/scripts/angular-ui-router.min.js"></script>
+    <script src="/scripts/angular-sanitize.min.js"></script>
+    <script src="/scripts/loading-bar.min.js"></script>
+    <script src="/scripts/spin.min.js"></script>
+    <script src="/scripts/angular-spinner.min.js"></script>
+    <script src="/scripts/toastr.min.js"></script>
+    <script src="/scripts/sortable.js"></script>
+    <script src="/scripts/keypress.js"></script>
+    <script src="/scripts/angular-strap.min.js"></script>
+    <script src="/scripts/angular-strap.tpl.min.js"></script>
+    <script src="/scripts/angular-draganddrop.js"></script>
+    <script src="/scripts/perfect-scrollbar.js"></script>
+    <script src="/scripts/angular-perfect-scrollbar.js"></script>
+    <script src="/scripts/select.min.js"></script>
+    <script src="/scripts/select2.min.js"></script>
+    <script src="/scripts/select2_locale_pt-BR.js"></script>
+    <script src="/scripts/angular_select2.js"></script>
+    <script src="/scripts/moment.js"></script>
+    <script src="/scripts/angular-ui-mask.min.js"></script>
+    <script src="/scripts/bindonce.min.js"></script>
+    <script src="/scripts/load-image.min.js"></script>
+    <script src="/scripts/canvas-to-blob.min.js"></script>
+    <script src="/scripts/jquery.blueimp-gallery.min.js"></script>
+    <script src="/scripts/jquery.iframe-transport.js"></script>
+    <script src="/scripts/jquery.fileupload.js"></script>
+    <script src="/scripts/jquery.fileupload-process.js"></script>
+    <script src="/scripts/jquery.fileupload-image.js"></script>
+    <script src="/scripts/jquery.fileupload-validate.js"></script>
+    <script src="/scripts/jquery.fileupload-angular.js"></script>
+    <script src="/scripts/angular-ui-tree.min.js"></script>
+    <script src="/scripts/ng-currency.js"></script>
+
+    <script src="/app/_shared/filters.js"></script>
+    <script src="/app/services.js"></script>
+    <script src="/app/_shared/directives.js"></script>
+    <script src="/app/_shared/directives.validator.js"></script>
+    <script src="/app/_shared/filtro/diretivaNgFiltro.js"></script>
+    <script src="/app/_shared/paginacao/diretivaNgPaginacao.js"></script>
+    <script src="/app/_shared/controllers.js"></script>
+    <script src="/app/_shared/HighlightService.js"></script>
+    <script src="/app/login/AuthInterceptorService.js"></script>
+    <script src="/app/login/AuthService.js"></script>
+    <script src="/app/login/LoginController.js"></script>
+    <script src="/app/_shared/MenuController.js"></script>
+    <script src="/app/_shared/NgSelectsService.js"></script>
+    <script src="/app/app.js"></script>
+    
+    @Scripts.Render("~/bundles/MyApp")
+
 </head>
 <body class="background" ng-cloak>
     <div ng-show="exibirMenu" ng-controller="MenuController">
@@ -438,8 +489,7 @@
             </td>
         </tr>
     </table>
-
-    @Scripts.Render("~/bundles/app")
+    
     <script>
 		app.constant('version', '@version'); // Version constant
     </script>

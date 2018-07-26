@@ -3,6 +3,8 @@ using System.Web.Http;
 using System.IO;
 using System.Linq;
 using SocialExplorer.IO.FastDBF;
+using DataModel;
+using System;
 
 namespace DevKit.Web.Controllers
 {
@@ -22,11 +24,25 @@ namespace DevKit.Web.Controllers
                 if (!StartDatabaseAndAuthorize())
                     return BadRequest();
 
-                var tEmpresa = (from e in db.T_Empresa
+                var tEmpresa = new T_Empresa();
+
+                try
+                {
+                    tEmpresa = (from e in db.T_Empresa
+                                where e.i_unique == Convert.ToInt32(emp)
+                                select e).
+                                FirstOrDefault();
+                }
+                catch (System.Exception ex)
+                {
+                    ex.ToString();
+
+                    tEmpresa = (from e in db.T_Empresa
                                 where e.st_fantasia == emp
                                 select e).
                                 FirstOrDefault();
-
+                }
+                
                 string dir = "C:\\fechamento_dbf",
                         file = "F" + tEmpresa.st_empresa + "-" + mes + ano.Substring(2),
                         ext = "DBF";

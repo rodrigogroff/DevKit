@@ -4,9 +4,8 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransLojasControl
 function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
 {
     $rootScope.exibirMenu = true;
-    $scope.tipo = $rootScope.tipo;
-
     $scope.loading = false;
+    $scope.tipo = $rootScope.tipo;
 
     $scope.campos = {
         sit: '1',

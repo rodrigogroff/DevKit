@@ -112,13 +112,6 @@ namespace DevKit.Web.Controllers
                             dtNow = dtNow.AddMonths(1);
                         }
 
-                        //if (dtNow.Month != mes && dtNow.Year != ano)
-                        //while (dtNow.Month != mes && dtNow.Year != ano)
-                        //{
-                        //    nuParc++;
-                        //    dtNow = dtNow.AddMonths(1);
-                        //}
-
                         var termsAbertos = (from e in lstParcelasEmAberto
                                             where e.nu_parcela == nuParc
                                             select e.fk_terminal).

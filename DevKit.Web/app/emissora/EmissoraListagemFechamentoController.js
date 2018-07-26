@@ -15,6 +15,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
     $rootScope.exibirMenu = true;
     $scope.loading = false;
+    $scope.tipo = $rootScope.tipo;
 
     $scope.sintetico = false;
     $scope.tipoFech = 1;    
@@ -25,11 +26,18 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         ano_inicial: $scope.date.getFullYear(),
         selects: {
             mes: ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 }),
+            empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
         }
     };
     
     $scope.search = function ()
     {
+        if ($scope.tipo == '5') {
+            $scope.emp_fail = $scope.campos.idEmpresa == undefined;
+            if ($scope.emp_fail == true)
+                return;
+        }
+
         if (invalidCheck($scope.campos.mes_inicial) ||
             invalidCheck($scope.campos.ano_inicial) )
         {
@@ -41,6 +49,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.tipoFechSel = undefined;
 
         var opcoes = {
+            idEmpresa: $scope.campos.idEmpresa,
             tipoFech: $scope.tipoFech,
             mes: $scope.campos.mes_inicial,
             ano: $scope.campos.ano_inicial,

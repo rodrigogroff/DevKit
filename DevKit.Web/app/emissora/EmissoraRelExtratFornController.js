@@ -5,6 +5,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
     $scope.loading = false;
+    $scope.tipo = $rootScope.tipo;
 
     $scope.pesquisa =
         {
@@ -48,7 +49,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         $scope.mes_fail = invalidCheck($scope.campos.mes_inicial);
         $scope.ano_fail = invalidCheck($scope.campos.ano_inicial);
 
-        if ($scope.cod_fail) 
+        if ($scope.cod_fail)
             return;
 
         if (!$scope.mes_fail && !$scope.ano_fail)

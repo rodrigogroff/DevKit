@@ -4,6 +4,7 @@ using System.Web.Http;
 
 using SyCrafEngine;
 using LinqToDB;
+using System;
 
 namespace DevKit.Web.Controllers
 {
@@ -20,6 +21,8 @@ namespace DevKit.Web.Controllers
                       dtCompra,
                       parcela,
                       valor;
+
+        public long _valor, _loja;
     }
 
     public class FechamentoListagemCartao
@@ -73,170 +76,84 @@ namespace DevKit.Web.Controllers
         {
             var tipoFech = Request.GetQueryStringValue("tipoFech");
             var mes = Request.GetQueryStringValue("mes").PadLeft(2, '0');
-            var ano = Request.GetQueryStringValue("ano"); 
+            var ano = Request.GetQueryStringValue("ano");
+            var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa",null);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
+
+            var tEmp = db.currentEmpresa;
+
+            if (idEmpresa != null)
+            {
+                tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
+
+                if (tEmp == null)
+                    return BadRequest();
+            }
 
             var m = new money();
 
             if (tipoFech == "1")
             {
-                #region - code -
+                #region - code - 
 
-                var itensFechamento = (from e in db.LOG_Fechamento
-                                       where e.fk_empresa == db.currentEmpresa.i_unique
-                                       where e.st_mes == mes
-                                       where e.st_ano == ano
-                                       orderby e.dt_compra descending
-                                       select e).
-                                       ToList();
-
-                #region - indexamento em memoria -
-
-                #region - cartoes -
-
-                var lstIDsCarts = (from e in itensFechamento select (long)e.fk_cartao).ToList();
-                var lstCartoes = (from e in db.T_Cartao where lstIDsCarts.Contains((long)e.i_unique) select e).ToList();
-
-                #endregion
-
-                #region - proprietarios -
-
-                var lstIDsProps = (from e in itensFechamento
-                                   join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
-                                   join prop in db.T_Proprietario on cart.fk_dadosProprietario equals (int)prop.i_unique
-                                   select prop.i_unique).
-                                   ToList();
-
-                var lstProprietarios = (from e in db.T_Proprietario
-                                        where lstIDsProps.Contains(e.i_unique)
-                                        select e).
-                                        ToList();
-
-                #endregion
-
-                #region - log transacoes -
-
-                var lstIDsLTRS = (from e in itensFechamento
-                                  join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
-                                  select parc.fk_log_transacoes).
-                                  ToList();
-
-                var lstTrans = (from e in db.LOG_Transacoes where lstIDsLTRS.Contains((int)e.i_unique) select e).ToList();
-
-                #endregion
-
-                #region - terminais -
-
-                var lstIDsTERMS = (from e in lstTrans select e.fk_terminal).ToList();
-                var lstTerms = (from e in db.T_Terminal where lstIDsTERMS.Contains((int)e.i_unique) select e).ToList();
-
-                #endregion
-
-                #region - parcelas -
-
-                var lstIDsParcelas = (from e in itensFechamento select (long)e.fk_parcela).ToList();
-                var lstParcelas = (from e in db.T_Parcelas where lstIDsParcelas.Contains((long)e.i_unique) select e).ToList();
-
-                #endregion
-
-                #region - lojistas -
-
-                var lstIDsLojistas = (from e in itensFechamento select (long)e.fk_loja).ToList();
-                var lstLojistas = (from e in db.T_Loja where lstIDsLojistas.Contains( (long)e.i_unique) select e).ToList();
-
-                #endregion
-
-                #endregion
-
-                var lst = new List<FechamentoListagemCartao>();
-
-                // ---------------------------------------
-                // ## iterar por todos os associados
-                // ---------------------------------------
-
-                var dList = itensFechamento.
-                            Select(y => y.fk_cartao).
-                            Distinct().
+                var fech = (from e in db.LOG_Fechamento
+                            where e.fk_empresa == tEmp.i_unique && e.st_mes == mes && e.st_ano == ano
+                            select new  { e.fk_loja, e.fk_parcela, e.fk_cartao }).
                             ToList();
 
-                var finalCartoes = (from e in db.T_Cartao
-                                    join prop in db.T_Proprietario on e.fk_dadosProprietario equals (int)prop.i_unique
-                                    where dList.Contains((int)e.i_unique)
-                                    orderby prop.st_nome
-                                    select e.i_unique).
-                                    ToList();
+                var ids_lojas = fech.Select(a => (long)a.fk_loja).Distinct().ToList();
+                var ids_parcelas = fech.Select(a => (long)a.fk_parcela).Distinct().ToList();
+                var ids_cartoes = fech.Select(a => (long)a.fk_cartao).Distinct().ToList();
 
-                foreach (var fkCartao in finalCartoes)
+                var parcelas = (from parc in db.T_Parcelas
+                                       where ids_parcelas.Contains((long)parc.i_unique)
+                                       select new FechamentoVendaCartao
+                                       {
+                                           dtCompra = Convert.ToDateTime(parc.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
+                                           nsu = parc.nu_nsu.ToString(),
+                                           parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
+                                           id = parc.fk_cartao.ToString(),
+                                           valor = m.setMoneyFormat((long) parc.vr_valor),
+                                           _valor = (long)parc.vr_valor,
+                                           _loja = (long)parc.fk_loja
+                                       }).
+                                       ToList();
+
+                var lojas = db.T_Loja.Where(y => ids_lojas.Contains((long)y.i_unique)).ToList();
+
+                var cartoes = (from cart in db.T_Cartao
+                           join prop in db.T_Proprietario on cart.fk_dadosProprietario equals (int)prop.i_unique
+                           where ids_cartoes.Contains ( (long)cart.i_unique )
+                           select new FechamentoListagemCartao
+                           {
+                               fkCartao = (int)cart.i_unique,
+                               associado = prop.st_nome,
+                               matricula = cart.st_matricula,
+                           }).
+                           ToList();
+
+                foreach (var item in cartoes)
                 {
-                    var cart = lstCartoes.
-                                Where(y => y.i_unique == fkCartao).
-                                FirstOrDefault();
+                    item.vendas = parcelas.Where(y => y.id == item.fkCartao.ToString()).OrderBy(y => y.dtCompra).ToList();
 
-                    var prop = lstProprietarios.
-                                Where (y=> y.i_unique == cart.fk_dadosProprietario).
-                                FirstOrDefault();
-
-                    lst.Add(new FechamentoListagemCartao
+                    foreach (var i in item.vendas)
                     {
-                        fkCartao = (int)cart.i_unique,
-                        matricula = cart.st_matricula,
-                        associado = prop.st_nome
-                    });
-                }
-
-                long vrTotalFechamento = 0, id = 0;
-                
-                foreach (var item in lst)
-                {
-                    // -------------------------------------------
-                    // ## iterar por todas as vendas do associado
-                    // -------------------------------------------
-
-                    var lstParcsFechamento = itensFechamento.
-                                             Where(y => y.fk_cartao == item.fkCartao).
-                                             ToList();
-
-                    long vrTotal = 0;
-
-                    foreach (var vendas in lstParcsFechamento)
-                    {
-                        var parc = lstParcelas.
-                                   Where(y => y.i_unique == vendas.fk_parcela).
-                                   FirstOrDefault();
-
-                        var ltr = lstTrans.Where ( y=> y.i_unique == parc.fk_log_transacoes).FirstOrDefault();
-                        var term = lstTerms.Where(y => y.i_unique == parc.fk_terminal).FirstOrDefault();
-                        var loja = lstLojistas.Where(y => y.i_unique == vendas.fk_loja).FirstOrDefault();
-
-                        vrTotal += (long) vendas.vr_valor;
-                        id++;
-
-                        item.vendas.Add(new FechamentoVendaCartao
-                        {
-                            id = id.ToString(),
-                            nsu = ltr.nu_nsu.ToString(),
-                            terminal = term.nu_terminal.ToString(),
-                            lojista = loja.st_nome,
-                            dtCompra = ObtemData(parc.dt_inclusao),
-                            parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
-                            valor = m.setMoneyFormat((int)parc.vr_valor)
-                        });
+                        var f = lojas.FirstOrDefault(y => y.i_unique == i._loja);
+                        i.lojista = f.st_loja + " - " + f.st_nome;
                     }
 
-                    vrTotalFechamento += vrTotal;
-
-                    item.total = m.setMoneyFormat((int)vrTotal);
+                    item.total = m.setMoneyFormat(item.vendas.Sum ( y=> y._valor));
                 }
 
                 return Ok(new
                 {
-                    count = lst.Count(),
-                    totalFechamento = m.setMoneyFormat((int)vrTotalFechamento),
-                    totalCartoes = dList.Count(),
-                    convenio = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa.TrimStart('0') + ")",
-                    results = lst
+                    count = cartoes.Count(),
+                    totalFechamento = m.formatToMoney(parcelas.Sum(y=> y._valor).ToString()),
+                    totalCartoes = cartoes.Count(),
+                    convenio = tEmp.st_fantasia + " (" + tEmp.st_empresa.TrimStart('0') + ")",
+                    results = cartoes
                 });
 
                 #endregion
@@ -246,7 +163,7 @@ namespace DevKit.Web.Controllers
                 #region - code - 
 
                 var itensFechamento = (from e in db.LOG_Fechamento
-                                       where e.fk_empresa == db.currentEmpresa.i_unique
+                                       where e.fk_empresa == tEmp.i_unique
                                        where e.st_mes == mes
                                        where e.st_ano == ano
                                        select e).
@@ -318,7 +235,7 @@ namespace DevKit.Web.Controllers
                                   ToList();
 
                 var lstConvenios = (from e in db.LINK_LojaEmpresa
-                                    where e.fk_empresa == db.currentEmpresa.i_unique
+                                    where e.fk_empresa == tEmp.i_unique
                                     select e).
                                     ToList();
 
@@ -423,7 +340,7 @@ namespace DevKit.Web.Controllers
                     totalRepasse = m.setMoneyFormat((int)vrTotalRepasse),
                     totalBonus = m.setMoneyFormat((int)vrTotalBonus),
                     totalLojistas = lstLojistas.Count(),
-                    convenio = db.currentEmpresa.st_fantasia + " (" + db.currentEmpresa.st_empresa.TrimStart('0') + ")",
+                    convenio = tEmp.st_fantasia + " (" + tEmp.st_empresa.TrimStart('0') + ")",
                     results = lst
                 });
 

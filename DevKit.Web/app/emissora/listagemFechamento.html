@@ -10,6 +10,23 @@
             </table>
         </legend>
         <div class="divWebForm" style="max-width:95%;min-width:95%">
+
+            <table width="500px" ng-if="tipo==5">
+                <tr>
+                    <td width="20px"></td>
+                    <td width="120px"><b>(DBA) Empresa</b></td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="emp_fail">!</button>
+                    </td>
+                    <td width="220px">
+                        <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.empresa" ng-model="campos.idEmpresa" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="120px"></td>
+                </tr>
+                <tr height="22px"> </tr>
+            </table>
+
             <table class="widget" style="color: white">
                 <tr height="22px"> </tr>
                 <tr height="43px">
@@ -85,7 +102,6 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
                                                     <th>Estabelecimento</th>
                                                     <th>NSU</th>
                                                     <th>Data compra</th>
@@ -94,7 +110,6 @@
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="tr in mdl.vendas">
-                                                <td style="min-width:70px;">{{ tr.id }}</td>
                                                 <td style="min-width:250px;">{{ tr.lojista }}</td>
                                                 <td style="min-width:70px;">{{ tr.nsu }}</td>
                                                 <td style="min-width:120px;">{{ tr.dtCompra }}</td>

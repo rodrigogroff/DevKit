@@ -5,6 +5,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 {
     $rootScope.exibirMenu = true;
     $scope.loading = false;
+    $scope.tipo = $rootScope.tipo;
 
     $scope.campos = {
         sit: '1',

@@ -490,8 +490,8 @@ public partial class ClientHandler
 
                                     enviaDadosEXPRESS(Iso210.registro);
 
-                                    if (Iso210.codResposta == "00")
-                                        bFinaliza = false; // continua depois via 202
+                                 //   if (Iso210.codResposta == "00")
+                                   //     bFinaliza = false; // continua depois via 202
 
                                     #endregion
                                 }

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using LinqToDB;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
@@ -135,6 +136,53 @@ namespace DevKit.Web.Controllers
 
                         return Ok();
                     }
+
+                case "3":
+                    {
+                        var idEmp = Request.GetQueryStringValue<long>("id_emp");
+
+                        var tEmp = db.T_Empresa.Find(idEmp);
+
+                        if (tEmp != null)
+                        {
+                            return Ok(new
+                            {
+                                nuCartoes = db.T_Cartao.
+                                            Where(y => y.tg_emitido.ToString() == StatusExpedicao.EmExpedicao).
+                                            Where(y => y.st_empresa == tEmp.st_empresa).
+                                            Count()
+                            });                            
+                        }
+
+                        return Ok();
+                    }
+                    
+
+                case "4":
+                    {
+                        var idEmp = Request.GetQueryStringValue<long>("id_emp");
+
+                        var tEmp = db.T_Empresa.Find(idEmp);
+
+                        if (tEmp != null)
+                        {
+                            foreach (var item in db.T_Cartao.
+                                            Where(y => y.tg_emitido.ToString() == StatusExpedicao.EmExpedicao).
+                                            Where(y => y.st_empresa == tEmp.st_empresa).
+                                            ToList())
+                            {
+
+                                var tCartUpd = db.T_Cartao.Find(item.i_unique);
+
+                                tCartUpd.tg_emitido = Convert.ToChar(StatusExpedicao.Expedido);
+
+                                db.Update(tCartUpd);
+                            }
+                        }
+
+                        return Ok();
+                    }
+                    
             }
 
             return BadRequest();            

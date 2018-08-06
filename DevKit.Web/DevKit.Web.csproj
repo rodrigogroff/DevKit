@@ -281,6 +281,8 @@
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
+    <Content Include="app\system\admopers\ativaGrafica.html" />
+    <Content Include="app\system\admopers\ativaGrafica.js" />
     <Content Include="app\system\admopers\limites.html" />
     <Content Include="app\system\admopers\limites.js" />
     <Content Include="app\system\admopers\opers.html" />
@@ -1007,7 +1009,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57397</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:4000/</IISUrl>
+          <IISUrl>http://localhost:4001/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

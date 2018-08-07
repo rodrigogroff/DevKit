@@ -145,12 +145,22 @@ namespace DevKit.Web.Controllers
 
                         if (tEmp != null)
                         {
+                            var lst = (from e in db.T_Cartao
+                                       join d in db.T_Proprietario on e.fk_dadosProprietario equals (int) d.i_unique
+                                      where e.tg_emitido.ToString() == StatusExpedicao.EmExpedicao
+                                      where e.st_empresa == tEmp.st_empresa
+                                      select new
+                                      {
+                                          id =  e.i_unique.ToString(),
+                                          matricula = e.st_matricula,
+                                          associado = d.st_nome
+                                      }).
+                                      ToList();
+
                             return Ok(new
                             {
-                                nuCartoes = db.T_Cartao.
-                                            Where(y => y.tg_emitido.ToString() == StatusExpedicao.EmExpedicao).
-                                            Where(y => y.st_empresa == tEmp.st_empresa).
-                                            Count()
+                                nuCartoes = lst.Count(),
+                                results = lst
                             });                            
                         }
 
@@ -161,18 +171,15 @@ namespace DevKit.Web.Controllers
                 case "4":
                     {
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
+                        var ids = Request.GetQueryStringValue("ids").TrimEnd(',').Split (',');
 
                         var tEmp = db.T_Empresa.Find(idEmp);
 
                         if (tEmp != null)
                         {
-                            foreach (var item in db.T_Cartao.
-                                            Where(y => y.tg_emitido.ToString() == StatusExpedicao.EmExpedicao).
-                                            Where(y => y.st_empresa == tEmp.st_empresa).
-                                            ToList())
+                            foreach (var item in ids)
                             {
-
-                                var tCartUpd = db.T_Cartao.Find(item.i_unique);
+                                var tCartUpd = db.T_Cartao.Find(Convert.ToInt64(item));
 
                                 tCartUpd.tg_emitido = Convert.ToChar(StatusExpedicao.Expedido);
 

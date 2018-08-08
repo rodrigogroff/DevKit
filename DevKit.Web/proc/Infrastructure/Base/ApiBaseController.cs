@@ -40,6 +40,18 @@ namespace DevKit.Web.Controllers
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (db != null)
+                {
+                    db.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
         public string userLoggedCodigo
         {
             get

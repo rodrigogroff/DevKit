@@ -113,8 +113,6 @@ public class SynchronousSocketListener
 
     public static int Main(String[] args)
     {
-        T_Loja loj;
-
         Console.WriteLine("\n" + DateTime.Now + "]");
         Console.WriteLine("\nCNET ISO [" + portNum + "]");
 
@@ -123,10 +121,6 @@ public class SynchronousSocketListener
             var term = db.T_Cartao.FirstOrDefault();
             Console.WriteLine("DBCHECK -> OK!");
         }
-
-        //var ch = new ClientHandler();
-        //ch.msgReceived.Append("xx0200B238040020C0100000000000000000000020000000000044820605103044050064103044060502137826766008998000973012650821          CX0000030000000000068084F592E55666434A4");
-        //ch.ProcessDataReceived();
 
         StartListening();
 

@@ -305,6 +305,8 @@ public partial class ClientHandler
         {
             var dadosRecebidos = msgReceived.ToString();
 
+            
+
             #region - ajuste de inválidos - 
 
             if (dadosRecebidos == null)
@@ -343,6 +345,8 @@ public partial class ClientHandler
             }
             else
             {
+                Log("Dados recebidos =>" + dadosRecebidos + "<=");
+
                 var isoCode = dadosRecebidos.Substring(0, 4);
 
                 Log("isoCode " + isoCode);

@@ -111,7 +111,7 @@ namespace DataModel
             CloseFile();
 
             if (var_codResp != "0000")
-                File.Move(nomeFile, "falha" + nomeFile);
+                File.Move(nomeFile, nomeFile + ".falha" );
         }
 
         private bool Authenticate()

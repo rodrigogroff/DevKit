@@ -68,6 +68,8 @@ namespace DataModel
             Registry("START VendaEmpresarial");
             Registry("-------------------------");
 
+            _db.BeginTransaction();
+
             try
             {
                 var_codResp = "9999";
@@ -80,6 +82,8 @@ namespace DataModel
                 }
 
                 Finish();
+
+                _db.CommitTransaction();
             }
             catch (SystemException ex)
             {
@@ -88,6 +92,10 @@ namespace DataModel
                 Registry("-------------------------");
                 Registry("*ERROR! " + ex.ToString());
                 Registry("-------------------------");
+
+                output_st_msg = "Erro SGBD";
+
+                _db.RollbackTransaction();
             }
 
             st.Stop();
@@ -103,7 +111,7 @@ namespace DataModel
             CloseFile();
 
             if (var_codResp != "0000")
-                File.Move(nomeFile, nomeFile.Replace(".txt", "_falha.txt"));
+                File.Move(nomeFile, "falha" + nomeFile);
         }
 
         private bool Authenticate()
@@ -392,6 +400,7 @@ namespace DataModel
                 {
                     Registry("(15.5!) Parcelas com erro!!! ");
 
+                    output_st_msg = "Parcelas com erro";
                     var_codResp = "0517";
                     return false;
                 }

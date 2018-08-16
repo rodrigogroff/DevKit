@@ -113,6 +113,20 @@ public class SynchronousSocketListener
 
     public static int Main(String[] args)
     {
+        //var str = "0200B238040020C0100000000000000000000020000000000028360815180928150047180928081502137826766009086009652011650423          CX0000010000000000063896B106C193898D9FB? 0202B238000002C0000400000000000000020020000000000008270815180828150217180802081500CX000004000000000007255027826766009622001551011650522009000000312";
+        //var str = "0202B238000002C0000400000000000000020020000000000049860815181639150451181559081500CX000005000000000007380027826766000010009377011650617009000000317";
+        //var x = str.Split('?');
+
+        //foreach (var item in x)
+        //{
+        //    var dados = item;
+
+        //    if (dados[0] != '0')
+        //        dados = dados.Substring(1);
+
+        //    var regIso = new ISO8583(dados);
+        //}
+        
         Console.WriteLine("\n" + DateTime.Now + "]");
         Console.WriteLine("\nCNET ISO [" + portNum + "]");
 

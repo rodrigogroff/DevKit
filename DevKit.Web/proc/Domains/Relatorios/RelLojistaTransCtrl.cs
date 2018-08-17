@@ -5,6 +5,7 @@ using System.Web.Http;
 using System;
 using SyCrafEngine;
 using DataModel;
+using App.Web;
 
 namespace DevKit.Web.Controllers
 {
@@ -25,7 +26,43 @@ namespace DevKit.Web.Controllers
 
     public class RelLojistaTransController : ApiControllerBase
     {
-        public IHttpActionResult Get()
+        [HttpGet]
+        [Route("api/RelLojistaTrans/exportar", Name = "ExportarRelLojistaTrans")]
+        public IHttpActionResult Exportar()
+        {
+            return Get(exportar: true);
+        }
+
+        private IHttpActionResult Export(List<RelLojistaTransItem> query)
+        {
+            var myXLSWrapper = new ExportWrapper("Export_LojistaTransacoes.xlsx",
+                                                   "Transações",
+                                                   new string[] {  "Data Venda",
+                                                                   "NSU",
+                                                                   "Situação",
+                                                                   "Associado",
+                                                                   "Valor total",
+                                                                   "Parcelas",
+                                                                   "Terminal"   });
+
+            foreach (var item in query)
+            {
+                myXLSWrapper.AddContents(new string[]
+                {
+                    item.data?? string.Empty,
+                    item.nsu?? string.Empty,
+                    item.situacao?? string.Empty,
+                    item.associado?? string.Empty,
+                    item.valor?? string.Empty,
+                    item.parcelas?? string.Empty,
+                    item.terminal?? string.Empty,
+                });
+            };
+
+            return ResponseMessage(myXLSWrapper.GetSingleSheetHttpResponse());
+        }
+
+        public IHttpActionResult Get(bool exportar = false)
         {
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
@@ -271,14 +308,15 @@ namespace DevKit.Web.Controllers
                     var sit = "";
 
                     List<string> cupom = new List<string>();
-
+                    
                     switch (trans.tg_confirmada.ToString())
                     {
                         case TipoConfirmacao.Cancelada:
                             {
                                 sit = "Cancelada";
 
-                                cupom = new Cupom().Cancelamento(db,
+                                if (!exportar)
+                                    cupom = new Cupom().Cancelamento(db,
                                                                    cart,
                                                                    trans.nu_nsuOrig.ToString(),
                                                                    nomeTerm,
@@ -293,28 +331,31 @@ namespace DevKit.Web.Controllers
                             {
                                 sit = "Confirmada";
 
-                                int i = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 0, p6 = 0, p7 = 0, p8 = 0, p9 = 0, p10 = 0, p11 = 0, p12 = 0;
-
-                                foreach (var parcela in (from e in db.T_Parcelas where e.fk_log_transacoes == trans.i_unique orderby e.nu_parcela select e.vr_valor).ToList())
+                                if (!exportar)
                                 {
-                                    switch (++i)
-                                    {
-                                        case 1: p1 = (int)parcela; break;
-                                        case 2: p2 = (int)parcela; break;
-                                        case 3: p3 = (int)parcela; break;
-                                        case 4: p4 = (int)parcela; break;
-                                        case 5: p5 = (int)parcela; break;
-                                        case 6: p6 = (int)parcela; break;
-                                        case 7: p7 = (int)parcela; break;
-                                        case 8: p8 = (int)parcela; break;
-                                        case 9: p9 = (int)parcela; break;
-                                        case 10: p10 = (int)parcela; break;
-                                        case 11: p11 = (int)parcela; break;
-                                        case 12: p12 = (int)parcela; break;
-                                    }
-                                }
+                                    int i = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 0, p6 = 0, p7 = 0, p8 = 0, p9 = 0, p10 = 0, p11 = 0, p12 = 0;
 
-                                cupom = new Cupom().Venda(db,
+                                    foreach (var parcela in (from e in db.T_Parcelas where e.fk_log_transacoes == trans.i_unique orderby e.nu_parcela select e.vr_valor).ToList())
+                                    {
+                                        switch (++i)
+                                        {
+                                            case 1: p1 = (int)parcela; break;
+                                            case 2: p2 = (int)parcela; break;
+                                            case 3: p3 = (int)parcela; break;
+                                            case 4: p4 = (int)parcela; break;
+                                            case 5: p5 = (int)parcela; break;
+                                            case 6: p6 = (int)parcela; break;
+                                            case 7: p7 = (int)parcela; break;
+                                            case 8: p8 = (int)parcela; break;
+                                            case 9: p9 = (int)parcela; break;
+                                            case 10: p10 = (int)parcela; break;
+                                            case 11: p11 = (int)parcela; break;
+                                            case 12: p12 = (int)parcela; break;
+                                        }
+                                    }
+
+
+                                    cupom = new Cupom().Venda(db,
                                                             cart,
                                                             prop,
                                                             Convert.ToDateTime(trans.dt_transacao).ToString("dd/MM/yyyy HH:mm"),
@@ -323,6 +364,7 @@ namespace DevKit.Web.Controllers
                                                             (int)trans.nu_parcelas,
                                                             (int)trans.vr_total,
                                                             p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+                                }
 
                                 break;
                             }
@@ -348,6 +390,9 @@ namespace DevKit.Web.Controllers
                         cupom = cupom
                     });
                 }
+
+                if (exportar)
+                    return Export(res);
 
                 return Ok(new { count = query.Count(), results = res });
             }

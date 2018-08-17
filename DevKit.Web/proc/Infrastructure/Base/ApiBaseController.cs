@@ -89,6 +89,8 @@ namespace DevKit.Web.Controllers
         {
             db = new AutorizadorCNDB();
 
+            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
             var userCurrentName = userLoggedName;
             
             switch(userLoggedType)

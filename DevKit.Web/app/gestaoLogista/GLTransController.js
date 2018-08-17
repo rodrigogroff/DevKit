@@ -37,14 +37,12 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             ngHistoricoFiltro.filtro.exibeFiltro = false;
     }
 
-    $scope.search = function ()
-    {
+    $scope.search = function () {
         $scope.load(0, $scope.itensporpagina);
         $scope.paginador.reiniciar();
-    }
+    };
 
-    $scope.load = function (skip, take)
-    {
+    $scope.load = function (skip, take) {
         $scope.loading = true;
 
         var opcoes = {
@@ -57,13 +55,28 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
 
         delete opcoes.selects;
 
-        Api.RelLojistaTrans.listPage(opcoes, function (data)
-        {
+        Api.RelLojistaTrans.listPage(opcoes, function (data) {
             $scope.list = data.results;
             $scope.total = data.count;
             $scope.loading = false;
         });
-    }
+    };
+
+    $scope.exportar = function ()
+    {
+        var opcoes =
+        {
+            skip: 0,
+            take: 999999,
+            idEmpresa: $scope.campos.idEmpresa
+        };
+
+        angular.extend(opcoes, $scope.campos);
+
+        delete opcoes.selects;
+
+        window.location.href = "/api/relLojistaTrans/exportar?" + $.param(opcoes);
+    };
 
     $scope.printDiv = function (parcelas, cupom) {
         var printContents = "<table>";
@@ -97,6 +110,6 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         popupWin.document.open();
         popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
         popupWin.document.close();
-    }
+    };
 
 }]);

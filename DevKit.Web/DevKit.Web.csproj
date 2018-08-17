@@ -732,7 +732,6 @@
     <Content Include="LinqToDB.Templates\LinqToDB.SQLite.ttinclude" />
     <Content Include="LinqToDB.Templates\LinqToDB.SqlCe.ttinclude" />
     <Content Include="LinqToDB.Templates\LinqToDB.SapHana.ttinclude" />
-    <Content Include="LinqToDB.Templates\LinqToDB.PostgreSQL.ttinclude" />
     <Content Include="LinqToDB.Templates\LinqToDB.Oracle.ttinclude" />
     <Content Include="LinqToDB.Templates\LinqToDB.MySql.ttinclude" />
     <Content Include="LinqToDB.Templates\LinqToDB.Informix.ttinclude" />

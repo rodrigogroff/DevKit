@@ -6,6 +6,8 @@ using System;
 using SyCrafEngine;
 using DataModel;
 using App.Web;
+using System.Security.Claims;
+using System.Threading;
 
 namespace DevKit.Web.Controllers
 {
@@ -27,6 +29,7 @@ namespace DevKit.Web.Controllers
     public class RelLojistaTransController : ApiControllerBase
     {
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/RelLojistaTrans/exportar", Name = "ExportarRelLojistaTrans")]
         public IHttpActionResult Exportar()
         {
@@ -67,6 +70,7 @@ namespace DevKit.Web.Controllers
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
 
+            var idLojista = Request.GetQueryStringValue<int?>("idLojista", null);
             var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa", null);
             var idTerminal = Request.GetQueryStringValue<int?>("idTerminal", null);
             var idOrdem = Request.GetQueryStringValue<int?>("idOrdem", null);
@@ -87,8 +91,11 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            if (idLojista == null)
+                idLojista = (int)db.currentLojista.i_unique;
+
             var query = (from e in db.LOG_Transacoes
-                         where e.fk_loja == db.currentLojista.i_unique
+                         where e.fk_loja == idLojista
                          select e);
 
             if (pends == true)
@@ -394,7 +401,7 @@ namespace DevKit.Web.Controllers
                 if (exportar)
                     return Export(res);
 
-                return Ok(new { count = query.Count(), results = res });
+                return Ok(new { count = query.Count(), results = res, id = db.currentLojista.i_unique });
             }
         }
     }

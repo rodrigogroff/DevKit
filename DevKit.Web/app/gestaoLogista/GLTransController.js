@@ -59,6 +59,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             $scope.list = data.results;
             $scope.total = data.count;
             $scope.loading = false;
+            $scope.fkLojista = data.id;
         });
     };
 
@@ -68,7 +69,8 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         {
             skip: 0,
             take: 999999,
-            idEmpresa: $scope.campos.idEmpresa
+            idEmpresa: $scope.campos.idEmpresa,
+            idLojista: $scope.fkLojista
         };
 
         angular.extend(opcoes, $scope.campos);

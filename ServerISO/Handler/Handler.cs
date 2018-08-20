@@ -364,8 +364,10 @@ public partial class ClientHandler
                         if (dados[0] != '0')
                             dados = dados.Substring(1);
 
-                        var regIso = new ISO8583(dados);
+                       
 
+                        var regIso = new ISO8583(dados);
+                                               
                         Log(regIso);
 
                         if (regIso.erro)
@@ -519,7 +521,44 @@ public partial class ClientHandler
                             {
                                 #region - confirmação da venda - 
 
+                                /*
+                                * 18/08/2018 19:06:52:1248 { ISO8583-DETALHES DO REGISTRO 
+                                        ======================================================== 
+                                        Registro Iso : codigo       =0202
+                                        Bits preenchidos :          =1,3,4,7,11,12,13,39,41,42,62,127
+                                        bit( 3  ) - Codigo Proc.    =002000
+                                        bit( 4  ) - valor           =000000018258
+                                        bit( 7  ) - datahora        =0818190643
+                                        bit( 11 ) - NSU Origem      =180964
+                                        bit( 13 ) - data            =0818
+                                        bit( 22 ) - modo captura    =
+                                        bit( 35 ) - trilha          =
+                                        bit( 37 ) - nsu alternativo =
+                                        bit( 39 ) - codResposta     =00
+                                        bit( 41 ) - terminal        =CX000014
+                                        bit( 42 ) - codigoLoja      =000000000006808
+                                        bit( 49 ) - codigo moeda    =
+                                        bit( 52 ) - Senha           =                
+                                        bit( 62 ) - Dados transacao =826766008997006092011650821
+                                        bit( 63 ) - Dados transacao =
+                                        bit( 64 ) - Dados transacao =
+                                        bit( 90 ) - dados original  =
+                                        bit( 125 )- NSU original    =
+                                        bit( 127 )- NSU             =000000422
+                                        ======================================================== 
+                                }
+                                18/08/2018 19:06:52:1248 {ProcessDataReceived SystemException System.ArgumentOutOfRangeException: startIndex cannot be larger than length of string.
+                                Parameter name: startIndex
+                                  at System.String.Substring(Int32 startIndex, Int32 length)
+                                  at ClientHandler.ProcessDataReceived()}
+
+                                   */
+
+                                Log("Conf de venda");
+
                                 var monta = montaConfirmacaoCE(regIso);
+
+                                Log("Conf de venda: (monta)" + monta);
 
                                 if (!monta)
                                     LogFalha(isoCode + " montaConfirmacaoCE falhou");
@@ -531,13 +570,18 @@ public partial class ClientHandler
                                     // processamento no cnet server CONF
                                     // --------------------------------
 
+                                    Log("prepara confirmação");
+
                                     using (var db = new AutorizadorCNDB())
                                     {
+                                        Log("db ok");
+
                                         var v = new VendaEmpresarialConfirmacao
                                         {
                                             dirFile = "serveriso_logs",
                                         };
 
+                                        Log("v ok");
                                         Log("NSU a ser conf: " + regIso.bit127);
 
                                         v.Run(db, regIso.bit127);

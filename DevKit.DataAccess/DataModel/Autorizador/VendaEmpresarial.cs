@@ -336,8 +336,30 @@ namespace DataModel
                                                            y.st_titularidade == "01");
             }
             else
-                cartTitular = cartPortador;                
+                cartTitular = cartPortador;
 
+            // testa duplicidade
+            {
+                var ultimaTrans = db.LOG_Transacoes.Where(y => y.fk_cartao == cartPortador.i_unique &&
+                                                              y.fk_loja == loj.i_unique &&
+                                                              y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada &&
+                                                              y.vr_total == vr_valor).
+                                                    OrderByDescending(y => y.dt_transacao).
+                                                    FirstOrDefault();
+
+                if (ultimaTrans != null)
+                {
+                    var numMinutes = DateTime.Now.Subtract(Convert.ToDateTime(ultimaTrans.dt_transacao)).TotalMinutes;
+
+                    if (DateTime.Now.Subtract ( Convert.ToDateTime(ultimaTrans.dt_transacao)).TotalMinutes < 60)
+                    {
+                        output_st_msg = "Transação duplicada";
+                        var_codResp = "0509";
+                        return false;
+                    }
+                }
+            }
+            
             new SaldoDisponivel().Obter(db, cartTitular, ref vr_dispMes, ref vr_dispTot);
 
             Registry("(a12) input_cont_pe.nu_parcelas " + (input_cont_pe.nu_parcelas == null ? "NULO" : input_cont_pe.nu_parcelas));

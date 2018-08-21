@@ -132,30 +132,6 @@ namespace DevKit.Web.Controllers
                 }
 
                 #endregion
-
-                // verifica duplicidade
-
-                var ultParcela = (from e in db.T_Parcelas
-                                  where e.fk_cartao == associadoPrincipal.i_unique
-                                  where e.fk_loja == db.currentLojista.i_unique
-                                  where e.nu_parcela == 1
-                                  orderby e.dt_inclusao descending
-                                  select e).
-                                FirstOrDefault();
-
-                if (ultParcela != null)
-                {
-                    var ultLog = (from e in db.LOG_Transacoes where e.i_unique == ultParcela.fk_log_transacoes select e).FirstOrDefault();
-
-                    if (ultLog != null)
-                        if (ultLog.vr_total == valor)
-                        {
-                            var ts = (DateTime.Now - ultLog.dt_transacao).Value;
-
-                            if (ts.TotalMinutes < 5)
-                                return BadRequest("Transação em duplicidade de valor");
-                        }
-                }
                 
                 #region - autorizador interno -
 

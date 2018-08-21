@@ -349,9 +349,11 @@ namespace DataModel
 
                 if (ultimaTrans != null)
                 {
-                    var numMinutes = DateTime.Now.Subtract(Convert.ToDateTime(ultimaTrans.dt_transacao)).TotalMinutes;
+                    var numSecs = DateTime.Now.Subtract(Convert.ToDateTime(ultimaTrans.dt_transacao)).TotalSeconds;
 
-                    if (DateTime.Now.Subtract ( Convert.ToDateTime(ultimaTrans.dt_transacao)).TotalMinutes < 60)
+                    Registry("(duplicidade) numSecs " + numSecs);
+
+                    if (numSecs < 60)
                     {
                         output_st_msg = "Transação duplicada";
                         var_codResp = "0509";

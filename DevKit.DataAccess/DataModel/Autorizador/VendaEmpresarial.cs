@@ -429,6 +429,14 @@ namespace DataModel
                     return false;
                 }
 
+                Registry("(a15.6) Buscando parcelas e log_trans");
+
+                var lstParcNoBancoTotal = db.T_Parcelas.Where(y => lstCartoes.Contains(y.fk_cartao.ToString())).ToList();
+                var id_trans = lstParcNoBancoTotal.Select(y => (long)y.fk_log_transacoes).Distinct().ToList();
+                var lstTransTotal = db.LOG_Transacoes.Where(y => id_trans.Contains((long)y.i_unique)).ToList();
+
+                Registry("(a15.61) Buscando parcelas e log_trans DONE");
+
                 for (int t = 1, index_pos = 0; t <= tmp_nu_parc; ++t)
                 {
                     long valor_unit_parc = Convert.ToInt64(valoresParcelados.Substring(index_pos, 12));
@@ -451,23 +459,19 @@ namespace DataModel
 
                     Registry("(a19) dispMesParc : " + dispMesParc);
 
-                    var lstParcNoBanco = db.T_Parcelas.
-                                            Where(y => lstCartoes.Contains(y.fk_cartao.ToString())).
-                                            Where(y => y.nu_parcela == t).ToList();
+                    var lstParcNoBanco = lstParcNoBancoTotal.Where(y => y.nu_parcela == t).ToList();
 
                     Registry("(a19.1) lstParcNoBanco : " + lstParcNoBanco.Count());
 
-                    var lstIdsTrans = lstParcNoBanco.Select(y => y.fk_log_transacoes.ToString()).ToList();
+                    var lstIdsTrans = lstParcNoBanco.Select(y => (long)y.fk_log_transacoes).ToList();
 
                     Registry("(a19.2) lstParcNoBanco : " + lstIdsTrans.Count());
 
-                    var lstLTRNoBanco = db.LOG_Transacoes.Where(a => lstIdsTrans.Contains(a.i_unique.ToString())).ToList();
+                    var lstLTRNoBanco = lstTransTotal.Where(a => lstIdsTrans.Contains((long)a.i_unique)).ToList();
 
                     Registry("(a19.3) lstLTRNoBanco : " + lstLTRNoBanco.Count());
 
-                    foreach (var itemParcela in db.T_Parcelas.
-                                            Where ( y=> lstCartoes.Contains(y.fk_cartao.ToString())).
-                                            Where ( y=> y.nu_parcela == t).ToList() )
+                    foreach (var itemParcela in lstParcNoBanco)
                     {
                         var ltr = lstLTRNoBanco.FirstOrDefault(y => y.i_unique == itemParcela.fk_log_transacoes);
 

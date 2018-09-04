@@ -283,6 +283,8 @@
     <Content Include="app\home\HomeController.js" />
     <Content Include="app\system\admopers\ativaGrafica.html" />
     <Content Include="app\system\admopers\ativaGrafica.js" />
+    <Content Include="app\system\admopers\lancTx.html" />
+    <Content Include="app\system\admopers\lancTx.js" />
     <Content Include="app\system\admopers\limites.html" />
     <Content Include="app\system\admopers\limites.js" />
     <Content Include="app\system\admopers\opers.html" />

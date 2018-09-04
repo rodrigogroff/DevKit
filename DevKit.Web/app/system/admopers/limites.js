@@ -16,21 +16,19 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         }
     };
 
-    $scope.executar = function ()
-    {
+    $scope.executar = function () {
         $scope.emp_fail = $scope.campos.idEmpresa == undefined;
         $scope.vlr_fail = $scope.campos.valor == undefined;
-        
+
         if ($scope.emp_fail == false && $scope.vlr_fail == false)
             $scope.mostraModal = true;
-    }
+    };
 
     $scope.cancelaModal = function () {
         $scope.mostraModal = false;
-    }
+    };
 
-    $scope.confirmar = function ()
-    {
+    $scope.confirmar = function () {
         $scope.mostraModal = false;
 
         $scope.loading = true;
@@ -42,10 +40,10 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             tipoOper: $scope.campos.tipoOper,
             valor: $scope.campos.valor
         },
-        function (data) {
-            toastr.success('Limites alterados com sucesso!', 'Sistema');
-            $scope.loading = false;
-        });
-    }
+            function (data) {
+                toastr.success('Limites alterados com sucesso!', 'Sistema');
+                $scope.loading = false;
+            });
+    };
 
 }]);

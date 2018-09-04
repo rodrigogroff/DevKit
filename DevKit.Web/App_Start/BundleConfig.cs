@@ -39,6 +39,7 @@ namespace DevKit.Web
                 "~/app/system/admopers/opers.js",
                 "~/app/system/admopers/limites.js",
                 "~/app/system/admopers/ativaGrafica.js",
+                "~/app/system/admopers/lanctx.js",
                 "~/app/associado/LimitesController.js",
                 "~/app/associado/LimitesMobileController.js",
                 "~/app/associado/ExtratosController.js",

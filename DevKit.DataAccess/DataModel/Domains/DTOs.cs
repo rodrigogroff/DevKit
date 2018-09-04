@@ -19,4 +19,10 @@ namespace DataModel
         public int count = 0;
         public List<BaseComboResponse> results = new List<BaseComboResponse>();
     }
+
+    public class LancDespesa
+    {
+        public string fkCartao, associado, matricula, valor, saldo;
+        public bool falta = false;
+    }
 }

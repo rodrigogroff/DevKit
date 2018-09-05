@@ -72,7 +72,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
         for (var i = 0; i < $scope.list.length; i++) {
             var v = $scope.list[i];
 
-            lst += v.fkCartao + ',' + v.valor + ';';
+            lst += v.fkCartao + '|' + v.valor + ';';
         }
 
         Api.AdmOper.listPage({
@@ -81,8 +81,7 @@ function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSel
             lista: lst
         },
         function (data) {
-            $scope.list = data.results;
-            $scope.loading = false;
+            toastr.success('Lançamentos efetuados!', 'Sistema');
         });
     };
 

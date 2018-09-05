@@ -209,9 +209,9 @@ namespace DevKit.Web.Controllers
                         var lst = new List<LancDespesa>();
 
                         var lstIdsCartoes = lstTrans.Select(y => y.fk_cartao).Distinct().ToList();
-                        var lstCartoes = db.T_Cartao.Where(y => lstIdsCartoes.Contains((int)y.i_unique));
+                        var lstCartoes = db.T_Cartao.Where(y => lstIdsCartoes.Contains((int)y.i_unique)).ToList();
                         var lstIdsProps = lstCartoes.Select(y => y.fk_dadosProprietario).Distinct().ToList();
-                        var lstProps = db.T_Proprietario.Where(y => lstIdsProps.Contains((int)y.i_unique));
+                        var lstProps = db.T_Proprietario.Where(y => lstIdsProps.Contains((int)y.i_unique)).ToList();
 
                         var mon = new money();
                         var saldo = new SaldoDisponivel
@@ -222,11 +222,8 @@ namespace DevKit.Web.Controllers
                         var lstIdsTrans = saldo.lstParcelas.Select(y => y.fk_log_transacoes).Distinct().ToList();
                         saldo.lstTrans = db.LOG_Transacoes.Where(y => lstIdsTrans.Contains((int)y.i_unique)).ToList();
 
-                        foreach (var item in lstTrans)
+                        foreach (var cart in lstCartoes)
                         {
-                            var cart = lstCartoes.FirstOrDefault(y => y.i_unique == item.fk_cartao);
-                            if (cart == null) continue;
-
                             var prop = lstProps.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
                             if (prop == null) continue;
 
@@ -240,7 +237,7 @@ namespace DevKit.Web.Controllers
                                 matricula = cart.st_matricula,
                                 associado = prop.st_nome,
                                 valor = mon.setMoneyFormat(valor),
-                                fkCartao = item.fk_cartao.ToString(),
+                                fkCartao = cart.i_unique.ToString(),
                                 saldo = mon.setMoneyFormat(vrDisp),
                                 falta = vrDisp < valor,
                             });
@@ -264,7 +261,7 @@ namespace DevKit.Web.Controllers
 
                         foreach (var item in lista)
                         {
-                            var v = item.Split(',');
+                            var v = item.Split('|');
                             lstIdsCartoes.Add(Convert.ToInt64(v[0]));
                         }
 
@@ -274,7 +271,7 @@ namespace DevKit.Web.Controllers
 
                         foreach (var item in lista)
                         {
-                            var v = item.Split(',');
+                            var v = item.Split('|');
                             var c = lstCartoes.FirstOrDefault(y => y.i_unique == Convert.ToInt64(v[0]));
 
                             var valor = ObtemValor(v[1]);
@@ -314,7 +311,9 @@ namespace DevKit.Web.Controllers
                                 en_operacao = OperacaoCartao.VENDA_EMPRESARIAL,
                                 st_msg_transacao = "Lanc. Adm",
                                 fk_loja = term != null ? (int)term.fk_loja : (int?)null,
-                                st_doc = "",
+                                tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada),
+                                tg_contabil = '1',
+                                st_doc = "",                                
                             };
 
                             l_tr.i_unique = Convert.ToInt32(db.InsertWithIdentity(l_tr));
@@ -322,6 +321,7 @@ namespace DevKit.Web.Controllers
                             var parc = new T_Parcela
                             {
                                 nu_nsu = (int)l_nsu.i_unique,
+                                fk_log_transacoes = (int)l_tr.i_unique,                                
                                 fk_empresa = (int)idEmp,
                                 fk_cartao = (int)c.i_unique,
                                 dt_inclusao = DateTime.Now,
@@ -337,7 +337,7 @@ namespace DevKit.Web.Controllers
                             parc.i_unique = Convert.ToInt32(db.InsertWithIdentity(parc));                            
                         }
 
-                        break;
+                        return Ok();                        
                     }
 
             }

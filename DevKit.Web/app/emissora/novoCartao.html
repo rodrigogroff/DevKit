@@ -392,7 +392,7 @@
                                 <button class="btn btn-xs btn-danger" ng-show="cep_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" maxlength="8"
+                                <input type="text" class="form-control input-transparent" maxlength="8" onKeyUp="money(this,ValorNum);" 
                                        ng-model="viewModel.cep">
                             </td>
                             <td></td>

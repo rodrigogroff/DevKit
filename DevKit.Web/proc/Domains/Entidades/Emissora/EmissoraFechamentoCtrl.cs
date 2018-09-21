@@ -124,14 +124,15 @@ namespace DevKit.Web.Controllers
                 var lojas = db.T_Loja.Where(y => ids_lojas.Contains((long)y.i_unique)).ToList();
 
                 var cartoes = (from cart in db.T_Cartao
-                           join prop in db.T_Proprietario on cart.fk_dadosProprietario equals (int)prop.i_unique
-                           where ids_cartoes.Contains ( (long)cart.i_unique )
-                           select new FechamentoListagemCartao
-                           {
-                               fkCartao = (int)cart.i_unique,
-                               associado = prop.st_nome,
-                               matricula = cart.st_matricula,
-                           }).
+                               join prop in db.T_Proprietario on cart.fk_dadosProprietario equals (int)prop.i_unique
+                               where ids_cartoes.Contains((long)cart.i_unique)
+                               select new FechamentoListagemCartao
+                               {
+                                   fkCartao = (int)cart.i_unique,
+                                   associado = prop.st_nome,
+                                   matricula = cart.st_matricula,
+                               }).
+                           OrderBy(u => u.associado).
                            ToList();
 
                 foreach (var item in cartoes)

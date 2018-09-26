@@ -394,8 +394,6 @@ public partial class ClientHandler
 
                                             LogFalha(isoCode + " montaCNET_Venda falhou");
 
-                                            //06
-
                                             var Iso210 = new ISO8583
                                             {
                                                 codResposta = "06",
@@ -433,12 +431,14 @@ public partial class ClientHandler
                                             enviaDadosEXPRESS(Iso210.registro);
 
                                             #endregion
+
+                                            bFinaliza = true;
                                         }
                                         else
                                         {
-                                            #region - processa venda normal - 
+                                            bFinaliza = false;
 
-                                            bFinaliza = true;
+                                            #region - processa venda normal - 
 
                                             using (var db = new AutorizadorCNDB())
                                             {
@@ -508,10 +508,10 @@ public partial class ClientHandler
 
                                                 enviaDadosEXPRESS(Iso210.registro);
 
-                                                //   if (Iso210.codResposta == "00")
-                                                //     bFinaliza = false; // continua depois via 202
-
                                                 #endregion
+
+                                                if (Iso210.codResposta != "00")
+                                                    bFinaliza = true;
                                             }
 
                                             #endregion

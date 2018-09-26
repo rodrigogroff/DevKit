@@ -26,6 +26,46 @@ namespace GetStarted
 
                 switch (strPatch)
                 {
+                    case "VLRDIFERE":
+                        {
+                            Console.WriteLine("Buscando parcelas....");
+                            var lstParcsConfirmadas = (from e in db.T_Parcelas
+                                                       join eTr in db.LOG_Transacoes on (int)e.fk_log_transacoes equals eTr.i_unique
+                                                       where eTr.tg_confirmada.ToString() == "1"
+                                                       where eTr.dt_transacao > DateTime.Now.AddMonths(-9)
+                                                       select e).
+                                                       OrderByDescending ( y=> y.dt_inclusao ).
+                                                       ToList();
+
+                            Console.WriteLine("Buscando parcelas.... " + lstParcsConfirmadas.Count());
+
+                            var lstVendas = lstParcsConfirmadas.Select(y => y.fk_log_transacoes).Distinct().ToList();
+                         //   var trans = db.LOG_Transacoes.Where ( y=> lstVendas.Contains((int)y.i_unique)).ToList();
+
+                            int tot = lstVendas.Count();
+                            int t = 0;
+
+                            foreach (var venda in lstVendas)
+                            {
+                                ++t;
+
+                                Console.Write("\r Vendas.... " + t + " / " + tot);
+
+                                var tLog = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == venda);
+                                var total = tLog.vr_total;
+
+                                // busca parcelas
+
+                                var totalParc = lstParcsConfirmadas.Where (y=> y.fk_log_transacoes == venda).Sum(y => y.vr_valor);
+
+                                if (total != totalParc)
+                                    Console.WriteLine(" >>>> " + venda + " => T " + total + " P " + totalParc + " {" + tLog.st_msg_transacao.Trim() 
+                                        + "} [" + Convert.ToDateTime(tLog.dt_transacao).ToString("dd/MM/yyyy") + " - NSU:" + tLog.nu_nsu);
+                            }
+
+                            break;
+                        }
+
                     default:
                     case "semTrans":
                         {

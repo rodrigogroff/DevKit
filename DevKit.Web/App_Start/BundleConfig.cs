@@ -40,6 +40,7 @@ namespace DevKit.Web
                 "~/app/system/admopers/limites.js",
                 "~/app/system/admopers/ativaGrafica.js",
                 "~/app/system/admopers/lanctx.js",
+                "~/app/system/admopers/dashboard.js",
                 "~/app/associado/LimitesController.js",
                 "~/app/associado/LimitesMobileController.js",
                 "~/app/associado/ExtratosController.js",
@@ -72,7 +73,7 @@ namespace DevKit.Web
                 "~/app/system/relatorios/ListingRelAssociadosController.js",
                 "~/app/system/relatorios/ListingLojistaTransController.js",                
                 "~/app/system/relatorios/ListingLojistaPendsController.js",
-                "~/app/system/cancelamento/CancelamentoController.js"
+                "~/app/system/cancelamento/CancelamentoController.js"                
                 ));
         }
     }

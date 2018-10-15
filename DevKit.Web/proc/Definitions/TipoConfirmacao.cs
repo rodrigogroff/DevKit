@@ -11,4 +11,10 @@ namespace DevKit.Web.Controllers
                             Cancelada = "5",
                             Desfeita = "6";
     }
+
+    public class TipoCaptura
+    {
+        public const string SITEF = "1",
+                            PORTAL = "2";
+    }
 }

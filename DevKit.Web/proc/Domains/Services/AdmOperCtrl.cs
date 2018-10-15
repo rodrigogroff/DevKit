@@ -340,6 +340,47 @@ namespace DevKit.Web.Controllers
                         return Ok();                        
                     }
 
+                case "101":
+                    {
+                        var dtNow = DateTime.Now;
+                        var dtIni = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 0, 0, 0);
+                        var dtFim = dtIni.AddDays(1);
+
+                        var query = db.LOG_Transacoes.
+                                        Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim);
+
+                        var qpendSitef = query.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).Count();
+
+                        return Ok( new
+                        {
+                            pendentesSitef = 0,
+                            confirmadasSitef = 0,
+                            confirmadasPortal = 0,
+                            totalConfirmadas = 0,
+                        });
+                    }
+
+                case "102":
+                    {
+
+
+                        return Ok();
+                    }
+
+                case "103":
+                    {
+
+
+                        return Ok();
+                    }
+
+                case "104":
+                    {
+
+
+                        return Ok();
+                    }
+
             }
 
             return BadRequest();            

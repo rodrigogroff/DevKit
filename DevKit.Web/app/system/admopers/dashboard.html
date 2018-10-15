@@ -17,7 +17,7 @@
             <table>
                 <tr>
                     <td width="600px" valign="top">
-                        <h3>Indicadores</h3>
+                        <h3>Indicadores</h3>  <!--101-->
                         <br />
                         <table class="table table-hover">
                             <tr>
@@ -26,47 +26,47 @@
                             </tr>
                             <tr>
                                 <td>TEMPO RESPOSTA</td>
-                                <td>xxx</td>
+                                <td>?</td>
                             </tr>
                             <tr>
-                                <td>No. PENDENTES</td>
-                                <td>xxx</td>
+                                <td>No. PENDENTES SITEF</td>
+                                <td>{{a.pendentesSitef}}</td>
                             </tr>
                             <tr>
-                                <td>CONFIRMADAS</td>
-                                <td>xxx</td>
+                                <td>CONFIRMADAS SITEF</td>
+                                <td>{{a.confirmadasSitef}}</td>
                             </tr>
                             <tr>
                                 <td>STATUS PORTAL</td>
-                                <td>xxx</td>
+                                <td>ATIVO</td>
                             </tr>
                             <tr>
                                 <td>TEMPO RESPOSTA</td>
-                                <td>xxx</td>
+                                <td>?</td>
                             </tr>
                             <tr>
-                                <td>No. CONFIRMADAS</td>
-                                <td>xxx</td>
+                                <td>No. CONFIRMADAS PORTAL</td>
+                                <td>{{a.confirmadasPortal}}</td>
                             </tr>
                             <tr>
-                                <td>TOTAL TRANS.CONFIRMADAS</td>
-                                <td>xxx</td>
+                                <td>TOTAL CONFIRMADAS</td>
+                                <td>{{a.totalConfirmadas}}</td>
                             </tr>
                         </table>
                     </td>
                     <td width="50px"></td>
                     <td width="600px" valign="top">
-                        <h3>Comparativo Autorizadores x Captura</h3>
+                        <h3>Comparativo Autorizadores x Captura</h3> <!--102-->
                         <br />
-                        SITEF: <br />
-                        PORTAL: <br />
+                        SITEF: {{b.totalSITEF}}<br />
+                        PORTAL: {{b.totalPORTAL}}<br />
                         <br />
                         <br />
                     </td>
                 </tr>
                 <tr>
                     <td valign="top">
-                        <h3>Transações em tempo real</h3>
+                        <h3>Transações em tempo real</h3> <!--103-->
                         <br />
                         <table class="table table-hover">
                             <thead>
@@ -78,24 +78,24 @@
                             </thead>
                             <tr>
                                 <td>STATUS SITEF</td>
-                                <td></td>
-                                <td></td>
+                                <td>{{c.totalSitef}}</td>
+                                <td>{{c.statusSITEF}}</td>
                             </tr>
                             <tr>
                                 <td>PORTAL</td>
-                                <td></td>
-                                <td></td>
+                                <td>{{c.totalPortal}}</td>
+                                <td>{{c.statusPoral}}</td>
                             </tr>
                             <tr>
                                 <td>OUTROS</td>
-                                <td></td>
-                                <td></td>
+                                <td>0</td>
+                                <td>0</td>
                             </tr>
                         </table>
                     </td>
                     <td></td>
                     <td valign="top">
-                        <h3>Transações em tempo real</h3>
+                        <h3>Transações em tempo real</h3> <!--104-->
                         <br />
                         <table class="table table-hover">
                             <thead>
@@ -107,25 +107,25 @@
                             </thead>
                             <tr>
                                 <td>STATUS SITEF</td>
-                                <td></td>
-                                <td></td>
+                                <td>{{d.totTransacoesSITEF}}</td>
+                                <td>ATIVO</td>
                             </tr>
                             <tr>
                                 <td>PORTAL</td>
-                                <td></td>
-                                <td></td>
+                                <td>{{d.totTransacoesPORTAL}}</td>
+                                <td>ATIVO</td>
                             </tr>
                             <tr>
                                 <td>OUTROS</td>
-                                <td></td>
-                                <td></td>
+                                <td>0</td>
+                                <td>0</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr>
                     <td valign="top">
-                        <h3>Transações x financeiro por empresa</h3>
+                        <h3>Transações x financeiro por empresa</h3> <!--105-->
                         <br />
                         <table class="table table-hover">
                             <thead>
@@ -136,11 +136,11 @@
                                     <th>Pendentes</th>
                                 </tr>
                             </thead>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                            <tr data-ng-repeat="item in e.list">
+                                <td>{{item.empresa}}</td>
+                                <td>{{item.financ}}</td>
+                                <td>{{item.confirmadas}}</td>
+                                <td>{{item.pendentes}}</td>
                             </tr>
                         </table>
                     </td>
@@ -152,7 +152,7 @@
                 </tr>
                 <tr>
                     <td valign="top">
-                        <h3>Estabelecimento x Transações</h3>
+                        <h3>Estabelecimento x Transações</h3> <!--106-->
                         <br />
                         Total Dia: <br />
                         <br />
@@ -166,14 +166,14 @@
                                     <th>Canceladas</th>
                                 </tr>
                             </thead>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                            <tr data-ng-repeat="item in f.list">
+                                <td>{{item.loja}}</td>
+                                <td>{{item.confirmadas}}</td>
+                                <td>{{item.pendentes}}</td>
+                                <td>{{item.canceladas}}</td>
                             </tr>
-                        </table>                        
-                        <h3>Estabelecimento x Volume Financeiro</h3>
+                        </table>
+                        <h3>Estabelecimento x Volume Financeiro</h3> <!--107-->
                         <br />
                         Total Dia: <br />
                         <br />
@@ -185,12 +185,12 @@
                                     <th>Valor</th>
                                 </tr>
                             </thead>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                            <tr data-ng-repeat="item in g.list">
+                                <td>{{item.loja}}</td>
+                                <td>{{item.valor}}</td>
                             </tr>
                         </table>
-                        
+
                     </td>
                     <td></td>                    
                 </tr>

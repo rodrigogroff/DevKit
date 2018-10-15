@@ -777,15 +777,14 @@ namespace DataModel
             };
 
             if (var_codResp != "0000")
-            {
                 l_tr.tg_confirmada = Convert.ToChar(TipoConfirmacao.Erro);
-                l_tr.tg_contabil = Convert.ToChar(Context.FALSE);
-            }
             else
-            {
                 l_tr.tg_confirmada = Convert.ToChar(TipoConfirmacao.Pendente);
-                l_tr.tg_contabil = Convert.ToChar(Context.TRUE);
-            }
+
+            if (IsSitef == true)
+                l_tr.tg_contabil = Convert.ToChar(TipoCaptura.SITEF);
+            else
+                l_tr.tg_contabil = Convert.ToChar(TipoCaptura.PORTAL);
 
             l_tr.i_unique = Convert.ToInt32(db.InsertWithIdentity(l_tr));
 

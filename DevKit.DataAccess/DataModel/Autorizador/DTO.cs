@@ -16,6 +16,12 @@ namespace DataModel
                             Desfeita = "6";
     }
 
+    public class TipoCaptura
+    {
+        public const string SITEF = "1",
+                            PORTAL = "2";
+    }
+
     public class POS_Entrada
     {
         public string st_empresa,

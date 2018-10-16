@@ -17,9 +17,9 @@
             <table>
                 <tr>
                     <td width="600px" valign="top">
-                        <h3>Indicadores</h3>  <!--101-->
+                        <h3>Indicadores </h3> <!--101-->
                         <br />
-                        <table class="table table-hover">
+                        <table class="table table-hover" ng-if="a.pendentesSitef != undefined">
                             <tr>
                                 <td width="250px">STATUS SITEF</td>
                                 <td>xxx</td>
@@ -56,7 +56,7 @@
                     </td>
                     <td width="50px"></td>
                     <td width="600px" valign="top">
-                        <h3>Comparativo Autorizadores x Captura</h3> <!--102-->
+                        <h3>Comparativo Autorizadores x Captura </h3> <!--102-->
                         <br />
                         SITEF: {{b.totalSITEF}}<br />
                         PORTAL: {{b.totalPORTAL}}<br />
@@ -66,9 +66,9 @@
                 </tr>
                 <tr>
                     <td valign="top">
-                        <h3>Transações em tempo real</h3> <!--103-->
+                        <h3>Transações em tempo real </h3> <!--103-->
                         <br />
-                        <table class="table table-hover">
+                        <table class="table table-hover" ng-if="c.totalSitef != undefined">
                             <thead>
                                 <tr>
                                     <th>CAPTURA TIPO</th>
@@ -84,7 +84,7 @@
                             <tr>
                                 <td>PORTAL</td>
                                 <td>{{c.totalPortal}}</td>
-                                <td>{{c.statusPoral}}</td>
+                                <td>ONLINE</td>
                             </tr>
                             <tr>
                                 <td>OUTROS</td>
@@ -95,9 +95,9 @@
                     </td>
                     <td></td>
                     <td valign="top">
-                        <h3>Transações em tempo real</h3> <!--104-->
+                        <h3>Transações em tempo real </h3> <!--104-->
                         <br />
-                        <table class="table table-hover">
+                        <table class="table table-hover" ng-if="d.totTransacoesSITEF != undefined">
                             <thead>
                                 <tr>
                                     <th>CAPTURA TIPO</th>
@@ -125,9 +125,9 @@
                 </tr>
                 <tr>
                     <td valign="top">
-                        <h3>Transações x financeiro por empresa</h3> <!--105-->
+                        <h3>Transações x financeiro por empresa </h3> <!--105-->
                         <br />
-                        <table class="table table-hover">
+                        <table class="table table-hover" ng-if="e.list != undefined">
                             <thead>
                                 <tr>
                                     <th>Empresa</th>
@@ -152,12 +152,12 @@
                 </tr>
                 <tr>
                     <td valign="top">
-                        <h3>Estabelecimento x Transações</h3> <!--106-->
+                        <h3>Estabelecimento x Transações </h3> <!--106-->
                         <br />
                         Total Dia: <br />
                         <br />
                         <br />
-                        <table class="table table-hover">
+                        <table class="table table-hover" ng-if="f.list != undefined">
                             <thead>
                                 <tr>
                                     <th>Loja</th>
@@ -173,12 +173,12 @@
                                 <td>{{item.canceladas}}</td>
                             </tr>
                         </table>
-                        <h3>Estabelecimento x Volume Financeiro</h3> <!--107-->
+                        <h3>Estabelecimento x Volume Financeiro </h3> <!--107-->
                         <br />
                         Total Dia: <br />
                         <br />
                         <br />
-                        <table class="table table-hover">
+                        <table class="table table-hover" ng-if="g.list != undefined">
                             <thead>
                                 <tr>
                                     <th>Loja</th>
@@ -190,7 +190,6 @@
                                 <td>{{item.valor}}</td>
                             </tr>
                         </table>
-
                     </td>
                     <td></td>                    
                 </tr>

@@ -347,12 +347,12 @@ namespace DevKit.Web.Controllers
                         var dtIni = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 0, 0, 0);
                         var dtFim = dtIni.AddDays(1);
 
+                        var queryX = db.LOG_Transacoes.Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim);
+
                         object a, b, c, d, e, f, g;
 
                         #region - A - 
                         {
-                            var queryX = db.LOG_Transacoes.Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim);
-
                             var pendentesSitef = queryX.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).
                                                         Where(y => y.tg_contabil.ToString() == TipoCaptura.SITEF).
                                                         Count();
@@ -379,8 +379,6 @@ namespace DevKit.Web.Controllers
 
                         #region - B -
                         {
-                            var queryX = db.LOG_Transacoes.Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim);
-
                             var confirmadasSitef = queryX.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
                                                             Where(y => y.tg_contabil.ToString() == TipoCaptura.SITEF).
                                                             Count();
@@ -399,24 +397,32 @@ namespace DevKit.Web.Controllers
 
                         #region - C -
                         {
-                            var queryX = db.LOG_Transacoes.Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim);
-
                             var totalSitef = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.SITEF).Count();
+
+                            var confSitef = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.SITEF && 
+                                                                y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).Count();
+
+                            var pendSitef = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.SITEF &&
+                                                                y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).Count();
+
                             var totalPortal = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.PORTAL).Count();
+
+                            var confPortal = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.PORTAL &&
+                                                                y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).Count();
 
                             c = new
                             {
                                 totalSitef,
-                                statusSITEF = "ONLINE",
+                                confSitef,
+                                pendSitef,
                                 totalPortal,
+                                confPortal
                             };
                         }
                         #endregion
 
                         #region - D -
                         {
-                            var queryX = db.LOG_Transacoes.Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim);
-
                             var totalSitef = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.SITEF).Count();
                             var totalPortal = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.PORTAL).Count();
 
@@ -434,7 +440,7 @@ namespace DevKit.Web.Controllers
                                               y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).
                                     ToList();
 
-                        var query = queryPrincipal.
+                        var queryConf = queryPrincipal.
                                 Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
                                 ToList();
 
@@ -442,16 +448,20 @@ namespace DevKit.Web.Controllers
                                     Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).
                                     ToList();
 
+                        var queryCanceladas = queryPrincipal.
+                                    Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada).
+                                    ToList();
+
                         #region - E -
                         {
-                            var empresas = query.Select(y => y.fk_empresa).Distinct().ToList();
+                            var empresas = queryConf.Select(y => y.fk_empresa).Distinct().ToList();
 
                             var lstCountEmpresas = new List<string>();
 
                             foreach (var item in empresas)
                             {
                                 lstCountEmpresas.Add(
-                                    query.Where(y => y.fk_empresa == (int)item).
+                                    queryConf.Where(y => y.fk_empresa == (int)item).
                                         Sum(y => y.vr_total).ToString().PadLeft(12, '0') + "." +
                                         item.ToString().PadLeft(6, '0'));
                             }
@@ -477,8 +487,9 @@ namespace DevKit.Web.Controllers
                                 {
                                     empresa = tEmp.st_fantasia,
                                     financ = mon.formatToMoney(vol),
-                                    confirmadas = query.Count(y => y.fk_empresa.ToString() == idEmp),
+                                    confirmadas = queryConf.Count(y => y.fk_empresa.ToString() == idEmp),
                                     pendentes = queryPendentes.Count(y => y.fk_empresa.ToString() == idEmp),
+                                    canceladas = queryCanceladas.Count(y => y.fk_empresa.ToString() == idEmp),
                                 });
                             }
 
@@ -491,14 +502,14 @@ namespace DevKit.Web.Controllers
 
                         #region - F - 
                         {
-                            var lojas = query.Select(y => y.fk_loja).Distinct().ToList();
+                            var lojas = queryConf.Select(y => y.fk_loja).Distinct().ToList();
 
                             var lstCountLojas = new List<string>();
 
                             foreach (var item in lojas)
                             {
                                 lstCountLojas.Add(
-                                    query.Where(y => y.fk_loja == (int)item).
+                                    queryConf.Where(y => y.fk_loja == (int)item).
                                         Sum(y => y.vr_total).ToString().PadLeft(12, '0') + "." +
                                         item.ToString().PadLeft(6, '0'));
                             }
@@ -511,26 +522,30 @@ namespace DevKit.Web.Controllers
                             var lst = new List<object>();
                             var mon = new money();
 
+                            var total = 0;
+
                             foreach (var item in lstLojas)
                             {
                                 var spl = item.Split('.');
 
                                 var vol = spl[0].TrimStart('0');
-                                var idEmp = spl[1].TrimStart('0');
+                                var idLoja = spl[1].TrimStart('0');
 
-                                var tLoja = db.T_Loja.FirstOrDefault(y => y.i_unique.ToString() == idEmp);
+                                var tLoja = db.T_Loja.FirstOrDefault(y => y.i_unique.ToString() == idLoja);
 
                                 lst.Add(new
                                 {
                                     loja = tLoja.st_nome,
                                     financ = mon.formatToMoney(vol),
-                                    confirmadas = query.Count(y => y.fk_empresa.ToString() == idEmp),
-                                    pendentes = queryPendentes.Count(y => y.fk_empresa.ToString() == idEmp),
+                                    confirmadas = queryConf.Count(y => y.fk_loja.ToString() == idLoja),
+                                    pendentes = queryPendentes.Count(y => y.fk_loja.ToString() == idLoja),
+                                    canceladas = queryCanceladas.Count(y => y.fk_loja.ToString() == idLoja),
                                 });
-                            }
+                            }                            
 
                             f = new
                             {
+                                total = queryConf.Count(),
                                 list = lst
                             };
                         }
@@ -538,14 +553,14 @@ namespace DevKit.Web.Controllers
 
                         #region - G - 
                         {
-                            var lojas = query.Select(y => y.fk_loja).Distinct().ToList();
+                            var lojas = queryConf.Select(y => y.fk_loja).Distinct().ToList();
 
                             var lstCountLojas = new List<string>();
 
                             foreach (var item in lojas)
                             {
                                 lstCountLojas.Add(
-                                    query.Where(y => y.fk_loja == (int)item).
+                                    queryConf.Where(y => y.fk_loja == (int)item).
                                         Sum(y => y.vr_total).ToString().PadLeft(12, '0') + "." +
                                         item.ToString().PadLeft(6, '0'));
                             }
@@ -557,6 +572,8 @@ namespace DevKit.Web.Controllers
 
                             var lst = new List<object>();
                             var mon = new money();
+
+                            long total = 0;
 
                             foreach (var item in lstLojas)
                             {
@@ -572,10 +589,13 @@ namespace DevKit.Web.Controllers
                                     loja = tLoja.st_nome,
                                     valor = mon.formatToMoney(vol),
                                 });
+
+                                total += Convert.ToInt64(vol);
                             }
 
                             g = new
                             {
+                                total = mon.setMoneyFormat((long)queryConf.Select(y=>y.vr_total).Sum()),
                                 list = lst
                             };
                         }

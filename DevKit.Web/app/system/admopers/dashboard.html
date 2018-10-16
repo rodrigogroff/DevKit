@@ -14,6 +14,7 @@
             </table>
         </legend>
         <div class="divWebForm">
+            <button class="btn btn-success right" ng-click="refresh()"> Refresh </button>
             <table>
                 <tr>
                     <td width="600px" valign="top">
@@ -53,6 +54,7 @@
                                 <td>{{a.totalConfirmadas}}</td>
                             </tr>
                         </table>
+                        <br />
                     </td>
                     <td width="50px"></td>
                     <td width="600px" valign="top">
@@ -73,25 +75,24 @@
                                 <tr>
                                     <th>CAPTURA TIPO</th>
                                     <th>QTD.TRANSAÇÕES</th>
-                                    <th>STATUS</th>
+                                    <th>CONFIRMADO</th>
+                                    <th>PENDENTE</th>
                                 </tr>
                             </thead>
                             <tr>
                                 <td>STATUS SITEF</td>
                                 <td>{{c.totalSitef}}</td>
-                                <td>{{c.statusSITEF}}</td>
+                                <td>{{c.confSitef}}</td>
+                                <td>{{c.pendSitef}}</td>
                             </tr>
                             <tr>
                                 <td>PORTAL</td>
                                 <td>{{c.totalPortal}}</td>
-                                <td>ONLINE</td>
-                            </tr>
-                            <tr>
-                                <td>OUTROS</td>
-                                <td>0</td>
+                                <td>{{c.confPortal}}</td>
                                 <td>0</td>
                             </tr>
                         </table>
+                        <br />
                     </td>
                     <td></td>
                     <td valign="top">
@@ -115,12 +116,8 @@
                                 <td>{{d.totTransacoesPORTAL}}</td>
                                 <td>ATIVO</td>
                             </tr>
-                            <tr>
-                                <td>OUTROS</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
                         </table>
+                        <br />
                     </td>
                 </tr>
                 <tr>
@@ -134,6 +131,7 @@
                                     <th>Vol.Financeiro</th>
                                     <th>Confirmadas</th>
                                     <th>Pendentes</th>
+                                    <th>Canceladas</th>
                                 </tr>
                             </thead>
                             <tr data-ng-repeat="item in e.list">
@@ -141,8 +139,10 @@
                                 <td>{{item.financ}}</td>
                                 <td>{{item.confirmadas}}</td>
                                 <td>{{item.pendentes}}</td>
+                                <td>{{item.canceladas}}</td>
                             </tr>
                         </table>
+                        <br />
                     </td>
                     <td></td>
                     <td valign="top">
@@ -153,8 +153,7 @@
                 <tr>
                     <td valign="top">
                         <h3>Estabelecimento x Transações </h3> <!--106-->
-                        <br />
-                        Total Dia: <br />
+                        Total Dia: {{f.total}}<br />
                         <br />
                         <br />
                         <table class="table table-hover" ng-if="f.list != undefined">
@@ -173,9 +172,12 @@
                                 <td>{{item.canceladas}}</td>
                             </tr>
                         </table>
-                        <h3>Estabelecimento x Volume Financeiro </h3> <!--107-->
                         <br />
-                        Total Dia: <br />
+                    </td>
+                    <td></td>
+                    <td>
+                        <h3>Estabelecimento x Volume Financeiro </h3> <!--107-->
+                        Total Dia: R$ {{g.total}}<br />
                         <br />
                         <br />
                         <table class="table table-hover" ng-if="g.list != undefined">
@@ -190,8 +192,8 @@
                                 <td>{{item.valor}}</td>
                             </tr>
                         </table>
+                        <br />
                     </td>
-                    <td></td>                    
                 </tr>
             </table>
             <br />

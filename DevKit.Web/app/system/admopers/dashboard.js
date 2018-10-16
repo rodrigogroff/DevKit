@@ -19,6 +19,10 @@ angular.module('app.controllers').controller('DashboardController',
                 });
             }
 
+            $scope.refresh = function () {
+                init();
+            };
+
             init();
 
         }]);

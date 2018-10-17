@@ -1,73 +1,67 @@
-﻿angular.module('app.controllers').controller('HomeController',
-['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$window',
-function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $window)
-{
-	$rootScope.exibirMenu = true;
-	$scope.loading = false;
+﻿
+angular.module('app.controllers').controller('HomeController',
+    ['$window', '$scope', '$rootScope', '$state', 'Api', 
+        function ($window, $scope, $rootScope, $state, Api) {
 
-    var w = angular.element($window);
+            $rootScope.exibirMenu = true;
+            $scope.loading = false;
 
-    $scope.$watch(function () { return $window.innerWidth; },
-        function (value) { $scope.width = $window.innerWidth + ", " + $window.innerHeight; }, true);
+            var w = angular.element($window);
 
-    w.bind('resize', function () { $scope.$apply(); });
+            $scope.$watch(function () { return $window.innerWidth; },
+                function (value) { $scope.width = $window.innerWidth + ", " + $window.innerHeight; }, true);
 
-	$scope.viewModel = undefined;
-	
-	init();
+            w.bind('resize', function () { $scope.$apply(); });
 
-	function init()
-	{
-		$scope.loading = true;
+            $scope.viewModel = undefined;
 
-        Api.HomeView.listPage({ }, function (data)
-		{
-			$scope.viewModel = data;
-			$scope.loading = false;
-        });
-	}
+            init();
 
-	$scope.showTask = function (mdl) {
-		$state.go('task', { id: mdl.id });
-	}
+            function init() {
+                $scope.loading = true;
 
-	$scope.showQuestion = function (mdl) {
-		$state.go('task', { id: mdl.fkTask });
-	}
+                Api.HomeView.listPage({}, function (data) {
+                    $scope.viewModel = data;
+                    $scope.loading = false;
+                });
+            }
 
-	$scope.markAsRead = function(mdl)
-    {
-        mdl.updateCommand = 'maskAsRead';
+            $scope.showTask = function (mdl) {
+                $state.go('task', { id: mdl.id });
+            };
 
-        Api.News.update({ id: mdl.id }, mdl, function (data)
-		{
-			init();
-		},
-		function (response) {
-			toastr.error(response.data.message, 'Error');
-		});
-	}
+            $scope.showQuestion = function (mdl) {
+                $state.go('task', { id: mdl.fkTask });
+            };
 
-	$scope.currentOption = undefined;
+            $scope.markAsRead = function (mdl) {
+                mdl.updateCommand = 'maskAsRead';
 
-	$scope.surveySelectOption = function (option)
-	{		
-		$scope.currentOption = option.id;
-	}
+                Api.News.update({ id: mdl.id }, mdl, function (data) {
+                    init();
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Error');
+                    });
+            };
 
-	$scope.confirmChoiceSurvey = function (mdl)
-    {
-		mdl.updateCommand = 'optionSelect';
-		mdl.anexedEntity = { id: $scope.currentOption };
+            $scope.currentOption = undefined;
 
-		Api.Survey.update({ id: mdl.id }, mdl, function (data)
-		{
-			init();
-			$scope.currentOption = undefined;
-		},
-		function (response) {
-			toastr.error(response.data.message, 'Error');
-		});
-	}
+            $scope.surveySelectOption = function (option) {
+                $scope.currentOption = option.id;
+            };
 
-}]);
+            $scope.confirmChoiceSurvey = function (mdl) {
+                mdl.updateCommand = 'optionSelect';
+                mdl.anexedEntity = { id: $scope.currentOption };
+
+                Api.Survey.update({ id: mdl.id }, mdl, function (data) {
+                    init();
+                    $scope.currentOption = undefined;
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Error');
+                    });
+            };
+
+        }]);

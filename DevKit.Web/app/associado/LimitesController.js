@@ -1,30 +1,27 @@
 ﻿
 angular.module('app.controllers').controller('LimitesController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
-{
-    $rootScope.exibirMenu = true;
-    $rootScope.mobileVersion = false;
+    ['$scope', '$rootScope', '$state', 'Api', 
+        function ($scope, $rootScope, $state, Api) {
 
-	$scope.loading = false;
+            $rootScope.exibirMenu = true;
+            $rootScope.mobileVersion = false;
 
-	init();
-
-	function init()
-    {
-        $scope.loading = true;
-
-        Api.LimiteAssociado.listPage({}, function (data)
-        {
-            $scope.list = data.results;
-            $scope.total = data.count;
             $scope.loading = false;
-        });
-    }
 
-    $scope.menu = function ()
-    {
-        $state.go('menuUsr', {});
-    }
-	
-}]);
+            init();
+
+            function init() {
+                $scope.loading = true;
+
+                Api.LimiteAssociado.listPage({}, function (data) {
+                    $scope.list = data.results;
+                    $scope.total = data.count;
+                    $scope.loading = false;
+                });
+            }
+
+            $scope.menu = function () {
+                $state.go('menuUsr', {});
+            };
+
+        }]);

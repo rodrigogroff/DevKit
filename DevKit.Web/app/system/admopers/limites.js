@@ -1,49 +1,50 @@
-﻿angular.module('app.controllers').controller('AdmOpersLimitesController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
-{
-	$rootScope.exibirMenu = true;
-    $scope.loading = false;
-    $scope.mostraModal = false;
+﻿
+angular.module('app.controllers').controller('AdmOpersLimitesController',
+    ['$scope', '$rootScope', 'Api', 'ngSelects',
+        function ($scope, $rootScope, Api, ngSelects) {
 
-    $scope.campos = {
+            $rootScope.exibirMenu = true;
+            $scope.loading = false;
+            $scope.mostraModal = false;
 
-        tipoLim: 1,
-        tipoOper: 1,
+            $scope.campos = {
 
-        selects: {
-            empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
-        }
-    };
+                tipoLim: 1,
+                tipoOper: 1,
 
-    $scope.executar = function () {
-        $scope.emp_fail = $scope.campos.idEmpresa == undefined;
-        $scope.vlr_fail = $scope.campos.valor == undefined;
+                selects: {
+                    empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
+                }
+            };
 
-        if ($scope.emp_fail == false && $scope.vlr_fail == false)
-            $scope.mostraModal = true;
-    };
+            $scope.executar = function () {
+                $scope.emp_fail = $scope.campos.idEmpresa == undefined;
+                $scope.vlr_fail = $scope.campos.valor == undefined;
 
-    $scope.cancelaModal = function () {
-        $scope.mostraModal = false;
-    };
+                if ($scope.emp_fail == false && $scope.vlr_fail == false)
+                    $scope.mostraModal = true;
+            };
 
-    $scope.confirmar = function () {
-        $scope.mostraModal = false;
+            $scope.cancelaModal = function () {
+                $scope.mostraModal = false;
+            };
 
-        $scope.loading = true;
+            $scope.confirmar = function () {
+                $scope.mostraModal = false;
 
-        Api.AdmOper.listPage({
-            op: '2',
-            id_emp: $scope.campos.idEmpresa,
-            tipoLim: $scope.campos.tipoLim,
-            tipoOper: $scope.campos.tipoOper,
-            valor: $scope.campos.valor
-        },
-            function (data) {
-                toastr.success('Limites alterados com sucesso!', 'Sistema');
-                $scope.loading = false;
-            });
-    };
+                $scope.loading = true;
 
-}]);
+                Api.AdmOper.listPage({
+                    op: '2',
+                    id_emp: $scope.campos.idEmpresa,
+                    tipoLim: $scope.campos.tipoLim,
+                    tipoOper: $scope.campos.tipoOper,
+                    valor: $scope.campos.valor
+                },
+                    function (data) {
+                        toastr.success('Limites alterados com sucesso!', 'Sistema');
+                        $scope.loading = false;
+                    });
+            };
+
+        }]);

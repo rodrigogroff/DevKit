@@ -1,71 +1,67 @@
 ﻿
 angular.module('app.controllers').controller('ListingLojistaPendsController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
-{
-    $rootScope.exibirMenu = true;
-    $scope.loading = false;
+    ['$scope', '$rootScope', 'Api',
+        function ($scope, $rootScope, Api) {
 
-    $scope.search = function ()
-    {
-        $scope.load(0, $scope.itensporpagina);        
-    }
-
-    $scope.load = function (skip, take)
-    {
-        $scope.loading = true;
-
-        var opcoes = {
-            skip: 0,
-            take: 1000,
-            pends: true
-        };
-
-        Api.RelLojistaTrans.listPage(opcoes, function (data)
-        {
-            $scope.list = data.results;
-            $scope.total = data.count;
+            $rootScope.exibirMenu = true;
             $scope.loading = false;
-        });
-    }
 
-    $scope.cancelar = function () {
-        $scope.mostraModal = true;
-    }
+            $scope.search = function () {
+                $scope.load(0, $scope.itensporpagina);
+            };
 
-    $scope.cancelaModal = function () {
-        $scope.mostraModal = false;
-    }
+            $scope.load = function (skip, take) {
+                $scope.loading = true;
 
-    $scope.cancelaModal = function () {
-        $scope.mostraModal = false;
-    }
+                var opcoes = {
+                    skip: 0,
+                    take: 1000,
+                    pends: true
+                };
 
-    $scope.confirmar = function () {
+                Api.RelLojistaTrans.listPage(opcoes, function (data) {
+                    $scope.list = data.results;
+                    $scope.total = data.count;
+                    $scope.loading = false;
+                });
+            };
 
-        $scope.loading = true;
+            $scope.cancelar = function () {
+                $scope.mostraModal = true;
+            };
 
-        var opcoes = {
-            skip: 0,
-            take: 1000,
-            pends: true,
-            pendsConf: true
-        };
+            $scope.cancelaModal = function () {
+                $scope.mostraModal = false;
+            };
 
-        Api.RelLojistaTrans.listPage(opcoes, function (data)
-        {
-            toastr.success('Todas as transações foram desfeitas', 'Sistema');
-            $scope.list = undefined;
-            $scope.total = 0;
-            $scope.mostraModal = false;
-            $scope.loading = false;
-        });        
-    }    
+            $scope.cancelaModal = function () {
+                $scope.mostraModal = false;
+            };
 
-    init();
+            $scope.confirmar = function () {
 
-    function init() {
-        $scope.search();
-    }
+                $scope.loading = true;
 
-}]);
+                var opcoes = {
+                    skip: 0,
+                    take: 1000,
+                    pends: true,
+                    pendsConf: true
+                };
+
+                Api.RelLojistaTrans.listPage(opcoes, function (data) {
+                    toastr.success('Todas as transações foram desfeitas', 'Sistema');
+                    $scope.list = undefined;
+                    $scope.total = 0;
+                    $scope.mostraModal = false;
+                    $scope.loading = false;
+                });
+            };
+
+            init();
+
+            function init() {
+                $scope.search();
+            }
+
+        }]);

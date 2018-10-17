@@ -1,7 +1,8 @@
 ﻿
 angular.module('app.controllers').controller('LojistasAssociadoMobileController',
-    ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$window',
-        function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $window) {
+    ['$scope', '$rootScope', 'ngHistoricoFiltro', 'Api', '$window',
+        function ($scope, $rootScope, ngHistoricoFiltro, Api, $window) {
+
             $rootScope.exibirMenu = true;
 
             $scope.itensporpagina = 15;
@@ -17,13 +18,12 @@ angular.module('app.controllers').controller('LojistasAssociadoMobileController'
                     ngHistoricoFiltro.filtro.exibeFiltro = false;
             }
 
-            $scope.search = function ()
-            {
+            $scope.search = function () {
                 $scope.setWidth = $window.innerWidth - 15;
 
                 $scope.load(0, $scope.itensporpagina);
                 $scope.paginador.reiniciar();
-            }
+            };
 
             $scope.load = function (skip, take) {
                 $scope.loading = true;
@@ -43,6 +43,6 @@ angular.module('app.controllers').controller('LojistasAssociadoMobileController'
                     $scope.total = data.count;
                     $scope.loading = false;
                 });
-            }
+            };
 
         }]);

@@ -1,92 +1,83 @@
-﻿angular.module('app.controllers').controller('CancelamentoController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', 
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects )
-{
-    $rootScope.exibirMenu = true;
+﻿
+angular.module('app.controllers').controller('CancelamentoController',
+    ['$scope', '$rootScope', 'Api', 
+        function ($scope, $rootScope, Api) {
 
-    init();
+            $rootScope.exibirMenu = true;
 
-    function init()
-    {
-        $scope.loading = false;        
-        $scope.viewModel = {};        
-    }
+            init();
 
-    $scope.limpar = function ()
-    {
-        $scope.viewModel = {};
-    }
+            function init() {
+                $scope.loading = false;
+                $scope.viewModel = {};
+            }
 
-    $scope.conferirNSU = function ()
-    {
-        $scope.viewModel.error = '';
+            $scope.limpar = function () {
+                $scope.viewModel = {};
+            };
 
-        $scope.stNSU_fail = invalidCheck($scope.viewModel.stNSU);
+            $scope.conferirNSU = function () {
+                $scope.viewModel.error = '';
 
-        if ($scope.stNSU_fail )
-            return;
+                $scope.stNSU_fail = invalidCheck($scope.viewModel.stNSU);
 
-        $scope.loading = true;
-        
-        Api.ConfereNSU.listPage({
-            nsu: $scope.viewModel.stNSU
-        },
-        function (data)
-        {
-            $scope.viewModel.cupom = data.results;
-            $scope.loading = false;
-        },
-        function (response)
-        {
-            $scope.viewModel.error = response.data.message;
-            $scope.loading = false;
-        });
-    }
-    
-    var invalidCheck = function (element) {
-        if (element == undefined)
-            return true;
-        else
-            if (element.length == 0)
-                return true;
+                if ($scope.stNSU_fail)
+                    return;
 
-        return false;
-    }
+                $scope.loading = true;
 
-    $scope.confirmar = function ()
-    {
-        $scope.loading = true;
+                Api.ConfereNSU.listPage({
+                    nsu: $scope.viewModel.stNSU
+                },
+                    function (data) {
+                        $scope.viewModel.cupom = data.results;
+                        $scope.loading = false;
+                    },
+                    function (response) {
+                        $scope.viewModel.error = response.data.message;
+                        $scope.loading = false;
+                    });
+            };
 
-        Api.CancelaVenda.listPage({
-            nsu: $scope.viewModel.stNSU
-        },
-        function (data)
-        {
-            $scope.viewModel.cupom = data.results;
-            $scope.loading = false;
-        },
-        function (response)
-        {
-            $scope.viewModel.cupom = undefined;
-            $scope.viewModel.erroCancelamento = response.data.message;
-            $scope.loading = false;
-        });
-    }    
+            var invalidCheck = function (element) {
+                if (element == undefined)
+                    return true;
+                else
+                    if (element.length == 0)
+                        return true;
 
-    $scope.printDiv = function (divName)
-    {
-        var printContents = "<table>";
+                return false;
+            };
 
-        for (var i = 0; i < $scope.viewModel.cupom.length; i = i + 1)
-            printContents += "<tr><td>" + $scope.viewModel.cupom[i] + "&nbsp;</td></tr>";
-        
-        printContents += "</table>"
+            $scope.confirmar = function () {
+                $scope.loading = true;
 
-        var popupWin = window.open('', '_blank', 'width=800,height=600');
-        popupWin.document.open();
-        popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
-        popupWin.document.close();
-    }
-    
-}]);
+                Api.CancelaVenda.listPage({
+                    nsu: $scope.viewModel.stNSU
+                },
+                    function (data) {
+                        $scope.viewModel.cupom = data.results;
+                        $scope.loading = false;
+                    },
+                    function (response) {
+                        $scope.viewModel.cupom = undefined;
+                        $scope.viewModel.erroCancelamento = response.data.message;
+                        $scope.loading = false;
+                    });
+            };
 
+            $scope.printDiv = function (divName) {
+                var printContents = "<table>";
+
+                for (var i = 0; i < $scope.viewModel.cupom.length; i = i + 1)
+                    printContents += "<tr><td>" + $scope.viewModel.cupom[i] + "&nbsp;</td></tr>";
+
+                printContents += "</table>"
+
+                var popupWin = window.open('', '_blank', 'width=800,height=600');
+                popupWin.document.open();
+                popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
+                popupWin.document.close();
+            };
+
+        }]);

@@ -1,16 +1,13 @@
-﻿angular.module('app.controllers').controller('ListingRelatoriosController',
-['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
-{
-    $rootScope.exibirMenu = true;
+﻿
+angular.module('app.controllers').controller('ListingRelatoriosController',
+    ['$scope', '$rootScope', '$state',
+        function ($scope, $rootScope, $state) {
 
-    $scope.loading = false;
+            $rootScope.exibirMenu = true;
+            $scope.loading = false;
 
-    $scope.associados = function ()
-    {
-        $state.go('relAssociados', { });
-    }
+            $scope.associados = function () {
+                $state.go('relAssociados', {});
+            };
 
-
-
-}]);
+        }]);

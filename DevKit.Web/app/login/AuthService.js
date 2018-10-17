@@ -59,18 +59,16 @@ function ($http, $q)
         _authentication.tipo = '';
     };
 
-    var _fillAuthData = function ()
-    {
+    var _fillAuthData = function () {
         var authData = JSON.parse(localStorage.getItem('authorizationData'));
-        if (authData)
-        {
+        if (authData) {
             _authentication.isAuth = true;
             _authentication.nameUser = authData.nameUser;
             _authentication.m1 = authData.m1;
             _authentication.m2 = authData.m2;
             _authentication.tipo = authData.tipo;
         }
-    }
+    };
 	
     authServiceFactory.login = _login;
     authServiceFactory.logOut = _logOut;

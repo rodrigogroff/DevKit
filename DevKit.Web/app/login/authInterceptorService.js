@@ -13,18 +13,19 @@ angular.module('app.services').factory('AuthInterceptorService', ['$q', '$rootSc
         }
 
         return config;
-    }
+    };
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
             $location.path('/login');
         }
         return $q.reject(rejection);
-    }
+    };
 
     authInterceptorServiceFactory.request = _request;
     authInterceptorServiceFactory.responseError = _responseError;
 
     return authInterceptorServiceFactory;
+
 }]);
 

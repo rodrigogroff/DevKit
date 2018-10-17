@@ -1,6 +1,7 @@
-﻿angular.module('app.controllers').controller('VendaMobileController',
-    ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$window',
-        function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects, $window) {
+﻿
+angular.module('app.controllers').controller('VendaMobileController',
+    ['$scope', '$rootScope', 'Api', 
+        function ($scope, $rootScope, Api) {
 
             init();
 
@@ -12,7 +13,7 @@
                 $scope.mostraModalMobile = false;
                 $scope.mostraModalMobileAutorizado = false;
                 $scope.processandoVenda = false;
-                                
+
                 $scope.lastTag = '';
                 $scope.modoVenda = '';
                 $scope.autorizando = false;
@@ -42,8 +43,7 @@
                         document.getElementById("cartAcesso").focus();
 
             }, true);
-
-
+            
             $scope.acesso_zero = false;
 
             $scope.$watch("viewModel.stAcesso", function (novo, anterior) {
@@ -61,12 +61,11 @@
 
             }, true);
 
-            $scope.pulaMatricula = function () { document.getElementById("cartMat").focus(); }
-            $scope.pulaAcesso = function () { document.getElementById("cartAcesso").focus(); }
-            $scope.pulaVenc = function () { document.getElementById("cartVenc").focus(); }
+            $scope.pulaMatricula = function () { document.getElementById("cartMat").focus(); };
+            $scope.pulaAcesso = function () { document.getElementById("cartAcesso").focus(); };
+            $scope.pulaVenc = function () { document.getElementById("cartVenc").focus(); };
 
-            $scope.conferirCartao = function ()
-            {
+            $scope.conferirCartao = function () {
                 var stA = $scope.viewModel.stAcesso.toString();
                 var stV = $scope.viewModel.stVencimento.toString();
 
@@ -108,24 +107,24 @@
                     acesso: stA,
                     vencimento: stV,
                 },
-                function (data) {
-                    $scope.viewModel.data = data.results[0];
-                    $scope.viewModel.emailCupom = $scope.viewModel.data.email;
-                    
-                    $scope.loading = false;
-                },
-                function (response) {                        
-                    $scope.loading = false;
-                    $scope.viewModel.error = "Cartão Inválido";
-                    $scope.viewModel.data = undefined;
-                    $scope.viewModel.parcelas = '';
-                    $scope.viewModel.valor = '';
-                    $scope.simulacao = undefined;
-                    $scope.modoVenda = '';
-                    $scope.erro = '';
-                    $scope.lastTag = '';
-                });
-            }
+                    function (data) {
+                        $scope.viewModel.data = data.results[0];
+                        $scope.viewModel.emailCupom = $scope.viewModel.data.email;
+
+                        $scope.loading = false;
+                    },
+                    function (response) {
+                        $scope.loading = false;
+                        $scope.viewModel.error = "Cartão Inválido";
+                        $scope.viewModel.data = undefined;
+                        $scope.viewModel.parcelas = '';
+                        $scope.viewModel.valor = '';
+                        $scope.simulacao = undefined;
+                        $scope.modoVenda = '';
+                        $scope.erro = '';
+                        $scope.lastTag = '';
+                    });
+            };
 
             var invalidCheck = function (element) {
                 if (element == undefined)
@@ -135,7 +134,7 @@
                         return true;
 
                 return false;
-            }
+            };
 
             $scope.cancelarSimula = function () {
                 $scope.viewModel.stEmpresa = '';
@@ -152,10 +151,9 @@
                 $scope.falhaVendaMsg = '';
                 $scope.viewModel.parcelas = 1;
                 $scope.viewModel.valor = '0,00';
-            }
+            };
 
-            $scope.parcelar = function ()
-            {
+            $scope.parcelar = function () {
                 $scope.valor_fail = invalidCheck($scope.viewModel.valor);
                 $scope.parcelas_fail = invalidCheck($scope.viewModel.parcelas);
 
@@ -246,7 +244,7 @@
 
                         if ($scope.viewModel.requerSenha == '1' || $scope.viewModel.requerSenha == 1)
                             $scope.mostraModalMobile = true;
-                        else 
+                        else
                             $scope.efetuarVenda();
                     },
                     function (response) {
@@ -255,10 +253,9 @@
                         $scope.loading = false;
                     });
 
-            }
+            };
 
-            $scope.efetuarVenda = function ()
-            {                
+            $scope.efetuarVenda = function () {
                 $scope.erroSoma = '';
 
                 Api.SomaParcelada.listPage(
@@ -278,15 +275,13 @@
                         p11: $scope.viewModel.p11,
                         p12: $scope.viewModel.p12,
                     },
-                    function (data)
-                    {
+                    function (data) {
                         $scope.modoVenda = 'confirmacao';
                         $scope.viewModel.requerSenha = data.results[0].requerSenha;
 
                         if ($scope.viewModel.requerSenha == '1' || $scope.viewModel.requerSenha == 1)
                             $scope.mostraModalMobile = true;
-                        else
-                        {
+                        else {
                             var stA = $scope.viewModel.stAcesso.toString();
                             var stV = $scope.viewModel.stVencimento.toString();
 
@@ -332,7 +327,7 @@
                         $scope.loading = false;
                         $scope.erroSoma = response.data.message;
                     });
-            }
+            };
 
             $scope.confirmarMobile = function () {
 
@@ -381,36 +376,35 @@
                         $scope.falhaVendaMsg = response.data.message;
                         $scope.loading = false;
                     });
-            }
+            };
 
             $scope.closeModalMobile = function () {
                 $scope.mostraModalMobile = undefined;
                 $scope.loading = false;
                 $scope.processandoVenda = false;
-            }
+            };
 
             $scope.closeModalMobileAutorizado = function () {
                 $scope.mostraModalMobileAutorizado = false;
                 $scope.mostraModalMobileEnviaEmail = true;
                 $scope.processandoVenda = false;
-            }
+            };
 
             $scope.closeModalMobileEnviaEmail = function () {
 
                 $scope.mostraModalMobileEnviaEmail = false;
                 $scope.cancelarSimula();
-            }
+            };
 
-            $scope.confirmarMobileEnviarEmail = function ()
-            {
+            $scope.confirmarMobileEnviarEmail = function () {
                 Api.EnvioEmail.listPage(
-                {
-                    cartao: $scope.viewModel.data.id,
-                    email: $scope.viewModel.emailCupom
-                },
-                function (data) { $scope.closeModalMobileEnviaEmail(); },
-                function (response) { });
-            }
+                    {
+                        cartao: $scope.viewModel.data.id,
+                        email: $scope.viewModel.emailCupom
+                    },
+                    function (data) { $scope.closeModalMobileEnviaEmail(); },
+                    function (response) { });
+            };
 
             // ---------------------------------------
             // controle de dinheiro
@@ -451,8 +445,7 @@
                 return ret;
             }
 
-            function Valor(v)
-            {
+            function Valor(v) {
                 var extract = extractNumbers(v);
                 var clean = cleanup(extract);
 
@@ -541,27 +534,28 @@
             // valor
             // ----------------------
 
-            $scope.abreModalValor = function () { $scope.modalValor = true; }
-            $scope.fechaModalValor = function () { $scope.modalValor = false; }
-            $scope.btnOneValor = function () { if($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '1'); }
-            $scope.btnTwoValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '2'); }
-            $scope.btnThreeValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '3'); }
-            $scope.btnFourValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '4'); }
-            $scope.btnFiveValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '5'); }
-            $scope.btnSixValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '6'); }
-            $scope.btnSevenValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '7'); }
-            $scope.btnEightValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '8'); }
-            $scope.btnNineValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '9'); }
+            $scope.abreModalValor = function () { $scope.modalValor = true; };
+            $scope.fechaModalValor = function () { $scope.modalValor = false; };
+            $scope.btnOneValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '1'); };
+            $scope.btnTwoValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '2'); };
+            $scope.btnThreeValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '3'); };
+            $scope.btnFourValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '4'); };
+            $scope.btnFiveValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '5'); };
+            $scope.btnSixValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '6'); };
+            $scope.btnSevenValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '7'); };
+            $scope.btnEightValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '8'); };
+            $scope.btnNineValor = function () { if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '9'); };
             $scope.btnZeroValor = function () {
                 if ($scope.viewModel.valor.length < 12) $scope.viewModel.valor = Valor($scope.viewModel.valor + '0'); if ($scope.viewModel.valor == '')
-                    $scope.viewModel.valor = '0,00';}
-            $scope.btnCleanValor = function () { $scope.viewModel.valor = '0,00'; }
+                    $scope.viewModel.valor = '0,00';
+            };
+            $scope.btnCleanValor = function () { $scope.viewModel.valor = '0,00'; };
             $scope.btnDelValor = function () {
                 if ($scope.viewModel.valor != '0,00') {
                     $scope.viewModel.valor = Valor($scope.viewModel.valor.substr(0, $scope.viewModel.valor.length - 1));
                     if ($scope.viewModel.valor == '')
                         $scope.viewModel.valor = '0,00';
                 }
-            }
+            };
 
         }]);

@@ -1,23 +1,21 @@
-﻿angular.module('app.controllers').controller('CacheController',
-['$window', '$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-function ($window, $scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects)
-{
-	$rootScope.exibirMenu = true;
-    $scope.viewModel = [];
+﻿
+angular.module('app.controllers').controller('CacheController',
+    ['$scope', '$rootScope', 'Api', 
+        function ($scope, $rootScope, Api) {
 
-	function init()
-	{
-        Api.Cache.listPage({ }, function (data)
-        {
-            $scope.viewModel = data;
-		});
-	}
+            $rootScope.exibirMenu = true;
+            $scope.viewModel = [];
 
-    $scope.refresh = function ()
-    {
-        init();
-    }
-    
-    init();
+            function init() {
+                Api.Cache.listPage({}, function (data) {
+                    $scope.viewModel = data;
+                });
+            }
 
-}]);
+            $scope.refresh = function () {
+                init();
+            };
+
+            init();
+
+        }]);

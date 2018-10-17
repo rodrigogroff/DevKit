@@ -105,6 +105,7 @@ namespace DevKit.Web.Controllers
             var q_trans = from e in db.LOG_Transacoes
                           where e.fk_empresa == tEmp.i_unique
                           where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
+                          where lstCarts.Count() == 0 || lstCarts.Contains ((int)e.fk_cartao)
                           orderby e.dt_transacao descending
                           select e;
 

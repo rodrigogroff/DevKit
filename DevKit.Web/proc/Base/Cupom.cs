@@ -32,7 +32,7 @@ namespace DevKit.Web.Controllers
                 "Data da Trans. original: " + Convert.ToDateTime(lTr.dt_transacao).ToString("dd-MM-yyyy"),
                 "Hora Trans. original: " + Convert.ToDateTime(lTr.dt_transacao).ToString("HH:mm:ss"),
                 "Valor trans original: R$ " + mon.setMoneyFormat((long)lTr.vr_total),
-                prop.st_nome,
+                prop != null ? prop.st_nome : "",
                 "*Valor estornado do limite do associado",
                 " ",
                 "   ",

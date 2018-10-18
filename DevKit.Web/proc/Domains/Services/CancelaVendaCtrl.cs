@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System;
 using System.Linq;
 using LinqToDB;
-using SyCrafEngine;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
@@ -48,54 +47,22 @@ namespace DevKit.Web.Controllers
             if (lTr == null)
                 return BadRequest("NSU Inválido");
 
-            var cart = (from e in db.T_Cartao
-                        where e.i_unique == lTr.fk_cartao
-                        select e).
-                        FirstOrDefault();
+            var veCanc = new VendaEmpresarialCancelamento();
 
-            var prop = (from e in db.T_Proprietario
-                        where e.i_unique == cart.fk_dadosProprietario
-                        select e).
-                        FirstOrDefault();
+            veCanc.Run(db, nsu);
 
-            empresa = cart.st_empresa;
-            matricula = cart.st_matricula;
+            if (veCanc.var_codResp != "0000")
+                return BadRequest("Falha (0xE" + veCanc.var_codResp + ")");
 
-            var sc = new SocketConvey();
+            CleanCache(db, CacheTags.associado, (long)lTr.fk_cartao);
 
-            var sck = sc.connectSocket(cnet_server, cnet_port);
-
-            strMessage = MontaCancelamento(cart.st_titularidade, nsu);
-
-            if (!sc.socketEnvia(sck, strMessage))
-            {
-                sck.Close();
-                return BadRequest("Falha de comunicação (0x2)");
-            }
-
-            retorno = sc.socketRecebe(sck);
-
-            if (retorno.Length < 6)
-            {
-                sck.Close();
-                return BadRequest("Falha de comunicação (0x3)");
-            }
-
-            var codResp = retorno.Substring(2, 4);
-
-            sck.Close();
-
-            if (codResp != "0000")
-            {
-                return BadRequest("Falha (0xE" + codResp + " - " + retorno.Substring(73, 20) + " )");
-            }
-
-            CleanCache(db, CacheTags.associado, (long)cart.i_unique);
+            var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == lTr.fk_cartao);
+            var prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
 
             var cupom = new Cupom().
                 Cancelamento(db,
                                cart,
-                               ObtemNsuRetorno(retorno),
+                               veCanc.var_nu_nsuAtual,
                                terminal,
                                nsu,
                                lTr,
@@ -106,27 +73,6 @@ namespace DevKit.Web.Controllers
                 count = 1,
                 results = cupom
             });
-        }
-
-        public string MontaCancelamento(string titularidade, string nsu)
-        {
-            var reg = "09";
-
-            reg += "CECA";
-            reg += terminal.PadRight(8, ' ');
-            reg += "000000";
-            reg += empresa.PadLeft(6, '0');
-            reg += matricula.PadLeft(6, '0');
-            reg += titularidade.ToString().PadLeft(2, '0');
-            reg += "       ";
-            reg += nsu.ToString().PadLeft(6, '0');
-
-            return reg.PadRight(61, ' ');
-        }
-
-        public string ObtemNsuRetorno(string message)
-        {
-            return message.Substring(7, 6).TrimStart('0');
         }
     }
 }

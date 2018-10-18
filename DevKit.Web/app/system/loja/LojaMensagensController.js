@@ -1,6 +1,6 @@
 ﻿
 angular.module('app.controllers').controller('LojaMensagensController',
-    ['$scope', '$rootScope', '$state', 'ngHistoricoFiltro', 'Api',
+    ['$scope', '$rootScope', '$state', 'Api',
         function ($scope, $rootScope, $state, Api) {
 
             $rootScope.exibirMenu = true;
@@ -20,9 +20,7 @@ angular.module('app.controllers').controller('LojaMensagensController',
             }
 
             $scope.confirmar = function () {
-                if ($scope.aceite == true)
-                    if ($rootScope != 3)
-                        $state.go('venda', {});
+                $state.go('venda', {});
             };
 
         }]);

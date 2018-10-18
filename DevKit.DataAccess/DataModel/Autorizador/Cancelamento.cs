@@ -43,6 +43,7 @@ namespace DataModel
             st.Start();
 
             db = _db;
+            input_st_nsu_cancel = nsu;
 
             SetupFile();
 

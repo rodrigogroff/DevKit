@@ -52,7 +52,8 @@ namespace DevKit.Web
                 using (var db = new AutorizadorCNDB())
                 {
                     var dtNow = DateTime.Now;
-                    var dtIni = dtNow.AddSeconds(-330);
+
+                    var dtIni = dtNow.AddSeconds(-10530);
                     var dtFim = dtNow.AddSeconds(-300);
 
                     var queryX = db.LOG_Transacoes.
@@ -60,6 +61,13 @@ namespace DevKit.Web
                                                y.tg_confirmada.ToString() == TipoConfirmacao.Pendente && 
                                                y.tg_contabil.ToString() == TipoCaptura.SITEF ).
                                     ToList();
+
+                    db.Insert(new T_WebBlock
+                    {
+                        st_ip = "Count: " + queryX.Count() + " -> " + dtIni.ToString(),
+                        fk_cartao = 0,
+                        dt_expire = DateTime.Now
+                    });
 
                     foreach (var item in queryX)
                     {
@@ -70,7 +78,7 @@ namespace DevKit.Web
                     }
                 }                    
 
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
             }
         }
     }

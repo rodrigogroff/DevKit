@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('AdmOpersLancTxController',
-    ['$scope', 'Api', 'ngSelects',
-        function ($scope, Api, ngSelects) {
+    ['$scope', 'Api', '$rootScope', 'ngSelects',
+        function ($scope, Api, $rootScope, ngSelects) {
 
             $rootScope.exibirMenu = true;
             $scope.loading = false;

@@ -110,6 +110,12 @@
                 </tr>
             </table>
 
+            <div ng-if="list.length > 0">
+                <br />
+                Total cartões: <b>{{list.length}}</b><br />
+                <br />
+            </div>
+
             <br />
             <button class="btn btn-success right" ng-click="lancar()" ng-if="list.length > 0"> Lançar Despesas </button>
             <br />

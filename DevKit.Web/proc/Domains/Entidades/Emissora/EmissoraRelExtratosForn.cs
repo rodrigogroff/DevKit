@@ -10,9 +10,10 @@ namespace DevKit.Web.Controllers
 {
     public class EmissoraRelExtratosFornDTO
     {
-        public string nome,
+        public string   nome,
                         empresa,
                         total, 
+                        
                         totalRep;
 
         public List<ItensForn> itens = new List<ItensForn>();
@@ -24,7 +25,9 @@ namespace DevKit.Web.Controllers
                         dtVenda, 
                         nsu, 
                         valor, 
-                        parcela, 
+                        parcela,
+                        cartao,
+                        matricula,
                         vlrParcela;
     }
 
@@ -123,9 +126,25 @@ namespace DevKit.Web.Controllers
                                      select e).
                                      ToList();
 
-                        var ltrs = (from e in lstParcelasEmAberto
-                                    join ltr in db.LOG_Transacoes on e.fk_log_transacoes equals (int)ltr.i_unique
-                                    select ltr).
+                        var ids = lstParcelasEmAberto.Select(y => y.fk_log_transacoes).ToList();
+
+                        var ltrs = (from e in db.LOG_Transacoes
+                                    where ids.Contains ((int)e.i_unique)
+                                    select e).
+                                    ToList();
+
+                        ids = ltrs.Select(y => y.fk_cartao).ToList();
+
+                        var carts = (from e in db.T_Cartao
+                                     where ids.Contains((int)e.i_unique)
+                                     select e).
+                                    ToList();
+
+                        ids = carts.Select(y => y.fk_dadosProprietario).ToList();
+
+                        var props = (from e in db.T_Proprietario
+                                     where ids.Contains((int)e.i_unique)
+                                     select e).
                                     ToList();
 
                         long serial = 1;
@@ -150,15 +169,18 @@ namespace DevKit.Web.Controllers
                                                  where e.fk_terminal == term
                                                  select e)
                             {
-
-
                                 var lt = ltrs.Where(y => y.i_unique == parc.fk_log_transacoes).FirstOrDefault();
+
+                                var cart = carts.FirstOrDefault(y => y.i_unique == lt.fk_cartao);
+                                var prop = props.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
 
                                 terminal.itens.Add(new ItensForn
                                 {
                                     serial = serial.ToString(),
                                     dtVenda = ObtemData(parc.dt_inclusao),
                                     nsu = parc.nu_nsu.ToString(),
+                                    cartao = prop.st_nome,
+                                    matricula = cart.st_matricula,
                                     parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
                                     valor = mon.setMoneyFormat((long)lt.vr_total),
                                     vlrParcela = mon.setMoneyFormat((long)parc.vr_valor)

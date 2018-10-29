@@ -254,28 +254,17 @@ namespace DevKit.Web.Controllers
                 case "11":
                     {
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
-                        var lista = Request.GetQueryStringValue("lista").TrimEnd(';').Split(';');
+                        var fkCartao = Request.GetQueryStringValue<long>("fkCartao");
+                        var _valor = Request.GetQueryStringValue<string>("valor");
 
                         var term = db.T_Terminal.FirstOrDefault(y => y.nu_terminal == "00005000");
 
-                        var lstIdsCartoes = new List<long>();
-
-                        foreach (var item in lista)
-                        {
-                            var v = item.Split('|');
-                            lstIdsCartoes.Add(Convert.ToInt64(v[0]));
-                        }
-
-                        var lstCartoes = db.T_Cartao.Where(y => lstIdsCartoes.Contains((long)y.i_unique)).ToList();
+                        var c = db.T_Cartao.Where(y => y.i_unique == fkCartao).FirstOrDefault();
 
                         var saldo = new SaldoDisponivel();
 
-                        foreach (var item in lista)
                         {
-                            var v = item.Split('|');
-                            var c = lstCartoes.FirstOrDefault(y => y.i_unique == Convert.ToInt64(v[0]));
-
-                            var valor = ObtemValor(v[1]);
+                            var valor = ObtemValor(_valor);
 
                             long vrDisp = (long)c.vr_limiteMensal,
                                  vrDispTotal = (long)c.vr_limiteTotal;
@@ -314,7 +303,7 @@ namespace DevKit.Web.Controllers
                                 fk_loja = term != null ? (int)term.fk_loja : (int?)null,
                                 tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada),
                                 tg_contabil = '1',
-                                st_doc = "",
+                                st_doc = "LANC DESP",
                             };
 
                             l_tr.i_unique = Convert.ToInt32(db.InsertWithIdentity(l_tr));

@@ -61,27 +61,23 @@ angular.module('app.controllers').controller('AdmOpersLancTxController',
                 $scope.mostraModalConf = false;
             };
 
-            $scope.sim = function () {
+            $scope.sim = function ()
+            {
                 $scope.mostraModalConf = false;
-
                 toastr.warning('Aguarde.... processando autorizações!', 'Sistema');
-
-                var lst = '';
 
                 for (var i = 0; i < $scope.list.length; i++) {
                     var v = $scope.list[i];
+                    Api.AdmOper.listPage({
+                        op: '11',
+                        id_emp: $scope.campos.idEmpresa,
+                        fkCartao: v.fkCartao,
+                        valor: v.valor                     
+                    },
+                    function (data) { });
+                }       
 
-                    lst += v.fkCartao + '|' + v.valor + ';';
-                }
-
-                Api.AdmOper.listPage({
-                    op: '11',
-                    id_emp: $scope.campos.idEmpresa,
-                    lista: lst
-                },
-                    function (data) {
-                        toastr.success('Lançamentos efetuados!', 'Sistema');
-                    });
+                toastr.success('Lançamentos efetuados!', 'Sistema');
             };
 
         }]);

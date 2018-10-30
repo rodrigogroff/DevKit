@@ -302,7 +302,7 @@ namespace DevKit.Web.Controllers
                                 st_msg_transacao = "Lanc. Adm",
                                 fk_loja = term != null ? (int)term.fk_loja : (int?)null,
                                 tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada),
-                                tg_contabil = '1',
+                                tg_contabil = '3',
                                 st_doc = "LANC DESP",
                             };
 

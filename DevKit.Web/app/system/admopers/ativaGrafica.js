@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('AdmOpersAtivaGraficaController',
-    ['$scope', '$rootScope', 'Api', 
-        function ($scope, $rootScope, Api) {
+    ['$scope', '$rootScope', 'Api', 'ngSelects',
+        function ($scope, $rootScope, Api, ngSelects) {
 
             $rootScope.exibirMenu = true;
             $scope.loading = false;

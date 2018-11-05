@@ -1,4 +1,4 @@
-﻿<div class="webFormPostion">
+﻿<div class="webFormPosition">
 	<section class="widgetForm" style="width:950px; height:100%">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
@@ -74,9 +74,7 @@
                             <tr height="40px">
                                 <td></td>
                                 <td>Situação</td>
-                                <td>
-                                    
-                                </td>
+                                <td></td>
                                 <td>
                                     <br />
                                     <input type="radio" value="1" ng-model="viewModel.tg_blocked"> Bloqueada
@@ -98,8 +96,7 @@
 							<tr height="20px"></tr>							
 						</table>
 					</div>
-				</tab>				
-
+				</tab>
                 <tab heading="Mensagens" ng-if="viewModel.id > 0">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <br />
@@ -131,13 +128,11 @@
                                             <td>{{ mdl.tipo }}</td>
                                             <td>{{ mdl.ativa == true ? 'sim' : 'não' }}</td>
                                         </tr>
-                                    </table>
-                                    <br />
+                                    </table>                                    
                                     <h4><b>Incluir / Alterar mensagem</b></h4>
                                     <br />
                                 </td>
                             </tr>
-
                             <tr height="40px">
                                 <td></td>
                                 <td>Mensagem</td>
@@ -149,7 +144,6 @@
                                            ng-model="viewModelMensagem.mensagem"></textarea>
                                 </td>
                             </tr>
-
                             <tr height="40px">
                                 <td></td>
                                 <td>Link (opcional)</td>
@@ -184,8 +178,7 @@
                                         </tr>
                                     </table>   
                                 </td>
-                            </tr>
-                            
+                            </tr>                            
                             <tr height="40px">
                                 <td></td>
                                 <td>Ativa?</td>
@@ -194,7 +187,6 @@
                                     <input type="checkbox" ng-model="viewModelMensagem.ativa"> Sim<br />
                                 </td>
                             </tr>
-
                             <tr height="40px">
                                 <td></td>
                                 <td>Tipo Mensagem</td>
@@ -205,7 +197,6 @@
                                     <input type="checkbox" ng-model="viewModelMensagem.generica"> Institucional (todas as lojas)<br />
                                 </td>
                             </tr>
-
                             <tr height="28px"></tr>
                             <tr height="40px">
                                 <td></td>
@@ -216,8 +207,7 @@
                         </table>
                         <br />
                     </div>
-                </tab>				
-
+                </tab>
 			</tabset>
 			<br />
 			<br />

@@ -26325,10 +26325,10 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-.demo-container {
+.demo-container102 {
     box-sizing: border-box;
-    width: 850px;
-    height: 450px;
+    width: 320px;
+    height: 250px;
     padding: 20px 15px 15px 15px;
     margin: 15px auto 30px auto;
     border: 1px solid #ddd;

@@ -19,9 +19,7 @@
                 <tr>
                     <td width="600px" valign="top">
                         
-                        <!--<div class="demo-container">
-                            <div id="placeholder" class="demo-placeholder"></div>
-                        </div>-->
+                        
 
                         <h3>Indicadores </h3> <!--101-->
                         <br />
@@ -65,16 +63,20 @@
                     <td width="600px" valign="top">
                         <h3>Comparativo Autorizadores x Captura </h3> <!--102-->
                         <br />
-                        SITEF: {{b.totalSITEF}}<br />
-                        PORTAL: {{b.totalPORTAL}}<br />
-                        <br />
-                        <br />
+                        <div align="center">
+                            SITEF: {{b.totalSITEF}}, PORTAL: {{b.totalPORTAL}}<br />
+                        </div>                        
+
+                        <div class="demo-container102">
+                            <div id="placeholder102" class="demo-placeholder"></div>
+                        </div>
+
                     </td>
                 </tr>
                 <tr>
                     <td valign="top">
                         <h3>Transações em tempo real </h3> <!--103-->
-                        <br />
+                        <br />                                               
                         <table class="table table-hover" ng-if="c.totalSitef != undefined">
                             <thead>
                                 <tr>
@@ -103,26 +105,9 @@
                     <td valign="top">
                         <h3>Transações em tempo real </h3> <!--104-->
                         <br />
-                        <table class="table table-hover" ng-if="d.totTransacoesSITEF != undefined">
-                            <thead>
-                                <tr>
-                                    <th>CAPTURA TIPO</th>
-                                    <th>QTD.TRANSAÇÕES</th>
-                                    <th>STATUS</th>
-                                </tr>
-                            </thead>
-                            <tr>
-                                <td>STATUS SITEF</td>
-                                <td>{{d.totTransacoesSITEF}}</td>
-                                <td>ATIVO</td>
-                            </tr>
-                            <tr>
-                                <td>PORTAL</td>
-                                <td>{{d.totTransacoesPORTAL}}</td>
-                                <td>ATIVO</td>
-                            </tr>
-                        </table>
-                        <br />
+                        <div class="demo-container102">
+                            <div id="placeholder103" class="demo-placeholder"></div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -153,6 +138,11 @@
                     <td valign="top">
                         <h3>Volume financeiro x Emissor</h3>
                         <br />
+
+                        <div class="demo-container102">
+                            <div id="placeholder105" class="demo-placeholder"></div>
+                        </div>
+
                     </td>
                 </tr>
                 <tr>

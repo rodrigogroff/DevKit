@@ -520,7 +520,9 @@
     <Content Include="scripts\jquery.fileupload-ui.js" />
     <Content Include="scripts\jquery.fileupload-validate.js" />
     <Content Include="scripts\jquery.fileupload.js" />
+    <Content Include="scripts\jquery.flot.categories.js" />
     <Content Include="scripts\jquery.flot.js" />
+    <Content Include="scripts\jquery.flot.pie.js" />
     <Content Include="scripts\jquery.iframe-transport.js" />
     <Content Include="scripts\jquery.mousewheel.js" />
     <Content Include="scripts\jquery.odatafilterui.js" />

@@ -475,7 +475,9 @@ namespace DevKit.Web.Controllers
                                 lst.Add(new
                                 {
                                     empresa = tEmp.st_fantasia,
+                                    _empresa = tEmp.st_fantasia.Split (' ')[0],
                                     financ = mon.formatToMoney(vol),
+                                    _financ = vol,
                                     confirmadas = queryConf.Count(y => y.fk_empresa.ToString() == idEmp),
                                     pendentes = queryPendentes.Count(y => y.fk_empresa.ToString() == idEmp),
                                     canceladas = queryCanceladas.Count(y => y.fk_empresa.ToString() == idEmp),

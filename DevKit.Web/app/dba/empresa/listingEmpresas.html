@@ -1,0 +1,74 @@
+﻿
+<div class="webFormPosition" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>DBA \ Listagem de <b>Empresas</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
+                    <td width="20px"></td>
+                </tr>
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color:white" width="590px">
+                <tr height="22px"> </tr>
+                <tr height="36px">
+                    <td width="25px"></td>
+                    <td width="110px"><b>Código</b></td>
+                    <td width="220px">
+                        <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.codigo" />
+                    </td>
+                    <td width="25px"></td>
+                    <td width="60px">
+                        <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
+                    </td>
+                </tr>
+                <tr height="22px"> </tr>
+            </table>
+            <div ng-show="list.length == 0">
+                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                <br />
+                <br />
+            </div>
+            <div ng-show="list.length > 0">
+                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                <br />
+                <table class="table table-hover" style="width:1200px">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>CNPJ</th>
+                            <th>Fantasia / Social</th>
+                            <th>Endereço</th>
+                            <th>Telefone</th>
+                            <th>Cartões</th>
+                            <th>Max. Parc.</th>
+                            <th>Dia Fat.</th>
+                            <th>Fechamento</th>
+                        </tr>
+                    </thead>
+                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                        <td>{{ mdl.st_empresa }}</td>
+                        <td>{{ mdl.nu_CNPJ }}</td>
+                        <td>{{ mdl.st_fantasia }}<br />{{ mdl.st_social }}</td>
+                        <td>{{ mdl.st_endereco }} - {{ mdl.st_estado }}<br />{{ mdl.st_cidade }}</td>
+                        <td>{{ mdl.nu_telefone }}</td>
+                        <td>{{ mdl.nu_cartoes }}</td>
+                        <td>{{ mdl.nu_parcelas }}</td>
+                        <td>{{ mdl.nu_periodoFat }}</td>
+                        <td>{{ mdl.nu_diaVenc }}</td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+            <br />
+        </div>
+    </section>
+</div>

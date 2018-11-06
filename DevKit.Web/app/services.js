@@ -45,6 +45,7 @@ angular.module('app.services', ['ngResource'])
         Associado: $resource('api/associado/:id', {}, opcoes),
         Loja: $resource('api/loja/:id', {}, opcoes),
         Empresa: $resource('api/empresa/:id', {}, opcoes),
+        EmpresaDBA: $resource('api/empresaDBA/:id', {}, opcoes),
         LimiteAssociado: $resource('api/limiteassociado/:id', {}, opcoes),
         AdmOper: $resource('api/admoper/:id', {}, opcoes),
         ExtratoAssociado: $resource('api/extratoassociado/:id', {}, opcoes),

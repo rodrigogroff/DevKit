@@ -236,6 +236,10 @@
     <Content Include="app\associado\ExtratosController.js" />
     <Content Include="app\associado\LojistasAssociadoController.js" />
     <Content Include="app\associado\LimitesController.js" />
+    <Content Include="app\dba\empresa\empresa.html" />
+    <Content Include="app\dba\empresa\empresa.js" />
+    <Content Include="app\dba\empresa\listingEmpresas.html" />
+    <Content Include="app\dba\empresa\listingEmpresas.js" />
     <Content Include="app\emissora\altCota.html" />
     <Content Include="app\emissora\altSegVia.html" />
     <Content Include="app\emissora\altDesbloq.html" />
@@ -673,6 +677,7 @@
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraFechamentoExpCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraFechamentoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraCartaoCtrl.cs" />
+    <Compile Include="proc\Domains\DBA\EmpresaDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaMensagensCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\TerminalLojaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\EmpresaCtrl.cs" />

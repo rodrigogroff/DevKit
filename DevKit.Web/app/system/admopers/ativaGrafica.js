@@ -14,7 +14,7 @@ angular.module('app.controllers').controller('AdmOpersAtivaGraficaController',
             };
 
             $scope.$watch("campos.idEmpresa", function (novo, antigo) {
-                if (novo != antigo) {
+                if (novo != antigo && novo != undefined) {
                     $scope.loading = true;
                     $scope.list = undefined;
 

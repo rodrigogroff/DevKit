@@ -23,7 +23,7 @@ namespace DataModel
 	/// <summary>
 	/// Database       : AutorizadorCN
 	/// Data Source    : .\SQLEXPRESS
-	/// Server Version : 11.00.3000
+	/// Server Version : 12.00.2269
 	/// </summary>
 	public partial class AutorizadorCNDB : LinqToDB.Data.DataConnection
 	{
@@ -65,6 +65,8 @@ namespace DataModel
 		public ITable<T_InfoAdicionai>                T_InfoAdicionais               { get { return this.GetTable<T_InfoAdicionai>(); } }
 		public ITable<T_Loja>                         T_Loja                         { get { return this.GetTable<T_Loja>(); } }
 		public ITable<T_LojaMensagem>                 T_LojaMensagem                 { get { return this.GetTable<T_LojaMensagem>(); } }
+		public ITable<T_LoteCartao>                   T_LoteCartao                   { get { return this.GetTable<T_LoteCartao>(); } }
+		public ITable<T_LoteCartaoDetalhe>            T_LoteCartaoDetalhe            { get { return this.GetTable<T_LoteCartaoDetalhe>(); } }
 		public ITable<T_MensagemEdu>                  T_MensagemEdu                  { get { return this.GetTable<T_MensagemEdu>(); } }
 		public ITable<T_Parcela>                      T_Parcelas                     { get { return this.GetTable<T_Parcela>(); } }
 		public ITable<T_PayFone>                      T_PayFone                      { get { return this.GetTable<T_PayFone>(); } }
@@ -667,6 +669,32 @@ namespace DataModel
 		[Column,     Nullable] public DateTime? dt_validade { get; set; } // datetime
 		[Column,     Nullable] public DateTime? dt_criacao  { get; set; } // datetime
 		[Column,     Nullable] public bool?     tg_ativa    { get; set; } // bit
+	}
+
+	[Table(Schema="dbo", Name="T_LoteCartao")]
+	public partial class T_LoteCartao
+	{
+		[PrimaryKey, Identity] public decimal   i_unique         { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      nu_cartoes       { get; set; } // int
+		[Column,     Nullable] public int?      fk_empresa       { get; set; } // int
+		[Column,     Nullable] public int?      tg_sitLote       { get; set; } // int
+		[Column,     Nullable] public DateTime? dt_abertura      { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_envio_grafica { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_ativacao      { get; set; } // datetime
+	}
+
+	[Table(Schema="dbo", Name="T_LoteCartaoDetalhe")]
+	public partial class T_LoteCartaoDetalhe
+	{
+		[PrimaryKey, Identity] public decimal i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?    fk_lote         { get; set; } // int
+		[Column,     Nullable] public int?    fk_empresa      { get; set; } // int
+		[Column,     Nullable] public int?    fk_cartao       { get; set; } // int
+		[Column,     Nullable] public int?    nu_matricula    { get; set; } // int
+		[Column,     Nullable] public int?    nu_via_original { get; set; } // int
+		[Column,     Nullable] public int?    nu_titularidade { get; set; } // int
+		[Column,     Nullable] public string  nu_cpf          { get; set; } // varchar(20)
+		[Column,     Nullable] public string  st_nome_cartao  { get; set; } // varchar(99)
 	}
 
 	[Table(Schema="dbo", Name="T_MensagemEdu")]
@@ -1284,6 +1312,18 @@ namespace DataModel
 		}
 
 		public static T_LojaMensagem Find(this ITable<T_LojaMensagem> table, long i_unique)
+		{
+			return table.FirstOrDefault(t =>
+				t.i_unique == i_unique);
+		}
+
+		public static T_LoteCartao Find(this ITable<T_LoteCartao> table, decimal i_unique)
+		{
+			return table.FirstOrDefault(t =>
+				t.i_unique == i_unique);
+		}
+
+		public static T_LoteCartaoDetalhe Find(this ITable<T_LoteCartaoDetalhe> table, decimal i_unique)
 		{
 			return table.FirstOrDefault(t =>
 				t.i_unique == i_unique);

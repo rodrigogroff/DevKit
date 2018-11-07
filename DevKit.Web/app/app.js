@@ -56,6 +56,10 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('empresa', { url: '/dba/empresa/:id', templateUrl: 'app/dba/empresa/empresa.html', controller: 'EmpresaController' })
             .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/empresa/listingEmpresas.html', controller: 'ListingEmpresasController' })
 
+            .state('novolote', { url: '/dba/lote', templateUrl: 'app/dba/lotes/lote.html', controller: 'LoteController' })
+            .state('lote', { url: '/dba/lote/:id', templateUrl: 'app/dba/lotes/lote.html', controller: 'LoteController' })
+            .state('lotes', { url: '/dba/lotes', templateUrl: 'app/dba/lotes/listingLotes.html', controller: 'ListingLotesController' })
+
             .state('empNovoCartao', { url: '/emissora/novoCartao', templateUrl: 'app/emissora/novoCartao.html', controller: 'EmissoraNovoCartaoController' })
             .state('empManutCartao', { url: '/emissora/manutCartao/:id', templateUrl: 'app/emissora/novoCartao.html', controller: 'EmissoraNovoCartaoController' })
             .state('empListagemCartao', { url: '/emissora/listagemCartao', templateUrl: 'app/emissora/listagemCartao.html', controller: 'EmissoraListagemCartaoController' })

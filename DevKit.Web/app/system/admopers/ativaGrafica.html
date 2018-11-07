@@ -32,26 +32,31 @@
 
             </table>
 
-            <h4>{{msgEmpresa}}</h4>
-            <br />
-            <br />
+            <div ng-if="campos.idEmpresa != undefined">
 
-            <table class="table table-hover" ng-if="list.length > 0">
-                <thead>
-                    <tr>
-                        <th> </th>
-                        <th>Matricula</th>
-                        <th>Associado</th>
+                <h4>{{msgEmpresa}}</h4>
+                <br />
+                <br />
+
+                <table class="table table-hover" ng-if="list.length > 0">
+                    <thead>
+                        <tr>
+                            <th> </th>
+                            <th>Matricula</th>
+                            <th>Associado</th>
+                        </tr>
+                    </thead>
+                    <tr data-ng-repeat="mdl in list" style="color:white">
+                        <td><input type="checkbox" ng-click="confirmar(mdl)" ng-checked="mdl.selecionado" /></td>
+                        <td>{{ mdl.matricula }}</td>
+                        <td>{{ mdl.associado }}</td>
                     </tr>
-                </thead>
-                <tr data-ng-repeat="mdl in list" style="color:white">
-                    <td><input type="checkbox" ng-click="confirmar(mdl)" ng-checked="mdl.selecionado" /></td>
-                    <td>{{ mdl.matricula }}</td>
-                    <td>{{ mdl.associado }}</td>
-                </tr>
-            </table>
+                </table>
 
-            <button class="btn btn-primary" ng-click="executar()">Executar</button><br />
+                <button class="btn btn-primary" ng-if="list.length > 0" ng-click="executar()">Executar</button><br />
+
+            </div>
+
             <br />
             <br />
 

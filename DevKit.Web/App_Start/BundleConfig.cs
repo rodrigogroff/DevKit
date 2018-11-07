@@ -55,6 +55,8 @@ namespace DevKit.Web
                 "~/app/emissora/EmissoraAltLimite.js",
                 "~/app/emissora/EmissoraAltCota.js",
                 "~/app/emissora/EmissoraAltBloq.js",
+                "~/app/dba/lotes/lote.js",
+                "~/app/dba/lotes/listingLotes.js",
                 "~/app/dba/empresa/listingEmpresas.js",
                 "~/app/dba/empresa/empresa.js",
                 "~/app/emissora/EmissoraAltDesbloq.js",

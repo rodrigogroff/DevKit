@@ -240,6 +240,10 @@
     <Content Include="app\dba\empresa\empresa.js" />
     <Content Include="app\dba\empresa\listingEmpresas.html" />
     <Content Include="app\dba\empresa\listingEmpresas.js" />
+    <Content Include="app\dba\lotes\lote.html" />
+    <Content Include="app\dba\lotes\lote.js" />
+    <Content Include="app\dba\lotes\listingLotes.html" />
+    <Content Include="app\dba\lotes\listingLotes.js" />
     <Content Include="app\emissora\altCota.html" />
     <Content Include="app\emissora\altSegVia.html" />
     <Content Include="app\emissora\altDesbloq.html" />
@@ -666,6 +670,7 @@
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
+    <Compile Include="proc\Domains\DBA\LoteDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTransLojas.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTrans.cs" />

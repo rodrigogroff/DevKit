@@ -5,7 +5,6 @@ using LinqToDB;
 using DataModel;
 using System.Collections.Generic;
 using SyCrafEngine;
-using System.Collections;
 
 namespace DevKit.Web.Controllers
 {
@@ -22,6 +21,8 @@ namespace DevKit.Web.Controllers
             {
                 case "0":
                     {
+                        #region - code - 
+
                         var dtOntem = DateTime.Now.AddDays(-1);
 
                         var dt = new DateTime(dtOntem.Year, dtOntem.Month, dtOntem.Day);
@@ -31,10 +32,14 @@ namespace DevKit.Web.Controllers
                         {
                             di = dt.ToString("dd/MM/yyyy"),
                         });
+
+                        #endregion
                     }
 
                 case "1":
                     {
+                        #region - code - 
+
                         var di = Request.GetQueryStringValue("di");
                         var df = Request.GetQueryStringValue("df");
 
@@ -71,10 +76,14 @@ namespace DevKit.Web.Controllers
                         {
                             resp = hits.ToString()
                         });
+
+                        #endregion
                     }
 
                 case "2":
                     {
+                        #region - code -
+
                         var id_emp = Request.GetQueryStringValue("id_emp");
                         var tipoLim = Request.GetQueryStringValue("tipoLim");
                         var tipoOper = Request.GetQueryStringValue("tipoOper");
@@ -138,10 +147,14 @@ namespace DevKit.Web.Controllers
                         }
 
                         return Ok();
+
+                        #endregion
                     }
 
                 case "3":
                     {
+                        #region - code - 
+
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
 
                         var tEmp = db.T_Empresa.Find(idEmp);
@@ -168,11 +181,14 @@ namespace DevKit.Web.Controllers
                         }
 
                         return Ok();
-                    }
 
+                        #endregion
+                    }
 
                 case "4":
                     {
+                        #region - code - 
+
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
                         var ids = Request.GetQueryStringValue("ids").TrimEnd(',').Split(',');
 
@@ -191,10 +207,14 @@ namespace DevKit.Web.Controllers
                         }
 
                         return Ok();
+
+                        #endregion
                     }
 
                 case "10":
                     {
+                        #region - code - 
+
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
                         var dtInicial = ObtemData(Request.GetQueryStringValue("dtInicial"));
                         var dtFinal = ObtemData(Request.GetQueryStringValue("dtFinal")).Value.AddDays(1);
@@ -249,10 +269,14 @@ namespace DevKit.Web.Controllers
                             total = lst.Count(),
                             results = lst
                         });
+
+                        #endregion
                     }
 
                 case "11":
                     {
+                        #region - code - 
+
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
                         var fkCartao = Request.GetQueryStringValue<long>("fkCartao");
                         var _valor = Request.GetQueryStringValue<string>("valor");
@@ -328,10 +352,156 @@ namespace DevKit.Web.Controllers
                         }
 
                         return Ok();
+
+                        #endregion
+                    }
+                    
+                case "12":
+                    {
+                        #region - code - 
+
+                        var idEmp = Request.GetQueryStringValue<long>("id_emp");
+
+                        var tEmp = db.T_Empresa.Find(idEmp);
+
+                        if (tEmp != null)
+                        {
+                            var lst = (from e in db.T_Cartao
+                                       join d in db.T_Proprietario on e.fk_dadosProprietario equals (int)d.i_unique
+                                       where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
+                                       where e.st_empresa == tEmp.st_empresa
+                                       select new
+                                       {
+                                           id = e.i_unique.ToString(),
+                                           matricula = e.st_matricula,
+                                           associado = d.st_nome
+                                       }).
+                                      ToList();
+
+                            return Ok(new
+                            {
+                                nuCartoes = lst.Count(),
+                                results = lst
+                            });
+                        }
+
+                        return Ok();
+
+                        #endregion 
+                    }
+
+                case "13":
+                    {
+                        #region - code - 
+
+                        var lst = (from e in db.T_Cartao
+                                    join d in db.T_Proprietario on e.fk_dadosProprietario equals (int)d.i_unique
+                                    where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
+                                    select new
+                                    {
+                                        id = e.i_unique.ToString(),
+                                        empresa = e.st_empresa,
+                                        matricula = e.st_matricula,
+                                        associado = d.st_nome,
+                                        selecionado = false,
+                                    }).
+                                    ToList();
+
+                        var lstEmp = lst.Select(y => y.empresa).Distinct().ToList();
+
+                        var lstEmbDb = db.T_Empresa.Where(y => lstEmp.Contains(y.st_empresa)).ToList();
+
+                        var lstRet = new List<object>();
+
+                        foreach (var item in lstEmp)
+                        {
+                            var e = lstEmbDb.FirstOrDefault(y => y.st_empresa == item);
+
+                            if (e != null)
+                                lstRet.Add(new 
+                                {
+                                    sigla = e.st_empresa,
+                                    nome = e.st_fantasia,
+                                    cartoes = lst.Count ( y=> y.empresa == item),
+                                });
+                        }
+
+                        return Ok(new
+                        {
+                            nuCartoes = lstRet.Count(),
+                            results = lstRet
+                        });
+
+                        #endregion
+                    }
+
+                case "14":
+                    {
+                        var lstEmp = Request.GetQueryStringValue("list").TrimEnd(';').Split(';').ToList();
+
+                        var lstEmpDb = (from e in db.T_Empresa
+                                        where lstEmp.Contains(e.st_empresa)
+                                        select e).
+                                        ToList();
+
+                        var lst = (from e in db.T_Cartao
+                                   join d in db.T_Proprietario on e.fk_dadosProprietario equals (int)d.i_unique
+                                   where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
+                                   where lstEmp.Contains (e.st_empresa)
+                                   select new
+                                   {
+                                       id = e.i_unique.ToString(),
+                                       empresa = e.st_empresa,
+                                       matricula = e.st_matricula,
+                                       titularidade = e.st_titularidade,
+                                       associado = d.st_nome,
+                                       selecionado = false,
+                                       cpf = d.st_cpf,
+                                       via = e.nu_viaCartao,
+                                       nome = d.st_nome
+                                   }).
+                                   ToList();
+
+                        // ------------------
+                        // cria lote
+                        // ------------------
+
+                        var novoLote = new T_LoteCartao
+                        {
+                            dt_abertura = DateTime.Now,
+                            fk_empresa  = null,
+                            nu_cartoes = lst.Count(),
+                            tg_sitLote = 1
+                        };
+
+                        novoLote.i_unique = Convert.ToDecimal(db.InsertWithIdentity(novoLote));
+
+                        // ------------------
+                        // cria os detalhes
+                        // ------------------
+
+                        foreach (var item in lst)
+                        {
+                            db.Insert(new T_LoteCartaoDetalhe
+                            {
+                                fk_lote = Convert.ToInt32(novoLote.i_unique),
+                                fk_cartao = Convert.ToInt32(item.id),
+                                fk_empresa = Convert.ToInt32(lstEmpDb.FirstOrDefault(y => y.st_empresa == item.empresa).i_unique),
+                                nu_cpf = item.cpf,
+                                nu_matricula = Convert.ToInt32(item.matricula),
+                                nu_titularidade = Convert.ToInt32(item.titularidade),
+                                nu_via_original = item.via,
+                                st_nome_cartao = item.nome                                
+                            });
+                        }
+                        
+                        return Ok();
                     }
 
                 case "100":
                     {
+                        #region - code - 
+
                         var dtNow = DateTime.Now;
                         var dtIni = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 0, 0, 0);
                         var dtFim = dtIni.AddDays(1);
@@ -596,6 +766,8 @@ namespace DevKit.Web.Controllers
                             {
                                 a,b,c,d,e,f,g
                             });
+
+                        #endregion
                     }
             }
 

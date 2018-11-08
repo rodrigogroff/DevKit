@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('ListingLotesController',
-    ['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
-        function ($scope, $rootScope, $state, Api, ngSelects) {
+    ['$scope',  '$state', 'Api', 'ngSelects',
+        function ($scope, $state, Api, ngSelects) {
             $scope.loading = false;
 
             $scope.search = function () {

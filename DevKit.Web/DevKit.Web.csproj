@@ -240,8 +240,8 @@
     <Content Include="app\dba\empresa\empresa.js" />
     <Content Include="app\dba\empresa\listingEmpresas.html" />
     <Content Include="app\dba\empresa\listingEmpresas.js" />
-    <Content Include="app\dba\lotes\lote.html" />
-    <Content Include="app\dba\lotes\lote.js" />
+    <Content Include="app\dba\lotes\novolote.html" />
+    <Content Include="app\dba\lotes\novolote.js" />
     <Content Include="app\dba\lotes\listingLotes.html" />
     <Content Include="app\dba\lotes\listingLotes.js" />
     <Content Include="app\emissora\altCota.html" />

@@ -38,6 +38,13 @@ namespace DevKit.Web.Controllers
                 }
 
                 item.data = Convert.ToDateTime(item.dt_abertura).ToString("dd/MM/yyyy HH:mm");
+
+                if (item.dt_envio_grafica != null)
+                    item.dataGrafica = Convert.ToDateTime(item.dt_envio_grafica).ToString("dd/MM/yyyy HH:mm");
+
+                if (item.dt_ativacao != null)
+                    item.dataAtiv = Convert.ToDateTime(item.dt_ativacao).ToString("dd/MM/yyyy HH:mm");
+
                 item.cartoes = item.nu_cartoes.ToString();
                 item.empresas = "";
 

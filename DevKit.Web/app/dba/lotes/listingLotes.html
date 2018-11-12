@@ -36,14 +36,16 @@
             <div ng-show="list.length > 0">
                 <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
                 <br />
-                <table class="table table-hover" style="width:900px">
+                <table class="table table-hover" style="width:990px">
                     <thead>
                         <tr>
                             <th>Código</th>
                             <th>Situação</th>
-                            <th>Data</th>
                             <th>Cartões</th>
                             <th>Empresas</th>
+                            <th>Dt. Abertura</th>
+                            <th>Dt. Gráfica</th>
+                            <th>Dt. Ativação</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -52,9 +54,11 @@
                     <tr data-ng-repeat="mdl in list">
                         <td>{{ mdl.i_unique }}</td>
                         <td>{{ mdl.situacao }}</td>
-                        <td>{{ mdl.data }}</td>
                         <td>{{ mdl.cartoes }}</td>
                         <td>{{ mdl.empresas }}</td>
+                        <td>{{ mdl.data }}</td>
+                        <td>{{ mdl.dataGrafica }}</td>
+                        <td>{{ mdl.dataAtiv }}</td>
                         <td><button type="submit" class="btn btn-primary" ng-click="show(mdl)">Cartões</button></td>
                         <td><button type="submit" class="btn btn-primary" ng-click="arquivo(mdl)">Arquivo gráfica</button></td>
                         <td><button type="submit" class="btn btn-primary" ng-click="ativar(mdl)">Ativação</button></td>
@@ -62,6 +66,47 @@
                 </table>
                 <br />
                 <br />
+
+                <div class="modal-backdrop"
+                     ng-if="modalCartoes == true"
+                     style="background: rgba(55, 55, 55, 0.5 );">
+                    <div class="modal-dialog" style="width:700px;height:500px">
+                        <br />
+                        <br />
+                        <br />
+                        <div class="modal-content" style="color:black">
+                            <legend style="color:black">
+                                Detalhes do Lote
+                                <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModalCartoes()"> X </button> &nbsp;
+                            </legend>
+                            <br />
+                            <div style="height:450px;overflow-y:scroll;">
+                                <table class="table table-hover" style="width:650px">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome Cartão</th>
+                                            <th>CPF</th>
+                                            <th>Matrícula</th>
+                                            <th>Titularidade</th>
+                                            <th>Via</th>
+                                        </tr>
+                                    </thead>
+                                    <tr data-ng-repeat="mdl in listDet">
+                                        <td style="color:black">{{ mdl.st_nome_cartao }}</td>
+                                        <td style="color:black">{{ mdl.nu_cpf }}</td>
+                                        <td style="color:black">{{ mdl.nu_matricula }}</td>
+                                        <td style="color:black">{{ mdl.nu_titularidade }}</td>
+                                        <td style="color:black">{{ mdl.nu_via_original }}</td>
+                                    </tr>
+                                </table>
+                                <br />
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
                 <br />
                 <br />
                 <br />

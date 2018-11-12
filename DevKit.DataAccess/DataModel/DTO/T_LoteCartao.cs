@@ -8,6 +8,6 @@ namespace DataModel
 {
     public partial class T_LoteCartao
     {
-        public string situacao, data, cartoes, empresas;
+        public string situacao, data, dataGrafica, dataAtiv, cartoes, empresas;
     }
 }

@@ -24,8 +24,20 @@ angular.module('app.controllers').controller('ListingLotesController',
                 });
             };
 
-            $scope.show = function (mdl) {
-                $state.go('lote', { id: mdl.i_unique });
+            $scope.show = function (mdl)
+            {
+                $scope.modalCartoes = true;
+                $scope.loading = true;
+
+                Api.LoteDetalhesDBA.listPage({ idLote: mdl.i_unique }, function (data) {
+                    $scope.listDet = data.results;
+                    $scope.total = data.count;
+                    $scope.loading = false;
+                });
+            };
+
+            $scope.closeModalCartoes = function (mdl) {
+                $scope.modalCartoes = false;              
             };
 
             $scope.new = function () {

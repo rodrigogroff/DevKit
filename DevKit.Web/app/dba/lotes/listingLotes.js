@@ -40,6 +40,12 @@ angular.module('app.controllers').controller('ListingLotesController',
                 $scope.modalCartoes = false;              
             };
 
+            $scope.arquivo = function (mdl) {
+                window.location.href = "/api/LoteDBA/exportar?" + $.param({
+                    idLote: mdl.i_unique
+                });
+            };
+
             $scope.new = function () {
                 $state.go('novolote');
             };

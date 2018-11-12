@@ -94,6 +94,7 @@
     <Compile Include="DataModel\db\AutorizadorDB_CurrentUser.cs" />
     <Compile Include="DataModel\db\AutorizadorDB_db.cs" />
     <Compile Include="DataModel\Domains\Constantes.cs" />
+    <Compile Include="DataModel\DTO\T_LoteCartao.cs" />
     <Compile Include="DataModel\Entities\T_Empresa_DTO.cs" />
     <Compile Include="DataModel\Enums\Expedicoes_enum.cs" />
     <Compile Include="DataModel\Enums\OrdemEmissorManutCartoes_enum.cs" />

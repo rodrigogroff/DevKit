@@ -36,30 +36,28 @@
             <div ng-show="list.length > 0">
                 <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
                 <br />
-                <table class="table table-hover" style="width:1200px">
+                <table class="table table-hover" style="width:900px">
                     <thead>
                         <tr>
                             <th>Código</th>
-                            <th>CNPJ</th>
-                            <th>Fantasia / Social</th>
-                            <th>Endereço</th>
-                            <th>Telefone</th>
+                            <th>Situação</th>
+                            <th>Data</th>
                             <th>Cartões</th>
-                            <th>Max. Parc.</th>
-                            <th>Dia Fat.</th>
-                            <th>Fechamento</th>
+                            <th>Empresas</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
-                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                        <td>{{ mdl.st_empresa }}</td>
-                        <td>{{ mdl.nu_CNPJ }}</td>
-                        <td>{{ mdl.st_fantasia }}<br />{{ mdl.st_social }}</td>
-                        <td>{{ mdl.st_endereco }} - {{ mdl.st_estado }}<br />{{ mdl.st_cidade }}</td>
-                        <td>{{ mdl.nu_telefone }}</td>
-                        <td>{{ mdl.nu_cartoes }}</td>
-                        <td>{{ mdl.nu_parcelas }}</td>
-                        <td>{{ mdl.nu_periodoFat }}</td>
-                        <td>{{ mdl.nu_diaVenc }}</td>
+                    <tr data-ng-repeat="mdl in list">
+                        <td>{{ mdl.i_unique }}</td>
+                        <td>{{ mdl.situacao }}</td>
+                        <td>{{ mdl.data }}</td>
+                        <td>{{ mdl.cartoes }}</td>
+                        <td>{{ mdl.empresas }}</td>
+                        <td><button type="submit" class="btn btn-primary" ng-click="show(mdl)">Cartões</button></td>
+                        <td><button type="submit" class="btn btn-primary" ng-click="arquivo(mdl)">Arquivo gráfica</button></td>
+                        <td><button type="submit" class="btn btn-primary" ng-click="ativar(mdl)">Ativação</button></td>
                     </tr>
                 </table>
                 <br />

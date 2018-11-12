@@ -352,16 +352,19 @@ namespace DevKit.Web.Controllers
             return retorno;
         }
 
-        public HttpResponseMessage TransferirConteudo(string dir, string fileName, string exten)
+        public HttpResponseMessage TransferirConteudo(string dir, string fileName, string extenT)
         {
-            byte[] fileData = File.ReadAllBytes(dir + "\\" + fileName + "." + exten);
+            byte[] fileData = File.ReadAllBytes(dir + "\\" + fileName + "." + extenT);
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             var stream2 = new MemoryStream(fileData);
 
             result.Content = new StreamContent(stream2);
             result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileName + "." + exten };
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = fileName + "." + extenT
+            };
 
             return result;
         }

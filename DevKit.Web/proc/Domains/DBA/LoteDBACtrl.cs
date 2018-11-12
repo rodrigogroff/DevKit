@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Net;
 using App.Web;
+using System.IO;
+using System.Text;
 
 namespace DevKit.Web.Controllers
 {
@@ -16,60 +18,93 @@ namespace DevKit.Web.Controllers
         [Route("api/LoteDBA/exportar", Name = "ExportarLoteDBA")]
         public IHttpActionResult Exportar(int idLote)
         {
-            return Ok();
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            string dir = "c:\\fechamento_dbf", file = "lote" + idLote, ext = "txt";
+
+            var t_lote = db.T_LoteCartao.FirstOrDefault(y => y.i_unique == idLote);
+
+            t_lote.dt_envio_grafica = DateTime.Now;
+
+            db.Update(t_lote);
+
+            string FileName = dir + "\\" + file + "." + ext;
+
+            if (File.Exists(FileName))
+                File.Delete(FileName);
+
+            using (var ts = new StreamWriter(dir + "\\" + file + "." + ext, false, Encoding.Default))
+            {
+                var lstDetCartoes = db.T_LoteCartaoDetalhe.Where(y => y.fk_lote == idLote).ToList();
+
+                var lstIdsEmps = lstDetCartoes.Select(y => y.fk_empresa).Distinct().ToList();
+                var lstIdsCartoes = lstDetCartoes.Select(y => y.fk_cartao).Distinct().ToList();
+                
+                var lstEmp = db.T_Empresa.Where(y => lstIdsEmps.Contains((int)y.i_unique));
+                var lstCartoes = db.T_Cartao.Where(y => lstIdsCartoes.Contains((int)y.i_unique));
+
+                foreach (var item in lstDetCartoes)
+                {
+                    var line = "";
+
+                    var emp = lstEmp.FirstOrDefault(y => y.i_unique == item.fk_empresa);
+                    var cart = lstCartoes.FirstOrDefault(y => y.i_unique == item.fk_cartao);
+                    var venctoCartao = cart.st_venctoCartao.PadLeft(4, '0');
+
+                    line += item.st_nome_cartao.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
+                    line += emp.st_empresa + ",";
+                    line += item.nu_matricula.ToString().PadLeft(6, '0') + ",";
+
+                    line += venctoCartao.Substring(0, 2) + "/" +
+                            venctoCartao.Substring(2, 2) + ",";
+
+                    line += calculaCodigoAcesso (   cart.st_empresa,
+                                                    cart.st_matricula,
+                                                    cart.st_titularidade,
+                                                    item.nu_via_original.ToString(),
+                                                    item.nu_cpf ) + ",";
+
+                    line += item.st_nome_cartao + ",|";
+
+                    line += "826766" + cart.st_empresa +
+                                            cart.st_matricula +
+                                            cart.st_titularidade +
+                                            item.nu_via_original.ToString() +
+                                 "65" + cart.st_venctoCartao;
+
+                    line += "|";
+
+                    ts.WriteLine(line);
+                }                
+            }
+
+            return ResponseMessage(TransferirConteudo(dir, file, ext));
         }
 
-        //[NonAction]
-        //private IHttpActionResult Export(IQueryable<T_Loja> query)
-        //{
-        //    var myXLSWrapper = new ExportWrapper("Export_Lojas.xlsx",
-        //                                           "Lojas",
-        //                                           new string[] { "Código",
-        //                                                          "Nome",
-        //                                                          "Cidade",
-        //                                                          "Estado",
-        //                                                          "Endereço",
-        //                                                          "Telefone",
-        //                                                          "Empresas",
-        //                                                          "Terminais",
-        //                                                          "Bloqueio",
-        //                                                          "Senha" });
-
-        //    var lstEmpresas = db.T_Empresa.ToList();
-        //    var lstLinks = db.LINK_LojaEmpresa.ToList();
-        //    var lstTerms = db.T_Terminal.ToList();
-
-        //    foreach (var item in query)
-        //    {
-        //        string senha = "Com Senha", empresas = "", terminais = "";
-
-        //        if (item.tg_portalComSenha == 0)
-        //            senha = "Sem Senha";
-
-        //        foreach (var it in lstLinks.Where(y => y.fk_loja == item.i_unique).ToList())
-        //            empresas += lstEmpresas.
-        //                            FirstOrDefault(y => y.i_unique == it.fk_empresa).st_empresa.TrimStart('0') + ",";
-
-        //        foreach (var it in lstTerms.Where(y => y.fk_loja == item.i_unique).ToList())
-        //            terminais += it.nu_terminal.ToString().TrimStart('0') + ",";
-
-        //        myXLSWrapper.AddContents(new string[]
-        //        {
-        //            item.st_loja,
-        //            item.st_nome,
-        //            item.st_cidade,
-        //            item.st_estado,
-        //            item.st_endereco,
-        //            item.nu_telefone.ToString(),
-        //            empresas,
-        //            terminais,
-        //            item.tg_blocked == '1' ? "Bloqueada" : "Ativa",
-        //            senha,
-        //        });
-        //    };
-
-        //    return ResponseMessage(myXLSWrapper.GetSingleSheetHttpResponse());
-        //}
+        // calculo codigo de acesso para cartoes convenio
+        public string calculaCodigoAcesso(string empresa, string matricula, string titularidade, string via, string cpf)
+        {
+            string chave = matricula + empresa + titularidade.PadLeft(2, '0') + via + cpf.PadRight(14, ' ');
+            int temp = 0;
+            for (int n = 0; n < chave.Length; n++)
+            {
+                string s = chave.Substring(n, 1);
+                char c = s[0]; // First character in s
+                int i = c; // ascii code
+                temp += i;
+            }
+            string calculado = temp.ToString("0000");
+            temp += int.Parse(calculado[3].ToString()) * 1000;
+            temp += int.Parse(calculado[2].ToString());
+            if (temp > 9999) temp -= 2000;
+            calculado = temp.ToString("0000");
+            calculado = calculado.Substring(2, 1) +
+                        calculado.Substring(0, 1) +
+                        calculado.Substring(3, 1) +
+                        calculado.Substring(1, 1);
+            return calculado;
+        }
 
         public IHttpActionResult Get()
         {

@@ -54,7 +54,7 @@ namespace DevKit.Web
                     var dtNow = DateTime.Now;
 
                     var dtIni = dtNow.AddSeconds(-60);
-                    var dtFim = dtNow.AddSeconds(-30);
+                    var dtFim = dtNow.AddSeconds(-90);
 
                     var queryX = db.LOG_Transacoes.
                                     Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim && 

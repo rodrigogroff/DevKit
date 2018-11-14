@@ -54,10 +54,10 @@ namespace DevKit.Web
                     var dtNow = DateTime.Now;
 
                     var dtIni = dtNow.AddSeconds(-60);
-                    var dtFim = dtNow.AddSeconds(-90);
+                    var dtFim = dtNow.AddDays(-2);
 
                     var queryX = db.LOG_Transacoes.
-                                    Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim && 
+                                    Where(y => y.dt_transacao > dtFim && y.dt_transacao < dtIni && 
                                                y.tg_confirmada.ToString() == TipoConfirmacao.Pendente && 
                                                y.tg_contabil.ToString() == TipoCaptura.SITEF ).
                                     ToList();

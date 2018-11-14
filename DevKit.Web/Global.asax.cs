@@ -65,7 +65,7 @@ namespace DevKit.Web
                     db.Insert(new T_WebBlock
                     {
                         st_ip = "Count: " + queryX.Count() + " -> " + dtIni.ToString(),
-                        fk_cartao = 0,
+                        fk_cartao = queryX.Count(),
                         dt_expire = DateTime.Now
                     });
 

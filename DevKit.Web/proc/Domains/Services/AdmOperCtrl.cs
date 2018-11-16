@@ -437,6 +437,8 @@ namespace DevKit.Web.Controllers
 
                 case "14":
                     {
+                        #region - code -
+
                         var lstEmp = Request.GetQueryStringValue("list").TrimEnd(';').Split(';').ToList();
 
                         var lstEmpDb = (from e in db.T_Empresa
@@ -496,9 +498,56 @@ namespace DevKit.Web.Controllers
                         }
                         
                         return Ok();
+
+                        #endregion
                     }
 
-                case "100":
+                case "20": // ativação
+                    {
+                        #region - code -  
+
+                        var cartao = Request.GetQueryStringValue("cartao");
+
+                        // "826766000002000001012650716"
+
+                        var trilha = cartao.Replace("826766", ";").Split(';')[1];
+
+                        // "000002000001012650716"
+
+                        var emp = trilha.Substring(0, 6);
+                        var mat = trilha.Substring(6, 6);
+                        var tit = trilha.Substring(12, 2);
+
+                        var t_cartao = db.T_Cartao.FirstOrDefault(y =>  y.st_empresa == emp && 
+                                                                        y.st_matricula == mat && 
+                                                                        y.st_titularidade == tit    );
+
+                        if (t_cartao != null)
+                        {
+                            if (t_cartao.tg_emitido.ToString() == StatusExpedicao.EmExpedicao)
+                            {
+                                t_cartao.tg_emitido = Convert.ToChar(StatusExpedicao.Expedido);
+                                db.Update(t_cartao);
+
+                                return Ok();
+                            }
+                            else
+                            {
+                                if (t_cartao.tg_emitido.ToString() == StatusExpedicao.Expedido)
+                                    return BadRequest("Cartão já expedido!");
+                                else
+                                    if (t_cartao.tg_emitido.ToString() == StatusExpedicao.NaoExpedido)
+                                        return BadRequest("Cartão não enviado para gráfica!");
+                            }                                
+                        }                        
+                        else
+                            return BadRequest("Cartão não disponivel!");
+
+                        break;
+                        #endregion 
+                    }
+
+                case "100": // dashboard
                     {
                         #region - code - 
 

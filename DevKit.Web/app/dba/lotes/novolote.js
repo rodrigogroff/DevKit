@@ -5,8 +5,6 @@ angular.module('app.controllers').controller('NovoLoteController',
 
             $scope.loading = false;
 
-            var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
-
             $scope.executar = function () {
 
                 $scope.loading = true;

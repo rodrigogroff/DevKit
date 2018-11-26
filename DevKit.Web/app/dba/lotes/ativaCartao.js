@@ -7,9 +7,9 @@ angular.module('app.controllers').controller('AtivaCartaoController',
 
             $scope.$watch("viewModel.cartao", function (novo, anterior)
             {
-                console.log(novo);
+                var indice = novo.indexOf("826766");
 
-                if (novo.length > 27)
+                if (novo.length - indice >= 27)
                 {
                     $scope.loading = true;
 

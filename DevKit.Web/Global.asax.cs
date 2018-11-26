@@ -53,7 +53,7 @@ namespace DevKit.Web
                 {
                     var dtNow = DateTime.Now;
 
-                    var dtIni = dtNow.AddSeconds(-60);
+                    var dtIni = dtNow.AddSeconds(-60*6);
                     var dtFim = dtNow.AddDays(-2);
 
                     var queryX = db.LOG_Transacoes.

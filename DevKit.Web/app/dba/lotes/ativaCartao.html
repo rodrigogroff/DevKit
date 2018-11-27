@@ -14,16 +14,23 @@
             </table>
         </legend>
         <div class="divWebForm">
-
-            <textarea class="form-control input-transparent" maxlength="150" style="width:400px" rows="6"
-                      ng-model="viewModel.cartao"></textarea>
-
+            <textarea class="form-control input-transparent" maxlength="150" style="width:400px" rows="6" ng-model="viewModel.cartao"></textarea>
             <br />
             <br />
-            [ {{viewModel.cartao.length}} ] chars
-            <br />
-
+            <table class="table table-hover" style="width:500px" ng-if="list.length > 0">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Cartão</th>
+                        <th>Mensagem</th>
+                    </tr>
+                </thead>
+                <tr data-ng-repeat="mdl in list">
+                    <td>{{ mdl.data }}</td>
+                    <td>{{ mdl.cartao }}</td>
+                    <td>{{ mdl.mensagem }}</td>
+                </tr>
+            </table>
         </div>
-
     </section>
 </div>

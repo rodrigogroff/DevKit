@@ -200,7 +200,7 @@ namespace DevKit.Web.Controllers
                             {
                                 var tCartUpd = db.T_Cartao.Find(Convert.ToInt64(item));
 
-                                tCartUpd.tg_emitido = Convert.ToChar(StatusExpedicao.Expedido);
+                                tCartUpd.tg_emitido = Convert.ToInt32(StatusExpedicao.Expedido);
 
                                 db.Update(tCartUpd);
                             }
@@ -526,24 +526,41 @@ namespace DevKit.Web.Controllers
                         {
                             if (t_cartao.tg_emitido.ToString() == StatusExpedicao.EmExpedicao)
                             {
-                                t_cartao.tg_emitido = Convert.ToChar(StatusExpedicao.Expedido);
+                                t_cartao.tg_emitido = Convert.ToInt32(StatusExpedicao.Expedido);
                                 db.Update(t_cartao);
 
-                                return Ok();
+                                return Ok(new {
+                                    data = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
+                                    cartao = emp + "." + mat + "." + tit,
+                                    mensagem = "Cartão ativado com sucesso!"
+                                });
                             }
                             else
                             {
                                 if (t_cartao.tg_emitido.ToString() == StatusExpedicao.Expedido)
-                                    return BadRequest("Cartão já expedido!");
+                                {
+                                    return Ok(new
+                                    {
+                                        data = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
+                                        cartao = emp + "." + mat + "." + tit,
+                                        mensagem = "Cartão já expedido!"
+                                    });
+                                }                                    
                                 else
+                                {
                                     if (t_cartao.tg_emitido.ToString() == StatusExpedicao.NaoExpedido)
-                                        return BadRequest("Cartão não enviado para gráfica!");
+                                        return Ok(new
+                                    {
+                                        data = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
+                                        cartao = emp + "." + mat + "." + tit,
+                                        mensagem = "Cartão não enviado para gráfica!"
+                                        });
+                                }
                             }                                
-                        }                        
-                        else
-                            return BadRequest("Cartão não disponivel!");
+                        }
 
-                        break;
+                        return Ok();
+
                         #endregion 
                     }
 

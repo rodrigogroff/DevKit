@@ -564,6 +564,41 @@ namespace DevKit.Web.Controllers
                         #endregion 
                     }
 
+                case "21": // ativação em lote
+                    {
+                        #region - code -  
+
+                        var idLote = Request.GetQueryStringValue("lote");
+
+                        var lote = db.T_LoteCartao.FirstOrDefault( y=> y.i_unique.ToString() == idLote);
+
+                        if (lote != null)
+                        {
+                            lote.dt_ativacao = DateTime.Now;
+
+                            db.Update(lote);
+
+                            var dbCarts = db.T_LoteCartaoDetalhe.Where(y => y.fk_lote.ToString() == idLote).ToList();
+
+                            foreach (var item in dbCarts)
+                            {
+                                var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == item.fk_cartao);
+
+                                if (cart != null)
+                                {
+                                    cart.tg_emitido = Convert.ToInt32(StatusExpedicao.Expedido);
+
+                                    db.Update(cart);
+                                }
+                            }
+                        }
+                        
+                        return Ok();
+
+                        #endregion 
+                    }
+
+
                 case "100": // dashboard
                     {
                         #region - code - 

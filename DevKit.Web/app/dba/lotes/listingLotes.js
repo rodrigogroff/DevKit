@@ -46,6 +46,20 @@ angular.module('app.controllers').controller('ListingLotesController',
                 });
             };
 
+            $scope.ativar = function (mdl) {
+                $scope.loading = true;
+                Api.AdmOper.listPage({ op: '21', lote: mdl.i_unique }, function (data)
+                {
+                    toastr.success('Lote ativado com sucesso!', 'Sistema');
+                    $scope.search();
+
+                    $scope.loading = false;
+                },
+                function (response) {
+                    $scope.loading = false;
+                });
+            };
+
             $scope.new = function () {
                 $state.go('novolote');
             };

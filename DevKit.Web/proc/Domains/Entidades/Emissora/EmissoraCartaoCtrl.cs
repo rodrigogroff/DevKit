@@ -37,7 +37,12 @@ namespace DevKit.Web.Controllers
     {
         public string nome, tit, dt;
     }
-    
+
+    public class CartaoLoteDTO
+    {
+        public string codigo, dtCriacao, dtGrafica, dtAtivacao;
+    }
+
     public class CartaoDTO
     {
         public string   id,
@@ -56,6 +61,7 @@ namespace DevKit.Web.Controllers
                         modo, valor, array;
 
         public List<CartaoDependenteDTO> lstDeps = new List<CartaoDependenteDTO>();
+        public List<CartaoLoteDTO> lstLotes = new List<CartaoLoteDTO>();
     }
 
     public class EmissoraCartaoController : ApiControllerBase
@@ -327,6 +333,43 @@ namespace DevKit.Web.Controllers
                 });
             }
 
+            var lstLotes = new List<CartaoLoteDTO>();
+
+            foreach (var item in db.T_LoteCartaoDetalhe.
+                                        Where ( y=> y.fk_cartao == id).
+                                        OrderByDescending ( y=> y.i_unique )
+                                        .ToList())
+            {
+                var loteTb = db.T_LoteCartao.FirstOrDefault(y => y.i_unique == item.fk_lote);
+
+                if (loteTb != null)
+                {
+                    var registro = new CartaoLoteDTO
+                    {
+                        codigo = loteTb.i_unique.ToString(),
+
+                        dtCriacao = loteTb.dt_abertura != null ?
+                            Convert.ToDateTime(loteTb.dt_abertura).ToString("dd/MM/yyyy HH:mm") : "",
+
+                        dtGrafica = loteTb.dt_envio_grafica != null ? 
+                            Convert.ToDateTime(loteTb.dt_envio_grafica).ToString("dd/MM/yyyy HH:mm") : "",
+                    };
+
+                    if (loteTb.dt_ativacao != null) // lote inteiro ativado
+                    {
+                        registro.dtAtivacao = 
+                            Convert.ToDateTime(loteTb.dt_ativacao).ToString("dd/MM/yyyy HH:mm");
+                    }
+                    else // manual
+                    {
+                        registro.dtAtivacao =
+                            Convert.ToDateTime(item.dt_ativacao).ToString("dd/MM/yyyy HH:mm");
+                    }
+
+                    lstLotes.Add(registro);
+                }                
+            }
+
             return Ok(new CartaoDTO
             {
                 // dados proprietário
@@ -355,7 +398,10 @@ namespace DevKit.Web.Controllers
                 situacao = cs.Convert(cart.tg_status),
                 expedicao = se.Convert(cart.tg_emitido),
                 via = cart.nu_viaCartao.ToString(),
-                lstDeps = lstDeps
+
+                // listas
+                lstDeps = lstDeps,
+                lstLotes = lstLotes
             });
         }
 

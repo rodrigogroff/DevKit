@@ -124,7 +124,7 @@
                                 <button class="btn btn-xs btn-danger" ng-show="dtNasc_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" 
+                                <input type="text" class="form-control input-transparent"
                                        maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"
                                        ng-model="viewModel.dtNasc">
                             </td>
@@ -145,7 +145,7 @@
                                 <button class="btn btn-xs btn-danger" ng-show="banco_fail">!</button>
                             </td>
                             <td width="160px">
-                                <input type="text" class="form-control input-transparent" 
+                                <input type="text" class="form-control input-transparent"
                                        onKeyUp="money(this,ValorNum);" maxlength="3"
                                        ng-model="viewModel.banco">
                             </td>
@@ -160,7 +160,7 @@
                                 <button class="btn btn-xs btn-danger" ng-show="bancoAg_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" 
+                                <input type="text" class="form-control input-transparent"
                                        onKeyUp="money(this,ValorNum);" maxlength="4"
                                        ng-model="viewModel.bancoAg">
                             </td>
@@ -196,7 +196,7 @@
                                 <button class="btn btn-xs btn-danger" ng-show="limMes_fail">!</button>
                             </td>
                             <td width="160px">
-                                <input type="text" class="form-control input-transparent" 
+                                <input type="text" class="form-control input-transparent"
                                        onKeyUp="money(this,Valor);" maxlength="12"
                                        ng-model="viewModel.limMes">
                             </td>
@@ -211,7 +211,7 @@
                                 <button class="btn btn-xs btn-danger" ng-show="limTot_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" 
+                                <input type="text" class="form-control input-transparent"
                                        onKeyUp="money(this,Valor);" maxlength="12"
                                        ng-model="viewModel.limTot">
                             </td>
@@ -392,7 +392,7 @@
                                 <button class="btn btn-xs btn-danger" ng-show="cep_fail">!</button>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-transparent" maxlength="8" onKeyUp="money(this,ValorNum);" 
+                                <input type="text" class="form-control input-transparent" maxlength="8" onKeyUp="money(this,ValorNum);"
                                        ng-model="viewModel.cep">
                             </td>
                             <td></td>
@@ -441,6 +441,29 @@
                         </tr>
                         <tr height="20px"></tr>
                     </table>
+                </tab>
+                <tab heading="Gráfica">
+                    <h4>Lotes de geração de plástico</h4>
+                    <br />
+                    <table class="table table-hover" ng-if="viewModel.lstLotes.length > 0" style="width:440px">
+                        <thead>
+                            <tr>
+                                <th>Número Lote</th>
+                                <th>Dt. Criação</th>
+                                <th>Dt. Gráfica</th>
+                                <th>Dt. Ativacao</th>
+                            </tr>
+                        </thead>
+                        <tr data-ng-repeat="mdl in viewModel.lstLotes">
+                            <td>{{ mdl.codigo }}</td>
+                            <td>{{ mdl.dtCriacao }}</td>
+                            <td>{{ mdl.dtGrafica }}</td>
+                            <td>{{ mdl.dtAtivacao }}</td>
+                        </tr>
+                        <tr height="12px"></tr>
+                    </table>
+                    <br />
+                    <br />
                 </tab>
             </tabset>
             <br />

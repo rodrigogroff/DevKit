@@ -686,15 +686,16 @@ namespace DataModel
 	[Table(Schema="dbo", Name="T_LoteCartaoDetalhe")]
 	public partial class T_LoteCartaoDetalhe
 	{
-		[PrimaryKey, Identity] public decimal i_unique        { get; set; } // numeric(15, 0)
-		[Column,     Nullable] public int?    fk_lote         { get; set; } // int
-		[Column,     Nullable] public int?    fk_empresa      { get; set; } // int
-		[Column,     Nullable] public int?    fk_cartao       { get; set; } // int
-		[Column,     Nullable] public int?    nu_matricula    { get; set; } // int
-		[Column,     Nullable] public int?    nu_via_original { get; set; } // int
-		[Column,     Nullable] public int?    nu_titularidade { get; set; } // int
-		[Column,     Nullable] public string  nu_cpf          { get; set; } // varchar(20)
-		[Column,     Nullable] public string  st_nome_cartao  { get; set; } // varchar(99)
+		[PrimaryKey, Identity] public decimal   i_unique        { get; set; } // numeric(15, 0)
+		[Column,     Nullable] public int?      fk_lote         { get; set; } // int
+		[Column,     Nullable] public int?      fk_empresa      { get; set; } // int
+		[Column,     Nullable] public int?      fk_cartao       { get; set; } // int
+		[Column,     Nullable] public int?      nu_matricula    { get; set; } // int
+		[Column,     Nullable] public int?      nu_via_original { get; set; } // int
+		[Column,     Nullable] public int?      nu_titularidade { get; set; } // int
+		[Column,     Nullable] public string    nu_cpf          { get; set; } // varchar(20)
+		[Column,     Nullable] public string    st_nome_cartao  { get; set; } // varchar(99)
+		[Column,     Nullable] public DateTime? dt_ativacao     { get; set; } // datetime
 	}
 
 	[Table(Schema="dbo", Name="T_MensagemEdu")]

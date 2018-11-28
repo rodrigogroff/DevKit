@@ -575,6 +575,7 @@ namespace DevKit.Web.Controllers
                         if (lote != null)
                         {
                             lote.dt_ativacao = DateTime.Now;
+                            lote.tg_sitLote = 3;
 
                             db.Update(lote);
 
@@ -597,7 +598,6 @@ namespace DevKit.Web.Controllers
 
                         #endregion 
                     }
-
 
                 case "100": // dashboard
                     {

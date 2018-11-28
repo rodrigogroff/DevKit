@@ -26,6 +26,9 @@ namespace DevKit.Web.Controllers
 
             t_lote.dt_envio_grafica = DateTime.Now;
 
+            if (t_lote.tg_sitLote == 1)
+                t_lote.tg_sitLote = 2;
+
             db.Update(t_lote);
 
             string FileName = dir + "\\" + file + "." + ext;

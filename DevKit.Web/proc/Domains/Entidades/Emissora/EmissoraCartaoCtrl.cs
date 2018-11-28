@@ -355,12 +355,15 @@ namespace DevKit.Web.Controllers
                             Convert.ToDateTime(loteTb.dt_envio_grafica).ToString("dd/MM/yyyy HH:mm") : "",
                     };
 
-                    if (loteTb.dt_ativacao != null) // lote inteiro ativado
+                    // lote inteiro ativado
+                    if (item.dt_ativacao == null && loteTb.dt_ativacao != null) 
                     {
                         registro.dtAtivacao = 
                             Convert.ToDateTime(loteTb.dt_ativacao).ToString("dd/MM/yyyy HH:mm");
                     }
-                    else // manual
+
+                    // manual
+                    else if (item.dt_ativacao != null) 
                     {
                         registro.dtAtivacao =
                             Convert.ToDateTime(item.dt_ativacao).ToString("dd/MM/yyyy HH:mm");

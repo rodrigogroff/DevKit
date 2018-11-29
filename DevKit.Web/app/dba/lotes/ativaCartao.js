@@ -15,7 +15,9 @@ angular.module('app.controllers').controller('AtivaCartaoController',
 
                     Api.AdmOper.listPage({ op: '20', cartao: $scope.viewModel.cartao }, function (data)
                     {
+                        $scope.list = [];
                         $scope.list.push(data);
+
                         $scope.viewModel.cartao = '';
                         $scope.loading = false;
                     },

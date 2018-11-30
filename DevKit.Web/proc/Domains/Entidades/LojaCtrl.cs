@@ -262,7 +262,7 @@ namespace DevKit.Web.Controllers
             
             return Ok(new 
             {
-                //campos
+                //campos diretos
 
                 id = mdl.i_unique.ToString(),
                 terminal = mdl.st_loja,
@@ -271,6 +271,16 @@ namespace DevKit.Web.Controllers
                 estado = mdl.st_estado,
                 tg_blocked = mdl.tg_blocked.ToString(),
                 tg_portalComSenha = comSenha,
+                mdl.nu_periodoFat,
+                mdl.nu_diavenc,
+
+                // campos transformados
+                tg_isentoFat = mdl.tg_isentoFat == 0 ? false : true,
+                snuPctValor = mon.setMoneyFormat((long)mdl.nu_pctValor),
+                svrMensalidade = mon.setMoneyFormat((long)mdl.vr_mensalidade),
+                svrMinimo = mon.setMoneyFormat((long)mdl.vr_minimo),
+                svrTransacao = mon.setMoneyFormat((long)mdl.vr_transacao),
+                snuFranquia = mon.setMoneyFormat((long)mdl.nu_franquia),
 
                 // listas
                 lstMensagens,

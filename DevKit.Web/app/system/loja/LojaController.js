@@ -51,7 +51,7 @@ angular.module('app.controllers').controller('LojaController',
             };
 
             $scope.save = function () {
-                $scope.nome_fail = invalidCheck($scope.viewModel.nome);
+                $scope.nome_fail = invalidCheck($scope.viewModel.st_nome);
 
                 $scope.viewModel.novaMensagem = $scope.viewModelMensagem;
 

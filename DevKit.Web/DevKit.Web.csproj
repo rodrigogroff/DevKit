@@ -716,7 +716,6 @@
     <Compile Include="proc\Infrastructure\Iso8583\SocketConvey.cs" />
     <Compile Include="proc\Serialization\Associado.cs" />
     <Compile Include="proc\Serialization\SimulacaoParcela.cs" />
-    <Compile Include="proc\Serialization\Loja.cs" />
     <Compile Include="proc\Serialization\Lojista.cs" />
     <Compile Include="proc\Base\Cache\StartupPreCacheService.cs" />
     <Compile Include="proc\Base\Cache\CacheClean.cs" />

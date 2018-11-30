@@ -48,7 +48,7 @@ namespace DevKit.Web.Controllers
                 if (item.tg_portalComSenha == 0)
                     senha = "Sem Senha";
 
-                foreach (var it in lstLinks.Where (y=> y.fk_loja == item.i_unique ).ToList())
+                foreach (var it in lstLinks.Where (y=> y.fk_loja == (int) item.i_unique ).ToList())
                     empresas += lstEmpresas.
                                     FirstOrDefault(y => y.i_unique == it.fk_empresa).st_empresa.TrimStart('0') + ",";
 
@@ -157,7 +157,7 @@ namespace DevKit.Web.Controllers
             if (exportar == true)
                 return Export(query);
 
-            var lst = new List<Loja>();
+            var lst = new List<T_Loja>();
 
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
@@ -166,7 +166,7 @@ namespace DevKit.Web.Controllers
                 if (item.tg_portalComSenha == 0)
                     senha = "Sem Senha";
 
-                lst.Add(new Loja
+                lst.Add(new T_Loja
                 {
                     id = item.i_unique.ToString(),
                     terminal = item.st_loja,
@@ -190,18 +190,13 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = (from e in db.T_Loja
-                       where e.i_unique == id
-                       select e).
-                       FirstOrDefault();
+            var mdl = (from e in db.T_Loja where e.i_unique == id select e).FirstOrDefault();
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            string comSenha = "1";
-
-            if (mdl.tg_portalComSenha == 0)
-                comSenha = "0";
+            if (mdl.tg_portalComSenha == null)
+                mdl.tg_portalComSenha = 1;
 
             var lstMensagens = new List<LojaMensagem>();
             
@@ -259,50 +254,57 @@ namespace DevKit.Web.Controllers
                     tx_admin = mon.setMoneyFormat((long)item.tx_admin)
                 });
             }
-            
-            return Ok(new 
-            {
-                //campos diretos
 
-                id = mdl.i_unique.ToString(),
-                terminal = mdl.st_loja,
-                nome = mdl.st_nome,
-                cidade = mdl.st_cidade,
-                estado = mdl.st_estado,
-                tg_blocked = mdl.tg_blocked.ToString(),
-                tg_portalComSenha = comSenha,
-                mdl.nu_periodoFat,
-                mdl.nu_diavenc,
+            // campos transformados
+            mdl.id = mdl.i_unique.ToString();
+            mdl.isentoFat = mdl.tg_isentoFat == 0 ? false : true;
+            mdl.snuPctValor = mon.setMoneyFormat((long)mdl.nu_pctValor);
+            mdl.svrMensalidade = mon.setMoneyFormat((long)mdl.vr_mensalidade);
+            mdl.svrMinimo = mon.setMoneyFormat((long)mdl.vr_minimo);
+            mdl.svrTransacao = mon.setMoneyFormat((long)mdl.vr_transacao);
+            mdl.snuFranquia = mdl.nu_franquia != null ? mdl.nu_franquia.ToString().PadLeft(6,'0') : "000000";
 
-                // campos transformados
-                tg_isentoFat = mdl.tg_isentoFat == 0 ? false : true,
-                snuPctValor = mon.setMoneyFormat((long)mdl.nu_pctValor),
-                svrMensalidade = mon.setMoneyFormat((long)mdl.vr_mensalidade),
-                svrMinimo = mon.setMoneyFormat((long)mdl.vr_minimo),
-                svrTransacao = mon.setMoneyFormat((long)mdl.vr_transacao),
-                snuFranquia = mon.setMoneyFormat((long)mdl.nu_franquia),
+            mdl.lstMensagens = lstMensagens;
+            mdl.lstTerminais = lstTerminais;
+            mdl.lstConvenios = lstConvenios;
 
-                // listas
-                lstMensagens,
-                lstTerminais,
-                lstConvenios
-            });
+            return Ok(mdl);
         }
 
         [HttpPut]
-        public IHttpActionResult Put(Loja mdl)
+        public IHttpActionResult Put(T_Loja mdl)
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
+
+            var mon = new SyCrafEngine.money();
 
             var mdlUpdate = (from e in db.T_Loja
                              where e.i_unique == Convert.ToInt32(mdl.id)
                              select e).
                              FirstOrDefault();
 
-            mdlUpdate.st_nome = mdl.nome;
+            mdlUpdate.st_nome = mdl.st_nome;
+            mdlUpdate.st_cidade = mdl.st_cidade;
+            mdlUpdate.st_estado = mdl.st_estado;
             mdlUpdate.tg_portalComSenha = Convert.ToInt32(mdl.tg_portalComSenha);
+
+            // campos transformados
             
+            if (mdl.isentoFat == true)
+                mdlUpdate.tg_isentoFat = 1;
+            else
+                mdlUpdate.tg_isentoFat = 0;
+
+            mdlUpdate.nu_periodoFat = Convert.ToInt32(mdl.nu_periodoFat);
+            mdlUpdate.nu_diavenc = Convert.ToInt32(mdl.nu_diavenc);
+
+            mdlUpdate.nu_pctValor = Convert.ToInt32(mon.prepareNumber(mdl.snuPctValor));
+            mdlUpdate.vr_mensalidade = Convert.ToInt32(mon.prepareNumber(mdl.svrMensalidade));
+            mdlUpdate.vr_minimo = Convert.ToInt32(mon.prepareNumber(mdl.svrMinimo));
+            mdlUpdate.vr_transacao = Convert.ToInt32(mon.prepareNumber(mdl.svrTransacao));
+            mdlUpdate.nu_franquia = Convert.ToInt32(mon.prepareNumber(mdl.snuFranquia));
+
             db.Update(mdlUpdate);
 
             if (mdl.novaMensagem != null)

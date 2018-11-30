@@ -10,6 +10,7 @@ namespace DevKit.Web.Services
     {
         public void Run(HttpApplicationState _app, T_Loja currentUser )
         {
+            /*
             var cache = new MemCacheController()
             {
                 myApplication = _app
@@ -42,6 +43,7 @@ namespace DevKit.Web.Services
                     hshReport[""] = ret;
                 }
             }
+            */
         }
     }
 }

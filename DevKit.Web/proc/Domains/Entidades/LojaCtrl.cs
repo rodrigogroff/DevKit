@@ -204,7 +204,7 @@ namespace DevKit.Web.Controllers
                 comSenha = "0";
 
             var lstMensagens = new List<LojaMensagem>();
-
+            
             foreach (var item in (from e in db.T_LojaMensagem
                                   where e.fk_loja == id || e.fk_loja == 0
                                   orderby e.dt_validade
@@ -225,8 +225,45 @@ namespace DevKit.Web.Controllers
                 });
             }
 
-            return Ok(new Loja
+            var lstTerminais = new List<LojaTerminal>();
+
+            foreach (var item in (from e in db.T_Terminal
+                                    where e.fk_loja == id || e.fk_loja == 0
+                                    orderby e.i_unique
+                                    select e).
+                                    ToList())
             {
+                lstTerminais.Add(new LojaTerminal
+                {
+                    id = item.i_unique.ToString(),
+                    codigo = item.nu_terminal,
+                    texto = item.st_localizacao.Replace ("{SE$3}",",")
+                });
+            }
+            
+            var lstConvenios = new List<LojaConvenio>();
+            var mon = new SyCrafEngine.money();
+
+            foreach (var item in (from e in db.LINK_LojaEmpresa
+                                    where e.fk_loja == id || e.fk_loja == 0
+                                    orderby e.i_unique
+                                    select e).
+                                    ToList())
+            {
+                var tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == item.fk_empresa);
+
+                lstConvenios.Add(new LojaConvenio
+                {
+                    id = item.i_unique.ToString(),
+                    empresa = tEmp.st_empresa + " " + tEmp.st_fantasia,
+                    tx_admin = mon.setMoneyFormat((long)item.tx_admin)
+                });
+            }
+            
+            return Ok(new 
+            {
+                //campos
+
                 id = mdl.i_unique.ToString(),
                 terminal = mdl.st_loja,
                 nome = mdl.st_nome,
@@ -234,7 +271,11 @@ namespace DevKit.Web.Controllers
                 estado = mdl.st_estado,
                 tg_blocked = mdl.tg_blocked.ToString(),
                 tg_portalComSenha = comSenha,
-                lstMensagens = lstMensagens
+
+                // listas
+                lstMensagens,
+                lstTerminais,
+                lstConvenios
             });
         }
 

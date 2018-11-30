@@ -19,6 +19,16 @@ namespace DevKit.Web.Controllers
                     ativa;
     }
 
+    public class LojaTerminal
+    {
+        public string   id, codigo, texto;
+    }
+
+    public class LojaConvenio
+    {
+        public string   id, empresa, tx_admin;
+    }
+
     public class Loja
     {
         public string id,

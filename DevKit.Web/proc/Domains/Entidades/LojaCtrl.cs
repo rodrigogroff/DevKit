@@ -288,7 +288,10 @@ namespace DevKit.Web.Controllers
 
             if (mdl.novoTerminal != null)
             {
-                var ult = db.T_Terminal.OrderByDescending(y => y.nu_terminal).FirstOrDefault();
+                var ult = db.T_Terminal.
+                            Where( y=> Convert.ToInt32(y.nu_terminal) > 7700).
+                            Where(y => Convert.ToInt32(y.nu_terminal) < 8000).
+                            OrderByDescending(y => y.nu_terminal).FirstOrDefault();
 
                 var novo = new T_Terminal
                 {

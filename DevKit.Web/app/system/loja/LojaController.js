@@ -9,8 +9,7 @@ angular.module('app.controllers').controller('LojaController',
             $scope.date = new Date();
 
             $scope.viewModel = {};
-
-            $scope.selectMes = ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 });
+            $scope.campos = {};
 
             var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
@@ -18,6 +17,9 @@ angular.module('app.controllers').controller('LojaController',
 
             function init()
             {
+                $scope.selectMes = ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 });
+                $scope.selectEmpresa = ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 });    
+
                 $scope.viewModelMensagem =
                     {
                         mes_final: $scope.date.getMonth() + 1,
@@ -83,6 +85,49 @@ angular.module('app.controllers').controller('LojaController',
 
             $scope.list = function () {
                 $state.go('lojas');
+            };
+
+            $scope.editarConvenio = function (mdl) {
+                $scope.viewModelConv = mdl;
+                $scope.modalEditarConvenio = true;
+            };
+
+            $scope.closeModalEditConvenio = function () {
+                $scope.viewModelConv = null;
+                $scope.modalEditarConvenio = false;
+            };
+
+            $scope.saveEditConvenio = function () {
+
+                $scope.viewModel.editConvenio = $scope.viewModelConv;
+
+                Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
+                    toastr.success('Convênio salvo!', 'Sucesso');
+                    $scope.modalEditarConvenio = false;
+                },
+                function (response) {
+                    toastr.error(response.data.message, 'Error');
+                });
+            };
+
+            $scope.salvarNovoConvenio = function ()
+            {
+                $scope.viewModel.novoConvenio =
+                    {
+                        idEmpresa: $scope.campos.idEmpresa,
+                        tx_admin: $scope.campos.tx_admin
+                    };
+
+                Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
+                    toastr.success('Convênio adicionado!', 'Sucesso');
+                    $scope.viewModel.lstConvenios.push(data);
+                    $scope.campos =
+                        {
+                        };                    
+                },
+                function (response) {
+                    toastr.error(response.data.message, 'Error');
+                });
             };
 
         }]);

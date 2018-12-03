@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DataModel
 {
@@ -26,7 +25,7 @@ namespace DataModel
 
     public class LojaConvenio
     {
-        public string id, empresa, tx_admin;
+        public string id, empresa, idEmpresa, tx_admin;
     }
 
     public partial class T_Loja
@@ -52,5 +51,8 @@ namespace DataModel
         public List<LojaConvenio> lstConvenios;
 
         public LojaMensagem novaMensagem;
+
+        public LojaConvenio editConvenio;
+        public LojaConvenio novoConvenio;
     }
 }

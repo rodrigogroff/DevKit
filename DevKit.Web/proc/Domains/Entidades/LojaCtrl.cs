@@ -284,6 +284,54 @@ namespace DevKit.Web.Controllers
                              select e).
                              FirstOrDefault();
 
+            if (mdl.novoConvenio != null)
+            {
+                if (db.LINK_LojaEmpresa.Any ( y=> y.fk_empresa == Convert.ToInt32(mdl.novoConvenio.idEmpresa) && y.fk_loja == (int)mdl.i_unique))
+                    return BadRequest("Empresa já conveniada!");
+
+                var novo = new LINK_LojaEmpresa
+                {
+                    fk_empresa = Convert.ToInt32(mdl.novoConvenio.idEmpresa),
+                    fk_loja = (int)mdl.i_unique,
+                    tx_admin = (int)ObtemValor(mdl.novoConvenio.tx_admin)
+                };
+
+                novo.i_unique = Convert.ToInt64(db.InsertWithIdentity(novo));
+
+                var tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique.ToString() == mdl.novoConvenio.idEmpresa);
+
+                var resp = new LojaConvenio
+                {
+                    id = novo.i_unique.ToString(),
+                    empresa = tEmp.st_empresa + " " + tEmp.st_fantasia,
+                    tx_admin = mon.setMoneyFormat((long)novo.tx_admin)
+                };
+
+                return Ok(resp);
+            }
+
+            if (mdl.editConvenio != null)
+            {
+                var convUp = db.LINK_LojaEmpresa.
+                                FirstOrDefault(y => y.i_unique.ToString() == mdl.editConvenio.id);
+
+                if (convUp == null)
+                    return BadRequest("Convênio não disponível");
+
+                try
+                {
+                    convUp.tx_admin = (int)ObtemValor(mdl.editConvenio.tx_admin);
+
+                    db.Update(convUp);
+
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.ToString());
+                }                
+            }
+
             mdlUpdate.st_nome = mdl.st_nome;
             mdlUpdate.st_cidade = mdl.st_cidade;
             mdlUpdate.st_estado = mdl.st_estado;

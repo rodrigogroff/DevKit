@@ -70,7 +70,7 @@ angular.module('app.controllers').controller('LojaController',
                     else {
                         Api.Loja.add($scope.viewModel, function (data) {
                             toastr.success('Loja adicionada!', 'Sucesso');
-                            $state.go('lojas');
+                            $state.go('loja', { id: data.i_unique });                            
                         },
                             function (response) {
                                 toastr.error(response.data.message, 'Error');
@@ -107,6 +107,7 @@ angular.module('app.controllers').controller('LojaController',
 
                 Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
                     toastr.success('Terminal salvo!', 'Sucesso');
+                    $scope.viewModel.editTerminal = null;
                     $scope.modalEditarTerminal = false;
                 },
                     function (response) {
@@ -115,6 +116,10 @@ angular.module('app.controllers').controller('LojaController',
             };
 
             $scope.salvarNovoTerminal = function () {
+
+                if ($scope.campos.texto.length == 0)
+                    return;
+
                 $scope.viewModel.novoTerminal =
                     {
                         texto: $scope.campos.texto
@@ -122,6 +127,9 @@ angular.module('app.controllers').controller('LojaController',
 
                 Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
                     toastr.success('Terminal adicionado!', 'Sucesso');
+
+                    $scope.viewModel.novoTerminal = null;
+
                     $scope.viewModel.lstTerminais.push(data);
                     $scope.campos =
                         {
@@ -152,6 +160,8 @@ angular.module('app.controllers').controller('LojaController',
 
                 Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
                     toastr.success('Convênio salvo!', 'Sucesso');
+
+                    $scope.viewModel.editConvenio = null;
                     $scope.modalEditarConvenio = false;
                 },
                 function (response) {
@@ -161,6 +171,10 @@ angular.module('app.controllers').controller('LojaController',
 
             $scope.salvarNovoConvenio = function ()
             {
+                if ($scope.campos.idEmpresa == undefined ||
+                    $scope.campos.tx_admin == undefined)
+                    return;
+
                 $scope.viewModel.novoConvenio =
                     {
                         idEmpresa: $scope.campos.idEmpresa,
@@ -170,6 +184,7 @@ angular.module('app.controllers').controller('LojaController',
                 Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
                     toastr.success('Convênio adicionado!', 'Sucesso');
                     $scope.viewModel.lstConvenios.push(data);
+                    $scope.viewModel.novoConvenio = null;
                     $scope.campos =
                         {
                         };                    

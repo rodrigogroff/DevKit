@@ -223,7 +223,7 @@ namespace DevKit.Web.Controllers
             var lstTerminais = new List<LojaTerminal>();
 
             foreach (var item in (from e in db.T_Terminal
-                                    where e.fk_loja == id || e.fk_loja == 0
+                                    where e.fk_loja == id 
                                     orderby e.i_unique
                                     select e).
                                     ToList())
@@ -258,17 +258,69 @@ namespace DevKit.Web.Controllers
             // campos transformados
             mdl.id = mdl.i_unique.ToString();
             mdl.isentoFat = mdl.tg_isentoFat == 0 ? false : true;
-            mdl.snuPctValor = mon.setMoneyFormat((long)mdl.nu_pctValor);
-            mdl.svrMensalidade = mon.setMoneyFormat((long)mdl.vr_mensalidade);
-            mdl.svrMinimo = mon.setMoneyFormat((long)mdl.vr_minimo);
-            mdl.svrTransacao = mon.setMoneyFormat((long)mdl.vr_transacao);
-            mdl.snuFranquia = mdl.nu_franquia != null ? mdl.nu_franquia.ToString().PadLeft(6,'0') : "000000";
+
+            if (mdl.nu_pctValor != null) mdl.snuPctValor = mon.setMoneyFormat((long)mdl.nu_pctValor);
+            if (mdl.vr_mensalidade != null) mdl.svrMensalidade = mon.setMoneyFormat((long)mdl.vr_mensalidade);
+            if (mdl.vr_minimo != null) mdl.svrMinimo = mon.setMoneyFormat((long)mdl.vr_minimo);
+            if (mdl.vr_transacao != null) mdl.svrTransacao = mon.setMoneyFormat((long)mdl.vr_transacao);
+            if (mdl.nu_franquia != null) mdl.snuFranquia = mdl.nu_franquia != null ? mdl.nu_franquia.ToString().PadLeft(6,'0') : "000000";
 
             mdl.lstMensagens = lstMensagens;
             mdl.lstTerminais = lstTerminais;
             mdl.lstConvenios = lstConvenios;
 
             return Ok(mdl);
+        }
+
+        [HttpPost]
+        public IHttpActionResult Post(T_Loja mdl)
+        {
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var mon = new SyCrafEngine.money();
+
+            var mdlNew = new T_Loja
+            {
+                st_nome = mdl.st_nome,
+                st_cidade = mdl.st_cidade,
+                st_estado = mdl.st_estado,                
+            };
+
+            // campos transformados
+
+            if (mdl.isentoFat == true)
+                mdlNew.tg_isentoFat = 1;
+            else
+                mdlNew.tg_isentoFat = 0;
+
+            if (mdlNew.tg_blocked == null)
+                mdlNew.tg_blocked = '0';
+
+            if (mdl.nu_periodoFat != null) mdlNew.nu_periodoFat = Convert.ToInt32(mdl.nu_periodoFat);
+            if (mdl.nu_diavenc != null) mdlNew.nu_diavenc = Convert.ToInt32(mdl.nu_diavenc);
+            if (mdl.snuPctValor != null) mdlNew.nu_pctValor = Convert.ToInt32(mon.prepareNumber(mdl.snuPctValor));
+            if (mdl.svrMensalidade != null) mdlNew.vr_mensalidade = Convert.ToInt32(mon.prepareNumber(mdl.svrMensalidade));
+            if (mdl.svrMinimo != null) mdlNew.vr_minimo = Convert.ToInt32(mon.prepareNumber(mdl.svrMinimo));
+            if (mdl.svrTransacao != null) mdlNew.vr_transacao = Convert.ToInt32(mon.prepareNumber(mdl.svrTransacao));
+            if (mdl.snuFranquia != null) mdlNew.nu_franquia = Convert.ToInt32(mon.prepareNumber(mdl.snuFranquia));
+
+            // ----------------
+            // obter codigo
+            // ----------------
+
+            var cd = Convert.ToInt32(
+                        db.T_Loja.
+                            Where(y => Convert.ToInt64(y.st_loja) > 6300).
+                            OrderByDescending(y => y.st_loja).                            
+                            Select ( y=> y.st_loja).
+                            FirstOrDefault()) + 1;
+
+            mdlNew.st_loja = cd.ToString();
+
+            mdlNew.i_unique = Convert.ToInt64(db.InsertWithIdentity(mdlNew));            
+
+            return Ok(mdlNew);
         }
 
         [HttpPut]

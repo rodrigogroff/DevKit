@@ -65,7 +65,7 @@ angular.module('app.controllers').controller('ListingLojasController',
             };
 
             $scope.new = function () {
-                //$state.go('profile-new');
+                $state.go('loja-new');
             };
 
         }]);

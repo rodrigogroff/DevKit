@@ -87,6 +87,55 @@ angular.module('app.controllers').controller('LojaController',
                 $state.go('lojas');
             };
 
+            // --------------------
+            // -- terminal --
+            // --------------------
+
+            $scope.editarTerminal = function (mdl) {
+                $scope.viewModelTerm = mdl;
+                $scope.modalEditarTerminal = true;
+            };
+
+            $scope.closeModalEditTerminal = function () {
+                $scope.viewModelTerm = null;
+                $scope.modalEditarTerminal = false;
+            };
+
+            $scope.saveEditTerminal = function () {
+
+                $scope.viewModel.editTerminal = $scope.viewModelTerm;
+
+                Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
+                    toastr.success('Terminal salvo!', 'Sucesso');
+                    $scope.modalEditarTerminal = false;
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Error');
+                    });
+            };
+
+            $scope.salvarNovoTerminal = function () {
+                $scope.viewModel.novoTerminal =
+                    {
+                        texto: $scope.campos.texto
+                    };
+
+                Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
+                    toastr.success('Terminal adicionado!', 'Sucesso');
+                    $scope.viewModel.lstTerminais.push(data);
+                    $scope.campos =
+                        {
+                        };
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Error');
+                    });
+            };
+
+            // --------------------
+            // -- convênio --
+            // --------------------
+
             $scope.editarConvenio = function (mdl) {
                 $scope.viewModelConv = mdl;
                 $scope.modalEditarConvenio = true;

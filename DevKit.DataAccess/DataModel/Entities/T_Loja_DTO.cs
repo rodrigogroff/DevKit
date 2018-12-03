@@ -52,6 +52,9 @@ namespace DataModel
 
         public LojaMensagem novaMensagem;
 
+        public LojaTerminal novoTerminal;
+        public LojaTerminal editTerminal;
+
         public LojaConvenio editConvenio;
         public LojaConvenio novoConvenio;
     }

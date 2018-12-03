@@ -328,19 +328,46 @@
                             <tr height="28px">
                                 <td></td>
                                 <td colspan="3">
+
+                                    <h4><b>Incluir terminal</b></h4>
+
+                                    <table width="500px">
+                                        <tr>                                            
+                                            <td width="60px">Texto</td>                                            
+                                            <td width="320px">
+
+                                                <input type="text"
+                                                       class="form-control input-transparent"
+                                                       maxlength="99"
+                                                       ng-model="campos.texto" />
+
+                                            </td>
+                                            <td width="20px"></td>
+                                            <td>
+                                                <button class="btn btn-primary" ng-click="salvarNovoTerminal()">Salvar</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <br />
+                                    <br />
+
                                     <table class="table table-hover" ng-if="viewModel.lstTerminais.length > 0">
                                         <thead>
                                             <tr>
                                                 <th>Código</th>
                                                 <th>Localização</th>
+                                                <th>Ação</th>
                                             </tr>
                                         </thead>
                                         <tr data-ng-repeat="mdl in viewModel.lstTerminais">
                                             <td>{{ mdl.codigo }}</td>
                                             <td>{{ mdl.texto }}</td>
+                                            <td>
+                                                <button class="btn btn-default btn-xs" ng-click="editarTerminal(mdl)">Editar</button>
+                                            </td>
                                         </tr>
                                     </table>
-                                    <h4><b>Incluir / Alterar terminais</b></h4>
                                     <br />
                                 </td>
                             </tr>
@@ -364,17 +391,17 @@
                             <tr height="28px">
                                 <td></td>
                                 <td colspan="3">
-                                    <h4><b>Incluir / Alterar convênios</b></h4>
+                                    <h4><b>Incluir convênio</b></h4>
 
                                     <table width="500px">
                                         <tr>
                                             <td width="90px">Empresa</td>
                                             <td width="220px">
-                                                
-                                                <input type="hidden" 
-                                                       style="width:100%" 
-                                                       placeholder="(Selecione)" 
-                                                       ui-select2="selectEmpresa" 
+
+                                                <input type="hidden"
+                                                       style="width:100%"
+                                                       placeholder="(Selecione)"
+                                                       ui-select2="selectEmpresa"
                                                        ng-model="campos.idEmpresa" />
 
                                             </td>
@@ -382,10 +409,9 @@
                                             <td width="10px">%</td>
                                             <td width="20px"></td>
                                             <td width="120px">
-                                                
+
                                                 <input type="text"
                                                        class="form-control input-transparent"
-                                                       style="background-color:lightgray"
                                                        maxlength="9"
                                                        ng-model="campos.tx_admin"
                                                        onKeyUp="money(this,Valor);" />
@@ -415,7 +441,7 @@
                                             <td>{{ mdl.empresa }}</td>
                                             <td>{{ mdl.tx_admin }}</td>
                                             <td>
-                                                <button class="btn btn-default" ng-click="editarConvenio(mdl)">Editar</button>
+                                                <button class="btn btn-default btn-xs" ng-click="editarConvenio(mdl)">Editar</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -429,6 +455,43 @@
             </tabset>
 
             <div class="modal-backdrop"
+                 ng-if="modalEditarTerminal == true"
+                 style="background: rgba(55, 55, 55, 0.5 );">
+                <div class="modal-dialog" style="width:400px;height:500px">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="modal-content" style="color:black">
+                        <legend style="color:black">
+                            Detalhes do terminal
+                            <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModalEditTerminal()"> X </button> &nbsp;
+                        </legend>
+
+                        <b><h4>{{viewModelTerm.codigo}}</h4></b>
+                        <br />
+                        Localização<br />
+                        <input type="text"
+                               class="form-control input-transparent"
+                               style="background-color:lightgray"
+                               maxlength="50"
+                               ng-model="viewModelTerm.texto" />
+                        <br />
+                        <br />
+
+                        <table>
+                            <tr>
+                                <td><button class="btn btn-default" ng-click="closeModalEditTerminal()">Cancelar</button> </td>
+                                <td width="20px"></td>
+                                <td><button class="btn btn-primary" ng-click="saveEditTerminal()">Salvar</button></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal-backdrop"
                  ng-if="modalEditarConvenio == true"
                  style="background: rgba(55, 55, 55, 0.5 );">
                 <div class="modal-dialog" style="width:400px;height:500px">
@@ -440,7 +503,7 @@
                             Detalhes do convênio
                             <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModalEditConvenio()"> X </button> &nbsp;
                         </legend>
-                        
+
                         <b><h4>{{viewModelConv.empresa}}</h4></b>
                         <br />
                         Taxa administrativa (%)<br />
@@ -459,7 +522,7 @@
                                 <td width="20px"></td>
                                 <td><button class="btn btn-primary" ng-click="saveEditConvenio()">Salvar</button></td>
                             </tr>
-                        </table>                        
+                        </table>
 
                     </div>
                 </div>

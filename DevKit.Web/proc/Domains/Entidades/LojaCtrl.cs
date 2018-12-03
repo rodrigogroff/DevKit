@@ -284,6 +284,54 @@ namespace DevKit.Web.Controllers
                              select e).
                              FirstOrDefault();
 
+            #region - terminal - 
+
+            if (mdl.novoTerminal != null)
+            {
+                var ult = db.T_Terminal.OrderByDescending(y => y.nu_terminal).FirstOrDefault();
+
+                var novo = new T_Terminal
+                {
+                    nu_terminal = (Convert.ToInt32(ult.nu_terminal) + 1).ToString(),
+                    fk_loja = (int)mdl.i_unique,
+                    st_localizacao = mdl.novoTerminal.texto
+                };
+
+                novo.i_unique = Convert.ToInt64(db.InsertWithIdentity(novo));
+
+                return Ok(new LojaTerminal
+                {
+                    texto = novo.st_localizacao,
+                    codigo = novo.nu_terminal,
+                    id = novo.i_unique.ToString()
+                });
+            }
+
+            if (mdl.editTerminal != null)
+            {
+                var ed = db.T_Terminal.FirstOrDefault(y => y.i_unique.ToString() == mdl.editTerminal.id);
+
+                if (ed == null)
+                    return BadRequest("Terminal não disponível");
+
+                try
+                {
+                    ed.st_localizacao = mdl.editTerminal.texto;
+
+                    db.Update(ed);
+
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.ToString());
+                }
+            }
+
+            #endregion
+
+            #region - convenio - 
+
             if (mdl.novoConvenio != null)
             {
                 if (db.LINK_LojaEmpresa.Any ( y=> y.fk_empresa == Convert.ToInt32(mdl.novoConvenio.idEmpresa) && y.fk_loja == (int)mdl.i_unique))
@@ -331,6 +379,8 @@ namespace DevKit.Web.Controllers
                     return BadRequest(ex.ToString());
                 }                
             }
+
+            #endregion
 
             mdlUpdate.st_nome = mdl.st_nome;
             mdlUpdate.st_cidade = mdl.st_cidade;

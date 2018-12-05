@@ -32,14 +32,13 @@
                                     <th width="20px"></th>
                                 </tr>
                             </thead>
-                            <tr height="28px"></tr>
+                            <tr height="12px"></tr>
                             <tr height="40px" ng-if="viewModel.i_unique > 0">
                                 <td></td>
                                 <td>Cód. Lojista</td>
                                 <td></td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="6"
-                                           ng-model="viewModel.st_loja">
+                                    <b><h3>{{viewModel.st_loja}}</h3></b>
                                 </td>
                             </tr>
                             <tr height="40px">
@@ -56,7 +55,7 @@
                                 <td>CNPJ</td>
                                 <td></td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="150"
+                                    <input type="text" class="form-control input-transparent" maxlength="16" onKeyUp="money(this,ValorNum);"
                                            ng-model="viewModel.nu_CNPJ">
                                 </td>
                             </tr>
@@ -106,7 +105,8 @@
                                 <td>CEP</td>
                                 <td></td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent"
+                                    <input type="text" class="form-control input-transparent" maxlength="8" 
+                                           onKeyUp="money(this,ValorNum);"
                                            ng-model="viewModel.nu_CEP">
                                 </td>
                                 <td></td>
@@ -143,8 +143,6 @@
                                     <br />
                                     <input type="radio" value="0" ng-model="viewModel.tg_blocked"> Ativa
                                 </td>
-                            </tr>
-                            <tr height="40px">
                                 <td></td>
                                 <td>Com senha</td>
                                 <td></td>
@@ -155,7 +153,7 @@
                                     <input type="radio" value="0" ng-model="viewModel.tg_portalComSenha"> Não
                                 </td>
                             </tr>
-                            <tr height="20px"></tr>
+                            <tr height="40px"></tr>
                         </table>
                     </div>
                 </tab>
@@ -188,7 +186,7 @@
                                 <td>Fax</td>
                                 <td></td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="150"
+                                    <input type="text" class="form-control input-transparent" maxlength="20" onKeyUp="money(this,ValorNum);"
                                            ng-model="viewModel.nu_fax">
                                 </td>
                             </tr>
@@ -197,14 +195,14 @@
                                 <td>Telefone Fixo</td>
                                 <td></td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="150"
+                                    <input type="text" class="form-control input-transparent" maxlength="20" onKeyUp="money(this,ValorNum);"
                                            ng-model="viewModel.nu_telefone">
                                 </td>
                                 <td></td>
                                 <td>Celular</td>
                                 <td></td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="150"
+                                    <input type="text" class="form-control input-transparent" maxlength="20" onKeyUp="money(this,ValorNum);"
                                            ng-model="viewModel.st_telCelular">
                                 </td>
                             </tr>

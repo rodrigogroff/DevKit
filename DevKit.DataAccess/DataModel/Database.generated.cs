@@ -657,6 +657,8 @@ namespace DataModel
 		[Column,     Nullable] public string  st_senha          { get; set; } // varchar(16)
 		[Column,     Nullable] public int?    tg_cancel         { get; set; } // int
 		[Column,     Nullable] public int?    tg_portalComSenha { get; set; } // int
+		[Column,     Nullable] public string  st_telCelular     { get; set; } // varchar(20)
+		[Column,     Nullable] public string  st_email          { get; set; } // varchar(200)
 	}
 
 	[Table(Schema="dbo", Name="T_LojaMensagem")]

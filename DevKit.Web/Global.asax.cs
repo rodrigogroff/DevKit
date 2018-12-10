@@ -41,7 +41,7 @@ namespace DevKit.Web
             if (cache["started_observer"] == null)
             {
                 cache["started_observer"] = true;
-              //  new Thread(new ThreadStart(BatchService)).Start();
+                new Thread(new ThreadStart(BatchService)).Start();
             }
         }
 

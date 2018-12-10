@@ -318,7 +318,25 @@ namespace DevKit.Web.Controllers
 
             mdlNew.st_loja = cd.ToString();
 
-            mdlNew.i_unique = Convert.ToInt64(db.InsertWithIdentity(mdlNew));            
+            mdlNew.i_unique = Convert.ToInt64(db.InsertWithIdentity(mdlNew));
+
+            // -------------
+            // terminal
+            // -------------
+
+            var ult = db.T_Terminal.
+                            Where(y => Convert.ToInt32(y.nu_terminal) > 7700).
+                            Where(y => Convert.ToInt32(y.nu_terminal) < 8000).
+                            OrderByDescending(y => y.nu_terminal).FirstOrDefault();
+
+            var novo = new T_Terminal
+            {
+                nu_terminal = (Convert.ToInt32(ult.nu_terminal) + 1).ToString(),
+                fk_loja = (int)mdlNew.i_unique,
+                st_localizacao = "Terminal Automático"
+            };
+
+            novo.i_unique = Convert.ToInt64(db.InsertWithIdentity(novo));
 
             return Ok(mdlNew);
         }

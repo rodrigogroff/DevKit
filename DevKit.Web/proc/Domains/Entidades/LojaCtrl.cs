@@ -354,6 +354,7 @@ namespace DevKit.Web.Controllers
                              select e).
                              FirstOrDefault();
 
+            
             #region - terminal - 
 
             if (mdl.novoTerminal != null)
@@ -402,7 +403,7 @@ namespace DevKit.Web.Controllers
             }
 
             #endregion
-
+                        
             #region - convenio - 
 
             if (mdl.novoConvenio != null)
@@ -461,7 +462,7 @@ namespace DevKit.Web.Controllers
             mdlUpdate.tg_portalComSenha = Convert.ToInt32(mdl.tg_portalComSenha);
 
             // campos transformados
-            
+
             if (mdl.isentoFat == true)
                 mdlUpdate.tg_isentoFat = 1;
             else

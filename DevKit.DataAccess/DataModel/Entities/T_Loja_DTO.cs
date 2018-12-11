@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataModel
 {
@@ -30,8 +31,10 @@ namespace DataModel
 
     public partial class T_Loja
     {
+        [NotMapped]
         public bool isentoFat = false;
 
+        [NotMapped]
         public string id,
                         terminal,
                         nome,
@@ -44,18 +47,30 @@ namespace DataModel
                         svrMensalidade,
                         svrMinimo,
                         svrTransacao,
-                        snuFranquia;                        
+                        snuFranquia;
 
+        [NotMapped]
         public List<LojaMensagem> lstMensagens;
+
+        [NotMapped]
         public List<LojaTerminal> lstTerminais;
+
+        [NotMapped]
         public List<LojaConvenio> lstConvenios;
 
+        [NotMapped]
         public LojaMensagem novaMensagem;
 
+        [NotMapped]
         public LojaTerminal novoTerminal;
+
+        [NotMapped]
         public LojaTerminal editTerminal;
 
+        [NotMapped]
         public LojaConvenio editConvenio;
+
+        [NotMapped]
         public LojaConvenio novoConvenio;
     }
 }

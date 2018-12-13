@@ -77,6 +77,10 @@ namespace DevKit.Web.Controllers
 
                     line += "|";
 
+                    cart.tg_emitido = Convert.ToInt32(StatusExpedicao.EmExpedicao);
+
+                    db.Update(cart);
+
                     ts.WriteLine(line);
                 }                
             }

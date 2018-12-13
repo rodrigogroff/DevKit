@@ -396,6 +396,7 @@ namespace DevKit.Web.Controllers
 
                         var lstCarts = (from e in db.T_Cartao
                                        where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
+                                       where e.tg_status.ToString() == CartaoStatus.Habilitado 
                                        select (int)e.i_unique).
                                        ToList();
 

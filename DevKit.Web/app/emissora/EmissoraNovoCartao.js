@@ -173,6 +173,7 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                     if (id > 0) {
                         Api.EmissoraCartao.update({ id: id }, $scope.viewModel, function (data) {
                             toastr.success('Cartão salvo!', 'Sucesso');
+                            $scope.loading = false;
                         },
                             function (response) {
                                 toastr.error(response.data.message, 'Erro');

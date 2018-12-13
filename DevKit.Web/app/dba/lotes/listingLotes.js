@@ -15,6 +15,7 @@ angular.module('app.controllers').controller('ListingLotesController',
                 var opcoes = {
                     skip: skip,
                     take: take,
+                    todos: $scope.campos.todos
                 };
 
                 Api.LoteDBA.listPage(opcoes, function (data) {

@@ -3,12 +3,15 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Web.Http;
 using SyCrafEngine;
+using DataModel;
+using System;
 
 namespace DevKit.Web.Controllers
 {
     public class RelAssociadosItem
     {
         public string associado, cartao, cpf, dispM, limM, dispT, limT, tit;
+        public string via, status, exped, dt_exp;
     }
 
     public class RelAssociadosController : ApiControllerBase
@@ -103,6 +106,17 @@ namespace DevKit.Web.Controllers
                                                            item.nu_viaCartao,
                                                            assoc.st_cpf);
 
+                    var exped = "Requerido";
+
+                    if (item.tg_emitido.ToString() == StatusExpedicao.EmExpedicao)                    
+                        exped = "Gráfica";                    
+                    else if (item.tg_emitido.ToString() == StatusExpedicao.Expedido)                    
+                        exped = "Expedido";
+
+                    var ultLoteDet = db.T_LoteCartaoDetalhe.
+                        Where(y => y.fk_cartao == item.i_unique).
+                        OrderByDescending(y => y.i_unique).FirstOrDefault();
+
                     res.Add(new RelAssociadosItem
                     {
                         associado = assoc.st_nome,
@@ -118,6 +132,12 @@ namespace DevKit.Web.Controllers
                         dispT = mon.setMoneyFormat(dispT),
                         limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
                         limT = mon.setMoneyFormat((long)item.vr_limiteTotal),
+
+
+                        via = item.nu_viaCartao.ToString(),
+                        status = item.tg_status.ToString() == CartaoStatus.Habilitado ? "Habilitado" : "Bloqueado",
+                        exped = exped,
+                        dt_exp = ultLoteDet != null ? ultLoteDet.dt_ativacao != null ? Convert.ToDateTime(ultLoteDet.dt_ativacao).ToString("dd/MM/yyyy HH:mm") : "" : ""
                     });
                 }
                     

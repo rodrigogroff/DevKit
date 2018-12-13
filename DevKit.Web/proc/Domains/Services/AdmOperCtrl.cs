@@ -394,17 +394,38 @@ namespace DevKit.Web.Controllers
                     {
                         #region - code - 
 
+                        var lstCarts = (from e in db.T_Cartao
+                                       where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
+                                       select (int)e.i_unique).
+                                       ToList();
+
+                        var lstLotesAbertos = db.T_LoteCartao.
+                                                Where(y => y.tg_sitLote == 1).
+                                                Select(y => (int)y.i_unique).
+                                                ToList();
+
+                        var lstLoteDets = db.T_LoteCartaoDetalhe.
+                                                Where(y => lstLotesAbertos.Contains((int)y.fk_lote)).
+                                                Select(y => (int)y.fk_cartao).
+                                                ToList();
+
+                        var lstCartsDisp = new List<int>();
+
+                        for (int i = 0; i < lstCarts.Count(); i++)
+                            if (!lstLoteDets.Contains(lstCarts[i]))
+                                lstCartsDisp.Add(lstCarts[i]);
+                                                       
                         var lst = (from e in db.T_Cartao
                                     join d in db.T_Proprietario on e.fk_dadosProprietario equals (int)d.i_unique
-                                    where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
-                                    select new
+                                    where lstCartsDisp.Contains ((int)e.i_unique)
+                                      select new
                                     {
                                         id = e.i_unique.ToString(),
                                         empresa = e.st_empresa,
                                         matricula = e.st_matricula,
                                         associado = d.st_nome,
                                         selecionado = false,
-                                    }).
+                                    }).                                    
                                     ToList();
 
                         var lstEmp = lst.Select(y => y.empresa).Distinct().ToList();

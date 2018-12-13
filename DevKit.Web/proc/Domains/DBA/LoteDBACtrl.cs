@@ -113,12 +113,16 @@ namespace DevKit.Web.Controllers
             var busca = Request.GetQueryStringValue("busca");
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
+            var todos = Request.GetQueryStringValue<bool>("todos", false);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var query = (from e in db.T_LoteCartao select e);
+            var query = from e in db.T_LoteCartao select e;
 
+            if (!todos)
+                query = query.Where(y => y.tg_sitLote != 3);
+            
             query = query.OrderByDescending(y => y.dt_abertura);
 
             var lst = new List<T_LoteCartao>();

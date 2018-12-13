@@ -26,6 +26,15 @@
                         <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
                     </td>
                 </tr>
+
+                <tr height="36px">
+                    <td width="25px"></td>
+                    <td width="110px"><b>Todos?</b></td>
+                    <td width="220px">
+                        Sim <input type="checkbox" ng-model="campos.todos" />
+                    </td>
+                </tr>
+
                 <tr height="22px"> </tr>
             </table>
             <div ng-show="list.length == 0">

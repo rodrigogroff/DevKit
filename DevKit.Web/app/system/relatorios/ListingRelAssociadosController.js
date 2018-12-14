@@ -8,6 +8,7 @@ angular.module('app.controllers').controller('ListingRelAssociadosController',
 
             $scope.campos = {
                 bloqueado: 'false',
+                expedicao: 'T',
                 matricula: '',
                 selects: {
                     empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
@@ -35,12 +36,10 @@ angular.module('app.controllers').controller('ListingRelAssociadosController',
                     skip: skip,
                     take: take,
                     matricula: $scope.campos.matricula,
-                    idEmpresa: $scope.campos.idEmpresa
+                    idEmpresa: $scope.campos.idEmpresa,
+                    bloqueado: $scope.campos.bloqueado,
+                    expedicao: $scope.campos.expedicao
                 };
-
-                angular.extend(opcoes, $scope.campos);
-
-                delete opcoes.selects;
 
                 Api.RelAssociados.listPage(opcoes, function (data) {
                     $scope.list = data.results;

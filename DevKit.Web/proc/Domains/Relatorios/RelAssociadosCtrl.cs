@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
     public class RelAssociadosItem
     {
         public string associado, cartao, cpf, dispM, limM, dispT, limT, tit;
-        public string via, status, exped, dt_exp;
+        public string via, status, exped, dt_exp, dt_ultMov;
     }
 
     public class RelAssociadosController : ApiControllerBase
@@ -24,6 +24,7 @@ namespace DevKit.Web.Controllers
             var take = Request.GetQueryStringValue<int>("take");
             var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa", null);
             var bloqueado = Request.GetQueryStringValue<bool?>("bloqueado");
+            var expedicao = Request.GetQueryStringValue("expedicao");
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -51,6 +52,22 @@ namespace DevKit.Web.Controllers
                     query = (from e in query
                              where e.tg_status.ToString() == "1"
                              select e);
+            }
+
+            if (expedicao != null)
+            {
+                if (expedicao == "R")
+                {
+                    query = (from e in query where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido select e);
+                }
+                else if (expedicao == "G")
+                {
+                    query = (from e in query where e.tg_emitido.ToString() == StatusExpedicao.EmExpedicao select e);
+                }
+                else if (expedicao == "A")
+                {
+                    query = (from e in query where e.tg_emitido.ToString() == StatusExpedicao.Expedido select e);
+                }
             }
 
             if (busca != null)
@@ -117,6 +134,11 @@ namespace DevKit.Web.Controllers
                         Where(y => y.fk_cartao == item.i_unique).
                         OrderByDescending(y => y.i_unique).FirstOrDefault();
 
+                    var ultMov = db.LOG_Transacoes.
+                                    Where(y => y.fk_cartao == assoc.i_unique && y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                        OrderByDescending(y => y.dt_transacao).
+                                        FirstOrDefault();
+
                     res.Add(new RelAssociadosItem
                     {
                         associado = assoc.st_nome,
@@ -132,12 +154,11 @@ namespace DevKit.Web.Controllers
                         dispT = mon.setMoneyFormat(dispT),
                         limM = mon.setMoneyFormat((long)item.vr_limiteMensal),
                         limT = mon.setMoneyFormat((long)item.vr_limiteTotal),
-
-
                         via = item.nu_viaCartao.ToString(),
                         status = item.tg_status.ToString() == CartaoStatus.Habilitado ? "Habilitado" : "Bloqueado",
                         exped = exped,
-                        dt_exp = ultLoteDet != null ? ultLoteDet.dt_ativacao != null ? Convert.ToDateTime(ultLoteDet.dt_ativacao).ToString("dd/MM/yyyy HH:mm") : "" : ""
+                        dt_exp = ultLoteDet != null ? ultLoteDet.dt_ativacao != null ? Convert.ToDateTime(ultLoteDet.dt_ativacao).ToString("dd/MM/yyyy HH:mm") : "" : "",
+                        dt_ultMov = ultMov != null ? Convert.ToDateTime(ultMov.dt_transacao).ToString("dd/MM/yyyy HH:mm") : ""
                     });
                 }
                     

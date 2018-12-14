@@ -679,6 +679,9 @@ namespace DevKit.Web.Controllers
 
                 case "altSegVia":
                     {
+                        if (cart.tg_status.ToString() == CartaoStatus.Bloqueado)
+                            return BadRequest("Cartão Bloqueado!");
+
                         cart.nu_viaCartao = cart.nu_viaCartao + 1;
                         cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
 

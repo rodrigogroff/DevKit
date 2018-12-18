@@ -477,6 +477,11 @@ namespace DevKit.Web.Controllers
             mdlUpdate.vr_transacao = Convert.ToInt32(mon.prepareNumber(mdl.svrTransacao));
             mdlUpdate.nu_franquia = Convert.ToInt32(mon.prepareNumber(mdl.snuFranquia));
 
+            mdlUpdate.st_email = mdl.st_email;
+            mdlUpdate.nu_fax = mdl.nu_fax;
+            mdlUpdate.nu_telefone = mdl.nu_telefone;
+            mdlUpdate.st_telCelular = mdl.st_telCelular;
+
             db.Update(mdlUpdate);
 
             if (mdl.novaMensagem != null)

@@ -31,7 +31,6 @@ namespace DevKit.Web
 			);
         }
 
-
         public HttpApplicationState cache;
 
         public override void Init()

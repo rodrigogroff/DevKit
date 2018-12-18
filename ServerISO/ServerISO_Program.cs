@@ -126,6 +126,17 @@ public class SynchronousSocketListener
         //    var regIso = new ISO8583(dados);
         //}
 
+
+        DateTime xdt = new DateTime(2018, 12, 14, 14, 0, 0);
+
+        for (int id = 624895; id <= 625055; id++)
+        {
+            Console.WriteLine("update LOG_Transacoes set dt_transacao='" + xdt.ToString("yyyy-MM-dd HH:mm:ss") + "' where i_unique = " + id);
+            xdt = xdt.AddMinutes(2);
+        }
+
+        Console.ReadLine();
+
         Console.WriteLine("\n" + DateTime.Now + "]");
         Console.WriteLine("\nCNET ISO [" + portNum + "]");
 

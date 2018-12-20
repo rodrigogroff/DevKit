@@ -232,7 +232,7 @@ namespace DevKit.Web.Controllers
                 {
                     id = item.i_unique.ToString(),
                     codigo = item.nu_terminal,
-                    texto = item.st_localizacao.Replace ("{SE$3}",",")
+                    texto = item.st_localizacao != null ? item.st_localizacao.Replace ("{SE$3}",",") : ""
                 });
             }
             

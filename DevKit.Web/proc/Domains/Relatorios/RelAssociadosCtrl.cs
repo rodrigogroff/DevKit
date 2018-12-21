@@ -135,7 +135,7 @@ namespace DevKit.Web.Controllers
                         OrderByDescending(y => y.i_unique).FirstOrDefault();
 
                     var ultMov = db.LOG_Transacoes.
-                                    Where(y => y.fk_cartao == assoc.i_unique && y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                    Where(y => y.fk_cartao == item.i_unique && y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
                                         OrderByDescending(y => y.dt_transacao).
                                         FirstOrDefault();
 

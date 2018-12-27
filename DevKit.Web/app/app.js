@@ -49,6 +49,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('admoperslimites', { url: '/system/admoperslimites/:id', templateUrl: 'app/system/admopers/limites.html', controller: 'AdmOpersLimitesController' })
             .state('admopersativagrafica', { url: '/system/admopersativagrafica/:id', templateUrl: 'app/system/admopers/ativaGrafica.html', controller: 'AdmOpersAtivaGraficaController' })
             .state('admoperslanctx', { url: '/system/admoperslanctx/:id', templateUrl: 'app/system/admopers/lanctx.html', controller: 'AdmOpersLancTxController' })
+            .state('admopersbloq', { url: '/system/', templateUrl: 'app/system/admopers/altBloq.html', controller: 'DBABloqueioController' })
 
             .state('menuUsr', { url: '/system/associadoMenu', templateUrl: 'app/associado/menu.html', controller: 'AssociadoMenuController' })
 

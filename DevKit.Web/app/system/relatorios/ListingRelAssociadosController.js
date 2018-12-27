@@ -38,7 +38,8 @@ angular.module('app.controllers').controller('ListingRelAssociadosController',
                     matricula: $scope.campos.matricula,
                     idEmpresa: $scope.campos.idEmpresa,
                     bloqueado: $scope.campos.bloqueado,
-                    expedicao: $scope.campos.expedicao
+                    expedicao: $scope.campos.expedicao,
+                    busca: $scope.campos.busca
                 };
 
                 Api.RelAssociados.listPage(opcoes, function (data) {

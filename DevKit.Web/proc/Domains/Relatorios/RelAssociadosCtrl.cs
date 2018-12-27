@@ -74,7 +74,7 @@ namespace DevKit.Web.Controllers
             {
                 query = (from e in query
                          join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int) associado.i_unique
-                         where associado.st_nome.Contains(busca)
+                         where associado.st_nome.ToUpper().Contains(busca.ToUpper())
                          select e);
             }
 

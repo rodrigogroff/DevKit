@@ -42,6 +42,7 @@ namespace DevKit.Web
                 "~/app/system/admopers/lanctx.js",
                 "~/app/system/admopers/dashboard.js",
                 "~/app/system/admopers/bloq.js",
+                "~/app/system/admopers/desbloq.js",
                 "~/app/associado/LimitesController.js",
                 "~/app/associado/LimitesMobileController.js",
                 "~/app/associado/ExtratosController.js",

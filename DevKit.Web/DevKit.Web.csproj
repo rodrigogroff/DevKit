@@ -292,11 +292,13 @@
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
     <Content Include="app\system\admopers\altBloq.html" />
+    <Content Include="app\system\admopers\altDesbloq.html" />
     <Content Include="app\system\admopers\dashboard.html" />
     <Content Include="app\system\admopers\dashboard.js" />
     <Content Include="app\system\admopers\ativaGrafica.html" />
     <Content Include="app\system\admopers\ativaGrafica.js" />
     <Content Include="app\system\admopers\bloq.js" />
+    <Content Include="app\system\admopers\desbloq.js" />
     <Content Include="app\system\admopers\lancTx.html" />
     <Content Include="app\system\admopers\lancTx.js" />
     <Content Include="app\system\admopers\limites.html" />

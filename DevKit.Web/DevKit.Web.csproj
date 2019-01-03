@@ -292,6 +292,7 @@
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
     <Content Include="app\system\admopers\altBloq.html" />
+    <Content Include="app\system\admopers\altCota.html" />
     <Content Include="app\system\admopers\altDesbloq.html" />
     <Content Include="app\system\admopers\altLimite.html" />
     <Content Include="app\system\admopers\altSegVia.html" />
@@ -305,6 +306,7 @@
     <Content Include="app\system\admopers\altLimite.js" />
     <Content Include="app\system\admopers\altSenha.js" />
     <Content Include="app\system\admopers\altSegVia.js" />
+    <Content Include="app\system\admopers\AltCota.js" />
     <Content Include="app\system\admopers\lancTx.html" />
     <Content Include="app\system\admopers\lancTx.js" />
     <Content Include="app\system\admopers\limites.html" />

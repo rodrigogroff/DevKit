@@ -54,6 +54,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('admopersaltlim', { url: '/system/altlim', templateUrl: 'app/system/admopers/altlimite.html', controller: 'DBAAltLimiteController' })
             .state('admopersaltsenha', { url: '/system/altsenha', templateUrl: 'app/system/admopers/altSenha.html', controller: 'DBAAltSenhaController' })
             .state('admopersaltsegvia', { url: '/system/altsegvia', templateUrl: 'app/system/admopers/altSegvia.html', controller: 'DBAAltSegViaController' })
+            .state('admopersaltcota', { url: '/system/altcota', templateUrl: 'app/system/admopers/altCota.html', controller: 'DBAAltCotaController' })
 
             .state('menuUsr', { url: '/system/associadoMenu', templateUrl: 'app/associado/menu.html', controller: 'AssociadoMenuController' })
 

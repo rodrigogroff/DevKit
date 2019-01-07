@@ -12,7 +12,7 @@
         </legend>
         <div class="divWebForm" style="max-width:95%;min-width:95%">
 
-            <table width="500px" ng-if="tipo==5">
+            <!--<table width="500px" ng-if="tipo==5">
                 <tr>
                     <td width="20px"></td>
                     <td width="120px"><b>(DBA) Empresa</b></td>
@@ -26,7 +26,7 @@
                     <td width="120px"></td>
                 </tr>
                 <tr height="22px"> </tr>
-            </table>
+            </table>-->
 
             <table class="widget" style="color: white" width="700px">
                 <tr height="22px"> </tr>
@@ -40,7 +40,7 @@
                     </td>
                     <td width="50px"></td>
                     <td width="120px">Data final</td>
-                    <td width="120px">
+                    <td width="150px">
                         <input type="text" class="form-control input-transparent"
                                maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"
                                ng-model="campos.dtFinal">
@@ -51,16 +51,92 @@
                     <td></td>
                     <td>Matrícula</td>
                     <td>
-                        <input type="text" class="form-control input-transparent" maxlength="6"
-                               ng-model="campos.mat">
+                        <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.mat">
                     </td>
                 </tr>
+
+                <tr height="43px" ng-if="tipo==5">
+                    <td></td>
+                    <td colspan="4"><h2>Modo DBA</h2></td>
+
+                </tr>
+
+                <tr height="43px" ng-if="tipo==5">
+                    <td></td>
+                    <td>Empresa</td>
+                    <td width="220px">
+                        <button class="btn btn-xs btn-danger" ng-show="emp_fail">!</button>
+                        <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.empresa" ng-model="campos.idEmpresa" />
+                    </td>
+                </tr>
+
+                <tr height="43px" ng-if="tipo==5">
+                    <td></td>
+                    <td>NSU</td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.nsu">
+                    </td>
+                    <td></td>
+                    <td>Terminal</td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.terminal">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr height="43px" ng-if="tipo==5">
+                    <td></td>
+                    <td>Cód. Loja</td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.codLoja">
+                    </td>
+                    <td></td>
+                    <td>CNPJ loja</td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="14" ng-model="campos.cnpjLoja">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr height="43px" ng-if="tipo==5">
+                    <td></td>
+                    <td>Valor</td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="9" ng-model="campos.valorVenda">
+                    </td>
+                    <td></td>
+                    <td>Parcelas</td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="2" ng-model="campos.parcelas">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr height="43px" ng-if="tipo==5">
+                    <td></td>
+                    <td>Operação</td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" maxlength="6" ng-model="campos.operacao">
+                    </td>                    
+                </tr>
+
+                <tr height="43px" ng-if="tipo==5">
+                    <td></td>
+                    <td>Tipo</td>
+                    <td>
+                        <label><input type="radio" name="tipo1" value="3" ng-model="campos.tipo"> (Todas) </label>&nbsp;&nbsp;
+                        <label><input type="radio" name="tipo2" value="1" ng-model="campos.tipo"> SITEF </label>&nbsp;&nbsp;
+                        <label><input type="radio" name="tipo3" value="2" ng-model="campos.tipo"> WEB </label>&nbsp;&nbsp;
+                    </td>                    
+                </tr>
+
+                <tr height="22px" ng-if="tipo==5"></tr>
 
                 <tr height="33px">
                     <td></td>
                     <td>Situação</td>
                     <td colspan="4">
-                        <label><input type="radio" name="status1" value="1" ng-model="campos.sit"> Todas </label>&nbsp;&nbsp;
+                        <label><input type="radio" name="status1" value="1" ng-model="campos.sit"> (Todas) </label>&nbsp;&nbsp;
                         <label><input type="radio" name="status2" value="2" ng-model="campos.sit"> Confirmadas</label>&nbsp;&nbsp;
                         <label><input type="radio" name="status3" value="3" ng-model="campos.sit"> Canceladas</label>&nbsp;&nbsp;
                         <label><input type="radio" name="status3" value="4" ng-model="campos.sit"> Negadas</label>&nbsp;&nbsp;
@@ -102,7 +178,7 @@
 
                     <h4>Transações confirmadas</h4>
                     <br />
-                    <table class="table table-hover">
+                    <table class="table table-hover" ng-if="tipo != 5">
                         <thead>
                             <tr>
                                 <th>Serial</th>
@@ -130,6 +206,39 @@
                             <td>{{ mdl.dt }}</td>
                             <td>CONFIRMADA</td>
                             <td>VENDA</td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-hover" ng-if="tipo==5">
+                        <thead>
+                            <tr>
+                                <th>Serial</th>
+                                <th>Loja</th>
+                                <th>Terminal</th>
+                                <th>NSU</th>
+                                <th>Matrícula</th>
+                                <th>Associado</th>
+                                <th>Vlr. Total</th>
+                                <th>Parcelas</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Tipo</th>
+                                <th>Operação</th>
+                            </tr>
+                        </thead>
+                        <tr data-ng-repeat="mdl in list[0].itens">
+                            <td>{{ mdl.serial }}</td>
+                            <td>{{ mdl.loja }}</td>
+                            <td>{{ mdl.terminal }}</td>
+                            <td>{{ mdl.nsu }}</td>
+                            <td>{{ mdl.mat }}</td>
+                            <td>{{ mdl.assoc }}</td>
+                            <td>{{ mdl.valorTot }}</td>
+                            <td>{{ mdl.parcelas }}</td>
+                            <td>{{ mdl.dt }}</td>
+                            <td>CONFIRMARDA</td>
+                            <td>{{ mdl.tipo }}</td>
+                            <td>{{ mdl.motivo }}</td>
                         </tr>
                     </table>
 

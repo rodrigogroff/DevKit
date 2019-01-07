@@ -9,6 +9,7 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransController',
 
             $scope.campos = {
                 sit: '1',
+                tipo: '3',
                 selects: {
                     empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
                 }
@@ -45,6 +46,14 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransController',
                     dtInicial: $scope.campos.dtInicial,
                     dtFinal: $scope.campos.dtFinal,
                     sit: $scope.campos.sit,
+
+                    nsu: $scope.campos.nsu,
+                    terminal: $scope.campos.terminal,
+                    codLoja: $scope.campos.codLoja,
+                    cnpjLoja: $scope.campos.cnpjLoja,
+                    valorVenda: $scope.campos.valorVenda,
+                    parcelas: $scope.campos.parcelas,
+                    tipo: $scope.campos.tipo,
                 };
 
                 Api.EmissoraRelExtratoTrans.listPage(opcoes, function (data) {

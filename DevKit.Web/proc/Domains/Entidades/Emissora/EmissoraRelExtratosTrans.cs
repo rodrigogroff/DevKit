@@ -24,6 +24,7 @@ namespace DevKit.Web.Controllers
                         valorTot,
                         parcelas,
                         dt,
+                        tipo,
                         motivo;
     }
 
@@ -34,7 +35,9 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
+            // -------------------
+            // normal
+            // -------------------
 
             var mat = Request.GetQueryStringValue("mat");
             var dtInicial = Request.GetQueryStringValue("dtInicial");
@@ -43,6 +46,20 @@ namespace DevKit.Web.Controllers
 
             DateTime? dt_inicial = ObtemData(dtInicial),
                       dt_final = ObtemData(dtFinal);
+
+            // -------------------
+            // dba
+            // -------------------
+
+            var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
+            var nsu = Request.GetQueryStringValue("nsu");
+            var terminal = Request.GetQueryStringValue("terminal");
+            var codLoja = Request.GetQueryStringValue("codLoja");
+            var cnpjLoja = Request.GetQueryStringValue("cnpjLoja");
+            var valorVenda = ObtemValor(Request.GetQueryStringValue("valorVenda"));
+            var parcelas = Request.GetQueryStringValue("parcelas");
+            var operacao = Request.GetQueryStringValue("operacao");
+            var tipo = Request.GetQueryStringValue("tipo");
 
             var dt = DateTime.Now;
 
@@ -105,9 +122,64 @@ namespace DevKit.Web.Controllers
             var q_trans = from e in db.LOG_Transacoes
                           where e.fk_empresa == tEmp.i_unique
                           where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
-                          where lstCarts.Count() == 0 || lstCarts.Contains ((int)e.fk_cartao)
-                          orderby e.dt_transacao descending
+                          where lstCarts.Count() == 0 || lstCarts.Contains ((int)e.fk_cartao)                          
                           select e;
+
+            // -----------
+            // dba
+            // -----------
+
+            if (!string.IsNullOrEmpty (nsu))
+            {
+                q_trans = q_trans.Where(y => y.nu_nsu.ToString() == nsu);
+            }
+            
+            if (!string.IsNullOrEmpty(terminal))
+            {
+                T_Terminal ter = db.T_Terminal.FirstOrDefault(y => y.nu_terminal.PadLeft(8, '0') == terminal.PadLeft(8, '0'));
+
+                if (ter != null)
+                    q_trans = q_trans.Where(y => y.fk_terminal == ter.i_unique);
+            }
+
+            if (!string.IsNullOrEmpty(codLoja))
+            {
+                T_Loja loj_temp = db.T_Loja.FirstOrDefault(y => y.st_loja == codLoja);
+
+                if (loj_temp != null)
+                    q_trans = q_trans.Where(y => y.fk_loja == loj_temp.i_unique);
+            }
+
+            if (!string.IsNullOrEmpty(cnpjLoja))
+            {
+                T_Loja loj_temp = db.T_Loja.FirstOrDefault(y => y.nu_CNPJ == cnpjLoja);
+
+                if (loj_temp != null)
+                    q_trans = q_trans.Where(y => y.fk_loja == loj_temp.i_unique);
+            }
+
+            if (valorVenda > 0)
+            {
+                q_trans = q_trans.Where(y => y.vr_total == valorVenda);
+            }
+
+            if (!string.IsNullOrEmpty(parcelas))
+            {
+                q_trans = q_trans.Where(y => y.nu_parcelas.ToString() == parcelas);
+            }
+
+            if (!string.IsNullOrEmpty(operacao))
+            {
+                q_trans = q_trans.Where(y => y.st_msg_transacao.ToUpper().Contains (operacao.ToUpper()));
+            }
+
+            if (!string.IsNullOrEmpty(tipo))
+            {
+                if (tipo != "3")
+                    q_trans = q_trans.Where(y => y.tg_contabil.ToString() == tipo);
+            }
+
+            q_trans = from e in q_trans orderby e.dt_transacao descending select e;
 
             if (q_trans.Count() > 2000)
                 return BadRequest("Pesquisa excede máximo de 2000 transações");
@@ -177,13 +249,15 @@ namespace DevKit.Web.Controllers
                     {
                         serial = serial.ToString(),
                         dt = ObtemData(tran.dt_transacao),
-                        loja = loja.st_nome,
+                        loja = "(" + loja.st_loja + ") " + loja.st_nome,
                         nsu = tran.nu_nsu.ToString(),
                         mat = _mat,
                         assoc = assocNome,
                         parcelas = tran.nu_parcelas.ToString(),
                         terminal = term.nu_terminal.ToString(),
-                        valorTot = mon.setMoneyFormat((long)tran.vr_total)
+                        valorTot = mon.setMoneyFormat((long)tran.vr_total),
+                        tipo = tran.tg_contabil.ToString() == "2" ? "Web" : "SITEF",
+                        motivo = tran.st_msg_transacao
                     });
                 }
             }
@@ -224,7 +298,7 @@ namespace DevKit.Web.Controllers
                     {
                         serial = serial.ToString(),
                         dt = ObtemData(tran.dt_transacao),
-                        loja = loja.st_nome,
+                        loja = "(" + loja.st_loja + ") " + loja.st_nome,
                         nsu = tran.nu_nsu.ToString(),
                         mat = _mat,
                         assoc = assocNome,
@@ -272,7 +346,7 @@ namespace DevKit.Web.Controllers
                     {
                         serial = serial.ToString(),
                         dt = ObtemData(tran.dt_transacao),
-                        loja = loja != null ? loja.st_nome : "[*Não disponível*]",
+                        loja = loja != null ? "(" + loja.st_loja + ") " + loja.st_nome : "[*Não disponível*]",
                         nsu = tran.nu_nsu.ToString(),
                         mat = _mat,
                         assoc = assocNome,
@@ -320,7 +394,7 @@ namespace DevKit.Web.Controllers
                     {
                         serial = serial.ToString(),
                         dt = ObtemData(tran.dt_transacao),
-                        loja = loja.st_nome,
+                        loja = "(" + loja.st_loja + ") " + loja.st_nome,
                         nsu = tran.nu_nsu.ToString(),
                         mat = _mat,
                         assoc = assocNome,

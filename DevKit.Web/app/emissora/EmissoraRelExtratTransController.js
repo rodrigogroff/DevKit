@@ -7,13 +7,23 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransController',
             $scope.loading = false;
             $scope.tipo = $rootScope.tipo;
 
-            $scope.campos = {
-                sit: '1',
-                tipo: '3',
-                selects: {
-                    empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
-                }
-            };
+            function init()
+            {
+                $scope.campos = {
+                    sit: '1',
+                    tipo: '3',
+                    selects: {
+                        empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 })
+                    }
+                };
+
+                Api.DataServer.listPage({}, function (data) {
+                        $scope.campos.dtInicial = data.dt;
+                        $scope.campos.dtFinal = data.dt;
+                });
+            }
+
+            init();
 
             var invalidCheck = function (element) {
                 if (element == undefined)
@@ -27,12 +37,12 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransController',
 
             $scope.search = function () {
 
-                if ($scope.tipo == '5') {
-                    $scope.emp_fail = $scope.campos.idEmpresa == undefined;
-                    if ($scope.emp_fail == true)
-                        return;
-                }
+                $scope.dt_ini_fail = $scope.campos.dtInicial == undefined;
+                $scope.dt_fim_fail = $scope.campos.dtFinal == undefined;
 
+                if ($scope.dt_ini_fail == true || $scope.dt_fim_fail == true)
+                    return;
+            
                 $scope.list = undefined;
 
                 $scope.dtIni_fail = invalidCheck($scope.campos.dtInicial);

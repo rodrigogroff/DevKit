@@ -93,7 +93,7 @@ namespace DevKit.Web.Controllers
             if (!string.IsNullOrEmpty(mat))
             {
                 cart = (from e in db.T_Cartao
-                            where e.st_empresa == tEmp.st_empresa
+                            where tEmp == null || tEmp != null && e.st_empresa == tEmp.st_empresa
                             where e.st_matricula == mat.PadLeft(6, '0')
                             where e.st_titularidade == "01"
                             select e).
@@ -103,7 +103,7 @@ namespace DevKit.Web.Controllers
                     return BadRequest("Cartão inválido");
 
                 lstCarts = (from e in db.T_Cartao
-                            where e.st_empresa == tEmp.st_empresa
+                            where tEmp == null || tEmp != null && e.st_empresa == tEmp.st_empresa
                             where e.st_matricula == mat.PadLeft(6, '0')
                             select (int)e.i_unique).
                             ToList();
@@ -114,16 +114,17 @@ namespace DevKit.Web.Controllers
                         FirstOrDefault();
             }
 
-            var lstTotCarts = (from e in db.T_Cartao
-                               where e.st_empresa == tEmp.st_empresa
-                               select e).
-                               ToList();
+            var lstTotCarts = tEmp != null ? (from e in db.T_Cartao where e.st_empresa == tEmp.st_empresa select e).ToList() :
+                                             (from e in db.T_Cartao select e).ToList();
 
             var q_trans = from e in db.LOG_Transacoes
-                          where e.fk_empresa == tEmp.i_unique
+                          //where e.fk_empresa == tEmp.i_unique
                           where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
                           where lstCarts.Count() == 0 || lstCarts.Contains ((int)e.fk_cartao)                          
                           select e;
+
+            if (tEmp != null)
+                q_trans = q_trans.Where(y => y.fk_empresa == tEmp.i_unique);
 
             // -----------
             // dba
@@ -234,7 +235,10 @@ namespace DevKit.Web.Controllers
 
                     if (_cart != null)
                     {
-                        _mat = _cart.st_matricula;
+                        if (tEmp == null)
+                            _mat = _cart.st_empresa + "." + _cart.st_matricula;
+                        else
+                            _mat = _cart.st_matricula;
 
                         if (_cart.st_titularidade != "01")
                             assocNome = db.T_Dependente.

@@ -717,6 +717,7 @@
     <Compile Include="proc\Domains\Services\CancelaVendaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\AssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Services\EfetuaVendaCtrl.cs" />
+    <Compile Include="proc\Domains\Services\DataServer.cs" />
     <Compile Include="proc\Domains\Services\SomaParceladaCtrl.cs" />
     <Compile Include="proc\Domains\Services\SimulaParceladaCtrl.cs" />
     <Compile Include="proc\Domains\System\CacheCtrl.cs" />

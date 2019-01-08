@@ -217,7 +217,9 @@ namespace DevKit.Web.Controllers
             {
                 var lstIT = lst[0];
 
-                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada))
+                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                            OrderBy ( y=> y.dt_transacao).
+                                            ThenBy ( y=> y.nu_nsu))
                 {
                     if (lstCarts.Count() > 0)
                         if (!lstCarts.Contains((int)tran.fk_cartao))
@@ -271,7 +273,9 @@ namespace DevKit.Web.Controllers
             {
                 var lstIT = lst[1];
 
-                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada))
+                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada).
+                                            OrderBy(y => y.dt_transacao).
+                                            ThenBy(y => y.nu_nsu))
                 {
                     if (lstCarts.Count() > 0)
                         if (!lstCarts.Contains((int)tran.fk_cartao))
@@ -319,7 +323,9 @@ namespace DevKit.Web.Controllers
                 var lstIT = lst[2];
 
                 foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Erro ||
-                                                      y.tg_confirmada.ToString() == TipoConfirmacao.Negada ))
+                                                      y.tg_confirmada.ToString() == TipoConfirmacao.Negada ).
+                                            OrderBy(y => y.dt_transacao).
+                                            ThenBy(y => y.nu_nsu))
                 {
                     if (lstCarts.Count() > 0)
                         if (!lstCarts.Contains((int)tran.fk_cartao))
@@ -367,7 +373,9 @@ namespace DevKit.Web.Controllers
             {
                 var lstIT = lst[3];
 
-                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente))
+                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).
+                                            OrderBy(y => y.dt_transacao).
+                                            ThenBy(y => y.nu_nsu))
                 {
                     if (lstCarts.Count() > 0)
                         if (!lstCarts.Contains((int)tran.fk_cartao))

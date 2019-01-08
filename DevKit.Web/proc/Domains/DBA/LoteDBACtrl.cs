@@ -46,11 +46,24 @@ namespace DevKit.Web.Controllers
                 var lstEmp = db.T_Empresa.Where(y => lstIdsEmps.Contains((int)y.i_unique));
                 var lstCartoes = db.T_Cartao.Where(y => lstIdsCartoes.Contains((int)y.i_unique));
 
-                foreach (var item in lstDetCartoes)
+                var oldEmp = "";
+
+                foreach (var item in lstDetCartoes.OrderBy ( y=> y.fk_empresa).ToList())
                 {
                     var line = "";
 
                     var emp = lstEmp.FirstOrDefault(y => y.i_unique == item.fk_empresa);
+
+                    if (oldEmp == "")
+                    {
+                        oldEmp = emp.st_empresa;
+                    }                        
+                    else if (oldEmp != emp.st_empresa)
+                    {
+                        ts.WriteLine("");
+                        ts.WriteLine("");
+                    }
+
                     var cart = lstCartoes.FirstOrDefault(y => y.i_unique == item.fk_cartao);
                     var venctoCartao = cart.st_venctoCartao.PadLeft(4, '0');
 
@@ -77,9 +90,12 @@ namespace DevKit.Web.Controllers
 
                     line += "|";
 
-                    cart.tg_emitido = Convert.ToInt32(StatusExpedicao.EmExpedicao);
+                    if (cart.tg_emitido == Convert.ToInt32(StatusExpedicao.NaoExpedido))
+                    {
+                        cart.tg_emitido = Convert.ToInt32(StatusExpedicao.EmExpedicao);
 
-                    db.Update(cart);
+                        db.Update(cart);
+                    }                    
 
                     ts.WriteLine(line);
                 }                

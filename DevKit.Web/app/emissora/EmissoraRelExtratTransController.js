@@ -76,6 +76,37 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransController',
                         $scope.cartao = data.cartao;
                         $scope.periodo = data.periodo;
                         $scope.total = data.total;
+
+                        $scope.listaFiltrada = [];
+
+                        console.log($scope.campos.tipo);
+                        console.log(' total ' + $scope.list[0].itens.length);
+
+                        for (var i = 0; i < $scope.list[0].itens.length; i++) {
+
+                            var item = $scope.list[0].itens[i];
+
+                            if ($scope.campos.sit == '1') // todas
+                                $scope.listaFiltrada.push(item);
+                            else {
+                                if ($scope.campos.sit == '2') { // confirmadas
+                                    if (item.idstatus == '1')
+                                        $scope.listaFiltrada.push(item);
+                                }
+                                else if ($scope.campos.sit == '3') { // canceladas
+                                    if (item.idstatus == '5')
+                                        $scope.listaFiltrada.push(item);
+                                }
+                                else if ($scope.campos.sit == '4') { // negadas
+                                    if (item.idstatus == '2' || item.idstatus == '3')
+                                        $scope.listaFiltrada.push(item);
+                                }
+                                else if ($scope.campos.sit == '5') { // pendentes
+                                    if (item.idstatus == '0')
+                                        $scope.listaFiltrada.push(item);
+                                }
+                            }
+                        }                        
                     }
 
                     $scope.loading = false;

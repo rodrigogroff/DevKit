@@ -15,8 +15,7 @@ namespace DevKit.Web.Controllers
 
     public class ItensTrans
     {
-        public string serial,
-                        loja,
+        public string   loja,
                         terminal,
                         nsu,
                         mat,
@@ -25,6 +24,8 @@ namespace DevKit.Web.Controllers
                         parcelas,
                         dt,
                         tipo,
+                        idstatus,
+                        status,
                         motivo;
     }
 
@@ -36,7 +37,7 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             // -------------------
-            // normal
+            // filtros normais
             // -------------------
 
             var mat = Request.GetQueryStringValue("mat");
@@ -48,7 +49,7 @@ namespace DevKit.Web.Controllers
                       dt_final = ObtemData(dtFinal);
 
             // -------------------
-            // dba
+            // filtros dba
             // -------------------
 
             var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
@@ -60,6 +61,12 @@ namespace DevKit.Web.Controllers
             var parcelas = Request.GetQueryStringValue("parcelas");
             var operacao = Request.GetQueryStringValue("operacao");
             var tipo = Request.GetQueryStringValue("tipo");
+
+            // -------------------
+            // query
+            // -------------------
+
+            #region - setup - 
 
             var dt = DateTime.Now;
 
@@ -117,6 +124,8 @@ namespace DevKit.Web.Controllers
             var lstTotCarts = tEmp != null ? (from e in db.T_Cartao where e.st_empresa == tEmp.st_empresa select e).ToList() :
                                              (from e in db.T_Cartao select e).ToList();
 
+            #endregion
+
             var q_trans = from e in db.LOG_Transacoes
                           //where e.fk_empresa == tEmp.i_unique
                           where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
@@ -126,9 +135,11 @@ namespace DevKit.Web.Controllers
             if (tEmp != null)
                 q_trans = q_trans.Where(y => y.fk_empresa == tEmp.i_unique);
 
-            // -----------
-            // dba
-            // -----------
+            // --------------------
+            // aplicando filtros 
+            // --------------------
+
+            #region - code - 
 
             if (!string.IsNullOrEmpty (nsu))
             {
@@ -180,6 +191,8 @@ namespace DevKit.Web.Controllers
                     q_trans = q_trans.Where(y => y.tg_contabil.ToString() == tipo);
             }
 
+            #endregion
+
             q_trans = from e in q_trans orderby e.dt_transacao descending select e;
 
             if (q_trans.Count() > 2000)
@@ -204,58 +217,76 @@ namespace DevKit.Web.Controllers
 
             var lst = new List<EmissoraRelExtratosTrans>
             {
-                new EmissoraRelExtratosTrans(),
-                new EmissoraRelExtratosTrans(),
-                new EmissoraRelExtratosTrans(),
                 new EmissoraRelExtratosTrans(),                
             };
 
-            long serial = 0, tot = 0;
-
-            // confirmadas
-            if (sit == "1" || sit == "2")
+            long tot = 0;
+                        
             {
                 var lstIT = lst[0];
 
-                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
-                                            OrderBy ( y=> y.dt_transacao).
-                                            ThenBy ( y=> y.nu_nsu))
+                foreach (var tran in trans.OrderBy ( y=> y.dt_transacao).ThenBy ( y=> y.nu_nsu))
                 {
+                    //Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+
                     if (lstCarts.Count() > 0)
                         if (!lstCarts.Contains((int)tran.fk_cartao))
                             continue;
 
-                    serial++;
+                    T_Loja loja = null;
+                    T_Terminal term = null;
 
-                    var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
-                    var term = terminais.Where(y => y.i_unique == tran.fk_terminal).FirstOrDefault();
+                    string  assocNome = "",
+                            _mat = "", 
+                            _stat = "";
+
+                    switch (tran.tg_confirmada.ToString())
+                    {
+                        case "0": _stat = "Pendente"; break;
+                        case "1": _stat = "Confirmada"; break;
+                        case "2": _stat = "Negada"; break;
+                        case "3": _stat = "Erro"; break;
+                        case "4": _stat = "Registro"; break;
+                        case "5": _stat = "Cancelada"; break;
+                        case "6": _stat = "Desfeita"; break;
+                    }
+
+                    if (tran.fk_loja > 0)
+                        loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
+
+                    if (tran.fk_terminal > 0)
+                        term = terminais.Where(y => y.i_unique == tran.fk_terminal).FirstOrDefault();
 
                     tot += (long) tran.vr_total;
 
-                    string assocNome = "", _mat = "";
-                    var _cart = lstTotCarts.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
-
-                    if (_cart != null)
+                    if (tran.fk_cartao > 0)
                     {
-                        if (tEmp == null)
-                            _mat = _cart.st_empresa + "." + _cart.st_matricula;
-                        else
-                            _mat = _cart.st_matricula;
+                        var _cart = lstTotCarts.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
 
-                        if (_cart.st_titularidade != "01")
-                            assocNome = db.T_Dependente.
-                                            FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
-                                                           y.fk_proprietario == _cart.i_unique).
-                                                             st_nome;
-                        else
-                            assocNome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;
+                        if (_cart != null)
+                        {
+                            if (tEmp == null)
+                                _mat = _cart.st_empresa + "." + _cart.st_matricula;
+                            else
+                                _mat = _cart.st_matricula;
+
+                            if (_cart.st_titularidade != "01")
+                                assocNome = db.T_Dependente.
+                                                FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
+                                                               y.fk_proprietario == _cart.i_unique).
+                                                                 st_nome;
+                            else
+                                assocNome = db.T_Proprietario.
+                                                FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;
+                        }
                     }
 
                     lstIT.itens.Add(new ItensTrans
                     {
-                        serial = serial.ToString(),
+                        idstatus = tran.tg_confirmada.ToString(),
+                        status = _stat,
                         dt = ObtemData(tran.dt_transacao),
-                        loja = "(" + loja.st_loja + ") " + loja.st_nome,
+                        loja = loja != null ?  "(" + loja.st_loja + ") " + loja.st_nome : "",
                         nsu = tran.nu_nsu.ToString(),
                         mat = _mat,
                         assoc = assocNome,
@@ -264,155 +295,6 @@ namespace DevKit.Web.Controllers
                         valorTot = mon.setMoneyFormat((long)tran.vr_total),
                         tipo = tran.tg_contabil.ToString() == "2" ? "Web" : "SITEF",
                         motivo = tran.st_msg_transacao
-                    });
-                }
-            }
-
-            // canceladas
-            if (sit == "1" || sit == "3")
-            {
-                var lstIT = lst[1];
-
-                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada).
-                                            OrderBy(y => y.dt_transacao).
-                                            ThenBy(y => y.nu_nsu))
-                {
-                    if (lstCarts.Count() > 0)
-                        if (!lstCarts.Contains((int)tran.fk_cartao))
-                            continue;
-
-                    serial++;
-
-                    var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
-                    var term = terminais.Where(y => y.i_unique == tran.fk_terminal).FirstOrDefault();
-
-                    string assocNome = "", _mat = "";
-                    var _cart = lstTotCarts.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
-
-                    if (_cart != null)
-                    {
-                        _mat = _cart.st_matricula;
-
-                        if (_cart.st_titularidade != "01")
-                            assocNome = db.T_Dependente.
-                                            FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
-                                                           y.fk_proprietario == _cart.i_unique).
-                                                             st_nome;
-                        else
-                            assocNome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;
-                    }
-
-                    lstIT.itens.Add(new ItensTrans
-                    {
-                        serial = serial.ToString(),
-                        dt = ObtemData(tran.dt_transacao),
-                        loja = "(" + loja.st_loja + ") " + loja.st_nome,
-                        nsu = tran.nu_nsu.ToString(),
-                        mat = _mat,
-                        assoc = assocNome,
-                        parcelas = tran.nu_parcelas.ToString(),
-                        terminal = term.nu_terminal.ToString(),
-                        valorTot = mon.setMoneyFormat((long)tran.vr_total)
-                    });
-                }
-            }
-
-            // negadas
-            if (sit == "1" || sit == "4")
-            {
-                var lstIT = lst[2];
-
-                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Erro ||
-                                                      y.tg_confirmada.ToString() == TipoConfirmacao.Negada ).
-                                            OrderBy(y => y.dt_transacao).
-                                            ThenBy(y => y.nu_nsu))
-                {
-                    if (lstCarts.Count() > 0)
-                        if (!lstCarts.Contains((int)tran.fk_cartao))
-                            continue;
-
-                    serial++;
-
-                    var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
-                    var term = terminais.Where(y => y.i_unique == tran.fk_terminal).FirstOrDefault();
-
-                    string assocNome = "", _mat = "";
-                    var _cart = lstTotCarts.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
-
-                    if (_cart != null)
-                    {
-                        _mat = _cart.st_matricula;
-
-                        if (_cart.st_titularidade != "01")
-                            assocNome = db.T_Dependente.
-                                            FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
-                                                           y.fk_proprietario == _cart.i_unique).
-                                                             st_nome;
-                        else
-                            assocNome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;
-                    }
-
-                    lstIT.itens.Add(new ItensTrans
-                    {
-                        serial = serial.ToString(),
-                        dt = ObtemData(tran.dt_transacao),
-                        loja = loja != null ? "(" + loja.st_loja + ") " + loja.st_nome : "[*Não disponível*]",
-                        nsu = tran.nu_nsu.ToString(),
-                        mat = _mat,
-                        assoc = assocNome,
-                        parcelas = tran.nu_parcelas != null ? tran.nu_parcelas.ToString() : "",
-                        terminal = term != null ? term.nu_terminal.ToString() : "[*Não disponível*]",
-                        valorTot = tran.vr_total != null ? mon.setMoneyFormat((long)tran.vr_total) : "(?)",
-                        motivo = tran.nu_cod_erro + " " + tran.st_msg_transacao
-                    });
-                }
-            }
-
-            // pends
-            if (sit == "1" || sit == "5")
-            {
-                var lstIT = lst[3];
-
-                foreach (var tran in trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).
-                                            OrderBy(y => y.dt_transacao).
-                                            ThenBy(y => y.nu_nsu))
-                {
-                    if (lstCarts.Count() > 0)
-                        if (!lstCarts.Contains((int)tran.fk_cartao))
-                            continue;
-
-                    serial++;
-
-                    var loja = lojas.Where(y => y.i_unique == tran.fk_loja).FirstOrDefault();
-                    var term = terminais.Where(y => y.i_unique == tran.fk_terminal).FirstOrDefault();
-
-                    string assocNome = "", _mat = "";
-                    var _cart = lstTotCarts.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
-
-                    if (_cart != null)
-                    {
-                        _mat = _cart.st_matricula;
-
-                        if (_cart.st_titularidade != "01")
-                            assocNome = db.T_Dependente.
-                                            FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
-                                                           y.fk_proprietario == _cart.i_unique).
-                                                             st_nome;
-                        else
-                            assocNome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;
-                    }
-
-                    lstIT.itens.Add(new ItensTrans
-                    {
-                        serial = serial.ToString(),
-                        dt = ObtemData(tran.dt_transacao),
-                        loja = "(" + loja.st_loja + ") " + loja.st_nome,
-                        nsu = tran.nu_nsu.ToString(),
-                        mat = _mat,
-                        assoc = assocNome,
-                        parcelas = tran.nu_parcelas.ToString(),
-                        terminal = term.nu_terminal.ToString(),
-                        valorTot = mon.setMoneyFormat((long)tran.vr_total)
                     });
                 }
             }

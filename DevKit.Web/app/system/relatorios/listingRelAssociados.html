@@ -1,5 +1,5 @@
-﻿<div class="webFormPosition">
-	<section class="widgetForm" style="width:1075px">
+﻿<div class="webFormPosition" style="width:90%">
+	<section class="widgetForm" style="width:100%">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
@@ -10,8 +10,8 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-		<div class="divWebForm">
-			<table width="100%">
+		<div class="divWebForm" style="width:100%">
+			<table >
 				<tr>
 					<td valign="top">
                         <table class="widget" style="color: white">
@@ -88,14 +88,15 @@
 						<div ng-show="list.length > 0">							
 							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
-							<table class="table table-hover">
+							<table class="table table-hover" style="width:90%">
 								<thead>
                                     <tr>
                                         <th>Associado</th>
                                         <th>Cartão</th>
                                         <th>Via</th>
                                         <th>Status</th>
-                                        <th>ult. Mov</th>
+                                        <th>ult.Transação</th>
+                                        <th>Dt. Pedido</th>
                                         <th>Dt. Exp</th>
                                         <th>CPF</th>
                                         <th>Tit.</th>
@@ -109,6 +110,7 @@
                                     <td>{{ mdl.via }}</td>
                                     <td>{{ mdl.status }}<br />{{ mdl.exped }}</td>
                                     <td>{{ mdl.dt_ultMov }}</td>
+                                    <td>{{ mdl.dt_pedido }}</td>
                                     <td>{{ mdl.dt_exp }}</td>
                                     <td>{{ mdl.cpf }}</td>
                                     <td>{{ mdl.tit }}</td>

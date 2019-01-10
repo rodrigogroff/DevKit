@@ -698,6 +698,7 @@ namespace DataModel
 		[Column,     Nullable] public string    nu_cpf          { get; set; } // varchar(20)
 		[Column,     Nullable] public string    st_nome_cartao  { get; set; } // varchar(99)
 		[Column,     Nullable] public DateTime? dt_ativacao     { get; set; } // datetime
+		[Column,     Nullable] public DateTime? dt_pedido       { get; set; } // datetime
 	}
 
 	[Table(Schema="dbo", Name="T_MensagemEdu")]

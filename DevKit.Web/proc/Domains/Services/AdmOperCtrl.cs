@@ -185,7 +185,7 @@ namespace DevKit.Web.Controllers
                         #endregion
                     }
 
-                case "4":
+                case "4": // ativação manual empresa
                     {
                         #region - code - 
 
@@ -201,6 +201,17 @@ namespace DevKit.Web.Controllers
                                 var tCartUpd = db.T_Cartao.Find(Convert.ToInt64(item));
 
                                 tCartUpd.tg_emitido = Convert.ToInt32(StatusExpedicao.Expedido);
+
+                                var loteDet = db.T_LoteCartaoDetalhe.
+                                                    Where(y => y.fk_cartao == Convert.ToInt64(item)).
+                                                    OrderByDescending(y => y.i_unique).
+                                                    FirstOrDefault();
+
+                                if (loteDet != null)
+                                {
+                                    loteDet.dt_ativacao = DateTime.Now;
+                                    db.Update(loteDet);
+                                }
 
                                 db.Update(tCartUpd);
                             }
@@ -515,7 +526,8 @@ namespace DevKit.Web.Controllers
                                 nu_matricula = Convert.ToInt32(item.matricula),
                                 nu_titularidade = Convert.ToInt32(item.titularidade),
                                 nu_via_original = item.via,
-                                st_nome_cartao = item.nome                                
+                                st_nome_cartao = item.nome,
+                                dt_pedido = DateTime.Now,
                             });
                         }
                         
@@ -524,7 +536,7 @@ namespace DevKit.Web.Controllers
                         #endregion
                     }
 
-                case "20": // ativação
+                case "20": // ativação via leitor
                     {
                         #region - code -  
 
@@ -550,6 +562,20 @@ namespace DevKit.Web.Controllers
                             {
                                 t_cartao.tg_emitido = Convert.ToInt32(StatusExpedicao.Expedido);
                                 db.Update(t_cartao);
+
+                                // encontra o ultimo lote_detalhe
+
+                                var ltDet = db.T_LoteCartaoDetalhe.
+                                                Where(y => y.fk_cartao == t_cartao.i_unique).
+                                                OrderByDescending(y => y.i_unique).
+                                                FirstOrDefault();
+
+                                if ( ltDet != null )
+                                {
+                                    ltDet.dt_ativacao = DateTime.Now;
+
+                                    db.Update(ltDet);
+                                }
 
                                 return Ok(new {
                                     data = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
@@ -613,6 +639,10 @@ namespace DevKit.Web.Controllers
 
                                     db.Update(cart);
                                 }
+
+                                item.dt_ativacao = DateTime.Now;
+
+                                db.Update(item);
                             }
                         }
                         

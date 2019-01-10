@@ -11,7 +11,7 @@ namespace DevKit.Web.Controllers
     public class RelAssociadosItem
     {
         public string associado, cartao, cpf, dispM, limM, dispT, limT, tit;
-        public string via, status, exped, dt_exp, dt_ultMov;
+        public string via, status, exped, dt_exp, dt_pedido, dt_ultMov;
     }
 
     public class RelAssociadosController : ApiControllerBase
@@ -81,7 +81,7 @@ namespace DevKit.Web.Controllers
             if (matricula != null && matricula != "")
             {
                 query = (from e in query
-                         where e.st_matricula.Contains(matricula)
+                         where e.st_matricula == matricula.PadLeft(6, '0')
                          select e);
             }
 
@@ -157,11 +157,11 @@ namespace DevKit.Web.Controllers
                         via = item.nu_viaCartao.ToString(),
                         status = item.tg_status.ToString() == CartaoStatus.Habilitado ? "Habilitado" : "Bloqueado",
                         exped = exped,
+                        dt_pedido = ultLoteDet != null ? ultLoteDet.dt_pedido != null ? Convert.ToDateTime(ultLoteDet.dt_pedido).ToString("dd/MM/yyyy HH:mm") : "" : "",
                         dt_exp = ultLoteDet != null ? ultLoteDet.dt_ativacao != null ? Convert.ToDateTime(ultLoteDet.dt_ativacao).ToString("dd/MM/yyyy HH:mm") : "" : "",
                         dt_ultMov = ultMov != null ? Convert.ToDateTime(ultMov.dt_transacao).ToString("dd/MM/yyyy HH:mm") : ""
                     });
-                }
-                    
+                }                    
             }
 
             return Ok(new { count = query.Count(), results = res });

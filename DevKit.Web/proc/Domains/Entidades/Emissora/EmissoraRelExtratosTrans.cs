@@ -271,10 +271,14 @@ namespace DevKit.Web.Controllers
                                 _mat = _cart.st_matricula;
 
                             if (_cart.st_titularidade != "01")
-                                assocNome = db.T_Dependente.
+                            {
+                                 var tx = db.T_Dependente.
                                                 FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
-                                                               y.fk_proprietario == _cart.i_unique).
-                                                                 st_nome;
+                                                               y.fk_proprietario == _cart.i_unique);
+
+                                if (tx != null)
+                                    assocNome = tx.st_nome;
+                            }
                             else
                                 assocNome = db.T_Proprietario.
                                                 FirstOrDefault(y => y.i_unique == _cart.fk_dadosProprietario).st_nome;

@@ -307,10 +307,12 @@
     <Content Include="app\system\admopers\altSenha.js" />
     <Content Include="app\system\admopers\altSegVia.js" />
     <Content Include="app\system\admopers\AltCota.js" />
+    <Content Include="app\system\admopers\novoCartao.js" />
     <Content Include="app\system\admopers\lancTx.html" />
     <Content Include="app\system\admopers\lancTx.js" />
     <Content Include="app\system\admopers\limites.html" />
     <Content Include="app\system\admopers\limites.js" />
+    <Content Include="app\system\admopers\novoCartao.html" />
     <Content Include="app\system\admopers\opers.html" />
     <Content Include="app\system\admopers\opers.js" />
     <Content Include="app\system\cancelamento\cancelamento.html" />

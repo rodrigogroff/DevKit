@@ -47,6 +47,7 @@ namespace DevKit.Web
                 "~/app/system/admopers/altSenha.js",
                 "~/app/system/admopers/altSegVia.js",
                 "~/app/system/admopers/altCota.js",
+                "~/app/system/admopers/novoCartao.js",
                 "~/app/associado/LimitesController.js",
                 "~/app/associado/LimitesMobileController.js",
                 "~/app/associado/ExtratosController.js",

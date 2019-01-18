@@ -57,6 +57,7 @@ namespace DevKit.Web.Controllers
                         email,
                         situacao, expedicao,
                         via,
+                        fkEmpresa,
                         uf, cidade, cep, end, numero, bairro,
                         modo, valor, array;
 
@@ -452,6 +453,12 @@ namespace DevKit.Web.Controllers
 
             var st_empresa = userLoggedEmpresa;
 
+            if (!string.IsNullOrEmpty(mdl.fkEmpresa))
+            {
+                // dba
+                st_empresa = db.T_Empresa.FirstOrDefault(y => y.i_unique.ToString() == mdl.fkEmpresa).st_empresa;
+            }
+
             if ( (from e in db.T_Cartao
                   join p in db.T_Proprietario 
                     on e.fk_dadosProprietario equals (int) p.i_unique
@@ -494,7 +501,9 @@ namespace DevKit.Web.Controllers
             cart.vr_limiteMensal = LimpaValor(mdl.limMes);
             cart.vr_limiteTotal = LimpaValor(mdl.limTot);
             cart.vr_extraCota = 0;
-            
+
+            cart.st_empresa = st_empresa;
+
             db.Insert(cart);
 
             // ----------------------------------

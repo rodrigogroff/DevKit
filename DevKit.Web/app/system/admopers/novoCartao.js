@@ -33,6 +33,8 @@ angular.module('app.controllers').controller('DBANovoCartaoController',
 
                     Api.EmissoraCartao.get({ id: $scope.campos.id }, function (data) {
                         $scope.viewModel = data;
+                        $scope.campos.idEmpresa = data.fkEmpresa;
+
                         $scope.loading = false;
                     },
                         function (response) {
@@ -176,8 +178,13 @@ angular.module('app.controllers').controller('DBANovoCartaoController',
                     !$scope.bancoAg_fail &&
                     !$scope.bancoCta_fail &&
                     !$scope.tel_fail &&
-                    !$scope.email_fail) {
-                    if ($scope.campos.id > 0) {
+                    !$scope.email_fail)
+                {
+
+                    $scope.viewModel.fkEmpresa = $scope.campos.idEmpresa;
+
+                    if ($scope.campos.id > 0)
+                    {
                         Api.EmissoraCartao.update({ id: $scope.campos.id }, $scope.viewModel, function (data) {
                             toastr.success('Cartão salvo!', 'Sucesso');
                             $scope.loading = false;

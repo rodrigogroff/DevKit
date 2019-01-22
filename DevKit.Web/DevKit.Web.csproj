@@ -68,6 +68,9 @@
     <Reference Include="linq2db, Version=2.1.0.0, Culture=neutral, PublicKeyToken=e41013125f9e410a, processorArchitecture=MSIL">
       <HintPath>..\packages\linq2db.2.1.0\lib\net45\linq2db.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.8.1\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -144,6 +147,9 @@
       <HintPath>bin\SocialExplorer.FastDBF.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -242,6 +248,8 @@
     <Content Include="app\dba\empresa\listingEmpresas.js" />
     <Content Include="app\dba\lotes\ativaCartao.html" />
     <Content Include="app\dba\lotes\ativaCartao.js" />
+    <Content Include="app\dba\lotes\expedicao.html" />
+    <Content Include="app\dba\lotes\expedicao.js" />
     <Content Include="app\dba\lotes\novolote.html" />
     <Content Include="app\dba\lotes\novolote.js" />
     <Content Include="app\dba\lotes\listingLotes.html" />

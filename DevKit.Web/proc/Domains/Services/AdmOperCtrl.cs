@@ -558,24 +558,24 @@ namespace DevKit.Web.Controllers
 
                         if (t_cartao != null)
                         {
+                            // encontra o ultimo lote_detalhe
+
+                            var ltDet = db.T_LoteCartaoDetalhe.
+                                            Where(y => y.fk_cartao == t_cartao.i_unique).
+                                            OrderByDescending(y => y.i_unique).
+                                            FirstOrDefault();
+
+                            if (ltDet != null)
+                            {
+                                ltDet.dt_ativacao = DateTime.Now;
+
+                                db.Update(ltDet);
+                            }
+
                             if (t_cartao.tg_emitido.ToString() == StatusExpedicao.EmExpedicao)
                             {
                                 t_cartao.tg_emitido = Convert.ToInt32(StatusExpedicao.Expedido);
                                 db.Update(t_cartao);
-
-                                // encontra o ultimo lote_detalhe
-
-                                var ltDet = db.T_LoteCartaoDetalhe.
-                                                Where(y => y.fk_cartao == t_cartao.i_unique).
-                                                OrderByDescending(y => y.i_unique).
-                                                FirstOrDefault();
-
-                                if ( ltDet != null )
-                                {
-                                    ltDet.dt_ativacao = DateTime.Now;
-
-                                    db.Update(ltDet);
-                                }
 
                                 return Ok(new {
                                     data = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),

@@ -11,40 +11,21 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('venda', { url: '/system/venda', templateUrl: 'app/system/venda/venda.html', controller: 'VendaController' })
             .state('vendamobile', { url: '/system/vendamobile', templateUrl: 'app/system/venda/vendamobile.html', controller: 'VendaMobileController' })
             .state('cancelamento', { url: '/system/cancelamento', templateUrl: 'app/system/cancelamento/cancelamento.html', controller: 'CancelamentoController' })
-
             .state('relAssociados', { url: '/system/relAssociados', templateUrl: 'app/system/relatorios/listingRelAssociados.html', controller: 'ListingRelAssociadosController' })
             .state('relLojistaTrans', { url: '/system/relLojistaTrans', templateUrl: 'app/system/relatorios/listingRelLojistaTrans.html', controller: 'ListingLojistaTransController' })
-
             .state('relLojistaPends', { url: '/system/relLojistaPends', templateUrl: 'app/system/relatorios/listingRelLojistaPends.html', controller: 'ListingLojistaPendsController' })
-
-            .state('gestaoLojistaRelTrans',
-                {
-                    url: '/gestaoLogista/transacoes',
-                    templateUrl: 'app/gestaoLogista/GLTrans.html',
-                    controller: 'GLTransController'
-                })
-
-            .state('gestaoLojistaDemonstrativo',
-                {
-                    url: '/gestaoLogista/demonstrativos',
-                    templateUrl: 'app/gestaoLogista/GLDemonstrativo.html',
-                    controller: 'GLDemonstrativoController'
-                })
-
+            .state('gestaoLojistaRelTrans', { url: '/gestaoLogista/transacoes', templateUrl: 'app/gestaoLogista/GLTrans.html', controller: 'GLTransController' })
+            .state('gestaoLojistaDemonstrativo', { url: '/gestaoLogista/demonstrativos', templateUrl: 'app/gestaoLogista/GLDemonstrativo.html', controller: 'GLDemonstrativoController' })
             .state('limitesUsr', { url: '/associado/limites', templateUrl: 'app/associado/limites.html', controller: 'LimitesController' })
             .state('limitesUsrMobile', { url: '/associado/limitesMobile', templateUrl: 'app/associado/limitesMobile.html', controller: 'LimitesMobileController' })
-
             .state('extratosUsr', { url: '/associado/extratos', templateUrl: 'app/associado/extratos.html', controller: 'ExtratosController' })
             .state('extratosUsrMobile', { url: '/associado/extratosMobile', templateUrl: 'app/associado/extratosMobile.html', controller: 'ExtratosMobileController' })
-
             .state('lojistasUsr', { url: '/associado/lojistas', templateUrl: 'app/associado/lojistas.html', controller: 'LojistasAssociadoController' })
             .state('lojistasUsrMobile', { url: '/associado/lojistasMobile', templateUrl: 'app/associado/lojistasMobile.html', controller: 'LojistasAssociadoMobileController' })
-
             .state('mensagens', { url: '/system/lojasMensagens', templateUrl: 'app/system/loja/lojaMensagens.html', controller: 'LojaMensagensController' })
             .state('lojas', { url: '/system/lojas', templateUrl: 'app/system/loja/listingLojas.html', controller: 'ListingLojasController' })
             .state('loja-new', { url: '/system/loja/new', templateUrl: 'app/system/loja/loja.html', controller: 'LojaController' })
             .state('loja', { url: '/system/loja/:id', templateUrl: 'app/system/loja/loja.html', controller: 'LojaController' })
-
             .state('admopers', { url: '/system/admopers/:id', templateUrl: 'app/system/admopers/opers.html', controller: 'AdmOpersController' })
             .state('admoperslimites', { url: '/system/admoperslimites/:id', templateUrl: 'app/system/admopers/limites.html', controller: 'AdmOpersLimitesController' })
             .state('admopersativagrafica', { url: '/system/admopersativagrafica/:id', templateUrl: 'app/system/admopers/ativaGrafica.html', controller: 'AdmOpersAtivaGraficaController' })
@@ -56,21 +37,15 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('admopersaltsegvia', { url: '/system/altsegvia', templateUrl: 'app/system/admopers/altSegvia.html', controller: 'DBAAltSegViaController' })
             .state('admopersaltcota', { url: '/system/altcota', templateUrl: 'app/system/admopers/altCota.html', controller: 'DBAAltCotaController' })
             .state('admopersnovocartao', { url: '/system/dbanovocartao', templateUrl: 'app/system/admopers/novoCartao.html', controller: 'DBANovoCartaoController' })
-
             .state('menuUsr', { url: '/system/associadoMenu', templateUrl: 'app/associado/menu.html', controller: 'AssociadoMenuController' })
-
             .state('novaempresa', { url: '/dba/empresa', templateUrl: 'app/dba/empresa/empresa.html', controller: 'EmpresaController' })
             .state('empresa', { url: '/dba/empresa/:id', templateUrl: 'app/dba/empresa/empresa.html', controller: 'EmpresaController' })
             .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/empresa/listingEmpresas.html', controller: 'ListingEmpresasController' })
-
             .state('novolote', { url: '/dba/lote', templateUrl: 'app/dba/lotes/novolote.html', controller: 'NovoLoteController' })
             .state('lote', { url: '/dba/lote/:id', templateUrl: 'app/dba/lotes/lote.html', controller: 'LoteController' })
             .state('lotes', { url: '/dba/lotes', templateUrl: 'app/dba/lotes/listingLotes.html', controller: 'ListingLotesController' })
-
             .state('listingexp', { url: '/dba/listingexp', templateUrl: 'app/dba/lotes/expedicao.html', controller: 'ListingExpController' })
-
             .state('ativacartao', { url: '/dba/ativa', templateUrl: 'app/dba/lotes/ativaCartao.html', controller: 'AtivaCartaoController' })
-
             .state('empNovoCartao', { url: '/emissora/novoCartao', templateUrl: 'app/emissora/novoCartao.html', controller: 'EmissoraNovoCartaoController' })
             .state('empManutCartao', { url: '/emissora/manutCartao/:id', templateUrl: 'app/emissora/novoCartao.html', controller: 'EmissoraNovoCartaoController' })
             .state('empListagemCartao', { url: '/emissora/listagemCartao', templateUrl: 'app/emissora/listagemCartao.html', controller: 'EmissoraListagemCartaoController' })

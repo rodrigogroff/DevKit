@@ -694,6 +694,7 @@
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
+    <Compile Include="proc\Domains\DBA\ExpedicaoDBACtrl.cs" />
     <Compile Include="proc\Domains\DBA\LoteDetalhesDBACtrl.cs" />
     <Compile Include="proc\Domains\DBA\LoteDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />

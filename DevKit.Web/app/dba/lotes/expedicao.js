@@ -16,10 +16,13 @@ angular.module('app.controllers').controller('ListingExpController',
                 var opcoes = {
                     skip: skip,
                     take: take,
-                    todos: $scope.campos.todos
+                    dtInicial: $scope.campos.dtInicial,
+                    dtFinal: $scope.campos.dtFinal,
+                    idEmpresa: $scope.campos.idEmpresa,
+                    ordem: $scope.campos.ordem,
                 };
 
-                Api.LoteDBA.listPage(opcoes, function (data) {
+                Api.ExpedicaoDBA.listPage(opcoes, function (data) {
                     $scope.list = data.results;
                     $scope.total = data.count;
                     $scope.loading = false;

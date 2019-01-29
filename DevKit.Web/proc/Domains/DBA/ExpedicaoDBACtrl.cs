@@ -40,7 +40,9 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var query = from e in db.T_LoteCartaoDetalhe
+                        join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
                         where idEmpresa == null || e.fk_empresa == idEmpresa
+                        where cart.tg_emitido.ToString() == StatusExpedicao.EmExpedicao 
                         select e;
 
             if (dtInicial != null && dtFinal != null)

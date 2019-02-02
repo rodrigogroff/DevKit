@@ -45,7 +45,7 @@
             <div ng-show="list.length > 0">
                 <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
                 <br />
-                <table class="table table-hover" style="width:990px">
+                <table class="table table-hover" style="width:1050px">
                     <thead>
                         <tr>
                             <th>Código</th>
@@ -55,6 +55,7 @@
                             <th>Dt. Abertura</th>
                             <th>Dt. Gráfica</th>
                             <th>Dt. Ativação</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -71,6 +72,7 @@
                         <td><button type="submit" class="btn btn-primary" ng-click="show(mdl)">Cartões</button></td>
                         <td><button type="submit" class="btn btn-primary" ng-click="arquivo(mdl)">Arquivo gráfica</button></td>
                         <td><button type="submit" class="btn btn-primary" ng-click="ativar(mdl)">Ativação</button></td>
+                        <td><button type="submit" class="btn btn-primary" ng-click="remover(mdl)">Remover</button></td>
                     </tr>
                 </table>
                 <br />
@@ -79,7 +81,7 @@
                 <div class="modal-backdrop"
                      ng-if="modalCartoes == true"
                      style="background: rgba(55, 55, 55, 0.5 );">
-                    <div class="modal-dialog" style="width:700px;height:500px">
+                    <div class="modal-dialog" style="width:900px;height:500px">
                         <br />
                         <br />
                         <br />
@@ -90,28 +92,51 @@
                             </legend>
                             <br />
                             <div style="height:450px;overflow-y:scroll;">
-                                <table class="table table-hover" style="width:650px">
+                                <table class="table table-hover" style="width:850px">
                                     <thead>
                                         <tr>
                                             <th>Nome Cartão</th>
                                             <th>CPF</th>
+                                            <th>Dt. Pedido</th>
+                                            <th>Expedição</th>
                                             <th>Matrícula</th>
                                             <th>Titularidade</th>
                                             <th>Via</th>
                                         </tr>
                                     </thead>
                                     <tr data-ng-repeat="mdl in listDet">
-                                        <td style="color:black">{{ mdl.st_nome_cartao }}</td>
-                                        <td style="color:black">{{ mdl.nu_cpf }}</td>
-                                        <td style="color:black">{{ mdl.nu_matricula }}</td>
-                                        <td style="color:black">{{ mdl.nu_titularidade }}</td>
-                                        <td style="color:black">{{ mdl.nu_via_original }}</td>
+                                        <td style="color:black">{{ mdl.nome }}</td>
+                                        <td style="color:black">{{ mdl.cpf }}</td>
+                                        <td style="color:black">{{ mdl.sdt_pedido }}</td>
+                                        <td style="color:black">{{ mdl.tg_emitido }}</td>
+                                        <td style="color:black">{{ mdl.matricula }}</td>
+                                        <td style="color:black">{{ mdl.titularidade }}</td>
+                                        <td style="color:black">{{ mdl.via }}</td>
                                     </tr>
                                 </table>
                                 <br />
                             </div>
                             <br />
                             <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-backdrop"
+                     ng-if="modalRemocao == true"
+                     style="background: rgba(55, 55, 55, 0.5 );">
+                    <div class="modal-dialog" style="width:700px;height:500px">
+                        <div class="modal-content" style="color:black">
+                            <legend style="color:black">
+                                Remover Lote
+                                <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModalRemover()"> X </button> &nbsp;
+                            </legend>
+                            <br />
+                            Deseja remover o lote {{loteAtual.i_unique}}?
+                            <br />
+                            <br />
+                            <button class="btn btn-default" ng-click="closeModalRemover()">Não</button> &nbsp;
+                            <button class="btn btn-danger" ng-click="removerLote()">Sim</button>
                         </div>
                     </div>
                 </div>

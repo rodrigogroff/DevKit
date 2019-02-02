@@ -130,9 +130,7 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get()
         {
-            var busca = Request.GetQueryStringValue("busca");
-            var skip = Request.GetQueryStringValue<int>("skip");
-            var take = Request.GetQueryStringValue<int>("take");
+            var busca = Request.GetQueryStringValue("busca");            
             var todos = Request.GetQueryStringValue<bool>("todos", false);
 
             if (!StartDatabaseAndAuthorize())
@@ -147,8 +145,28 @@ namespace DevKit.Web.Controllers
 
             var lst = new List<T_LoteCartao>();
 
-            foreach (var item in query.Skip(skip).Take(take).ToList())
-                lst.Add(item);
+            foreach (var item in query.ToList())
+            {
+                var lstCarts = db.T_LoteCartaoDetalhe.Where(y => y.fk_lote == item.i_unique).Select(y => y.fk_cartao).ToList();
+
+                if (!todos)
+                {
+                    var found = false;
+
+                    foreach (var itemC in lstCarts)
+                    {
+                        var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == itemC);
+
+                        if (cart.tg_emitido != 2) // ativo
+                            found = true;
+                    }
+
+                    if (found)
+                        lst.Add(item);
+                }
+                else
+                    lst.Add(item);
+            }                
 
             foreach (var item in lst)
             {

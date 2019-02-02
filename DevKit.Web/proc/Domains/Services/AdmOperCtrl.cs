@@ -651,6 +651,28 @@ namespace DevKit.Web.Controllers
                         #endregion 
                     }
 
+                case "22": // remover lote
+                    {
+                        #region - code -
+
+                        var idLote = Convert.ToInt32(Request.GetQueryStringValue("lote"));
+
+                        var lote = db.T_LoteCartao.FirstOrDefault(y => y.i_unique == idLote);
+
+                        foreach (var item in db.T_LoteCartaoDetalhe.Where ( y=> y.fk_lote == idLote).Select ( y=> y.i_unique).ToList())
+                        {
+                            var del = db.T_LoteCartaoDetalhe.Find(item);
+
+                            db.Delete(del);
+                        }
+
+                        db.Delete(lote);
+
+                        return Ok();
+                        
+                        #endregion
+                    }
+
                 case "100": // dashboard
                     {
                         #region - code - 

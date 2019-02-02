@@ -34,6 +34,29 @@ angular.module('app.controllers').controller('ListingLotesController',
                     $scope.listDet = data.results;
                     $scope.total = data.count;
                     $scope.loading = false;
+                   
+                });
+            };
+
+            $scope.remover = function (mdl) {
+                $scope.modalRemocao = true;
+                $scope.loteAtual = mdl;
+            };
+
+            $scope.closeModalRemover = function () {
+                $scope.modalRemocao = false;
+            };
+
+            $scope.removerLote = function () {
+                $scope.loading = true;
+                Api.AdmOper.listPage({ op: '22', lote: $scope.loteAtual.i_unique }, function (data) {
+                    toastr.success('Lote removido com sucesso!', 'Sistema');
+                    $scope.modalRemocao = false;                    
+                    $scope.loading = false;
+                    $scope.search();
+                },
+                function (response) {
+                    $scope.loading = false;
                 });
             };
 

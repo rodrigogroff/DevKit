@@ -14,6 +14,7 @@ namespace DevKit.Web
             var modelState = context.ModelState;
             if (!modelState.IsValid)
             {
+                /*
                 var errors = new JObject();
                 foreach (var key in modelState.Keys)
                 {
@@ -23,6 +24,7 @@ namespace DevKit.Web
                 }
 
                 context.Response = context.Request.CreateResponse<JObject>(HttpStatusCode.BadRequest, errors);
+                */
             }
         }
     }

@@ -127,7 +127,6 @@ namespace DevKit.Web.Controllers
             #endregion
 
             var q_trans = from e in db.LOG_Transacoes
-                          //where e.fk_empresa == tEmp.i_unique
                           where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
                           where lstCarts.Count() == 0 || lstCarts.Contains ((int)e.fk_cartao)                          
                           select e;
@@ -191,6 +190,18 @@ namespace DevKit.Web.Controllers
                     q_trans = q_trans.Where(y => y.tg_contabil.ToString() == tipo);
             }
 
+            if (!string.IsNullOrEmpty(sit))
+            {
+                if (sit == "2")
+                    q_trans = q_trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada);
+                else if (sit == "3")
+                    q_trans = q_trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada);
+                else if (sit == "4") 
+                    q_trans = q_trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Negada);
+                else if (sit == "5")
+                    q_trans = q_trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente);
+            }
+
             #endregion
 
             q_trans = from e in q_trans orderby e.dt_transacao descending select e;
@@ -227,8 +238,6 @@ namespace DevKit.Web.Controllers
 
                 foreach (var tran in trans.OrderBy ( y=> y.dt_transacao).ThenBy ( y=> y.nu_nsu))
                 {
-                    //Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
-
                     if (lstCarts.Count() > 0)
                         if (!lstCarts.Contains((int)tran.fk_cartao))
                             continue;

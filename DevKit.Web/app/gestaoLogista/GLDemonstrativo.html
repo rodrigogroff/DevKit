@@ -195,6 +195,7 @@
                                         <th>Total Vendas</th>
                                         <th>Valor repasse<br />Mensal</th>
                                         <th>situação</th>
+                                        <th>Data Fechamento</th>
                                     </tr>
                                 </thead>
                                 <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
@@ -203,6 +204,7 @@
                                     <td>{{ mdl.totalVendas }}</td>
                                     <td>{{ mdl.vlrRepasseMensal }}</td>
                                     <td>{{ mdl.situacao }}</td>
+                                    <td>{{ mdl.dtFechamento }}</td>
                                 </tr>
                             </table>
                             <br />
@@ -383,6 +385,7 @@
                                             <th>Total Vendas</th>
                                             <th>Valor repasse<br />Mensal</th>
                                             <th>situação</th>
+                                            <th>Data Fechamento</th>
                                         </tr>
                                     </thead>
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in term.lstDemonstrativos">
@@ -391,6 +394,7 @@
                                         <td>{{ mdl.totalVendas }}</td>
                                         <td>{{ mdl.vlrRepasseMensal }}</td>
                                         <td>{{ mdl.situacao }}</td>
+                                        <td>{{ mdl.dtFechamento }}</td>
                                     </tr>
                                     <tr style="background-color:white;color:black">
                                         <td colspan="2">

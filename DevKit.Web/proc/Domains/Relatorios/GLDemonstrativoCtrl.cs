@@ -22,7 +22,8 @@ namespace DevKit.Web.Controllers
                           totalVendas, 
                           terminal,
                           vlrRepasseMensal, 
-                          situacao;
+                          situacao,
+                          dtFechamento;
 
             public List<DemoTransacao> lst = new List<DemoTransacao>();
         }
@@ -502,6 +503,12 @@ namespace DevKit.Web.Controllers
                                                 select e).
                                                 FirstOrDefault();
 
+                                //schedule_fech_mensal;empresa;001401;afiliada;
+
+                                var tScheduler = (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa) select e).FirstOrDefault();
+
+                                var hora = tScheduler.st_monthly_hhmm.PadLeft(4, '0');
+
                                 {
                                     var totalVendas = (from e in db.LOG_Fechamento
                                                        join ltr in db.T_Parcelas on e.fk_parcela equals (int)ltr.i_unique
@@ -532,6 +539,7 @@ namespace DevKit.Web.Controllers
                                         totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
                                         vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
                                         situacao = "ENCERRADO",
+                                        dtFechamento = tScheduler.nu_monthly_day + " / " + hora.Substring(0,2) + ":" + hora.Substring(2)
                                     });
                                 }
                             }

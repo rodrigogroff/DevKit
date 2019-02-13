@@ -61,6 +61,9 @@ namespace DevKit.Web.Controllers
             if (iValor == 0)
                 return BadRequest("Valor zerado!");
 
+            if (parcelas == 0)
+                return BadRequest("Parcela zerada!");
+
             var associado = RestoreTimerCache(CacheTags.associado, idCartao.ToString(), 1) as T_Cartao;
 
             if (associado == null)

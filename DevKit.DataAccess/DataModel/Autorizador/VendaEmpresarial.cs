@@ -131,6 +131,13 @@ namespace DataModel
             var_vr_total = input_cont_pe.vr_valor;
             var_nu_parcelas = input_cont_pe.nu_parcelas;
 
+            if (Convert.ToInt32(var_nu_parcelas) == 0)
+            {
+                output_st_msg = "Parcela zerada";
+                var_codResp = "0303";
+                return false;
+            }
+
             if (IsSitef == false) // venda online
             {
                 var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal);

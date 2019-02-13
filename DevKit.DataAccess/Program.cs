@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Net.Mail;
+using System.Collections.Generic;
 
 namespace GetStarted
 {
@@ -20,7 +21,107 @@ namespace GetStarted
 
             using (var db = new AutorizadorCNDB())
             {
-                var strPatch = Console.ReadLine();
+                {
+                    int tot = 0;
+
+                    var lstDelFech = new List<long>();
+
+                    {
+                        var lstTrans = new List<string>();
+                        var hshLogTrans = new Hashtable();
+
+                        Console.WriteLine("Empresa 008997");
+
+                        foreach (var itemFech in db.LOG_Fechamento.
+                                                    Where(y => y.fk_empresa == 28 &&
+                                                              y.st_mes == "02" && y.st_ano == "2019").
+                                                    OrderBy(y => y.fk_cartao).ThenBy(y => y.vr_valor).
+                                                    ToList())
+                        {
+                            var logTrans = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemFech.fk_parcela).fk_log_transacoes.ToString();
+                            var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == itemFech.fk_cartao);
+
+                            if (hshLogTrans[logTrans] == null)
+                                hshLogTrans[logTrans] = 1;
+                            else
+                            {
+                                hshLogTrans[logTrans] = (int)hshLogTrans[logTrans] + 1;
+                                lstTrans.Add(logTrans);
+                                tot++;
+
+                                lstDelFech.Add((long)itemFech.i_unique);
+
+                                Console.WriteLine("C" + cart.st_matricula + " => LT " + logTrans + " VR => " + itemFech.vr_valor);
+                                Console.WriteLine("  >> parc " + itemFech.fk_parcela);
+
+                                var lstParcs = db.T_Parcelas.Where(y => y.fk_log_transacoes.ToString() == logTrans).OrderBy(y => y.nu_indice).ToList();
+
+                                foreach (var itemParc in lstParcs)
+                                {
+                                    if (itemParc.i_unique >= itemFech.fk_parcela)
+                                    {
+                                        var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemParc.i_unique);
+                                        parcUpd.nu_parcela++;
+                                        db.Update(parcUpd);
+                                    }
+                                }
+                            }
+                        }                       
+                    }
+
+                    {
+                        var lstTrans = new List<string>();
+                        var hshLogTrans = new Hashtable();
+
+                        Console.WriteLine("Empresa 008998");
+
+                        foreach (var itemFech in db.LOG_Fechamento.
+                                                    Where(y => y.fk_empresa == 29 &&
+                                                              y.st_mes == "02" && y.st_ano == "2019").
+                                                    OrderBy(y => y.fk_cartao).ThenBy(y => y.vr_valor).
+                                                    ToList())
+                        {
+                            var logTrans = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemFech.fk_parcela).fk_log_transacoes.ToString();
+                            var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == itemFech.fk_cartao);
+
+                            if (hshLogTrans[logTrans] == null)
+                                hshLogTrans[logTrans] = 1;
+                            else
+                            {
+                                hshLogTrans[logTrans] = (int)hshLogTrans[logTrans] + 1;
+                                lstTrans.Add(logTrans);
+                                tot++;
+
+                                lstDelFech.Add((long)itemFech.i_unique);
+
+                                Console.WriteLine("C" + cart.st_matricula + " => LT " + logTrans + " VR => " + itemFech.vr_valor);
+                                Console.WriteLine("  >> parc " + itemFech.fk_parcela);
+
+                                var lstParcs = db.T_Parcelas.Where(y => y.fk_log_transacoes.ToString() == logTrans).OrderBy(y => y.nu_indice).ToList();
+
+                                foreach (var itemParc in lstParcs)
+                                {
+                                    if (itemParc.i_unique >= itemFech.fk_parcela)
+                                    {
+                                        var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemParc.i_unique);
+                                        parcUpd.nu_parcela++;
+                                        db.Update(parcUpd);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Console.WriteLine("Fechamentos errados: " + tot);
+
+                    foreach (var item in lstDelFech)
+                    {
+                        var itemF = db.LOG_Fechamento.FirstOrDefault(y => y.i_unique == item);
+                        db.Delete(itemF);
+                    }
+                }
+
+                /*var strPatch = Console.ReadLine();
 
                 strPatch = strPatch.ToUpper();
 
@@ -216,7 +317,38 @@ namespace GetStarted
 
                         break;
                     }
+
+                    case "FIXFECH":
+                        {
+
+                            var lstTrans = new List<string>();
+                            var hshLogTrans = new Hashtable();
+
+                            foreach (var itemFech in db.LOG_Fechamento.
+                                                        Where ( y=> y.fk_empresa == 28 && 
+                                                                    y.st_mes == "01" && y.st_ano == "2019" ).
+                                                        OrderBy( y=> y.fk_cartao).ThenBy ( y=> y.vr_valor).
+                                                        ToList())
+                            {
+                                var logTrans = db.T_Parcelas.FirstOrDefault(y=> y.i_unique == itemFech.fk_parcela).fk_log_transacoes.ToString();
+                                var cart = db.T_Cartao.FirstOrDefault(y=> y.i_unique == itemFech.fk_cartao);
+
+                                if (hshLogTrans[logTrans] == null)
+                                    hshLogTrans[logTrans] = 1;
+                                else
+                                {
+                                    hshLogTrans[logTrans] = (int)hshLogTrans[logTrans] + 1;
+                                    lstTrans.Add(logTrans);
+
+                                    Console.WriteLine("C" + cart.st_matricula + " => LT " + logTrans + " VR => " + itemFech.vr_valor);
+                                }
+                            }
+
+                            break;
+                        }
+                        
                 }
+                */
             }
         }
     }

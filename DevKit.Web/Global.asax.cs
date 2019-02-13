@@ -70,8 +70,8 @@ namespace DevKit.Web
 
                     foreach (var item in queryX)
                     {
-                        item.tg_confirmada = Convert.ToChar(TipoConfirmacao.Cancelada);
-                        item.st_msg_transacao = "Canc. Auto";
+                        item.tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada);
+                        item.st_msg_transacao = "Conf. Auto";
 
                         db.Update(item);
                     }

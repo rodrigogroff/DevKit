@@ -283,7 +283,7 @@ namespace DevKit.Web.Controllers
                             {
                                  var tx = db.T_Dependente.
                                                 FirstOrDefault(y => y.nu_titularidade == Convert.ToInt32(_cart.st_titularidade) &&
-                                                               y.fk_proprietario == _cart.i_unique);
+                                                               y.fk_proprietario == _cart.fk_dadosProprietario);
 
                                 if (tx != null)
                                     assocNome = tx.st_nome;

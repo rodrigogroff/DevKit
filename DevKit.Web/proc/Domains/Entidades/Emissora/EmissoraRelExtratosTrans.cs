@@ -304,7 +304,7 @@ namespace DevKit.Web.Controllers
                         mat = _mat,
                         assoc = assocNome,
                         parcelas = tran.nu_parcelas.ToString(),
-                        terminal = term.nu_terminal.ToString(),
+                        terminal = term?.nu_terminal.ToString(),
                         valorTot = mon.setMoneyFormat((long)tran.vr_total),
                         tipo = tran.tg_contabil.ToString() == "2" ? "Web" : "SITEF",
                         motivo = tran.st_msg_transacao

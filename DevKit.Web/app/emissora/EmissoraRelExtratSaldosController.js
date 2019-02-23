@@ -106,6 +106,10 @@ angular.module('app.controllers').controller('EmissoraRelExtratSaldosController'
                         $scope.mesAtual = data.mesAtual;
                         $scope.total = data.total;
                         $scope.saldo = data.saldo;
+                        $scope.saldoM = data.saldoM;
+                        $scope.saldoT = data.saldoT;
+                        $scope.saldoDT = data.saldoDT;
+                        $scope.saldoCT = data.saldoCT;
                         $scope.dtEmissao = data.dtEmissao;
                         $scope.pesquisa.tipoSel = 2;
                         $scope.loading = false;

@@ -60,6 +60,7 @@ angular.module('app.services', ['ngResource'])
         LojistasAssociado: $resource('api/lojistasassociado/:id', {}, opcoes),
         LojistaMensagens: $resource('api/lojistamensagens/:id', {}, opcoes),
         CancelaVenda: $resource('api/cancelavenda/:id', {}, opcoes),
+        CancelaVendaDBA: $resource('api/cancelavendadba/:id', {}, opcoes),
         Cache: $resource('api/cache/:id', {}, opcoes),
         OrdemRelLojistaTrans: $resource('api/ordemrellojistaTrans/:id', {}, opcoes),
         OrdemEmissorManutCartoes: $resource('api/ordememissormanutcartoes/:id', {}, opcoes),

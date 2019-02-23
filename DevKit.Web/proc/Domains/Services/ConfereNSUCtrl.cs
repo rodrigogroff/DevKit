@@ -12,27 +12,35 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Get()
         {
             var nsu = Request.GetQueryStringValue<int>("nsu", 0);
+            var dt = ObtemData(Request.GetQueryStringValue<string>("dt", ""));
+
+            DateTime _dt = DateTime.Now;
+
+            if (dt != null)
+                _dt = Convert.ToDateTime(dt);
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var dtNow = DateTime.Now;
+            long? fkLoja = null;
+
+            if (db.currentLojista != null)
+                fkLoja = (long) db.currentLojista.i_unique;
 
             var q = (from e in db.LOG_Transacoes
 
-                       where e.fk_loja == db.currentLojista.i_unique
+                        where fkLoja != null && e.fk_loja == fkLoja || fkLoja == null
                        where e.nu_nsu == nsu
 
                        where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada.ToString()
                        
-                       where e.dt_transacao.Value.Year == dtNow.Year
-                       where e.dt_transacao.Value.Month == dtNow.Month
-                       where e.dt_transacao.Value.Day == dtNow.Day
-
-                       orderby e.dt_transacao descending
+                       where e.dt_transacao.Value.Year == _dt.Year && e.dt_transacao.Value.Month == _dt.Month && e.dt_transacao.Value.Day == _dt.Day
+                       
+                     orderby e.dt_transacao descending
 
                        select e);
 
+            
             var lTr = q.FirstOrDefault();
 
             if (lTr == null)

@@ -52,6 +52,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('empListagemLoja', { url: '/emissora/listagemLoja', templateUrl: 'app/emissora/listagemLoja.html', controller: 'EmissoraListagemLojaController' })
             .state('empListagemUsuario', { url: '/emissora/listagemUsuario', templateUrl: 'app/emissora/listagemUsuario.html', controller: 'EmissoraListagemUsuarioController' })
             .state('empAltSenhaUsuario', { url: '/emissora/altsenhausuario', templateUrl: 'app/emissora/altSenhaUsuario.html', controller: 'EmissoraAltSenhaUsuarioController' })
+            .state('empcancelamento', { url: '/emissora/cancelamento', templateUrl: 'app/emissora/cancelamentoEmissora.html', controller: 'CancelamentoEmissoraController' })
             .state('empAltSenha', { url: '/emissora/altsenha', templateUrl: 'app/emissora/altSenha.html', controller: 'EmissoraAltSenhaController' })
             .state('empAltSegVia', { url: '/emissora/altsegvia', templateUrl: 'app/emissora/altSegVia.html', controller: 'EmissoraAltSegViaController' })
             .state('empAltLim', { url: '/emissora/altlim', templateUrl: 'app/emissora/altLimite.html', controller: 'EmissoraAltLimiteController' })

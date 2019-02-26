@@ -298,7 +298,7 @@ namespace DevKit.Web.Controllers
                     {
                         idstatus = tran.tg_confirmada.ToString(),
                         status = _stat,
-                        dt = ObtemData(tran.dt_transacao),
+                        dt = ObtemDataSegundos(tran.dt_transacao),
                         loja = loja != null ?  "(" + loja.st_loja + ") " + loja.st_nome : "",
                         nsu = tran.nu_nsu.ToString(),
                         mat = _mat,

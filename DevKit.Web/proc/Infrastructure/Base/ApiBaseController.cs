@@ -238,6 +238,22 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
+        public string ObtemDataSegundos(DateTime? valor)
+        {
+            try
+            {
+                if (valor == null)
+                    return "";
+
+                return Convert.ToDateTime(valor).ToString("dd/MM/yyyy HH:mm:SS");
+            }
+            catch (SystemException ex)
+            {
+                return null;
+            }
+        }
+
+        [NonAction]
         public string ObtemData(DateTime? valor)
         {
             try

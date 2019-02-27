@@ -64,6 +64,8 @@ public partial class ClientHandler
             else
                 // All the data has arrived; put it in response.
                 ProcessDataReceived();
+
+            Thread.Sleep(100);
         }
         catch (IOException)
         {

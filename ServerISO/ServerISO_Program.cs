@@ -38,7 +38,7 @@ public class ClientConnectionPool
 
 public class ClientService
 {
-    const int NUM_OF_THREAD = 50;
+    const int NUM_OF_THREAD = 150;
 
     ClientConnectionPool ConnectionPool;
     Thread[] ThreadTask = new Thread[NUM_OF_THREAD];
@@ -82,7 +82,7 @@ public class ClientService
                     ConnectionPool.Enqueue(client);
             }
 
-            Thread.Sleep(1);
+            Thread.Sleep(100);
         }
     }
 
@@ -125,8 +125,7 @@ public class SynchronousSocketListener
 
         //    var regIso = new ISO8583(dados);
         //}
-
-
+        /*
         DateTime xdt = new DateTime(2018, 12, 14, 14, 0, 0);
 
         for (int id = 624895; id <= 625055; id++)
@@ -137,7 +136,9 @@ public class SynchronousSocketListener
 
         Console.ReadLine();
 
-        Console.WriteLine("\n" + DateTime.Now + "]");
+    */
+
+        Console.WriteLine("\n" + DateTime.Now + "] 1.00001");
         Console.WriteLine("\nCNET ISO [" + portNum + "]");
 
         using (var db = new AutorizadorCNDB())
@@ -184,7 +185,7 @@ public class SynchronousSocketListener
                     ConnectionPool.Enqueue(new ClientHandler(handler, ClientNbr));
                 }
 
-                Thread.Sleep(1);
+                Thread.Sleep(100);
             }
 
             //listener.Stop();

@@ -245,7 +245,7 @@ namespace DevKit.Web.Controllers
                 if (valor == null)
                     return "";
 
-                return Convert.ToDateTime(valor).ToString("dd/MM/yyyy HH:mm:SS");
+                return Convert.ToDateTime(valor).ToString("dd/MM/yyyy HH:mm:ss");
             }
             catch (SystemException ex)
             {

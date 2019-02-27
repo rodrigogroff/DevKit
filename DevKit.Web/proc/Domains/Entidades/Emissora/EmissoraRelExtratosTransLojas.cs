@@ -172,7 +172,7 @@ namespace DevKit.Web.Controllers
                     {
                         associado = prop != null ? prop.st_nome : "",
                         cartao = cartao.st_matricula + "." + cartao.st_titularidade,
-                        dt = Convert.ToDateTime(tran.dt_transacao).ToString("dd/MM/yyyy HH:mm:SS"),
+                        dt = Convert.ToDateTime(tran.dt_transacao).ToString("dd/MM/yyyy HH:mm:ss"),
                         nsu = tran.nu_nsu.ToString(),
                         parcelas = tran.nu_parcelas.ToString(),
                         terminal = term.nu_terminal,

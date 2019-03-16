@@ -95,7 +95,9 @@ namespace DevKit.Web.Controllers
             var res = new List<RelAssociadosItem>();
 
             query = (from e in query
+                     join emp in db.T_Empresa on e.st_empresa equals emp.st_empresa
                      join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int)associado.i_unique
+                     where emp.tg_bloq == 0
                      orderby associado.st_nome
                      select e);
 

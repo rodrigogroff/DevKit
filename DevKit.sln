@@ -7,15 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevKit.DataAccess", "DevKit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevKit.Web", "DevKit.Web\DevKit.Web.csproj", "{3F37EF80-E4CA-4BF7-8B21-07849230404C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{31992D7E-A656-4D93-82E6-259739B034FF}"
-	ProjectSection(SolutionItems) = preProject
-		DevKit_Standard_v01.00.docx = DevKit_Standard_v01.00.docx
-		fraude.txt = fraude.txt
-		Listings.txt = Listings.txt
-		management.txt = management.txt
-		todo.txt = todo.txt
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerISO", "ServerISO\ServerISO.csproj", "{A00B6157-E72A-49C4-A328-C4E96341EF4F}"
 EndProject
 Global

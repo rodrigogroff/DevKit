@@ -68,7 +68,7 @@ namespace DataModel
             Registry("START VendaEmpresarial");
             Registry("-------------------------");
 
-            _db.BeginTransaction();
+            
 
             try
             {
@@ -83,7 +83,7 @@ namespace DataModel
 
                 Finish();
 
-                _db.CommitTransaction();
+            
             }
             catch (SystemException ex)
             {
@@ -95,7 +95,7 @@ namespace DataModel
 
                 output_st_msg = "Erro SGBD";
 
-                _db.RollbackTransaction();
+                
             }
 
             st.Stop();

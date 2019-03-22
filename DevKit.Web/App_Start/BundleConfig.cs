@@ -67,6 +67,7 @@ namespace DevKit.Web
                 "~/app/dba/lotes/ativaCartao.js",
                 "~/app/dba/lotes/expedicao.js",
                 "~/app/dba/empresa/listingEmpresas.js",
+                "~/app/dba/faturamento/listagemFaturamento.js",
                 "~/app/dba/empresa/empresa.js",
                 "~/app/emissora/CancelamentoEmissoraController.js",
                 "~/app/emissora/EmissoraAltDesbloq.js",

@@ -1,0 +1,36 @@
+﻿<div class="webFormPosition" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>DBA \ Demonstrativo de <b>Faturamento</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td width="20px"></td>
+                </tr>
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color:white" width="590px">
+                <tr height="22px"> </tr>
+                <tr height="36px">
+                    <td width="25px"></td>
+                    <td width="110px"><b>Selecione</b></td>
+                    <td width="220px">
+                        <label style="display:block;"><input type="radio" name="tipo" id="tipoDemonstrativo" value="1" ng-model="tipoDemonstrativo"> Emissora</label>
+                        <label style="display:block;"><input type="radio" name="tipo" id="tipoDemonstrativo" value="2" ng-model="tipoDemonstrativo"> Lojistas</label>                        
+                    </td>
+                    <td width="25px"></td>
+                    <td width="60px">
+                        <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
+                    </td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr height="22px"> </tr>
+            </table>
+            <br />
+        </div>
+    </section>
+</div>

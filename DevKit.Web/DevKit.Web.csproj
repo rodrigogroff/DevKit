@@ -246,6 +246,8 @@
     <Content Include="app\dba\empresa\empresa.js" />
     <Content Include="app\dba\empresa\listingEmpresas.html" />
     <Content Include="app\dba\empresa\listingEmpresas.js" />
+    <Content Include="app\dba\faturamento\listagemFaturamento.html" />
+    <Content Include="app\dba\faturamento\listagemFaturamento.js" />
     <Content Include="app\dba\lotes\ativaCartao.html" />
     <Content Include="app\dba\lotes\ativaCartao.js" />
     <Content Include="app\dba\lotes\expedicao.html" />

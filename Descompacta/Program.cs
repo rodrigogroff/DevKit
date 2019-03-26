@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using System.Text;
 using System.Threading;
 
 namespace Descompacta
@@ -20,26 +21,48 @@ namespace Descompacta
                 {
                     Console.WriteLine(">> versão nova!");
 
-                    using (var ZipArchive = ZipFile.OpenRead(zipPath))
+                    try
                     {
-                        foreach (ZipArchiveEntry entry in ZipArchive.Entries)
+                        using (var ZipArchive = ZipFile.OpenRead(zipPath))
                         {
-                            var entryFullname = Path.Combine(extractPath, entry.FullName);
-                            var entryPath = Path.GetDirectoryName(entryFullname);
+                            foreach (ZipArchiveEntry entry in ZipArchive.Entries)
+                            {
+                                var entryFullname = Path.Combine(extractPath, entry.FullName);
+                                var entryPath = Path.GetDirectoryName(entryFullname);
 
-                            if (!Directory.Exists(entryPath))
-                                Directory.CreateDirectory(entryPath);
+                                if (!Directory.Exists(entryPath))
+                                    Directory.CreateDirectory(entryPath);
 
-                            var entryFn = Path.GetFileName(entryFullname);
+                                var entryFn = Path.GetFileName(entryFullname);
 
-                            if (!string.IsNullOrEmpty(entryFn))
-                                entry.ExtractToFile(entryFullname, true);
+                                if (!string.IsNullOrEmpty(entryFn))
+
+                                {
+                                    if (File.Exists(entryFullname))
+                                        File.Delete(entryFullname);
+
+                                    entry.ExtractToFile(entryFullname, true);
+                                }                                    
+                            }
+                        }
+
+                        Console.WriteLine(">> versão nova pronta!");
+
+                        Thread.Sleep(500);
+
+                        File.Delete(zipPath);
+                        
+                        Console.WriteLine(">> pronto!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(">> erro! " + ex.ToString());
+
+                        using (var sw = new StreamWriter( Directory.GetCurrentDirectory() + "\\erro" + DateTime.Now.ToString("ddMMyyyyHHmmss") + "log.txt", false, Encoding.Default))
+                        {
+                            sw.WriteLine(ex.ToString());
                         }
                     }
-
-                    File.Delete(zipPath);
-
-                    Console.WriteLine(">> versão nova pronta!");
                 }
 
                 Thread.Sleep(5000);

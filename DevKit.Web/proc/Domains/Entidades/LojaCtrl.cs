@@ -80,6 +80,8 @@ namespace DevKit.Web.Controllers
             var busca = Request.GetQueryStringValue("busca");
             var terminal = Request.GetQueryStringValue("terminal");
             var cidade = Request.GetQueryStringValue("cidade");
+            var cnpj = Request.GetQueryStringValue("cnpj");
+            var nomeSocial = Request.GetQueryStringValue("nomeSocial");
             var estado = Request.GetQueryStringValue("estado");
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
@@ -96,6 +98,20 @@ namespace DevKit.Web.Controllers
             {
                 query = from e in query
                         where e.st_nome.Contains(busca)
+                        select e;
+            }
+
+            if (!string.IsNullOrEmpty(cnpj))
+            {
+                query = from e in query
+                        where e.nu_CNPJ == cnpj
+                        select e;
+            }
+
+            if (!string.IsNullOrEmpty(nomeSocial))
+            {
+                query = from e in query
+                        where e.st_social == nomeSocial
                         select e;
             }
 
@@ -166,15 +182,23 @@ namespace DevKit.Web.Controllers
                 if (item.tg_portalComSenha == 0)
                     senha = "Sem Senha";
 
+                var strTerms = "";
+
+                foreach (var itemT in db.T_Terminal.Where(y => y.fk_loja == item.i_unique).ToList())
+                    strTerms += itemT.nu_terminal.ToString() + ", ";
+                
                 lst.Add(new T_Loja
                 {
                     id = item.i_unique.ToString(),
                     terminal = item.st_loja,
+                    nu_CNPJ = item.nu_CNPJ,
                     nome = item.st_nome,
+                    st_social = item.st_social,
                     cidade = item.st_cidade,
                     estado = item.st_estado,
                     situacao = item.tg_blocked == '1' ? "Bloqueada" : "Ativa",
                     tipoVenda = senha,
+                    strTerminais = strTerms
                 });
             }
 

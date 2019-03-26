@@ -38,7 +38,10 @@ angular.module('app.controllers').controller('ListingLojasController',
                     estado: $scope.campos.estado,
                     bloqueada: $scope.campos.bloqueada,
                     comSenha: $scope.campos.comSenha,
-                    idEmpresa: $scope.campos.idEmpresa
+                    idEmpresa: $scope.campos.idEmpresa,
+                    cnpj: $scope.campos.cnpj,
+                    nomeFantasia: $scope.campos.nomeFantasia,
+                    nomeSocial: $scope.campos.nomeSocial
                 };
 
                 if (exportar) {

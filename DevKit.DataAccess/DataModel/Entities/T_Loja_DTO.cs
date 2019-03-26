@@ -41,6 +41,7 @@ namespace DataModel
                         cidade,
                         estado,
                         situacao,
+                        strTerminais,
                         tipoVenda,
 
                         snuPctValor,

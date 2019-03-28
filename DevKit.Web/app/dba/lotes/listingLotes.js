@@ -15,7 +15,8 @@ angular.module('app.controllers').controller('ListingLotesController',
                 var opcoes = {
                     skip: skip,
                     take: take,
-                    todos: $scope.campos.todos
+                    todos: $scope.campos.todos,
+                    idEmpresa: $scope.campos.idEmpresa,
                 };
 
                 Api.LoteDBA.listPage(opcoes, function (data) {
@@ -89,6 +90,9 @@ angular.module('app.controllers').controller('ListingLotesController',
             };
 
             function init() {
+
+                $scope.selectEmpresa = ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 });
+
                 $scope.campos = {
                     codigo: ''
                 };                

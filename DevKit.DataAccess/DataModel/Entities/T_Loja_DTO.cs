@@ -42,6 +42,7 @@ namespace DataModel
                         estado,
                         situacao,
                         strTerminais,
+                        strEmpresas,
                         tipoVenda,
 
                         snuPctValor,

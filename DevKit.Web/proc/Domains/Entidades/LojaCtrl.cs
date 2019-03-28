@@ -175,6 +175,8 @@ namespace DevKit.Web.Controllers
 
             var lst = new List<T_Loja>();
 
+            var lstEmps = db.T_Empresa.ToList();
+
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
                 var senha = "Com Senha";
@@ -182,11 +184,17 @@ namespace DevKit.Web.Controllers
                 if (item.tg_portalComSenha == 0)
                     senha = "Sem Senha";
 
-                var strTerms = "";
+                string strTerms = "", strEmps = "";
 
                 foreach (var itemT in db.T_Terminal.Where(y => y.fk_loja == item.i_unique).ToList())
                     strTerms += itemT.nu_terminal.ToString() + ", ";
-                
+
+                foreach (var itemT in db.LINK_LojaEmpresa.Where(y => y.fk_loja == item.i_unique).ToList())
+                {
+                    var tE = lstEmps.FirstOrDefault(y => y.i_unique == itemT.fk_empresa);
+                    strEmps += tE.st_empresa + ", ";
+                }                    
+
                 lst.Add(new T_Loja
                 {
                     id = item.i_unique.ToString(),
@@ -198,7 +206,8 @@ namespace DevKit.Web.Controllers
                     estado = item.st_estado,
                     situacao = item.tg_blocked == '1' ? "Bloqueada" : "Ativa",
                     tipoVenda = senha,
-                    strTerminais = strTerms
+                    strTerminais = strTerms,
+                    strEmpresas = strEmps
                 });
             }
 

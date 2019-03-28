@@ -132,6 +132,7 @@ namespace DevKit.Web.Controllers
         {
             var busca = Request.GetQueryStringValue("busca");            
             var todos = Request.GetQueryStringValue<bool>("todos", false);
+            var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa");
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -140,6 +141,14 @@ namespace DevKit.Web.Controllers
 
             if (!todos)
                 query = query.Where(y => y.tg_sitLote != 3);
+
+            if (idEmpresa > 0)
+            {
+                query = from e in query
+                        join cartDet in db.T_LoteCartaoDetalhe on (int)e.i_unique equals cartDet.fk_lote
+                        where cartDet.fk_empresa == idEmpresa
+                        select e;                     
+            }
             
             query = query.OrderByDescending(y => y.dt_abertura);
 

@@ -63,11 +63,13 @@ namespace DevKit.Web
             return retorno;
         }
 
+        #endregion
+
         public override async System.Threading.Tasks.Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
-		{
-			context.Validated();
-			await System.Threading.Tasks.Task.FromResult(0);
-		}
+        {
+            context.Validated();
+            await System.Threading.Tasks.Task.FromResult(0);
+        }
 
         public override System.Threading.Tasks.Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
@@ -84,8 +86,6 @@ namespace DevKit.Web
 
             return System.Threading.Tasks.Task.FromResult<object>(null);
         }
-
-        #endregion
 
         public override async System.Threading.Tasks.Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
@@ -133,10 +133,16 @@ namespace DevKit.Web
                                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
                                     identity.AddClaim(new Claim(ClaimTypes.Name, terminal.nu_terminal.TrimStart('0')));
+
+                                    identity.AddClaim(new Claim("m1", lojista.st_nome));
+                                    identity.AddClaim(new Claim("m2", lojista.st_social));
+
+                                    /*
                                     identity.AddClaim(new Claim("m1", "Lojista " + lojista.st_loja + " - " + lojista.st_nome));
                                     identity.AddClaim(new Claim("m2", (lojista.st_endereco + " / " +
                                                                         lojista.st_cidade + " " +
                                                                         lojista.st_estado).Replace("{SE$3}", "")));
+                                                                        */
 
                                     identity.AddClaim(new Claim("tipo", "1"));
 

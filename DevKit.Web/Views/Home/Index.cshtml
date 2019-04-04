@@ -262,6 +262,10 @@
                                             <span ng-if="authentication.tipo == '5'" style="color:black">Terminal <b>{{authentication.nameUser}}</b><br />Administração do portal</span>
                                         </td>
                                         <td width="20px"></td>
+                                        <td ng-if="authentication.tipo == '1'" style="padding-top:12px">
+                                            <b>{{authentication.m1}}</b> / <br />
+                                            {{authentication.m2}}
+                                        </td>
                                         <td ng-if="authentication.tipo == '4'" style="padding-top:12px">
                                             Emissora: <b>{{authentication.m1}}</b><br />
                                             {{authentication.m2}}

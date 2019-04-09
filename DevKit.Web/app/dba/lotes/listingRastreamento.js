@@ -20,7 +20,7 @@ angular.module('app.controllers').controller('ListingRastreamentoController',
                     idEmpresa: $scope.campos.idEmpresa,
                 };
 
-                Api.LoteDBA.listPage(opcoes, function (data) {
+                Api.ListagemRastreamento.listPage(opcoes, function (data) {
                     $scope.list = data.results;
                     $scope.total = data.count;
                     $scope.loading = false;

@@ -111,7 +111,7 @@ namespace DevKit.Web.Controllers
             if (!string.IsNullOrEmpty(nomeSocial))
             {
                 query = from e in query
-                        where e.st_social == nomeSocial
+                        where e.st_social.ToUpper().Contains(nomeSocial.ToUpper())
                         select e;
             }
 

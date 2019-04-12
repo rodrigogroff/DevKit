@@ -16,7 +16,12 @@ angular.module('app.controllers').controller('ListingRastreamentoController',
                 var opcoes = {
                     skip: skip,
                     take: take,
-                    todos: $scope.campos.todos,
+                    nome: $scope.campos.nome,
+                    mat: $scope.campos.mat,
+                    dtInicial: $scope.campos.dtInicial,
+                    dtFinal: $scope.campos.dtFinal,                    
+                    sedex: $scope.campos.sedex,         
+                    dtEnvio: $scope.campos.dtEnvio,         
                     idEmpresa: $scope.campos.idEmpresa,
                 };
 
@@ -27,9 +32,21 @@ angular.module('app.controllers').controller('ListingRastreamentoController',
                 });
             };
 
+            $scope.abreModal = function (mdl) {
+                $scope.pedidoCartao = mdl;
+                $scope.modalEdit = true;
+            };
+
+            $scope.closeModal = function () {
+                $scope.modalEdit = false;
+            };
+
             function init() {
 
                 $scope.selectEmpresa = ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 });
+
+                $scope.modalEdit = false;
+                $scope.pedidoCartao = null;
 
                 $scope.campos = {
                     codigo: ''

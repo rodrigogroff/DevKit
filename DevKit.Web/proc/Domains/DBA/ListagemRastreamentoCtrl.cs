@@ -17,6 +17,16 @@ namespace DevKit.Web.Controllers
         {
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
+            var mat = Request.GetQueryStringValue<int>("mat");
+            var nome = Request.GetQueryStringValue("nome");
+            var dtInicial = ObtemData(Request.GetQueryStringValue("dtInicial"));
+            var dtFinal = ObtemData(Request.GetQueryStringValue("dtFinal"));
+
+            /*
+             * var dtEnvio = ObtemData(Request.GetQueryStringValue("dtEnvio"));
+             * var sedex = Request.GetQueryStringValue("sedex");
+             */
+
             var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa", null);
 
             if (!StartDatabaseAndAuthorize())
@@ -26,7 +36,27 @@ namespace DevKit.Web.Controllers
 
             if (idEmpresa != null)
                 query = query.Where(y => y.fk_empresa == idEmpresa);
-            
+
+            if (!string.IsNullOrEmpty(nome))
+            {
+                query = query.Where(y => y.st_nome_cartao.ToUpper().Contains(nome.ToUpper()));
+            }
+
+            if (mat > 0)
+            {
+                query = query.Where(y => y.nu_matricula == mat);
+            }
+
+            if (dtInicial != null)
+            {
+                query = query.Where(y => y.dt_pedido >= dtInicial);
+            }
+
+            if (dtFinal != null)
+            {
+                query = query.Where(y => y.dt_pedido <= dtFinal);
+            }
+
             query = from e in query
                     orderby e.dt_pedido descending
                     select e;

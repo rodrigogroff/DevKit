@@ -61,7 +61,7 @@
                     <td width="25px"></td>
                     <td width="110px">Sedex</td>
                     <td width="220px">
-                        <input type="text" class="form-control input-transparent" maxlength="20" ng-model="campos.nome">
+                        <input type="text" class="form-control input-transparent" maxlength="20" ng-model="campos.sedex">
                     </td>
                     <td width="25px"></td>
                 </tr>
@@ -97,18 +97,18 @@
                             <th>Dt. Pedido</th>
                             <th>Empresa</th>
                             <th>Nome</th>
-                            <th>Matricula</th>                            
+                            <th>Matricula</th>
                             <th>Dt. Envio</th>
                             <th>Sedex</th>
                         </tr>
                     </thead>
-                    <tr data-ng-repeat="mdl in list">
+                    <tr ng-click="abreModal(mdl)" data-ng-repeat="mdl in list">
                         <td>{{ mdl.dtPedido }}</td>
                         <td>{{ mdl.empresa }}</td>
                         <td>{{ mdl.nome }}</td>
-                        <td>{{ mdl.mat }}</td>                        
+                        <td>{{ mdl.mat }}</td>
                         <td>{{ mdl.dtEnvio }}</td>
-                        <td>{{ mdl.sedex }}</td>                        
+                        <td>{{ mdl.sedex }}</td>
                     </tr>
                 </table>
                 <br />
@@ -116,6 +116,63 @@
                 <br />
                 <br />
             </div>
+            <div class="modal-backdrop"
+                 ng-if="modalEdit == true"
+                 style="background: rgba(55, 55, 55, 0.5 );">
+                <div class="modal-dialog" style="width:800px;height:150px">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="modal-content" style="color:black">
+                        <legend style="color:black">
+                            Detalhes do Cartão
+                            <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModal()"> X </button> &nbsp;
+                        </legend>
+                        <br />
+                        <div style="height:150px;overflow-y:scroll;">                            
+                            <table>
+                                <tr height="43px">
+                                    <td width="20px"></td>
+                                    <td width="120px">Data pedido</td>
+                                    <td width="20px"></td>
+                                    <td width="320px"><b>{{pedidoCartao.dtPedido}}</b></td>
+                                    <td width="20px"></td>
+                                    <td width="120px">Empresa</td>
+                                    <td width="20px"></td>
+                                    <td width="250px"><b>{{pedidoCartao.empresa}}</b></td>
+                                    <td width="20px"></td>
+                                </tr>
+                                <tr height="43px">
+                                    <td></td>
+                                    <td>Nome portador</td>
+                                    <td></td>
+                                    <td><b>{{pedidoCartao.nome}}</b></td>
+                                    <td></td>
+                                    <td>Matrícula</td>
+                                    <td></td>
+                                    <td><b>{{pedidoCartao.mat}}</b></td>
+                                    <td></td>
+                                </tr>
+                                <tr height="43px">
+                                    <td></td>
+                                    <td>Data Envio</td>
+                                    <td></td>
+                                    <td><b>{{pedidoCartao.dtEnvio}}</b></td>
+                                    <td></td>
+                                    <td>Sedex</td>
+                                    <td></td>
+                                    <td><b>{{pedidoCartao.sedex}}</b></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <br />
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </div>
+
             <br />
         </div>
     </section>

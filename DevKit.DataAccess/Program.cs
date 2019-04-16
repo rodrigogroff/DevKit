@@ -21,6 +21,79 @@ namespace GetStarted
 
             using (var db = new AutorizadorCNDB())
             {
+                // ------------------------------
+                // desfaz fechamento
+                // ------------------------------
+
+                int tot = 0;
+
+                var lstDelFech = new List<long>();
+
+                var lstTrans = new List<string>();
+                var hshLogTrans = new Hashtable();
+
+                foreach (var itemFech in db.LOG_Fechamento.Where(y => y.fk_empresa == 38 && y.st_mes == "04" && y.st_ano == "2019").ToList())
+                {
+                    lstDelFech.Add((long)itemFech.i_unique);
+
+                    var parc = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemFech.fk_parcela);
+                    var logTrans = parc.fk_log_transacoes.ToString();
+                    var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == itemFech.fk_cartao);
+
+                    var lstParcs = db.T_Parcelas.Where(y => y.fk_log_transacoes.ToString() == logTrans).OrderBy(y => y.nu_indice).ToList();
+
+                    Console.WriteLine("C" + cart.st_matricula + " => LT " + logTrans + " VR => " + itemFech.vr_valor + " parcs " + lstParcs.Count);
+
+                    foreach (var itemParc in lstParcs)
+                    {
+                        if (itemParc.i_unique >= itemFech.fk_parcela)
+                        {
+                            var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemParc.i_unique);
+                            parcUpd.nu_parcela++;
+                            db.Update(parcUpd);
+                        }
+                    }                    
+                }
+
+                foreach (var item in lstDelFech)
+                {
+                    var itemF = db.LOG_Fechamento.FirstOrDefault(y => y.i_unique == item);
+                    db.Delete(itemF);
+                }
+
+                // reconstroi o fechamento
+
+                foreach (var parc in db.T_Parcelas.Where(y => y.fk_empresa == 38 && y.nu_parcela > 0).ToList())
+                {
+                    var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
+
+                    if (logTrans.dt_transacao > new DateTime(2019, 04, 15))
+                        continue;
+
+                    if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
+                        continue;
+                    
+                    var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == parc.i_unique);
+                    parcUpd.nu_parcela--;
+                    db.Update(parcUpd);
+
+                    db.Insert(new LOG_Fechamento
+                    {
+                        dt_compra = logTrans.dt_transacao,
+                        dt_fechamento = DateTime.Now,
+                        fk_cartao = parc.fk_cartao,
+                        fk_empresa = parc.fk_empresa,
+                        fk_loja = parc.fk_loja,
+                        fk_parcela = (int) parc.i_unique,
+                        nu_parcela = parc.nu_parcela,
+                        st_afiliada = "",
+                        st_ano = "2019",
+                        st_mes = "04",
+                        vr_valor = parc.vr_valor                        
+                    });
+                }
+
+                /*
                 {
                     int tot = 0;
 
@@ -120,7 +193,7 @@ namespace GetStarted
                         db.Delete(itemF);
                     }
                 }
-
+                */
                 /*var strPatch = Console.ReadLine();
 
                 strPatch = strPatch.ToUpper();

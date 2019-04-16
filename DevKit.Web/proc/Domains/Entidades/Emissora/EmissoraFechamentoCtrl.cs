@@ -100,26 +100,30 @@ namespace DevKit.Web.Controllers
 
                 var fech = (from e in db.LOG_Fechamento
                             where e.fk_empresa == tEmp.i_unique && e.st_mes == mes && e.st_ano == ano
-                            select new  { e.fk_loja, e.fk_parcela, e.fk_cartao }).
+                            select e).
                             ToList();
 
                 var ids_lojas = fech.Select(a => (long)a.fk_loja).Distinct().ToList();
                 var ids_parcelas = fech.Select(a => (long)a.fk_parcela).Distinct().ToList();
                 var ids_cartoes = fech.Select(a => (long)a.fk_cartao).Distinct().ToList();
 
-                var parcelas = (from parc in db.T_Parcelas
-                                       where ids_parcelas.Contains((long)parc.i_unique)
-                                       select new FechamentoVendaCartao
-                                       {
-                                           dtCompra = Convert.ToDateTime(parc.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
-                                           nsu = parc.nu_nsu.ToString(),
-                                           parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
-                                           id = parc.fk_cartao.ToString(),
-                                           valor = m.setMoneyFormat((long) parc.vr_valor),
-                                           _valor = (long)parc.vr_valor,
-                                           _loja = (long)parc.fk_loja
-                                       }).
-                                       ToList();
+                var parcelas = new List<FechamentoVendaCartao>();
+
+                foreach (var _parc in ids_parcelas)
+                {
+                    var parc = db.T_Parcelas.FirstOrDefault(y => y.i_unique == _parc);
+
+                    parcelas.Add(new FechamentoVendaCartao
+                    {
+                        dtCompra = Convert.ToDateTime(parc.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
+                        nsu = parc.nu_nsu.ToString(),
+                        parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
+                        id = parc.fk_cartao.ToString(),
+                        valor = m.setMoneyFormat((long)parc.vr_valor),
+                        _valor = (long)parc.vr_valor,
+                        _loja = (long)parc.fk_loja
+                    });
+                }
 
                 var lojas = db.T_Loja.Where(y => ids_lojas.Contains((long)y.i_unique)).ToList();
 

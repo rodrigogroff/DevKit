@@ -13,11 +13,268 @@ namespace GetStarted
 {
     class Program
     {
+        static void AjustaParcela(int idParcela)
+        {
+            Console.WriteLine(idParcela);
+
+            using (var db = new AutorizadorCNDB())
+            {
+                var fech = db.LOG_Fechamento.FirstOrDefault(y => y.fk_parcela == idParcela);
+
+                var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == idParcela);
+                parcUpd.nu_parcela++;
+                db.Update(parcUpd);
+
+                db.Delete(fech);
+            }
+        }
+
+        static void AjustaParcelasErradas(string arquivo, int fkEmpresa, string mes, string ano)
+        {
+            using (var db = new AutorizadorCNDB())
+            {
+                var dbEmpresa = db.T_Empresa.FirstOrDefault(y => y.i_unique == fkEmpresa);
+
+                var lstFech = db.LOG_Fechamento.Where(y => y.fk_empresa == fkEmpresa && y.st_mes == mes && y.st_ano == ano).ToList();
+
+                using (var sr = new StreamReader(arquivo))
+                {
+                    var loja = new T_Loja();
+
+                    while (!sr.EndOfStream)
+                    {
+                        var line = sr.ReadLine();
+
+                        if (line.StartsWith("="))
+                        {
+                            loja = db.T_Loja.FirstOrDefault(y => y.st_loja == line.Replace("=", ""));
+
+                            if (loja == null)
+                                throw new Exception("ERRO: " + line + " não existe loja!");
+                            else
+                            {
+                                Console.WriteLine(">> " + loja.st_nome);
+                            }
+                        }
+                        else if (line.StartsWith("*"))
+                        {
+                            Console.WriteLine(line);
+
+                            var dados = line.Split(';');
+
+                            var nsu = Convert.ToInt32(dados[1]);
+
+                            var cartao_mat = dados[3].Split('.')[0].PadLeft(6,'0');
+                            var cartao_tit = dados[3].Split('.')[1];
+
+                            var valor = Convert.ToInt64(dados[5].Replace (",","").Replace (".",""));
+                            var parcela = dados[6].Split('/')[0].Trim();
+
+                            var dbCart = db.T_Cartao.FirstOrDefault(y => y.st_empresa == dbEmpresa.st_empresa && y.st_matricula == cartao_mat && y.st_titularidade == cartao_tit);
+
+                            if (dbCart != null)
+                            {
+                                var log_fech = lstFech.Where(y => y.fk_loja == loja.i_unique && 
+                                                                      y.nu_parcela.ToString() == parcela && 
+                                                                      y.fk_cartao == dbCart.i_unique).ToList();
+
+                                bool found = false;
+
+                                foreach (var itemF in log_fech)
+                                {
+                                    var t_parc = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemF.fk_parcela);
+
+                                    if (t_parc != null)
+                                    {
+                                        if (t_parc.nu_nsu == nsu)
+                                        {
+                                            // ajusta a parcela
+                                            var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemF.fk_parcela);
+                                            parcUpd.nu_parcela++;
+                                            db.Update(parcUpd);
+
+                                            // deleta o fechamento
+                                            db.Delete(log_fech);
+                                            Console.WriteLine("Ajustado!");
+
+                                            found = true;
+                                        }
+                                    }
+                                }
+
+                                if (!found)
+                                    Console.WriteLine("Não achou fechamento!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Não achou cartão!");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        static void ReFecha(string mes, string ano, int fkEmpresa, int anoF, int mesF, int diaF)
+        {
+            using (var db = new AutorizadorCNDB())
+            {
+                // ------------------------------
+                // desfaz fechamento
+                // ------------------------------
+
+                var lstDelFech = new List<long>();
+
+                Console.WriteLine("--------- ajustando parcelas antigas da empresa " + fkEmpresa);
+
+                var lstOld = db.LOG_Fechamento.Where(y => y.fk_empresa == fkEmpresa && y.st_mes == mes && y.st_ano == ano).ToList();
+
+                int counterOld = 0;
+
+                foreach (var itemFech in lstOld)
+                {
+                    ++counterOld;
+
+                    Console.WriteLine("--------- ajustando parcelas antigas " + counterOld + " de " + lstOld.Count());
+
+                    lstDelFech.Add((long)itemFech.i_unique);
+
+                    var parc = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemFech.fk_parcela);
+                    var logTrans = parc.fk_log_transacoes.ToString();
+                    var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == itemFech.fk_cartao);
+
+                    var lstParcs = db.T_Parcelas.Where(y => y.fk_log_transacoes.ToString() == logTrans).OrderBy(y => y.nu_indice).ToList();
+
+                    foreach (var itemParc in lstParcs)
+                    {
+                        if (itemParc.i_unique >= itemFech.fk_parcela)
+                        {
+                            var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemParc.i_unique);
+                            parcUpd.nu_parcela++;
+                            db.Update(parcUpd);
+                        }
+                    }
+                }
+
+                Console.WriteLine("--------- Limpando antigo fechamento => " + lstDelFech.Count());
+
+                foreach (var item in lstDelFech)
+                {
+                    var itemF = db.LOG_Fechamento.FirstOrDefault(y => y.i_unique == item);
+                    db.Delete(itemF);
+                }
+
+                // reconstroi o fechamento
+                Console.WriteLine("--------- Fechamento vai ser reconstruido");
+
+                var lst = db.T_Parcelas.Where(y => y.fk_empresa == fkEmpresa && y.nu_parcela > 0).ToList();
+
+                int index = 0;
+
+                foreach (var parc in lst)
+                {
+                    ++index;
+
+                    Console.WriteLine("--------- Fechamento vai ser reconstruido " + index + " de " + lst.Count());
+
+                    var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
+
+                    if (logTrans.dt_transacao > new DateTime(anoF, mesF, diaF))
+                        continue;
+
+                    if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
+                        continue;
+
+                    var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == parc.i_unique);
+                    parcUpd.nu_parcela--;
+                    db.Update(parcUpd);
+
+                    if (parcUpd.nu_parcela == 0)
+                        db.Insert(new LOG_Fechamento
+                        {
+                            dt_compra = logTrans.dt_transacao,
+                            dt_fechamento = DateTime.Now,
+                            fk_cartao = parc.fk_cartao,
+                            fk_empresa = parc.fk_empresa,
+                            fk_loja = parc.fk_loja,
+                            fk_parcela = (int)parc.i_unique,
+                            nu_parcela = parc.nu_parcela,
+                            st_afiliada = "",
+                            st_ano = ano,
+                            st_mes = mes,                        
+                            vr_valor = parc.vr_valor
+                        });
+                }
+
+                Console.WriteLine("## Fechamento realizado!");
+                
+            }
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("------------------------");
             Console.WriteLine("(0.21) Patch?");
             Console.WriteLine("------------------------");
+
+            AjustaParcela(873707);
+            AjustaParcela(873708);
+
+            AjustaParcela(870361);
+            AjustaParcela(870362);
+
+            AjustaParcela(868858);
+            AjustaParcela(868859);
+
+            AjustaParcela(867683);
+            AjustaParcela(867684);
+
+            AjustaParcela(870753);
+            AjustaParcela(870754);
+
+            AjustaParcela(877472);
+            AjustaParcela(877473);
+
+            AjustaParcela(869217);
+            AjustaParcela(869218);
+
+            AjustaParcela(874762);
+            AjustaParcela(874763);
+
+            AjustaParcela(869164);
+            AjustaParcela(869165);
+
+            AjustaParcela(870448);
+            AjustaParcela(870449);
+
+            AjustaParcela(874648);
+            AjustaParcela(874649);
+            AjustaParcela(871368);
+            AjustaParcela(871369);
+
+            AjustaParcela(870058);
+            AjustaParcela(870059);
+
+            AjustaParcela(870744);
+            AjustaParcela(870745);
+
+            AjustaParcela(878444);
+            AjustaParcela(878445);
+
+            AjustaParcela(876327);
+            AjustaParcela(876328);
+            
+            AjustaParcela(879924);
+            AjustaParcela(879925);            
+
+            //            AjustaParcelasErradas("c:\\logs\\limpeza_fechamento.txt", 38, "04", "2019");
+
+            //ReFecha("04", "2019", 23, 2019, 04, 16);
+            //ReFecha("04", "2019", 24, 2019, 04, 16);
+            //ReFecha("04", "2019", 25, 2019, 04, 16);
+            //ReFecha("04", "2019", 26, 2019, 04, 16);
+
+            Console.ReadLine();
 
             using (var db = new AutorizadorCNDB())
             {
@@ -25,7 +282,7 @@ namespace GetStarted
                 // desfaz fechamento
                 // ------------------------------
 
-                int tot = 0;
+                /*
 
                 var lstDelFech = new List<long>();
 
@@ -62,6 +319,8 @@ namespace GetStarted
                 }
 
                 // reconstroi o fechamento
+                Console.WriteLine("--------- Fechamento vai ser construido");
+                
 
                 foreach (var parc in db.T_Parcelas.Where(y => y.fk_empresa == 38 && y.nu_parcela > 0).ToList())
                 {
@@ -92,6 +351,10 @@ namespace GetStarted
                         vr_valor = parc.vr_valor                        
                     });
                 }
+
+                Console.WriteLine("## Fechamento realizado pra 9086");
+                Console.ReadLine();
+                */
 
                 /*
                 {

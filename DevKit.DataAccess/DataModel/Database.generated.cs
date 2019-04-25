@@ -559,7 +559,9 @@ namespace DataModel
 		[Column,     Nullable] public string  st_obs          { get; set; } // varchar(400)
 		[Column,     Nullable] public int?    tg_bloq         { get; set; } // int
 		[Column,     Nullable] public string  st_homepage     { get; set; } // varchar(500)
-	}
+        [Column, Nullable] public int? nu_diaFech { get; set; } // int
+        [Column, Nullable] public string st_horaFech { get; set; } // varchar(500)
+    }
 
 	[Table(Schema="dbo", Name="T_EmpresaAfiliada")]
 	public partial class T_EmpresaAfiliada

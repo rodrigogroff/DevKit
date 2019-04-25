@@ -15,6 +15,7 @@ namespace DevKit.Web.Controllers
     public class FechamentoVendaCartao
     {
         public string id,
+                        idParcela,
                       nsu,
                       terminal,
                       lojista,
@@ -100,26 +101,31 @@ namespace DevKit.Web.Controllers
 
                 var fech = (from e in db.LOG_Fechamento
                             where e.fk_empresa == tEmp.i_unique && e.st_mes == mes && e.st_ano == ano
-                            select new  { e.fk_loja, e.fk_parcela, e.fk_cartao }).
+                            select e).
                             ToList();
 
                 var ids_lojas = fech.Select(a => (long)a.fk_loja).Distinct().ToList();
                 var ids_parcelas = fech.Select(a => (long)a.fk_parcela).Distinct().ToList();
                 var ids_cartoes = fech.Select(a => (long)a.fk_cartao).Distinct().ToList();
 
-                var parcelas = (from parc in db.T_Parcelas
-                                       where ids_parcelas.Contains((long)parc.i_unique)
-                                       select new FechamentoVendaCartao
-                                       {
-                                           dtCompra = Convert.ToDateTime(parc.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
-                                           nsu = parc.nu_nsu.ToString(),
-                                           parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
-                                           id = parc.fk_cartao.ToString(),
-                                           valor = m.setMoneyFormat((long) parc.vr_valor),
-                                           _valor = (long)parc.vr_valor,
-                                           _loja = (long)parc.fk_loja
-                                       }).
-                                       ToList();
+                var parcelas = new List<FechamentoVendaCartao>();
+
+                foreach (var _parc in ids_parcelas)
+                {
+                    var parc = db.T_Parcelas.FirstOrDefault(y => y.i_unique == _parc);
+
+                    parcelas.Add(new FechamentoVendaCartao
+                    {
+                        dtCompra = Convert.ToDateTime(parc.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
+                        nsu = parc.nu_nsu.ToString(),
+                        parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
+                        idParcela = parc.i_unique.ToString(),
+                        id = parc.fk_cartao.ToString(),
+                        valor = m.setMoneyFormat((long)parc.vr_valor),
+                        _valor = (long)parc.vr_valor,
+                        _loja = (long)parc.fk_loja
+                    });
+                }
 
                 var lojas = db.T_Loja.Where(y => ids_lojas.Contains((long)y.i_unique)).ToList();
 
@@ -169,47 +175,11 @@ namespace DevKit.Web.Controllers
                                        where e.st_ano == ano
                                        select e).
                                       ToList();
-
-                #region - indexamento em memoria -
-
-                #region - cartoes -
-
-                var lstIDsCarts = (from e in itensFechamento
-                                   join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
-                                   select cart.i_unique).
-                                   ToList();
-
-                var lstCartoes = (from e in db.T_Cartao
-                                  where lstIDsCarts.Contains(e.i_unique)
-                                  select e).
-                                  ToList();
-
-                #endregion
-
-                #region - proprietarios -
-
-                var lstIDsProps = (from e in itensFechamento
-                                   join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
-                                   join prop in db.T_Proprietario on cart.fk_dadosProprietario equals (int)prop.i_unique
-                                   select prop.i_unique).
-                                   ToList();
-
-                var lstProprietarios = (from e in db.T_Proprietario
-                                        where lstIDsProps.Contains(e.i_unique)
-                                        select e).
-                                        ToList();
-
-                #endregion
-
-                #region - parcelas & terminais -
-
-                var lstIDsParcelas = (from e in itensFechamento
-                                      join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
-                                      select parc.i_unique).
-                                       ToList();
+                
+                var lstIDsParcelas = (from e in itensFechamento select e.fk_parcela).ToList();
 
                 var lstParcelas = (from e in db.T_Parcelas
-                                   where lstIDsParcelas.Contains(e.i_unique)
+                                   where lstIDsParcelas.Contains((int)e.i_unique)
                                    select e).
                                   ToList();
 
@@ -220,17 +190,11 @@ namespace DevKit.Web.Controllers
                                    select e).
                                   ToList();
 
-                #endregion
 
-                #region - lojistas & convenios -
-
-                var lstIDsLojistas = (from e in itensFechamento
-                                      join loja in db.T_Loja on e.fk_loja equals (int)loja.i_unique
-                                      select loja.i_unique).
-                                      ToList();
+                var lstIDsLojistas = (from e in itensFechamento select e.fk_loja).ToList();
 
                 var lstLojistas = (from e in db.T_Loja
-                                   where lstIDsLojistas.Contains(e.i_unique)
+                                   where lstIDsLojistas.Contains((int)e.i_unique)
                                    orderby e.st_nome
                                    select e).
                                   ToList();
@@ -239,8 +203,6 @@ namespace DevKit.Web.Controllers
                                     where e.fk_empresa == tEmp.i_unique
                                     select e).
                                     ToList();
-
-                #endregion
 
                 #endregion
 
@@ -285,15 +247,15 @@ namespace DevKit.Web.Controllers
 
                     foreach (var vendas in lstParcsFechamento)
                     {
-                        var parc = lstParcelas.
+                        var parc = db.T_Parcelas.
                                    Where(y => y.i_unique == vendas.fk_parcela).
                                    FirstOrDefault();
 
-                        var cart = lstCartoes.
+                        var cart = db.T_Cartao.
                                    Where(y => y.i_unique == vendas.fk_cartao).
                                    FirstOrDefault();
 
-                        var prop = lstProprietarios.
+                        var prop = db.T_Proprietario.
                                    Where(y => y.i_unique == cart.fk_dadosProprietario).
                                    FirstOrDefault();
 
@@ -344,8 +306,6 @@ namespace DevKit.Web.Controllers
                     convenio = tEmp.st_fantasia + " (" + tEmp.st_empresa.TrimStart('0') + ")",
                     results = lst
                 });
-
-                #endregion
             }
 
             return BadRequest();

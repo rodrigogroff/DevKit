@@ -7,7 +7,6 @@ using System.Web.Http;
 using System.Net;
 using System.IO;
 using System.Text;
-using DataModel;
 
 namespace DevKit.Web.Controllers
 {

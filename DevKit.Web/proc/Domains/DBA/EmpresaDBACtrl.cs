@@ -23,7 +23,7 @@ namespace DevKit.Web.Controllers
             var query = (from e in db.T_Empresa select e);
 
             if (!string.IsNullOrEmpty(busca))
-                query = query.Where(y => y.st_fantasia.Contains(busca));
+                query = query.Where(y => y.st_fantasia.Contains(busca) || y.st_empresa.Contains(busca) );
 
             query = query.OrderBy(y => y.st_fantasia);
 

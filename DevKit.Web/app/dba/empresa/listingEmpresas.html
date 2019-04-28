@@ -7,7 +7,7 @@
                 <tr height="48px">
                     <td width="20px"></td>
                     <td>DBA \ Listagem de <b>Empresas</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-                    <td><input type="submit" class="btn btn-success pull-right" value="Novo" ng-click="new()"></td>
+                    <td><input type="submit" class="btn btn-success pull-right" value="Nova" ng-click="new()"></td>
                     <td width="20px"></td>
                 </tr>
             </table>
@@ -59,7 +59,7 @@
                         <td>{{ mdl.nu_cartoes }}</td>
                         <td>{{ mdl.nu_parcelas }}</td>
                         <td>{{ mdl.nu_periodoFat }}</td>
-                        <td>{{ mdl.nu_diaFech }} / {{ mdl.st_horaFech }} </td>
+                        <td>{{ mdl.nu_diaFech }} / {{ mdl.st_horaFech.substring(0,2) }}:{{ mdl.st_horaFech.substring(2) }} </td>
                     </tr>
                 </table>
                 <br />

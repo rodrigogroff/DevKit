@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('ListingEmpresasController',
-    ['$scope', '$rootScope', '$state', 'Api', 'ngSelects',
-        function ($scope, $rootScope, $state, Api, ngSelects) {
+    ['$scope',  '$state', 'Api', 
+        function ($scope,  $state, Api) {
             $scope.loading = false;
 
             $scope.search = function () {
@@ -15,6 +15,7 @@ angular.module('app.controllers').controller('ListingEmpresasController',
                 var opcoes = {
                     skip: skip,
                     take: take,
+                    busca: $scope.campos.codigo
                 };
 
                 Api.EmpresaDBA.listPage(opcoes, function (data) {

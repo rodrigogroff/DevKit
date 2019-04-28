@@ -81,14 +81,7 @@ namespace DevKit.Web.Controllers
                             hshLojaConvenio[item.fk_loja] = item.tx_admin;
                         }
 
-                        
-
-                        var diaFech = (from e in db.I_Scheduler
-                                       where 
-                                                e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
-                                       select e).
-                                       FirstOrDefault().
-                                       nu_monthly_day;
+                        var diaFech = curEmp.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)select e).FirstOrDefault().nu_monthly_day;
 
                         if (dtNow.Day > diaFech)
                             dtNow = dtNow.AddMonths(1);
@@ -199,11 +192,7 @@ namespace DevKit.Web.Controllers
                                 hshLojaConvenio[item.fk_loja] = item.tx_admin;
                             }
 
-                            var diaFech = (from e in db.I_Scheduler
-                                           where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
-                                           select e).
-                                           FirstOrDefault().
-                                           nu_monthly_day;
+                            var diaFech = curEmp.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa) select e).FirstOrDefault().nu_monthly_day;
 
                             if (dtNow.Day > diaFech)
                                 dtNow = dtNow.AddMonths(1);
@@ -332,11 +321,7 @@ namespace DevKit.Web.Controllers
                                             select eConv).
                                             FirstOrDefault();
 
-                            var diaFech = (from e in db.I_Scheduler
-                                           where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
-                                           select e).
-                                           FirstOrDefault().
-                                           nu_monthly_day;
+                            var diaFech = curEmp.nu_diaFech; //  (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa) select e).FirstOrDefault().nu_monthly_day;
 
                             if (dtNow.Day > diaFech)
                                 dtNow = dtNow.AddMonths(1);

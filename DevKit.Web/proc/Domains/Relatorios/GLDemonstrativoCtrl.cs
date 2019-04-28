@@ -95,11 +95,7 @@ namespace DevKit.Web.Controllers
                                                 select e).
                                                 FirstOrDefault();
 
-                                var diaFech = (from e in db.I_Scheduler
-                                               where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa)
-                                               select e).
-                                       FirstOrDefault().
-                                       nu_monthly_day;
+                                var diaFech = tEmpresa.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa) select e).FirstOrDefault().nu_monthly_day;
 
                                 if (dt.Day > diaFech)
                                     dt = dt.AddMonths(1);
@@ -239,11 +235,7 @@ namespace DevKit.Web.Controllers
                                                     select e).
                                                     FirstOrDefault();
 
-                                    var diaFech = (from e in db.I_Scheduler
-                                                   where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa)
-                                                   select e).
-                                       FirstOrDefault().
-                                       nu_monthly_day;
+                                    var diaFech = tEmpresa.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa) select e).FirstOrDefault().nu_monthly_day;
 
                                     if (dt.Day > diaFech)
                                         dt = dt.AddMonths(1);
@@ -505,9 +497,9 @@ namespace DevKit.Web.Controllers
 
                                 //schedule_fech_mensal;empresa;001401;afiliada;
 
-                                var tScheduler = (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa) select e).FirstOrDefault();
+                                //var tScheduler = (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa) select e).FirstOrDefault();
 
-                                var hora = tScheduler.st_monthly_hhmm.PadLeft(4, '0');
+                                var hora = tEmpresa.st_horaFech; // tScheduler.st_monthly_hhmm.PadLeft(4, '0');
 
                                 {
                                     var totalVendas = (from e in db.LOG_Fechamento
@@ -539,7 +531,7 @@ namespace DevKit.Web.Controllers
                                         totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
                                         vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
                                         situacao = "ENCERRADO",
-                                        dtFechamento = tScheduler.nu_monthly_day + " / " + hora.Substring(0,2) + ":" + hora.Substring(2)
+                                        dtFechamento = db.currentAssociadoEmpresa.nu_diaFech + " / " + hora.Substring(0,2) + ":" + hora.Substring(2)
                                     });
                                 }
                             }

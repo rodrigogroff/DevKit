@@ -142,11 +142,7 @@ namespace DevKit.Web.Controllers
 
                         var dtNow = DateTime.Now;
 
-                        var diaFech = (from e in db.I_Scheduler
-                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentAssociadoEmpresa.st_empresa)
-                                       select e).
-                                       FirstOrDefault().
-                                       nu_monthly_day;
+                        var diaFech = db.currentAssociadoEmpresa.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentAssociadoEmpresa.st_empresa)select e).FirstOrDefault().nu_monthly_day;
 
                         if (dtNow.Day >= diaFech)
                             dtNow = dtNow.AddMonths(1);
@@ -169,11 +165,7 @@ namespace DevKit.Web.Controllers
                     {
                         var dtNow = DateTime.Now.AddMonths(1);
 
-                        var diaFech = (from e in db.I_Scheduler
-                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentAssociadoEmpresa.st_empresa)
-                                       select e).
-                                       FirstOrDefault().
-                                       nu_monthly_day;
+                        var diaFech = db.currentAssociadoEmpresa.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + db.currentAssociadoEmpresa.st_empresa) select e).FirstOrDefault().nu_monthly_day;
 
                         if (dtNow.Day >= diaFech)
                             dtNow = dtNow.AddMonths(1);

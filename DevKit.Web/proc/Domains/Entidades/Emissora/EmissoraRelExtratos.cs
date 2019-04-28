@@ -134,12 +134,8 @@ namespace DevKit.Web.Controllers
                                       where e.st_matricula == mat
                                       select e).
                                       FirstOrDefault();
-                        
-                        var diaFech = (from e in db.I_Scheduler
-                                          where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
-                                          select e).
-                                          FirstOrDefault().
-                                          nu_monthly_day;
+
+                        var diaFech = curEmp.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa) select e).FirstOrDefault().nu_monthly_day;
 
                         long tot = 0, dispMensal = 0, dispTot = 0;
 
@@ -219,11 +215,7 @@ namespace DevKit.Web.Controllers
                                          select e).
                                          FirstOrDefault();
 
-                        var diaFech = (from e in db.I_Scheduler
-                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa)
-                                       select e).
-                                          FirstOrDefault().
-                                          nu_monthly_day;
+                        var diaFech = curEmp.nu_diaFech; //  (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa) select e).FirstOrDefault().nu_monthly_day;
 
                         var dtNow = DateTime.Now.AddMonths(1);
 

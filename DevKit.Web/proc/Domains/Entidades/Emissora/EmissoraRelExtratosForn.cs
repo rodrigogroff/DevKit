@@ -95,11 +95,7 @@ namespace DevKit.Web.Controllers
                         if (!lstParcelasEmAberto.Any())
                             return BadRequest();
 
-                        var diaFech = (from e in db.I_Scheduler
-                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmp.st_empresa)
-                                       select e).
-                                       FirstOrDefault().
-                                       nu_monthly_day;
+                        var diaFech = tEmp.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmp.st_empresa) select e).FirstOrDefault().nu_monthly_day;
 
                         var dtNow = DateTime.Now;
 

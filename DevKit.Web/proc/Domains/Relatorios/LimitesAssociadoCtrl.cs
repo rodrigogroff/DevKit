@@ -53,22 +53,22 @@ namespace DevKit.Web.Controllers
                 valor = "R$ " + mon.setMoneyFormat((long)db.currentAssociado.vr_extraCota)
             });
 
-            var scheduler = RestoreTimerCache(CacheTags.I_Scheduler, db.currentAssociado.st_empresa, 100) as I_Scheduler;
+            //var scheduler = RestoreTimerCache(CacheTags.I_Scheduler, db.currentAssociado.st_empresa, 100) as I_Scheduler;
 
-            if (scheduler == null)
-            {
-                scheduler = (from e in db.I_Scheduler
-                             where e.st_job.Contains(db.currentAssociado.st_empresa)
-                             select e).
-                             FirstOrDefault();
+            //if (scheduler == null)
+            //{
+            //    scheduler = (from e in db.I_Scheduler
+            //                 where e.st_job.Contains(db.currentAssociado.st_empresa)
+            //                 select e).
+            //                 FirstOrDefault();
 
-                BackupCache(scheduler);
-            }
+            //    BackupCache(scheduler);
+            //}
 
             list.Add(new LimiteAssociadoDTO
             {
                 nome = "Melhor dia de compra",
-                valor = scheduler.nu_monthly_day.ToString().PadLeft(2, '0')
+                valor = db.currentAssociadoEmpresa.nu_diaFech.ToString().PadLeft(2, '0')
             });
 
             list.Add(new LimiteAssociadoDTO
@@ -79,7 +79,7 @@ namespace DevKit.Web.Controllers
 
             var dt = DateTime.Now;
 
-            if (DateTime.Now.Day >= scheduler.nu_monthly_day)
+            if (DateTime.Now.Day >= db.currentAssociadoEmpresa.nu_diaFech)
             {
                 dt = dt.AddMonths(1);
 

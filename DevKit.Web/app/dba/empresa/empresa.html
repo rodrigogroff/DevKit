@@ -14,8 +14,13 @@
             </table>
         </legend>
         <div class="divWebForm">
+            <div ng-if="msgErro.length > 0">
+                <button class="btn btn-danger btn-lg"> {{msgErro}}</button><br />
+                <br />
+            </div>
             <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
-                <tab heading="{{tabCadastro_fail}} Cadastro">
+                <tab heading="Cadastro {{tabCadastro_fail
+                    }}">
                     <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
                         <table>
                             <thead>
@@ -116,253 +121,278 @@
                             <tr height="46px"></tr>
                         </table>
                     </div>
-                </tab>
-                <tab heading="{{tabContato_fail}} Localização">
-                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th width="20px"></th>
-                                    <th width="150px"></th>
-                                    <th width="20px"></th>
-                                    <th width="380px"></th>
-                                    <th width="20px"></th>
+                    </tab>
+                    <tab heading="Localização {{tabContato_fail}}">
+                        <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th width="20px"></th>
+                                        <th width="150px"></th>
+                                        <th width="20px"></th>
+                                        <th width="380px"></th>
+                                        <th width="20px"></th>
+                                    </tr>
+                                </thead>
+                                <tr height="22px"></tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Homepage</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_homepage">
+                                    </td>
+                                    <td></td>
                                 </tr>
-                            </thead>
-                            <tr height="22px"></tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Homepage</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_homepage">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Estado</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_estado">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Cidade</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_cidade">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Endereço</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_endereco">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>CEP</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.nu_cep">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>OBS</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_obs">
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="46px"></tr>
-                        </table>
-                    </div>
-                </tab>
-                <tab heading="{{tabCobranca_fail}} Faturamento">
-                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th width="20px"></th>
-                                    <th width="150px"></th>
-                                    <th width="20px"></th>
-                                    <th width="380px"></th>
-                                    <th width="20px"></th>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Estado</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_estado">
+                                    </td>
+                                    <td></td>
                                 </tr>
-                            </thead>
-                            <tr height="22px"></tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Isenção?</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <b>Sim</b> <input type="checkbox" ng-model="viewModel.tg_isentoFat" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Dia Faturamento</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.nu_periodoFat"
-                                           onKeyUp="money(this,Valor);" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Vencimento</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.nu_diaVenc" onKeyUp="money(this,Valor);" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Pct. Valor (%)</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.nu_pctValor" onKeyUp="money(this,Valor);" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Mensalidade R$</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrMensalidade" onKeyUp="money(this,Valor);" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Cartão Ativo R$</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrCartaoAtivo" onKeyUp="money(this,Valor);" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Valor Mínimo R$</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrMinimo" onKeyUp="money(this,Valor);" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Valor Transação R$</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrTransacao" onKeyUp="money(this,Valor);" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Franquia (transações)</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.snuFranquia" onKeyUp="money(this,ValorNum);" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="46px"></tr>
-                        </table>
-                    </div>
-                </tab>
-
-                <tab heading="Fechamento">
-                    <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th width="20px"></th>
-                                    <th width="150px"></th>
-                                    <th width="20px"></th>
-                                    <th width="380px"></th>
-                                    <th width="20px"></th>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Cidade</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_cidade">
+                                    </td>
+                                    <td></td>
                                 </tr>
-                            </thead>
-                            <tr height="22px"></tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Dia Fechamento</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="2" ng-model="viewModel.nu_diaFech"
-                                           onKeyUp="money(this,ValorNum);" />
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Hora Fechamento</b>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent"
-                                           maxlength="10" ui-mask="99:99" ui-mask-placeholder ui-mask-placeholder-char="_"
-                                           ng-model="campos.st_horaFech">
-                                </td>
-                                <td></td>
-                            </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Endereço</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_endereco">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>CEP</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.nu_cep">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>OBS</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.st_obs">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="46px"></tr>
+                            </table>
+                        </div>
+                    </tab>
+                    <tab heading="Faturamento {{tabCobranca_fail}}">
+                        <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th width="20px"></th>
+                                        <th width="150px"></th>
+                                        <th width="20px"></th>
+                                        <th width="380px"></th>
+                                        <th width="20px"></th>
+                                    </tr>
+                                </thead>
+                                <tr height="22px"></tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Isenção?</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <b>Sim</b> <input type="checkbox" ng-model="viewModel.tg_isentoFat" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Dia Faturamento</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.nu_periodoFat"
+                                               onKeyUp="money(this,Valor);" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Vencimento</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.nu_diaVenc" onKeyUp="money(this,Valor);" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Pct. Valor (%)</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.nu_pctValor" onKeyUp="money(this,Valor);" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Mensalidade R$</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrMensalidade" onKeyUp="money(this,Valor);" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Cartão Ativo R$</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrCartaoAtivo" onKeyUp="money(this,Valor);" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Valor Mínimo R$</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrMinimo" onKeyUp="money(this,Valor);" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Valor Transação R$</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.svrTransacao" onKeyUp="money(this,Valor);" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Franquia (transações)</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="9" ng-model="viewModel.snuFranquia" onKeyUp="money(this,ValorNum);" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="46px"></tr>
+                            </table>
+                        </div>
+                    </tab>
 
-                            <tr height="46px"></tr>
-                        </table>
-                    </div>
-                </tab>
+                    <tab heading="Fechamento {{tabFechamento_fail}}">
+                        <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th width="20px"></th>
+                                        <th width="150px"></th>
+                                        <th width="20px"></th>
+                                        <th width="380px"></th>
+                                        <th width="20px"></th>
+                                    </tr>
+                                </thead>
+                                <tr height="22px"></tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Dia Fechamento</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent" maxlength="2" ng-model="viewModel.nu_diaFech"
+                                               onKeyUp="money(this,ValorNum);" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr height="40px">
+                                    <td></td>
+                                    <td>
+                                        <b>Hora Fechamento</b>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control input-transparent"
+                                               maxlength="10" ui-mask="99:99" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                               ng-model="viewModel.st_horaFech">
+                                    </td>
+                                    <td></td>
+                                </tr>
 
-                <!--<tab heading="Dados Bancários">
+                                <div class="modal-backdrop"
+                                     ng-if="modalConf == true"
+                                     style="background: rgba(55, 55, 55, 0.5 );">
+                                    <div class="modal-dialog" style="width:500px">
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <div class="modal-content" style="color:black">
+                                            <legend style="color:black">
+                                                Confirmação de dados
+                                                <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModalConf()"> X </button> &nbsp;
+                                            </legend>
+                                            Confirma fechamento abaixo?<br /><br />
+                                            {{viewModel.nu_diaFech}} / {{viewModel.st_horaFech.substring(0,2)}}:{{viewModel.st_horaFech.substring(2)}} <br />
+                                            <br />
+                                            <br />
+                                            <div class="pull-right">
+                                                <button class="btn btn-success" ng-click="confirmar()"> Confirmar </button>
+                                            </div>
+                                            <br />
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <tr height="46px"></tr>
+                            </table>
+                        </div>
+                    </tab>
+
+                    <!--<tab heading="Dados Bancários">
         <div style="width:100%;min-height:320px;background:rgba(15, 43, 89, 0.25);">
             <table>
                 <thead>
@@ -821,18 +851,18 @@
             </table>
         </div>
     </tab>-->
-            </tabset>
-            <br />
-            <br />
-            <table>
-                <tr>
-                    <td><button class="btn btn-default" ng-click="list()">Cancelar</button></td>
-                    <td width="34px"></td>
-                    <td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
-                </tr>
-            </table>
-            <br />
-            <br />
-        </div>
+                    </tabset>
+                    <br />
+                    <br />
+                    <table>
+                        <tr>
+                            <td><button class="btn btn-default" ng-click="list()">Cancelar</button></td>
+                            <td width="34px"></td>
+                            <td><button class="btn btn-primary" ng-click="save()">Salvar</button></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+</div>
     </section>
 </div>

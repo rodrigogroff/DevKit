@@ -49,24 +49,22 @@ angular.module('app.controllers').controller('EmpresaController',
             };
 
             $scope.save = function () {
+
+                $scope.msgErro = '';
+
                 $scope.st_fantasia_fail = invalidCheck($scope.viewModel.st_fantasia);                
                 $scope.cnpj_fail = invalidCheck($scope.viewModel.nu_CNPJ);
                 $scope.st_empresa_fail = invalidCheck($scope.viewModel.st_empresa);
+                $scope.fech_fail = invalidCheck($scope.viewModel.nu_diaFech) || invalidCheck($scope.viewModel.st_horaFech);
 
                 if ($scope.st_fantasia_fail == false &&
                     $scope.cnpj_fail == false &&
-                    $scope.st_empresa_fail == false)
+                    $scope.st_empresa_fail == false &&
+                    $scope.fech_fail == false )
                 {
                     if (id > 0) {
                         $scope.viewModel.updateCommand = "entity";
-
-                        Api.EmpresaDBA.update({ id: id }, $scope.viewModel, function (data) {
-                            toastr.success('Dados atualizados!', 'Sucesso');
-                            $scope.msgErro = '';
-                        },
-                            function (response) {
-                                toastr.error(response.data.message, 'Erro');
-                            });
+                        $scope.modalConf = true;
                     }
                     else {
                         Api.EmpresaDBA.add($scope.viewModel, function (data) {
@@ -80,13 +78,31 @@ angular.module('app.controllers').controller('EmpresaController',
                 }
                 else {
                     if ($scope.st_fantasia_fail || $scope.cnpj_fail || $scope.st_empresa_fail )
-                        $scope.tabCadastro_fail = "(!)";
+                        $scope.tabCadastro_fail = '(*)';
 
-                    //if ($scope.mens_fail)
-                      //  $scope.tabCobranca_fail = "(!)";
+                    if ($scope.fech_fail == true)
+                        $scope.tabFechamento_fail = '(*)';                    
 
                     $scope.msgErro = 'Verificar pendências de campos mandatórios';
                 }
+            };
+
+            $scope.closeModalConf = function () {
+                $scope.modalConf = false;
+            };
+
+            $scope.confirmar = function () {
+
+                $scope.viewModel.updateCommand = "entity";
+
+                Api.EmpresaDBA.update({ id: id }, $scope.viewModel, function (data) {
+                    toastr.success('Dados atualizados!', 'Sucesso');
+                    $scope.modalConf = false;
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Erro');
+                    });
+
             };
 
             $scope.list = function () {

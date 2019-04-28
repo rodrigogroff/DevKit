@@ -24,6 +24,17 @@ angular.module('app.controllers').controller('EmpresaController',
                 }
             }
 
+            $scope.atualizar = function () {
+                Api.EmpresaDBA.get({ id: id }, function (data) {
+                    $scope.viewModel = data;
+                    $scope.loading = false;
+                },
+                    function (response) {
+                        if (response.status === 404) { toastr.error('Invalid ID', 'Erro'); }
+                        $scope.list();
+                    });
+            };
+
             var invalidCheck = function (element) {
                 if (element == undefined)
                     return true;

@@ -15,6 +15,28 @@
         </legend>
         <div class="divWebForm">
             <button class="btn btn-success right" ng-click="refresh()"> Refresh </button>
+
+            <div ng-if="h.fechamentos.length > 0">
+                <br />
+                <table class="table table-hover" style="width:600px" ng-if="h.fechamentos.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Fechamento de empresa</th>
+                            <th>Data / Hora</th>
+                            <th>Finalizado?</th>
+                            <th>Cartões</th>
+                            <th>Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tr data-ng-repeat="mdl in h.fechamentos">
+                        <td>{{ mdl.st_empresa }}</td>
+                        <td>Dia <b>{{mdl.nu_diaFech}}</b> / Hora <b>{{ mdl.st_horaFech.substring(0,2)}}:{{mdl.st_horaFech.substring(2)}}</b> </td>
+                        <td>{{ mdl.sfechFinalizado }}</td>
+                        <td>{{ mdl.sfechCartoes }}</td>
+                        <td>{{ mdl.sfechValorTotal }}</td>
+                    </tr>
+                </table>
+            </div>
             <table>
                 <tr>
                     <td width="600px" valign="top">

@@ -60,6 +60,29 @@ namespace DevKit.Web.Controllers
 
             mdl.snuFranquia = mdl.nu_franquia?.ToString();
 
+            mdl.lstFechamento = db.T_JobFechamento.Where(y => y.fk_empresa == mdl.i_unique).OrderByDescending(y => y.i_unique).Take(5).ToList();
+
+            var mon = new money();
+
+            foreach (var itemFech in mdl.lstFechamento)
+            {
+                itemFech.sdt_inicio = itemFech.dt_inicio?.ToString("dd/MM/yyyy HH:mm");
+                itemFech.sdt_fim = itemFech.dt_fim?.ToString("dd/MM/yyyy HH:mm");
+
+                itemFech.sfechCartoes = db.LOG_Fechamento.Where(y => y.fk_empresa == mdl.i_unique &&
+                                                                                     y.st_ano == itemFech.st_ano &&
+                                                                                     y.st_mes == itemFech.st_mes ).
+                                                                                     Select(y => y.fk_cartao).
+                                                                                     Distinct().
+                                                                                     Count().
+                                                                                     ToString();
+
+                itemFech.sfechValorTotal = "R$ " + mon.formatToMoney(db.LOG_Fechamento.Where(y => y.fk_empresa == mdl.i_unique &&
+                                                                y.st_ano == itemFech.st_ano &&
+                                                                y.st_mes == itemFech.st_mes).
+                                                                 Sum(y => y.vr_valor).ToString());
+            }
+
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 

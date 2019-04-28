@@ -19,7 +19,20 @@ namespace GetStarted
             Console.WriteLine("(0.22) Patch?");
             Console.WriteLine("------------------------");
 
-            CopiaDadosDoScheduler();
+            //CopiaDadosDoScheduler();
+        }
+
+        static void LimpaScheduler()
+        {
+            using (var db = new AutorizadorCNDB())
+            {
+                var lstSchedul = (from e in db.I_Scheduler
+                                   where e.st_job.StartsWith("schedule_fech_mensal;empresa;")
+                                   select e).
+                                   ToList();
+
+
+            }
         }
 
         static void CopiaDadosDoScheduler()

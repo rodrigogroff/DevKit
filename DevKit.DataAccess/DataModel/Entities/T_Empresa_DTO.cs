@@ -8,10 +8,23 @@ namespace DataModel
 {
     public partial class T_Empresa
     {
-        public string   svrMensalidade = "",
+        public string svrMensalidade = "",
                         svrCartaoAtivo = "",
                         svrMinimo = "",
                         svrTransacao = "",
-                        snuFranquia = "";
+                        snuFranquia = "",
+                        sfechFinalizado = "",
+                        sfechCartoes = "",
+                        sfechValorTotal = "";
+
+        public List<T_JobFechamento> lstFechamento = new List<T_JobFechamento>();
+    }
+
+    public partial class T_JobFechamento
+    {
+        public string   sdt_inicio = "",
+                        sdt_fim = "",
+                        sfechCartoes = "",
+                        sfechValorTotal = "";
     }
 }

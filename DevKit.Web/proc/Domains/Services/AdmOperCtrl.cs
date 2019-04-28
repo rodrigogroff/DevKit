@@ -683,7 +683,7 @@ namespace DevKit.Web.Controllers
 
                         var queryX = db.LOG_Transacoes.Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim);
 
-                        object a, b, c, d, e, f, g;
+                        object a, b, c, d, e, f, g, h;
 
                         #region - A - 
                         {
@@ -937,9 +937,46 @@ namespace DevKit.Web.Controllers
                         }
                         #endregion
 
+                        #region - H - 
+                        {
+                            var emps = db.T_Empresa.Where(y => y.nu_diaFech == DateTime.Now.Day).ToList();
+                            var mon = new money();
+
+                            foreach (var item in emps)
+                            {
+                                item.sfechFinalizado = db.T_JobFechamento.Any(y => y.fk_empresa == item.i_unique &&
+                                                                                   y.st_ano == DateTime.Now.Year.ToString() &&
+                                                                                   y.st_mes == DateTime.Now.Month.ToString().PadLeft(2, '0') &&
+                                                                                   y.dt_fim != null) ? "Sim" : "Não";
+
+                                if (item.sfechFinalizado == "Sim")
+                                {
+                                    item.sfechCartoes = db.LOG_Fechamento.Where(y => y.fk_empresa == item.i_unique &&
+                                                                                     y.st_ano == DateTime.Now.Year.ToString() &&
+                                                                                     y.st_mes == DateTime.Now.Month.ToString().PadLeft(2, '0')).
+                                                                                     Select(y => y.fk_cartao).
+                                                                                     Distinct().
+                                                                                     Count().
+                                                                                     ToString();
+
+                                    item.sfechValorTotal = "R$ " + mon.formatToMoney(db.LOG_Fechamento.Where(y => y.fk_empresa == item.i_unique &&
+                                                                                    y.st_ano == DateTime.Now.Year.ToString() &&
+                                                                                    y.st_mes == DateTime.Now.Month.ToString().PadLeft(2, '0')).
+                                                                                     Sum(y => y.vr_valor).ToString());
+                                }
+                                                                                 
+                            }
+
+                            h = new 
+                            {
+                                fechamentos = emps
+                            };
+                        }
+                        #endregion
+
                         return Ok( new
                             {
-                                a,b,c,d,e,f,g
+                                a,b,c,d,e,f,g,h
                             });
 
                         #endregion

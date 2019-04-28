@@ -12,7 +12,7 @@ angular.module('app.controllers').controller('DashboardController',
 
                     $scope.a = data.a; $scope.b = data.b; $scope.c = data.c;
                     $scope.d = data.d; $scope.e = data.e; $scope.f = data.f;
-                    $scope.g = data.g;
+                    $scope.g = data.g; $scope.h = data.h;
 
                     // ----------------
                     // Pie Chart

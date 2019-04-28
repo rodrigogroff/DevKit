@@ -386,9 +386,32 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <tr height="46px"></tr>
+                                <tr height="16px"></tr>
                             </table>
+                            <div style="margin-left:15px;margin-right:15px">
+                                <button class="btn btn-success" style="padding-left:15px" ng-click="atualizar()"> Atualizar </button><br />
+                                <br />
+                                <table class="table table-hover" style="width:1200px" ng-if="viewModel.lstFechamento.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th>Mês</th>
+                                            <th>Ano</th>
+                                            <th>Data Inicial</th>
+                                            <th>Data Final</th>
+                                            <th>Cartões</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tr data-ng-repeat="mdl in viewModel.lstFechamento">
+                                        <td>{{ mdl.st_mes }}</td>
+                                        <td>{{ mdl.st_ano }}</td>
+                                        <td>{{ mdl.sdt_inicio }}</td>
+                                        <td>{{ mdl.sdt_fim }}</td>
+                                        <td>{{ mdl.sfechCartoes }}</td>
+                                        <td>{{ mdl.sfechValorTotal }}</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </tab>
 

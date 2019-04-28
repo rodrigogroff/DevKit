@@ -53,10 +53,12 @@ namespace DevKit.Web
             {
                 using (var db = new AutorizadorCNDB())
                 {
-                    var diaFechamento = DateTime.Now.Day;
-                    var horaAtual = DateTime.Now.ToString("HHmm");
-                    var ano = DateTime.Now.ToString("yyyy");
-                    var mes = DateTime.Now.ToString("MM").PadLeft(2,'0');
+                    var dt = DateTime.Now;
+
+                    var diaFechamento = dt.Day;
+                    var horaAtual = dt.ToString("HHmm");
+                    var ano = dt.ToString("yyyy");
+                    var mes = dt.ToString("MM").PadLeft(2,'0');
 
                     var lstEmpresas = db.T_Empresa.Where(y => y.nu_diaFech == diaFechamento && y.st_horaFech == horaAtual).ToList();
 

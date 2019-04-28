@@ -19,7 +19,7 @@ namespace GetStarted
             Console.WriteLine("(0.22) Patch?");
             Console.WriteLine("------------------------");
 
-            //CopiaDadosDoScheduler();
+            LimpaScheduler();
         }
 
         static void LimpaScheduler()
@@ -31,7 +31,10 @@ namespace GetStarted
                                    select e).
                                    ToList();
 
-
+                foreach (var item in lstSchedul)
+                {
+                    db.Delete(item);
+                }
             }
         }
 

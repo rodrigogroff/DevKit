@@ -51,99 +51,106 @@ namespace DevKit.Web
         {
             while (true)
             {
-                using (var db = new AutorizadorCNDB())
+                try
                 {
-                    var dt = DateTime.Now;
-
-                    var diaFechamento = dt.Day;
-                    var horaAtual = dt.ToString("HHmm");
-                    var ano = dt.ToString("yyyy");
-                    var mes = dt.ToString("MM").PadLeft(2,'0');
-
-                    var lstEmpresas = db.T_Empresa.Where(y => y.nu_diaFech == diaFechamento && y.st_horaFech == horaAtual).ToList();
-
-                    foreach (var empresa in lstEmpresas)
+                    using (var db = new AutorizadorCNDB())
                     {
-                        // ------------------------------
-                        // só fecha uma vez no mes
-                        // ------------------------------
+                        var dt = DateTime.Now;
 
-                        if (db.LOG_Fechamento.Any(y =>  y.st_ano == ano && 
-                                                        y.st_mes == mes && 
-                                                        y.fk_empresa == empresa.i_unique ))
-                            continue;
+                        var diaFechamento = dt.Day;
+                        var horaAtual = dt.ToString("HHmm");
+                        var ano = dt.ToString("yyyy");
+                        var mes = dt.ToString("MM").PadLeft(2, '0');
 
-                        var g_job = new T_JobFechamento
+                        var lstEmpresas = db.T_Empresa.Where(y => y.nu_diaFech == diaFechamento && y.st_horaFech == horaAtual).ToList();
+
+                        foreach (var empresa in lstEmpresas)
                         {
-                            dt_inicio = DateTime.Now,
-                            dt_fim = null,
-                            fk_empresa = (int) empresa.i_unique,
-                            st_ano = ano,
-                            st_mes = mes
-                        };
+                            // ------------------------------
+                            // só fecha uma vez no mes
+                            // ------------------------------
 
-                        // ----------------------------
-                        // registra job
-                        // ----------------------------
-
-                        g_job.i_unique = Convert.ToInt32(db.InsertWithIdentity(g_job));
-
-                        // ----------------------------
-                        // busca parcelas
-                        // ----------------------------
-
-                        var lst = db.T_Parcelas.Where(y => y.fk_empresa == empresa.i_unique && y.nu_parcela > 0).ToList();
-
-                        foreach (var parc in lst)
-                        {
-                            // ----------------------------
-                            // somente confirmadas
-                            // ----------------------------
-
-                            var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
-
-                            if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
+                            if (db.LOG_Fechamento.Any(y => y.st_ano == ano &&
+                                                            y.st_mes == mes &&
+                                                            y.fk_empresa == empresa.i_unique))
                                 continue;
 
-                            // ----------------------------
-                            // decrementa parcela
-                            // ----------------------------
-
-                            var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == parc.i_unique);
-                            parcUpd.nu_parcela--;
-                            db.Update(parcUpd);
-
-                            // -------------------------------------------
-                            // insere fechamento quando parcela zerar 
-                            // -------------------------------------------
-
-                            if (parcUpd.nu_parcela == 0)
+                            var g_job = new T_JobFechamento
                             {
-                                db.Insert(new LOG_Fechamento
+                                dt_inicio = DateTime.Now,
+                                dt_fim = null,
+                                fk_empresa = (int)empresa.i_unique,
+                                st_ano = ano,
+                                st_mes = mes
+                            };
+
+                            // ----------------------------
+                            // registra job
+                            // ----------------------------
+
+                            g_job.i_unique = Convert.ToInt32(db.InsertWithIdentity(g_job));
+
+                            // ----------------------------
+                            // busca parcelas
+                            // ----------------------------
+
+                            var lst = db.T_Parcelas.Where(y => y.fk_empresa == empresa.i_unique && y.nu_parcela > 0).ToList();
+
+                            foreach (var parc in lst)
+                            {
+                                // ----------------------------
+                                // somente confirmadas
+                                // ----------------------------
+
+                                var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
+
+                                if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
+                                    continue;
+
+                                // ----------------------------
+                                // decrementa parcela
+                                // ----------------------------
+
+                                var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == parc.i_unique);
+                                parcUpd.nu_parcela--;
+                                db.Update(parcUpd);
+
+                                // -------------------------------------------
+                                // insere fechamento quando parcela zerar 
+                                // -------------------------------------------
+
+                                if (parcUpd.nu_parcela == 0)
                                 {
-                                    dt_compra = logTrans.dt_transacao,
-                                    dt_fechamento = DateTime.Now,
-                                    fk_cartao = parc.fk_cartao,
-                                    fk_empresa = parc.fk_empresa,
-                                    fk_loja = parc.fk_loja,
-                                    fk_parcela = (int)parc.i_unique,
-                                    nu_parcela = parc.nu_parcela,
-                                    st_afiliada = "",
-                                    st_ano = ano,
-                                    st_mes = mes,
-                                    vr_valor = parc.vr_valor
-                                });
+                                    db.Insert(new LOG_Fechamento
+                                    {
+                                        dt_compra = logTrans.dt_transacao,
+                                        dt_fechamento = DateTime.Now,
+                                        fk_cartao = parc.fk_cartao,
+                                        fk_empresa = parc.fk_empresa,
+                                        fk_loja = parc.fk_loja,
+                                        fk_parcela = (int)parc.i_unique,
+                                        nu_parcela = parc.nu_parcela,
+                                        st_afiliada = "",
+                                        st_ano = ano,
+                                        st_mes = mes,
+                                        vr_valor = parc.vr_valor
+                                    });
+                                }
                             }
+
+                            // ----------------------------
+                            // registra job / finalizado!
+                            // ----------------------------
+
+                            g_job.dt_fim = DateTime.Now;
+
+                            db.Update(g_job);
                         }
+                    }                    
+                }
+                catch (SystemException ex)
+                {
 
-                        // ----------------------------
-                        // registra job / finalizado!
-                        // ----------------------------
-
-                        g_job.dt_fim = DateTime.Now;
-
-                        db.Update(g_job);
-                    }
                 }
 
                 Thread.Sleep(1000 * 60);

@@ -66,7 +66,10 @@ angular.module('app.controllers').controller('EmpresaController',
                 $scope.st_fantasia_fail = invalidCheck($scope.viewModel.st_fantasia);                
                 $scope.cnpj_fail = invalidCheck($scope.viewModel.nu_CNPJ);
                 $scope.st_empresa_fail = invalidCheck($scope.viewModel.st_empresa);
-                $scope.fech_fail = invalidCheck($scope.viewModel.nu_diaFech) || invalidCheck($scope.viewModel.st_horaFech);
+                $scope.fech_fail = false;
+                
+                if ($scope.viewModel.nu_diaFech > 0 && $scope.viewModel.st_horaFech.length > 0)
+                    $scope.fech_fail = invalidCheck($scope.viewModel.nu_diaFech) || invalidCheck($scope.viewModel.st_horaFech);
 
                 if ($scope.st_fantasia_fail == false &&
                     $scope.cnpj_fail == false &&

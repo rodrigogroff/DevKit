@@ -112,6 +112,12 @@ namespace DevKit.Web.Controllers
             if (!string.IsNullOrEmpty(mdl.snuFranquia))
                 mdl.nu_franquia = (int)mon.getNumericValue(mdl.snuFranquia);
 
+            if (mdl.nu_diaFech > 28)
+                return BadRequest("Dia de fechamento precisa estar entre 1 e 28");
+
+            if (mdl.nu_diaFech == 0)
+                return BadRequest("Dia de fechamento não pode estar zerado");
+
             db.Update(mdl);
 
             return Ok();

@@ -94,9 +94,7 @@ namespace DevKit.Web
                             // busca parcelas
                             // ----------------------------
 
-                            var lst = db.T_Parcelas.Where(y => y.fk_empresa == empresa.i_unique && y.nu_parcela > 0).ToList();
-
-                            foreach (var parc in lst)
+                            foreach (var parc in db.T_Parcelas.Where(y => y.fk_empresa == empresa.i_unique && y.nu_parcela > 0).ToList())
                             {
                                 // ----------------------------
                                 // somente confirmadas

@@ -102,8 +102,16 @@ namespace DevKit.Web
 
                                 var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
 
-                                if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
+                                if (logTrans == null)
                                     continue;
+                                else
+                                {
+                                    if (logTrans.tg_confirmada == null)
+                                        continue;
+
+                                    if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
+                                        continue;
+                                }                                   
 
                                 // ----------------------------
                                 // decrementa parcela

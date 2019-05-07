@@ -13,9 +13,12 @@ namespace DevKit.Web.Controllers
     {
         public IHttpActionResult Get()
         {
-            var busca = Request.GetQueryStringValue("busca");
+            var busca = Request.GetQueryStringValue("busca")?.ToUpper();
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
+            var cnpj = Request.GetQueryStringValue("cnpj");
+            var cidade = Request.GetQueryStringValue("cidade");
+            var estado = Request.GetQueryStringValue("estado");
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -23,7 +26,16 @@ namespace DevKit.Web.Controllers
             var query = (from e in db.T_Empresa select e);
 
             if (!string.IsNullOrEmpty(busca))
-                query = query.Where(y => y.st_fantasia.Contains(busca) || y.st_empresa.Contains(busca) );
+                query = query.Where(y => y.st_fantasia.ToUpper().Contains(busca) || y.st_empresa.ToUpper().Contains(busca) || y.st_social.ToUpper().Contains(busca));
+
+            if (!string.IsNullOrEmpty(cnpj))
+                query = query.Where(y => y.nu_CNPJ.Contains(cnpj));
+
+            if (!string.IsNullOrEmpty(cidade))
+                query = query.Where(y => y.st_cidade.ToUpper().Contains(cidade));
+
+            if (!string.IsNullOrEmpty(estado))
+                query = query.Where(y => y.st_estado.ToUpper().Contains(estado));
 
             query = query.OrderBy(y => y.st_fantasia);
 

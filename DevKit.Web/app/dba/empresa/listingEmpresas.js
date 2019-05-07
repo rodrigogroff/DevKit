@@ -15,7 +15,10 @@ angular.module('app.controllers').controller('ListingEmpresasController',
                 var opcoes = {
                     skip: skip,
                     take: take,
-                    busca: $scope.campos.codigo
+                    busca: $scope.campos.codigo,
+                    cnpj: $scope.campos.cnpj,
+                    cidade: $scope.campos.cidade,
+                    estado: $scope.campos.estado
                 };
 
                 Api.EmpresaDBA.listPage(opcoes, function (data) {

@@ -26,16 +26,18 @@ namespace DevKit.Web.Controllers
         {
             var myXLSWrapper = new ExportWrapper ( "Export_Lojas.xlsx",
                                                    "Lojas",
-                                                   new string[] { "Código",
-                                                                  "Nome",
-                                                                  "Cidade",
-                                                                  "Estado",
-                                                                  "Endereço",
-                                                                  "Telefone",
-                                                                  "Empresas",
-                                                                  "Terminais",
-                                                                  "Bloqueio",
-                                                                  "Senha" });
+                                                   new string[] {   "Código",
+                                                                    "CNPJ",
+                                                                    "Email",
+                                                                    "Nome",
+                                                                    "Cidade",
+                                                                    "Estado",
+                                                                    "Endereço",
+                                                                    "Telefone",
+                                                                    "Empresas",
+                                                                    "Terminais",
+                                                                    "Bloqueio",
+                                                                    "Senha" });
 
             var lstEmpresas = db.T_Empresa.ToList();
             var lstLinks = db.LINK_LojaEmpresa.ToList();
@@ -58,6 +60,8 @@ namespace DevKit.Web.Controllers
                 myXLSWrapper.AddContents(new string[]
                 {
                     item.st_loja,
+                    item.nu_CNPJ,
+                    item.st_email,
                     item.st_nome,
                     item.st_cidade,
                     item.st_estado,

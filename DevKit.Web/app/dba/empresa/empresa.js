@@ -91,6 +91,7 @@ angular.module('app.controllers').controller('EmpresaController',
                     }
                 }
                 else {
+
                     if ($scope.st_fantasia_fail || $scope.cnpj_fail || $scope.st_empresa_fail )
                         $scope.tabCadastro_fail = '(*)';
 

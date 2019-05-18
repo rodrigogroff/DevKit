@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('EmissoraDBAListagemFaturamentoController',
-    ['$scope', '$state', 'Api', 
-        function ($scope, $state, Api ) {
+    ['$scope', '$state', 'Api', 'ngSelects',
+        function ($scope, $state, Api, ngSelects ) {
             $scope.loading = false;
 
             $scope.search = function () {
@@ -9,24 +9,40 @@ angular.module('app.controllers').controller('EmissoraDBAListagemFaturamentoCont
                 $scope.paginador.reiniciar();
             };
 
-            $scope.load = function (skip, take) {
-                /*
+            $scope.load = function (skip, take, exportar) {
+                
                 $scope.loading = true;
 
                 var opcoes = {
                     skip: skip,
                     take: take,
+                    codigo: $scope.campos.codigo,
+                    tipoDemonstrativo: $scope.campos.tipoDemonstrativo,
+                    ano: $scope.campos.ano,
+                    mes: $scope.campos.mes
                 };
 
-                Api.EmpresaDBA.listPage(opcoes, function (data) {
-                    $scope.list = data.results;
-                    $scope.total = data.count;
-                    $scope.loading = false;
-                });
-                */
+                if (exportar) {
+                    toastr.warning('Aguarde, solicitação em andamento', 'Exportar');
+                    window.location.href = "/api/FaturamentoDBA/exportar?" + $.param(opcoes);
+                }
+                else {
+                    Api.FaturamentoDBA.listPage(opcoes, function (data) {
+                        $scope.list = data.results;
+                        $scope.total = data.count;
+                        $scope.loading = false;
+                    });
+                }                
+            };
+
+            $scope.exportar = function () {
+                $scope.load(0, $scope.itensporpagina, true);
             };
 
             function init() {
+
+                $scope.selectMeses = ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 });
+
                 $scope.campos = {
                     tipoDemonstrativo: '2'
                 };                

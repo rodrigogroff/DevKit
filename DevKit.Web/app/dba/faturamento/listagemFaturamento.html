@@ -15,22 +15,84 @@
                 <tr height="22px"> </tr>
                 <tr height="36px">
                     <td width="25px"></td>
-                    <td width="110px"><b>Selecione</b></td>
-                    <td width="220px">
-                        <label style="display:block;"><input type="radio" name="tipo" id="tipoDemonstrativo" value="1" ng-model="tipoDemonstrativo"> Emissora</label>
-                        <label style="display:block;"><input type="radio" name="tipo" id="tipoDemonstrativo" value="2" ng-model="tipoDemonstrativo"> Lojistas</label>                        
+                    <td width="70px"><b>Selecione</b></td>
+                    <td width="180px">
+                        <label style="display:block;"><input type="radio" name="tipo" id="tipoDemonstrativo" value="1" ng-model="campos.tipoDemonstrativo"> Emissora</label>
+                        <label style="display:block;"><input type="radio" name="tipo" id="tipoDemonstrativo" value="2" ng-model="campos.tipoDemonstrativo"> Lojistas</label>
                     </td>
                     <td width="25px"></td>
                     <td width="60px">
                         <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
                     </td>
                 </tr>
-                <tr>
-
+                <tr height="36px">
+                    <td></td>
+                    <td><b>Código</b></td>
+                    <td>
+                        <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.codigo" />
+                    </td>
+                    <td></td>
                 </tr>
+                <tr height="36px">
+                    <td></td>
+                    <td><b>Ano</b></td>
+                    <td>
+                        <input type="text" class="form-control input-transparent" ng-model="campos.ano" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="36px">
+                    <td></td>
+                    <td><b>Mês</b></td>
+                    <td>
+                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="selectMeses" ng-model="campos.mes" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr></tr>
                 <tr height="22px"> </tr>
             </table>
             <br />
+            <div ng-show="list.length > 0">
+                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                <br />
+                <input type="submit" class="btn btn-info" value="Exportar" ng-if="list.length > 0" ng-click="exportar()"><br />
+                <br />
+                <table class="table table-hover" style="width:1200px">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Social</th>
+                            <th>Dia Venc</th>
+                            <th>Total</th>
+                            <th>Detalhes</th>
+                        </tr>
+                    </thead>
+                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                        <td>{{ mdl.codigo }}</td>
+                        <td>{{ mdl.nome }}</td>
+                        <td>{{ mdl.social }}</td>
+                        <td>{{ mdl.dia_venc }}</td>
+                        <td>{{ mdl.total }}</td>
+                        <td>
+                            <table style="width:500px">
+                                <tr data-ng-repeat="itemFat in mdl.detalhes">
+                                    <td>
+                                        {{ itemFat.item }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
         </div>
     </section>
 </div>

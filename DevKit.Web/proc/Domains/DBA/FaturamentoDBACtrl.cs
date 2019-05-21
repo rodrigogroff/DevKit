@@ -37,27 +37,36 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
-        private IHttpActionResult Export(List<FaturamentoDTO> query)
+        private IHttpActionResult Export(List<FaturamentoDTO> query, int ano, int mes)
         {
-            var myXLSWrapper = new ExportWrapper("Export_Faturamento_Lojas.xlsx",
+            var myXLSWrapper = new ExportWrapper("Export_Faturamento_Lojas_ " + mes.ToString().PadLeft(2,'0') + "_" + ano + ".xlsx",
                                                    "Faturamento",
-                                                   new string[] {   "Código",
-                                                                    "nome",
-                                                                    "social",
-                                                                    "dia_venc",
-                                                                    "total", });
+                                                   new string[] {   "INTEGRACAO",
+                                                                    "Cliente-ou-Fornecedor",
+                                                                    "Categoria",
+                                                                    "Forma-de-Pagamento",
+                                                                    "Vencimento",
+                                                                    "Valor-Vencimento",
+                                                                    "Tipo",
+                                                                    "Descrição",
+                                                                    "Marca", });
 
-            
+            //INTEGRACAO	Cliente-ou-Fornecedor	Categoria	Forma-de-Pagamento	Vencimento	Valor-Vencimento	Tipo	Descricao	Marca
+            //4060	DROGARIA FARMANELLI LTDA 3	EM COBRANCA	BOLETO BANCARIO	16/05/2019	412,96	RECEITA	EM ATRASO	SICREDI
 
             foreach (var item in query)
             {
                 myXLSWrapper.AddContents(new string[]
                 {
                     item.codigo,
-                    item.nome,
                     item.social,
+                    "EM COBRANCA",
+                    "BOLETO BANCARIO",
                     item.dia_venc,
-                    item._total.ToString()
+                    item.total.Substring (3),
+                    "RECEITA",
+                    "EM ATRASO",
+                    "SICREDI",
                 });
             };
 
@@ -97,12 +106,12 @@ namespace DevKit.Web.Controllers
                 //     lista
                 // -==================-
 
-                DateTime dt = new DateTime(ano, mes, 1);
-                DateTime dtFinal = dt.AddMonths(1);
+                DateTime dt_ini = new DateTime(ano, mes, 1).AddMonths(-1).AddDays(20);
+                DateTime dt_fim = new DateTime(ano, mes, 20);
 
                 var lst_fk_lojas = (from e in db.LOG_Transacoes
                                     join loj in db.T_Loja on e.fk_loja equals (int) loj.i_unique
-                                    where e.dt_transacao > dt && e.dt_transacao < dtFinal
+                                    where e.dt_transacao > dt_ini && e.dt_transacao < dt_fim
                                     where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
                                     where codigo == null || loj.st_loja == codigo
                                     select e.fk_loja).
@@ -124,7 +133,7 @@ namespace DevKit.Web.Controllers
                     // -================================-
 
                     int totalTransacoes = (from e in db.LOG_Transacoes
-                                           where e.dt_transacao > dt && e.dt_transacao < dtFinal
+                                           where e.dt_transacao > dt_ini && e.dt_transacao < dt_fim
                                            where e.fk_loja == item.i_unique
                                            where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
                                            select e).
@@ -136,36 +145,39 @@ namespace DevKit.Web.Controllers
                         totTransFranq = 0;
                                        
                     long vrTransacoes = (from e in db.LOG_Transacoes
-                                           where e.dt_transacao > dt && e.dt_transacao < dtFinal
-                                           where e.fk_loja == item.i_unique
-                                           where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                           select (long)e.vr_total).
-                                           Sum();
+                                         where e.dt_transacao > dt_ini && e.dt_transacao < dt_fim
+                                         where e.fk_loja == item.i_unique
+                                         where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
+                                         select (long)e.vr_total).
+                                         Sum();
 
                     long totCom = (vrTransacoes * (long)item.nu_pctValor) / 10000;
-                    long totX = (int)item.vr_transacao * totTransFranq + (int)item.vr_mensalidade + totCom;
+
+                    long totX = (int)item.vr_transacao * totTransFranq + 
+                                (int)item.vr_mensalidade +
+                                totCom;
 
                     lst.Add(new FaturamentoDTO
                     {
                         codigo = item.st_loja,
                         nome = item.st_nome,
                         social = item.st_social,
-                        dia_venc = dtFinal.AddDays((int)item.nu_diavenc).ToString("dd/MM/yyyy"),
+                        dia_venc = new DateTime(ano, mes, 16).AddMonths(1).ToString("dd/MM/yyyy"),
                        total = "R$ " + mon.setMoneyFormat(totX),
                        _total = (int)totX,
                        detalhes = new List<FaturamentoDTOItem>
                        {
-                            new FaturamentoDTOItem { item = "Total de transações [" + totalTransacoes+ "], Custo por transação [R$ " + mon.setMoneyFormat((long)item.vr_transacao) + "], Franquia [" + item.nu_franquia + "]"},
+                            new FaturamentoDTOItem { item = "Total de transações [" + totalTransacoes + "], Custo por transação [R$ " + mon.setMoneyFormat((long)item.vr_transacao) + "], Franquia [" + item.nu_franquia + "]"},
                             new FaturamentoDTOItem { item = "Valor vendas [R$ " + mon.setMoneyFormat(vrTransacoes) + "], Pct Valor % [ " + mon.setMoneyFormat((long)item.nu_pctValor) + "]" },
-                            new FaturamentoDTOItem { item = "Valor transação (1) = R$" + mon.setMoneyFormat((long)item.vr_transacao * totalTransacoes) + " Final [" +totTransFranq + "]" },
+                            new FaturamentoDTOItem { item = "Valor transação (1) = R$" + mon.setMoneyFormat((long)item.vr_transacao * totTransFranq) + " Final [" + totTransFranq + "]" },
                             new FaturamentoDTOItem { item = "Valor Mensalidade (2) = R$" + mon.setMoneyFormat((long)item.vr_mensalidade ) },
                             new FaturamentoDTOItem { item = "Valor Comissão (3) = R$" + mon.setMoneyFormat(totCom ) },
-                            new FaturamentoDTOItem { item = "      Total = R$" + mon.setMoneyFormat(totX) },}
+                            new FaturamentoDTOItem { item = "Total = R$" + mon.setMoneyFormat(totX) },}
                     });
                 }
 
                 if (exportar == true)
-                    return Export(lst);
+                    return Export(lst, ano, mes);
 
                 #endregion
             }

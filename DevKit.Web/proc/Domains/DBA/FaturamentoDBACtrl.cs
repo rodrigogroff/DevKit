@@ -65,7 +65,7 @@ namespace DevKit.Web.Controllers
                     item.dia_venc,
                     item.total.Substring (3),
                     "RECEITA",
-                    "EM ATRASO",
+                    "A FATURAR",
                     "SICREDI",
                 });
             };
@@ -106,8 +106,8 @@ namespace DevKit.Web.Controllers
                 //     lista
                 // -==================-
 
-                DateTime dt_ini = new DateTime(ano, mes, 1).AddMonths(-1).AddDays(20);
-                DateTime dt_fim = new DateTime(ano, mes, 20);
+                DateTime dt_ini = new DateTime(ano, mes, 1).AddMonths(-1).AddDays(19);
+                DateTime dt_fim = new DateTime(ano, mes, 19).AddHours(23).AddMinutes(59).AddSeconds(59);
 
                 var lst_fk_lojas = (from e in db.LOG_Transacoes
                                     join loj in db.T_Loja on e.fk_loja equals (int) loj.i_unique
@@ -162,18 +162,20 @@ namespace DevKit.Web.Controllers
                         codigo = item.st_loja,
                         nome = item.st_nome,
                         social = item.st_social,
-                        dia_venc = new DateTime(ano, mes, 16).AddMonths(1).ToString("dd/MM/yyyy"),
-                       total = "R$ " + mon.setMoneyFormat(totX),
-                       _total = (int)totX,
-                       detalhes = new List<FaturamentoDTOItem>
-                       {
+                        dia_venc = new DateTime(ano, mes, (int) item.nu_periodoFat).AddMonths(1).ToString("dd/MM/yyyy"),
+                        total = "R$ " + mon.setMoneyFormat(totX),
+                        _total = (int)totX,
+                        detalhes = new List<FaturamentoDTOItem>
+                        {
+                            new FaturamentoDTOItem { item = "Periodo [" + dt_ini.ToString("dd/MM/yyyy") + "] a [" + dt_fim.ToString("dd/MM/yyyy") + "]" },
                             new FaturamentoDTOItem { item = "Total de transações [" + totalTransacoes + "], Custo por transação [R$ " + mon.setMoneyFormat((long)item.vr_transacao) + "], Franquia [" + item.nu_franquia + "]"},
                             new FaturamentoDTOItem { item = "Valor vendas [R$ " + mon.setMoneyFormat(vrTransacoes) + "], Pct Valor % [ " + mon.setMoneyFormat((long)item.nu_pctValor) + "]" },
                             new FaturamentoDTOItem { item = "Valor transação (1) = R$" + mon.setMoneyFormat((long)item.vr_transacao * totTransFranq) + " Final [" + totTransFranq + "]" },
                             new FaturamentoDTOItem { item = "Valor Mensalidade (2) = R$" + mon.setMoneyFormat((long)item.vr_mensalidade ) },
                             new FaturamentoDTOItem { item = "Valor Comissão (3) = R$" + mon.setMoneyFormat(totCom ) },
                             new FaturamentoDTOItem { item = "Total = R$" + mon.setMoneyFormat(totX) },}
-                    });
+                        }
+                    );
                 }
 
                 if (exportar == true)

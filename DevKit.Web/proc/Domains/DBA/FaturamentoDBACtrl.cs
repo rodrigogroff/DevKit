@@ -135,7 +135,6 @@ namespace DevKit.Web.Controllers
                     int totalTransacoes = (from e in db.LOG_Transacoes
                                            where e.dt_transacao > dt_ini && e.dt_transacao < dt_fim
                                            where e.fk_loja == item.i_unique
-                                           where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
                                            select e).
                                            Count();
 

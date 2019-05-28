@@ -42,10 +42,14 @@ angular.module('app.controllers').controller('EmissoraDBAListagemFaturamentoCont
             function init() {
 
                 $scope.selectMeses = ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 });
-
-                $scope.campos = {
-                    tipoDemonstrativo: '2'
-                };                
+                
+                Api.DataServer.listPage({}, function (data) {
+                    $scope.campos = {
+                        tipoDemonstrativo: '2',
+                        ano: data.dt.substring(6, 10),
+                        mes: data.dt.substring(3, 5)
+                    };                
+                });
             }
 
             init();

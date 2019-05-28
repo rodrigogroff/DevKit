@@ -75,9 +75,6 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get(bool? exportar = false)
         {            
-            var skip = Request.GetQueryStringValue<int>("skip");
-            var take = Request.GetQueryStringValue<int>("take");
-
             var codigo = Request.GetQueryStringValue<string>("codigo");
             var tipoDemonstrativo = Request.GetQueryStringValue<int>("tipoDemonstrativo");
             var ano = Request.GetQueryStringValue<int>("ano");
@@ -87,10 +84,12 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var mon = new money();
-
             var lst = new List<FaturamentoDTO>();
 
-            int tot = 0;
+            long tot = 0, totFat = 0;
+
+            DateTime dt_ini = new DateTime(ano, mes, 1).AddMonths(-1).AddDays(19);
+            DateTime dt_fim = new DateTime(ano, mes, 19).AddHours(23).AddMinutes(59).AddSeconds(59);
 
             if (tipoDemonstrativo == 1)
             {
@@ -106,44 +105,36 @@ namespace DevKit.Web.Controllers
                 //     lista
                 // -==================-
 
-                DateTime dt_ini = new DateTime(ano, mes, 1).AddMonths(-1).AddDays(19);
-                DateTime dt_fim = new DateTime(ano, mes, 19).AddHours(23).AddMinutes(59).AddSeconds(59);
+                var lst_lojas = (from e in db.T_Loja
+                                    where e.tg_blocked.ToString() == "0"
+                                    orderby e.st_social 
+                                    select e).
+                                    ToList();
 
-                var lst_fk_lojas = (from e in db.LOG_Transacoes
-                                    join loj in db.T_Loja on e.fk_loja equals (int) loj.i_unique
-                                    where e.dt_transacao > dt_ini && e.dt_transacao < dt_fim
-                                    where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
-                                    where codigo == null || loj.st_loja == codigo
-                                    select e.fk_loja).
-                                    Distinct();
+                tot = lst_lojas.Count();
 
-                tot = lst_fk_lojas.Count();
+                var lstTemp = lst_lojas.Select(y => y.i_unique).ToList();
 
-                // -==================-
-                //     paginação
-                // -==================-
+                var transList = (from e in db.LOG_Transacoes
+                                 where e.dt_transacao > dt_ini && e.dt_transacao < dt_fim
+                                 where lstTemp.Contains((int)e.fk_loja)
+                                 select e).
+                                 ToList();
 
-                if (exportar == false)
-                    lst_fk_lojas = lst_fk_lojas.Skip(skip).Take(take);
-                
-                foreach (var item in (from e in db.T_Loja where lst_fk_lojas.Contains((int)e.i_unique) select e).ToList())
+                foreach (var item in lst_lojas)
                 {
                     // -================================-
                     //     calculo de faturamento
                     // -================================-
 
-                    int totalTransacoes = (from e in db.LOG_Transacoes
-                                           where e.dt_transacao > dt_ini && e.dt_transacao < dt_fim
-                                           where e.fk_loja == item.i_unique
-                                           select e).
-                                           Count();
+                    int totalTransacoes = transList.Where (y=> y.fk_loja == item.i_unique).Count();
 
                     int totTransFranq = totalTransacoes - (int) item.nu_franquia;
 
                     if (totTransFranq < 0)
                         totTransFranq = 0;
                                        
-                    long vrTransacoes = (from e in db.LOG_Transacoes
+                    long vrTransacoes = (from e in transList
                                          where e.dt_transacao > dt_ini && e.dt_transacao < dt_fim
                                          where e.fk_loja == item.i_unique
                                          where e.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
@@ -156,12 +147,14 @@ namespace DevKit.Web.Controllers
                                 (int)item.vr_mensalidade +
                                 totCom;
 
+                    totFat += totX;
+
                     lst.Add(new FaturamentoDTO
                     {
                         codigo = item.st_loja,
                         nome = item.st_nome,
                         social = item.st_social,
-                        dia_venc = new DateTime(ano, mes, (int) item.nu_periodoFat).AddMonths(1).ToString("dd/MM/yyyy"),
+                        dia_venc = new DateTime(ano, mes, 5).AddMonths(1).ToString("dd/MM/yyyy"),
                         total = "R$ " + mon.setMoneyFormat(totX),
                         _total = (int)totX,
                         detalhes = new List<FaturamentoDTOItem>
@@ -186,6 +179,11 @@ namespace DevKit.Web.Controllers
             return Ok(new
             {
                 count = tot,
+                dtEmissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
+                dtVencimento = new DateTime(ano, mes, 5).AddMonths(1).ToString("dd/MM/yyyy"),
+                perFatIni = dt_ini.ToString("dd/MM/yyyy"),
+                perFatFim = dt_fim.ToString("dd/MM/yyyy"),
+                totalFat = mon.setMoneyFormat(totFat),
                 results = lst
             });
         }

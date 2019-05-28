@@ -31,6 +31,11 @@ angular.module('app.controllers').controller('EmissoraDBAListagemFaturamentoCont
                         $scope.list = data.results;
                         $scope.total = data.count;
                         $scope.loading = false;
+                        $scope.dtEmissao = data.dtEmissao;
+                        $scope.dtVencimento = data.dtVencimento;
+                        $scope.perFatIni = data.perFatIni;
+                        $scope.perFatFim = data.perFatFim;
+                        $scope.totalFat = data.totalFat;
                     });
                 }                
             };

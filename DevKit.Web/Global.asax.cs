@@ -36,10 +36,6 @@ namespace DevKit.Web
 
         public override void Init()
         {
-#if DEBUG
-            return;
-#endif
-
             cache = HttpContext.Current.Application;
 
             if (cache["started_observer"] == null)

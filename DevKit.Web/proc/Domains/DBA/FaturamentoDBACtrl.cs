@@ -106,10 +106,11 @@ namespace DevKit.Web.Controllers
                 // -==================-
 
                 var lst_lojas = (from e in db.T_Loja
-                                    where e.tg_blocked.ToString() == "0"
-                                    orderby e.st_social 
-                                    select e).
-                                    ToList();
+                                 where e.tg_blocked.ToString() == "0"
+                                 where string.IsNullOrEmpty(codigo) || e.st_loja.Contains (codigo)
+                                 orderby e.st_social 
+                                 select e).
+                                 ToList();
 
                 tot = lst_lojas.Count();
 

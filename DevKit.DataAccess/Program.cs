@@ -19,7 +19,7 @@ namespace GetStarted
             Console.WriteLine("(0.22) Patch?");
             Console.WriteLine("------------------------");
 
-            LimpaScheduler();
+          //  LimpaScheduler();
         }
 
         static void LimpaScheduler()

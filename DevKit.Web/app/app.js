@@ -69,13 +69,10 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('empRelExtratForn', { url: '/emissora/relExtratForn', templateUrl: 'app/emissora/relExtratForn.html', controller: 'EmissoraRelExtratFornController' })
             .state('empRelExtratTrans', { url: '/emissora/relExtratTrans', templateUrl: 'app/emissora/relExtratTrans.html', controller: 'EmissoraRelExtratTransController' })
             .state('empRelExtratTransLojas', { url: '/emissora/relExtratTransLojas', templateUrl: 'app/emissora/relExtratTransLojas.html', controller: 'EmissoraRelExtratTransLojasController' })
-
             .state('dashboard', { url: '/system/dash', templateUrl: 'app/system/admopers/dashboard.html', controller: 'DashboardController' })
-
+            .state('dbaListagemCartao', { url: '/dba/listagemCartao', templateUrl: 'app/dba/dba_listagemCartao.html', controller: 'DBAListagemCartaoController' })
             .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
-
         $locationProvider.html5Mode(true);
-
     }]);
 
 angular.module('app').config(function ($httpProvider) {

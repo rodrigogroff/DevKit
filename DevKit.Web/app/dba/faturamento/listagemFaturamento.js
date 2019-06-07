@@ -19,7 +19,9 @@ angular.module('app.controllers').controller('EmissoraDBAListagemFaturamentoCont
                     codigo: $scope.campos.codigo,
                     tipoDemonstrativo: $scope.campos.tipoDemonstrativo,
                     ano: $scope.campos.ano,
-                    mes: $scope.campos.mes
+                    mes: $scope.campos.mes,
+                    isentoFat: $scope.campos.isentoFat,
+                    semFat: $scope.campos.semFat,
                 };
 
                 if (exportar) {
@@ -51,6 +53,8 @@ angular.module('app.controllers').controller('EmissoraDBAListagemFaturamentoCont
                 Api.DataServer.listPage({}, function (data) {
                     $scope.campos = {
                         tipoDemonstrativo: '2',
+                        isentoFat: 2,
+                        semFat: 2,
                         ano: data.dt.substring(6, 10),
                         mes: data.dt.substring(3, 5)
                     };                

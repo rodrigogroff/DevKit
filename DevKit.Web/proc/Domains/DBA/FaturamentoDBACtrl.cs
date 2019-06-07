@@ -77,6 +77,8 @@ namespace DevKit.Web.Controllers
         {            
             var codigo = Request.GetQueryStringValue<string>("codigo");
             var tipoDemonstrativo = Request.GetQueryStringValue<int>("tipoDemonstrativo");
+            var isentoFat = Request.GetQueryStringValue<int>("isentoFat");
+            var semFat = Request.GetQueryStringValue<int>("semFat");
             var ano = Request.GetQueryStringValue<int>("ano");
             var mes = Request.GetQueryStringValue<int>("mes");
 
@@ -111,6 +113,15 @@ namespace DevKit.Web.Controllers
                                  orderby e.st_social 
                                  select e).
                                  ToList();
+
+                if (isentoFat == 1)
+                {
+                    lst_lojas = (from e in lst_lojas
+                                 where e.tg_isentoFat == 1
+                                orderby e.st_social
+                                select e).
+                                 ToList();
+                }
 
                 tot = lst_lojas.Count();
 
@@ -148,6 +159,21 @@ namespace DevKit.Web.Controllers
                                 (int)item.vr_mensalidade +
                                 totCom;
 
+                    if (semFat == 1 && totX > 0)
+                        continue;
+
+                    if (semFat == 2 && totX == 0)
+                        continue;
+
+                    if (item.tg_isentoFat == 1)
+                        totX = 0;
+
+                    if (isentoFat == 2 && item.tg_isentoFat == 1)
+                        continue;
+
+                    if (isentoFat == 1 && totX > 0)
+                        continue;
+
                     totFat += totX;
 
                     lst.Add(new FaturamentoDTO
@@ -160,6 +186,7 @@ namespace DevKit.Web.Controllers
                         _total = (int)totX,
                         detalhes = new List<FaturamentoDTOItem>
                         {
+                            new FaturamentoDTOItem { item = "Isento? [" + (item.tg_isentoFat == 1 ? "Sim" : "Não") + "]" },
                             new FaturamentoDTOItem { item = "Periodo [" + dt_ini.ToString("dd/MM/yyyy") + "] a [" + dt_fim.ToString("dd/MM/yyyy") + "]" },
                             new FaturamentoDTOItem { item = "Total de transações [" + totalTransacoes + "], Custo por transação [R$ " + mon.setMoneyFormat((long)item.vr_transacao) + "], Franquia [" + item.nu_franquia + "]"},
                             new FaturamentoDTOItem { item = "Valor vendas [R$ " + mon.setMoneyFormat(vrTransacoes) + "], Pct Valor % [ " + mon.setMoneyFormat((long)item.nu_pctValor) + "]" },

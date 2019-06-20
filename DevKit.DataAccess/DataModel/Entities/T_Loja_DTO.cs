@@ -35,7 +35,7 @@ namespace DataModel
         public bool isentoFat = false;
 
         [NotMapped]
-        public string id,
+        public string   id,
                         terminal,
                         nome,
                         cidade,
@@ -44,12 +44,12 @@ namespace DataModel
                         strTerminais,
                         strEmpresas,
                         tipoVenda,
-
                         snuPctValor,
                         svrMensalidade,
                         svrMinimo,
                         svrTransacao,
-                        snuFranquia;
+                        snuFranquia,
+                        sdtCadastro;
 
         [NotMapped]
         public List<LojaMensagem> lstMensagens;

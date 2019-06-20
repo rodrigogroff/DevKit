@@ -308,6 +308,11 @@ namespace DevKit.Web.Controllers
             mdl.lstTerminais = lstTerminais;
             mdl.lstConvenios = lstConvenios;
 
+            var dt = db.LOG_Transacoes.Where(y => y.fk_loja == mdl.i_unique).OrderBy(y => y.dt_transacao).FirstOrDefault();
+
+            if (dt.dt_transacao != null)
+                mdl.sdtCadastro = Convert.ToDateTime(dt.dt_transacao).ToString("dd/MM/yyyy");
+
             return Ok(mdl);
         }
 
@@ -322,6 +327,13 @@ namespace DevKit.Web.Controllers
             var mdlNew = new T_Loja
             {
                 st_nome = mdl.st_nome,
+                st_social = mdl.st_social,
+                st_enderecoInst = mdl.st_enderecoInst,
+                st_endereco = mdl.st_endereco,
+                st_contato = mdl.st_contato,
+                st_email = mdl.st_email,          
+                nu_telefone = mdl.nu_telefone,
+                st_telCelular = mdl.st_telCelular,
                 st_cidade = mdl.st_cidade,
                 st_estado = mdl.st_estado,                
             };
@@ -496,6 +508,12 @@ namespace DevKit.Web.Controllers
             #endregion
 
             mdlUpdate.st_nome = mdl.st_nome;
+            mdlUpdate.st_social = mdl.st_social;
+
+            if (mdl.st_senha != null)
+                if (mdl.st_senha.Length > 0)
+                    mdlUpdate.st_senha = mdl.st_senha;
+
             mdlUpdate.st_cidade = mdl.st_cidade;
             mdlUpdate.st_estado = mdl.st_estado;
             mdlUpdate.tg_portalComSenha = Convert.ToInt32(mdl.tg_portalComSenha);
@@ -520,6 +538,9 @@ namespace DevKit.Web.Controllers
             mdlUpdate.nu_fax = mdl.nu_fax;
             mdlUpdate.nu_telefone = mdl.nu_telefone;
             mdlUpdate.st_telCelular = mdl.st_telCelular;
+            mdlUpdate.st_contato = mdl.st_contato;
+            mdlUpdate.st_endereco = mdl.st_endereco;
+            mdlUpdate.st_enderecoInst = mdl.st_enderecoInst;
 
             db.Update(mdlUpdate);
 

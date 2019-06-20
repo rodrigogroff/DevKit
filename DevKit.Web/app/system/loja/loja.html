@@ -41,6 +41,16 @@
                                     <b><h3>{{viewModel.st_loja}}</h3></b>
                                 </td>
                             </tr>
+                            <tr height="40px" ng-if="viewModel.i_unique > 0">
+                                <td></td>
+                                <td>Data Cadastro</td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    {{viewModel.sdtCadastro}}
+                                </td>
+                            </tr>
                             <tr height="40px">
                                 <td></td>
                                 <td>Nome da loja</td>
@@ -96,7 +106,7 @@
                                 <td>Estado</td>
                                 <td></td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent"
+                                    <input type="text" class="form-control input-transparent" maxlength="2"
                                            ng-model="viewModel.st_estado">
                                 </td>
                             </tr>
@@ -105,7 +115,7 @@
                                 <td>CEP</td>
                                 <td></td>
                                 <td>
-                                    <input type="text" class="form-control input-transparent" maxlength="8" 
+                                    <input type="text" class="form-control input-transparent" maxlength="8"
                                            onKeyUp="money(this,ValorNum);"
                                            ng-model="viewModel.nu_CEP">
                                 </td>

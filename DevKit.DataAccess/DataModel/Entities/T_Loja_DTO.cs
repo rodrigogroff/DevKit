@@ -29,6 +29,12 @@ namespace DataModel
         public string id, empresa, idEmpresa, tx_admin;
     }
 
+    public partial class T_Empresa
+    {
+        [NotMapped]
+        public string stotLojistas;
+    }
+
     public partial class T_Loja
     {
         [NotMapped]

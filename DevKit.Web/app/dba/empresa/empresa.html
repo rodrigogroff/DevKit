@@ -75,6 +75,18 @@
                             <tr height="40px">
                                 <td></td>
                                 <td>
+                                    <b>Total lojistas conveniados</b>
+                                </td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    {{viewModel.stotLojistas}}
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
                                     <b>Nome Fantasia</b>
                                 </td>
                                 <td>
@@ -87,7 +99,19 @@
                             <tr height="40px">
                                 <td></td>
                                 <td>
-                                    <b>Social</b>
+                                    <b>Telefone</b>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="st_fantasia_fail">!</button>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.nu_telefone">
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Razão Social</b>
                                 </td>
                                 <td>
                                     <button class="btn btn-xs btn-danger" ng-show="st_social_fail">!</button>

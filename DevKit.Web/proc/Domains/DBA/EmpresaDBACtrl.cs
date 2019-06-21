@@ -72,6 +72,8 @@ namespace DevKit.Web.Controllers
 
             mdl.snuFranquia = mdl.nu_franquia?.ToString();
 
+            mdl.stotLojistas = db.LINK_LojaEmpresa.Where(y => y.fk_empresa == mdl.i_unique).ToList().Count().ToString();
+
             mdl.lstFechamento = db.T_JobFechamento.Where(y => y.fk_empresa == mdl.i_unique).OrderByDescending(y => y.i_unique).Take(5).ToList();
 
             var mon = new money();

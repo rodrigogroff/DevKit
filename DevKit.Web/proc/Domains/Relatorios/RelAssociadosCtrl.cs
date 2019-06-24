@@ -39,6 +39,11 @@ namespace DevKit.Web.Controllers
                              FirstOrDefault().
                              st_empresa;
             }
+            else
+            {
+                // vem da empresa logada
+                stEmpresa = userLoggedEmpresa;
+            }
 
             var query = (from e in db.T_Cartao select e);
 
@@ -106,7 +111,9 @@ namespace DevKit.Web.Controllers
             var sd = new SaldoDisponivel();
             var mon = new money();
 
-            foreach (var item in query.Skip(skip).Take(take).ToList())
+            var lstFinal = query.Skip(skip).Take(take).ToList();
+
+            foreach (var item in lstFinal)
             {
                 var assoc = (from e in db.T_Proprietario
                              where e.i_unique == item.fk_dadosProprietario

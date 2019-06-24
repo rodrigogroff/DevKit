@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('EmissoraNovoCartaoController',
-    ['$scope', '$rootScope', '$state', '$stateParams', 'Api',
-        function ($scope, $rootScope, $state, $stateParams, Api) {
+    ['$scope', '$rootScope', '$state', '$stateParams', 'Api','ngSelects',
+        function ($scope, $rootScope, $state, $stateParams, Api, ngSelects) {
 
             $rootScope.exibirMenu = true;
             $scope.loading = false;
@@ -13,6 +13,13 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                     via: '01',
                     situacao: 'Em cadastramento',
                 };
+
+            $scope.campos = {
+                matOk: true,
+                selects: {
+                    empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
+                }
+            };
 
             var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
@@ -97,6 +104,32 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                     });
             };
 
+            $scope.checkMat = function () {
+
+                $scope.loading = true;
+
+                var opcoes = {
+                    idEmpresa: $scope.viewModel.fkEmpresa,
+                    skip: 0,
+                    take: 1,
+                    matricula: $scope.viewModel.matricula,
+                };
+
+                Api.RelAssociados.listPage(opcoes, function (data) {
+                    $scope.loading = false;
+
+                    $scope.mat_ok = false;
+                    $scope.mat_fail = false;
+
+                    if (data.count == 0) {
+                        $scope.mat_ok = true;
+                    }
+                    else {
+                        $scope.mat_fail = true;                    
+                    }                        
+                });
+            };
+
             $scope.altSenha = function () {
 
                 $scope.senha_fail = invalidCheck($scope.viewModel.senhaAtual);
@@ -147,6 +180,8 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
 
                 $scope.mat_fail = invalidCheck($scope.viewModel.matricula);
 
+                $scope.checkMat();
+
                 $scope.venc_fail = invalidCheck($scope.viewModel.vencMes) || invalidCheck($scope.viewModel.vencAno);
                 $scope.nome_fail = invalidCheck($scope.viewModel.nome);
                 $scope.cpf_fail = invalidCheck($scope.viewModel.cpf);
@@ -158,6 +193,13 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                 $scope.bancoCta_fail = invalidCheck($scope.viewModel.bancoCta);
                 $scope.tel_fail = invalidCheck($scope.viewModel.tel);
                 $scope.email_fail = invalidCheck($scope.viewModel.email);
+
+                if ($scope.tipo == 5)
+                    if ($scope.viewModel.fkEmpresa == undefined) {
+                        $scope.emp_fail = true;
+                        toastr.error('Selecione a empresa do novo cartão', 'Erro');
+                        $scope.loading = false;
+                    }
 
                 if (!$scope.mat_fail &&
                     !$scope.nome_fail &&

@@ -294,13 +294,12 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var cart = (from e in db.T_Cartao
-                       where e.i_unique == id
-                       select e).
-                       FirstOrDefault();
+            var cart = (from e in db.T_Cartao where e.i_unique == id select e).FirstOrDefault();
 
             if (cart == null)
                 return BadRequest();
+
+            var t_Emp = (from e in db.T_Empresa where e.st_empresa == cart.st_empresa select e).FirstOrDefault();
 
             var prop = (from e in db.T_Proprietario
                          where e.i_unique == cart.fk_dadosProprietario
@@ -388,7 +387,7 @@ namespace DevKit.Web.Controllers
                 end = prop.st_endereco,
                 numero = prop.st_numero,
                 bairro = prop.st_bairro,
-
+                fkEmpresa = t_Emp.i_unique.ToString(),
                 // cartão
                 id = id.ToString(),
                 matricula = cart.st_matricula,

@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('ListingRelAssociadosController',
-    ['$scope', '$rootScope', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-        function ($scope, $rootScope, ngHistoricoFiltro, Api, ngSelects) {
+    ['$scope', '$rootScope', 'ngHistoricoFiltro', 'Api', 'ngSelects', '$state',
+        function ($scope, $rootScope, ngHistoricoFiltro, Api, ngSelects, $state) {
 
             $rootScope.exibirMenu = true;
             $scope.loading = false;
@@ -18,6 +18,10 @@ angular.module('app.controllers').controller('ListingRelAssociadosController',
             $scope.itensporpagina = 15;
 
             init();
+
+            $scope.show = function (mdl) {
+                $state.go('empManutCartao', { id: mdl.id });
+            };
 
             function init() {
                 if (ngHistoricoFiltro.filtro)

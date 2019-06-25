@@ -10,8 +10,8 @@ namespace DevKit.Web.Controllers
 {
     public class RelAssociadosItem
     {
-        public string associado, cartao, cpf, dispM, limM, dispT, limT, tit;
-        public string via, status, exped, dt_exp, dt_pedido, dt_ultMov;
+        public string   id, associado, cartao, cpf, dispM, limM, dispT, limT, tit,
+                        via, status, exped, dt_exp, dt_pedido, dt_ultMov;
     }
 
     public class RelAssociadosController : ApiControllerBase
@@ -150,6 +150,7 @@ namespace DevKit.Web.Controllers
 
                     res.Add(new RelAssociadosItem
                     {
+                        id = item.i_unique.ToString(),
                         associado = assoc.st_nome,
 
                         cartao = item.st_empresa + "." +

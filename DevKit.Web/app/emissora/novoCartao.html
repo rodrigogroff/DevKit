@@ -5,8 +5,8 @@
             <table style="color:white; width:100%">
                 <tr height="48px">
                     <td width="20px"></td>
-                    <td ng-if="id == 0">Novo <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-                    <td ng-if="id != 0">Manutenção <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td ng-if="id == undefined || id == 0 ">Novo <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td ng-if="id > 0">Manutenção <b>cartão convênio</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
                 </tr>
                 <tr height="12px"></tr>
             </table>
@@ -25,7 +25,7 @@
                                 <button class="btn btn-xs btn-danger" ng-show="emp_fail">!</button>
                             </td>
                             <td width="160px">
-                                <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.empresa" ng-model="viewModel.fkEmpresa" />
+                                <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.empresa" ng-model="viewModel.fkEmpresa" ng-disabled="id > 0" />
                             </td>
                             <td></td>
                         </tr>

@@ -28,6 +28,7 @@ namespace DevKit.Web.Controllers
                                                    "Lojas",
                                                    new string[] {   "Código",
                                                                     "CNPJ",
+                                                                    "Razão Social",
                                                                     "Email",
                                                                     "Nome",
                                                                     "Cidade",
@@ -62,6 +63,7 @@ namespace DevKit.Web.Controllers
                 {
                     item.st_loja,
                     item.nu_CNPJ,
+                    item.st_social,
                     item.st_email,
                     item.st_nome,
                     item.st_cidade,
@@ -310,8 +312,9 @@ namespace DevKit.Web.Controllers
 
             var dt = db.LOG_Transacoes.Where(y => y.fk_loja == mdl.i_unique).OrderBy(y => y.dt_transacao).FirstOrDefault();
 
-            if (dt.dt_transacao != null)
-                mdl.sdtCadastro = Convert.ToDateTime(dt.dt_transacao).ToString("dd/MM/yyyy");
+            if (dt != null)
+                if (dt.dt_transacao != null)
+                    mdl.sdtCadastro = Convert.ToDateTime(dt.dt_transacao).ToString("dd/MM/yyyy");
 
             return Ok(mdl);
         }

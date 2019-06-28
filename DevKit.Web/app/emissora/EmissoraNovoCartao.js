@@ -201,17 +201,19 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                         $scope.loading = false;
                     }
 
-                if (!$scope.mat_fail &&
-                    !$scope.nome_fail &&
-                    !$scope.cpf_fail &&
-                    !$scope.dtNasc_fail &&
-                    !$scope.limMes_fail &&
-                    !$scope.limTot_fail &&
-                    !$scope.banco_fail &&
-                    !$scope.bancoAg_fail &&
-                    !$scope.bancoCta_fail &&
-                    !$scope.tel_fail &&
-                    !$scope.email_fail) {
+                if (    !$scope.mat_fail
+                        && !$scope.nome_fail
+                        && !$scope.cpf_fail
+                        && !$scope.dtNasc_fail
+                        && $scope.limMes_fail
+                        && !$scope.limTot_fail
+                        //&& !$scope.banco_fail
+                        //&& !$scope.bancoAg_fail
+                        //&& $scope.bancoCta_fail
+                        //&& !$scope.tel_fail &&
+                        //!$scope.email_fail
+                    )
+                {
                     if (id > 0) {
                         Api.EmissoraCartao.update({ id: id }, $scope.viewModel, function (data) {
                             toastr.success('Cartão salvo!', 'Sucesso');

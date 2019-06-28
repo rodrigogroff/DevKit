@@ -531,7 +531,7 @@ namespace DevKit.Web.Controllers
                                         totalVendas = "R$ " + mon.setMoneyFormat((long)totalVendas),
                                         vlrRepasseMensal = "R$ " + mon.setMoneyFormat((long)repasse),
                                         situacao = "ENCERRADO",
-                                        dtFechamento = db.currentAssociadoEmpresa.nu_diaFech + " / " + hora.Substring(0,2) + ":" + hora.Substring(2)
+                                        dtFechamento = tEmpresa.nu_diaFech + " / " + hora.Substring(0,2) + ":" + hora.Substring(2)
                                     });
                                 }
                             }
@@ -539,7 +539,7 @@ namespace DevKit.Web.Controllers
                             return Ok(new
                             {
                                 count = results.Count,
-                                results = results,
+                                results,
                                 totAtual = "R$ " + mon.setMoneyFormat(totAtual),
                                 totAtualRepasse = "R$ " + mon.setMoneyFormat(totAtualRepasse),
                             });

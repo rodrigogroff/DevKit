@@ -104,8 +104,10 @@
                                         <th>Total</th>
                                     </tr>
 								</thead>
-                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                    <td>{{ mdl.associado }}</td>
+                                <tr data-ng-repeat="mdl in list">
+                                    <td>
+                                        <a ng-click="show(mdl)">{{ mdl.associado }}</a>
+                                    </td>
                                     <td>{{ mdl.cartao }}</td>
                                     <td>{{ mdl.via }}</td>
                                     <td>{{ mdl.status }}<br />{{ mdl.exped }}</td>

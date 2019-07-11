@@ -185,6 +185,8 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                 $scope.venc_fail = invalidCheck($scope.viewModel.vencMes) || invalidCheck($scope.viewModel.vencAno);
                 $scope.nome_fail = invalidCheck($scope.viewModel.nome);
                 $scope.cpf_fail = invalidCheck($scope.viewModel.cpf);
+
+                /*
                 $scope.dtNasc_fail = invalidCheck($scope.viewModel.dtNasc);
                 $scope.limMes_fail = invalidCheck($scope.viewModel.limMes);
                 $scope.limTot_fail = invalidCheck($scope.viewModel.limTot);
@@ -193,6 +195,7 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                 $scope.bancoCta_fail = invalidCheck($scope.viewModel.bancoCta);
                 $scope.tel_fail = invalidCheck($scope.viewModel.tel);
                 $scope.email_fail = invalidCheck($scope.viewModel.email);
+                */
 
                 if ($scope.tipo == 5)
                     if ($scope.viewModel.fkEmpresa == undefined) {
@@ -201,12 +204,14 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                         $scope.loading = false;
                     }
 
-                if (    !$scope.mat_fail
-                        && !$scope.nome_fail
-                        && !$scope.cpf_fail
-                        && !$scope.dtNasc_fail
-                        && $scope.limMes_fail
-                        && !$scope.limTot_fail
+                if (!$scope.mat_fail
+                    && !$scope.nome_fail
+                    && !$scope.venc_fail
+
+               ////         && !$scope.cpf_fail
+                   ////     && !$scope.dtNasc_fail
+                       // && $scope.limMes_fail
+                       // && !$scope.limTot_fail
                         //&& !$scope.banco_fail
                         //&& !$scope.bancoAg_fail
                         //&& $scope.bancoCta_fail

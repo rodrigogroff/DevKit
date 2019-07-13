@@ -40,6 +40,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('menuUsr', { url: '/system/associadoMenu', templateUrl: 'app/associado/menu.html', controller: 'AssociadoMenuController' })
             .state('novaempresa', { url: '/dba/empresa', templateUrl: 'app/dba/empresa/empresa.html', controller: 'EmpresaController' })
             .state('empresa', { url: '/dba/empresa/:id', templateUrl: 'app/dba/empresa/empresa.html', controller: 'EmpresaController' })
+            .state('auditoria', { url: '/dba/auditoria', templateUrl: 'app/dba/dba_auditoria.html', controller: 'DBAAuditoriaController' })
             .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/empresa/listingEmpresas.html', controller: 'ListingEmpresasController' })
             .state('novolote', { url: '/dba/lote', templateUrl: 'app/dba/lotes/novolote.html', controller: 'NovoLoteController' })
             .state('lote', { url: '/dba/lote/:id', templateUrl: 'app/dba/lotes/lote.html', controller: 'LoteController' })

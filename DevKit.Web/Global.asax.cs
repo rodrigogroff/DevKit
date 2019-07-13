@@ -9,6 +9,7 @@ using DataModel;
 using LinqToDB;
 using System;
 using System.Data;
+using SyCrafEngine;
 
 namespace DevKit.Web
 {
@@ -51,9 +52,10 @@ namespace DevKit.Web
         {
             while (true)
             {
-                try
+                using (var db = new AutorizadorCNDB())
                 {
-                    using (var db = new AutorizadorCNDB())
+                    string currentEmpresa = "";
+                    try
                     {
                         var dt = DateTime.Now;
 
@@ -75,6 +77,8 @@ namespace DevKit.Web
                                                             y.fk_empresa == empresa.i_unique))
                                 continue;
 
+                            currentEmpresa = empresa.st_empresa;
+
                             var g_job = new T_JobFechamento
                             {
                                 dt_inicio = DateTime.Now,
@@ -94,6 +98,8 @@ namespace DevKit.Web
                             // busca parcelas
                             // ----------------------------
 
+                            long totValor = 0;
+
                             foreach (var parc in db.T_Parcelas.Where(y => y.fk_empresa == empresa.i_unique && y.nu_parcela > 0).ToList())
                             {
                                 // ----------------------------
@@ -111,7 +117,7 @@ namespace DevKit.Web
 
                                     if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
                                         continue;
-                                }                                   
+                                }
 
                                 // ----------------------------
                                 // decrementa parcela
@@ -127,6 +133,8 @@ namespace DevKit.Web
 
                                 if (parcUpd.nu_parcela == 0)
                                 {
+                                    totValor += (int)parc.vr_valor;
+
                                     db.Insert(new LOG_Fechamento
                                     {
                                         dt_compra = logTrans.dt_transacao,
@@ -151,12 +159,28 @@ namespace DevKit.Web
                             g_job.dt_fim = DateTime.Now;
 
                             db.Update(g_job);
-                        }
-                    }                    
-                }
-                catch (SystemException ex)
-                {
 
+                            db.Insert(new LOG_Audit
+                            {
+                                dt_operacao = DateTime.Now,
+                                fk_usuario = null,
+                                st_oper = "Fechamento [OK]",
+                                st_empresa = currentEmpresa,
+                                st_log = "Ano " + ano + " Mes " + mes + " Valor => " + new money().setMoneyFormat(totValor)
+                            });
+                        }
+                    }
+                    catch (SystemException ex)
+                    {
+                        db.Insert(new LOG_Audit
+                        {
+                            dt_operacao = DateTime.Now,
+                            fk_usuario = null,
+                            st_oper = "Fechamento [ERRO]",
+                            st_empresa = currentEmpresa,
+                            st_log = ex.ToString()
+                        });
+                    }
                 }
 
                 Thread.Sleep(1000 * 60);
@@ -179,13 +203,6 @@ namespace DevKit.Web
                                                y.tg_confirmada.ToString() == TipoConfirmacao.Pendente && 
                                                y.tg_contabil.ToString() == TipoCaptura.SITEF ).
                                     ToList();
-
-                    db.Insert(new T_WebBlock
-                    {
-                        st_ip = "Count: " + queryX.Count() + " -> " + dtIni.ToString(),
-                        fk_cartao = queryX.Count(),
-                        dt_expire = DateTime.Now
-                    });
 
                     foreach (var item in queryX)
                     {

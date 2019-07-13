@@ -40,6 +40,17 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                             $scope.list();
                         });
                 }
+                else {
+                    $scope.viewModel =
+                        {
+                            limMes: '0,00',
+                            limTot: '0,00',
+                            via: '01',
+                            situacao: 'Em cadastramento',
+                        };
+
+                    id = 0;
+                }
             }
 
             var invalidCheck = function (element) {
@@ -232,7 +243,11 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                     else {
                         Api.EmissoraCartao.add($scope.viewModel, function (data) {
                             toastr.success('Cartão salvo!', 'Sucesso');
-                            $state.go('empListagemCartao');
+
+                            $scope.retCartaoAdd = data;
+                            $scope.modalSave = true;
+
+                            //$state.go('empListagemCartao');
                         },
                             function (response) {
                                 toastr.error(response.data.message, 'Erro');
@@ -244,6 +259,14 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                     toastr.error('Existem pendências de cadastro', 'Erro');
                     $scope.loading = false;
                 }
+            };
+
+            $scope.editarCartao = function () {
+                $state.go('empManutCartao', { id: $scope.retCartaoAdd.i_unique });
+            };
+
+            $scope.novoCartao = function () {
+                $scope.modalSave = false;
             };
 
         }]);

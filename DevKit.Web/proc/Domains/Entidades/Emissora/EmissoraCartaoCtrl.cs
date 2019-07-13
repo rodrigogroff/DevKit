@@ -298,6 +298,15 @@ namespace DevKit.Web.Controllers
 
             if (cart == null)
                 return BadRequest();
+            
+            db.Insert(new LOG_Audit
+            {
+                dt_operacao = DateTime.Now,
+                fk_usuario = userIdLoggedUsuario,
+                st_empresa = userLoggedEmpresa,
+                st_oper = "Visualizar Cartão",
+                st_log = "Mat: " + cart.st_matricula 
+            });
 
             var t_Emp = (from e in db.T_Empresa where e.st_empresa == cart.st_empresa select e).FirstOrDefault();
 
@@ -505,9 +514,20 @@ namespace DevKit.Web.Controllers
 
             db.Insert(cart);
 
+            cart.i_unique = Convert.ToDecimal (db.InsertWithIdentity(cart));
+
             // ----------------------------------
             // log de auditoria
             // ----------------------------------
+
+            db.Insert(new LOG_Audit
+            {
+                dt_operacao = DateTime.Now,
+                fk_usuario = userIdLoggedUsuario,
+                st_empresa = userLoggedEmpresa,
+                st_oper = "Novo Cartão",
+                st_log = "Mat: " + cart.st_matricula + " Nome:" + prop.st_nome
+            });
 
             /*db.Insert(new LOG_Audit
             {
@@ -518,7 +538,7 @@ namespace DevKit.Web.Controllers
                 fk_generic = 0
             });*/
 
-            return Ok();
+            return Ok(cart);
         }
         
         [HttpPut]
@@ -548,14 +568,7 @@ namespace DevKit.Web.Controllers
 
                     db.Update(_cart);
 
-                    db.Insert(new LOG_Audit
-                    {
-                        tg_operacao = Convert.ToInt32(TipoOperacao.CotaExtraMensal),
-                        fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
-                        dt_operacao = DateTime.Now,
-                        st_observacao = "",
-                        fk_generic = (int)_cart.i_unique
-                    });
+                    
                 }
 
                 return Ok();
@@ -590,11 +603,11 @@ namespace DevKit.Web.Controllers
 
                         db.Insert(new LOG_Audit
                         {
-                            tg_operacao = Convert.ToInt32(TipoOperacao.CotaExtraMensal),
-                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
-                            st_observacao = "",
-                            fk_generic = (int)cart.i_unique
+                            fk_usuario = userIdLoggedUsuario,
+                            st_empresa = userLoggedEmpresa,
+                            st_oper = "Cartão / Cota Extra ",
+                            st_log = "Mat: " + cart.st_matricula
                         });
 
                         return Ok();
@@ -611,13 +624,13 @@ namespace DevKit.Web.Controllers
 
                         db.Insert(new LOG_Audit
                         {
-                            tg_operacao = Convert.ToInt32(TipoOperacao.AlterSenha),
-                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
-                            st_observacao = "",
-                            fk_generic = (int) cart.i_unique
+                            fk_usuario = userIdLoggedUsuario,
+                            st_empresa = userLoggedEmpresa,
+                            st_oper = "Cartão / Alteração de senha ",
+                            st_log = "Mat: " + cart.st_matricula
                         });
-                        
+
                         return Ok();
                     }
 
@@ -630,19 +643,23 @@ namespace DevKit.Web.Controllers
                             return BadRequest("Informe os limites corretamente!");
 
                         var lst = mdl.valor.Split('|');
-                        
+
+                        string de_para = " antigo mensal: " + cart.vr_limiteMensal + " antigo total: " + cart.vr_limiteMensal;
+
                         cart.vr_limiteMensal = LimpaValor(lst[0]);
                         cart.vr_limiteTotal = LimpaValor(lst[1]);
+
+                        de_para += " novo mensal: " + cart.vr_limiteMensal + " novo total: " + cart.vr_limiteMensal;
                         
                         db.Update(cart);
 
                         db.Insert(new LOG_Audit
                         {
-                            tg_operacao = Convert.ToInt32(TipoOperacao.AlterCartao),
-                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
-                            st_observacao = "",
-                            fk_generic = (int)cart.i_unique
+                            fk_usuario = userIdLoggedUsuario,
+                            st_empresa = userLoggedEmpresa,
+                            st_oper = "Cartão / Alteração de limite ",
+                            st_log = "Mat: " + cart.st_matricula + " => " + de_para
                         });
 
                         return Ok();
@@ -654,14 +671,14 @@ namespace DevKit.Web.Controllers
                         cart.dt_bloqueio = DateTime.Now;
 
                         db.Update(cart);
-
+                        
                         db.Insert(new LOG_Audit
                         {
-                            tg_operacao = Convert.ToInt32(TipoOperacao.BloqueioCartao),
-                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
-                            st_observacao = "",
-                            fk_generic = (int)cart.i_unique
+                            fk_usuario = userIdLoggedUsuario,
+                            st_empresa = userLoggedEmpresa,
+                            st_oper = "Cartão / Bloqueio ",
+                            st_log = "Mat: " + cart.st_matricula 
                         });
 
                         return Ok();
@@ -675,11 +692,11 @@ namespace DevKit.Web.Controllers
 
                         db.Insert(new LOG_Audit
                         {
-                            tg_operacao = Convert.ToInt32(TipoOperacao.DesbloqueioCartao),
-                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
-                            st_observacao = "",
-                            fk_generic = (int)cart.i_unique
+                            fk_usuario = userIdLoggedUsuario,
+                            st_empresa = userLoggedEmpresa,
+                            st_oper = "Cartão / Desbloqueio ",
+                            st_log = "Mat: " + cart.st_matricula
                         });
 
                         return Ok();
@@ -697,11 +714,11 @@ namespace DevKit.Web.Controllers
 
                         db.Insert(new LOG_Audit
                         {
-                            tg_operacao = Convert.ToInt32(TipoOperacao.ReqSegViaCart),
-                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
-                            st_observacao = "",
-                            fk_generic = (int)cart.i_unique
+                            fk_usuario = userIdLoggedUsuario,
+                            st_empresa = userLoggedEmpresa,
+                            st_oper = "Cartão / Segunda via ",
+                            st_log = "Mat: " + cart.st_matricula
                         });
 
                         return Ok();
@@ -746,13 +763,13 @@ namespace DevKit.Web.Controllers
 
                         db.Insert(new LOG_Audit
                         {
-                            tg_operacao = Convert.ToInt32(TipoOperacao.CadDepenCart),
-                            fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                             dt_operacao = DateTime.Now,
-                            st_observacao = "",
-                            fk_generic = (int)cart.i_unique
+                            fk_usuario = userIdLoggedUsuario,
+                            st_empresa = userLoggedEmpresa,
+                            st_oper = "Cartão / Novo Dependente ",
+                            st_log = "Mat: " + cart.st_matricula + " tit " + proxTit.ToString().PadLeft(2, '0') + " => Nome: " + mdl.valor
                         });
-
+                                               
                         return Ok();
                     }
             }
@@ -765,17 +782,13 @@ namespace DevKit.Web.Controllers
 
             db.Update(cart);
 
-            // ----------------------------------
-            // log de auditoria
-            // ----------------------------------
-
             db.Insert(new LOG_Audit
             {
-                tg_operacao = Convert.ToInt32(TipoOperacao.AltDadosPropCart),
-                fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
                 dt_operacao = DateTime.Now,
-                st_observacao = "",
-                fk_generic = (int)cart.i_unique
+                fk_usuario = userIdLoggedUsuario,
+                st_empresa = userLoggedEmpresa,
+                st_oper = "Editar Dados Cartão",
+                st_log = "Mat: " + cart.st_matricula
             });
 
             db.Update(cart);

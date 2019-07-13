@@ -254,6 +254,9 @@ namespace DataModel
         [Column, Nullable] public DateTime? dt_operacao { get; set; } // datetime
         [Column, Nullable] public string st_observacao { get; set; } // varchar(150)
         [Column, Nullable] public int? fk_generic { get; set; } // int
+        [Column, Nullable] public string st_empresa { get; set; } // varchar(150)
+        [Column, Nullable] public string st_oper { get; set; } // varchar(150)
+        [Column, Nullable] public string st_log { get; set; } // varchar(150)
     }
 
     [Table(Schema = "dbo", Name = "LOG_Chamado")]

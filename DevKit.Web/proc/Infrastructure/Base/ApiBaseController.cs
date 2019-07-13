@@ -84,6 +84,24 @@ namespace DevKit.Web.Controllers
             }
         }
 
+        public int? userIdLoggedUsuario
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+                var id = identity.Claims.
+                         Where(c => c.Type == "IdUsuario").
+                         Select(c => c.Value).
+                         SingleOrDefault();
+
+                if (id != null)
+                    return Convert.ToInt32(id);
+                else
+                    return null;
+            }
+        }
+
         [NonAction]
         public bool StartDatabaseAndAuthorize()
         {

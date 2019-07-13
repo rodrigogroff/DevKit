@@ -130,18 +130,12 @@
                     <table class="widget" style="color:white">
                         <tr height="12px">
                             <td width="20px"></td>
-                            <td width="100px">
-                                
-                            </td>
-                            <td width="20px">
-                                
-                            </td>
-                            <td width="260px">
-                                
-                            </td>
+                            <td width="100px"></td>
+                            <td width="20px"></td>
+                            <td width="260px"></td>
                             <td width="20px"></td>
                         </tr>
-                        
+
                         <tr height="43px">
                             <td></td>
                             <td>
@@ -498,6 +492,42 @@
             <button class="btn btn-primary" ng-click="save()" ng-disabled="loading == true">Salvar</button>
             <br />
             <br />
+
+            <div class="modal-backdrop"
+                 ng-if="modalSave == true"
+                 style="background: rgba(55, 55, 55, 0.5 );">
+                <div class="modal-dialog" style="width:450px">
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div class="modal-content" style="color:black" width="100%">
+                        <div style="height:200px">
+                            <h3>Cartão incluído com sucesso!</h3>
+                            <div align="center">
+                                <br />
+                                <br />
+                                Escolha uma opção abaixo:<br />
+                                <br />
+                                <br />
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <button class="btn btn-primary" ng-click="editarCartao()">Editar</button>
+                                        </td>
+                                        <td width="20px"></td>
+                                        <td>
+                                            <button class="btn btn-success" ng-click="novoCartao()">Novo cartão</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <br />
             <br />
         </div>

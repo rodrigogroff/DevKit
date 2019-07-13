@@ -267,6 +267,9 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
 
             $scope.novoCartao = function () {
                 $scope.modalSave = false;
+                $scope.mat_ok = false;
+                
+                init();
             };
 
         }]);

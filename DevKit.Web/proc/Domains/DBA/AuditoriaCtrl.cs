@@ -30,6 +30,7 @@ namespace DevKit.Web.Controllers
             var oper = Request.GetQueryStringValue("oper")?.ToUpper();
             var sdtInicial = Request.GetQueryStringValue<string>("dtInicial");
             var sdtFinal = Request.GetQueryStringValue<string>("dtFinal");
+            var resp = Request.GetQueryStringValue<string>("resp")?.ToUpper();
 
             DateTime? dtInicial = null, dtFinal = null;
 
@@ -47,6 +48,11 @@ namespace DevKit.Web.Controllers
             if (idEmpresa != null)
                 stEmpresa = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa).st_empresa;
 
+            List<int> lstIdUsers = new List<int>();
+
+            if (!string.IsNullOrEmpty(resp))
+                lstIdUsers = db.T_Usuario.Where(y => y.st_nome.ToUpper().Contains(resp)).Select (y=> (int) y.i_unique).ToList();
+
             // ----------------
             // query
             // ----------------
@@ -58,6 +64,9 @@ namespace DevKit.Web.Controllers
 
             if (!string.IsNullOrEmpty(oper))
                 query = query.Where(y => y.st_oper.ToUpper().Contains(oper.ToUpper()));
+
+            if (!string.IsNullOrEmpty(resp))
+                query = query.Where(y => lstIdUsers.Contains((int)y.fk_usuario));
 
             if (!string.IsNullOrEmpty(stEmpresa))
                 query = query.Where(y => y.st_empresa == stEmpresa);

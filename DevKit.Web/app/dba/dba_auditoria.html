@@ -29,18 +29,22 @@
                 <tr height="22px"> </tr>
                 <tr height="43px">
                     <td></td>
-                    <td>Data inicial</td>                    
+                    <td><b>Data inicial</b></td>
                     <td>
                         <input type="text" class="form-control input-transparent"
                                maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"
                                ng-model="campos.dtInicial">
                     </td>
                     <td></td>
-                    <td>Data final</td>
+                    <td><b>Data final</b></td>
                     <td>
                         <input type="text" class="form-control input-transparent"
                                maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"
                                ng-model="campos.dtFinal">
+                    </td>
+                    <td></td>
+                    <td align="right">
+                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
                     </td>
                     <td></td>
                 </tr>
@@ -64,10 +68,18 @@
                                ng-model="campos.cont" />
                     </td>
                     <td width="20px"></td>
-                    <td width="120px" align="right">
-                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
-                    </td>
+                    <td width="120px"></td>
                     <td width="20px"></td>
+                </tr>
+                <tr height="43px">
+                    <td></td>
+                    <td><b>Responsável</b></td>
+                    <td>
+                        <input type="text" focus="true"
+                               class="form-control input-transparent"
+                               ng-model="campos.resp" />
+                    </td>
+                    <td></td>
                 </tr>
                 <tr height="20px"></tr>
             </table>

@@ -41,6 +41,7 @@ angular.module('app.controllers').controller('DBAAuditoriaController',
                     take: take,
                     dtInicial: $scope.campos.dtInicial,
                     dtFinal: $scope.campos.dtFinal,
+                    resp: $scope.campos.resp,
                 };
 
                 Api.Auditoria.listPage(opcoes, function (data) {

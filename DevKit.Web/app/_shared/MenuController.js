@@ -12,7 +12,7 @@ angular.module('app.controllers').controller('MenuController',
             {
                 var tipo = $rootScope.tipo;
 
-                $rootScope.mobileVersion = $window.innerWidth < 1000;
+                $rootScope.mobileVersion = false;// $window.innerWidth < 1000;
 
                 AuthService.fillAuthData();
 

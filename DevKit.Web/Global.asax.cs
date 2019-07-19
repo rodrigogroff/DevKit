@@ -77,7 +77,18 @@ namespace DevKit.Web
                                                             y.fk_empresa == empresa.i_unique))
                                 continue;
 
+                            
+
                             currentEmpresa = empresa.st_empresa;
+
+                            db.Insert(new LOG_Audit
+                            {
+                                dt_operacao = DateTime.Now,
+                                fk_usuario = null,
+                                st_oper = "Fechamento [INICIO]",
+                                st_empresa = currentEmpresa,
+                                st_log = "Ano " + ano + " Mes " + mes
+                            });
 
                             var g_job = new T_JobFechamento
                             {

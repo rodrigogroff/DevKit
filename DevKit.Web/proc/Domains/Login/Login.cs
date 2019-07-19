@@ -334,6 +334,15 @@ namespace DevKit.Web
                                 }
                             }
 
+                            db.Insert(new LOG_Audit
+                            {
+                                dt_operacao = DateTime.Now,
+                                fk_usuario = Convert.ToInt32(tUser.i_unique),
+                                st_empresa = empresa,
+                                st_oper = "Login",
+                                st_log = "Empresa: " + empresa + " User:" + tUser.st_nome
+                            });
+
                             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
                             identity.AddClaim(new Claim(ClaimTypes.Name, usuario));

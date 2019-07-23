@@ -37,6 +37,7 @@ namespace DevKit.Web
 
         public override void Init()
         {
+            /*
             cache = HttpContext.Current.Application;
 
             if (cache["started_observer"] == null)
@@ -46,6 +47,7 @@ namespace DevKit.Web
                 new Thread(new ThreadStart(BatchService_ConfirmacaoAuto)).Start();
                 new Thread(new ThreadStart(BatchService_Fechamento)).Start();
             }
+            */
         }
 
         protected void BatchService_Fechamento()

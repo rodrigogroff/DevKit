@@ -58,10 +58,10 @@ namespace Descompacta
                     {
                         Console.WriteLine(">> erro! " + ex.ToString());
 
-                        using (var sw = new StreamWriter( Directory.GetCurrentDirectory() + "\\erro" + DateTime.Now.ToString("ddMMyyyyHHmmss") + "log.txt", false, Encoding.Default))
-                        {
-                            sw.WriteLine(ex.ToString());
-                        }
+                     //   using (var sw = new StreamWriter( Directory.GetCurrentDirectory() + "\\erro" + DateTime.Now.ToString("ddMMyyyyHHmmss") + "log.txt", false, Encoding.Default))
+                       // {
+                         //   sw.WriteLine(ex.ToString());
+                        //}
                     }
                 }
 

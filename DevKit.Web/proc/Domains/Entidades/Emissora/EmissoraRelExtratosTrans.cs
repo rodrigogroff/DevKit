@@ -296,6 +296,15 @@ namespace DevKit.Web.Controllers
                         }
                     }
 
+                    var tipoTrans = "";
+
+                    switch(tran.tg_contabil.ToString())
+                    {
+                        case "1": tipoTrans = "SITEF"; break;
+                        case "2": tipoTrans = "Web"; break;
+                        case "3": tipoTrans = "LA"; break;
+                    }
+
                     lstIT.itens.Add(new ItensTrans
                     {
                         idstatus = tran.tg_confirmada.ToString(),
@@ -308,7 +317,7 @@ namespace DevKit.Web.Controllers
                         parcelas = tran.nu_parcelas.ToString(),
                         terminal = term?.nu_terminal.ToString(),
                         valorTot = mon.setMoneyFormat((long)tran.vr_total),
-                        tipo = tran.tg_contabil.ToString() == "2" ? "Web" : "SITEF",
+                        tipo = tipoTrans,
                         motivo = tran.st_msg_transacao
                     });
                 }

@@ -15,6 +15,7 @@ namespace DevKit.Web.Controllers
                         qtd_conf,
                         qtd_canc,
                         qtd_pend,
+                        qtd_erro,
                         totValor;
 
         public List<ItensTransLojas> itens = new List<ItensTransLojas>();
@@ -79,12 +80,15 @@ namespace DevKit.Web.Controllers
             var tEmp = db.currentEmpresa;
 
             if (idEmpresa != null)
-            {
                 tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
-            }
+
+            var tIdEmpresa = 0;
+
+            if (tEmp != null)
+                tIdEmpresa = (int) tEmp.i_unique;
 
             var t_trans = (from e in db.LOG_Transacoes
-                           where e.fk_empresa == tEmp.i_unique
+                           where tIdEmpresa == 0 || e.fk_empresa == tIdEmpresa
                            where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
                            where idLoja == 0 || e.fk_loja == idLoja
                            orderby e.dt_transacao descending
@@ -133,6 +137,7 @@ namespace DevKit.Web.Controllers
                 var lojaTrans = trans.Where(y => y.fk_loja == item.i_unique).
                                         Where(y =>  y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada || 
                                                     y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada ||
+                                                    y.tg_confirmada.ToString() == TipoConfirmacao.Erro ||
                                                     y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).
                                         ToList();
 
@@ -143,9 +148,11 @@ namespace DevKit.Web.Controllers
                 relatLoja.qtd_conf = lojaTrans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).Count().ToString();
                 relatLoja.qtd_canc = lojaTrans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada).Count().ToString();
                 relatLoja.qtd_pend = lojaTrans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).Count().ToString();
+                relatLoja.qtd_erro = lojaTrans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Erro).Count().ToString();
 
                 foreach (var tran in lojaTrans.Where (y =>  y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada ||
                                                             y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada ||
+                                                            y.tg_confirmada.ToString() == TipoConfirmacao.Erro ||
                                                             y.tg_confirmada.ToString() == TipoConfirmacao.Pendente))
                 {
                     var cartao = cartoes.FirstOrDefault(y => y.i_unique == tran.fk_cartao);
@@ -166,12 +173,18 @@ namespace DevKit.Web.Controllers
                     {
                         case TipoConfirmacao.Cancelada: _sit = "Cancelada"; break;
                         case TipoConfirmacao.Pendente: _sit = "Pendente"; break;
+                        case TipoConfirmacao.Erro: _sit = "Erro"; break;
                     }
+
+                    string _cart = cartao.st_matricula + "." + cartao.st_titularidade;
+
+                    if (tEmp == null)
+                        _cart = cartao.st_empresa + "." + _cart;
 
                     relatLoja.itens.Add(new ItensTransLojas
                     {
                         associado = prop != null ? prop.st_nome : "",
-                        cartao = cartao.st_matricula + "." + cartao.st_titularidade,
+                        cartao = _cart,
                         dt = Convert.ToDateTime(tran.dt_transacao).ToString("dd/MM/yyyy HH:mm:ss"),
                         nsu = tran.nu_nsu.ToString(),
                         parcelas = tran.nu_parcelas.ToString(),
@@ -188,11 +201,12 @@ namespace DevKit.Web.Controllers
             {
                 results = lst,
                 dtEmissao = ObtemData(DateTime.Now),
-                empresa = tEmp.st_empresa + " - " + tEmp.st_fantasia,
+                empresa = tEmp?.st_empresa + " - " + tEmp?.st_fantasia,
                 periodo = ObtemData(dt_inicial).Substring(0, 10) + " a " + ObtemData(dt_final).Substring(0, 10),
                 vendasConf = mon.formatToMoney(trans.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).Sum ( y=> y.vr_total).ToString()),
                 qtdConf = trans.Count(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada),
                 qtdPend = trans.Count(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente),
+                qtdErro = trans.Count(y => y.tg_confirmada.ToString() == TipoConfirmacao.Erro),
                 qtdCanc = trans.Count(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada),
             });            
         }

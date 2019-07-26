@@ -13,7 +13,7 @@ namespace DevKit.Web.Controllers
 {
     public class RelLojistaTransItem
     {
-        public string data,
+        public string data, id,
                         nsu, 
                         situacao,
                         associado, 
@@ -85,6 +85,7 @@ namespace DevKit.Web.Controllers
 
             var confirmada = Request.GetQueryStringValue<bool?>("confirmada", null);
             var cancelada = Request.GetQueryStringValue<bool?>("cancelada", null);
+            var erro = Request.GetQueryStringValue<bool?>("erro", null);
             var pends = Request.GetQueryStringValue<bool?>("pends", null);
             var pendsConf = Request.GetQueryStringValue<bool?>("pendsConf", null);
             
@@ -183,9 +184,13 @@ namespace DevKit.Web.Controllers
 
                 if (confirmada == null) confirmada = false;
                 if (cancelada == null) cancelada = false;
+                if (erro == null) erro = false;
 
                 if (confirmada == true)
                     lstSits.Add(TipoConfirmacao.Confirmada);
+
+                if (erro == true)
+                    lstSits.Add(TipoConfirmacao.Erro);
 
                 if (cancelada == true)
                     lstSits.Add(TipoConfirmacao.Cancelada);
@@ -278,6 +283,8 @@ namespace DevKit.Web.Controllers
 
                 var mon = new money();
                 var res = new List<RelLojistaTransItem>();
+
+                int ID = 1;
 
                 foreach (var trans in query.Skip(skip).Take(take).ToList())
                 {
@@ -385,6 +392,7 @@ namespace DevKit.Web.Controllers
 
                     res.Add(new RelLojistaTransItem
                     {
+                        id = ID.ToString(),
                         data = Convert.ToDateTime(trans.dt_transacao).ToString("dd/MM/yyyy HH:mm:ss"),
                         nsu = trans.nu_nsu.ToString(),
                         situacao = sit,
@@ -396,6 +404,8 @@ namespace DevKit.Web.Controllers
                         totalValor = mon.setMoneyFormat(totValor),
                         cupom = cupom
                     });
+
+                    ID++;
                 }
 
                 if (exportar)

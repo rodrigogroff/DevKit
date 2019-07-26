@@ -11,7 +11,8 @@ angular.module('app.controllers').controller('GLTransController',
             $scope.campos = {
                 idOrdem: '1',
                 confirmada: true,
-                cancelada: false,
+                cancelada: true,
+                erro: true,
                 mes_inicial: $scope.date.getMonth() + 1,
                 mes_final: $scope.date.getMonth() + 1,
                 ano_inicial: $scope.date.getFullYear(),
@@ -26,13 +27,9 @@ angular.module('app.controllers').controller('GLTransController',
                 }
             };
 
-            $scope.itensporpagina = 15;
-
             init();
 
             function init() {
-                if (ngHistoricoFiltro.filtro)
-                    ngHistoricoFiltro.filtro.exibeFiltro = false;
             }
 
             $scope.search = function () {
@@ -44,8 +41,8 @@ angular.module('app.controllers').controller('GLTransController',
                 $scope.loading = true;
 
                 var opcoes = {
-                    skip: skip,
-                    take: take,
+                    skip: 0,
+                    take: 999999,
                     idEmpresa: $scope.campos.idEmpresa
                 };
 

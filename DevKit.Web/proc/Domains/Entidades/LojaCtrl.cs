@@ -531,6 +531,8 @@ namespace DevKit.Web.Controllers
             mdlUpdate.nu_periodoFat = Convert.ToInt32(mdl.nu_periodoFat);
             mdlUpdate.nu_diavenc = Convert.ToInt32(mdl.nu_diavenc);
 
+            mdlUpdate.tg_blocked = mdl.tg_blocked;
+
             mdlUpdate.nu_pctValor = Convert.ToInt32(mon.prepareNumber(mdl.snuPctValor));
             mdlUpdate.vr_mensalidade = Convert.ToInt32(mon.prepareNumber(mdl.svrMensalidade));
             mdlUpdate.vr_minimo = Convert.ToInt32(mon.prepareNumber(mdl.svrMinimo));

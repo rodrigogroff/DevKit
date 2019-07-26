@@ -26,12 +26,6 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransLojasControl
 
             $scope.search = function () {
 
-                if ($scope.tipo == '5') {
-                    $scope.emp_fail = $scope.campos.idEmpresa == undefined;
-                    if ($scope.emp_fail == true)
-                        return;
-                }
-
                 $scope.list = undefined;
 
                 $scope.dtIni_fail = invalidCheck($scope.campos.dtInicial);
@@ -56,6 +50,7 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransLojasControl
                     $scope.qtdConf = data.qtdConf;
                     $scope.qtdPend = data.qtdPend;
                     $scope.qtdCanc = data.qtdCanc;
+                    $scope.qtdErro = data.qtdErro;
                     $scope.loading = false;
                 },
                     function (response) {

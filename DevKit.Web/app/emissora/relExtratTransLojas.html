@@ -82,6 +82,7 @@
                 <b>Quantidade (confirmadas)</b>: {{qtdConf}}<br />
                 <b>Quantidade (pendentes)</b>: {{qtdPend}}<br />
                 <b>Quantidade (canceladas)</b>: {{qtdCanc}}<br />
+                <b>Quantidade (erro)</b>: {{qtdErro}}<br />
                 <br />
 
                 <div data-ng-repeat="loja in list">
@@ -91,6 +92,7 @@
                     Número de transações confirmadas: {{loja.qtd_conf}}<br />
                     Número de transações canceladas: {{loja.qtd_canc}}<br />
                     Número de transações pendentes: {{loja.qtd_pend}}<br />
+                    Número de transações erro: {{loja.qtd_erro}}<br />
                     <br />
                     <table class="table table-hover">
                         <thead>
@@ -116,7 +118,7 @@
                             <td>{{ mdl.terminal }}</td>
                         </tr>
                     </table>
-                </div>             
+                </div>
                 <br />
             </div>
             <br />

@@ -102,6 +102,7 @@
                                 <td>
                                     <input type="checkbox" ng-model="campos.confirmada"> Confirmada<br />
                                     <input type="checkbox" ng-model="campos.cancelada"> Cancelada<br />
+                                    <input type="checkbox" ng-model="campos.erro"> Erro<br />
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -135,31 +136,32 @@
 						<div ng-show="list.length > 0">							
                             <h4>Total de transações: {{ list[0].totalTransacoes }}</h4>
                             <h4>Total em vendas: R$ <b>{{ list[0].totalValor }}</b></h4>
-							<ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
 							<br />
 							<table class="table table-hover">
 								<thead>
-									<tr>
-										<th>Data venda</th>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Data venda</th>
                                         <th>NSU</th>
                                         <th>Situação</th>
-										<th>Associado</th>
+                                        <th>Associado</th>
                                         <th>Valor total</th>
                                         <th>Parcelas</th>
                                         <th>Terminal</th>
                                         <th>Segunda Via</th>
-									</tr>
+                                    </tr>
 								</thead>
-								<tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                    <td>{{ mdl.id }}</td>
                                     <td>{{ mdl.data }}</td>
                                     <td>{{ mdl.nsu }}</td>
                                     <td>{{ mdl.situacao }}</td>
-									<td>{{ mdl.associado }}</td>
+                                    <td>{{ mdl.associado }}</td>
                                     <td>{{ mdl.valor }}</td>
                                     <td>{{ mdl.parcelas }}</td>
                                     <td>{{ mdl.terminal }}</td>
                                     <td><a ng-if="mdl.situacao == 'Confirmada' || mdl.situacao == 'Cancelada'" ng-click="printDiv(mdl.parcelas, mdl.cupom)">Cupom</a></td>
-								</tr>
+                                </tr>
 							</table>                            
 						</div>
 						<br />

@@ -100,6 +100,7 @@ namespace DevKit.Web.Controllers
 
             var query = (from e in db.T_Cartao
                          where e.st_empresa == tEmp.st_empresa
+                         where e.st_titularidade == "01"
                          select e);
 
             #region - filtros - 
@@ -233,6 +234,9 @@ namespace DevKit.Web.Controllers
                                        where e.st_matricula == cartaoAtual.st_matricula
                                        where e.st_empresa == cartaoAtual.st_empresa
                                        select e).FirstOrDefault();
+
+                            if (cartTit == null)
+                                continue;
 
                              limM = cartTit.vr_limiteMensal;
                              limT = cartTit.vr_limiteTotal;

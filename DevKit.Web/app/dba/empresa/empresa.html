@@ -6,7 +6,8 @@
                 <tr height="48px">
                     <td width="20px"></td>
                     <td>
-                        DBA \ Cadastro de Empresa <i class="fa fa-spinner fa-spin" ng-show="loading"></i> <b><span class="btn-success" ng-show="viewModel.id > 0"> &nbsp;{{viewModel.nome}}&nbsp;</span></b>
+                        DBA \ Cadastro de Empresa <i class="fa fa-spinner fa-spin" ng-show="loading"></i> &nbsp;&nbsp;<b><span class="btn-success" ng-show="viewModel.i_unique > 0"> 
+                        &nbsp;{{viewModel.st_fantasia}}&nbsp;</span></b>
                     </td>
                     <td width="20px"></td>
                 </tr>
@@ -276,6 +277,17 @@
                                 <td></td>
                                 <td>
                                     <b>Sim</b> <input type="checkbox" ng-model="viewModel.tg_isentoFat" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Saldo em cartões?</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <b>Sim</b> <input type="checkbox" ng-model="viewModel.tg_convenioComSaldo" />
                                 </td>
                                 <td></td>
                             </tr>

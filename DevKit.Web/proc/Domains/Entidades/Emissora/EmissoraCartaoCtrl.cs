@@ -57,9 +57,11 @@ namespace DevKit.Web.Controllers
                         email,
                         situacao, expedicao,
                         via,
-                        fkEmpresa,
+                        fkEmpresa,                        
                         uf, cidade, cep, end, numero, bairro,
                         modo, valor, array;
+
+        public bool? tg_convenioComSaldo;
 
         public List<CartaoDependenteDTO> lstDeps = new List<CartaoDependenteDTO>();
         public List<CartaoLoteDTO> lstLotes = new List<CartaoLoteDTO>();
@@ -400,6 +402,7 @@ namespace DevKit.Web.Controllers
                 // cartão
                 id = id.ToString(),
                 matricula = cart.st_matricula,
+                tg_convenioComSaldo = cart.tg_convenioComSaldo,
                 limMes = mon.setMoneyFormat((long)cart.vr_limiteMensal),
                 limTot = mon.setMoneyFormat((long)cart.vr_limiteTotal),                
                 vencMes = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(0, 2),
@@ -428,7 +431,7 @@ namespace DevKit.Web.Controllers
             cart.st_matricula = mdl.matricula.PadLeft(6,'0');
             cart.st_banco = mdl.banco;
             cart.st_agencia = mdl.bancoAg;
-            cart.st_conta = mdl.bancoCta;
+            cart.st_conta = mdl.bancoCta;            
             cart.st_venctoCartao = mdl.vencMes.PadLeft(2, '0') + mdl.vencAno.PadLeft(2, '0');
         }
 
@@ -459,12 +462,19 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            var prop = new T_Proprietario();
+            var cart = new T_Cartao();
+
             var st_empresa = userLoggedEmpresa;
 
             if (!string.IsNullOrEmpty(mdl.fkEmpresa))
             {
                 // dba
-                st_empresa = db.T_Empresa.FirstOrDefault(y => y.i_unique.ToString() == mdl.fkEmpresa).st_empresa;
+                var tDb = db.T_Empresa.FirstOrDefault(y => y.i_unique.ToString() == mdl.fkEmpresa);
+
+                st_empresa = tDb.st_empresa;
+
+                cart.tg_convenioComSaldo = tDb.tg_convenioComSaldo;
             }
 
             if ( (from e in db.T_Cartao
@@ -485,8 +495,6 @@ namespace DevKit.Web.Controllers
                 return BadRequest("Matrícula já cadastrada nesta empresa!");
             }
 
-            var prop = new T_Proprietario();
-            var cart = new T_Cartao();
 
             CopiaDadosProprietario(mdl, ref prop);
             
@@ -501,6 +509,8 @@ namespace DevKit.Web.Controllers
             cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
             cart.tg_tipoCartao = Convert.ToChar(TipoCartao.empresarial);
             cart.nu_senhaErrada = Convert.ToInt32(Context.NONE);
+
+            cart.tg_convenioComSaldo = mdl.tg_convenioComSaldo;
 
             cart.dt_bloqueio = DateTime.Now;
             cart.dt_inclusao = DateTime.Now;
@@ -529,14 +539,6 @@ namespace DevKit.Web.Controllers
                 st_log = "Mat: " + cart.st_matricula + " Nome:" + prop.st_nome
             });
 
-            /*db.Insert(new LOG_Audit
-            {
-                tg_operacao = Convert.ToInt32(TipoOperacao.CadCartao),
-                fk_usuario = Convert.ToInt32(userLoggedEmpresaIdUsuario),
-                dt_operacao = DateTime.Now,
-                st_observacao = "",
-                fk_generic = 0
-            });*/
 
             return Ok(cart);
         }
@@ -779,6 +781,9 @@ namespace DevKit.Web.Controllers
             db.Update(prop);
 
             CopiaDadosCartao(mdl, ref cart, (int?) prop.i_unique, st_empresa);
+
+            // custom field
+            cart.tg_convenioComSaldo = mdl.tg_convenioComSaldo;
 
             db.Update(cart);
 

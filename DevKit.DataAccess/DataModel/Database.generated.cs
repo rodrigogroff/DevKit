@@ -78,6 +78,7 @@ namespace DataModel
         public ITable<T_Terminal> T_Terminal { get { return this.GetTable<T_Terminal>(); } }
         public ITable<T_Usuario> T_Usuario { get { return this.GetTable<T_Usuario>(); } }
         public ITable<T_WebBlock> T_WebBlock { get { return this.GetTable<T_WebBlock>(); } }
+        public ITable<T_SaldoConvenio> T_SaldoConvenio { get { return this.GetTable<T_SaldoConvenio>(); } }
 
         public AutorizadorCNDB()
         {
@@ -130,6 +131,16 @@ namespace DataModel
         }
 
         #endregion
+    }
+
+    [Table(Schema = "dbo", Name = "T_SaldoConvenio")]
+    public partial class T_SaldoConvenio
+    {
+        [PrimaryKey, Identity] public long i_unique { get; set; }
+        [Column, Nullable] public long fk_cartao { get; set; }
+        [Column, Nullable] public long vr_saldo { get; set; }
+        [Column, Nullable] public long nu_mes { get; set; }
+        [Column, Nullable] public long nu_ano { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "T_JobFechamento")]
@@ -426,6 +437,8 @@ namespace DataModel
         [Column, Nullable] public int? nu_webSenhaErrada { get; set; } // int
         [Column, Nullable] public int? tg_semanaCompleta { get; set; } // int
         [Column, Nullable] public int? tg_excluido { get; set; } // int
+        [Column, Nullable] public bool? tg_convenioComSaldo { get; set; }
+        [Column, Nullable] public long? vr_saldoConvenio { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "T_Chamado")]
@@ -530,6 +543,7 @@ namespace DataModel
         [Column, Nullable] public string st_homepage { get; set; } // varchar(500)
         [Column, Nullable] public int? nu_diaFech { get; set; } // int
         [Column, Nullable] public string st_horaFech { get; set; } // varchar(500)
+        [Column, Nullable] public bool? tg_convenioComSaldo { get; set; } // varchar(500)
     }
 
     [Table(Schema = "dbo", Name = "T_EmpresaAfiliada")]

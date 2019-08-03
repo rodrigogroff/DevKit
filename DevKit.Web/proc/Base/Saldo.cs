@@ -115,8 +115,7 @@ namespace DevKit.Web.Controllers
                 if (transacao == null)
                     continue;
 
-                if (transacao.tg_confirmada.ToString() == TipoConfirmacao.Confirmada ||
-                    transacao.tg_confirmada.ToString() == TipoConfirmacao.Pendente )
+                if (transacao.tg_confirmada.ToString() == TipoConfirmacao.Confirmada )
                 {
                     dispMensal -= (int) parc.vr_valor;
                     vrUtilizadoAtual += (long) parc.vr_valor;
@@ -141,8 +140,7 @@ namespace DevKit.Web.Controllers
 
                 var sit = transacao.tg_confirmada.ToString();
 
-                if (sit == TipoConfirmacao.Confirmada ||
-                    sit == TipoConfirmacao.Pendente)
+                if (sit == TipoConfirmacao.Confirmada)
                 {
                     dispTotal -= (int)parc.vr_valor;
                 }

@@ -526,8 +526,6 @@ namespace DevKit.Web.Controllers
 
             cart.st_empresa = st_empresa;
 
-            db.Insert(cart);
-
             cart.i_unique = Convert.ToDecimal (db.InsertWithIdentity(cart));
 
             // ----------------------------------

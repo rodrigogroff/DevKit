@@ -169,6 +169,7 @@ namespace DevKit.Web.Controllers
                                        {
                                            id = e.i_unique.ToString(),
                                            matricula = e.st_matricula,
+                                           titularidade = e.st_titularidade,
                                            associado = d.st_nome
                                        }).
                                       ToList();

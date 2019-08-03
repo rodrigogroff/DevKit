@@ -43,12 +43,14 @@
                         <tr>
                             <th> </th>
                             <th>Matricula</th>
+                            <th>Titularidade</th>
                             <th>Associado</th>
                         </tr>
                     </thead>
                     <tr data-ng-repeat="mdl in list" style="color:white">
                         <td><input type="checkbox" ng-click="confirmar(mdl)" ng-checked="mdl.selecionado" /></td>
                         <td>{{ mdl.matricula }}</td>
+                        <td>{{ mdl.titularidade }}</td>
                         <td>{{ mdl.associado }}</td>
                     </tr>
                 </table>

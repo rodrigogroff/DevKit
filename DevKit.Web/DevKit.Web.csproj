@@ -242,9 +242,13 @@
     <Content Include="app\associado\ExtratosController.js" />
     <Content Include="app\associado\LojistasAssociadoController.js" />
     <Content Include="app\associado\LimitesController.js" />
+    <Content Include="app\dba\dba_usuarios.html" />
+    <Content Include="app\dba\dba_usuariosController.js" />
     <Content Include="app\dba\dba_auditoriacontroller.js" />
     <Content Include="app\dba\DBAListagemCartaoController.js" />
     <Content Include="app\dba\dba_auditoria.html" />
+    <Content Include="app\dba\dbaUsuario.html" />
+    <Content Include="app\dba\dbaUsuario.js" />
     <Content Include="app\dba\empresa\empresa.html" />
     <Content Include="app\dba\empresa\empresa.js" />
     <Content Include="app\dba\empresa\listingEmpresas.html" />
@@ -705,6 +709,7 @@
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\DBA\AuditoriaCtrl.cs" />
+    <Compile Include="proc\Domains\DBA\DBAUsuarioCtrl.cs" />
     <Compile Include="proc\Domains\DBA\FaturamentoDBACtrl.cs" />
     <Compile Include="proc\Domains\DBA\ExpedicaoDBACtrl.cs" />
     <Compile Include="proc\Domains\DBA\ListagemRastreamentoCtrl.cs" />

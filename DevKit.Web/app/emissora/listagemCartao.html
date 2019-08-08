@@ -124,7 +124,11 @@
                                         <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.dtInicial }}</td>
                                         <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.dtUltExp }}</td>
                                         <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.situacao }}<br />{{ mdl.expedicao }}</td>
-                                        <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.limM }}</td>
+                                        <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.limM }}
+                                            <div ng-if="mdl.limAcc !== '0,00'">
+                                                Acc: {{ mdl.limM }}
+                                            </div>                                        
+                                        </td>
                                         <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.limT }}</td>
                                         <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.limCota }}</td>
                                         <td style="min-width:120px;color:{{mdl.colorFront}}">{{ mdl.dispM }}</td>

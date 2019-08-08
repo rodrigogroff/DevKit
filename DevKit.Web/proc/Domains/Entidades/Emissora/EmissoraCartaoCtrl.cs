@@ -25,6 +25,7 @@ namespace DevKit.Web.Controllers
                         via,
                         dispM, 
                         limM, 
+                        limAcc,
                         dispT, 
                         limT,
                         colorBack, colorFront,
@@ -51,13 +52,13 @@ namespace DevKit.Web.Controllers
                         cpf,
                         vencMes, vencAno,
                         dtNasc,
-                        limMes, limTot, limCota,
+                        limMes, limTot, limCota, limAcc,
                         banco, bancoAg, bancoCta,
                         tel,
                         email,
                         situacao, expedicao,
                         via,
-                        fkEmpresa,                        
+                        fkEmpresa,                      
                         uf, cidade, cep, end, numero, bairro,
                         modo, valor, array;
 
@@ -153,17 +154,19 @@ namespace DevKit.Web.Controllers
                 case null:
                 case EnumOrdemEmissorManutCartoes.nomeAssociado:
 
-                    query = (from e in query
+                    if (matricula != null && matricula != "")
+                        query = (from e in query
                              join p in db.T_Proprietario on e.fk_dadosProprietario equals (int)p.i_unique
-                             orderby p.st_nome, e.st_titularidade
+                             orderby e.st_titularidade, p.st_nome
                              select e);
 
                     break;
 
                 case EnumOrdemEmissorManutCartoes.matricula:
 
-                    query = (from e in query
-                             orderby e.st_matricula, e.st_titularidade
+                    if (matricula != null && matricula != "")
+                        query = (from e in query
+                             orderby e.st_titularidade, e.st_matricula
                              select e);
 
                     break;
@@ -269,6 +272,7 @@ namespace DevKit.Web.Controllers
                             dtUltExp = dtPrimTtrans != null ? Convert.ToDateTime(dtPrimTtrans).ToString("dd/MM/yyyy") : "",
                             tit = cartaoAtual.st_titularidade,
                             limM = mon.setMoneyFormat((long)limM),
+                            limAcc = cartaoAtual.vr_saldoConvenio > 0 ? mon.setMoneyFormat((long)cartaoAtual.vr_saldoConvenio) : "0,00",
                             limT = mon.setMoneyFormat((long)limT),
                             limCota = mon.setMoneyFormat((long)limEC),
                             dispM = mon.setMoneyFormat(dispM),
@@ -409,6 +413,7 @@ namespace DevKit.Web.Controllers
                 tg_convenioComSaldo = cart.tg_convenioComSaldo,
                 limMes = mon.setMoneyFormat((long)cart.vr_limiteMensal),
                 limTot = mon.setMoneyFormat((long)cart.vr_limiteTotal),                
+                limAcc = cart.vr_saldoConvenio > 0 ? mon.setMoneyFormat((long)cart.vr_saldoConvenio) : "0,00",
                 vencMes = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(0, 2),
                 vencAno = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(2, 2),
                 banco = cart.st_banco,                
@@ -417,7 +422,7 @@ namespace DevKit.Web.Controllers
                 situacao = cs.Convert(cart.tg_status),
                 expedicao = se.Convert(cart.tg_emitido),
                 via = cart.nu_viaCartao.ToString(),
-
+                
                 // listas
                 lstDeps = lstDeps,
                 lstLotes = lstLotes

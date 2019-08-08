@@ -193,6 +193,8 @@ namespace DevKit.Web.Controllers
                             saldoT = mon.setMoneyFormat((long)cartao.vr_limiteTotal),
                             saldoDT = mon.setMoneyFormat(dispTot),
                             saldoCT = mon.setMoneyFormat((long)cartao.vr_extraCota),
+                            saldoAcc = cartao.vr_saldoConvenio > 0 ? mon.setMoneyFormat((long)cartao.vr_saldoConvenio) : "0,00",
+                            saldoMensAcc = cartao.vr_saldoConvenio > 0 ? mon.setMoneyFormat((long)cartao.vr_saldoConvenio + (long)cartao.vr_limiteMensal) : "0,00",
                             associado = associado.st_nome,
                             cartao = cartao.st_empresa + "." + cartao.st_matricula,
                             cpf = associado.st_cpf,

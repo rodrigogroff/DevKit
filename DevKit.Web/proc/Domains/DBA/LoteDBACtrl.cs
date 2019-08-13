@@ -67,7 +67,19 @@ namespace DevKit.Web.Controllers
                     var cart = lstCartoes.FirstOrDefault(y => y.i_unique == item.fk_cartao);
                     var venctoCartao = cart.st_venctoCartao.PadLeft(4, '0');
 
-                    line += item.st_nome_cartao.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
+                    var nome = "";
+
+                    if (cart.st_titularidade == "01")
+                    {
+                        nome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario).st_nome;
+                    }
+                    else
+                    {
+                        nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == cart.fk_dadosProprietario &&
+                                                                   y.nu_titularidade == Convert.ToInt32(cart.st_titularidade)).st_nome;
+                    }
+
+                    line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
                     line += emp.st_empresa + ",";
                     line += item.nu_matricula.ToString().PadLeft(6, '0') + ",";
 
@@ -80,7 +92,7 @@ namespace DevKit.Web.Controllers
                                                     item.nu_via_original.ToString(),
                                                     item.nu_cpf ) + ",";
 
-                    line += item.st_nome_cartao + ",|";
+                    line += nome + ",|";
 
                     line += "826766" + cart.st_empresa +
                                             cart.st_matricula +
@@ -166,7 +178,8 @@ namespace DevKit.Web.Controllers
                     {
                         var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == itemC);
 
-                        if (cart.tg_emitido != 2) // ativo
+                        if (cart != null)
+                            if (cart.tg_emitido != 2) // ativo
                             found = true;
                     }
 

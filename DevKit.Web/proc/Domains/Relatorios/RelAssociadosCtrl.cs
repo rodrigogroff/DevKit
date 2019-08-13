@@ -78,8 +78,9 @@ namespace DevKit.Web.Controllers
             if (busca != null)
             {
                 query = (from e in query
-                         join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int) associado.i_unique
-                         where associado.st_nome.ToUpper().Contains(busca.ToUpper())
+                         join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int)associado.i_unique
+                         join dependente in db.T_Dependente on e.fk_dadosProprietario equals (int)dependente.fk_proprietario
+                         where associado.st_nome.ToUpper().Contains(busca.ToUpper()) || dependente.st_nome.ToUpper().Contains (busca.ToUpper())
                          select e);
             }
 
@@ -148,10 +149,17 @@ namespace DevKit.Web.Controllers
                                         OrderByDescending(y => y.dt_transacao).
                                         FirstOrDefault();
 
+                    var nome = "";
+
+                    if (item.st_titularidade == "01")
+                        nome = assoc.st_nome;
+                    else
+                        nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == assoc.i_unique).st_nome;
+                    
                     res.Add(new RelAssociadosItem
                     {
                         id = item.i_unique.ToString(),
-                        associado = assoc.st_nome,
+                        associado = nome,
 
                         cartao = item.st_empresa + "." +
                                  item.st_matricula + "." +

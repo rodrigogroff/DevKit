@@ -32,12 +32,24 @@ namespace DevKit.Web.Controllers
             {
                 var cart = db.T_Cartao.FirstOrDefault( y=> y.i_unique == item.fk_cartao );
 
+                var nome = "";
+
+                if (cart.st_titularidade == "01")
+                {
+                    nome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario).st_nome;
+                }
+                else
+                {
+                    nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == cart.fk_dadosProprietario && 
+                                                               y.nu_titularidade == Convert.ToInt32 (cart.st_titularidade)).st_nome;
+                }
+
                 lstDet.Add(new T_LoteCartaoDetalheDTO
                 {
                     sdt_pedido = item.dt_pedido != null ? Convert.ToDateTime(item.dt_pedido).ToString() : "",
                     cpf = item.nu_cpf.ToString(),
                     tg_emitido = cart.tg_emitido == 2 ? "Emitido" : "Não Emitido ("+ cart.tg_emitido + ")",
-                    nome = item.st_nome_cartao,
+                    nome = nome,
                     matricula = item.nu_matricula.ToString(),
                     titularidade = item.nu_titularidade.ToString(),
                     via = item.nu_via_original.ToString(),

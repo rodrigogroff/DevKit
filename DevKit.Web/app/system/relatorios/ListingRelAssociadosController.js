@@ -43,6 +43,7 @@ angular.module('app.controllers').controller('ListingRelAssociadosController',
                     idEmpresa: $scope.campos.idEmpresa,
                     bloqueado: $scope.campos.bloqueado,
                     expedicao: $scope.campos.expedicao,
+                    titularidade: $scope.campos.titularidade,
                     busca: $scope.campos.busca
                 };
 

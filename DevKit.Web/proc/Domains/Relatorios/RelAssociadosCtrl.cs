@@ -20,6 +20,7 @@ namespace DevKit.Web.Controllers
         {
             var busca = Request.GetQueryStringValue("busca");
             var matricula = Request.GetQueryStringValue("matricula");
+            var titularidade = Request.GetQueryStringValue("titularidade");
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
             var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa", null);
@@ -73,6 +74,13 @@ namespace DevKit.Web.Controllers
                 {
                     query = (from e in query where e.tg_emitido.ToString() == StatusExpedicao.Expedido select e);
                 }
+            }
+
+            if (!string.IsNullOrEmpty (titularidade))
+            {
+                query = (from e in query
+                         where e.st_titularidade == titularidade.PadLeft(2, '0')
+                         select e);
             }
 
             if (busca != null)

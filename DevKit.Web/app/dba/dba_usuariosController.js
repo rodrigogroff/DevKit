@@ -17,6 +17,10 @@ angular.module('app.controllers').controller('DBAListUsuariosController',
                 }
             };
 
+            $scope.novoUsuario = {
+
+            };
+
             init();
 
             function init() {
@@ -32,6 +36,24 @@ angular.module('app.controllers').controller('DBAListUsuariosController',
             $scope.show = function (mdl) {
                 console.log(mdl);
                 $state.go('usuario', { id: mdl.id });
+            };
+
+            $scope.abreNovo = function () {
+                $scope.novoUsuario = {};
+                $scope.modal = true;                
+            };
+
+            $scope.fecharModal = function () {
+                $scope.modal = false;
+            };
+
+            $scope.criarNovoUsuario = function () {
+
+                Api.DBAUsuario.add($scope.novoUsuario, function (data) {
+                    toastr.success('Usuário adicionado!', 'Sucesso');
+                });
+
+                $scope.modal = false;
             };
 
             $scope.load = function (skip, take) {

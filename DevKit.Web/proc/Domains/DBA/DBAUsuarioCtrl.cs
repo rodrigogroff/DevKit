@@ -6,12 +6,19 @@ using System.Net;
 using DataModel;
 using System;
 using SyCrafEngine;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DevKit.Web.Controllers
 {
     public class DBAUsuarioDTO
     {
         public string id,nome, empresa, sit, ultLogin;
+    }
+
+    public class DBAUsuarioNovo
+    {
+        public string idEmpresa, nome;
     }
 
     public class DBAUsuarioController : ApiControllerBase
@@ -70,6 +77,47 @@ namespace DevKit.Web.Controllers
             return Ok(mdl);
         }
 
+        [NonAction]
+        public string getMd5Hash(string input)
+        {
+            // Create a new instance of the MD5CryptoServiceProvider object.
+            MD5 md5Hasher = MD5.Create();
+
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
+
+        [HttpPost]
+        public IHttpActionResult Post(DBAUsuarioNovo mdl)
+        {
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            db.Insert(new T_Usuario
+            {
+                st_nome = mdl.nome,
+                tg_bloqueio = '0',
+                st_empresa = db.T_Empresa.FirstOrDefault(y => y.i_unique.ToString() == mdl.idEmpresa).st_empresa,
+                st_senha = getMd5Hash (mdl.nome),
+            });
+
+            return Ok(mdl);
+        }
+
         /*
         [HttpPut]
         public IHttpActionResult Put(T_Empresa mdl)
@@ -105,33 +153,7 @@ namespace DevKit.Web.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        public IHttpActionResult Post(T_Empresa mdl)
-        {
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
-            var mon = new money();
-
-            if (!string.IsNullOrEmpty(mdl.svrMensalidade))
-                mdl.vr_mensalidade = (int)mon.getNumericValue(mdl.svrMensalidade);
-
-            if (!string.IsNullOrEmpty(mdl.svrCartaoAtivo))
-                mdl.vr_cartaoAtivo = (int)mon.getNumericValue(mdl.svrCartaoAtivo);
-
-            if (!string.IsNullOrEmpty(mdl.svrMinimo))
-                mdl.vr_minimo = (int)mon.getNumericValue(mdl.svrMinimo);
-
-            if (!string.IsNullOrEmpty(mdl.svrTransacao))
-                mdl.vr_transacao = (int)mon.getNumericValue(mdl.svrTransacao);
-
-            if (!string.IsNullOrEmpty(mdl.snuFranquia))
-                mdl.nu_franquia = (int)mon.getNumericValue(mdl.snuFranquia);
-
-            mdl.i_unique = Convert.ToInt64(db.InsertWithIdentity(mdl));
-
-            return Ok(mdl);
-        }
+        
         */
     }
 }

@@ -13,12 +13,13 @@ namespace DevKit.Web.Controllers
 {
     public class DBAUsuarioDTO
     {
-        public string id,nome, empresa, sit, ultLogin;
+        public string id, nome, empresa, sit, idEmpresa, ultLogin, senha;
+        public bool bloqueio = false;
     }
 
     public class DBAUsuarioNovo
     {
-        public string idEmpresa, nome;
+        public string idEmpresa, nome, senha;
     }
 
     public class DBAUsuarioController : ApiControllerBase
@@ -74,7 +75,12 @@ namespace DevKit.Web.Controllers
 
             var mdl = (from e in db.T_Usuario where e.i_unique == id select e).FirstOrDefault();
 
-            return Ok(mdl);
+            return Ok(new DBAUsuarioDTO
+            {
+                bloqueio = mdl.tg_bloqueio == '1',
+                nome = mdl.st_nome,
+                idEmpresa = db.T_Empresa.FirstOrDefault ( y=> y.st_empresa == mdl.st_empresa ).i_unique.ToString()
+            });
         }
 
         [NonAction]
@@ -112,48 +118,35 @@ namespace DevKit.Web.Controllers
                 st_nome = mdl.nome,
                 tg_bloqueio = '0',
                 st_empresa = db.T_Empresa.FirstOrDefault(y => y.i_unique.ToString() == mdl.idEmpresa).st_empresa,
-                st_senha = getMd5Hash (mdl.nome),
+                st_senha = getMd5Hash (mdl.senha),
             });
 
             return Ok(mdl);
         }
 
-        /*
         [HttpPut]
-        public IHttpActionResult Put(T_Empresa mdl)
+        public IHttpActionResult Put(DBAUsuarioDTO mdl)
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mon = new money();
+            var tb = db.T_Usuario.FirstOrDefault(y => y.i_unique.ToString() == mdl.id);
 
-            if (!string.IsNullOrEmpty(mdl.svrMensalidade))
-                mdl.vr_mensalidade = (int) mon.getNumericValue(mdl.svrMensalidade);
+            if (!string.IsNullOrEmpty(mdl.senha))
+            {
+                tb.st_senha = getMd5Hash(mdl.senha);
+            }
 
-            if (!string.IsNullOrEmpty(mdl.svrCartaoAtivo))
-                mdl.vr_cartaoAtivo = (int)mon.getNumericValue(mdl.svrCartaoAtivo);
+            tb.st_nome = mdl.nome;
 
-            if (!string.IsNullOrEmpty(mdl.svrMinimo))
-                mdl.vr_minimo = (int)mon.getNumericValue(mdl.svrMinimo);
+            if (mdl.bloqueio)
+                tb.tg_bloqueio = '1';
+            else
+                tb.tg_bloqueio = '0';
 
-            if (!string.IsNullOrEmpty(mdl.svrTransacao))
-                mdl.vr_transacao = (int)mon.getNumericValue(mdl.svrTransacao);
-
-            if (!string.IsNullOrEmpty(mdl.snuFranquia))
-                mdl.nu_franquia = (int)mon.getNumericValue(mdl.snuFranquia);
-
-            if (mdl.nu_diaFech > 28)
-                return BadRequest("Dia de fechamento precisa estar entre 1 e 28");
-
-            if (mdl.nu_diaFech == 0)
-                return BadRequest("Dia de fechamento não pode estar zerado");
-
-            db.Update(mdl);
+            db.Update(tb);
 
             return Ok();
         }
-
-        
-        */
     }
 }

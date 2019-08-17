@@ -63,7 +63,7 @@
                                         <tr>
                                             <th>Empresa</th>
                                             <th>Nome</th>
-                                            <th>Situacao</th>
+                                            <th>Situação</th>
                                         </tr>
                                     </thead>
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
@@ -105,6 +105,17 @@
                                 <td width="20px"></td>
                             </tr>
                             <tr height="43px">
+                                <td width="20px"></td>
+                                <td width="130px">
+                                    <b>Senha Inicial</b>
+                                </td>
+                                <td width="20px"></td>
+                                <td width="320px">
+                                    <input type="text" class="form-control input-transparent" maxlength="200" ng-model="novoUsuario.senha">
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                            <tr height="43px">
                                 <td></td>
                                 <td>
                                     <b>Empresa</b>
@@ -114,7 +125,7 @@
                                     <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.empresa" ng-model="novoUsuario.idEmpresa" />
                                 </td>
                                 <td></td>
-                            </tr>                            
+                            </tr>
                             <tr height="22px"> </tr>
                         </table>
                         <br />

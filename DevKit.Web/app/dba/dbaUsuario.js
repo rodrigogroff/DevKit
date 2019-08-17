@@ -24,15 +24,12 @@ angular.module('app.controllers').controller('DBAEditUsuarioController',
                 }
             }
 
-            $scope.atualizar = function () {
-                Api.EmpresaDBA.get({ id: id }, function (data) {
-                    $scope.viewModel = data;
-                    $scope.loading = false;
-                },
-                    function (response) {
-                        if (response.status === 404) { toastr.error('Invalid ID', 'Erro'); }
-                        $scope.list();
-                    });
+            $scope.trocaSenha = function () {
+                $scope.viewModel.modal = true;
+            };
+
+            $scope.fecharModal = function () {
+                $scope.viewModel.modal = false;
             };
 
             var invalidCheck = function (element) {
@@ -46,40 +43,32 @@ angular.module('app.controllers').controller('DBAEditUsuarioController',
             };
 
             $scope.save = function () {
+                if (id > 0) {
 
-                $scope.st_nome_fail = invalidCheck($scope.viewModel.st_nome);                
+                    $scope.viewModel.id = id;
 
-                if ( !$scope.st_nome_fail )
-                {
-                    if (id > 0) {
-                        $scope.viewModel.updateCommand = "entity";
-                        $scope.modalConf = true;
-                    }
-                    else {
-                        Api.EmpresaDBA.add($scope.viewModel, function (data) {
-                            toastr.success('Empresa adicionada!', 'Sucesso');
-                            $state.go('empresa', { id: data.i_unique });
-                        },
-                            function (response) {
-                                toastr.error(response.data.message, 'Erro');
-                            });
-                    }
-                }
-                else {
-                    $scope.msgErro = 'Verificar pendências de campos mandatórios';
+                    Api.DBAUsuario.update({ id: id }, $scope.viewModel, function (data) {
+                        toastr.success('Dados do usuário atualizados!', 'Sucesso');
+                        $scope.viewModel.modal = false;
+                    },
+                    function (response) {
+                        toastr.error(response.data.message, 'Erro');
+                    });
                 }
             };
 
-
+            $scope.list = function () {
+                $state.go('dbaUsuarios');
+            };
+            
             function init()
             {
+                $scope.modal = false;
                 $scope.viewModel =
                     {
                         
                     };
                 
-                $scope.tipocob = ngSelects.obterConfiguracao(Api.TipoCob, {});
-                $scope.selectDayMonths = ngSelects.obterConfiguracao(Api.DayMonthCombo, {});
                 $scope.selectEmpresa = ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 });
                 
                 loadEntity();

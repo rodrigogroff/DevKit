@@ -34,7 +34,6 @@ angular.module('app.controllers').controller('DBAListUsuariosController',
             };
 
             $scope.show = function (mdl) {
-                console.log(mdl);
                 $state.go('usuario', { id: mdl.id });
             };
 

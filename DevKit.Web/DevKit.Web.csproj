@@ -734,6 +734,8 @@
     <Compile Include="proc\Domains\Combos\ExpedicoesCtrl.cs" />
     <Compile Include="proc\Domains\Combos\SituacoesCtrl.cs" />
     <Compile Include="proc\Domains\Combos\OrdemEmissorManutCartoesCtrl.cs" />
+    <Compile Include="proc\Domains\ServerISO\ConfirmacaoAutoCtrl.cs" />
+    <Compile Include="proc\Domains\ServerISO\FechamentoCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\GLDemonstrativoCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\LojistasAssociadoCtrl.cs" />
     <Compile Include="proc\Domains\Relatorios\RelLojistaTransCtrl.cs" />

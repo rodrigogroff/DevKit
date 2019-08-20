@@ -16,7 +16,7 @@ public partial class ClientHandler
         ContinueProcess = true;
         this.ClientSocket = _clientSocket;
 
-        _clientSocket.ReceiveTimeout = 1000;
+        _clientSocket.ReceiveTimeout = 100000;
         
         networkStream = _clientSocket.GetStream();
         bytes = new byte[_clientSocket.ReceiveBufferSize];

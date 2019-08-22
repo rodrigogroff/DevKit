@@ -112,6 +112,8 @@ public class ClientService
 public class SynchronousSocketListener
 {
     public static int portNum = 2700;   // software express
+    //public static string localHost = "http://meuconvey.conveynet.com.br";
+    public static string localHost = "http://localhost:4091";
 
     public static int Main(String[] args)
     {
@@ -141,7 +143,7 @@ public class SynchronousSocketListener
 
         while (true)
         {
-            var serviceClient = new RestClient("http://localhost:4091");
+            var serviceClient = new RestClient(localHost);
             var serviceRequest = new RestRequest("api/FechamentoServerISO", Method.GET);
 
             var response = serviceClient.Execute(serviceRequest);
@@ -156,7 +158,7 @@ public class SynchronousSocketListener
 
         while (true)
         {
-            var serviceClient = new RestClient("http://localhost:4091");
+            var serviceClient = new RestClient(localHost);
             var serviceRequest = new RestRequest("api/ConfirmacaoAutoServerISO", Method.GET);
 
             var response = serviceClient.Execute(serviceRequest);

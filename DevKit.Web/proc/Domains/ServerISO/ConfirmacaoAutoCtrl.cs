@@ -1,11 +1,8 @@
 ﻿using LinqToDB;
 using System.Linq;
-using System.Collections.Generic;
 using System.Web.Http;
-using System.Net;
 using DataModel;
 using System;
-using SyCrafEngine;
 
 namespace DevKit.Web.Controllers
 {
@@ -13,6 +10,7 @@ namespace DevKit.Web.Controllers
     {
         [AllowAnonymous]
         [HttpGet]
+        [Route("api/ConfirmacaoAutoServerISO")]
         public IHttpActionResult Get()
         {
             using (var db = new AutorizadorCNDB())

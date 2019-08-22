@@ -74,6 +74,7 @@
     <Compile Include="Handler\Handler_montaConfirmacaoCE.cs" />
     <Compile Include="Handler\Handler_montaVendaCEparcelada.cs" />
     <Compile Include="Handler\Handler_montaVendaCE.cs" />
+    <Compile Include="ISO\DTO.cs" />
     <Compile Include="ISO\ISO8583.cs" />
     <Compile Include="ISO\ISO8583_desmontaRegistro.cs" />
     <Compile Include="ISO\ISO8583_montaRegistro.cs" />

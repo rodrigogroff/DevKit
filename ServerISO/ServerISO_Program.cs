@@ -1,10 +1,7 @@
-﻿using DataModel;
-using System;
+﻿using System;
 using System.Net.Sockets;
 using System.Collections;
 using System.Threading;
-using System.Linq;
-using LinqToDB;
 using RestSharp;
 
 #region - ClientConnectionPool - 
@@ -112,22 +109,17 @@ public class ClientService
 public class SynchronousSocketListener
 {
     public static int portNum = 2700;   // software express
-    //public static string localHost = "http://meuconvey.conveynet.com.br";
-    public static string localHost = "http://localhost:4091";
 
-    public static int Main(String[] args)
+    public static string localHost = "http://meuconvey.conveynet.com.br";
+    //public static string localHost = "http://localhost:4091";
+
+    public static int Main()
     {
-        Console.WriteLine("\n" + DateTime.Now + "] 1.00001");
+        Console.WriteLine("\n" + DateTime.Now + "] 1.00002");
         Console.WriteLine("\nCNET ISO [" + portNum + "]");
 
         new Thread(new ThreadStart(BatchService_Fechamento)).Start();
         new Thread(new ThreadStart(BatchService_ConfirmacaoAuto)).Start();
-
-        using (var db = new AutorizadorCNDB())
-        {
-            var term = db.T_Cartao.FirstOrDefault();
-            Console.WriteLine("DBCHECK -> OK!");
-        }
 
         StartListening();
 
@@ -146,7 +138,7 @@ public class SynchronousSocketListener
             var serviceClient = new RestClient(localHost);
             var serviceRequest = new RestRequest("api/FechamentoServerISO", Method.GET);
 
-            var response = serviceClient.Execute(serviceRequest);
+            serviceClient.Execute(serviceRequest);
 
             Thread.Sleep(1000 * 60);
         }
@@ -161,13 +153,11 @@ public class SynchronousSocketListener
             var serviceClient = new RestClient(localHost);
             var serviceRequest = new RestRequest("api/ConfirmacaoAutoServerISO", Method.GET);
 
-            var response = serviceClient.Execute(serviceRequest);
+            serviceClient.Execute(serviceRequest);
 
             Thread.Sleep(5000);
         }
     }
-
-    #region - code - 
 
     public static void StartListening()
     {
@@ -199,15 +189,10 @@ public class SynchronousSocketListener
 
                 Thread.Sleep(100);
             }
-
-            //listener.Stop();
-            //ClientTask.Stop();
         }
         catch (Exception e)
         {
             Console.WriteLine(e.ToString());
         }
     }
-
-#endregion
 }

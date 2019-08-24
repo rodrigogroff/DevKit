@@ -22,6 +22,8 @@ namespace DevKit.Web.Controllers
         public string st_codResp { get; set; }
         public string st_msg { get; set; }
         public string st_nsuRcb { get; set; }
+        public string st_via { get; set; }
+        public string st_nomeCliente { get; set; }
     }
 
     public class VendaServerISOController : ApiControllerBase
@@ -53,6 +55,8 @@ namespace DevKit.Web.Controllers
                     st_codResp = v.var_codResp.Substring(2, 2),
                     st_msg = v.output_st_msg,
                     st_nsuRcb = v.output_cont_pr.st_nsuRcb,
+                    st_via = v.output_cont_pr.st_via,
+                    st_nomeCliente = v.output_cont_pr.st_nomeCliente
                 });
             }
         }

@@ -3,7 +3,9 @@ using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using DataModel;
+using Newtonsoft.Json;
+using RestSharp;
+using ServerISO.DTO;
 
 public partial class ClientHandler
 {
@@ -441,81 +443,64 @@ public partial class ClientHandler
                                             bFinaliza = false;
 
                                             #region - processa venda normal - 
+                                            
+                                            var serviceClient = new RestClient(localHost);
+                                            var serviceRequest = new RestRequest("api/VendaServerISO", Method.PUT);
 
-                                            using (var db = new AutorizadorCNDB())
+                                            var dadosVenda = new VendaIsoInputDTO
                                             {
-                                                #region - monta regras -
+                                                nu_nsuOrig = regIso.nsuOrigem,
+                                                st_codLoja = regIso.codLoja,
+                                                st_empresa = regIso.trilha2.Substring(6, 6),
+                                                st_matricula = regIso.trilha2.Substring(12, 6),
+                                                st_senha = regIso.senha,
+                                                st_terminal = regIso.terminal,
+                                                st_titularidade = regIso.trilha2.Substring(18, 2),
+                                                nu_parcelas = regIso.codProcessamento == "002000" ? "01" : regIso.bit62.Substring(0, 2),
+                                                st_valores = regIso.codProcessamento == "002000" ? regIso.valor.ToString() : regIso.bit62.Substring(2),
+                                                vr_valor = regIso.valor.ToString(),
+                                            };
 
-                                                var v = new VendaEmpresarial
-                                                {
-                                                    dirFile = "serveriso_logs",
-                                                    IsSitef = true
-                                                };
+                                            serviceRequest.AddJsonBody(dadosVenda);
 
-                                                v.input_cont_pe.st_empresa = regIso.trilha2.Substring(6, 6);
-                                                v.input_cont_pe.st_matricula = regIso.trilha2.Substring(12, 6);
-                                                v.input_cont_pe.st_titularidade = regIso.trilha2.Substring(18, 2);
+                                            var response = serviceClient.Execute(serviceRequest);
+                                            var retornoVenda = JsonConvert.DeserializeObject<VendaIsoOutputDTO>(response.Content);
+                                                
+                                            if (string.IsNullOrEmpty(retornoVenda.st_msg))
+                                                retornoVenda.st_msg = "  ";
 
-                                                v.input_cont_pe.st_codLoja = regIso.codLoja;
-                                                v.input_cont_pe.st_terminal = regIso.terminal;
+                                            Log("NSU: " + retornoVenda.st_nsuRcb);
+                                            Log("Código resp: " + retornoVenda.st_codResp);
+                                            Log("Mensagem na log trans: " + retornoVenda.st_msg);
 
-                                                v.var_nu_nsuOrig = regIso.nsuOrigem;
+                                              
 
-                                                if (regIso.codProcessamento == "002000")
-                                                {
-                                                    v.input_cont_pe.nu_parcelas = "01";
-                                                    v.input_cont_pe.vr_valor = regIso.valor.ToString();
-                                                    v.input_cont_pe.st_valores = regIso.valor.ToString();
-                                                }
-                                                else
-                                                {
-                                                    v.input_cont_pe.nu_parcelas = regIso.bit62.Substring(0, 2);
-                                                    v.input_cont_pe.vr_valor = regIso.valor.ToString();
-                                                    v.input_cont_pe.st_valores = regIso.bit62.Substring(2);
-                                                }
+                                             
 
-                                                v.input_cont_pe.st_senha = regIso.senha;
+                                            var Iso210 = new ISO8583
+                                            {
+                                                codigo = "0210",
+                                                codResposta = retornoVenda.st_codResp,
+                                                nsuOrigem = regIso.nsuOrigem,
+                                                codProcessamento = regIso.codProcessamento,
+                                                valor = regIso.valor,
+                                                terminal = regIso.terminal,
+                                                codLoja = regIso.codLoja,
+                                                bit62 = dadosVenda.st_empresa +
+                                                        dadosVenda.st_matricula +
+                                                        dadosVenda.st_titularidade +
+                                                        retornoVenda.st_via +
+                                                        retornoVenda.st_nomeCliente.PadRight(40, ' '),
+                                                bit127 = retornoVenda.st_nsuRcb.PadLeft(9, '0')
+                                            };
 
-                                                v.Run(db);
+                                            Log(Iso210);
 
-                                                if (string.IsNullOrEmpty(v.output_st_msg))
-                                                    v.output_st_msg = "  ";
+                                            enviaDadosEXPRESS(Iso210.registro);
 
-                                                Log("NSU: " + v.output_cont_pr.st_nsuRcb);
-                                                Log("Código resp: " + v.var_codResp.Substring(2, 2));
-                                                Log("Mensagem na log trans: " + v.output_st_msg);
-
-                                                #endregion
-
-                                                #region - retorna no socket - 
-
-                                                var Iso210 = new ISO8583
-                                                {
-                                                    codigo = "0210",
-                                                    codResposta = v.var_codResp.Substring(2, 2),
-                                                    nsuOrigem = regIso.nsuOrigem,
-                                                    codProcessamento = regIso.codProcessamento,
-                                                    valor = regIso.valor,
-                                                    terminal = regIso.terminal,
-                                                    codLoja = regIso.codLoja,
-                                                    bit62 = v.input_cont_pe.st_empresa +
-                                                            v.input_cont_pe.st_matricula +
-                                                            v.input_cont_pe.st_titularidade +
-                                                            v.output_cont_pr.st_via +
-                                                            v.output_cont_pr.st_nomeCliente.PadRight(40, ' '),
-                                                    bit127 = v.output_cont_pr.st_nsuRcb.PadLeft(9, '0')
-                                                };
-
-                                                Log(Iso210);
-
-                                                enviaDadosEXPRESS(Iso210.registro);
-
-                                                #endregion
-
-                                                if (Iso210.codResposta != "00")
-                                                    bFinaliza = true;
-                                            }
-
+                                            if (Iso210.codResposta != "00")
+                                                bFinaliza = true;
+                                            
                                             #endregion
                                         }
 
@@ -546,20 +531,17 @@ public partial class ClientHandler
 
                                             Log("prepara confirmação");
 
-                                            using (var db = new AutorizadorCNDB())
+                                            var serviceClient = new RestClient(localHost);
+                                            var serviceRequest = new RestRequest("api/VendaConfServerISO", Method.PUT);
+
+                                            serviceRequest.AddJsonBody(new VendaConfIsoInputDTO
                                             {
-                                                Log("db ok");
+                                                st_nsu = regIso.bit127
+                                            });
 
-                                                var v = new VendaEmpresarialConfirmacao
-                                                {
-                                                    dirFile = "serveriso_logs",
-                                                };
+                                            var response = serviceClient.Execute(serviceRequest);
 
-                                                Log("v ok");
-                                                Log("NSU a ser conf: " + regIso.bit127);
-
-                                                v.Run(db, regIso.bit127);
-                                            }
+                                            Log("confirmação pronta");
 
                                             #endregion
                                         }
@@ -647,53 +629,35 @@ public partial class ClientHandler
                                             {
                                                 #region - cancelamento -
 
-                                                using (var db = new AutorizadorCNDB())
+                                                Log("cancelamento " + regIso.bit125);
+
+                                                var serviceClient = new RestClient(localHost);
+                                                var serviceRequest = new RestRequest("api/VendaCancServerISO", Method.PUT);
+
+                                                serviceRequest.AddJsonBody(new VendaCancIsoInputDTO
                                                 {
-                                                    var v = new VendaEmpresarialCancelamento
-                                                    {
-                                                        dirFile = "serveriso_logs",
-                                                    };
+                                                    st_nsu = regIso.bit125
+                                                });
 
-                                                    v.Run(db, regIso.bit125);
+                                                var response = serviceClient.Execute(serviceRequest);
+                                                var strResp = JsonConvert.DeserializeObject<VendaCancIsoOutputDTO>(response.Content);
 
-                                                    var isoRegistro = new ISO8583
-                                                    {
-                                                        codigo = codigoIso,
-                                                        codProcessamento = regIso.codProcessamento,
-                                                        codLoja = regIso.codLoja,
-                                                        terminal = regIso.terminal,
-                                                        codResposta = v.var_codResp.Substring(2, 2),
-                                                        bit127 = regIso.bit125.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0'),
-                                                        nsuOrigem = regIso.nsuOrigem,
-                                                    };
+                                                var isoRegistro = new ISO8583
+                                                {
+                                                    codigo = codigoIso,
+                                                    codProcessamento = regIso.codProcessamento,
+                                                    codLoja = regIso.codLoja,
+                                                    terminal = regIso.terminal,
+                                                    codResposta = strResp.st_codResp,
+                                                    bit127 = regIso.bit125.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0'),
+                                                    nsuOrigem = regIso.nsuOrigem,
+                                                };
 
-                                                    enviaDadosEXPRESS(isoRegistro.registro);
-                                                }
+                                                Log(isoRegistro);
 
-                                                #region - codigo antigo comentado - 
+                                                enviaDadosEXPRESS(isoRegistro.registro);
 
-                                                //dadosRec400 = dadosRec400.PadRight(200, ' ');
-
-                                                //var isoRegistro = new ISO8583
-                                                //{
-                                                //    codigo = codigoIso,
-                                                //    codProcessamento = regIso.codProcessamento,
-                                                //    codLoja = regIso.codLoja,
-                                                //    terminal = regIso.terminal,
-                                                //    codResposta = dadosRec400.Substring(2, 2),
-                                                //    bit127 = "000" + dadosRec400.Substring(21, 6),
-                                                //    nsuOrigem = regIso.nsuOrigem,
-                                                //};
-
-                                                //Log("Montagem Bit 62");
-
-                                                //isoRegistro.bit62 = !(dadosRec400.Substring(0, 4) == "0400") ?
-                                                //    dadosRec400.Substring(7, 6) + regIso.valor :
-                                                //    regIso.bit125.Substring(3, 6) + regIso.valor;
-
-                                                //Log(isoRegistro);
-
-                                                #endregion
+                                                Log("cancelamento " + regIso.bit125 + " enviado!");
 
                                                 #endregion
                                             }
@@ -701,32 +665,35 @@ public partial class ClientHandler
                                             {
                                                 #region - desfazimento - 
 
+                                                var serviceClient = new RestClient(localHost);
+                                                var serviceRequest = new RestRequest("api/VendaDesfazServerISO", Method.PUT);
+
+                                                serviceRequest.AddJsonBody(new VendaDesfazIsoInputDTO
+                                                {
+                                                    st_nsu = regIso.nsuOrigem
+                                                });
+
+                                                var response = serviceClient.Execute(serviceRequest);
+                                                var strResp = JsonConvert.DeserializeObject<VendaDesfazIsoOutputDTO>(response.Content);
+
                                                 Log("Desfazimento " + regIso.nsuOrigem);
 
-                                                using (var db = new AutorizadorCNDB())
+                                                var Iso430 = new ISO8583
                                                 {
-                                                    var v = new VendaEmpresarialDesfazimento
-                                                    {
-                                                        dirFile = "serveriso_logs",
-                                                    };
+                                                    codigo = "430",
+                                                    codResposta = strResp.st_codResp,
+                                                    nsuOrigem = regIso.nsuOrigem,
+                                                    valor = regIso.valor,
+                                                    terminal = regIso.terminal,
+                                                    codLoja = regIso.codLoja,
+                                                    bit62 = regIso.nsuOrigem.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0')
+                                                };
 
-                                                    v.Run(db, regIso.nsuOrigem);
+                                                Log(Iso430);
 
-                                                    var Iso430 = new ISO8583
-                                                    {
-                                                        codigo = "430",
-                                                        codResposta = v.var_codResp,
-                                                        nsuOrigem = regIso.nsuOrigem,
-                                                        valor = regIso.valor,
-                                                        terminal = regIso.terminal,
-                                                        codLoja = regIso.codLoja,
-                                                        bit62 = regIso.nsuOrigem.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0')
-                                                    };
+                                                enviaDadosEXPRESS(Iso430.registro);
 
-                                                    Log(Iso430);
-
-                                                    enviaDadosEXPRESS(Iso430.registro);
-                                                }
+                                                Log("Desfazimento " + regIso.nsuOrigem + " enviado!");
 
                                                 #endregion
                                             }

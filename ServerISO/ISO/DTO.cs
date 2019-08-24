@@ -20,6 +20,8 @@ namespace ServerISO.DTO
         public string st_codResp { get; set; }
         public string st_msg { get; set; }
         public string st_nsuRcb { get; set; }
+        public string st_via { get; set; }
+        public string st_nomeCliente { get; set; }
     }
 
     public class VendaConfIsoInputDTO

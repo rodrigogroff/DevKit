@@ -9,7 +9,7 @@ using ServerISO.DTO;
 
 public partial class ClientHandler
 {
-    public string localHost = "127.0.0.1";
+    public string localHost = SynchronousSocketListener.localHost;
 
     public ClientHandler() { }
 

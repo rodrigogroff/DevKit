@@ -111,8 +111,7 @@ public class SynchronousSocketListener
     public static int portNum = 2700;   // software express
 
     public static string localHost = "http://meuconvey.conveynet.com.br";
-    //public static string localHost = "http://localhost:4091";
-
+    
     public static int Main()
     {
         Console.WriteLine("\n" + DateTime.Now + "] 1.00002");

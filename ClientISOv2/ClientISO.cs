@@ -53,16 +53,56 @@ namespace ClientISOv2
 
                 for (int i = 0; i < 1; i++)
                 {
+                    var resp = "";
+
                     var x = Guid.NewGuid().ToString();
+                    var x2 = Guid.NewGuid().ToString();
+                    var x3 = Guid.NewGuid().ToString();
+                    var x4 = Guid.NewGuid().ToString();
 
-                    SendToServer("200 " + i + " " + x);
+                    char sep = '\0';
 
-                    var y = ReceiveDataFromServer();
+                    SendSincrono(   "0200 " + x + sep +
+                                    "0200 " + x2 + sep +
+                                    "0400 " + x3 + sep +
+                                    "0420 " + x3 + sep +
+                                    "0200 " + x4 );
 
-                    Console.WriteLine("Rec from server: " + y);
+                    Thread.Sleep(100);
+
+                    resp = ReceiveDataFromServer();
+                    Console.WriteLine("Rec from server: " + resp);
+
+                    SendSincrono("0202 xxxx");
+
+                    Thread.Sleep(100);
+
+                    resp = ReceiveDataFromServer();
+                    Console.WriteLine("Rec from server: " + resp);
+
+                    SendSincrono("0202 xxx");
+
+                    Thread.Sleep(100);
+
+                    resp = ReceiveDataFromServer();
+                    Console.WriteLine("Rec from server: " + resp);
+
+                    Thread.Sleep(100);
+
+                    resp = ReceiveDataFromServer();
+                    Console.WriteLine("Rec from server: " + resp);
+
+                    Thread.Sleep(100);
+
+                    resp = ReceiveDataFromServer();
+                    Console.WriteLine("Rec from server: " + resp);
+
+                    SendSincrono("0202 xxx ");
 
                     Thread.Sleep(100);
                 }
+
+                Disconnect();
             }
             catch (Exception exc) {
                 Console.WriteLine(exc.ToString());
@@ -71,8 +111,6 @@ namespace ClientISOv2
 
         public void SendToServer(string tbMsgToSend)
         {
-            //Console.WriteLine("Send..." + tbMsgToSend);
-
             try
             {
                 byte[] byteData = Encoding.ASCII.GetBytes(tbMsgToSend);
@@ -94,8 +132,6 @@ namespace ClientISOv2
             {
                 Socket handler = (Socket)ar.AsyncState;
                 int bytesSend = handler.EndSend(ar);
-
-                
             }
             catch (SocketException exc)
             {
@@ -116,8 +152,6 @@ namespace ClientISOv2
                 
                 // Sends data to a connected Socket. 
                 int bytesSend = senderSock.Send(msg);
-
-                ReceiveDataFromServer();                
             }
             catch (Exception exc) {
                 Console.WriteLine(exc.ToString());

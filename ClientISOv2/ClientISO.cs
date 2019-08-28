@@ -33,7 +33,7 @@ namespace ClientISOv2
                 IPAddress ipAddr = ipHost.AddressList[1];
 
                 // Creates a network endpoint 
-                IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 4510);
+                IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 2700);
 
                 // Create one Socket object to setup Tcp connection 
                 senderSock = new Socket(

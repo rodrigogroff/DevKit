@@ -5,33 +5,28 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Linq;
+using RestSharp;
 
 namespace ServerIsoV2
 {
-    public class IsoCommand
+    public partial class ServerISO
     {
-        public bool Ended { get; set; }
+        public bool Simulation = true;
 
-        public bool Running { get; set; }
-
-        public string Id { get; set; }
-
-        public string Text { get; set; }
-
-        public Socket handler { get; set; }
-
-        public bool ChannelOpen { get; set; }
-    }
-
-    public class ServerISO
-    {
         public Encoding myEnconding = Encoding.ASCII;
-        public const int portHost = 4510;
+
+        public string localHost = "http://meuconvey.conveynet.com.br";
+
+        public const int portHost = 2700,
+                         maxQueue = 999,
+                         maxPckSize = 99999;
+
         public char sepPacotes = '\0';
         
         public List<IsoCommand> GlobalCommands = new List<IsoCommand>();
 
-        public byte[] GetBuffer() { return new byte[99999]; }
+        public byte[] GetBuffer() { return new byte[maxPckSize]; }
+
         public string GenerateId() { return Guid.NewGuid().ToString(); }
 
         public void Start()
@@ -44,20 +39,87 @@ namespace ServerIsoV2
             IPHostEntry ipHost = Dns.GetHostEntry("");
             IPAddress ipAddr = ipHost.AddressList[1];
 
+            Console.WriteLine(ipAddr.ToString());
+
             var ipEndPoint = new IPEndPoint(ipAddr, portHost);
             var sListener = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             sListener.Bind(ipEndPoint);
-            sListener.Listen(1000);
+            sListener.Listen(maxQueue);
 
             AsyncCallback aCallback = new AsyncCallback(BeginClientAccept);
             sListener.BeginAccept(aCallback, sListener);
 
+            #endregion
+
             Console.WriteLine("Server on " + ipEndPoint.Address + " port: " + ipEndPoint.Port);
 
-            ProcessGlobalQueue();
+            if (!Simulation)
+            {
+                new Thread(new ThreadStart(BatchService_Fechamento)).Start();
+                new Thread(new ThreadStart(BatchService_ConfirmacaoAuto)).Start();
+            }                       
+            
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                var lstCmdsToExecute = GlobalCommands.Where(y => y.Running == false).ToList();
+                var count = lstCmdsToExecute.Count();
+
+                if (DateTime.Now.Second % 10 == 0)
+                    Console.WriteLine("[" + DateTime.Now.ToString() + "] >> Queue: " + count);
+
+                if (count > 0)
+                {
+                    Console.WriteLine("Queue: " + count);
+
+                    foreach (var cmd in lstCmdsToExecute)
+                        new Thread(() => ProcessaLote(cmd)).Start();
+                }
+
+                GlobalCommands.RemoveAll(y => y.Ended == true);
+            }
+        }
+
+        public void BatchService_Fechamento()
+        {
+            #region - code - 
+
+            Console.WriteLine("BatchService_Fechamento...");
+
+            while (true)
+            {
+                var serviceClient = new RestClient(localHost);
+                var serviceRequest = new RestRequest("api/FechamentoServerISO", Method.GET);
+
+                serviceClient.Execute(serviceRequest);
+
+                Thread.Sleep(1000 * 60);
+            }
 
             #endregion
         }
+
+        public void BatchService_ConfirmacaoAuto()
+        {
+            #region - code - 
+
+            Console.WriteLine("BatchService_ConfirmacaoAuto...");
+
+            while (true)
+            {
+                var serviceClient = new RestClient(localHost);
+                var serviceRequest = new RestRequest("api/ConfirmacaoAutoServerISO", Method.GET);
+
+                serviceClient.Execute(serviceRequest);
+
+                Thread.Sleep(5000);
+            }
+
+            #endregion
+        }
+
+        #region - socket methods - 
 
         public void BeginClientAccept(IAsyncResult ar)
         {
@@ -209,86 +271,6 @@ namespace ServerIsoV2
             #endregion
         }
 
-        public void ProcessGlobalQueue()
-        {
-            while (true)
-            {
-                Thread.Sleep(1000);
-
-                var lstCmdsToExecute = GlobalCommands.Where(y => y.Running == false).ToList();
-                var count = lstCmdsToExecute.Count();
-
-                if (DateTime.Now.Second % 5 == 0)
-                    Console.WriteLine("[" + DateTime.Now.ToString() + "] >> Queue: " + count);
-
-                if (count > 0)
-                {
-                    Console.WriteLine("Queue: " + count);
-
-                    foreach (var cmd in lstCmdsToExecute)
-                        new Thread(() => ProcessaLote(cmd)).Start();
-                }
-
-                GlobalCommands.RemoveAll(y => y.Ended == true);                
-            }
-        }
-        public void ProcessaLote(IsoCommand cmd)
-        {
-            cmd.Ended = false;
-            cmd.Running = true;
-
-            foreach (var iso in cmd.Text.Split(sepPacotes))
-            {
-                Console.WriteLine("[Processing] " + iso);
-
-                if (iso.StartsWith("0200"))
-                {
-                    #region - processa venda -
-
-                    #endregion
-
-                    cmd.ChannelOpen = false;
-
-                    Send("210 ", cmd);
-
-                    while (!cmd.ChannelOpen)
-                        Thread.Sleep(10);
-
-                    Listen(cmd);
-                }
-                else if (iso.StartsWith("0202"))
-                {
-                    #region - processa confirmação - 
-
-                    #endregion
-                }
-                else if (iso.StartsWith("0400"))
-                {
-                    #region - processa cancelamnto - 
-
-                    cmd.ChannelOpen = false;
-
-                    Send("0410 ", cmd);
-
-                    while (!cmd.ChannelOpen)
-                        Thread.Sleep(10);
-
-                    #endregion
-                }
-                else if (iso.StartsWith("0420"))
-                {
-                    #region - processa desfazimento - 
-
-                    cmd.ChannelOpen = false;
-
-                    Send("0430 ", cmd);
-
-                    while (!cmd.ChannelOpen)
-                        Thread.Sleep(10);
-
-                    #endregion
-                }
-            }
-        }        
+        #endregion
     }
 }

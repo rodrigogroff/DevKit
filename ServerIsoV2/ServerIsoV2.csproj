@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ServerIsoV2</RootNamespace>
     <AssemblyName>ServerIsoV2</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,8 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,12 +50,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Processing\Check\VeificaCancelamento.cs" />
+    <Compile Include="Processing\Check\VerificaConfirmacao.cs" />
+    <Compile Include="Processing\Check\VerificaDesfazimento.cs" />
+    <Compile Include="Processing\Check\VerificaVenda.cs" />
+    <Compile Include="Processing\Check\VerificaVendaParcelada.cs" />
+    <Compile Include="Infra\Log.cs" />
+    <Compile Include="Entities\IsoCommand.cs" />
+    <Compile Include="Entities\Api.cs" />
+    <Compile Include="Infra\ISO8583.cs" />
+    <Compile Include="Infra\ISO8583_desmontaRegistro.cs" />
+    <Compile Include="Infra\ISO8583_montaRegistro.cs" />
+    <Compile Include="Processing\ProcessaLote.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerISO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

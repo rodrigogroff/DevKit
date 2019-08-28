@@ -3,7 +3,7 @@ namespace ServerIsoV2
 {
     public partial class IsoCommand
     {
-        public bool montaCNET_VendaCEparcelada(ISO8583 regIso)
+        public bool VerificaVendaParcelada(ISO8583 regIso)
         {
             try
             {

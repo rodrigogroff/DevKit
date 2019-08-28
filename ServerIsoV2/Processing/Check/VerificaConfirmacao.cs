@@ -2,7 +2,7 @@
 {
     public partial class IsoCommand
     {
-        public bool montaConfirmacaoCE(ISO8583 regIso)
+        public bool VerificaConfirmacaoCE(ISO8583 regIso)
         {
             try
             {

@@ -3,7 +3,7 @@ namespace ServerIsoV2
 {
     public partial class IsoCommand
     {
-        public bool montaDesfazimento(ISO8583 regIso)
+        public bool VerificaDesfazimento(ISO8583 regIso)
         {
             try
             {

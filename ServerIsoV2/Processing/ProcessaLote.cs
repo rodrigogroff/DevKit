@@ -43,8 +43,8 @@ namespace ServerIsoV2
                         #region - processa venda -
                         
                         var monta = !(regIso.codProcessamento == "002000") ?
-                                                                    cmd.montaCNET_VendaCEparcelada(regIso) :
-                                                                    cmd.montaCNET_VendaCE(regIso);
+                                                                    cmd.VerificaVendaParcelada(regIso) :
+                                                                    cmd.VerificaVendaCE(regIso);
 
                         if (!monta)
                         {
@@ -63,26 +63,12 @@ namespace ServerIsoV2
                                 codLoja = regIso.codLoja
                             };
 
-                            string str4, str5, str6;
+                            cmd.Log(Iso210);
 
-                            if (regIso.trilha2.Trim().Length == 0)
-                            {
-                                str4 = "999999999999999999999999999";
-                                str5 = "999999";
-                                str6 = "999999";
-                            }
-                            else if (regIso.trilha2.Trim().Length == 27)
-                            {
-                                str4 = regIso.trilha2.Trim();
-                                str5 = regIso.trilha2.Trim().Substring(6, 6);
-                                str6 = regIso.trilha2.Trim().Substring(12, 6);
-                            }
-                            else
-                            {
-                                str5 = regIso.trilha2.Substring(17, 6);
-                                str6 = regIso.trilha2.Substring(23, 6);
-                                str4 = ("999999" + str5 + str6 + regIso.trilha2.Substring(29, 3)).PadLeft(27, '0');
-                            }
+                            cmd.ChannelOpen = false;
+                            Send(Iso210.registro, cmd);
+                            while (!cmd.ChannelOpen)
+                                Thread.Sleep(10);
 
                             #endregion
                         }
@@ -144,7 +130,7 @@ namespace ServerIsoV2
                             while (!cmd.ChannelOpen)
                                 Thread.Sleep(10);
 
-                            Listen(cmd);
+                            WaitMessage(cmd);
 
                             #endregion
                         }
@@ -157,7 +143,7 @@ namespace ServerIsoV2
 
                         cmd.Log("Conf de venda");
 
-                        var monta = cmd.montaConfirmacaoCE(regIso);
+                        var monta = cmd.VerificaConfirmacaoCE(regIso);
 
                         cmd.Log("Conf de venda: (monta)" + monta);
 
@@ -186,7 +172,7 @@ namespace ServerIsoV2
 
                         #endregion
                     }
-                    else if (dadosRecebidos.StartsWith("0420") || dadosRecebidos.StartsWith("0400"))
+                    else if (dadosRecebidos.StartsWith("0400") || dadosRecebidos.StartsWith("0420"))
                     {
                         #region - processa cancelamnto / desfazimento - 
 
@@ -196,12 +182,12 @@ namespace ServerIsoV2
                         if (isoCode == "0400")
                         {
                             codigoIso = "0410";
-                            montar = cmd.montaCancelamento(regIso);
+                            montar = cmd.VerificaCancelamento(regIso);
                         }
                         else if (isoCode == "0420")
                         {
                             codigoIso = "0430";
-                            montar = cmd.montaDesfazimento(regIso);
+                            montar = cmd.VerificaDesfazimento(regIso);
                         }
 
                         cmd.Log("codigoIso " + codigoIso);
@@ -239,7 +225,7 @@ namespace ServerIsoV2
                             {
                                 #region - erro desfazimento -
 
-                                var Iso430 = new ISO8583
+                                var IsoErro = new ISO8583
                                 {
                                     codigo = codigoIso,
                                     codResposta = "06",
@@ -250,10 +236,10 @@ namespace ServerIsoV2
                                     bit62 = regIso.nsuOrigem.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0')
                                 };
 
-                                cmd.Log(Iso430);
+                                cmd.Log(IsoErro);
 
                                 cmd.ChannelOpen = false;
-                                Send(Iso430.registro, cmd);
+                                Send(IsoErro.registro, cmd);
                                 while (!cmd.ChannelOpen)
                                     Thread.Sleep(10);
 
@@ -261,89 +247,89 @@ namespace ServerIsoV2
                             }
 
                             #endregion
+
+                            continue;
+                        }
+                        
+                        if (codigoIso == "0410")
+                        {
+                            #region - cancelamento -
+
+                            cmd.Log("cancelamento " + regIso.bit125);
+
+                            var serviceClient = new RestClient(localHost);
+                            var serviceRequest = new RestRequest("api/VendaCancServerISO", Method.PUT);
+
+                            serviceRequest.AddJsonBody(new VendaCancIsoInputDTO
+                            {
+                                st_nsu = regIso.bit125
+                            });
+
+                            var response = serviceClient.Execute(serviceRequest);
+                            var strResp = JsonConvert.DeserializeObject<VendaCancIsoOutputDTO>(response.Content);
+
+                            var isoRegistro = new ISO8583
+                            {
+                                codigo = codigoIso,
+                                codProcessamento = regIso.codProcessamento,
+                                codLoja = regIso.codLoja,
+                                terminal = regIso.terminal,
+                                codResposta = strResp.st_codResp,
+                                bit127 = regIso.bit125.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0'),
+                                nsuOrigem = regIso.nsuOrigem,
+                            };
+
+                            cmd.Log(isoRegistro);
+
+                            cmd.ChannelOpen = false;
+                            Send(isoRegistro.registro, cmd);
+                            while (!cmd.ChannelOpen)
+                                Thread.Sleep(10);
+
+                            cmd.Log("cancelamento " + regIso.bit125 + " enviado!");
+
+                            #endregion
                         }
                         else
                         {
-                            if (codigoIso == "0410")
+                            #region - desfazimento - 
+
+                            var serviceClient = new RestClient(localHost);
+                            var serviceRequest = new RestRequest("api/VendaDesfazServerISO", Method.PUT);
+
+                            serviceRequest.AddJsonBody(new VendaDesfazIsoInputDTO
                             {
-                                #region - cancelamento -
+                                st_nsu = regIso.nsuOrigem
+                            });
 
-                                cmd.Log("cancelamento " + regIso.bit125);
+                            var response = serviceClient.Execute(serviceRequest);
+                            var strResp = JsonConvert.DeserializeObject<VendaDesfazIsoOutputDTO>(response.Content);
 
-                                var serviceClient = new RestClient(localHost);
-                                var serviceRequest = new RestRequest("api/VendaCancServerISO", Method.PUT);
+                            cmd.Log("Desfazimento " + regIso.nsuOrigem);
 
-                                serviceRequest.AddJsonBody(new VendaCancIsoInputDTO
-                                {
-                                    st_nsu = regIso.bit125
-                                });
-
-                                var response = serviceClient.Execute(serviceRequest);
-                                var strResp = JsonConvert.DeserializeObject<VendaCancIsoOutputDTO>(response.Content);
-
-                                var isoRegistro = new ISO8583
-                                {
-                                    codigo = codigoIso,
-                                    codProcessamento = regIso.codProcessamento,
-                                    codLoja = regIso.codLoja,
-                                    terminal = regIso.terminal,
-                                    codResposta = strResp.st_codResp,
-                                    bit127 = regIso.bit125.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0'),
-                                    nsuOrigem = regIso.nsuOrigem,
-                                };
-
-                                cmd.Log(isoRegistro);
-
-                                cmd.ChannelOpen = false;
-                                Send(isoRegistro.registro, cmd);
-                                while (!cmd.ChannelOpen)
-                                    Thread.Sleep(10);
-
-                                cmd.Log("cancelamento " + regIso.bit125 + " enviado!");
-
-                                #endregion
-                            }
-                            else
+                            var Iso430 = new ISO8583
                             {
-                                #region - desfazimento - 
+                                codigo = "430",
+                                codResposta = strResp.st_codResp,
+                                nsuOrigem = regIso.nsuOrigem,
+                                valor = regIso.valor,
+                                terminal = regIso.terminal,
+                                codLoja = regIso.codLoja,
+                                bit62 = regIso.nsuOrigem.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0')
+                            };
 
-                                var serviceClient = new RestClient(localHost);
-                                var serviceRequest = new RestRequest("api/VendaDesfazServerISO", Method.PUT);
+                            cmd.Log(Iso430);
 
-                                serviceRequest.AddJsonBody(new VendaDesfazIsoInputDTO
-                                {
-                                    st_nsu = regIso.nsuOrigem
-                                });
+                            cmd.ChannelOpen = false;
+                            Send(Iso430.registro, cmd);
+                            while (!cmd.ChannelOpen)
+                                Thread.Sleep(10);
 
-                                var response = serviceClient.Execute(serviceRequest);
-                                var strResp = JsonConvert.DeserializeObject<VendaDesfazIsoOutputDTO>(response.Content);
+                            cmd.Log("Desfazimento " + regIso.nsuOrigem + " enviado!");
 
-                                cmd.Log("Desfazimento " + regIso.nsuOrigem);
-
-                                var Iso430 = new ISO8583
-                                {
-                                    codigo = "430",
-                                    codResposta = strResp.st_codResp,
-                                    nsuOrigem = regIso.nsuOrigem,
-                                    valor = regIso.valor,
-                                    terminal = regIso.terminal,
-                                    codLoja = regIso.codLoja,
-                                    bit62 = regIso.nsuOrigem.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0')
-                                };
-
-                                cmd.Log(Iso430);
-
-                                cmd.ChannelOpen = false;
-                                Send(Iso430.registro, cmd);
-                                while (!cmd.ChannelOpen)
-                                    Thread.Sleep(10);
-
-                                cmd.Log("Desfazimento " + regIso.nsuOrigem + " enviado!");
-
-                                #endregion
-                            }
+                            #endregion
                         }
-
+                        
                         #endregion
                     }
                 }

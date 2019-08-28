@@ -256,7 +256,7 @@ namespace ServerIsoV2
             #endregion
         }
 
-        public void Listen(IsoCommand cmd)
+        public void WaitMessage(IsoCommand cmd)
         {
             #region - code - 
 

@@ -43,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientISO.cs" />
+    <Compile Include="ISO8583.cs" />
+    <Compile Include="ISO8583_desmontaRegistro.cs" />
+    <Compile Include="ISO8583_montaRegistro.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

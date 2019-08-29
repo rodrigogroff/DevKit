@@ -8,43 +8,83 @@ namespace ClientISOv2
 {
     public class ClientISO
     {
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[999999];
         Socket senderSock;
+
+        public const string TerminalTeste = "",
+                            codLoja = "",
+                            trilha2 = ""; //????????????
+
+        public ISO8583 Get0200(string valor, string nsuOrigem)
+        {
+            return new ISO8583
+            {
+                codProcessamento = "002000",
+                nsuOrigem = nsuOrigem,
+                terminal = ClientISO.TerminalTeste,
+                codLoja = ClientISO.codLoja,
+                trilha2 = ClientISO.trilha2,
+                senha = "", //????????????
+                valor = valor.PadLeft(12, '0')
+            };
+        }
+
+        public ISO8583 Get0400(string nsu)
+        {
+            return new ISO8583
+            {
+                codProcessamento = "002000",
+                codLoja = ClientISO.codLoja,
+                terminal = ClientISO.TerminalTeste,
+                nsuOrigem = "",
+
+                bit125 = nsu
+            };
+        }
+
+        public ISO8583 Get0420(string nsu)
+        {
+            return new ISO8583
+            {
+                codProcessamento = "002000",
+                nsuOrigem = nsu,
+                codLoja = ClientISO.codLoja,
+                terminal = ClientISO.TerminalTeste,
+                valor = ""
+            };
+        }
+
+        public ISO8583 Get0202(string nsu)
+        {
+            return new ISO8583
+            {
+                codProcessamento = "002000",
+                codLoja = ClientISO.codLoja,
+                terminal = ClientISO.TerminalTeste,
+                bit127 = nsu
+            };
+        }
 
         public void Start()
         {
             try
-            {
-                // Create one SocketPermission for socket access restrictions 
-                SocketPermission permission = new SocketPermission(
-                    NetworkAccess.Connect,    // Connection permission 
-                    TransportType.Tcp,        // Defines transport types 
-                    "",                       // Gets the IP addresses 
-                    SocketPermission.AllPorts // All ports 
-                    );
+            {                
+                SocketPermission permission = new SocketPermission( NetworkAccess.Connect, TransportType.Tcp, "", SocketPermission.AllPorts );
 
-                // Ensures the code to have permission to access a Socket 
                 permission.Demand();
 
-                // Resolves a host name to an IPHostEntry instance            
-                IPHostEntry ipHost = Dns.GetHostEntry("");
+                var ipHost = Dns.GetHostEntry("");
+                var ipAddr = ipHost.AddressList[1];
+                var ipEndPoint = new IPEndPoint(ipAddr, 2700);
+                var nsuRec = "";
 
-                // Gets first IP address associated with a localhost 
-                IPAddress ipAddr = ipHost.AddressList[1];
+                ISO8583 isoReg;
 
-                // Creates a network endpoint 
-                IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 2700);
+                senderSock = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
+                {
+                    NoDelay = false   // Using the Nagle algorithm 
+                };
 
-                // Create one Socket object to setup Tcp connection 
-                senderSock = new Socket(
-                    ipAddr.AddressFamily,// Specifies the addressing scheme 
-                    SocketType.Stream,   // The type of socket  
-                    ProtocolType.Tcp     // Specifies the protocols  
-                    );
-
-                senderSock.NoDelay = false;   // Using the Nagle algorithm 
-
-                // Establishes a connection to a remote host 
                 senderSock.Connect(ipEndPoint);
 
                 Console.WriteLine ( "Socket connected to " + senderSock.RemoteEndPoint.ToString() );
@@ -53,61 +93,54 @@ namespace ClientISOv2
 
                 for (int i = 0; i < 1; i++)
                 {
-                    var resp = "";
-
-                    var x = Guid.NewGuid().ToString();
-                    var x2 = Guid.NewGuid().ToString();
-                    var x3 = Guid.NewGuid().ToString();
-                    var x4 = Guid.NewGuid().ToString();
-
                     char sep = '\0';
 
-                    SendSincrono(   "0200 " + x + sep +
-                                    "0200 " + x2 + sep +
-                                    "0400 " + x3 + sep +
-                                    "0420 " + x3 + sep +
-                                    "0200 " + x4 );
+                    SendSincrono ( Get0200("100", "1").registro + sep +
+                                   Get0200("101", "1").registro + sep +
+                                   Get0200("102", "1").registro );
 
                     Thread.Sleep(100);
 
-                    resp = ReceiveDataFromServer();
-                    Console.WriteLine("Rec from server: " + resp);
+                    isoReg = new ISO8583(ReceiveDataFromServer());
 
-                    SendSincrono("0202 xxxx");
+                    nsuRec = isoReg.bit127;
 
-                    Thread.Sleep(100);
+                    Console.WriteLine("Rec from server: " + isoReg.registro);                    
 
-                    resp = ReceiveDataFromServer();
-                    Console.WriteLine("Rec from server: " + resp);
-
-                    SendSincrono("0202 xxx");
+                    SendSincrono(Get0202(nsuRec).registro);
 
                     Thread.Sleep(100);
 
-                    resp = ReceiveDataFromServer();
-                    Console.WriteLine("Rec from server: " + resp);
+                    isoReg = new ISO8583(ReceiveDataFromServer());
+
+                    nsuRec = isoReg.bit127;
+
+                    Console.WriteLine("Rec from server: " + isoReg.registro);
+
+                    SendSincrono(Get0202(nsuRec).registro);
 
                     Thread.Sleep(100);
 
-                    resp = ReceiveDataFromServer();
-                    Console.WriteLine("Rec from server: " + resp);
+                    isoReg = new ISO8583(ReceiveDataFromServer());
 
-                    Thread.Sleep(100);
+                    nsuRec = isoReg.bit127;
 
-                    resp = ReceiveDataFromServer();
-                    Console.WriteLine("Rec from server: " + resp);
+                    Console.WriteLine("Rec from server: " + isoReg.registro);
 
-                    SendSincrono("0202 xxx ");
+                    SendSincrono(Get0202(nsuRec).registro);
 
                     Thread.Sleep(100);
                 }
 
                 Disconnect();
             }
-            catch (Exception exc) {
+            catch (Exception exc)
+            {
                 Console.WriteLine(exc.ToString());
             }
         }
+
+        #region - socket -
 
         public void SendToServer(string tbMsgToSend)
         {
@@ -118,11 +151,11 @@ namespace ClientISOv2
             }
             catch (SocketException exc)
             {
-                //Console.WriteLine("Não conseguiu enviar!");
+                
             }
             catch (Exception exc)
             {
-                //Console.WriteLine("*** Send + " + exc.ToString());
+                
             }
         }
 
@@ -135,11 +168,11 @@ namespace ClientISOv2
             }
             catch (SocketException exc)
             {
-                //Console.WriteLine("Não conseguiu enviar!");
+                
             }
             catch (Exception exc)
             {
-                //Console.WriteLine("*** SendCallback + " + exc.ToString());
+                
             }
         }
 
@@ -153,8 +186,9 @@ namespace ClientISOv2
                 // Sends data to a connected Socket. 
                 int bytesSend = senderSock.Send(msg);
             }
-            catch (Exception exc) {
-                Console.WriteLine(exc.ToString());
+            catch (Exception exc)
+            {
+                
             }
         }
 
@@ -181,8 +215,6 @@ namespace ClientISOv2
             }
             catch (Exception exc)
             {
-                Console.WriteLine(exc.ToString());
-
                 return null;                
             }
         }
@@ -200,5 +232,7 @@ namespace ClientISOv2
                 Console.WriteLine(exc.ToString());
             }
         }
+
+        #endregion
     }
 }

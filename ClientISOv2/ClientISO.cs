@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 
@@ -8,12 +9,39 @@ namespace ClientISOv2
 {
     public class ClientISO
     {
-        byte[] bytes = new byte[999999];
         Socket senderSock;
 
-        public const string TerminalTeste = "",
-                            codLoja = "",
-                            trilha2 = ""; //????????????
+        public string DESCript(string dados, string chave = "12345678")
+        {
+            #region - code -
+
+            dados = dados.PadLeft(8, '*');
+
+            byte[] key = Encoding.ASCII.GetBytes(chave);
+            byte[] data = Encoding.ASCII.GetBytes(dados);
+
+            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+
+            des.Key = key;
+            des.Mode = CipherMode.ECB;
+
+            ICryptoTransform DESt = des.CreateEncryptor();
+            DESt.TransformBlock(data, 0, 8, data, 0);
+
+            string retorno = "";
+            for (int n = 0; n < 8; n++)
+            {
+                retorno += String.Format("{0:X2}", data[n]);
+            }
+
+            return retorno;
+
+            #endregion
+        }
+
+        public const string TerminalTeste = "123456",   // ????????
+                            codLoja = "5000",           // ????????
+                            trilha2 = "000000" + "000002" + "000001" + "01";
 
         public ISO8583 Get0200(string valor, string nsuOrigem)
         {
@@ -24,7 +52,7 @@ namespace ClientISOv2
                 terminal = ClientISO.TerminalTeste,
                 codLoja = ClientISO.codLoja,
                 trilha2 = ClientISO.trilha2,
-                senha = "", //????????????
+                senha = DESCript ("1234"),
                 valor = valor.PadLeft(12, '0')
             };
         }
@@ -37,7 +65,6 @@ namespace ClientISOv2
                 codLoja = ClientISO.codLoja,
                 terminal = ClientISO.TerminalTeste,
                 nsuOrigem = "",
-
                 bit125 = nsu
             };
         }
@@ -50,7 +77,7 @@ namespace ClientISOv2
                 nsuOrigem = nsu,
                 codLoja = ClientISO.codLoja,
                 terminal = ClientISO.TerminalTeste,
-                valor = ""
+                valor = "0100"
             };
         }
 
@@ -196,6 +223,8 @@ namespace ClientISOv2
         {
             try
             {
+                byte[] bytes = new byte[999999];
+
                 // Receives data from a bound Socket. 
                 int bytesRec = senderSock.Receive(bytes);
 

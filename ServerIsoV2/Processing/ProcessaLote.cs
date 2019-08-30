@@ -329,7 +329,7 @@ namespace ServerIsoV2
 
                                 var Iso430 = new ISO8583
                                 {
-                                    codigo = "430",
+                                    codigo = codigoIso,
                                     codResposta = resp.st_codResp,
                                     nsuOrigem = regIso.nsuOrigem,
                                     valor = regIso.valor,
@@ -356,6 +356,8 @@ namespace ServerIsoV2
                 }
                 catch (System.Exception ex)
                 {
+                    Console.WriteLine("FALHA:" + ex.ToString());
+
                     cmd.LogFalha(ex.ToString());
                 }
             }

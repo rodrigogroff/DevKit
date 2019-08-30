@@ -16,7 +16,7 @@ namespace ServerIsoV2
         public Encoding myEnconding = Encoding.ASCII;
 
         //public string localHost = "http://localhost:4091";
-        public string localHost = "http://meuconvey.conveynet.com.br";
+        public string localHost = "http://177.85.160.41";
 
         public const int portHostSITEF = 2700,
                          maxQueue = 999,
@@ -38,7 +38,23 @@ namespace ServerIsoV2
             permission.Demand();
 
             IPHostEntry ipHost = Dns.GetHostEntry("");
-            IPAddress ipAddr = ipHost.AddressList[1];
+
+            int index = 0;
+
+            for (int i = 0; i < ipHost.AddressList.Length; i++)
+            {
+                Console.WriteLine(i + " " + ipHost.AddressList[i].ToString());
+
+                if (ipHost.AddressList[i].ToString().Contains("."))
+                {
+                    index = i;
+                    break;
+                }
+            }                   
+
+            IPAddress ipAddr = ipHost.AddressList[0];
+
+            ipAddr = IPAddress.Parse("10.11.0.41");
 
             Console.WriteLine(ipAddr.ToString());
 

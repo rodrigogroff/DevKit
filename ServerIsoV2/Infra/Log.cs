@@ -72,7 +72,7 @@ namespace ServerIsoV2
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
 
-                idLogFile = "logFile_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + "_" + Id + ".txt";
+                idLogFile = "logFile_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + "_" + Guid.NewGuid().ToString() + ".txt";
 
                 strLogFile = dir + "\\" + idLogFile;
 
@@ -94,6 +94,9 @@ namespace ServerIsoV2
 
         public void LogFalha(string dados)
         {
+            numFalha++;
+            firstLog = true;
+
             Log(dados);
 
             var st = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff") + " {" + dados + "}";
@@ -122,7 +125,7 @@ namespace ServerIsoV2
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
-            string idLogFile = "logFile_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + "_" + Id + ".txt";
+            string idLogFile = "logFile_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + "_" + Guid.NewGuid().ToString() + ".txt";
 
             swFalha = new StreamWriter(dir + "\\FALHA" + numFalha + idLogFile, false)
             {

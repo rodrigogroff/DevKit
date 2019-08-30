@@ -9,7 +9,14 @@ namespace ClientISOv2
 {
     public class ClientISO
     {
+        char sep = '\0';
         Socket senderSock;
+
+        public const string TerminalTeste = "123456",   // ????????
+                            codLoja = "5000",           // ????????
+                            trilha2 = "000000" + "000002" + "000001" + "01";
+
+        #region - obter pacotes - 
 
         public string DESCript(string dados, string chave = "12345678")
         {
@@ -38,11 +45,7 @@ namespace ClientISOv2
 
             #endregion
         }
-
-        public const string TerminalTeste = "123456",   // ????????
-                            codLoja = "5000",           // ????????
-                            trilha2 = "000000" + "000002" + "000001" + "01";
-
+        
         public ISO8583 Get0200(string valor, string nsuOrigem)
         {
             #region - code - 
@@ -110,17 +113,28 @@ namespace ClientISOv2
 
             #endregion
         }
+        
+        #endregion
 
         public void Start()
         {
             try
-            {                
+            {
+                #region - listener - 
+
                 SocketPermission permission = new SocketPermission( NetworkAccess.Connect, TransportType.Tcp, "", SocketPermission.AllPorts );
 
                 permission.Demand();
 
-                var ipHost = Dns.GetHostEntry("");
-                var ipAddr = ipHost.AddressList[1];
+                var ipHost = Dns.GetHostEntry("177.85.160.41");
+
+                for (int i = 0; i < ipHost.AddressList.Length; i++)
+                    Console.WriteLine(i + " " + ipHost.AddressList[i].ToString());
+
+                var ipAddr = ipHost.AddressList[0];
+
+                //var ipHost = Dns.GetHostEntry("");
+                //var ipAddr = ipHost.AddressList[1];
                 var ipEndPoint = new IPEndPoint(ipAddr, 2700);
                 var nsuRec = "";
 
@@ -133,49 +147,18 @@ namespace ClientISOv2
 
                 senderSock.Connect(ipEndPoint);
 
+                #endregion
+
                 Console.WriteLine ( "Socket connected to " + senderSock.RemoteEndPoint.ToString() );
 
                 //  while (true) { if (DateTime.Now.Second == 1) break; Thread.Sleep(10); }
 
-                char sep = '\0';
-
                 for (int i = 0; i < 1; i++)
                 {
-                    SendSincrono ( Get0200("100", "1").registro + sep +
-                                   Get0200("101", "1").registro + sep +
-                                   Get0200("102", "1").registro );
-
-                    Thread.Sleep(100);
-
-                    isoReg = new ISO8583(ReceiveDataFromServer());
-
-                    nsuRec = isoReg.bit127;
-
-                    Console.WriteLine("Rec from server: " + isoReg.registro);                    
-
-                    SendSincrono(Get0202(nsuRec).registro);
-
-                    Thread.Sleep(100);
-
-                    isoReg = new ISO8583(ReceiveDataFromServer());
-
-                    nsuRec = isoReg.bit127;
-
-                    Console.WriteLine("Rec from server: " + isoReg.registro);
-
-                    SendSincrono(Get0202(nsuRec).registro);
-
-                    Thread.Sleep(100);
-
-                    isoReg = new ISO8583(ReceiveDataFromServer());
-
-                    nsuRec = isoReg.bit127;
-
-                    Console.WriteLine("Rec from server: " + isoReg.registro);
-
-                    SendSincrono(Get0202(nsuRec).registro);
-
-                    Thread.Sleep(100);
+                    ExecutaLote();
+                    //ExecutaVendaPendente();
+                    //ExecutaCancelamentoSimples("99");
+                    //ExecutaDesfazimentoSimples("110");
                 }
 
                 Disconnect();
@@ -185,8 +168,92 @@ namespace ClientISOv2
                 Console.WriteLine(exc.ToString());
             }
         }
+        
+        #region - funções de teste - 
 
-        #region - socket -
+        public void ExecutaLote()
+        {
+            #region - code - 
+
+            SendSincrono(Get0200("100", "1").registro + sep +
+                                   Get0200("101", "1").registro + sep +
+                                   Get0200("102", "1").registro);
+
+            Thread.Sleep(100);
+
+            var isoReg = new ISO8583(ReceiveDataFromServer());
+
+            var nsuRec = isoReg.bit127;
+
+            Console.WriteLine("Rec from server: " + isoReg.registro);
+
+            SendSincrono(Get0202(nsuRec).registro);
+
+            Thread.Sleep(100);
+
+            isoReg = new ISO8583(ReceiveDataFromServer());
+
+            nsuRec = isoReg.bit127;
+
+            Console.WriteLine("Rec from server: " + isoReg.registro);
+
+            SendSincrono(Get0202(nsuRec).registro);
+
+            Thread.Sleep(100);
+
+            isoReg = new ISO8583(ReceiveDataFromServer());
+
+            nsuRec = isoReg.bit127;
+
+            Console.WriteLine("Rec from server: " + isoReg.registro);
+
+            SendSincrono(Get0202(nsuRec).registro);
+
+            Thread.Sleep(100);
+
+            #endregion
+        }
+
+        public void ExecutaVendaPendente()
+        {
+            #region - code - 
+
+            SendSincrono(Get0200("103", "1").registro);
+
+            Thread.Sleep(100);
+
+            var isoReg = new ISO8583(ReceiveDataFromServer());
+
+            #endregion
+        }
+
+        public void ExecutaCancelamentoSimples(string nsu)
+        {
+            #region - code - 
+
+            SendSincrono(Get0400(nsu.PadLeft(6,'0')).registro);
+            Thread.Sleep(100);
+            var isoReg = new ISO8583(ReceiveDataFromServer());
+            Console.WriteLine("Rec from server: " + isoReg.registro);
+
+            #endregion
+        }
+
+        public void ExecutaDesfazimentoSimples(string nsu)
+        {
+            #region - code - 
+
+            SendSincrono(Get0420(nsu.PadLeft(6, '0')).registro);
+            Thread.Sleep(100);
+            var isoReg = new ISO8583(ReceiveDataFromServer());
+            Console.WriteLine("Rec from server: " + isoReg.registro);
+
+            #endregion
+        }
+
+        #endregion
+
+        #region - socket handlers -
 
         public void SendToServer(string tbMsgToSend)
         {

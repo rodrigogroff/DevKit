@@ -6,6 +6,9 @@ public partial class ISO8583
 {
     public void desmonta_registro(string regISO)
     {
+        if (string.IsNullOrEmpty(regISO)) return;
+        if (regISO.Length < 4) return;
+
         int num1 = 1,
             num2 = 4,
             startIndex1 = 0,

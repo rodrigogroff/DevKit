@@ -15,9 +15,10 @@ namespace ServerIsoV2
 
         public Encoding myEnconding = Encoding.ASCII;
 
+        //public string localHost = "http://localhost:4091";
         public string localHost = "http://meuconvey.conveynet.com.br";
 
-        public const int portHost = 2700,
+        public const int portHostSITEF = 2700,
                          maxQueue = 999,
                          maxPckSize = 99999;
 
@@ -41,7 +42,7 @@ namespace ServerIsoV2
 
             Console.WriteLine(ipAddr.ToString());
 
-            var ipEndPoint = new IPEndPoint(ipAddr, portHost);
+            var ipEndPoint = new IPEndPoint(ipAddr, portHostSITEF);
             var sListener = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             sListener.Bind(ipEndPoint);
             sListener.Listen(maxQueue);

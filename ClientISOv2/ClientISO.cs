@@ -45,8 +45,11 @@ namespace ClientISOv2
 
         public ISO8583 Get0200(string valor, string nsuOrigem)
         {
+            #region - code - 
+
             return new ISO8583
             {
+                codigo= "0200",
                 codProcessamento = "002000",
                 nsuOrigem = nsuOrigem,
                 terminal = ClientISO.TerminalTeste,
@@ -55,41 +58,57 @@ namespace ClientISOv2
                 senha = DESCript ("1234"),
                 valor = valor.PadLeft(12, '0')
             };
+
+            #endregion
+        }
+
+        public ISO8583 Get0202(string nsu)
+        {
+            #region - code - 
+
+            return new ISO8583
+            {
+                codigo = "0202",
+                codProcessamento = "002000",
+                codLoja = ClientISO.codLoja,
+                terminal = ClientISO.TerminalTeste,
+                bit62 = ClientISO.trilha2,
+                bit127 = nsu
+            };
+
+            #endregion
         }
 
         public ISO8583 Get0400(string nsu)
         {
+            #region - code - 
             return new ISO8583
             {
+                codigo = "0400",
                 codProcessamento = "002000",
                 codLoja = ClientISO.codLoja,
                 terminal = ClientISO.TerminalTeste,
                 nsuOrigem = "",
                 bit125 = nsu
             };
+            #endregion
         }
 
         public ISO8583 Get0420(string nsu)
         {
+            #region - code - 
+
             return new ISO8583
             {
+                codigo = "0420",
                 codProcessamento = "002000",
                 nsuOrigem = nsu,
                 codLoja = ClientISO.codLoja,
                 terminal = ClientISO.TerminalTeste,
                 valor = "0100"
             };
-        }
 
-        public ISO8583 Get0202(string nsu)
-        {
-            return new ISO8583
-            {
-                codProcessamento = "002000",
-                codLoja = ClientISO.codLoja,
-                terminal = ClientISO.TerminalTeste,
-                bit127 = nsu
-            };
+            #endregion
         }
 
         public void Start()
@@ -116,12 +135,12 @@ namespace ClientISOv2
 
                 Console.WriteLine ( "Socket connected to " + senderSock.RemoteEndPoint.ToString() );
 
-                while (true) { if (DateTime.Now.Second == 1) break; Thread.Sleep(10); }
+                //  while (true) { if (DateTime.Now.Second == 1) break; Thread.Sleep(10); }
+
+                char sep = '\0';
 
                 for (int i = 0; i < 1; i++)
                 {
-                    char sep = '\0';
-
                     SendSincrono ( Get0200("100", "1").registro + sep +
                                    Get0200("101", "1").registro + sep +
                                    Get0200("102", "1").registro );

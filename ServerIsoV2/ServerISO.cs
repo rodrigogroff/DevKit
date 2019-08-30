@@ -16,7 +16,8 @@ namespace ServerIsoV2
         public Encoding myEnconding = Encoding.ASCII;
 
         //public string localHost = "http://localhost:4091";
-        public string localHost = "http://177.85.160.41";
+        public string hostAPI = "http://192.168.15.26:80";
+        public string hostMachine = "10.11.0.41";
 
         public const int portHostSITEF = 2700,
                          maxQueue = 999,
@@ -54,7 +55,7 @@ namespace ServerIsoV2
 
             IPAddress ipAddr = ipHost.AddressList[0];
 
-            ipAddr = IPAddress.Parse("10.11.0.41");
+            ipAddr = IPAddress.Parse(hostMachine);
 
             Console.WriteLine(ipAddr.ToString());
 
@@ -106,7 +107,7 @@ namespace ServerIsoV2
 
             while (true)
             {
-                var serviceClient = new RestClient(localHost);
+                var serviceClient = new RestClient(hostAPI);
                 var serviceRequest = new RestRequest("api/FechamentoServerISO", Method.GET);
 
                 serviceClient.Execute(serviceRequest);
@@ -125,7 +126,7 @@ namespace ServerIsoV2
 
             while (true)
             {
-                var serviceClient = new RestClient(localHost);
+                var serviceClient = new RestClient(hostAPI);
                 var serviceRequest = new RestRequest("api/ConfirmacaoAutoServerISO", Method.GET);
 
                 serviceClient.Execute(serviceRequest);

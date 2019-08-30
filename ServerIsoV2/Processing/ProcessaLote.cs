@@ -78,7 +78,7 @@ namespace ServerIsoV2
                             {
                                 #region - processa venda normal - 
 
-                                var serviceClient = new RestClient(localHost);
+                                var serviceClient = new RestClient(hostAPI);
                                 var serviceRequest = new RestRequest("api/VendaServerISO", Method.PUT);
 
                                 var dadosVenda = new VendaIsoInputDTO
@@ -163,7 +163,7 @@ namespace ServerIsoV2
 
                                 cmd.Log("prepara confirmação");
 
-                                var serviceClient = new RestClient(localHost);
+                                var serviceClient = new RestClient(hostAPI);
                                 var serviceRequest = new RestRequest("api/VendaConfServerISO", Method.PUT);
 
                                 serviceRequest.AddJsonBody(new VendaConfIsoInputDTO
@@ -265,7 +265,7 @@ namespace ServerIsoV2
 
                                 cmd.Log("cancelamento " + regIso.bit125);
 
-                                var serviceClient = new RestClient(localHost);
+                                var serviceClient = new RestClient(hostAPI);
                                 var serviceRequest = new RestRequest("api/VendaCancServerISO", Method.PUT);
 
                                 serviceRequest.AddJsonBody(new VendaCancIsoInputDTO
@@ -308,7 +308,7 @@ namespace ServerIsoV2
                             {
                                 #region - desfazimento - 
 
-                                var serviceClient = new RestClient(localHost);
+                                var serviceClient = new RestClient(hostAPI);
                                 var serviceRequest = new RestRequest("api/VendaDesfazServerISO", Method.PUT);
 
                                 serviceRequest.AddJsonBody(new VendaDesfazIsoInputDTO

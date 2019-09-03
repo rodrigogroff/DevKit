@@ -85,11 +85,41 @@ namespace DevKit.Web.Controllers
 
             if (busca != null)
             {
-                query = (from e in query
-                         join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int)associado.i_unique
-                         join dependente in db.T_Dependente on e.fk_dadosProprietario equals (int)dependente.fk_proprietario
-                         where associado.st_nome.ToUpper().Contains(busca.ToUpper()) || dependente.st_nome.ToUpper().Contains (busca.ToUpper())
-                         select e);
+                var lstFksAssociados = db.T_Proprietario.Where(y => y.st_nome.ToUpper().Contains(busca.ToUpper())).Select(y => y.i_unique).ToList();
+                                        
+                if (lstFksAssociados.Count() > 0)
+                {
+                    var lstCarts = new List<decimal>();
+
+                    foreach (var item in lstFksAssociados)
+                    {
+                        lstCarts.Add(
+                            db.T_Cartao.FirstOrDefault(
+                                y => y.fk_dadosProprietario == item &&
+                                     Convert.ToInt32(y.st_titularidade) == 1).
+                                     i_unique);
+                    }
+
+                    query = query.Where(y => lstCarts.Contains(y.i_unique));
+                }
+
+                var lstFksDependentes = db.T_Dependente.Where(y => y.st_nome.ToUpper().Contains(busca.ToUpper())).ToList();
+
+                if (lstFksDependentes.Count() > 0)
+                {
+                    var lstCarts = new List<decimal>();
+
+                    foreach (var item in lstFksDependentes)
+                    {
+                        lstCarts.Add ( 
+                            db.T_Cartao.FirstOrDefault ( 
+                                y => y.fk_dadosProprietario == item.fk_proprietario && 
+                                     Convert.ToInt32(y.st_titularidade) == item.nu_titularidade).
+                                     i_unique);
+                    }
+
+                    query = query.Where(y => lstCarts.Contains(y.i_unique));
+                }
             }
 
             if (matricula != null && matricula != "")

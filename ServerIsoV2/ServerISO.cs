@@ -4,95 +4,180 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Linq;
+using RestSharp;
 
 namespace ServerIsoV2
 {
-    public class Command
+    public partial class ServerISO
     {
-        public string Text { get; set; }
+        public bool Simulation = true;
 
-        public Socket handler { get; set; }
-    }
-    
-    public class ServerISO
-    {
-        public List<Command> Commands = new List<Command>();
-                
+        public Encoding myEnconding = Encoding.ASCII;
+
+        //public string localHost = "http://localhost:4091";
+        public string hostAPI = "http://192.168.15.26:80";
+        public string hostMachine = "10.11.0.41";
+
+        public const int portHostSITEF = 2700,
+                         maxQueue = 999,
+                         maxPckSize = 99999;
+
+        public char sepPacotes = '\0';
+        
+        public List<IsoCommand> GlobalCommands = new List<IsoCommand>();
+
+        public byte[] GetBuffer() { return new byte[maxPckSize]; }
+
+        public string GenerateId() { return Guid.NewGuid().ToString(); }
+
         public void Start()
-        {            
-            var permission = new SocketPermission( NetworkAccess.Accept, TransportType.Tcp, "", SocketPermission.AllPorts );             
+        {
+            #region - setup listener -
+
+            var permission = new SocketPermission(NetworkAccess.Accept, TransportType.Tcp, "", SocketPermission.AllPorts);
             permission.Demand();
-            
-            IPHostEntry ipHost = Dns.GetHostEntry("");            
-            IPAddress ipAddr = ipHost.AddressList[1];
-            
-            var ipEndPoint = new IPEndPoint(ipAddr, 4510);            
-            var sListener = new Socket( ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp );
+
+            IPHostEntry ipHost = Dns.GetHostEntry("");
+
+            int index = 0;
+
+            for (int i = 0; i < ipHost.AddressList.Length; i++)
+            {
+                Console.WriteLine(i + " " + ipHost.AddressList[i].ToString());
+
+                if (ipHost.AddressList[i].ToString().Contains("."))
+                {
+                    index = i;
+                    break;
+                }
+            }                   
+
+            IPAddress ipAddr = ipHost.AddressList[0];
+
+            ipAddr = IPAddress.Parse(hostMachine);
+
+            Console.WriteLine(ipAddr.ToString());
+
+            var ipEndPoint = new IPEndPoint(ipAddr, portHostSITEF);
+            var sListener = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             sListener.Bind(ipEndPoint);
-            sListener.Listen(1000);
-            
-            AsyncCallback aCallback = new AsyncCallback(AcceptCallback);
+            sListener.Listen(maxQueue);
+
+            AsyncCallback aCallback = new AsyncCallback(BeginClientAccept);
             sListener.BeginAccept(aCallback, sListener);
 
-            Console.WriteLine( "Server is now listening on " + ipEndPoint.Address + " port: " + ipEndPoint.Port );
+            #endregion
+
+            Console.WriteLine("Server on " + ipEndPoint.Address + " port: " + ipEndPoint.Port);
+
+            if (!Simulation)
+            {
+                new Thread(new ThreadStart(BatchService_Fechamento)).Start();
+                new Thread(new ThreadStart(BatchService_ConfirmacaoAuto)).Start();
+            }                       
+            
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                var lstCmdsToExecute = GlobalCommands.Where(y => y.Running == false).ToList();
+                var count = lstCmdsToExecute.Count();
+
+                if (DateTime.Now.Second % 10 == 0)
+                    Console.WriteLine("[" + DateTime.Now.ToString() + "] >> Queue: " + count);
+
+                if (count > 0)
+                {
+                    Console.WriteLine("Queue: " + count);
+
+                    foreach (var cmd in lstCmdsToExecute)
+                        new Thread(() => ProcessaLote(cmd)).Start();
+                }
+
+                GlobalCommands.RemoveAll(y => y.Ended == true);
+            }
+        }
+
+        public void BatchService_Fechamento()
+        {
+            #region - code - 
+
+            Console.WriteLine("BatchService_Fechamento...");
 
             while (true)
             {
-                if (Commands.Count > 0 )
-                {
-                    Console.WriteLine("Queue: " + Commands.Count);
+                var serviceClient = new RestClient(hostAPI);
+                var serviceRequest = new RestRequest("api/FechamentoServerISO", Method.GET);
 
-                    var cmd = Commands[0];
-                    Commands.RemoveAt(0);
+                serviceClient.Execute(serviceRequest);
 
-                    Thread thread = new Thread(() => ProcessCommand(cmd));
-                    thread.Start();
-                }
+                Thread.Sleep(1000 * 60);
+            }
 
-                Thread.Sleep(100);
-            }                
+            #endregion
         }
 
-        public void ProcessCommand (Command cmd)
+        public void BatchService_ConfirmacaoAuto()
         {
-            Console.WriteLine("CMD> " + cmd.Text);
-            Send("210 " + cmd.Text, cmd.handler);
+            #region - code - 
+
+            Console.WriteLine("BatchService_ConfirmacaoAuto...");
+
+            while (true)
+            {
+                var serviceClient = new RestClient(hostAPI);
+                var serviceRequest = new RestRequest("api/ConfirmacaoAutoServerISO", Method.GET);
+
+                serviceClient.Execute(serviceRequest);
+
+                Thread.Sleep(5000);
+            }
+
+            #endregion
         }
 
-        public byte[] GetBuffer()
-        {
-            return new byte[999999];
-        }
+        #region - socket methods - 
 
-        public void AcceptCallback(IAsyncResult ar)
+        public void BeginClientAccept(IAsyncResult ar)
         {
+            #region - code - 
+
             try
             {
                 byte[] buffer = GetBuffer();
                 
-                var listener = (Socket)ar.AsyncState;
+                var listener = ar.AsyncState as Socket;
                 var handler = listener.EndAccept(ar);
-
+               
                 handler.NoDelay = false;
 
-                object[] obj = new object[2];
+                object[] obj = new object[3];
                 obj[0] = buffer;
                 obj[1] = handler;
+                obj[2] = GenerateId();
 
-                handler.BeginReceive( buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), obj );
-                listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
+                Console.WriteLine("> New client connected!");
+
+                handler.BeginReceive( buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveMsg), obj );
+                listener.BeginAccept(new AsyncCallback(BeginClientAccept), listener);
             }
             catch (Exception exc)
             {
                 Console.WriteLine("*** AcceptCallback + " + exc.ToString());
             }
+
+            #endregion
         }
 
-        public void ReceiveCallback(IAsyncResult ar)
+        public void ReceiveMsg(IAsyncResult ar)
         {
+            #region - code - 
+
             var obj = ar.AsyncState as object[];
             byte[] buffer = obj[0] as byte[];
             var handler = obj[1] as Socket;
+            var myGuid = obj[2] as string;
 
             string content = string.Empty;
 
@@ -102,52 +187,51 @@ namespace ServerIsoV2
 
                 if (bytesRead > 0)
                 {
-                    content += Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                    Console.WriteLine("RECV: " + content);
+                    content += myEnconding.GetString(buffer, 0, bytesRead);
+                    Console.WriteLine("[Received] " + content);
 
-                    Commands.Add(new Command
+                    GlobalCommands.Add(new IsoCommand
                     {
                         Text = content,
-                        handler = handler
-                    });                    
-                }      
-                else
-                {
-                    Listen(handler);
+                        handler = handler,
+                        Id = myGuid
+                    });
                 }
             }
             catch (SocketException exc)
             {
-                Console.WriteLine(exc);
+                var cmd = GlobalCommands.Where(y => y.Id == myGuid).FirstOrDefault();
+
+                Console.WriteLine("[Client Exit]");
+
+                if (cmd != null)
+                    cmd.Ended = true;
             }
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
             }
+
+            #endregion
         }
 
-        public void Listen(Socket handler)
+        public void Send(string tbMsgToSend, IsoCommand cmd)
         {
-            Console.WriteLine("Listen....");
+            #region - code -
 
-            object[] obj = new object[2];
-            byte[] buffernew = GetBuffer();
-            obj[0] = buffernew;
-            obj[1] = handler;
+            Console.WriteLine("[Sending] " + tbMsgToSend);
 
-            handler.BeginReceive(buffernew, 0, buffernew.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), obj);
-        }
-
-        public void Send(string tbMsgToSend, Socket handler)
-        {
             try
             {
-                var obj = new object[2];
-                byte[] byteData = Encoding.ASCII.GetBytes(tbMsgToSend);
+                var obj = new object[3];
+                byte[] byteData = myEnconding.GetBytes(tbMsgToSend);
                 obj[0] = byteData;
-                obj[1] = handler;
+                obj[1] = cmd.handler;
+                obj[2] = cmd.Id;
 
-                handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), obj);                
+                cmd.ChannelOpen = false;
+
+                cmd.handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), obj);                
             }
             catch (SocketException exc)
             {
@@ -157,17 +241,26 @@ namespace ServerIsoV2
             {
                 Console.WriteLine(exc);
             }
+
+            #endregion
         }
 
         public void SendCallback(IAsyncResult ar)
         {
+            #region - code - 
+
             try
             {
                 var obj = ar.AsyncState as object[];
                 var handler = obj[1] as Socket;
+                var myGuid = obj[2] as string;
+
                 int bytesSend = handler.EndSend(ar);
 
-                Listen(handler);
+                var cmd = GlobalCommands.Where(y => y.Id == myGuid).FirstOrDefault();
+
+                if (cmd != null)
+                    cmd.ChannelOpen = true;
             }
             catch (SocketException exc)
             {
@@ -177,6 +270,25 @@ namespace ServerIsoV2
             {
                 Console.WriteLine(exc);
             }
-        }        
+
+            #endregion
+        }
+
+        public void WaitMessage(IsoCommand cmd)
+        {
+            #region - code - 
+
+            object[] obj = new object[3];
+            byte[] buffernew = GetBuffer();
+            obj[0] = buffernew;
+            obj[1] = cmd.handler;
+            obj[2] = cmd.Id;
+
+            cmd.handler.BeginReceive(buffernew, 0, buffernew.Length, SocketFlags.None, new AsyncCallback(ReceiveMsg), obj);
+
+            #endregion
+        }
+
+        #endregion
     }
 }

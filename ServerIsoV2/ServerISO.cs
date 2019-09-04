@@ -11,7 +11,7 @@ namespace ServerIsoV2
 {
     public partial class ServerISO
     {
-        public bool Simulation = true;
+        public bool Simulation = false;
 
         public Encoding myEnconding = Encoding.ASCII;
 
@@ -210,6 +210,38 @@ namespace ServerIsoV2
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
+            }
+
+            #endregion
+        }
+
+        public void SendSincrono(string theMessageToSend, IsoCommand cmd)
+        {
+            #region - code - 
+
+            Console.WriteLine("Send >> " + theMessageToSend);
+            try
+            {
+                cmd.ChannelOpen = false;
+
+                string str = string.Format("{0:X2}", (object)theMessageToSend.Length).PadLeft(4, '0');
+                byte[] numArray = new byte[2];
+                for (int index = 0; index < str.Length / 2; ++index)
+                    numArray[index] = (byte)Convert.ToInt32(str.Substring(index * 2, 2), 16);
+                byte[] bytes = Encoding.ASCII.GetBytes("00" + theMessageToSend);
+                bytes[0] = numArray[1];
+                bytes[1] = numArray[0];
+
+                // Sends data to a connected Socket. 
+                int bytesSend = cmd.handler.Send(bytes);
+
+                cmd.ChannelOpen = true;
+
+                cmd.Log("Envio completo!");
+            }
+            catch (Exception exc)
+            {
+                cmd.LogFalha(exc.ToString());
             }
 
             #endregion

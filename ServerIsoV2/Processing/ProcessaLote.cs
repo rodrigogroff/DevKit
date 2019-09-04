@@ -66,11 +66,7 @@ namespace ServerIsoV2
                                 };
 
                                 cmd.Log(Iso210);
-
-                                cmd.ChannelOpen = false;
-                                Send(Iso210.registro, cmd);
-                                while (!cmd.ChannelOpen)
-                                    Thread.Sleep(10);
+                                SendSincrono(Iso210.registro, cmd);
 
                                 #endregion
                             }
@@ -133,10 +129,7 @@ namespace ServerIsoV2
                                 cmd.ChannelOpen = false;
 
                                 cmd.Log(Iso210);
-                                Send(Iso210.registro, cmd);
-
-                                while (!cmd.ChannelOpen)
-                                    Thread.Sleep(10);
+                                SendSincrono(Iso210.registro, cmd);
 
                                 WaitMessage(cmd);
 
@@ -294,11 +287,8 @@ namespace ServerIsoV2
                                 };
 
                                 cmd.Log(isoRegistro);
-
-                                cmd.ChannelOpen = false;
-                                Send(isoRegistro.registro, cmd);
-                                while (!cmd.ChannelOpen)
-                                    Thread.Sleep(10);
+                                
+                                SendSincrono(isoRegistro.registro, cmd);
 
                                 cmd.Log("cancelamento " + regIso.bit125 + " enviado!");
 
@@ -339,11 +329,8 @@ namespace ServerIsoV2
                                 };
 
                                 cmd.Log(Iso430);
-
-                                cmd.ChannelOpen = false;
-                                Send(Iso430.registro, cmd);
-                                while (!cmd.ChannelOpen)
-                                    Thread.Sleep(10);
+                                
+                                SendSincrono(Iso430.registro, cmd);
 
                                 cmd.Log("Desfazimento " + regIso.nsuOrigem + " enviado!");
 

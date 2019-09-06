@@ -9,7 +9,7 @@ using ServerISO.DTO;
 
 public partial class ClientHandler
 {
-    public string localHost = SynchronousSocketListener.localHost;
+    public string localHost = "http://192.168.15.26:80";
 
     public ClientHandler() { }
 
@@ -147,7 +147,7 @@ public partial class ClientHandler
             };
 
             Log("==========================================");
-            Log("CNET ISO vr 1.00");
+            Log("CNET ISO vr 1.50");
             Log("==========================================");
         }
         
@@ -188,63 +188,6 @@ public partial class ClientHandler
 
     #region - socket functions - 
     
-    public void enviaDadosCNET(TcpClient tcpClient, string registroCNET)
-    {
-        Log("enviaDadosCNET " + registroCNET);
-
-        try
-        {
-            var networkStream = tcpClient.GetStream();
-
-            byte[] sendBytes = Encoding.ASCII.GetBytes(registroCNET);
-            networkStream.Write(sendBytes, 0, sendBytes.Length);
-            networkStream.Flush();
-        }
-        catch (SocketException ex)
-        {
-            LogFalha("enviaDadosCNET SocketException : " + ex.Message);
-            throw ex;
-        }
-        catch (Exception ex)
-        {
-            LogFalha("enviaDadosCNET Exception : " + ex.ToString());
-            throw ex;
-        }
-    }
-
-    public string enviaRecebeDadosCNET(TcpClient tcpClient, string registroCNET)
-    {
-        Log("enviaRecebeDadosCNET (enviado) " + registroCNET);
-
-        try
-        {
-            NetworkStream networkStream = tcpClient.GetStream();
-
-            byte[] sendBytes = Encoding.ASCII.GetBytes(registroCNET);
-            networkStream.Write(sendBytes, 0, sendBytes.Length);
-            networkStream.Flush();
-
-            byte[] bytes = new byte[tcpClient.ReceiveBufferSize];
-            int BytesRead = networkStream.Read(bytes, 0, (int)tcpClient.ReceiveBufferSize);
-
-            string dadosSocket = Encoding.ASCII.GetString(bytes, 0, BytesRead);
-
-            Log("enviaRecebeDadosCNET (recebido) " + dadosSocket);
-
-            return dadosSocket;
-        }
-        catch (SocketException ex)
-        {
-            LogFalha("enviaRecebeDadosCNET SocketException : " + ex.Message);
-            throw ex;
-        }
-        catch (Exception ex)
-        {
-            LogFalha("enviaRecebeDadosCNET Exception : " + ex.ToString());
-            throw ex;
-        }
-    }
-
     public void enviaDadosREDE(string Dados)
     {
         Log("enviaDadosREDE " + Dados);
@@ -314,20 +257,6 @@ public partial class ClientHandler
             if (dadosRecebidos == null)
                 dadosRecebidos = "";
 
-            if (dadosRecebidos.ToUpper() == "PING")
-            {
-                enviaDadosREDE("PONG");
-
-                Log("========= ProcessDataReceived FINALIZADO PING ====================");
-
-                networkStream.Close();
-                ClientSocket.Close();
-                ContinueProcess = false;
-                sw.Close();
-
-                return;
-            }
-
             if (dadosRecebidos.Length > 3)
                 dadosRecebidos = dadosRecebidos.Substring(2);
             else
@@ -359,10 +288,16 @@ public partial class ClientHandler
                 }
                 else
                 {
-                    var msgs = dadosRecebidos.Split('?');
+                    var msgs = dadosRecebidos.Split('\0');
 
                     foreach (var item in msgs)
                     {
+                        if (item.Length < 20)
+                        {
+                            Log(" REJEITANDO >> " + item);
+                            continue;
+                        }                            
+
                         var dados = item;
 
                         if (dados[0] != '0')
@@ -409,27 +344,6 @@ public partial class ClientHandler
                                                 codLoja = regIso.codLoja
                                             };
 
-                                            string str4, str5, str6;
-
-                                            if (regIso.trilha2.Trim().Length == 0)
-                                            {
-                                                str4 = "999999999999999999999999999";
-                                                str5 = "999999";
-                                                str6 = "999999";
-                                            }
-                                            else if (regIso.trilha2.Trim().Length == 27)
-                                            {
-                                                str4 = regIso.trilha2.Trim();
-                                                str5 = regIso.trilha2.Trim().Substring(6, 6);
-                                                str6 = regIso.trilha2.Trim().Substring(12, 6);
-                                            }
-                                            else
-                                            {
-                                                str5 = regIso.trilha2.Substring(17, 6);
-                                                str6 = regIso.trilha2.Substring(23, 6);
-                                                str4 = ("999999" + str5 + str6 + regIso.trilha2.Substring(29, 3)).PadLeft(27, '0');
-                                            }
-
                                             Log(Iso210);
 
                                             enviaDadosEXPRESS(Iso210.registro);
@@ -472,10 +386,6 @@ public partial class ClientHandler
                                             Log("NSU: " + retornoVenda.st_nsuRcb);
                                             Log("Código resp: " + retornoVenda.st_codResp);
                                             Log("Mensagem na log trans: " + retornoVenda.st_msg);
-
-                                              
-
-                                             
 
                                             var Iso210 = new ISO8583
                                             {

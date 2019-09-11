@@ -43,7 +43,7 @@
                             </tr>
                             <tr height="40px" ng-if="viewModel.i_unique > 0">
                                 <td></td>
-                                <td>Data Cadastro</td>
+                                <td>Primeira Venda</td>
                                 <td>
                                     
                                 </td>
@@ -63,7 +63,9 @@
                                 </td>
                                 <td></td>
                                 <td>CNPJ</td>
-                                <td></td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="cnpj_fail">!</button>
+                                </td>
                                 <td>
                                     <input type="text" class="form-control input-transparent" maxlength="16" onKeyUp="money(this,ValorNum);"
                                            ng-model="viewModel.nu_CNPJ">

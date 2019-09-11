@@ -104,7 +104,7 @@ namespace DevKit.Web
                             try
                             {
                                 var terminal = (from e in db.T_Terminal
-                                                where e.nu_terminal == UserName.PadLeft(8, '0')
+                                                where e.nu_terminal.TrimStart('0') == UserName
                                                 select e).
                                                 FirstOrDefault();
 

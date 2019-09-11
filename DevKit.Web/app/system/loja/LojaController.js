@@ -54,10 +54,12 @@ angular.module('app.controllers').controller('LojaController',
 
             $scope.save = function () {
                 $scope.nome_fail = invalidCheck($scope.viewModel.st_nome);
+                $scope.cnpj_fail = invalidCheck($scope.viewModel.nu_CNPJ);
 
                 $scope.viewModel.novaMensagem = $scope.viewModelMensagem;
 
-                if (!$scope.nome_fail) {
+                if (!$scope.nome_fail && !$scope.cnpj_fail)
+                {
                     if (id > 0) {
                         Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
                             toastr.success('Loja salva!', 'Sucesso');

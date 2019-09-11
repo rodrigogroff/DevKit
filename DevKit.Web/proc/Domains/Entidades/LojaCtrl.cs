@@ -338,7 +338,10 @@ namespace DevKit.Web.Controllers
                 nu_telefone = mdl.nu_telefone,
                 st_telCelular = mdl.st_telCelular,
                 st_cidade = mdl.st_cidade,
-                st_estado = mdl.st_estado,                
+                st_estado = mdl.st_estado,      
+                nu_CEP = mdl.nu_CEP,
+                nu_inscEst = mdl.nu_inscEst,
+                nu_CNPJ = mdl.nu_CNPJ
             };
 
             // campos transformados
@@ -546,6 +549,10 @@ namespace DevKit.Web.Controllers
             mdlUpdate.st_contato = mdl.st_contato;
             mdlUpdate.st_endereco = mdl.st_endereco;
             mdlUpdate.st_enderecoInst = mdl.st_enderecoInst;
+
+            mdlUpdate.nu_CNPJ = mdl.nu_CNPJ;
+            mdlUpdate.nu_CEP = mdl.nu_CEP;
+            mdlUpdate.nu_inscEst = mdl.nu_inscEst;
 
             db.Update(mdlUpdate);
 

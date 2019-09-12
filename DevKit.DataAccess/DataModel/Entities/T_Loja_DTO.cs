@@ -26,7 +26,7 @@ namespace DataModel
 
     public class LojaConvenio
     {
-        public string id, empresa, idEmpresa, tx_admin;
+        public string id, empresa, idEmpresa, tx_admin, remover;
     }
 
     public partial class T_Empresa

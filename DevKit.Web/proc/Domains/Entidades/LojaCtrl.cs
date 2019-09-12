@@ -491,24 +491,36 @@ namespace DevKit.Web.Controllers
 
             if (mdl.editConvenio != null)
             {
-                var convUp = db.LINK_LojaEmpresa.
-                                FirstOrDefault(y => y.i_unique.ToString() == mdl.editConvenio.id);
-
-                if (convUp == null)
-                    return BadRequest("Convênio não disponível");
-
-                try
+                if (mdl.editConvenio.remover == "true")
                 {
-                    convUp.tx_admin = (int)ObtemValor(mdl.editConvenio.tx_admin);
+                    var convDel = db.LINK_LojaEmpresa.
+                                    FirstOrDefault(y => y.i_unique.ToString() == mdl.editConvenio.id);
 
-                    db.Update(convUp);
+                    db.Delete(convDel);
 
                     return Ok();
                 }
-                catch (Exception ex)
+                else
                 {
-                    return BadRequest(ex.ToString());
-                }                
+                    var convUp = db.LINK_LojaEmpresa.
+                                    FirstOrDefault(y => y.i_unique.ToString() == mdl.editConvenio.id);
+
+                    if (convUp == null)
+                        return BadRequest("Convênio não disponível");
+
+                    try
+                    {
+                        convUp.tx_admin = (int)ObtemValor(mdl.editConvenio.tx_admin);
+
+                        db.Update(convUp);
+
+                        return Ok();
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest(ex.ToString());
+                    }
+                }
             }
 
             #endregion

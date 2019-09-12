@@ -151,6 +151,21 @@ angular.module('app.controllers').controller('LojaController',
                 $scope.modalEditarConvenio = true;
             };
 
+            $scope.removerConvenio = function (mdl) {
+                $scope.viewModelConv = mdl;
+
+                $scope.viewModel.editConvenio = $scope.viewModelConv;
+                $scope.viewModel.editConvenio.remover = 'true';
+
+                Api.Loja.update({ id: id }, $scope.viewModel, function (data) {
+                    toastr.success('Convênio removido!', 'Sucesso');
+                    init();
+                },
+                function (response) {
+                    toastr.error(response.data.message, 'Error');
+                });
+            };
+
             $scope.closeModalEditConvenio = function () {
                 $scope.viewModelConv = null;
                 $scope.modalEditarConvenio = false;

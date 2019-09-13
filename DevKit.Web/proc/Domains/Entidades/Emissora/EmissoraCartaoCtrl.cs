@@ -436,8 +436,13 @@ namespace DevKit.Web.Controllers
                                        string st_empresa )
         {
             cart.fk_dadosProprietario = id_prop;
-            cart.st_empresa = st_empresa;
-            cart.st_matricula = mdl.matricula.PadLeft(6,'0');
+
+            if (string.IsNullOrEmpty(cart.st_empresa))
+                cart.st_empresa = st_empresa;
+
+            if (string.IsNullOrEmpty(cart.st_matricula))
+                cart.st_matricula = mdl.matricula.PadLeft(6,'0');
+
             cart.st_banco = mdl.banco;
             cart.st_agencia = mdl.bancoAg;
             cart.st_conta = mdl.bancoCta;            
@@ -504,7 +509,6 @@ namespace DevKit.Web.Controllers
                 return BadRequest("Matrícula já cadastrada nesta empresa!");
             }
 
-
             CopiaDadosProprietario(mdl, ref prop);
             
             var id_prop = Convert.ToInt32(db.InsertWithIdentity(prop));
@@ -528,8 +532,6 @@ namespace DevKit.Web.Controllers
             cart.vr_limiteMensal = LimpaValor(mdl.limMes);
             cart.vr_limiteTotal = LimpaValor(mdl.limTot);
             cart.vr_extraCota = 0;
-
-            cart.st_empresa = st_empresa;
 
             cart.i_unique = Convert.ToDecimal (db.InsertWithIdentity(cart));
 

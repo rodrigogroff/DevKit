@@ -124,7 +124,7 @@ namespace DevKit.Web.Controllers
                         if (db.currentLojista == null)
                         {
                             var term = (from e in db.T_Terminal
-                                        where e.nu_terminal == userCurrentName.PadLeft(8, '0')
+                                        where Convert.ToInt64(e.nu_terminal) == Convert.ToInt64(userCurrentName)
                                         select e).
                                         FirstOrDefault();
 

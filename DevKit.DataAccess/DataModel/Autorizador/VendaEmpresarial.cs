@@ -140,7 +140,7 @@ namespace DataModel
 
             if (IsSitef == false) // venda online
             {
-                var q = db.T_Terminal.Where(y => y.nu_terminal == input_cont_pe.st_terminal);
+                var q = db.T_Terminal.Where(y => Convert.ToInt64(y.nu_terminal) == Convert.ToInt64(input_cont_pe.st_terminal.TrimStart('0')));
 
                 Registry("(a1) db.T_Terminal.Where(y => y.nu_terminal == " + input_cont_pe.st_terminal);
 

@@ -1,0 +1,82 @@
+
+.ButtonLarge {
+    font: larger;
+    width: 100%
+}
+
+.ballPctBig {
+    width: 220px;
+    align-content: center;
+}
+
+.ballPctMed {
+    width: 180px;
+    padding-left: 20px;
+    align-content: center;
+}
+
+.ballPctSm {
+    width: 80px;
+    align-content: center;
+}
+
+.TrackingChart {    
+    width: 100%;
+    height: 150px;    
+}
+
+.ballPctSm2 {
+    width: 130px;
+    align-content: center;
+}
+
+.mousePointer {
+    cursor: pointer
+}
+
+.leftDiv {
+    float: left;
+    width:100%;
+}
+
+.rightDiv {
+    float: right;
+}
+ 
+.rowNegLeft {
+    margin-left:-18px;    
+}
+
+.timelineStart {
+    margin-left:20px;    
+}
+
+.timelineHeight {
+    height:156px;
+}
+
+.dot {    
+    background-image: url('../../pages/contract/dot.png'); 
+    background-size: 100% 100%;
+}
+
+.cover {
+    background-image: url('../../pages/contract/cover.png'); 
+  }
+  
+.dotLado {    
+    float: right;
+    width: 100%;
+}
+
+.stepItemCurrent { 
+    margin-top: 0px;
+}
+
+.stepItem { 
+    margin-top: 20px;    
+}
+
+.stepItemStart { 
+    margin-top: 20px;
+}

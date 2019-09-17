@@ -8,48 +8,18 @@ export const ApiLocation = {
 }
 
 export class Api {
-    isAuthenticated = () => localStorage.getItem('login');
+    isAuthenticated = () => localStorage.getItem('token');
 
     loggedUserName = () => localStorage.getItem('user_name');
     loggedUserSocialID = () => localStorage.getItem('socialID');
 
     cleanLogin() {
-        localStorage.setItem('sessao', null)
-        localStorage.setItem('login', null)
-        localStorage.setItem('languageOption', null)
         localStorage.setItem('token', null)
     }
 
-    loginOk = (token, sigla, user_name, socialID, languageOption) => {
+    loginOk = (token, nome) => {
         localStorage.setItem('token', token)
-        localStorage.setItem('socialID', socialID)
-        localStorage.setItem('user_name', sigla)
-        localStorage.setItem('user_nameFull', user_name)
-        localStorage.setItem('login', 'true')
-        localStorage.setItem('languageOption', languageOption)
-    }
-
-    changeLanguage = (languageOption) => {
-        localStorage.setItem('languageOption', languageOption)
-    }
-
-    getDropDownItens = (myArray, allStr) => {
-
-        var myOptions = [];
-        myArray.forEach(element => {
-            myOptions.push(element.name)
-        })
-        myOptions.push(allStr)
-        return myOptions;
-    }
-
-    getDropDownItensTag = (myArray, allStr) => {
-        var myOptions = [];
-        myArray.forEach(element => {
-            myOptions.push(element.tag)
-        })
-        myOptions.push(allStr)
-        return myOptions;
+        localStorage.setItem('user_name', nome)
     }
 
     ping = () => {
@@ -72,49 +42,6 @@ export class Api {
                 .catch(() => {
                     reject({ ok: false })
                 });
-        })
-    }
-
-    getCurrentLanguage = () => localStorage.getItem('languageOption');
-
-    getLanguages = (option) => {
-        return new Promise((resolve, reject) => {
-            if (option === 'login') {
-                fetch(ApiLocation.api_host + ':' + ApiLocation.api_port + ApiLocation.api_portal + 'languages',
-                    {
-                        method: 'GET', headers: { 'Content-Type': 'application/json' }
-                    })
-                    .then((res) => {
-                        if (res.status === 401)
-                            reject({ ok: false })
-                        else {
-                            res.json().then((data) => {
-                                localStorage.setItem('multi-language', JSON.stringify(data))
-                                resolve({
-                                    ok: true,
-                                    payload: data,
-                                })
-                            })
-                                .catch((xxx) => {
-                                    resolve({ ok: false })
-                                });
-                        }
-                    })
-                    .catch(() => {
-                        resolve({ ok: false })
-                    });
-            }
-            else {
-                var ml = JSON.parse(localStorage.getItem('multi-language'));
-                if (ml !== null && ml !== undefined) {
-                    resolve({
-                        ok: true,
-                        payload: ml,
-                    })
-                }
-                else
-                    reject({ ok: false })
-            }
         })
     }
 

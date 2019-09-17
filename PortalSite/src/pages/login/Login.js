@@ -21,145 +21,39 @@ import Widget from "../../components/Widget";
 import s from "./Login.module.scss";
 import MaskedInput from "react-maskedinput";
 
-// vortigo components
-
 import logoImg from "./logo.png";
 import { Api } from "../../shared/Api";
-import { Util } from "../../shared/Util";
 
 export default class Login extends React.Component {
+
   state = {
-    loadingLanguages: true,
     loading: false,
     alertIsOpen: false,
-    selectActiveClient: true,
+
     redirectDashboard: false,
-    redirectPassword: false,
-    invalidForm: false,
-    error_cpf: false,
-    selectedOption: "PT ",
-    languagesArray: [],
-    cpf: "",
-    userThyssenID: "",
-    password: "",
+
+    _empresa: "",
+    _matricula: "",
+    _codAcesso: "",
+    _venc: "",
+    _senha: "",
     error: ""
   };
 
-  constructor(props) {
-    super(props);
-    this.cpfRef = createRef();
-  }
+  //constructor(props) {
+  //    super(props);
+  //  this.cpfRef = createRef();
+  //}
 
   componentDidMount() {
-    var api = new Api();
-
-    api.getLanguages("login").then(resp => {
-      this.setState(
-        {
-          languagesArray: resp.payload,
-          loadingLanguages: false
-        },
-        () => {
-          this.translate(0);
-        }
-      );
-    });
-    setTimeout(() => {
-      if (this.cpfRef != null)
-        if (this.cpfRef.current != null) this.cpfRef.current.focus();
-    }, 500);
+    //    setTimeout(() => {
+    //    if (this.cpfRef != null)
+    //    if (this.cpfRef.current != null) this.cpfRef.current.focus();
+    //}, 500);
   }
 
-  handleLanguageChange = e => {
-    this.setState({ selectedOption: e.currentTarget.textContent });
-    switch (e.currentTarget.textContent) {
-      default:
-      case "PT ":
-        this.translate(0);
-        break;
-      case "EN ":
-        this.translate(1);
-        break;
-      case "ES ":
-        this.translate(2);
-        break;
-    }
-  };
-
-  translate = option => {
-    var uiTranslation = this.state.languagesArray.languages[option];
-
-    if (uiTranslation !== undefined)
-      this.setState({
-        socialID: uiTranslation.Screens[0].Login.socialID,
-        passwordLabel: uiTranslation.Screens[0].Login.passwordLabel,
-        tabTitle: uiTranslation.Screens[0].Login.tabTitle,
-        title: uiTranslation.Screens[0].Login.title,
-        subtitle: uiTranslation.Screens[0].Login.subtitle,
-        loginButton: uiTranslation.Screens[0].Login.loginButton,
-        forgotPassword: uiTranslation.Screens[0].Login.forgotPassword,
-        msg_invalid_cpf: uiTranslation.Screens[0].Login.msg_invalid_cpf,
-        msg_user_invalid: uiTranslation.Screens[0].Login.msg_user_invalid,
-        msg_invalid_password:
-          uiTranslation.Screens[0].Login.msg_invalid_password,
-        userThyssen: uiTranslation.Screens[0].Login.userThyssen,
-        radioClient: uiTranslation.Screens[0].Login.radioClient,
-        radioColaborator: uiTranslation.Screens[0].Login.radioColaborator,
-        tooltipCPF: uiTranslation.Screens[0].Login.tooltipCPF,
-        tooltipPassword: uiTranslation.Screens[0].Login.tooltipPassword
-      });
-  };
-
-  redirectToPassword = e => {
-    this.setState({ redirectPassword: true });
-  };
-
-  changeActive = event => {
-    this.setState(
-      { selectActiveClient: !this.state.selectActiveClient },
-      () => {
-        setTimeout(() => {
-          if (this.cpfRef != null)
-            if (this.cpfRef.current != null) this.cpfRef.current.focus();
-        }, 500);
-      }
-    );
-  };
-
-  onChange_CPF = event => {
-    var util = new Util();
-
-    if (util.checkCPFMask(event.target.value))
-      if (!util.checkCPF(event.target.value))
-        this.setState({ error_cpf: true });
-      else this.setState({ error_cpf: false });
-
-    this.setState({ cpf: event.target.value }, () => {
-      if (this.state.invalidForm === true) this.checkInvalidForm();
-    });
-  };
-
-  onChange_Password = event => {
-    this.setState({ password: event.target.value }, () => {
-      if (this.state.invalidForm === true) this.checkInvalidForm();
-    });
-  };
-
   checkInvalidForm = () => {
-    var util = new Util();
-    var errorCPF = !util.checkCPF(this.state.cpf);
-    var errorPassword = !util.checkPassword(this.state.password);
-    var invalidForm = false;
-
-    if (errorCPF || errorPassword) invalidForm = true;
-
-    this.setState({
-      invalidForm: invalidForm,
-      error_cpf: errorCPF,
-      error_password: errorPassword
-    });
-
-    return invalidForm;
+    return false;
   };
 
   executeLogin = e => {
@@ -167,20 +61,15 @@ export default class Login extends React.Component {
 
     if (this.checkInvalidForm()) return;
 
-    let login = this.state.cpf;
-    let passwd = this.state.password;
-    let typeLogin = "1";
-    let browserIP = "123465";
+    var empresa = this.state._empresa;
+    var matricula = this.state._matricula;
+    var codAcesso = this.state._codAcesso;
+    var venc = this.state._venc;
+    var senha = this.state._senha;
 
-    if (this.state.selectActiveClient === false) {
-      login = this.state.userThyssenID;
-      typeLogin = "2";
-    }
-
-    var serviceData = JSON.stringify({ login, passwd, typeLogin, browserIP });
+    var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, senha });
 
     this.setState({
-      redirectHome: null,
       loading: true,
       error: ""
     });
@@ -194,15 +83,12 @@ export default class Login extends React.Component {
 
           api.loginOk(
             resp.payload.token,
-            resp.payload.sigla,
-            resp.payload.name,
-            login,
-            resp.payload.languageOption
+            resp.payload.user.nome
           );
 
           this.props.updateMainVars({
-            name: resp.payload.sigla,
-            languageOption: resp.payload.languageOption
+            name: resp.payload.user.nome,
+            languageOption: '0'
           });
 
           this.setState({ loading: false, redirectDashboard: true });
@@ -227,16 +113,11 @@ export default class Login extends React.Component {
   render() {
     if (this.state.redirectDashboard === true)
       return <Redirect to="/app/main/dashboard" />;
-    else if (this.state.redirectPassword === true)
-      return <Redirect to="/password" />;
     else if (this.state.loadingLanguages === true) return <div />;
     else
       return (
         <div className={s.root}>
-          <Modal
-            isOpen={this.state.error.length > 0}
-            toggle={() => this.setState({ error: "" })}
-          >
+          <Modal isOpen={this.state.error.length > 0} toggle={() => this.setState({ error: "" })}>
             <ModalHeader toggle={() => this.setState({ error: "" })}>
               Aviso do Sistema
             </ModalHeader>
@@ -249,77 +130,22 @@ export default class Login extends React.Component {
               </div>
             </ModalBody>
             <ModalFooter className="bg-white">
-              <Button
-                color="primary"
-                onClick={() => this.setState({ error: "" })}
-              >
-                Fechar
-              </Button>
+              <Button color="primary" onClick={() => this.setState({ error: "" })}> Fechar </Button>
             </ModalFooter>
           </Modal>
           <div align='center' style={{ width: '330px' }}>
             <Widget
               className={`${s.widget}`}
               bodyClass="p-0"
-              title={
-                <h3 className="mt-0">
-                  {this.state.title}
-                  &nbsp;&nbsp;
-                  <UncontrolledButtonDropdown>
-                    <DropdownToggle
-                      caret
-                      color="grey"
-                      className="dropdown-toggle-split"
-                    >
-                      {this.state.selectedOption}
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem onClick={this.handleLanguageChange}>
-                        PT{" "}
-                      </DropdownItem>
-                      <DropdownItem onClick={this.handleLanguageChange}>
-                        EN{" "}
-                      </DropdownItem>
-                      <DropdownItem onClick={this.handleLanguageChange}>
-                        ES{" "}
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledButtonDropdown>
-                </h3>
-              }
-            >
+              title={<h3 className="mt-0"> Login </h3>} >
               <div className="logoClass" align="center">
                 <img className={s.imgLogo} src={logoImg} alt=" " />
               </div>
-              <p className={s.widgetLoginInfo}>{this.state.subtitle}</p>
-              <p className="text-center text-white w-100 d-block mt-2">
-                <span
-                  className={
-                    this.state.selectActiveClient === true
-                      ? s.lblActive
-                      : s.lblInactive
-                  }
-                  onClick={this.changeActive}
-                >
-                  {this.state.radioClient}{" "}
-                </span>{" "}
-                &nbsp;&nbsp;|&nbsp;&nbsp;
-                <span
-                  className={
-                    this.state.selectActiveClient === true
-                      ? s.lblInactive
-                      : s.lblActive
-                  }
-                  onClick={this.changeActive}
-                >
-                  {this.state.radioColaborator}
-                </span>
-              </p>
+              <p className={s.widgetLoginInfo}>Entre com os digitos de seu cartao</p>
               <form className="mt" onSubmit={this.executeLogin}>
+
                 <label htmlFor="email-input" className="ml-4">
-                  {this.state.selectActiveClient === true
-                    ? this.state.socialID
-                    : this.state.userThyssen}
+                  Empresa
                 </label>
                 <InputGroup className="input-group-no-border px-4">
                   <InputGroupAddon addonType="prepend">
@@ -327,34 +153,15 @@ export default class Login extends React.Component {
                       <i className="fa fa-user text-white" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Tooltip
-                    placement="top"
-                    isOpen={this.state.error_cpf}
-                    target="email-input"
-                  >
-                    {this.state.tooltipCPF}
+                  <Tooltip placement="top" isOpen={this.state.error_cpf} target="email-input">
+                    Informe a empresa corretamente
                   </Tooltip>
-                  {this.state.selectActiveClient === true ? (
-                    <MaskedInput
-                      className="input-transparent form-control"
-                      id="email-input"
-                      ref={this.cpfRef}
-                      mask="111.111.111-11"
-                      onChange={this.onChange_CPF}
-                    />
-                  ) : (
-                      <Input
-                        className="input-transparent form-control"
-                        id="email-input"
-                        maxLength="20"
-                        onChange={event =>
-                          this.setState({ userThyssenID: event.target.value })
-                        }
-                      />
-                    )}
+                  <Input className="input-transparent form-control" id="email-input" maxLength="6"
+                    onChange={event => this.setState({ _empresa: event.target.value })} />
                 </InputGroup>
+
                 <label htmlFor="password-input" className="mt ml-4">
-                  {this.state.passwordLabel}
+                  Senha
                 </label>
                 <InputGroup className="input-group-no-border px-4">
                   <InputGroupAddon addonType="prepend">
@@ -362,30 +169,20 @@ export default class Login extends React.Component {
                       <i className="fa fa-lock text-white" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Tooltip
-                    placement="top"
-                    isOpen={this.state.error_password}
-                    target="password-input"
-                  >
-                    {this.state.tooltipPassword}
+                  <Tooltip placement="top" isOpen={this.state.error_password} target="password-input">
+                    Informe a senha corretamente
                   </Tooltip>
-                  <Input
-                    id="password-input"
-                    type="password"
-                    className="input-transparent"
-                    maxLength="9"
-                    onChange={this.onChange_Password}
-                  />
+                  <Input id="password-input" type="password" className="input-transparent" maxLength="6"
+                    onChange={event => this.setState({ _senha: event.target.value })} />
                 </InputGroup>
+
                 <div className="bg-widget-transparent mt-4">
                   <div className="p-4">
                     <h4>
-                      <Button
-                        color={this.state.invalidForm ? "danger" : "primary"}
+                      <Button color={this.state.invalidForm ? "danger" : "primary"}
                         style={{ width: "100%" }}
                         type="submit"
-                        disabled={this.state.loading}
-                      >
+                        disabled={this.state.loading} >
                         {this.state.loading === true ? (
                           <span className="spinner">
                             <i className="fa fa-spinner fa-spin" />
@@ -394,15 +191,13 @@ export default class Login extends React.Component {
                         ) : (
                             <div />
                           )}
-                        {this.state.loginButton}
+                        Entrar
                       </Button>
                     </h4>
                     <br></br>
-                    <p onClick={this.redirectToPassword} className={s.mousePointer} align="center">
-                      {this.state.forgotPassword}
-                    </p>
                   </div>
                 </div>
+
               </form>
             </Widget>
           </div>

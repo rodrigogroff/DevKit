@@ -50,61 +50,30 @@ export default class AccountEditPage extends React.Component {
 
   componentDidMount() {
     var api = new Api();
-    var util = new Util();
-    var indexLang = api.getCurrentLanguage();
-    api.getLanguages().then(resp => {
-      this.setState({
-        languagesArray: resp.payload,
-        loadingLanguages: false,
-        languageDef: util.getCurrentLanguages(),
-      },
-        () => {
-          this.translate(indexLang);
-          this.setState({ loading: true, selectedOption: this.state.languageDef[indexLang] });
-          api.getTokenPortal('userLoggedDetail', null).then(resp => {
-            if (resp.ok === true) {
-              this.setState({
-                loading: false,
-                _cpf: resp.payload.cpf,
-                _name: resp.payload.name,
-                _email: resp.payload.email,
-                _phone: resp.payload.phone,
-                translateSelectedIndex: resp.payload.languageOption,
-                selectedOption: this.state.languageDef[resp.payload.languageOption]
-              });
-            }
-            else
-              this.setState({ loading: false, error: resp.msg })
-          }).catch(err => {
-            this.setState({ loading: false, error: err.msg })
-          });
+
+    this.setState({ loading: true });
+    api.getTokenPortal('userLoggedDetail', null).then(resp => {
+      if (resp.ok === true) {
+        this.setState({
+          loading: false,
+          _cpf: resp.payload.cpf,
+          _name: resp.payload.name,
+          _email: resp.payload.email,
+          _phone: resp.payload.phone,
+          translateSelectedIndex: resp.payload.languageOption,
+          selectedOption: this.state.languageDef[resp.payload.languageOption]
         });
+      }
+      else
+        this.setState({ loading: false, error: resp.msg })
+    }).catch(err => {
+      this.setState({ loading: false, error: err.msg })
     });
+
+
   }
 
-  translate = option => {
 
-    var uiTranslation = this.state.languagesArray.languages[option];
-
-    if (uiTranslation !== undefined)
-      this.setState({
-        translateSelectedIndex: option,
-        title: uiTranslation.Screens[4].Account.title,
-        subtitle: uiTranslation.Screens[4].Account.subtitle,
-        fieldName: uiTranslation.Screens[4].Account.fieldName,
-        fieldEmail: uiTranslation.Screens[4].Account.fieldEmail,
-        fieldPhone: uiTranslation.Screens[4].Account.fieldPhone,
-        fieldID: uiTranslation.Screens[4].Account.fieldID,
-        submitButton: uiTranslation.Screens[4].Account.submitButton,
-        fieldLanguage: uiTranslation.Screens[2].Language.fieldLanguage,
-        tooltipName: uiTranslation.Screens[4].Account.tooltipName,
-        tooltipEmail: uiTranslation.Screens[4].Account.tooltipEmail,
-        tooltipPhone: uiTranslation.Screens[4].Account.tooltipPhone,
-        tooltipPassword: uiTranslation.Screens[0].Login.tooltipPassword,
-        tooltipPasswordNew: uiTranslation.Screens[0].Login.tooltipPassword,
-        tooltipPasswordConf: uiTranslation.Screens[0].Login.tooltipPassword,
-      });
-  }
 
   handleLanguageChange = e => {
     this.setState({ selectedOption: e.currentTarget.textContent });

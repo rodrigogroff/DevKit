@@ -1,16 +1,6 @@
 
 export class Util {
 
-    getAllItens = () => {
-        return '(Todos)'
-    }
-
-    getCurrentLanguages = () => {
-        return ['PT - Português Brasileiro ',
-            'EN - English ',
-            'ES - Español ']
-    }
-
     checkCPFMask = (valor) => {
 
         if (valor === undefined || valor === null)

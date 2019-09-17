@@ -65,24 +65,14 @@ class Header extends React.Component {
       if (this.props.mainVars.main_userName === "") {
         this.props.updateMainVars({
           name: api.loggedUserName(),
-          languageOption: api.getCurrentLanguage()
+          languageOption: '0'
         });
       }
 
       api
         .ping()
         .then(resp => {
-          api.getLanguages().then(resp => {
-            this.setState(
-              {
-                languagesArray: resp.payload,
-                loadingLanguages: false
-              },
-              () => {
-                this.translate(this.props.mainVars.main_languageOption);
-              }
-            );
-          });
+
         })
         .catch(() => {
           this.setState({ exit: true });
@@ -94,24 +84,6 @@ class Header extends React.Component {
     this.translate(this.props.mainVars.main_languageOption);
   };
 
-  translate = option => {
-    if (option === undefined) option = this.props.mainVars.main_languageOption;
-
-    var uiTranslation = this.state.languagesArray.languages[option];
-
-    if (uiTranslation !== undefined)
-      this.setState({
-        welcomeLabel: uiTranslation.Screens[1].Dashboard.welcomeLabel,
-        menuRightLink_AccountConfig:
-          uiTranslation.Screens[1].Dashboard.menuRightLink_AccountConfig,
-        menuRightLink_UserManagement:
-          uiTranslation.Screens[1].Dashboard.menuRightLink_UserManagement,
-        menuRightLink_LanguageConfig:
-          uiTranslation.Screens[1].Dashboard.menuRightLink_LanguageConfig,
-        menuRightLink_Logout:
-          uiTranslation.Screens[1].Dashboard.menuRightLink_Logout
-      });
-  };
 
   getCircularName = () => {
     var s = this.props.mainVars.main_userName;

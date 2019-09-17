@@ -78,14 +78,7 @@ class ContractDetailPage extends React.Component {
 
     var api = new Api();
 
-    api.getLanguages().then(resp => {
-      this.setState({
-        languagesArray: resp.payload,
-      },
-        () => {
-          this.translate(api.getCurrentLanguage());
-        })
-    });
+
   }
 
   /* ------- Multi-Language ------------------  */

@@ -69,17 +69,7 @@ export default class DashboardContracts extends React.Component {
 
 		var api = new Api();
 
-		api.getLanguages().then(resp => {
-			this.setState({
-				languagesArray: resp.payload,
-			},
-				() => {
-					this.translate(api.getCurrentLanguage());
-					if (this.nameRef)
-						if (this.nameRef.current)
-							this.nameRef.current.focus();
-				})
-		});
+
 	}
 
 	loadCombos() {

@@ -1,14 +1,24 @@
 ﻿using Entities.Api;
+using Master.Repository;
 using System;
+using System.IO;
 using System.Net.Mail;
+using System.Security.Cryptography;
 
 namespace Master.Service
 {
     public class BaseService
     {
+        public IDapperRepository repository;
+
         public const string _defaultError = "Ops, aconteceu um imprevisto",
                             databaseName = "portal_on";
 
+        public BaseService(IDapperRepository repo)
+        {
+            repository = repo;
+        }
+               
         public ServiceError Error;                
 
         public int I(string myNumber)
@@ -41,6 +51,31 @@ namespace Master.Service
             #endregion
         }
 
+        public static string DESdeCript(string dados, string chave = "12345678")
+        {
+            byte[] key = System.Text.Encoding.ASCII.GetBytes(chave);//{1,2,3,4,5,6,7,8};
+            byte[] data = new byte[8];
+
+            for (int n = 0; n < dados.Length / 2; n++)
+            {
+                data[n] = (byte)Convert.ToInt32(dados.Substring(n * 2, 2), 16);
+            }
+
+            DES des = new DESCryptoServiceProvider();
+            des.Key = key;
+            des.Mode = CipherMode.ECB;
+            ICryptoTransform crypto = des.CreateDecryptor();
+            MemoryStream cipherStream = new MemoryStream();
+            CryptoStream cryptoStream = new CryptoStream(cipherStream, crypto, CryptoStreamMode.Write);
+            cryptoStream.Write(data, 0, data.Length);
+            crypto.TransformBlock(data, 0, 8, data, 0);
+            System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
+            string retorno = enc.GetString(data);
+
+            return retorno;
+        }
+
+        /*
         public static void SendMailMessage ( LocalNetwork network, 
                                              string to, 
                                              bool isHtml, 
@@ -105,5 +140,6 @@ namespace Master.Service
                 
             }
         }
+        */
     }
 }

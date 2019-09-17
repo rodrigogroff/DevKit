@@ -23,26 +23,7 @@ namespace Master
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
    
             services.Configure<Features>(Configuration.GetSection("features"));
-
-#if DEBUG
-            services.Configure<LocalNetwork>(Configuration.GetSection("localNetworkDev"));
-#endif
-
-#if Develop
-            services.Configure<LocalNetwork>(Configuration.GetSection("localNetworkDevelop"));
-#endif
-
-#if QA
-            services.Configure<LocalNetwork>(Configuration.GetSection("localNetworkQA"));
-#endif
-
-#if Homolog
-            services.Configure<LocalNetwork>(Configuration.GetSection("localNetworkHomolog"));
-#endif
-                       
-#if RELEASE
-            services.Configure<LocalNetwork>(Configuration.GetSection("localNetworkProduction"));
-#endif
+            services.Configure<LocalNetwork>(Configuration.GetSection("localNetwork"));
 
             var key = Encoding.ASCII.GetBytes(LocalNetwork.Secret);
             services.AddAuthentication(x =>

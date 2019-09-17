@@ -40,11 +40,10 @@ namespace Api.Master.Controllers
 
             return new AuthenticatedUser
             {
-                cpf = claims.FirstOrDefault(claim => claim.Type == "cpf")?.Value,
-                name = claims.FirstOrDefault(claim => claim.Type == "name")?.Value,
-                email = claims.FirstOrDefault(claim => claim.Type == "email")?.Value,
-                cnpj = claims.FirstOrDefault(claim => claim.Type == "cnpj")?.Value,
-                sessionEnsemble = claims.FirstOrDefault(claim => claim.Type == "sessionEnsemble")?.Value,                
+                _id = claims.FirstOrDefault(claim => claim.Type == "_id")?.Value,
+                nome = claims.FirstOrDefault(claim => claim.Type == "nome")?.Value,
+                empresa = claims.FirstOrDefault(claim => claim.Type == "empresa")?.Value,
+                matricula = claims.FirstOrDefault(claim => claim.Type == "matricula")?.Value,
             };
         }
 
@@ -57,11 +56,10 @@ namespace Api.Master.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("cpf", au.cpf),
-                    new Claim("name", au.name),
-                    new Claim("email", au.email),
-                    new Claim("cnpj", au.cnpj),
-                    new Claim("sessionEnsemble", au.sessionEnsemble),
+                    new Claim("_id", au._id),
+                    new Claim("name", au.nome),
+                    new Claim("empresa", au.empresa),
+                    new Claim("matricula", au.matricula),
                 }),
                 Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials (   new SymmetricSecurityKey(key), 

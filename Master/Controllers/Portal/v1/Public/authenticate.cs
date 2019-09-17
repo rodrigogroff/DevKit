@@ -1,6 +1,7 @@
 ﻿using Entities.Api.Configuration;
 using Entities.Api.Login;
 using Entities.Database;
+using Master.Repository;
 using Master.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,10 @@ namespace Api.Master.Controllers
             //obj.browserIP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             
             var auth = new AuthenticatedUser();
+            var repo = new DapperRepository();
             var userInfo = new User();
 
-            var srv = new UserAuthenticateV1();
+            var srv = new UserAuthenticateV1(repo);
 
             if (!srv.Exec(network, obj, ref userInfo, ref auth))
                 return BadRequest(srv.Error);

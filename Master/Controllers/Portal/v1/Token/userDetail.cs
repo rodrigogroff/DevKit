@@ -1,7 +1,7 @@
 ﻿using Entities.Database;
+using Master.Repository;
 using Master.Service;
 using Microsoft.AspNetCore.Mvc;
-//using Portal.Ensemble.Services;
 
 namespace Api.Master.Controllers
 {
@@ -11,9 +11,9 @@ namespace Api.Master.Controllers
         public ActionResult<User> UserDetail(string cpf)
         {
             var au = GetCurrentAuthenticatedUser();
+            var repo = new DapperRepository();
             var ret = new User();
-                        
-            var srv = new UserDetailV1();
+            var srv = new UserDetailV1(repo);
             
             if (!srv.Exec(network, au, cpf, ref ret))
                 return BadRequest(srv.Error);

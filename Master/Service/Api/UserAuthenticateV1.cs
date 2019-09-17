@@ -12,10 +12,7 @@ namespace Master.Service
     {
         public UserAuthenticateV1 (IDapperRepository repository) : base (repository) { }
 
-        public bool Exec ( LocalNetwork network,
-                           LoginInformation login,
-                           ref User userInfo,
-                           ref AuthenticatedUser loggedUser )
+        public bool Exec ( LocalNetwork network, LoginInformation login, ref AuthenticatedUser loggedUser )
         {
             try
             {
@@ -102,11 +99,16 @@ namespace Master.Service
                             Error = new ServiceError
                             {
                                 message = "Autenticação de cartão inválida",
-                                debugInfo = "dadosProprietario == null"
+                                debugInfo = "senhaComputada != login.senha"
                             };
 
                             return false;
                         }
+
+                    loggedUser.empresa = login.empresa;
+                    loggedUser.matricula = login.matricula;
+                    loggedUser.nome = dadosProprietario.st_nome;
+                    loggedUser._id = associadoPrincipal.i_unique.ToString();
                 }
     
                 return true;
@@ -146,6 +148,12 @@ namespace Master.Service
             }
 
             if (string.IsNullOrEmpty(login.venc))
+            {
+                Error = new ServiceError { message = "Login inválido" };
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(login.senha))
             {
                 Error = new ServiceError { message = "Login inválido" };
                 return false;

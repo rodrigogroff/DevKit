@@ -1,6 +1,5 @@
 ﻿using Entities.Api.Configuration;
 using Entities.Api.Login;
-using Entities.Database;
 using Master.Repository;
 using Master.Service;
 using Microsoft.AspNetCore.Authorization;
@@ -18,11 +17,10 @@ namespace Api.Master.Controllers
             
             var auth = new AuthenticatedUser();
             var repo = new DapperRepository();
-            var userInfo = new User();
-
+            
             var srv = new UserAuthenticateV1(repo);
 
-            if (!srv.Exec(network, obj, ref userInfo, ref auth))
+            if (!srv.Exec(network, obj, ref auth))
                 return BadRequest(srv.Error);
                         
             var token = ComposeTokenForSession(auth);
@@ -30,7 +28,7 @@ namespace Api.Master.Controllers
             return Ok( new 
             {
                 token,
-                user = userInfo 
+                user = auth
             });
         }
     }

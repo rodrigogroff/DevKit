@@ -134,32 +134,42 @@ export default class Login extends React.Component {
             </ModalFooter>
           </Modal>
           <div align='center' style={{ width: '330px' }}>
-            <Widget
-              className={`${s.widget}`}
-              bodyClass="p-0"
-              title={<h3 className="mt-0"> Login </h3>} >
+            <Widget className={`${s.widget}`} bodyClass="p-0">
               <div className="logoClass" align="center">
                 <img className={s.imgLogo} src={logoImg} alt=" " />
               </div>
               <p className={s.widgetLoginInfo}>Entre com os digitos de seu cartao</p>
               <form className="mt" onSubmit={this.executeLogin}>
-
                 <label htmlFor="email-input" className="ml-4">
-                  Empresa
+                  Cartão
                 </label>
                 <InputGroup className="input-group-no-border px-4">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="fa fa-user text-white" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Tooltip placement="top" isOpen={this.state.error_cpf} target="email-input">
-                    Informe a empresa corretamente
-                  </Tooltip>
-                  <Input className="input-transparent form-control" id="email-input" maxLength="6"
-                    onChange={event => this.setState({ _empresa: event.target.value })} />
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td width='100px'>
+                          <Input className="input-transparent form-control" id="empresa-input" maxLength="6"
+                            onChange={event => this.setState({ _empresa: event.target.value })} />
+                        </td>
+                        <td width='10px'></td>
+                        <td width='100px'>
+                          <Input className="input-transparent form-control" id="matricula-input" maxLength="6"
+                            onChange={event => this.setState({ _matricula: event.target.value })} />
+                        </td>
+                        <td width='10px'></td>
+                        <td width='80px'>
+                          <Input className="input-transparent form-control" id="codAcesso-input" maxLength="4"
+                            onChange={event => this.setState({ _codAcesso: event.target.value })} />
+                        </td>
+                        <td width='10px'></td>
+                        <td width='80px'>
+                          <Input className="input-transparent form-control" id="vencimento-input" maxLength="4"
+                            onChange={event => this.setState({ _venc: event.target.value })} />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </InputGroup>
-
                 <label htmlFor="password-input" className="mt ml-4">
                   Senha
                 </label>

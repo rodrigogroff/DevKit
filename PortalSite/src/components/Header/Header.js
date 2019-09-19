@@ -69,25 +69,14 @@ class Header extends React.Component {
         });
       }
 
-      api
-        .ping()
-        .then(resp => {
-
-        })
-        .catch(() => {
-          this.setState({ exit: true });
-        });
+      api.ping().then(resp => { }).catch(() => {
+        this.setState({ exit: true });
+      });
     }
   }
 
-  translateCombo = option => {
-    this.translate(this.props.mainVars.main_languageOption);
-  };
-
-
   getCircularName = () => {
-    var s = this.props.mainVars.main_userName;
-    return s;
+    return 'RR';
   };
 
   doLogout() {
@@ -145,7 +134,7 @@ class Header extends React.Component {
                     <tbody>
                       <tr>
                         <td>
-                          <img className={s.imgLogo} alt='Dasahboard' src={logoImg} onClick={this.redirectDashBoard} />
+                          <img className={s.imgLogo} alt='Dashboard' src={logoImg} onClick={this.redirectDashBoard} />
                         </td>
                       </tr>
                     </tbody>
@@ -156,11 +145,6 @@ class Header extends React.Component {
                     <table>
                       <tbody>
                         <tr>
-                          <td>
-                            <h4>
-                              <NavLink className={s.navLinkWhite} href="#/app/main/dashboard">Dashboard</NavLink>
-                            </h4>
-                          </td>
                           <td>
                             <div className={s.User}>
                               <Dropdown isOpen={this.state.accountOpen} toggle={this.toggleAccountDropdown} onClick={this.translateCombo}>
@@ -174,12 +158,12 @@ class Header extends React.Component {
                                 <DropdownMenu right className={`${s.dropdownMenu} ${s.account}`}>
                                   <DropdownItem>
                                     <NavLink href="#/app/accountEdit">
-                                      {this.state.menuRightLink_AccountConfig}
+                                      Meus Dados
                                     </NavLink>
                                   </DropdownItem>
                                   <DropdownItem>
                                     <NavLink onClick={this.doLogout}>
-                                      {this.state.menuRightLink_Logout}
+                                      Sair
                                     </NavLink>
                                   </DropdownItem>
                                 </DropdownMenu>

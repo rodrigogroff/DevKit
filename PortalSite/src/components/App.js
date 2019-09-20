@@ -6,7 +6,7 @@ import { HashRouter } from 'react-router-dom';
 import PasswordPage from '../pages/password/Password';
 
 import LayoutComponent from '../components/Layout';
-import LoginComponent from '../pages/login';
+import LoginAssociadoComponent from '../pages/associado/login';
 import '../styles/theme.scss';
 
 const PrivateRoute = ({ component, ...rest }) => {
@@ -19,7 +19,7 @@ const PrivateRoute = ({ component, ...rest }) => {
         ) : (
             <Redirect
               to={{
-                pathname: '/login',
+                pathname: '/loginAssociado',
                 state: { from: props.location },
               }}
             />
@@ -53,8 +53,8 @@ class App extends React.PureComponent {
           <Route path="/" exact render={() => <Redirect to="/app/main" />} />
           <Route path="/app" exact render={() => <Redirect to="/app/main" />} />
           <PrivateRoute path="/app" component={LayoutComponent} mainVars={this.state} updateMainVars={this.updateMainVars} />
-          <Route path="/login" exact >
-            <LoginComponent mainVars={this.state} updateMainVars={this.updateMainVars} />
+          <Route path="/loginAssociado" exact >
+            <LoginAssociadoComponent mainVars={this.state} updateMainVars={this.updateMainVars} />
           </Route>
           <Route path="/password" exact component={PasswordPage} />
           <Redirect from="*" to="/app/main/analytics" />

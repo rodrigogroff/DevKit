@@ -26,6 +26,7 @@ import s from "./Header.module.scss";
 
 import { Api } from "../../shared/Api";
 import logoImg from "./sidebar_logo.png";
+import menuImg from "./menu.png";
 
 class Header extends React.Component {
 
@@ -122,7 +123,7 @@ class Header extends React.Component {
   };
 
   render() {
-    if (this.state.exit === true) return <Redirect to="/login" />;
+    if (this.state.exit === true) return <Redirect to="/loginAssociado" />;
     else
       return (
         <div>
@@ -147,18 +148,26 @@ class Header extends React.Component {
                         <tr>
                           <td>
                             <div className={s.User}>
-                              <Dropdown isOpen={this.state.accountOpen} toggle={this.toggleAccountDropdown} onClick={this.translateCombo}>
+                              <Dropdown isOpen={this.state.accountOpen} toggle={this.toggleAccountDropdown}>
                                 <h3>
                                   <DropdownToggle nav className={s.navItem}>
-                                    <Button color="primary" className={"btn-rounded btn-block"} style={{ borderRadius: '50%' }}>
-                                      <h4>{this.getCircularName()}</h4>
-                                    </Button>
+                                    <img className={s.menuLogo} alt='Menu' src={menuImg} />
                                   </DropdownToggle>
                                 </h3>
                                 <DropdownMenu right className={`${s.dropdownMenu} ${s.account}`}>
                                   <DropdownItem>
                                     <NavLink href="#/app/accountEdit">
-                                      Meus Dados
+                                      Limites
+                                    </NavLink>
+                                  </DropdownItem>
+                                  <DropdownItem>
+                                    <NavLink href="#/app/accountEdit">
+                                      Extratos
+                                    </NavLink>
+                                  </DropdownItem>
+                                  <DropdownItem>
+                                    <NavLink href="#/app/accountEdit">
+                                      Lojas
                                     </NavLink>
                                   </DropdownItem>
                                   <DropdownItem>

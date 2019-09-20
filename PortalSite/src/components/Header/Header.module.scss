@@ -15,7 +15,14 @@
   max-width:70%; 
           height:auto; 
           margin-top: -12px;
-  margin-left: 10px;
+  margin-left: 20px;
+} 
+
+.menuLogo { 
+  max-width:60px; 
+          height:auto; 
+          margin-top: 0px;
+  margin-right: -10px;
 } 
 
 .UserName {
@@ -58,7 +65,7 @@
 
   @media (max-width: breakpoint-max(xs)) {
     right: auto;
-    left: -200px;
+    left: -20px;
   }
 
   &::after {
@@ -66,7 +73,7 @@
     right: 15px;
 
     @media (max-width: breakpoint-max(xs)) {
-      right: 200px;
+      right: 20px;
     }
   }
 
@@ -130,7 +137,7 @@
 }
 
 .account {
-  width: 220px !important;
+  width: 120px !important;
 
   section {
     padding: 5px 10px;

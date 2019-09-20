@@ -17,12 +17,12 @@ import {
   ModalFooter,
   DropdownItem
 } from "reactstrap";
-import Widget from "../../components/Widget";
+import Widget from "../../../components/Widget";
 import s from "./Login.module.scss";
 import MaskedInput from "react-maskedinput";
 
 import logoImg from "./logo.png";
-import { Api } from "../../shared/Api";
+import { Api } from "../../../shared/Api";
 
 export default class Login extends React.Component {
 

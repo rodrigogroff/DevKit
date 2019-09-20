@@ -64,7 +64,6 @@ export default class LayoutComponent extends React.Component {
                   </Switch>
                 </CSSTransition>
               </TransitionGroup>
-              <footer className={s.contentFooter}>Vortigo Prototype 1.0</footer>
             </main>
           </Hammer>
         </div>

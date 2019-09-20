@@ -112,7 +112,7 @@ export default class Login extends React.Component {
 
   render() {
     if (this.state.redirectDashboard === true)
-      return <Redirect to="/app/main/dashboard" />;
+      return <Redirect to="/app/associado/limites" />;
     else if (this.state.loadingLanguages === true) return <div />;
     else
       return (

@@ -4,9 +4,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Hammer from "rc-hammerjs";
 
 import Header from "../Header";
-import AccountEditPage from "../../pages/account/AccountEdit";
-import ContractDetailPage from "../../pages/contract/Contract";
-import DashboardContracts from "../../pages/dashboardContracts/DashboardContracts";
+import AssociadoLimites from "../../pages/associado/limites/Limites";
 
 import s from "./Layout.module.scss";
 
@@ -36,30 +34,11 @@ export default class LayoutComponent extends React.Component {
                 >
                   <Switch>
                     <Route
-                      path="/app/main"
-                      exact
-                      render={() => <Redirect to="/app/main/dashboard" />}
-                    />
-                    <Route
-                      path="/app/main/dashboard"
+                      path="/app/associado/limites"
                       exact
                       mainVars={this.props.mainVars}
                       updateMainVars={this.props.updateMainVars}
-                      component={DashboardContracts}
-                    />
-                    <Route
-                      path="/app/main/contract"
-                      exact
-                      mainVars={this.props.mainVars}
-                      updateMainVars={this.props.updateMainVars}
-                      component={ContractDetailPage}
-                    />
-                    <Route
-                      path="/app/accountEdit"
-                      exact
-                      mainVars={this.props.mainVars}
-                      updateMainVars={this.props.updateMainVars}
-                      component={AccountEditPage}
+                      component={AssociadoLimites}
                     />
                   </Switch>
                 </CSSTransition>

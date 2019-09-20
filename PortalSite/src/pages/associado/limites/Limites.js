@@ -12,21 +12,19 @@ import {
 	ModalFooter,
 	Input,
 } from 'reactstrap';
-import Widget from '../../components/Widget';
+import Widget from '../../../components/Widget';
 import Pagination from "react-js-pagination";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import s from './Dashboard.module.scss';
-
-// vortigo components
+import s from './Limites.module.scss';
 
 import filterImg from './filter.png'
 import filterXImg from './filterX.png'
 
-import { Api } from '../../shared/Api.js'
+import { Api } from '../../../shared/Api.js'
 
 
-export default class DashboardContracts extends React.Component {
+export default class AssociadoLimites extends React.Component {
 
 	state = {
 
@@ -45,7 +43,8 @@ export default class DashboardContracts extends React.Component {
 		//		else
 		return (
 			<div className={s.root}>
-			</div >
+				<h2>Limites do associado</h2>
+			</div>
 		)
 	}
 }

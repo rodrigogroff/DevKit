@@ -42,10 +42,9 @@ class Header extends React.Component {
     settingsOpen: false,
     searchFocused: false,
     searchOpen: false,
+    
     exit: false,
-    dashBoard: false,
-
-    languagesArray: [],
+    limites: false,
 
     userName: ""
   };
@@ -75,10 +74,6 @@ class Header extends React.Component {
       });
     }
   }
-
-  getCircularName = () => {
-    return 'RR';
-  };
 
   doLogout() {
     var api = new Api();
@@ -116,14 +111,15 @@ class Header extends React.Component {
     this.props.dispatch(changeSidebarVisibility(visibility));
   }
 
-  redirectDashBoard = () => {
+  redirectLimites = () => {
     this.setState({
-      dashBoard: true
+      limites: true
     });
   };
 
   render() {
     if (this.state.exit === true) return <Redirect to="/loginAssociado" />;
+    else if (this.state.limites === true) return <Redirect to="/app/associado/limites" />;
     else
       return (
         <div>
@@ -135,7 +131,7 @@ class Header extends React.Component {
                     <tbody>
                       <tr>
                         <td>
-                          <img className={s.imgLogo} alt='Dashboard' src={logoImg} onClick={this.redirectDashBoard} />
+                          <img className={s.imgLogo} alt='Limites' src={logoImg} onClick={this.redirectLimites} />
                         </td>
                       </tr>
                     </tbody>

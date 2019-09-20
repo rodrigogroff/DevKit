@@ -2,7 +2,6 @@
 using Master.Repository;
 using System;
 using System.IO;
-using System.Net.Mail;
 using System.Security.Cryptography;
 
 namespace Master.Service
@@ -13,6 +12,11 @@ namespace Master.Service
 
         public const string _defaultError = "Ops, aconteceu um imprevisto",
                             databaseName = "portal_on";
+
+        public BaseService()
+        {
+
+        }
 
         public BaseService(IDapperRepository repo)
         {

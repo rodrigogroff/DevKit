@@ -17,7 +17,7 @@ namespace Master.Service
         {
             try
             {
-                using (var db = new SqlConnection(network.sqlServer))
+                using (var db = new SqlConnection(network.GetSqlServer()))
                 {
                     var associadoPrincipal = repository.ObterCartao(db, au._id);
                     var empresa = repository.ObterEmpresa(db, associadoPrincipal.st_empresa);

@@ -1,7 +1,6 @@
 ﻿using Entities.Api;
 using Entities.Api.Configuration;
 using Entities.Api.Login;
-using Entities.Database;
 using Master.Repository;
 using System;
 using System.Data.SqlClient;
@@ -22,7 +21,7 @@ namespace Master.Service
                 login.empresa = login.empresa.PadLeft(6, '0');
                 login.matricula = login.matricula.PadLeft(6, '0');
                 
-                using (var db = new SqlConnection(network.sqlServer))
+                using (var db = new SqlConnection(network.GetSqlServer()))
                 {
                     var associadoPrincipal = repository.ObterCartao(db, login.empresa, login.matricula, "01");
 

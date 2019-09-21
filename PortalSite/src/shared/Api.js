@@ -1,7 +1,7 @@
 
 export const ApiLocation = {
     //api_host: 'http://localhost',
-    api_host: 'http://192.168.15.26',
+    api_host: 'http://meuconvey.conveynet.com.br',
     api_port: '18524',
     api_portal: '/api/v1/portal/',
 }

@@ -10,7 +10,12 @@ namespace Master.Service
     {
         public BuscaSaldo() { }
 
-        public void SaldoCartao(IDapperRepository repository, SqlConnection db, T_Cartao cart, ref long dispMensal, ref long dispTotal, ref long vrUtilizadoAtual )
+        public void SaldoCartao (   IDapperRepository repository,
+                                    SqlConnection db, 
+                                    T_Cartao cart, 
+                                    ref long dispMensal, 
+                                    ref long dispTotal, 
+                                    ref long vrUtilizadoAtual )
         {
             dispMensal = (long)cart.vr_limiteMensal;
             dispTotal = (long)cart.vr_limiteTotal;
@@ -26,10 +31,11 @@ namespace Master.Service
                                 ToList();
 
             var lstParcelasTotais = repository.ObterListaParcelaDeListaCartaoSuperior(db, lstCartoes, 1);
+            var lstTransacoesTotais = repository.ObterListaLogTransacao(db, lstParcelasTotais.Select(y => (long)y.fk_log_transacoes).ToList());
 
             foreach (var parc in lstParcelasTotais)
             {
-                var transacao = repository.ObterLogTransacao(db, (long)parc.fk_log_transacoes);
+                var transacao = lstTransacoesTotais.FirstOrDefault(y => (long)y.i_unique == parc.fk_log_transacoes);
 
                 if (transacao == null)
                     continue;

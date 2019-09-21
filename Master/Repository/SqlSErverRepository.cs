@@ -16,6 +16,7 @@ namespace Master.Repository
         List<T_Parcelas> ObterListaParcelaDeListaCartaoIgual(SqlConnection db, List<long> lstFkCartao, int nuParcela);
         List<T_Parcelas> ObterListaParcelaDeListaCartaoSuperior(SqlConnection db, List<long> lstFkCartao, int nuParcela);
         LOG_Transacoes ObterLogTransacao(SqlConnection db, long id);
+        List<LOG_Transacoes> ObterListaLogTransacao(SqlConnection db, List<long> lstFkLog);
     }
 
     public class DapperRepository : IDapperRepository
@@ -70,6 +71,13 @@ namespace Master.Repository
         {
             return db.Query<LOG_Transacoes>(@"select * from [LOG_Transacoes] (nolock) 
                                         where   i_unique = @id ", new { id }).FirstOrDefault();
+        }
+
+        public List<LOG_Transacoes> ObterListaLogTransacao(SqlConnection db, List<long> lstFkLog)
+        {
+            return db.Query<LOG_Transacoes>(@"select * from [LOG_Transacoes] (nolock) 
+                                        where i_unique in @lstFkLog", new { lstFkLog }).ToList();
+
         }
     }
 }

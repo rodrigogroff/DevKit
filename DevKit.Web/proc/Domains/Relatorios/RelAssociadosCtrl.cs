@@ -129,7 +129,7 @@ namespace DevKit.Web.Controllers
                          select e);
             }
 
-            if (stEmpresa != "")
+            if (!string.IsNullOrEmpty(stEmpresa))
             {
                 query = (from e in query
                          where e.st_empresa == stEmpresa

@@ -83,14 +83,16 @@ namespace DevKit.Web.Controllers
                          select e);
             }
 
+            int qtdDeps = 0; 
+
             if (busca != null)
             {
                 var lstFksAssociados = db.T_Proprietario.Where(y => y.st_nome.ToUpper().Contains(busca.ToUpper())).Select(y => y.i_unique).ToList();
-                                        
+
+                var lstCarts = new List<decimal>();
+
                 if (lstFksAssociados.Count() > 0)
                 {
-                    var lstCarts = new List<decimal>();
-
                     foreach (var item in lstFksAssociados)
                     {
                         lstCarts.Add(
@@ -98,16 +100,14 @@ namespace DevKit.Web.Controllers
                                 y => y.fk_dadosProprietario == item &&
                                      Convert.ToInt32(y.st_titularidade) == 1).
                                      i_unique);
-                    }
-
-                    query = query.Where(y => lstCarts.Contains(y.i_unique));
+                    }                    
                 }
 
                 var lstFksDependentes = db.T_Dependente.Where(y => y.st_nome.ToUpper().Contains(busca.ToUpper())).ToList();
 
                 if (lstFksDependentes.Count() > 0)
                 {
-                    var lstCarts = new List<decimal>();
+                    qtdDeps = lstFksDependentes.Count();
 
                     foreach (var item in lstFksDependentes)
                     {
@@ -116,10 +116,11 @@ namespace DevKit.Web.Controllers
                                 y => y.fk_dadosProprietario == item.fk_proprietario && 
                                      Convert.ToInt32(y.st_titularidade) == item.nu_titularidade).
                                      i_unique);
-                    }
-
-                    query = query.Where(y => lstCarts.Contains(y.i_unique));
+                    }                    
                 }
+
+                if (lstCarts.Any())
+                    query = query.Where(y => lstCarts.Contains(y.i_unique));
             }
 
             if (matricula != null && matricula != "")
@@ -138,12 +139,13 @@ namespace DevKit.Web.Controllers
 
             var res = new List<RelAssociadosItem>();
 
-            query = (from e in query
-                     join emp in db.T_Empresa on e.st_empresa equals emp.st_empresa
-                     join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int)associado.i_unique
-                     where emp.tg_bloq == 0
-                     orderby associado.st_nome
-                     select e);
+            if (qtdDeps == 0)
+                query = (from e in query
+                         join emp in db.T_Empresa on e.st_empresa equals emp.st_empresa
+                         join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int)associado.i_unique
+                         where emp.tg_bloq == 0
+                         orderby associado.st_nome
+                         select e);
 
             var calcAcesso = new CodigoAcesso();
 

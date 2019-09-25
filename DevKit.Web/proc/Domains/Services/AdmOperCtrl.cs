@@ -42,6 +42,7 @@ namespace DevKit.Web.Controllers
 
                         var di = Request.GetQueryStringValue("di");
                         var df = Request.GetQueryStringValue("df");
+                        var nsu = Request.GetQueryStringValue("nsu");
 
                         var dtOntem = DateTime.Now.AddDays(-1);
 
@@ -66,6 +67,10 @@ namespace DevKit.Web.Controllers
                                                            y.dt_transacao > dt && y.dt_transacao < dtFim).
                                                            ToList())
                         {
+                            if (!string.IsNullOrEmpty(nsu))
+                                if (item.nu_nsu != Convert.ToInt32(nsu))
+                                    continue;
+
                             var itUpd = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == item.i_unique);
                             itUpd.tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada);
                             db.Update(itUpd);

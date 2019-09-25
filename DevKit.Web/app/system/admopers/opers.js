@@ -25,7 +25,8 @@ angular.module('app.controllers').controller('AdmOpersController',
                 Api.AdmOper.listPage({
                     op: '1',
                     di: $scope.campos.dtInicial,
-                    df: $scope.campos.dtFinal
+                    df: $scope.campos.dtFinal,
+                    nsu: $scope.campos.nsu,
                 },
                     function (data) {
                         $scope.campos.resultado = data.resp + ' pendências resolvidas';

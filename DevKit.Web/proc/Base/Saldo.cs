@@ -99,15 +99,22 @@ namespace DevKit.Web.Controllers
                               select (int)e.i_unique).
                               ToList();
 
-            var lstParcelas = (from e in db.T_Parcelas
-                               where lstCartoes.Contains((int)e.fk_cartao)
-                               where e.nu_parcela == 1
+            var lstParcelasTotais = (from e in db.T_Parcelas
+                                     where lstCartoes.Contains((int)e.fk_cartao)
+                                     where e.nu_parcela >= 1
+                                     select e).
+                                     ToList();
+
+            var lst_log = lstParcelasTotais.Select(y => (int)y.fk_log_transacoes).Distinct().ToList();
+
+            var lstLogTrans = (from e in db.LOG_Transacoes
+                               where lst_log.Contains((int)e.i_unique)
                                select e).
                                ToList();
 
-            foreach (var parc in lstParcelas)
+            foreach (var parc in lstParcelasTotais.Where ( y=> y.nu_parcela == 1))
             {
-                var transacao = (from e in db.LOG_Transacoes
+                var transacao = (from e in lstLogTrans
                                  where e.i_unique == parc.fk_log_transacoes
                                  select e).
                                  FirstOrDefault();
@@ -120,17 +127,11 @@ namespace DevKit.Web.Controllers
                     dispMensal -= (int) parc.vr_valor;
                     vrUtilizadoAtual += (long) parc.vr_valor;
                 }
-            }
+            }                       
 
-            var lstParcelasTotais = (from e in db.T_Parcelas
-                                     where lstCartoes.Contains((int)e.fk_cartao)
-                                     where e.nu_parcela >= 1
-                                     select e).
-                                     ToList();
-
-            foreach (var parc in lstParcelasTotais)
+            foreach (var parc in lstParcelasTotais.Where(y => y.nu_parcela >= 1))
             {
-                var transacao = (from e in db.LOG_Transacoes
+                var transacao = (from e in lstLogTrans
                                  where e.i_unique == parc.fk_log_transacoes
                                  select e).
                                  FirstOrDefault();
@@ -138,9 +139,7 @@ namespace DevKit.Web.Controllers
                 if (transacao == null)
                     continue;
 
-                var sit = transacao.tg_confirmada.ToString();
-
-                if (sit == TipoConfirmacao.Confirmada)
+                if (transacao.tg_confirmada.ToString() == TipoConfirmacao.Confirmada)
                 {
                     dispTotal -= (int)parc.vr_valor;
                 }

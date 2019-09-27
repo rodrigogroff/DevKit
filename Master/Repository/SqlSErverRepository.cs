@@ -12,6 +12,7 @@ namespace Master.Repository
         T_Cartao ObterCartao(SqlConnection db, string id);
         T_Proprietario ObterProprietario(SqlConnection db, long id);
         List<T_Cartao> ObterListaCartao(SqlConnection db, string empresa, string matricula);
+        List<T_Loja> ObterListaLoja(SqlConnection db, List<long> lstFkLoja);
         T_Empresa ObterEmpresa(SqlConnection db, string empresa);
         List<T_Parcelas> ObterListaParcelaDeListaCartaoIgual(SqlConnection db, List<long> lstFkCartao, int nuParcela);
         List<T_Parcelas> ObterListaParcelaDeListaCartaoSuperior(SqlConnection db, List<long> lstFkCartao, int nuParcela);
@@ -78,6 +79,12 @@ namespace Master.Repository
             return db.Query<LOG_Transacoes>(@"select * from [LOG_Transacoes] (nolock) 
                                         where i_unique in @lstFkLog", new { lstFkLog }).ToList();
 
+        }
+
+        public List<T_Loja> ObterListaLoja(SqlConnection db, List<long> lstFkLoja)
+        {
+            return db.Query<T_Loja>(@"select * from [T_Loja] (nolock) 
+                                        where i_unique in @lstFkLoja", new { lstFkLoja }).ToList();
         }
     }
 }

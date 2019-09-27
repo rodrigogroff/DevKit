@@ -152,12 +152,12 @@ class Header extends React.Component {
                                 </h3>
                                 <DropdownMenu right className={`${s.dropdownMenu} ${s.account}`}>
                                   <DropdownItem>
-                                    <NavLink href="#/app/accountEdit">
+                                    <NavLink href="#/app/associado/limites">
                                       Limites
                                     </NavLink>
                                   </DropdownItem>
                                   <DropdownItem>
-                                    <NavLink href="#/app/accountEdit">
+                                    <NavLink href="#/app/associado/extratos">
                                       Extratos
                                     </NavLink>
                                   </DropdownItem>

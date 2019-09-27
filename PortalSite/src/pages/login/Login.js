@@ -21,7 +21,7 @@ import Widget from "../../components/Widget";
 import s from "./Login.module.scss";
 import MaskedInput from "react-maskedinput";
 
-import logoImg from "./logo.png";
+import logoImg from "./logox.png";
 import { Api } from "../../shared/Api";
 
 export default class Login extends React.Component {
@@ -36,9 +36,9 @@ export default class Login extends React.Component {
     _matricula: "",
     _codAcesso: "",
     _venc: "",
-    _senha: "",
+    _senha: "", 
     error: ""
-  };
+  };  
 
   //constructor(props) {
   //    super(props);

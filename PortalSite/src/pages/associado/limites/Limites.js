@@ -54,9 +54,6 @@ export default class AssociadoLimites extends React.Component {
 					mesVigente: resp.payload.mesVigente,
 					pct: resp.payload.pct,
 				});
-
-				console.log (resp.payload);
-
 			}
 		});
 	}

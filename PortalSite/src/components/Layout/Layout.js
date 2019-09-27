@@ -5,6 +5,7 @@ import Hammer from "rc-hammerjs";
 
 import Header from "../Header";
 import AssociadoLimites from "../../pages/associado/limites/Limites";
+import AssociadoExtratos from "../../pages/associado/extratos/Extratos";
 
 import s from "./Layout.module.scss";
 
@@ -39,6 +40,13 @@ export default class LayoutComponent extends React.Component {
                       mainVars={this.props.mainVars}
                       updateMainVars={this.props.updateMainVars}
                       component={AssociadoLimites}
+                    />
+                    <Route
+                      path="/app/associado/extratos"
+                      exact
+                      mainVars={this.props.mainVars}
+                      updateMainVars={this.props.updateMainVars}
+                      component={AssociadoExtratos}
                     />
                   </Switch>
                 </CSSTransition>

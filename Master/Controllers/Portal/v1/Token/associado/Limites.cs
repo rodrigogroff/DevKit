@@ -7,8 +7,9 @@ namespace Api.Master.Controllers
 {
     public partial class MasterController
     {
-        [HttpGet("api/v1/portal/associadoLimites")]
-        public ActionResult<AssociadoLimites> AssociadoLimites()
+        [HttpGet]
+        [Route("api/v1/portal/associadoLimites")]
+        public ActionResult<AssociadoLimites> associadoLimites()
         {
             var auth = GetCurrentAuthenticatedUser();
 

@@ -6,6 +6,8 @@ import Hammer from "rc-hammerjs";
 import Header from "../Header";
 import AssociadoLimites from "../../pages/associado/limites/Limites";
 import AssociadoExtratos from "../../pages/associado/extratos/Extratos";
+import AssociadoParcelamentos from "../../pages/associado/parcelamentos/Parcelamentos";
+import AssociadoFaturas from "../../pages/associado/faturas/Faturas";
 
 import s from "./Layout.module.scss";
 
@@ -28,26 +30,12 @@ export default class LayoutComponent extends React.Component {
           <Hammer onSwipe={this.handleSwipe}>
             <main className={s.content}>
               <TransitionGroup>
-                <CSSTransition
-                  key={this.props.location.pathname}
-                  classNames="fade"
-                  timeout={200}
-                >
+                <CSSTransition key={this.props.location.pathname} classNames="fade" timeout={200}>
                   <Switch>
-                    <Route
-                      path="/app/associado/limites"
-                      exact
-                      mainVars={this.props.mainVars}
-                      updateMainVars={this.props.updateMainVars}
-                      component={AssociadoLimites}
-                    />
-                    <Route
-                      path="/app/associado/extratos"
-                      exact
-                      mainVars={this.props.mainVars}
-                      updateMainVars={this.props.updateMainVars}
-                      component={AssociadoExtratos}
-                    />
+                    <Route path="/app/associado/limites" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoLimites} />
+                    <Route path="/app/associado/extratos" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoExtratos} />
+                    <Route path="/app/associado/parcelamentos" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoParcelamentos} />
+                    <Route path="/app/associado/faturas" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoFaturas} />
                   </Switch>
                 </CSSTransition>
               </TransitionGroup>

@@ -14,10 +14,12 @@ namespace Master.Repository
         List<T_Cartao> ObterListaCartao(SqlConnection db, string empresa, string matricula);
         List<T_Loja> ObterListaLoja(SqlConnection db, List<long> lstFkLoja);
         T_Empresa ObterEmpresa(SqlConnection db, string empresa);
+        List<T_Parcelas> ObterListaParcela(SqlConnection db, List<long> lstFkParcela);
         List<T_Parcelas> ObterListaParcelaDeListaCartaoIgual(SqlConnection db, List<long> lstFkCartao, int nuParcela);
         List<T_Parcelas> ObterListaParcelaDeListaCartaoSuperior(SqlConnection db, List<long> lstFkCartao, int nuParcela);
         LOG_Transacoes ObterLogTransacao(SqlConnection db, long id);
         List<LOG_Transacoes> ObterListaLogTransacao(SqlConnection db, List<long> lstFkLog);
+        List<LOG_Fechamento> ObterListaFechamento(SqlConnection db, string mes, string ano, long fkEmpresa, long fkCartao);
     }
 
     public class DapperRepository : IDapperRepository
@@ -85,6 +87,19 @@ namespace Master.Repository
         {
             return db.Query<T_Loja>(@"select * from [T_Loja] (nolock) 
                                         where i_unique in @lstFkLoja", new { lstFkLoja }).ToList();
+        }
+
+        public List<LOG_Fechamento> ObterListaFechamento(SqlConnection db, string mes, string ano, long fkEmpresa, long fkCartao)
+        {
+            return db.Query<LOG_Fechamento>(@"select * from [LOG_Fechamento] (nolock) 
+                                        where st_mes = @mes and st_ano = @ano and fk_empresa = @fkEmpresa and fk_cartao = @fkCartao", 
+                                        new { mes, ano, fkEmpresa, fkCartao }).ToList();
+        }
+
+        public List<T_Parcelas> ObterListaParcela(SqlConnection db, List<long> lstFkParcela)
+        {
+            return db.Query<T_Parcelas>(@"select * from [T_Parcelas] (nolock) 
+                                        where  i_unique in @lstFkParcela", new { lstFkParcela }).ToList();
         }
     }
 }

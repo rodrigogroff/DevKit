@@ -60,15 +60,15 @@ export default class AssociadoExtratos extends React.Component {
 				<ol className="breadcrumb">
 					<li className="breadcrumb-item">Portal </li>
 					<li className="active breadcrumb-item">
-						Extratos do Associado
-								{this.state.loading ? <div className="loader"><p className="loaderText"><i className='fa fa-spinner fa-spin'></i></p></div> : <div ></div>}
+						Extrato de fatura atual
+						{this.state.loading ? <div className="loader"><p className="loaderText"><i className='fa fa-spinner fa-spin'></i></p></div> : <div ></div>}
 					</li>
 				</ol>
 				<Widget>
 
 					<h3>{this.state.mesAtual}</h3>
 
-					<table>
+					<table width='100%'>
 						<tbody>
 							<tr>
 								<td>
@@ -106,11 +106,11 @@ export default class AssociadoExtratos extends React.Component {
 						</tbody>
 					</table>
 					{this.state.vendas != undefined ? <div>
-						<table>
+						<table width='100%'>
 							<thead>
 								<th>Data</th>
 								<th></th>
-								<th>Valor</th>
+								<th>Valor R$</th>
 								<th></th>
 								<th>Parcela</th>
 								<th></th>

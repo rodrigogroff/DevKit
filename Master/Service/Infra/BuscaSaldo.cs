@@ -39,8 +39,8 @@ namespace Master.Service
 
                 if (transacao == null)
                     continue;
-
-                if (transacao.tg_confirmada.ToString() == TipoConfirmacao.Confirmada)
+                
+                if (parc.nu_parcela == 1 && transacao.tg_confirmada.ToString() == TipoConfirmacao.Confirmada)
                 {
                     if (parc.nu_parcela == 1)
                         dispMensal -= (int)parc.vr_valor;

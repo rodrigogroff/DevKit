@@ -2,9 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
 import { HashRouter } from 'react-router-dom';
-
-import PasswordPage from '../pages/password/Password';
-
 import LayoutComponent from '../components/Layout';
 import LoginAssociadoComponent from '../pages/associado/login';
 import '../styles/theme.scss';
@@ -50,14 +47,11 @@ class App extends React.PureComponent {
     return (
       <HashRouter>
         <Switch>
-          <Route path="/" exact render={() => <Redirect to="/app/main" />} />
-          <Route path="/app" exact render={() => <Redirect to="/app/main" />} />
+          <Route path="/" exact render={() => <Redirect to="/loginAssociado" />} />
           <PrivateRoute path="/app" component={LayoutComponent} mainVars={this.state} updateMainVars={this.updateMainVars} />
           <Route path="/loginAssociado" exact >
             <LoginAssociadoComponent mainVars={this.state} updateMainVars={this.updateMainVars} />
           </Route>
-          <Route path="/password" exact component={PasswordPage} />
-          <Redirect from="*" to="/app/main/analytics" />
         </Switch>
       </HashRouter>
     );

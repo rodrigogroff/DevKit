@@ -99,6 +99,11 @@ export default class AssociadoFaturas extends React.Component {
 							</table>
 						</Widget>
 					))}
+					<br></br>
+					<p>Para visualizar períodos superiores a 6 meses, solicite a  entidade mantenedora do seu cartão</p>
+					<br></br>
+					<br></br>
+					<br></br>
 				</div>
 					:
 					<div></div>}

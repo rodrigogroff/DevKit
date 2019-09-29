@@ -43,7 +43,7 @@ namespace Master.Service
 
                     while (true)
                     {
-                        dt = dt.AddMonths(-1);
+                        
 
                         var lst = repository.ObterListaFechamento ( db, 
                                                                     dt.Month.ToString().PadLeft(2, '0'), 
@@ -89,6 +89,8 @@ namespace Master.Service
                             valorTotal = "R$ " + mon.setMoneyFormat((long)lst.Sum(y => y.vr_valor)),
                             vendas = vendas
                         });
+
+                        dt = dt.AddMonths(-1);
 
                         if (--maxMeses == 0)
                             break;

@@ -142,7 +142,7 @@ export default class Login extends React.Component {
               <br></br>
               <form className="mt" onSubmit={this.executeLogin}>
                 <label htmlFor="email-input">
-                  Informe os dígitos de seu cartão empresarial
+                  Informe o número do seu Cartão Benefícios
                 </label>
                 <InputGroup className="input-group-no-border px-4">
                   <table>
@@ -199,8 +199,8 @@ export default class Login extends React.Component {
                 <br></br><br></br>
                 <div className="bg-widget-transparent mt-4">
                   <div className="p-4">
-                  <br></br>
-                    <h4>                    
+                    <br></br>
+                    <h4>
                       <Button color={this.state.invalidForm ? "danger" : "primary"}
                         style={{ width: "100%" }}
                         type="submit"
@@ -212,9 +212,9 @@ export default class Login extends React.Component {
                           </span>
                         ) : (
                             <div />
-                          )}                        
+                          )}
                         Efetuar Login
-                      </Button>                      
+                      </Button>
                     </h4>
                     <br></br>
                     <br></br>

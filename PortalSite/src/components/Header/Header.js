@@ -42,7 +42,7 @@ class Header extends React.Component {
     settingsOpen: false,
     searchFocused: false,
     searchOpen: false,
-    
+
     exit: false,
     limites: false,
 
@@ -168,7 +168,7 @@ class Header extends React.Component {
                                   </DropdownItem>
                                   <DropdownItem>
                                     <NavLink href="#/app/associado/faturas">
-                                      Faturas fechadas
+                                      Histórico Faturas
                                     </NavLink>
                                   </DropdownItem>
                                   <DropdownItem>

@@ -37,21 +37,26 @@ namespace Master.Service
                                                    ref dispTotal,
                                                    ref vrUtilizadoAtual);
 
-                    var dt = new DateTime ( DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day );
+                    var dt = new DateTime ( DateTime.Now.Year, DateTime.Now.Month, 1 );
 
                     int maxMeses = 6;
 
                     while (true)
                     {
-                        
-
                         var lst = repository.ObterListaFechamento ( db, 
                                                                     dt.Month.ToString().PadLeft(2, '0'), 
                                                                     dt.Year.ToString(),
                                                                     (long) empresa.i_unique,
                                                                     (long) associadoPrincipal.i_unique );
-                        if (lst.Count() == 0)
-                            break;
+
+                        if (lst.Count() == 0 && maxMeses == 6)
+                        {
+                            dt = dt.AddMonths(-1);
+                            continue;
+                        }
+                        else
+                            if (lst.Count() == 0)
+                                break;
 
                         var lstIdParcelas = lst.Select(y => (long)y.fk_parcela).ToList();
                         var parcelas = repository.ObterListaParcela(db, lstIdParcelas);

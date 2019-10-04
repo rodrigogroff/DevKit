@@ -95,11 +95,12 @@ namespace DevKit.Web.Controllers
                 {
                     foreach (var item in lstFksAssociados)
                     {
-                        lstCarts.Add(
-                            db.T_Cartao.FirstOrDefault(
+                        var cart = db.T_Cartao.FirstOrDefault(
                                 y => y.fk_dadosProprietario == item &&
-                                     Convert.ToInt32(y.st_titularidade) == 1).
-                                     i_unique);
+                                     Convert.ToInt32(y.st_titularidade) == 1);
+
+                        if (cart != null)
+                            lstCarts.Add(cart.i_unique);
                     }                    
                 }
 
@@ -111,11 +112,12 @@ namespace DevKit.Web.Controllers
 
                     foreach (var item in lstFksDependentes)
                     {
-                        lstCarts.Add ( 
-                            db.T_Cartao.FirstOrDefault ( 
-                                y => y.fk_dadosProprietario == item.fk_proprietario && 
-                                     Convert.ToInt32(y.st_titularidade) == item.nu_titularidade).
-                                     i_unique);
+                        var cart = db.T_Cartao.FirstOrDefault(
+                                y => y.fk_dadosProprietario == item.fk_proprietario &&
+                                     Convert.ToInt32(y.st_titularidade) == item.nu_titularidade);
+
+                        if (cart != null)
+                            lstCarts.Add(cart.i_unique);
                     }                    
                 }
 

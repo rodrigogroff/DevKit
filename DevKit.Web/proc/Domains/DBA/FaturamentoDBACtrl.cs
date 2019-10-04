@@ -141,6 +141,9 @@ namespace DevKit.Web.Controllers
 
                     int totalTransacoes = transList.Where (y=> y.fk_loja == item.i_unique).Count();
 
+                    if (item.nu_franquia == null)
+                        item.nu_franquia = 0;
+
                     int totTransFranq = totalTransacoes - (int) item.nu_franquia;
 
                     if (totTransFranq < 0)
@@ -154,6 +157,9 @@ namespace DevKit.Web.Controllers
                                          Sum();
 
                     long totCom = (vrTransacoes * (long)item.nu_pctValor) / 10000;
+
+                    if (item.vr_transacao == null)
+                        item.vr_transacao = 0;
 
                     long totX = (int)item.vr_transacao * totTransFranq + 
                                 (int)item.vr_mensalidade +

@@ -455,6 +455,9 @@ namespace DataModel
                     Registry("(a17) valor_unit_parc > cartPortador.vr_limiteMensal " );
                     Registry("(a18) " + valor_unit_parc  + " > " + cartPortador.vr_limiteMensal );
 
+                    if (valor_unit_parc == 0)
+                        continue;
+
                     if (valor_unit_parc > cartPortador.vr_limiteMensal)
                     {
                         output_st_msg = "limite excedido";
@@ -489,12 +492,16 @@ namespace DataModel
                         {
                             var tg_conf = ltr.tg_confirmada.ToString();
 
-                            if (tg_conf == TipoConfirmacao.Confirmada || tg_conf == TipoConfirmacao.Pendente)
+                            if (tg_conf == TipoConfirmacao.Confirmada)
+                            {
                                 dispMesParc -= (long)itemParcela.vr_valor;
+                                Registry("(a19.5) itemParcela.vr_valor " + itemParcela.vr_valor);
+                            }                                
 
                             if (valor_unit_parc > dispMesParc)
                             {
                                 Registry("(a20) if (valor_unit_parc > dispMesParc) ");
+                                Registry("(a20) if (" + valor_unit_parc + " > " + dispMesParc + ") ");
 
                                 output_st_msg = "limite excedido";
                                 var_codResp = "2723";

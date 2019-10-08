@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
@@ -7,6 +8,19 @@ namespace Descompacta
 {
     class Program
     {
+        static void ExecuteBatFile(string dir, string batFile)
+        {
+            Process proc = null;
+
+            proc = new Process();
+            proc.StartInfo.WorkingDirectory = dir;
+            proc.StartInfo.FileName = batFile;
+            proc.StartInfo.CreateNoWindow = false;
+            proc.Start();
+            proc.WaitForExit();            
+            proc.Close();            
+        }
+
         static void Main(string[] args)
         {
             while (true)
@@ -123,6 +137,9 @@ namespace Descompacta
 
                     if (File.Exists(zipVersaoAtualMasterPath))
                     {
+
+                        ExecuteBatFile(@"C:\Users\Administrator\Desktop", @"stop.bat");
+
                         #region - code zipVersaoAtualFrontPath - 
 
                         Console.WriteLine(">> versão nova!");
@@ -166,6 +183,8 @@ namespace Descompacta
                         }
 
                         #endregion
+
+                        ExecuteBatFile(@"C:\Users\Administrator\Desktop", @"start.bat");
                     }
                 }
 

@@ -218,7 +218,7 @@ export default class Login extends React.Component {
                     </h4>
                     <br></br>
                     <br></br>
-                    <p className={s.widgetLoginInfo}>Sistema Convênios | v2.001</p>
+                    <p className={s.widgetLoginInfo}>Sistema Convênios | v2.002</p>
                     <br></br>
                   </div>
                 </div>

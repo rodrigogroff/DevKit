@@ -7,6 +7,8 @@ namespace Entities.Api.Configuration
 
         public string nome { get; set; }
 
+        public string versao { get; set; }
+
         public string matricula { get; set; }
 
         public string empresa { get; set; }

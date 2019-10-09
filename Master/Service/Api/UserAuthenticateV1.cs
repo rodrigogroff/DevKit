@@ -108,6 +108,7 @@ namespace Master.Service
                     loggedUser.matricula = login.matricula;
                     loggedUser.nome = dadosProprietario.st_nome;
                     loggedUser._id = associadoPrincipal.i_unique.ToString();
+                    loggedUser.versao = "01.0001";
                 }
     
                 return true;

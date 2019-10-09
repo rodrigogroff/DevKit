@@ -151,6 +151,11 @@ class Header extends React.Component {
                                   </DropdownToggle>
                                 </h3>
                                 <DropdownMenu right className={`${s.dropdownMenu} ${s.account}`}>
+                                <DropdownItem>
+                                    <NavLink href="#/app/associado/QRCODE">
+                                      QRCODE
+                                    </NavLink>
+                                  </DropdownItem>
                                   <DropdownItem>
                                     <NavLink href="#/app/associado/limites">
                                       Limites

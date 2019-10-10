@@ -81,9 +81,12 @@ export default class Login extends React.Component {
       .then(resp => {
         if (resp.ok === true) {
 
+          let cartao = this.state._empresa + '.' + this.state._matricula + '.' + this.state._codAcesso + '.' + this.state._venc;
+
           api.loginOk(
             resp.payload.token,
-            resp.payload.user.nome
+            resp.payload.user.nome,
+            cartao
           );
 
           this.props.updateMainVars({

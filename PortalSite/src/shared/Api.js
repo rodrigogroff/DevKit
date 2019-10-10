@@ -7,18 +7,21 @@ export const ApiLocation = {
 }
 
 export class Api {
+        
     isAuthenticated = () => localStorage.getItem('token');
 
     loggedUserName = () => localStorage.getItem('user_name');
     loggedUserSocialID = () => localStorage.getItem('socialID');
+    loggedUserCartao = () => localStorage.getItem('cartao');
 
     cleanLogin() {
         localStorage.setItem('token', null)
     }
 
-    loginOk = (token, nome) => {
+    loginOk = (token, nome, cartao) => {
         localStorage.setItem('token', token)
         localStorage.setItem('user_name', nome)
+        localStorage.setItem('cartao', cartao)
     }
 
     ping = () => {

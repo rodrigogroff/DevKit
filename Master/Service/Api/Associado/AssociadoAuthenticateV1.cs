@@ -7,11 +7,50 @@ using System.Data.SqlClient;
 
 namespace Master.Service
 {
-    public class UserAuthenticateV1 : BaseService
+    public class AssociadoAuthenticateV1 : BaseService
     {
-        public UserAuthenticateV1 (IDapperRepository repository) : base (repository) { }
+        public AssociadoAuthenticateV1 (IDapperRepository repository) : base (repository) { }
 
-        public bool Exec ( LocalNetwork network, LoginInformation login, ref AuthenticatedUser loggedUser )
+        bool ValidadeRequest(AssociadoLoginInformation login)
+        {
+            #region - code - 
+
+            if (string.IsNullOrEmpty(login.empresa))
+            {
+                Error = new ServiceError { message = "Login inválido" };
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(login.matricula))
+            {
+                Error = new ServiceError { message = "Login inválido" };
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(login.codAcesso))
+            {
+                Error = new ServiceError { message = "Login inválido" };
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(login.venc))
+            {
+                Error = new ServiceError { message = "Login inválido" };
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(login.senha))
+            {
+                Error = new ServiceError { message = "Login inválido" };
+                return false;
+            }
+
+            return true;
+
+            #endregion
+        }
+
+        public bool Exec ( LocalNetwork network, AssociadoLoginInformation login, ref AuthenticatedUser loggedUser )
         {
             try
             {
@@ -108,7 +147,7 @@ namespace Master.Service
                     loggedUser.matricula = login.matricula;
                     loggedUser.nome = dadosProprietario.st_nome;
                     loggedUser._id = associadoPrincipal.i_unique.ToString();
-                    loggedUser.versao = "01.0001";
+                    loggedUser._type = "1";                    
                 }
     
                 return true;
@@ -123,45 +162,6 @@ namespace Master.Service
 
                 return false;
             }
-        }
-
-        bool ValidadeRequest(LoginInformation login)
-        {
-            #region - code - 
-            
-            if (string.IsNullOrEmpty(login.empresa))
-            {
-                Error = new ServiceError { message = "Login inválido" };
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(login.matricula))
-            {
-                Error = new ServiceError { message = "Login inválido" };
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(login.codAcesso))
-            {
-                Error = new ServiceError { message = "Login inválido" };
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(login.venc))
-            {
-                Error = new ServiceError { message = "Login inválido" };
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(login.senha))
-            {
-                Error = new ServiceError { message = "Login inválido" };
-                return false;
-            }
-
-            return true;
-
-            #endregion
-        }
+        }        
     }
 }

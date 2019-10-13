@@ -29,9 +29,7 @@ export default class Login extends React.Component {
   state = {
     loading: false,
     alertIsOpen: false,
-
     redirectDashboard: false,
-
     _empresa: "",
     _matricula: "",
     _codAcesso: "",
@@ -40,26 +38,8 @@ export default class Login extends React.Component {
     error: ""
   };
 
-  //constructor(props) {
-  //    super(props);
-  //  this.cpfRef = createRef();
-  //}
-
-  componentDidMount() {
-    //    setTimeout(() => {
-    //    if (this.cpfRef != null)
-    //    if (this.cpfRef.current != null) this.cpfRef.current.focus();
-    //}, 500);
-  }
-
-  checkInvalidForm = () => {
-    return false;
-  };
-
   executeLogin = e => {
     e.preventDefault();
-
-    if (this.checkInvalidForm()) return;
 
     var empresa = this.state._empresa;
     var matricula = this.state._matricula;
@@ -116,7 +96,6 @@ export default class Login extends React.Component {
   render() {
     if (this.state.redirectDashboard === true)
       return <Redirect to="/app/associado/limites" />;
-    else if (this.state.loadingLanguages === true) return <div />;
     else
       return (
         <div className={s.root}>

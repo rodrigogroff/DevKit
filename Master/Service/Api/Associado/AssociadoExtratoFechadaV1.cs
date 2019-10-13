@@ -43,7 +43,7 @@ namespace Master.Service
 
                     while (true)
                     {
-                        var lst = repository.ObterListaFechamento ( db, 
+                        var lst = repository.ObterFechamentoLista ( db, 
                                                                     dt.Month.ToString().PadLeft(2, '0'), 
                                                                     dt.Year.ToString(),
                                                                     (long) empresa.i_unique,
@@ -59,10 +59,10 @@ namespace Master.Service
                                 break;
 
                         var lstIdParcelas = lst.Select(y => (long)y.fk_parcela).ToList();
-                        var parcelas = repository.ObterListaParcela(db, lstIdParcelas);
+                        var parcelas = repository.ObterParcelaLista(db, lstIdParcelas);
 
                         var lstIdLojas = lst.Select(y => (long)y.fk_loja).ToList();
-                        var lojas = repository.ObterListaLoja(db, lstIdLojas);
+                        var lojas = repository.ObterLojaLista(db, lstIdLojas);
 
                         var vendas = new List<AssociadoExtratoVenda>();
 

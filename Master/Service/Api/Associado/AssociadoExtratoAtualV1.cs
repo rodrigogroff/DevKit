@@ -44,17 +44,17 @@ namespace Master.Service
                     dto.mesAtual = new EnumMonth().Get(dt.Month).stName + " / " + dt.Year;
                     dto.saldoDisponivel = "R$ " + mon.setMoneyFormat(dispMensal);
 
-                    var lst = repository.ObterListaCartao(db, associadoPrincipal.st_empresa, associadoPrincipal.st_matricula).
+                    var lst = repository.ObterCartaoLista(db, associadoPrincipal.st_empresa, associadoPrincipal.st_matricula).
                                 Select ( y=> (long) y.i_unique ).
                                 ToList();
 
-                    var parcs = repository.ObterListaParcelaDeListaCartaoIgual(db, lst, 1);
+                    var parcs = repository.ObterParcelaListaDeListaCartaoIgual(db, lst, 1);
 
                     var lstFKTrans = parcs.Select(y => (long)y.fk_log_transacoes).Distinct().ToList();
-                    var lstTrans = repository.ObterListaLogTransacao(db, lstFKTrans);
+                    var lstTrans = repository.ObterLogTransacaoLista(db, lstFKTrans);
 
                     var lstFKLojas = parcs.Select(y => (long) y.fk_loja).Distinct().ToList();
-                    var lstLoja = repository.ObterListaLoja(db, lstFKLojas);
+                    var lstLoja = repository.ObterLojaLista(db, lstFKLojas);
                     
                     long totAtual = 0;
 

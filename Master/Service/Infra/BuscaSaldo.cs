@@ -26,12 +26,12 @@ namespace Master.Service
                 dispTotal += (long)cart.vr_extraCota;
             }
 
-            var lstCartoes = repository.ObterListaCartao (db, cart.st_empresa, cart.st_matricula).
+            var lstCartoes = repository.ObterCartaoLista (db, cart.st_empresa, cart.st_matricula).
                                 Select ( y=> (long) y.i_unique).
                                 ToList();
 
-            var lstParcelasTotais = repository.ObterListaParcelaDeListaCartaoSuperior(db, lstCartoes, 1);
-            var lstTransacoesTotais = repository.ObterListaLogTransacao(db, lstParcelasTotais.Select(y => (long)y.fk_log_transacoes).ToList());
+            var lstParcelasTotais = repository.ObterParcelaListaDeListaCartaoSuperior(db, lstCartoes, 1);
+            var lstTransacoesTotais = repository.ObterLogTransacaoLista(db, lstParcelasTotais.Select(y => (long)y.fk_log_transacoes).ToList());
 
             foreach (var parc in lstParcelasTotais)
             {

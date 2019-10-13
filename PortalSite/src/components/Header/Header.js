@@ -46,6 +46,8 @@ class Header extends React.Component {
     exit: false,
     limites: false,
 
+    _type: '1',
+
     userName: ""
   };
 
@@ -56,6 +58,10 @@ class Header extends React.Component {
     this.onDismiss = this.onDismiss.bind(this);
     this.toggleAccountDropdown = this.toggleAccountDropdown.bind(this);
     this.toggleSearchOpen = this.toggleSearchOpen.bind(this);
+
+    var api = new Api();
+    
+    this.setState({ _type: api.loggedUserType() });
   }
 
   componentDidMount() {
@@ -71,14 +77,16 @@ class Header extends React.Component {
 
       api.ping().then(resp => { }).catch(() => {
         this.setState({ exit: true });
-      });
+      });     
     }
   }
 
   doLogout() {
     var api = new Api();
     api.cleanLogin();
-    this.setState({ exit: true });
+
+    if (this.state._type == '1') this.setState({ exitAssociado: true });
+    if (this.state._type == '2') this.setState({ exitLojista: true });
   }
 
   onDismiss() {
@@ -117,84 +125,149 @@ class Header extends React.Component {
     });
   };
 
-  render() {
-    if (this.state.exit === true) return <Redirect to="/loginAssociado" />;
+  render() 
+  {
+    if (this.state.exitAssociado === true) return <Redirect to="/loginAssociado" />;
+    else if (this.state.exitLojista === true) return <Redirect to="/loginLojista" />;
     else if (this.state.limites === true) return <Redirect to="/app/associado/limites" />;
     else
-      return (
-        <div>
-          <table width="100%" className={s.appBarHeader}>
-            <tbody>
-              <tr>
-                <td>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <img className={s.imgLogo} alt='Limites' src={logoImg} onClick={this.redirectLimites} />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-                <td>
-                  <div align="right">
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div className={s.User}>
-                              <Dropdown isOpen={this.state.accountOpen} toggle={this.toggleAccountDropdown}>
-                                <h3>
-                                  <DropdownToggle nav className={s.navItem}>
-                                    <img className={s.menuLogo} alt='Menu' src={menuImg} />
-                                  </DropdownToggle>
-                                </h3>
-                                <DropdownMenu right className={`${s.dropdownMenu} ${s.account}`}>
-                                <DropdownItem>
-                                    <NavLink href="#/app/associado/QRCODE">
-                                      QRCODE
-                                    </NavLink>
-                                  </DropdownItem>
-                                  <DropdownItem>
-                                    <NavLink href="#/app/associado/limites">
-                                      Limites
-                                    </NavLink>
-                                  </DropdownItem>
-                                  <DropdownItem>
-                                    <NavLink href="#/app/associado/extratos">
-                                      Extrato atual
-                                    </NavLink>
-                                  </DropdownItem>
-                                  <DropdownItem>
-                                    <NavLink href="#/app/associado/parcelamentos">
-                                      Parcelamentos
-                                    </NavLink>
-                                  </DropdownItem>
-                                  <DropdownItem>
-                                    <NavLink href="#/app/associado/faturas">
-                                      Histórico Faturas
-                                    </NavLink>
-                                  </DropdownItem>
-                                  <DropdownItem>
-                                    <NavLink onClick={this.doLogout}>
-                                      Sair
-                                    </NavLink>
-                                  </DropdownItem>
-                                </DropdownMenu>
-                              </Dropdown>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div >
-      );
+    {
+      switch (this.state._type)
+      {
+        case '1':
+            return (
+              <div>
+                <table width="100%" className={s.appBarHeader}>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <img className={s.imgLogo} alt='Limites' src={logoImg} onClick={this.redirectLimites} />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td>
+                        <div align="right">
+                          <table>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <div className={s.User}>
+                                    <Dropdown isOpen={this.state.accountOpen} toggle={this.toggleAccountDropdown}>
+                                      <h3>
+                                        <DropdownToggle nav className={s.navItem}>
+                                          <img className={s.menuLogo} alt='Menu' src={menuImg} />
+                                        </DropdownToggle>
+                                      </h3>
+                                      <DropdownMenu right className={`${s.dropdownMenu} ${s.account}`}>
+                                      <DropdownItem>
+                                          <NavLink href="#/app/associado/QRCODE">
+                                            QRCODE
+                                          </NavLink>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                          <NavLink href="#/app/associado/limites">
+                                            Limites
+                                          </NavLink>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                          <NavLink href="#/app/associado/extratos">
+                                            Extrato atual
+                                          </NavLink>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                          <NavLink href="#/app/associado/parcelamentos">
+                                            Parcelamentos
+                                          </NavLink>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                          <NavLink href="#/app/associado/faturas">
+                                            Histórico Faturas
+                                          </NavLink>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                          <NavLink onClick={this.doLogout}>
+                                            Sair
+                                          </NavLink>
+                                        </DropdownItem>
+                                      </DropdownMenu>
+                                    </Dropdown>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div >
+            );
+
+        case '2':
+            return (
+              <div>
+                <table width="100%" className={s.appBarHeader}>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <img className={s.imgLogo} alt='Limites' src={logoImg} onClick={this.redirectLimites} />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td>
+                        <div align="right">
+                          <table>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <div className={s.User}>
+                                    <Dropdown isOpen={this.state.accountOpen} toggle={this.toggleAccountDropdown}>
+                                      <h3>
+                                        <DropdownToggle nav className={s.navItem}>
+                                          <img className={s.menuLogo} alt='Menu' src={menuImg} />
+                                        </DropdownToggle>
+                                      </h3>      
+                                      <DropdownMenu right className={`${s.dropdownMenu} ${s.account}`}>
+                                        <DropdownItem>
+                                            <NavLink href="#/app/lojista/venda">
+                                              Venda
+                                            </NavLink>
+                                        </DropdownItem> 
+                                        <DropdownItem>
+                                          <NavLink onClick={this.doLogout}>
+                                            Sair
+                                          </NavLink>
+                                        </DropdownItem>                                       
+                                      </DropdownMenu>      
+                                    </Dropdown>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div >
+            );
+      }
+    }
+      
   }
 }
 

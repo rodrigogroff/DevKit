@@ -10,8 +10,9 @@ export class Api {
         
     isAuthenticated = () => localStorage.getItem('token');
 
-    loggedUserName = () => localStorage.getItem('user_name');
-    loggedUserSocialID = () => localStorage.getItem('socialID');
+    loggedUserType = () => localStorage.getItem('type');
+    loggedUserName = () => localStorage.getItem('user_name');    
+
     loggedUserCartao = () => localStorage.getItem('cartao');
 
     cleanLogin() {
@@ -22,6 +23,14 @@ export class Api {
         localStorage.setItem('token', token)
         localStorage.setItem('user_name', nome)
         localStorage.setItem('cartao', cartao)
+        localStorage.setItem('type', '1')
+    }
+
+    loginLojistaOk = (token, terminal, nome) => {
+        localStorage.setItem('token', token)
+        localStorage.setItem('terminal', terminal)        
+        localStorage.setItem('user_name', nome)        
+        localStorage.setItem('type', '2')
     }
 
     ping = () => {
@@ -155,6 +164,39 @@ export class Api {
     postPublicLoginPortal = (loginInfo) => {
         return new Promise((resolve, reject) => {
             fetch(ApiLocation.api_host + ':' + ApiLocation.api_port + ApiLocation.api_portal + 'authenticate',
+                {
+                    method: 'POST', headers: { 'Content-Type': 'application/json', }, body: loginInfo
+                })
+                .then((res) => {
+                    if (res.ok === true) {
+                        res.json().then((data) => {
+                            resolve({
+                                ok: true,
+                                payload: data,
+                            })
+                        })
+                    }
+                    else {
+                        res.json().then((data) => {
+                            resolve({
+                                ok: false,
+                                msg: data.message,
+                            })
+                        })
+                    }
+                })
+                .catch((errorMsg) => {
+                    resolve({
+                        ok: false,
+                        msg: errorMsg.toString(),
+                    })
+                });
+        })
+    }
+
+    postPublicLoginLojistaPortal = (loginInfo) => {
+        return new Promise((resolve, reject) => {
+            fetch(ApiLocation.api_host + ':' + ApiLocation.api_port + ApiLocation.api_portal + 'authenticateLojista',
                 {
                     method: 'POST', headers: { 'Content-Type': 'application/json', }, body: loginInfo
                 })

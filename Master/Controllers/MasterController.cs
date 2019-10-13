@@ -41,6 +41,8 @@ namespace Api.Master.Controllers
             return new AuthenticatedUser
             {
                 _id = claims.FirstOrDefault(claim => claim.Type == "_id")?.Value,
+                _type = claims.FirstOrDefault(claim => claim.Type == "_type")?.Value,
+                terminal = claims.FirstOrDefault(claim => claim.Type == "terminal")?.Value,
                 nome = claims.FirstOrDefault(claim => claim.Type == "nome")?.Value,
                 empresa = claims.FirstOrDefault(claim => claim.Type == "empresa")?.Value,
                 matricula = claims.FirstOrDefault(claim => claim.Type == "matricula")?.Value,
@@ -52,12 +54,20 @@ namespace Api.Master.Controllers
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(LocalNetwork.Secret);
+
+            if (au.nome == null) au.nome = "";
+            if (au.terminal == null) au.terminal = "";
+            if (au.empresa == null) au.empresa = "";
+            if (au.matricula == null) au.matricula = "";
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("_id", au._id),
+                    new Claim("_type", au._type),
                     new Claim("name", au.nome),
+                    new Claim("terminal", au.terminal),
                     new Claim("empresa", au.empresa),
                     new Claim("matricula", au.matricula),
                 }),

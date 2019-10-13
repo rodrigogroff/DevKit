@@ -41,16 +41,16 @@ namespace Master.Service
                     if (DateTime.Now.Day >= empresa.nu_diaFech)
                         dt = dt.AddMonths(1);
 
-                    var lstCartao = repository.ObterListaCartao ( db, 
+                    var lstCartao = repository.ObterCartaoLista ( db, 
                                                                   associadoPrincipal.st_empresa, 
                                                                   associadoPrincipal.st_matricula).
                                             Select(y => (long)y.i_unique).
                                             ToList();
 
-                    var lstTotParcs = repository.ObterListaParcelaDeListaCartaoSuperior(db, lstCartao, 2);
+                    var lstTotParcs = repository.ObterParcelaListaDeListaCartaoSuperior(db, lstCartao, 2);
 
                     var lstIdsTrans = lstTotParcs.Select(y => (long) y.fk_log_transacoes).ToList();
-                    var lstTotTransacoes = repository.ObterListaLogTransacao(db, lstIdsTrans);
+                    var lstTotTransacoes = repository.ObterLogTransacaoLista(db, lstIdsTrans);
 
                     int nuParcs = 1;
 

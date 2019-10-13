@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 import LayoutComponent from '../components/Layout';
+
 import LoginAssociadoComponent from '../pages/associado/login';
+import LoginLojistaComponent from '../pages/lojista/login';
+
 import '../styles/theme.scss';
 
 const PrivateRoute = ({ component, ...rest }) => {
@@ -52,6 +55,9 @@ class App extends React.PureComponent {
           <Route path="/loginAssociado" exact >
             <LoginAssociadoComponent mainVars={this.state} updateMainVars={this.updateMainVars} />
           </Route>
+          <Route path="/loginLojista" exact >
+            <LoginLojistaComponent mainVars={this.state} updateMainVars={this.updateMainVars} />
+          </Route>
         </Switch>
       </HashRouter>
     );
@@ -63,3 +69,4 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps)(App);
+

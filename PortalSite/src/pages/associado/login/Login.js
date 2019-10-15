@@ -1,5 +1,5 @@
 
-import React, { createRef } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import {
   Button,
@@ -8,18 +8,13 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-  DropdownItem
+  ModalFooter
 } from "reactstrap";
 import Widget from "../../../components/Widget";
 import s from "./Login.module.scss";
-import MaskedInput from "react-maskedinput";
 
 import logoImg from "./logo.png";
 import { Api } from "../../../shared/Api";
@@ -36,6 +31,11 @@ export default class Login extends React.Component {
     _venc: "",
     _senha: "",
     error: ""
+  };
+
+  componentDidMount() {
+    var api = new Api();
+    this.setState({ _versao: api.versao() });
   };
 
   executeLogin = e => {
@@ -200,7 +200,7 @@ export default class Login extends React.Component {
                     </h4>
                     <br></br>
                     <br></br>
-                    <p className={s.widgetLoginInfo}>Sistema Convênios | v2.002</p>
+                    <p className={s.widgetLoginInfo}>Sistema Convênios | {this.state._versao}</p>
                     <br></br>
                   </div>
                 </div>

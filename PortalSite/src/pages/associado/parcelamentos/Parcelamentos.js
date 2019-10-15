@@ -1,15 +1,8 @@
 
-import React, { createRef } from 'react';
+import React  from 'react';
 
-import {
-	Col,
-	FormGroup,
-	Label,
-	Input,
-} from 'reactstrap';
 import Widget from '../../../components/Widget';
 
-import "react-circular-progressbar/dist/styles.css";
 import s from './Parcelamentos.module.scss';
 
 import { Api } from '../../../shared/Api.js'
@@ -61,7 +54,7 @@ export default class AssociadoParcelamentos extends React.Component {
 					</li>
 				</ol>
 				<Widget>
-					{this.state.parcelamento != undefined ? <div>
+					{this.state.parcelamento !== undefined ? <div>
 						<table>
 							<thead>
 								<th width='110px'>Mês / Ano</th>

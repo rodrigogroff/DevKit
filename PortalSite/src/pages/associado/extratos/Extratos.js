@@ -1,5 +1,5 @@
 
-import React, { createRef } from 'react';
+import React  from 'react';
 
 import {
 	Col,
@@ -9,8 +9,6 @@ import {
 } from 'reactstrap';
 import Widget from '../../../components/Widget';
 
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
 import s from './Extratos.module.scss';
 
 import { Api } from '../../../shared/Api.js'
@@ -105,7 +103,7 @@ export default class AssociadoExtratos extends React.Component {
 							</tr>
 						</tbody>
 					</table>
-					{this.state.vendas != undefined ? <div>
+					{this.state.vendas !== undefined ? <div>
 						<table width='100%'>
 							<thead>
 								<th>Data</th>

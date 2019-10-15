@@ -1,5 +1,5 @@
 
-import React, { createRef } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 
 import {
@@ -30,6 +30,11 @@ export default class LoginLojista extends React.Component {
     _terminal: "",
     _senha: "",
     error: ""
+  };
+  
+  componentDidMount() {
+    var api = new Api();
+    this.setState({ _versao: api.versao() });
   };
 
   executeLogin = e => {
@@ -177,7 +182,7 @@ export default class LoginLojista extends React.Component {
                   </h4>
                   <br></br>
                   <br></br>
-                  <p className={s.widgetLoginInfo}>Sistema Convênios | v2.002</p>
+                  <p className={s.widgetLoginInfo}>Sistema Convênios | {this.state._versao}</p>
                   <br></br>
                 </div>
               </div>

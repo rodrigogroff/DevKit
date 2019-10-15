@@ -1,18 +1,8 @@
 
-import React, { createRef } from 'react';
-import QRCode from 'qrcode.react';
+import React from 'react';
 
-import {
-	Button,
-	Col,
-	FormGroup,
-	Label,
-	Input,
-} from 'reactstrap';
 import Widget from '../../../components/Widget';
 
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
 import s from './venda.module.scss';
 
 import { Api } from '../../../shared/Api.js'

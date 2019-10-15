@@ -1,12 +1,6 @@
 
-import React, { createRef } from 'react';
+import React from 'react';
 
-import {
-	Col,
-	FormGroup,
-	Label,
-	Input,
-} from 'reactstrap';
 import Widget from '../../../components/Widget';
 
 import "react-circular-progressbar/dist/styles.css";
@@ -60,7 +54,7 @@ export default class AssociadoFaturas extends React.Component {
 						{this.state.loading ? <div className="loader"><p className="loaderText"><i className='fa fa-spinner fa-spin'></i></p></div> : <div ></div>}
 					</li>
 				</ol>
-				{this.state.faturas != undefined ? <div>
+				{this.state.faturas !== undefined ? <div>
 					{this.state.faturas.map((current, index) => (
 						<Widget key={`${current}${index}`}>
 							<h4>{current.mesAno}</h4>

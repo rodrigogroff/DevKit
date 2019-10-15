@@ -7,7 +7,9 @@ export const ApiLocation = {
 }
 
 export class Api {
-        
+    
+    versao = () => "v2.1.0002";
+
     isAuthenticated = () => localStorage.getItem('token');
 
     loggedUserType = () => localStorage.getItem('type');
@@ -17,6 +19,10 @@ export class Api {
 
     cleanLogin() {
         localStorage.setItem('token', null)
+        localStorage.setItem('user_name', null)
+        localStorage.setItem('cartao', null)
+        localStorage.setItem('type', null)
+        localStorage.setItem('terminal', null)
     }
 
     loginOk = (token, nome, cartao) => {

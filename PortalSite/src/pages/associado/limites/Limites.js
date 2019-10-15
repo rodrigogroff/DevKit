@@ -1,5 +1,5 @@
 
-import React, { createRef } from 'react';
+import React from 'react';
 
 import {
 	Col,

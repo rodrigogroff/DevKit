@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import {
   NavLink,
-  Button,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -58,10 +57,6 @@ class Header extends React.Component {
     this.onDismiss = this.onDismiss.bind(this);
     this.toggleAccountDropdown = this.toggleAccountDropdown.bind(this);
     this.toggleSearchOpen = this.toggleSearchOpen.bind(this);
-
-    var api = new Api();
-    
-    this.setState({ _type: api.loggedUserType() });
   }
 
   componentDidMount() {
@@ -79,14 +74,16 @@ class Header extends React.Component {
         this.setState({ exit: true });
       });     
     }
+
+    this.setState({ _type: api.loggedUserType() });
   }
 
   doLogout() {
     var api = new Api();
     api.cleanLogin();
 
-    if (this.state._type == '1') this.setState({ exitAssociado: true });
-    if (this.state._type == '2') this.setState({ exitLojista: true });
+    if (this.state._type === '1') this.setState({ exitAssociado: true });
+    if (this.state._type === '2') this.setState({ exitLojista: true });
   }
 
   onDismiss() {
@@ -134,6 +131,7 @@ class Header extends React.Component {
     {
       switch (this.state._type)
       {
+        default:
         case '1':
             return (
               <div>

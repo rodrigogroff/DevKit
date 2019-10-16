@@ -21,7 +21,14 @@ export default class AssociadoQRCODE extends React.Component {
 
 		var api = new Api();
 
-		this.state = { width: 0, height: 0, loading: false, cartao: api.loggedUserCartao() };
+		this.state = {
+			width: 0,
+			height: 0,
+			loading: false,
+			cartao: api.loggedUserCartao(),
+			nome: api.loggedUserName()
+		};
+
 		this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
 	}
 
@@ -65,18 +72,19 @@ export default class AssociadoQRCODE extends React.Component {
 								<br></br>
 								<br></br>
 							</td>
-						</tr>						
+						</tr>
 						<tr>
 							<td align='center'>
-								
+
 							</td>
 						</tr>
 					</tbody>
 				</table>
 				<div align='center'>
+					<h4>{this.state.nome}</h4>
 					<h3>{this.state.cartao}</h3>
 					<Button color="success" type="submit">Conferir Vendas</Button>
-				</div>				
+				</div>
 				<br></br>
 				<br></br>
 				<br></br>

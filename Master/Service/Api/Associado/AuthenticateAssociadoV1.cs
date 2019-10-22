@@ -7,9 +7,9 @@ using System.Data.SqlClient;
 
 namespace Master.Service
 {
-    public class AssociadoAuthenticateV1 : BaseService
+    public class AuthenticateAssociadoV1 : BaseService
     {
-        public AssociadoAuthenticateV1 (IDapperRepository repository) : base (repository) { }
+        public AuthenticateAssociadoV1 (IDapperRepository repository) : base (repository) { }
 
         bool ValidadeRequest(AssociadoLoginInformation login)
         {

@@ -10,6 +10,7 @@ import AssociadoLimites from "../../pages/associado/limites/Limites";
 import AssociadoExtratos from "../../pages/associado/extratos/Extratos";
 import AssociadoParcelamentos from "../../pages/associado/parcelamentos/Parcelamentos";
 import AssociadoFaturas from "../../pages/associado/faturas/Faturas";
+import AssociadoRede from "../../pages/associado/rede/Rede";
 
 import LojistaVenda from "../../pages/lojista/venda/venda";
 
@@ -41,6 +42,7 @@ export default class LayoutComponent extends React.Component {
                     <Route path="/app/associado/extratos" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoExtratos} />
                     <Route path="/app/associado/parcelamentos" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoParcelamentos} />
                     <Route path="/app/associado/faturas" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoFaturas} />
+                    <Route path="/app/associado/rede" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoRede} />
                     <Route path="/app/lojista/venda" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={LojistaVenda} />
                   </Switch>
                 </CSSTransition>

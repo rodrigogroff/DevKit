@@ -7,9 +7,9 @@ using System.Data.SqlClient;
 
 namespace Master.Service
 {
-    public class LojistaAuthenticateV1 : BaseService
+    public class AuthenticateLojistaV1 : BaseService
     {
-        public LojistaAuthenticateV1(IDapperRepository repository) : base (repository) { }
+        public AuthenticateLojistaV1(IDapperRepository repository) : base (repository) { }
 
         bool ValidadeRequest(LojistaLoginInformation login)
         {

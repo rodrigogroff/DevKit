@@ -27,7 +27,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Portal\v1\Token\lojista\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

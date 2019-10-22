@@ -186,6 +186,11 @@ class Header extends React.Component {
                                           </NavLink>
                                       </DropdownItem>
                                       <DropdownItem>
+                                        <NavLink href="#/app/associado/rede">
+                                          Rede Lojas
+                                          </NavLink>
+                                      </DropdownItem>
+                                      <DropdownItem>
                                         <NavLink onClick={this.doLogout}>
                                           Sair
                                           </NavLink>

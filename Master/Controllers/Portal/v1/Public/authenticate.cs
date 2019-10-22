@@ -19,7 +19,7 @@ namespace Api.Master.Controllers
             var auth = new AuthenticatedUser();
             var repo = new DapperRepository();
             
-            var srv = new AssociadoAuthenticateV1(repo);
+            var srv = new AuthenticateAssociadoV1(repo);
 
             if (!srv.Exec(network, obj, ref auth))
                 return BadRequest(srv.Error);
@@ -43,7 +43,7 @@ namespace Api.Master.Controllers
             var auth = new AuthenticatedUser();
             var repo = new DapperRepository();
 
-            var srv = new LojistaAuthenticateV1(repo);
+            var srv = new AuthenticateLojistaV1(repo);
 
             if (!srv.Exec(network, obj, ref auth))
                 return BadRequest(srv.Error);

@@ -123,7 +123,7 @@ namespace Master.Repository
                                         where fk_empresa = @idEmpresa", new { idEmpresa }).ToList();
 
             return db.Query<T_Loja>(@"  select * from [T_Loja] (nolock) 
-                                        where i_unique in @lst", new { lst }).ToList();
+                                        where i_unique in @lst and tg_blocked = '0' order by st_nome", new { lst }).ToList();
         }
     }
 }

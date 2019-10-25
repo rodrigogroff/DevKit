@@ -24,6 +24,7 @@ export default class LojistaVenda extends React.Component {
 		this.state = {
 			width: 0,
 			height: 0,
+			error: '',
 			loading: false,
 			result: 'Pendente de leitura...',
 			_valor: "0,00",
@@ -104,7 +105,7 @@ export default class LojistaVenda extends React.Component {
 					</li>
 				</ol>
 
-				<div align='center' style={{ display: 'none' }}>
+				<div align='center'>
 					<br></br>
 					<QrReader
 						delay={300}

@@ -16,7 +16,7 @@ namespace Master.Repository
         T_Loja ObterLoja(SqlConnection db, long? idLoja);
         T_Empresa ObterEmpresa(SqlConnection db, string empresa);
         T_Terminal ObterTerminal(SqlConnection db, string codigo);
-        List<T_Loja> ObterListaLojas(SqlConnection db, long idEmpresa);
+        List<T_Loja> ObterListaLojas(SqlConnection db, long idEmpresa, string pesquisa);
         List<T_Parcelas> ObterParcelaLista(SqlConnection db, List<long> lstFkParcela);
         List<T_Parcelas> ObterParcelaListaDeListaCartaoIgual(SqlConnection db, List<long> lstFkCartao, int nuParcela);
         List<T_Parcelas> ObterParcelaListaDeListaCartaoSuperior(SqlConnection db, List<long> lstFkCartao, int nuParcela);
@@ -117,13 +117,17 @@ namespace Master.Repository
                                         where i_unique = @idLoja", new { idLoja }).FirstOrDefault();
         }
 
-        public List<T_Loja> ObterListaLojas(SqlConnection db, long idEmpresa)
+        public List<T_Loja> ObterListaLojas(SqlConnection db, long idEmpresa, string pesquisa)
         {
             var lst = db.Query<long>(@" select fk_loja from [LINK_LojaEmpresa] (nolock)
                                         where fk_empresa = @idEmpresa", new { idEmpresa }).ToList();
 
-            return db.Query<T_Loja>(@"  select * from [T_Loja] (nolock) 
+            if (string.IsNullOrEmpty(pesquisa))
+                return db.Query<T_Loja>(@"  select * from [T_Loja] (nolock) 
                                         where i_unique in @lst", new { lst }).ToList();
+            else
+                return db.Query<T_Loja>(@"  select * from [T_Loja] (nolock) 
+                                        where (st_nome like @pesquisa or st_endereco like @pesquisa) and i_unique in @lst", new { lst, pesquisa }).ToList();
         }
     }
 }

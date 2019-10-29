@@ -12,7 +12,7 @@ namespace Master.Service
     {
         public AssociadoRedeV1(IDapperRepository repository) : base(repository) { }
 
-        public bool Exec(LocalNetwork network, AuthenticatedUser au, ref AssociadoRede dto)
+        public bool Exec(LocalNetwork network, AuthenticatedUser au, ref AssociadoRede dto, string pesquisa)
         {
             try
             {
@@ -21,14 +21,17 @@ namespace Master.Service
                     var associadoPrincipal = repository.ObterCartao(db, au._id);
                     var empresa = repository.ObterEmpresa(db, associadoPrincipal.st_empresa);
 
-                    var lst = repository.ObterListaLojas(db, (long)empresa.i_unique);
+                    if (!string.IsNullOrEmpty(pesquisa))
+                        pesquisa = '%' + pesquisa + "%";
+
+                    var lst = repository.ObterListaLojas(db, (long)empresa.i_unique, pesquisa);
 
                     foreach (var item in lst)
                     {
                         dto.resultados.Add(new LojaRede
                         {
                             nomeLoja = item.st_nome,
-                            end = item.st_endereco
+                            end = item.st_endereco + " " + item.st_cidade + " " + item.nu_telefone + " " + item.st_telCelular
                         });
                     }
                 }

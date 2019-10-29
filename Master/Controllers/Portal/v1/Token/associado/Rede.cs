@@ -9,7 +9,7 @@ namespace Api.Master.Controllers
     {
         [HttpGet]
         [Route("api/v1/portal/associadoRede")]
-        public ActionResult<AssociadoRede> associadoRede()
+        public ActionResult<AssociadoRede> associadoRede(string pesquisa)
         {
             var auth = GetCurrentAuthenticatedUser();
 
@@ -17,7 +17,7 @@ namespace Api.Master.Controllers
             var srv = new AssociadoRedeV1(repo);
             var dto = new AssociadoRede();
 
-            if (!srv.Exec(network, auth, ref dto))
+            if (!srv.Exec(network, auth, ref dto, pesquisa))
                 return BadRequest(srv.Error);
 
             return Ok(dto);

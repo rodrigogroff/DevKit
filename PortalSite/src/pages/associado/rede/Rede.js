@@ -2,7 +2,10 @@
 import React from 'react';
 
 import Widget from '../../../components/Widget';
-
+import {
+	Button,
+	Input,
+} from "reactstrap";
 import s from './Rede.module.scss';
 
 import { Api } from '../../../shared/Api.js'
@@ -11,15 +14,17 @@ export default class AssociadoRede extends React.Component {
 
 	state = {
 		loading: false,
+		_pesquisa: '',
 	};
 
 	componentDidMount() {
-
 		this.setState({ loading: true, error: '' });
+		this.pesquisar();		
+	}
 
+	pesquisar = e => {
 		var api = new Api();
-
-		api.getTokenPortal('associadoRede', null).then(resp => {
+		api.getTokenPortal('associadoRede', 'pesquisa=' + this.state._pesquisa).then(resp => {
 			if (resp.ok === false) {
 				this.setState({
 					loading: false,
@@ -29,7 +34,7 @@ export default class AssociadoRede extends React.Component {
 			else {
 				this.setState({
 					loading: false,
-					lojas: resp.payload.resultados,					
+					lojas: resp.payload.resultados,
 				});
 			}
 		});
@@ -46,7 +51,27 @@ export default class AssociadoRede extends React.Component {
 					</li>
 				</ol>
 				<Widget>
-				{this.state.lojas !== undefined ? <div>
+
+					<table>
+						<tbody>
+							<tr>
+								<td width='90px'>
+									Pesquisar
+								</td>
+								<td width='90px'>
+									<Input className="input-transparent form-control" id="pesquisa-input" 
+														onChange={event => this.setState({ _pesquisa: event.target.value })} />
+								</td>
+								<td width='20px'></td>
+								<td width='120px'>
+									<Button className={s.block} color="primary" onClick={this.pesquisar}>Pesquisar</Button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br></br>
+
+					{this.state.lojas !== undefined ? <div>
 						<table width='100%'>
 							<thead>
 								<th>Loja / Endereço</th>
@@ -58,7 +83,7 @@ export default class AssociadoRede extends React.Component {
 											<b>{current.nomeLoja}</b> <br></br>
 											{current.end}<br></br>
 											<br></br>
-										</td>										
+										</td>
 									</tr>
 								))}
 							</tbody>

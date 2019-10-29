@@ -1,4 +1,4 @@
-
+﻿
 export const ApiLocation = {
     //api_host: 'http://localhost',
     api_host: 'https://meuconvey.conveynet.com.br',
@@ -7,13 +7,13 @@ export const ApiLocation = {
 }
 
 export class Api {
-    
-    versao = () => "v2.1.0002";
+
+    versao = () => "v2.1.0004";
 
     isAuthenticated = () => localStorage.getItem('token');
 
     loggedUserType = () => localStorage.getItem('type');
-    loggedUserName = () => localStorage.getItem('user_name');    
+    loggedUserName = () => localStorage.getItem('user_name');
 
     loggedUserCartao = () => localStorage.getItem('cartao');
 
@@ -34,8 +34,8 @@ export class Api {
 
     loginLojistaOk = (token, terminal, nome) => {
         localStorage.setItem('token', token)
-        localStorage.setItem('terminal', terminal)        
-        localStorage.setItem('user_name', nome)        
+        localStorage.setItem('terminal', terminal)
+        localStorage.setItem('user_name', nome)
         localStorage.setItem('type', '2')
     }
 

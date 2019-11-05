@@ -23,6 +23,11 @@ namespace Master.Repository
         LOG_Transacoes ObterLogTransacao(SqlConnection db, long id);
         List<LOG_Transacoes> ObterLogTransacaoLista(SqlConnection db, List<long> lstFkLog);
         List<LOG_Fechamento> ObterFechamentoLista(SqlConnection db, string mes, string ano, long fkEmpresa, long fkCartao);
+        void InserirSolicitacaoVenda(SqlConnection db, SolicitacaoVenda tbl);
+        void AtualizarSolicitacaoVenda(SqlConnection db, SolicitacaoVenda tbl);
+        SolicitacaoVenda ObterSolicVendaCartao(SqlConnection db, long fkCartao);
+        SolicitacaoVenda ObterSolicLojista(SqlConnection db, long fkLoja);
+        SolicitacaoVenda ObterSolicVendaCartaoId(SqlConnection db, long id);
     }
 
     public class DapperRepository : IDapperRepository
@@ -124,10 +129,72 @@ namespace Master.Repository
 
             if (string.IsNullOrEmpty(pesquisa))
                 return db.Query<T_Loja>(@"  select * from [T_Loja] (nolock) 
-                                        where i_unique in @lst", new { lst }).ToList();
+                                        where i_unique in @lst order by st_nome", new { lst }).ToList();
             else
                 return db.Query<T_Loja>(@"  select * from [T_Loja] (nolock) 
-                                        where (st_nome like @pesquisa or st_endereco like @pesquisa) and i_unique in @lst", new { lst, pesquisa }).ToList();
+                                        where (st_nome like @pesquisa or st_endereco like @pesquisa) and i_unique in @lst order by st_nome", new { lst, pesquisa }).ToList();
+        }
+
+        public void InserirSolicitacaoVenda(SqlConnection db, SolicitacaoVenda tbl)
+        {
+            db.Execute(@"insert into [SolicitacaoVenda] (fkCartao,fkLoja,vrValor,nuParcelas,tgAberto,dtSolic,dtConf)
+                        values (@fkCartao,@fkLoja,@vrValor,@nuParcelas,@tgAberto,@dtSolic,@dtConf)", 
+                        new { 
+                            tbl.fkCartao,
+                            tbl.fkLoja,
+                            tbl.vrValor,
+                            tbl.nuParcelas,
+                            tbl.tgAberto,
+                            tbl.dtSolic,
+                            tbl.dtConf 
+                        } );
+        }
+
+        public void AtualizarSolicitacaoVenda(SqlConnection db, SolicitacaoVenda tbl)
+        {
+            db.Execute(@"update [SolicitacaoVenda] 
+                                set fkCartao = @fkCartao, 
+                                    fkLoja = @fkLoja, 
+                                    vrValor = @vrValor, 
+                                    nuParcelas = @nuParcelas, 
+                                    tgAberto = @tgAberto, 
+                                    dtSolic = @dtSolic,
+                                    dtConf = @dtConf
+                                where id = @id",
+                        new
+                        {
+                            tbl.id,
+                            tbl.fkCartao,
+                            tbl.fkLoja,
+                            tbl.vrValor,
+                            tbl.nuParcelas,
+                            tbl.tgAberto,
+                            tbl.dtSolic,
+                            tbl.dtConf,
+                        });
+        }
+
+        public SolicitacaoVenda ObterSolicVendaCartao(SqlConnection db, long fkCartao)
+        {
+            return db.Query<SolicitacaoVenda>(@"select * from [SolicitacaoVenda] (nolock) 
+                                                where fkCartao = @fkCartao and tgAberto = 1 
+                                                order by dtSolic desc", new { fkCartao }).
+                                                FirstOrDefault();
+        }
+
+        public SolicitacaoVenda ObterSolicVendaCartaoId(SqlConnection db, long id)
+        {
+            return db.Query<SolicitacaoVenda>(@"select * from [SolicitacaoVenda] (nolock) 
+                                                where id = @id ", new { id }).
+                                                FirstOrDefault();
+        }
+
+        public SolicitacaoVenda ObterSolicLojista(SqlConnection db, long fkLoja)
+        {
+            return db.Query<SolicitacaoVenda>(@"select * from [SolicitacaoVenda] (nolock) 
+                                                where fkLoja = @fkLoja and tgAberto = 1 
+                                                order by dtSolic desc", new { fkLoja }).
+                                                FirstOrDefault();
         }
     }
 }

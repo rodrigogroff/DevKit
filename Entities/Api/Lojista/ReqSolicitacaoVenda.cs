@@ -1,7 +1,7 @@
 ﻿
 namespace Entities.Api.Login
 {
-    public class SolicitacaoVenda
+    public class ReqSolicitacaoVenda
     {
         public string empresa { get; set; }
         public string matricula { get; set; }

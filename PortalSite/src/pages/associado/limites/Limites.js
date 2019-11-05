@@ -174,7 +174,6 @@ export default class AssociadoLimites extends React.Component {
 								 />
 						</Col>
 					</FormGroup>
-
 					<table>
 						<tbody>
 							<tr>
@@ -212,7 +211,6 @@ export default class AssociadoLimites extends React.Component {
 							</tr>
 						</tbody>
 					</table>
-
 				</Widget >
 			</div >
 		)

@@ -25,6 +25,7 @@ export default class LojistaVenda extends React.Component {
 			width: 0,
 			height: 0,
 			error: "",
+			aviso: "",
 			loading: false,
 			digitar: true,
 			naoEscolheu: false,
@@ -60,6 +61,7 @@ export default class LojistaVenda extends React.Component {
 	}
 
 	executeSolic = e => {
+		
 		e.preventDefault();
 
 		var empresa = this.state._empresa;
@@ -74,8 +76,12 @@ export default class LojistaVenda extends React.Component {
 		var api = new Api();
 
 		api.postTokenPortal("solicitaVenda", serviceData).then(resp => {
-			if (resp.ok === true) {
-				//resp.payload;
+			if (resp.ok === true) 
+			{
+				this.setState({
+					loading: false,
+					aviso: "Solicitação de venda feita com sucesso!",					
+				});
 			}
 			else {
 				this.setState({
@@ -110,6 +116,23 @@ export default class LojistaVenda extends React.Component {
 					</ModalBody>
 					<ModalFooter className="bg-white">
 						<Button color="primary" onClick={() => this.setState({ error: "" })}> Fechar </Button>
+					</ModalFooter>
+				</Modal>
+
+				<Modal isOpen={this.state.aviso.length > 0} toggle={() => this.setState({ aviso: "" })}>
+					<ModalHeader toggle={() => this.setState({ aviso: "" })}>
+						Aviso do Sistema
+            		</ModalHeader>
+					<ModalBody className="bg-success-system">
+						<div className="modalBodyMain">
+							<br />
+							{this.state.aviso}
+							<br />
+							<br />
+						</div>
+					</ModalBody>
+					<ModalFooter className="bg-white">
+						<Button color="primary" onClick={() => this.setState({ aviso: "" })}> Fechar </Button>
 					</ModalFooter>
 				</Modal>
 

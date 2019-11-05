@@ -11,8 +11,10 @@ import AssociadoExtratos from "../../pages/associado/extratos/Extratos";
 import AssociadoParcelamentos from "../../pages/associado/parcelamentos/Parcelamentos";
 import AssociadoFaturas from "../../pages/associado/faturas/Faturas";
 import AssociadoRede from "../../pages/associado/rede/Rede";
+import AssociadoSolicitacoes from "../../pages/associado/solics/Solicitacoes";
 
 import LojistaVenda from "../../pages/lojista/venda/venda";
+import LojistaSolicitacoes from "../../pages/lojista/solics/Solicitacoes";
 
 import s from "./Layout.module.scss";
 
@@ -39,11 +41,13 @@ export default class LayoutComponent extends React.Component {
                   <Switch>
                     <Route path="/app/associado/QRCODE" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoQRCODE} />
                     <Route path="/app/associado/limites" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoLimites} />
+                    <Route path="/app/associado/solics" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoSolicitacoes} />
                     <Route path="/app/associado/extratos" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoExtratos} />
                     <Route path="/app/associado/parcelamentos" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoParcelamentos} />
                     <Route path="/app/associado/faturas" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoFaturas} />
                     <Route path="/app/associado/rede" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoRede} />
                     <Route path="/app/lojista/venda" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={LojistaVenda} />
+                    <Route path="/app/lojista/solics" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={LojistaSolicitacoes} />
                   </Switch>
                 </CSSTransition>
               </TransitionGroup>

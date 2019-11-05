@@ -1,0 +1,152 @@
+@import '../../../styles/app';
+
+.paginationMain {
+  float: right;
+}
+
+.pagination_text {
+  font-size: x-large;
+}
+
+.pagination_innerClass {
+  font-size: x-large;
+  display: flex;
+}
+
+.pagination_itemClass {
+  color: grey;
+  text-align: center;
+  width: 38px;
+  height: 38px;
+  margin-left:9px;
+  background: #657381;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);      
+}
+
+.lblComboItem {
+  color: #E2DB13
+}
+
+.pagination_itemClass:hover {
+  color: white;
+  background: #3E98C7;
+}
+
+.pagination_activeClass {
+  background: #3E98C7;
+}
+
+.pagination_activeLinkClass {
+  color: white;      
+}
+
+.pagination_linkClass {
+  color: white;      
+}
+
+.cardWidget {
+  padding-left: 90px;
+}
+
+.cardCircle {
+  height: 50px
+}
+
+.cardRight {
+  float: right;
+  text-align: right;
+}
+
+.cardLeft {
+  float: right;
+}
+
+.fullWidth {
+  width: 100%;  
+}
+
+.inputAddon {
+  border: none;
+  background-color: transparentize($text-transparent, 0.1);
+  transition: background-color ease-in-out 0.15s;
+}
+
+.cardInfo {
+  text-align: center;
+  margin-left: -33%;
+}
+
+.cardInfoBelow {
+  text-align: center;
+  width: 200px;
+}
+
+
+.labelBold  {
+  font-size: large;
+}
+
+.lblTitle {
+  font-size: small;
+  color:#dadada;
+}
+
+.fullWidth {
+  width:100%,
+}
+
+.lblActive {
+  font-size: large;
+  color: #3E98C7;
+}
+
+.lblInactive {
+  font-size: large;
+  color: #c0c0c0;
+  cursor: pointer;
+}
+
+.mousePointer {
+  cursor: pointer;
+}
+
+.img {
+  max-height: 64px;
+}
+
+.fullWidth {
+  width:80%;
+  margin-left:40px;
+}
+
+.root {
+  :global {
+    .post-comments footer {
+      margin: 0 (-$widget-padding-horizontal) (-$widget-padding-vertical);
+      padding: $widget-padding-vertical $widget-padding-horizontal;
+    }
+
+    .stat-item .name {
+      margin-top: 10px;
+    }
+
+    .list-group-item:hover {
+      background-color: $bg-addition;
+    }
+
+    .detail {
+      .x_label {
+        background: $widget-bg-color !important;
+      }
+    }
+  }
+}
+
+.table {
+  :global(.table.table-sm) {
+    td {
+      font-size: 1rem;
+      vertical-align: middle;
+    }
+  }
+}

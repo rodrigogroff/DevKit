@@ -1,5 +1,6 @@
 ﻿using Entities.Api;
 using Entities.Api.Login;
+using Entities.Database;
 using Master.Repository;
 using System;
 using System.Data.SqlClient;
@@ -10,41 +11,41 @@ namespace Master.Service
     {
         public SolicitaVendaV1(IDapperRepository repository) : base (repository) { }
 
-        bool ValidadeRequest(SolicitacaoVenda login)
+        bool ValidadeRequest(ReqSolicitacaoVenda req)
         {
             #region - code - 
 
-            if (string.IsNullOrEmpty(login.empresa))
+            if (string.IsNullOrEmpty(req.empresa))
             {
                 Error = new ServiceError { message = "Cartão inválido" };
                 return false;
             }
 
-            if (string.IsNullOrEmpty(login.matricula))
+            if (string.IsNullOrEmpty(req.matricula))
             {
                 Error = new ServiceError { message = "Cartão inválido" };
                 return false;
             }
 
-            if (string.IsNullOrEmpty(login.codAcesso))
+            if (string.IsNullOrEmpty(req.codAcesso))
             {
                 Error = new ServiceError { message = "Cartão inválido" };
                 return false;
             }
 
-            if (string.IsNullOrEmpty(login.venc))
+            if (string.IsNullOrEmpty(req.venc))
             {
                 Error = new ServiceError { message = "Cartão inválido" };
                 return false;
             }
 
-            if (string.IsNullOrEmpty(login.valor))
+            if (string.IsNullOrEmpty(req.valor))
             {
                 Error = new ServiceError { message = "Valor inválido" };
                 return false;
             }
 
-            if (string.IsNullOrEmpty(login.parcelas))
+            if (string.IsNullOrEmpty(req.parcelas))
             {
                 Error = new ServiceError { message = "Num. Parcelas inválido" };
                 return false;
@@ -55,19 +56,19 @@ namespace Master.Service
             #endregion
         }
 
-        public bool Exec ( LocalNetwork network, SolicitacaoVenda login )
+        public bool Exec ( LocalNetwork network, long fkLoja, ReqSolicitacaoVenda req )
         {
             try
             {
-                if (!ValidadeRequest(login))
+                if (!ValidadeRequest(req))
                     return false;
 
-                login.empresa = login.empresa.PadLeft(6, '0');
-                login.matricula = login.matricula.PadLeft(6, '0');
+                req.empresa = req.empresa.PadLeft(6, '0');
+                req.matricula = req.matricula.PadLeft(6, '0');
                 
                 using (var db = new SqlConnection(network.GetSqlServer()))
                 {
-                    var associadoPrincipal = repository.ObterCartao(db, login.empresa, login.matricula, "01");
+                    var associadoPrincipal = repository.ObterCartao(db, req.empresa, req.matricula, "01");
 
                     if (associadoPrincipal == null)
                     {
@@ -80,7 +81,7 @@ namespace Master.Service
                         return false;
                     }
 
-                    if (associadoPrincipal.st_venctoCartao != login.venc)
+                    if (associadoPrincipal.st_venctoCartao != req.venc)
                     {
                         Error = new ServiceError
                         {
@@ -91,7 +92,7 @@ namespace Master.Service
                         return false;
                     }
 
-                    var tEmp = repository.ObterEmpresa(db, login.empresa);
+                    var tEmp = repository.ObterEmpresa(db, req.empresa);
 
                     if (tEmp == null)
                     {
@@ -117,13 +118,13 @@ namespace Master.Service
                         return false;
                     }
 
-                    var codAcessoCalc = new CodigoAcesso().Obter ( login.empresa,
-                                                                   login.matricula,
+                    var codAcessoCalc = new CodigoAcesso().Obter ( req.empresa,
+                                                                   req.matricula,
                                                                    associadoPrincipal.st_titularidade,
                                                                    associadoPrincipal.nu_viaCartao,
                                                                    dadosProprietario.st_cpf );
 
-                    if (codAcessoCalc != login.codAcesso)
+                    if (codAcessoCalc != req.codAcesso)
                     {
                         Error = new ServiceError
                         {
@@ -137,6 +138,19 @@ namespace Master.Service
                     // -----------------------
                     // salvar no banco!!
                     // -----------------------
+
+                    var solic = new SolicitacaoVenda
+                    { 
+                        dtSolic = DateTime.Now,
+                        dtConf = null,
+                        tgAberto = true,
+                        fkCartao = (long) associadoPrincipal.i_unique,
+                        fkLoja = fkLoja,                        
+                        vrValor = Convert.ToInt32(req.valor.Replace(".","").Replace(",","")),
+                        nuParcelas = Convert.ToInt32(req.parcelas),
+                    };
+
+                    repository.InserirSolicitacaoVenda(db, solic);
                 }
 
                 return true;

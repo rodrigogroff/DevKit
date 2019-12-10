@@ -367,23 +367,46 @@ namespace DevKit.Web
                         {
                             #region - dba - 
 
-                            if (context.Password.ToLower() == "superdba")
+                            try
                             {
+                                var tUser = (from e in db.UsuarioParceiro
+                                             where e.stEmail.ToUpper() == UserName.ToUpper() &&
+                                                    e.stSenha == context.Password &&
+                                                    e.bAtivo == true
+                                             select e).
+                                            FirstOrDefault();
+
+                                if (tUser == null)
+                                {
+                                    context.SetError("Erro", "Credenciais Invalidas");
+                                    return;
+                                }
+
+                                var tParceiro = db.Parceiro.FirstOrDefault(y => y.id == tUser.fkParceiro);
+
+                                if (tParceiro == null)
+                                {
+                                    context.SetError("Erro", "Credenciais Invalidas");
+                                    return;
+                                }
+
                                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
-                                identity.AddClaim(new Claim(ClaimTypes.Name, "DBA"));
-                                identity.AddClaim(new Claim("tipo", "1"));
-
+                                identity.AddClaim(new Claim(ClaimTypes.Name, tUser.stNome));
+                                identity.AddClaim(new Claim("tipo", tUser.nuTipo.ToString()));
+                                identity.AddClaim(new Claim("m1", tParceiro.stNome.ToString()));
+                                identity.AddClaim(new Claim("m2", tUser.nuTipo == 1 ? "Admin" : "Operador"));                                
+                                
                                 var ticket = new AuthenticationTicket(identity, null);
 
                                 context.Validated(ticket);
                             }
-                            else
+                            catch (System.Exception ex)
                             {
-                                context.SetError("Erro", "Senha de DBA inválida");
+                                context.SetError("Erro", ex.ToString());
                                 return;
                             }
-
+                           
                             #endregion
 
                             break;

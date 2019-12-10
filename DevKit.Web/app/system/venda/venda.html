@@ -473,8 +473,9 @@
                                             <td ng-if="processandoVenda == true">
                                                 <i class="fa fa-spinner fa-spin"></i> Processando venda
                                             </td>
-                                            <td ng-if="processandoVenda == false">
+                                            <td>
                                                 <button class="btn btn-success"
+                                                        ng-disabled="processandoVenda == true"
                                                         ng-if="viewModel.senhaPortadorCartao.length == 4"
                                                         ng-click="confirmar()">
                                                     Confirmar

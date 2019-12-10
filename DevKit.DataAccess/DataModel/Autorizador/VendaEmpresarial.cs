@@ -68,8 +68,6 @@ namespace DataModel
             Registry("START VendaEmpresarial");
             Registry("-------------------------");
 
-            
-
             try
             {
                 var_codResp = "9999";

@@ -539,8 +539,8 @@
                 </form>
             </div>
 
-            <div ng-if="tipo == 5" align="center" style="width:400px;height:500px;background-color:#e0e0e0;" ng-show="!loginOK">
-                <form id="validate" style="width:300px;">
+            <div ng-if="tipo == 5" align="center" style="width:460px;height:500px;background-color:#e0e0e0;" ng-show="!loginOK">
+                <form id="validate" style="width:400px;">
                     <fieldset>
                         <br /><br />
                         <br />
@@ -549,42 +549,44 @@
                         </div>
                         <h4>Administração ConveyNET</h4>
 
-                        <table>
+                        <table width="100%">
                             <tr height="24px"></tr>
                             <tr height="48px">
+                                <td width="20px">&nbsp;</td>
                                 <td width="120px">
-                                    <p for="login" style="color: black">Login</p>
+                                    <p for="login" style="color: black">Email</p>
                                 </td>
-                                <td width="180px">
-                                    <div class="input-group input-group-lg">
+                                <td width="360px">
+                                    <div class="input-group input-group-lg" width="100%">
                                         <span class="input-group-addon" style="width:45px"><i class="fa fa-user"></i></span>
-                                        <input id="login-username" style="font-size: 12px; border: 1px solid #ccc;" type="text"
+                                        <input id="login-username" style="font-size:small;width:260px;border: 1px solid #ccc;" type="text"
                                                class="form-control" name="username" ng-model="loginData.userName" value="" autofocus>
                                     </div>
                                 </td>
                             </tr>
                             <tr height="48px">
+                                <td></td>
                                 <td>
                                     <p for="pass" style="color: black">Senha</p>
                                 </td>
                                 <td>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon" style="width:45px"><i class="fa fa-lock"></i></span>
-                                        <input id="login-password" style="font-size: 12px; border: 1px solid #ccc;" type="password"
+                                        <input id="login-password" style="font-size:small;width:260px;border: 1px solid #ccc;" type="password"
                                                class="form-control" name="password" ng-model="loginData.password">
                                     </div>
                                 </td>
                             </tr>
                             <tr height="24px"></tr>
                             <tr height="48px">
-                                <td colspan="2" align="center">
+                                <td colspan="3" align="center">
                                     <button type="submit" id="btn-login" class="btn btn-block btn-lg btn-primary" ng-click="login()">
                                         <div ng-show="!loading">Efetuar login </div> <div ng-show="loading">Processando... <i class="fa fa-spinner fa-spin"></i></div>
                                     </button>
                                 </td>
                             </tr>
                             <tr height="48px">
-                                <td colspan="2">
+                                <td colspan="3">
                                     <div align="center">
                                         <span style="color:#ff0000;">{{mensagem}}</span>
                                     </div>

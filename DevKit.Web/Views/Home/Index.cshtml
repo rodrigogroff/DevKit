@@ -17,13 +17,7 @@
     <script type="text/javascript">
 
         function money(o, f) {
-
-            o.value = f(o.value);
-
-            //v_obj = o;
-            //v_fun = f;
-            //execmascara();
-            //setTimeout("execmascara()", 1);
+            o.value = f(o.value);            
         }
 
         function execmascara() {
@@ -259,7 +253,7 @@
                                                     <b>{{authentication.nameUser}}</b>
                                                 </span>
                                             </div>
-                                            <span ng-if="authentication.tipo == '5'" style="color:black">Terminal <b>{{authentication.nameUser}}</b><br />Administração do portal</span>
+                                            <span ng-if="authentication.tipo == '5'" style="color:black">Bem-vindo, <b>{{authentication.nameUser}}</b> ({{authentication.m2}})<br />Administração <i>{{authentication.m1}}</i></span>
                                         </td>
                                         <td width="20px"></td>
                                         <td ng-if="authentication.tipo == '1'" style="padding-top:12px">

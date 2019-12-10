@@ -79,6 +79,8 @@ namespace DataModel
         public ITable<T_Usuario> T_Usuario { get { return this.GetTable<T_Usuario>(); } }
         public ITable<T_WebBlock> T_WebBlock { get { return this.GetTable<T_WebBlock>(); } }
         public ITable<T_SaldoConvenio> T_SaldoConvenio { get { return this.GetTable<T_SaldoConvenio>(); } }
+        public ITable<Parceiro> Parceiro { get { return this.GetTable<Parceiro>(); } }
+        public ITable<UsuarioParceiro> UsuarioParceiro { get { return this.GetTable<UsuarioParceiro>(); } }
 
         public AutorizadorCNDB()
         {
@@ -131,6 +133,25 @@ namespace DataModel
         }
 
         #endregion
+    }
+
+    [Table(Schema = "dbo", Name = "Parceiro")]
+    public partial class Parceiro
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public string stNome { get; set; }
+    }
+
+    [Table(Schema = "dbo", Name = "UsuarioParceiro")]
+    public partial class UsuarioParceiro
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public string stEmail { get; set; }
+        [Column, Nullable] public string stSenha { get; set; }
+        [Column, Nullable] public string stNome { get; set; }
+        [Column, Nullable] public int nuTipo { get; set; }
+        [Column, Nullable] public long fkParceiro { get; set; }
+        [Column, Nullable] public bool bAtivo { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "T_SaldoConvenio")]

@@ -56,13 +56,13 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransController',
                     dtInicial: $scope.campos.dtInicial,
                     dtFinal: $scope.campos.dtFinal,
                     sit: $scope.campos.sit,
-
                     nsu: $scope.campos.nsu,
                     terminal: $scope.campos.terminal,
                     codLoja: $scope.campos.codLoja,
                     cnpjLoja: $scope.campos.cnpjLoja,
                     valorVenda: $scope.campos.valorVenda,
                     parcelas: $scope.campos.parcelas,
+                    operacao: $scope.campos.operacao,
                     tipo: $scope.campos.tipo,
                 };
 

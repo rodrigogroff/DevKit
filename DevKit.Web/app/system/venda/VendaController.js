@@ -249,7 +249,9 @@ angular.module('app.controllers').controller('VendaController',
             };
 
             $scope.efetuarVenda = function () {
+
                 $scope.erroSoma = '';
+                $scope.loading = true;
 
                 Api.SomaParcelada.listPage(
                     {

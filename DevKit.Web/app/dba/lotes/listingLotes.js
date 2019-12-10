@@ -17,6 +17,7 @@ angular.module('app.controllers').controller('ListingLotesController',
                     take: take,
                     todos: $scope.campos.todos,
                     idEmpresa: $scope.campos.idEmpresa,
+                    matricula: $scope.campos.matricula,
                 };
 
                 Api.LoteDBA.listPage(opcoes, function (data) {

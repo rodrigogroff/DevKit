@@ -145,6 +145,7 @@ namespace DevKit.Web.Controllers
             var busca = Request.GetQueryStringValue("busca");            
             var todos = Request.GetQueryStringValue<bool>("todos", false);
             var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa");
+            var matricula = Request.GetQueryStringValue<int?>("matricula");
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -154,11 +155,15 @@ namespace DevKit.Web.Controllers
             if (!todos)
                 query = query.Where(y => y.tg_sitLote != 3);
 
-            if (idEmpresa > 0)
+            if (idEmpresa > 0 || matricula > 0)
             {
-                query = from e in query
-                        join cartDet in db.T_LoteCartaoDetalhe on (int)e.i_unique equals cartDet.fk_lote
-                        where cartDet.fk_empresa == idEmpresa
+                var lstLotes = (from e in db.T_LoteCartaoDetalhe
+                               where idEmpresa == null || e.fk_empresa == idEmpresa
+                                where matricula == null || e.nu_matricula == matricula
+                               select (long)e.fk_lote).ToList();
+
+                query = from e in query                        
+                        where lstLotes.Contains((long)e.i_unique)
                         select e;                     
             }
             
@@ -166,17 +171,25 @@ namespace DevKit.Web.Controllers
 
             var lst = new List<T_LoteCartao>();
 
-            foreach (var item in query.ToList())
-            {
-                var lstCarts = db.T_LoteCartaoDetalhe.Where(y => y.fk_lote == item.i_unique).Select(y => y.fk_cartao).ToList();
+            var tu = query.ToList();
 
+            var lstFkLotes = tu.Select(y => (long)y.i_unique).ToList();
+            var lstCartDetalhe = db.T_LoteCartaoDetalhe.Where(y => lstFkLotes.Contains((long)y.fk_lote)).ToList();
+            var lstCarts = lstCartDetalhe.Select(y => (long)y.fk_cartao).ToList();
+            var lstTotCarts = db.T_Cartao.Where(y => lstCarts.Contains((long)y.i_unique)).ToList();
+
+            foreach (var item in tu)
+            {
                 if (!todos)
                 {
                     var found = false;
 
-                    foreach (var itemC in lstCarts)
+                    var lstCartDetalhe_tmp = lstCartDetalhe.Where(y => y.fk_lote == (long)item.i_unique).ToList();
+                    var lstCarts_tmp = lstTotCarts.Where(y => lstCartDetalhe_tmp.Select(a => (long)a.fk_cartao).ToList().Contains((long)y.i_unique)).ToList();
+
+                    foreach (var itemC in lstCarts_tmp)
                     {
-                        var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == itemC);
+                        var cart = lstTotCarts.FirstOrDefault(y => y.i_unique == itemC.i_unique);
 
                         if (cart != null)
                             if (cart.tg_emitido != 2) // ativo
@@ -210,15 +223,16 @@ namespace DevKit.Web.Controllers
                 item.cartoes = item.nu_cartoes.ToString();
                 item.empresas = "";
 
-                var lstDetalhes = db.T_LoteCartaoDetalhe.Where(y => y.fk_lote == item.i_unique).ToList();
+                var lstDetalhes = lstCartDetalhe.Where(y => y.fk_lote == item.i_unique).ToList();
 
                 var lstEmps = lstDetalhes.Select(y => y.fk_empresa).Distinct();
 
                 foreach (var it in lstEmps)
                 {
-                    var e = db.T_Empresa.FirstOrDefault(y => y.i_unique == it).st_empresa;
+                    var e = db.T_Empresa.FirstOrDefault(y => y.i_unique == it);
 
-                    item.empresas += e + ", ";
+                    if (e != null)
+                        item.empresas += e.st_empresa + ", ";
                 }
 
                 item.empresas = item.empresas.Trim().TrimEnd(',');

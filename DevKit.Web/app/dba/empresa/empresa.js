@@ -333,6 +333,8 @@ angular.module('app.controllers').controller('EmpresaController',
                 $scope.estado = ngSelects.obterConfiguracao(Api.EstadoCombo, { scope: $scope, filtro: { campo: 'fkPais', valor: '1' } });
                 $scope.cidade = ngSelects.obterConfiguracao(Api.CidadeCombo, { scope: $scope, filtro: { campo: 'fkEstado', valor: 'newEnd.fkEstado' } });
 
+                $scope.selectParceiro = ngSelects.obterConfiguracao(Api.Parceiro, {});
+
                 loadEntity();
             }
 

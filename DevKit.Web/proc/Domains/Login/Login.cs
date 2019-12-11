@@ -78,11 +78,13 @@ namespace DevKit.Web
             string m1 = context.Identity.Claims.Where(x => x.Type == "m1").Select(x => x.Value).FirstOrDefault();
             string m2 = context.Identity.Claims.Where(x => x.Type == "m2").Select(x => x.Value).FirstOrDefault();
             string tipo = context.Identity.Claims.Where(x => x.Type == "tipo").Select(x => x.Value).FirstOrDefault();
+            string tipoDBA = context.Identity.Claims.Where(x => x.Type == "tipoDBA").Select(x => x.Value).FirstOrDefault();
 
             context.AdditionalResponseParameters.Add("nameUser", nameUser);
             context.AdditionalResponseParameters.Add("m1", m1);
             context.AdditionalResponseParameters.Add("m2", m2);
             context.AdditionalResponseParameters.Add("tipo", tipo);
+            context.AdditionalResponseParameters.Add("tipoDBA", tipoDBA);
 
             return System.Threading.Tasks.Task.FromResult<object>(null);
         }
@@ -393,7 +395,8 @@ namespace DevKit.Web
                                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
                                 identity.AddClaim(new Claim(ClaimTypes.Name, tUser.stNome));
-                                identity.AddClaim(new Claim("tipo", tUser.nuTipo.ToString()));
+                                identity.AddClaim(new Claim("tipo", "5"));
+                                identity.AddClaim(new Claim("tipoDBA", tUser.nuTipo.ToString()));
                                 identity.AddClaim(new Claim("m1", tParceiro.stNome.ToString()));
                                 identity.AddClaim(new Claim("m2", tUser.nuTipo == 1 ? "Admin" : "Operador"));                                
                                 

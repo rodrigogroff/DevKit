@@ -19,6 +19,7 @@ namespace DevKit.Web.Controllers
             var cnpj = Request.GetQueryStringValue("cnpj");
             var cidade = Request.GetQueryStringValue("cidade");
             var estado = Request.GetQueryStringValue("estado");
+            var fkParceiro = Request.GetQueryStringValue<long?>("parceiro");
 
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
@@ -36,6 +37,9 @@ namespace DevKit.Web.Controllers
 
             if (!string.IsNullOrEmpty(estado))
                 query = query.Where(y => y.st_estado.ToUpper().Contains(estado));
+
+            if (fkParceiro > 0)
+                query = query.Where(y => y.fkParceiro == fkParceiro);
 
             query = query.OrderBy(y => y.st_fantasia);
 

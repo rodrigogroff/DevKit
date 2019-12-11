@@ -727,6 +727,7 @@
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraFechamentoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraCartaoCtrl.cs" />
     <Compile Include="proc\Domains\DBA\EmpresaDBACtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\ParceiroCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaMensagensCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\TerminalLojaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\EmpresaCtrl.cs" />

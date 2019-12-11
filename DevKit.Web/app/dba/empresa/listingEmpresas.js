@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('ListingEmpresasController',
-    ['$scope',  '$state', 'Api', 
-        function ($scope,  $state, Api) {
+    ['$scope',  '$state', 'Api', 'ngSelects', 
+        function ($scope,  $state, Api, ngSelects) {
             $scope.loading = false;
 
             $scope.search = function () {
@@ -14,11 +14,12 @@ angular.module('app.controllers').controller('ListingEmpresasController',
 
                 var opcoes = {
                     skip: skip,
-                    take: take,
+                    take: 200,
                     busca: $scope.campos.codigo,
                     cnpj: $scope.campos.cnpj,
                     cidade: $scope.campos.cidade,
-                    estado: $scope.campos.estado
+                    estado: $scope.campos.estado,
+                    parceiro: $scope.campos.fkParceiro,
                 };
 
                 Api.EmpresaDBA.listPage(opcoes, function (data) {
@@ -37,6 +38,9 @@ angular.module('app.controllers').controller('ListingEmpresasController',
             };
 
             function init() {
+
+                $scope.selectParceiro = ngSelects.obterConfiguracao(Api.Parceiro, {});
+
                 $scope.campos = {
                     codigo: ''
                 };                

@@ -142,6 +142,9 @@ namespace DevKit.Web.Controllers
 
         public IHttpActionResult Get()
         {
+            if (userLoggedParceiroId != "1")
+                return BadRequest("Não autorizado!");
+
             var busca = Request.GetQueryStringValue("busca");            
             var todos = Request.GetQueryStringValue<bool>("todos", false);
             var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa");

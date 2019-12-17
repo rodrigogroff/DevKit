@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('ListingExpController',
-    ['$scope',  '$state', 'Api', 'ngSelects',
-        function ($scope, $state, Api, ngSelects) {
+    ['$scope', 'Api', 'ngSelects',
+        function ($scope, Api, ngSelects) {
 
             $scope.loading = false;
 
@@ -26,7 +26,11 @@ angular.module('app.controllers').controller('ListingExpController',
                     $scope.list = data.results;
                     $scope.total = data.count;
                     $scope.loading = false;
-                });
+                },
+                    function (response) {
+                        $scope.loading = false;
+                        toastr.error('Acesso não autorizado!', 'Erro');
+                    });
             };
 
             function init() {

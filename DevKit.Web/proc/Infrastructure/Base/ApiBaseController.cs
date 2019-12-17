@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Collections.Generic;
 
 namespace DevKit.Web.Controllers
 {
@@ -53,6 +54,19 @@ namespace DevKit.Web.Controllers
                 
                 return identity.Claims.
                     Where(c => c.Type == "tipo").
+                    Select(c => c.Value).
+                    SingleOrDefault();
+            }
+        }
+
+        public string userLoggedParceiroId
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+                return identity.Claims.
+                    Where(c => c.Type == "parceiro").
                     Select(c => c.Value).
                     SingleOrDefault();
             }
@@ -253,6 +267,42 @@ namespace DevKit.Web.Controllers
             }
 
             return true;
+        }
+
+        [NonAction]
+        public List<long> ObtemDBAListaEmpresasParceiroId()
+        {
+            try
+            {
+                var idParceiro = Convert.ToInt64(userLoggedParceiroId);
+
+                return db.T_Empresa.
+                    Where(y => y.fkParceiro == idParceiro).
+                    Select(y => (long)y.i_unique).
+                    ToList();
+            }
+            catch (SystemException ex)
+            {
+                return null;
+            }
+        }
+
+        [NonAction]
+        public List<string> ObtemDBAListaEmpresasParceiroStr()
+        {
+            try
+            {
+                var idParceiro = Convert.ToInt64(userLoggedParceiroId);
+
+                return db.T_Empresa.
+                    Where(y => y.fkParceiro == idParceiro).
+                    Select(y => y.st_empresa).
+                    ToList();
+            }
+            catch (SystemException ex)
+            {
+                return null;
+            }
         }
 
         [NonAction]

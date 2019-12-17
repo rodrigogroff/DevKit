@@ -30,23 +30,46 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var stEmpresa = "";
+            var query = (from e in db.T_Cartao select e);
 
-            if (idEmpresa != null)
+            if (userLoggedType == "5")
             {
-                stEmpresa = (from e in db.T_Empresa
-                             where (int)e.i_unique == idEmpresa
-                             select e).
+                if (idEmpresa != null)
+                {
+                    var stEmpresa = (from e in db.T_Empresa
+                                     where (int)e.i_unique == idEmpresa
+                                     select e).
                              FirstOrDefault().
                              st_empresa;
+
+                    query = (from e in query
+                             where e.st_empresa == stEmpresa
+                             select e);
+                }
+                else if (userLoggedParceiroId != "1")
+                {
+                    var lstEmpsParceiro = ObtemDBAListaEmpresasParceiroStr();
+
+                    query = (from e in query
+                                 where lstEmpsParceiro.Contains(e.st_empresa)
+                                 select e);                      
+                }
             }
             else
             {
-                // vem da empresa logada
-                stEmpresa = userLoggedEmpresa;
-            }
+                if (idEmpresa != null)
+                {
+                    var stEmpresa = (from e in db.T_Empresa
+                                 where (int)e.i_unique == idEmpresa
+                                 select e).
+                                 FirstOrDefault().
+                                 st_empresa;
 
-            var query = (from e in db.T_Cartao select e);
+                    query = (from e in query
+                                where e.st_empresa == stEmpresa
+                                select e);                    
+                }
+            }
 
             if (bloqueado != null)
             {
@@ -132,12 +155,7 @@ namespace DevKit.Web.Controllers
                          select e);
             }
 
-            if (!string.IsNullOrEmpty(stEmpresa))
-            {
-                query = (from e in query
-                         where e.st_empresa == stEmpresa
-                         select e);                     
-            }
+            
 
             var res = new List<RelAssociadosItem>();
 

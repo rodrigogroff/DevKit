@@ -111,8 +111,29 @@ namespace DevKit.Web.Controllers
                     var ids_parcelas = fech.Select(a => (long)a.fk_parcela).Distinct().ToList();
                     var ids_cartoes = fech.Select(a => (long)a.fk_cartao).Distinct().ToList();
 
-                    var lstParc = (from e in db.T_Parcelas where ids_parcelas.Contains((long)e.i_unique) select e).ToList();
+                    var lstParc = new List<T_Parcela>();
 
+                    {
+                        var lst_tmp_ids_parcelas = new List<long>();
+
+                        lst_tmp_ids_parcelas = ids_parcelas.Take(99999999).ToList();
+
+                        while (true)
+                        {
+                            var lst_ids = lst_tmp_ids_parcelas.Take(500).ToList();
+
+                            lstParc.AddRange ( (from e in db.T_Parcelas where lst_ids.Contains((long)e.i_unique) select e).ToList() );
+
+                            foreach (var item in lst_ids)
+                                lst_tmp_ids_parcelas.Remove(item);
+
+                            lst_ids.Clear();
+
+                            if (lst_tmp_ids_parcelas.Count() == 0)
+                                break;
+                        }
+                    }
+                    
                     var parcelas = new List<FechamentoVendaCartao>();
 
                     foreach (var _parc in ids_parcelas)
@@ -181,12 +202,30 @@ namespace DevKit.Web.Controllers
                                            select e).
                                           ToList();
 
-                    var lstIDsParcelas = (from e in itensFechamento select e.fk_parcela).Distinct().ToList();
+                    var lstIDsParcelas = (from e in itensFechamento select (long)e.fk_parcela).Distinct().ToList();
 
-                    var lstParcelas = (from e in db.T_Parcelas
-                                       where lstIDsParcelas.Contains((int)e.i_unique)
-                                       select e).
-                                      ToList();
+                    var lstParcelas = new List<T_Parcela>();
+
+                    {
+                        var lst_tmp_ids_parcelas = new List<long>();
+
+                        lst_tmp_ids_parcelas = lstIDsParcelas.Take(99999999).ToList();
+
+                        while (true)
+                        {
+                            var lst_ids = lst_tmp_ids_parcelas.Take(500).ToList();
+
+                            lstParcelas.AddRange((from e in db.T_Parcelas where lst_ids.Contains((long)e.i_unique) select e).ToList());
+
+                            foreach (var item in lst_ids)
+                                lst_tmp_ids_parcelas.Remove(item);
+
+                            lst_ids.Clear();
+
+                            if (lst_tmp_ids_parcelas.Count() == 0)
+                                break;
+                        }
+                    }
 
                     var lstIDsCartoes = (from e in itensFechamento select e.fk_cartao).Distinct().ToList();
 

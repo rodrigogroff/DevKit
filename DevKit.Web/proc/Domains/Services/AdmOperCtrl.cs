@@ -160,6 +160,9 @@ namespace DevKit.Web.Controllers
                     {
                         #region - code - 
 
+                        if (userLoggedParceiroId != "1")
+                            return BadRequest("Não autorizado!");
+
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
 
                         var tEmp = db.T_Empresa.Find(idEmp);
@@ -411,14 +414,22 @@ namespace DevKit.Web.Controllers
                     {
                         #region - code - 
 
+                        if (userLoggedParceiroId != "1")
+                            return BadRequest("Não autorizado!");
+
+                        var lstIdEmpresas = ObtemDBAListaEmpresasParceiroId();
+                        var lstStrEmpresas = ObtemDBAListaEmpresasParceiroStr();
+
                         var lstCarts = (from e in db.T_Cartao
-                                       where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
-                                       where e.tg_status.ToString() == CartaoStatus.Habilitado 
-                                       select (int)e.i_unique).
-                                       ToList();
+                                        where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
+                                        where lstStrEmpresas.Contains(e.st_empresa)
+                                        where e.tg_status.ToString() == CartaoStatus.Habilitado
+                                        select (int)e.i_unique).
+                                        ToList();
 
                         var lstLotesAbertos = db.T_LoteCartao.
                                                 Where(y => y.tg_sitLote == 1).
+                                                Where ( y=> lstIdEmpresas.Contains((long)y.fk_empresa)).
                                                 Select(y => (int)y.i_unique).
                                                 ToList();
 
@@ -545,6 +556,9 @@ namespace DevKit.Web.Controllers
                 case "20": // ativação via leitor
                     {
                         #region - code -  
+
+                        if (userLoggedParceiroId != "1")
+                            return BadRequest("Não autorizado!");
 
                         var cartao = Request.GetQueryStringValue("cartao");
 

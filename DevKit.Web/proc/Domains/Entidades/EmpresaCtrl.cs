@@ -24,6 +24,15 @@ namespace DevKit.Web.Controllers
 
             var query = (from e in db.T_Empresa select e);
 
+            if (userLoggedType == "5")
+            {
+                if (userLoggedParceiroId != "1")
+                {
+                    var lstEmpsParceiro = ObtemDBAListaEmpresasParceiroStr();
+                    query = query.Where(y => lstEmpsParceiro.Contains(y.st_empresa));
+                }
+            }
+
             if (!string.IsNullOrEmpty(busca))
                 query = query.Where(y => y.st_empresa.Contains(busca));
             

@@ -36,6 +36,10 @@ angular.module('app.controllers').controller('AdmOpersAtivaGraficaController',
                             }
 
                             $scope.loading = false;
+                        },
+                        function (response) {
+                            $scope.loading = false;
+                            toastr.error('Acesso não autorizado!', 'Erro');
                         });
                 }
             });

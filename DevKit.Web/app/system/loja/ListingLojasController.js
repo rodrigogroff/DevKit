@@ -55,7 +55,11 @@ angular.module('app.controllers').controller('ListingLojasController',
                         $scope.list = data.results;
                         $scope.total = data.count;
                         $scope.loading = false;
-                    });
+                    },
+                        function (response) {
+                            $scope.loading = false;
+                            toastr.error('Acesso não autorizado!', 'Erro');
+                        });
                 }
             };
 

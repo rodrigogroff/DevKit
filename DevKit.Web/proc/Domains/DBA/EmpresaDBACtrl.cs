@@ -13,6 +13,9 @@ namespace DevKit.Web.Controllers
     {
         public IHttpActionResult Get()
         {
+            if (userLoggedParceiroId != "1")
+                return BadRequest("Não autorizado!");
+
             var busca = Request.GetQueryStringValue("busca")?.ToUpper();
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");

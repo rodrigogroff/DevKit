@@ -144,6 +144,18 @@ namespace DevKit.Web.Controllers
                         where emp.fk_empresa == idEmpresa
                         select e;
             }
+            else
+            { 
+                if (userLoggedParceiroId != "1")
+                {
+                    var lstEmpsParceiro = ObtemDBAListaEmpresasParceiroId();
+
+                    query = from e in query
+                            join emp in db.LINK_LojaEmpresa on Convert.ToInt32(e.i_unique) equals emp.fk_loja
+                            where lstEmpsParceiro.Contains((long)emp.fk_empresa)
+                            select e;
+                }
+            }
 
             if (!string.IsNullOrEmpty(estado))
             {

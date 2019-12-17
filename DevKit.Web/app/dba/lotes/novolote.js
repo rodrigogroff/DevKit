@@ -52,9 +52,9 @@ angular.module('app.controllers').controller('NovoLoteController',
                     }
                 },
                     function (response) {
-                        if (response.status === 404) { toastr.error('Invalid ID', 'Erro'); }
-                        $scope.list();
-                    });
+                        $scope.loading = false;
+                        toastr.error( 'Acesso não autorizado!', 'Erro');                        
+                });
             }
 
             init();

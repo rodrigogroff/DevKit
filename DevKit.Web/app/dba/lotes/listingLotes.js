@@ -24,7 +24,11 @@ angular.module('app.controllers').controller('ListingLotesController',
                     $scope.list = data.results;
                     $scope.total = data.count;
                     $scope.loading = false;
-                });
+                },
+                    function (response) {
+                        $scope.loading = false;
+                        toastr.error('Acesso não autorizado!', 'Erro');
+                    });
             };
 
             $scope.show = function (mdl)

@@ -79,12 +79,14 @@ namespace DevKit.Web
             string m2 = context.Identity.Claims.Where(x => x.Type == "m2").Select(x => x.Value).FirstOrDefault();
             string tipo = context.Identity.Claims.Where(x => x.Type == "tipo").Select(x => x.Value).FirstOrDefault();
             string tipoDBA = context.Identity.Claims.Where(x => x.Type == "tipoDBA").Select(x => x.Value).FirstOrDefault();
+            string parceiro = context.Identity.Claims.Where(x => x.Type == "parceiro").Select(x => x.Value).FirstOrDefault();
 
             context.AdditionalResponseParameters.Add("nameUser", nameUser);
             context.AdditionalResponseParameters.Add("m1", m1);
             context.AdditionalResponseParameters.Add("m2", m2);
             context.AdditionalResponseParameters.Add("tipo", tipo);
             context.AdditionalResponseParameters.Add("tipoDBA", tipoDBA);
+            context.AdditionalResponseParameters.Add("parceiro", parceiro);
 
             return System.Threading.Tasks.Task.FromResult<object>(null);
         }
@@ -316,6 +318,7 @@ namespace DevKit.Web
                             var tUser = (from e in db.T_Usuario
                                          where e.st_empresa == empresa
                                          where e.st_nome == usuario
+                                         where e.tg_bloqueio == '0'
                                          select e).
                                          FirstOrDefault();
 
@@ -396,6 +399,7 @@ namespace DevKit.Web
 
                                 identity.AddClaim(new Claim(ClaimTypes.Name, tUser.stNome));
                                 identity.AddClaim(new Claim("tipo", "5"));
+                                identity.AddClaim(new Claim("parceiro", tParceiro.id.ToString()));
                                 identity.AddClaim(new Claim("tipoDBA", tUser.nuTipo.ToString()));
                                 identity.AddClaim(new Claim("m1", tParceiro.stNome.ToString()));
                                 identity.AddClaim(new Claim("m2", tUser.nuTipo == 1 ? "Admin" : "Operador"));                                

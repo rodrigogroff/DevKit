@@ -23,6 +23,7 @@ angular.module('app.controllers').controller('AtivaCartaoController',
                     },
                     function (response) {                    
                         $scope.loading = false;
+                        toastr.error('Acesso não autorizado!', 'Erro');
                     });
                 }
             }, true);

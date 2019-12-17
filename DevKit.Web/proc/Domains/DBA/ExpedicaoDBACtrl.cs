@@ -4,9 +4,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Web.Http;
-using System.Net;
-using System.IO;
-using System.Text;
 
 namespace DevKit.Web.Controllers
 {
@@ -19,6 +16,9 @@ namespace DevKit.Web.Controllers
     {
         public IHttpActionResult Get()
         {
+            if (userLoggedParceiroId != "1")
+                return BadRequest("Não autorizado!");
+
             var sdtInicial = Request.GetQueryStringValue<string>("dtInicial");
             var sdtFinal = Request.GetQueryStringValue<string>("dtFinal");
             var skip = Request.GetQueryStringValue<int>("skip");

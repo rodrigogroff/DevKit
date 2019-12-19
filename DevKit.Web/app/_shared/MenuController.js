@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('MenuController',
-    ['$scope', '$rootScope', '$location', 'AuthService', 'Api', 'version', '$state', '$window',
-        function ($scope, $rootScope, $location, AuthService, Api, version, $state, $window) {
+    ['$scope', '$rootScope', 'AuthService', 'version', '$window',
+        function ($scope, $rootScope, AuthService, version, $window) {
             $scope.version = version;
             $scope.searchParam = '';
 
@@ -18,22 +18,20 @@ angular.module('app.controllers').controller('MenuController',
 
                 $scope.authentication = AuthService.authentication;
 
-                if (!AuthService.authentication.isAuth)
-                    $location.path('login');
-
                 $scope.resizeReady = false;
                 $scope.width = $window.innerWidth;
                 
                 $scope.resizeReady = true;
             }
 
-            $scope.logOut = function ()
-            {
-                AuthService.fillAuthData();
-                var tipo = AuthService.authentication.tipo;
-                if (tipo == undefined) tipo = 1;
+            $scope.logOut = function (mTipo)
+            {                
                 AuthService.logOut();
-                //window.location = '/login?tipo=' + tipo;
+
+                $rootScope.loginOK = false;
+                $rootScope.exibirMenu = false;
+
+                window.location = 'https://meuconvey.conveynet.com.br/login?tipo=' + mTipo;
             };
 
         }]);

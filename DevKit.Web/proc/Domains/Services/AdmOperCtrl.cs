@@ -703,6 +703,13 @@ namespace DevKit.Web.Controllers
 
                         var queryX = db.LOG_Transacoes.Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim);
 
+                        if (Convert.ToInt32(userLoggedParceiroId) > 1)
+                        {
+                            var lst = ObtemDBAListaEmpresasParceiroId();
+
+                            queryX = queryX.Where(y => lst.Contains((long)y.fk_empresa));
+                        }
+
                         object a, b, c, d, e, f, g, h;
 
                         #region - A - 
@@ -791,18 +798,26 @@ namespace DevKit.Web.Controllers
                         var queryPrincipal = db.LOG_Transacoes.
                                     Where(y => y.dt_transacao > dtIni && y.dt_transacao < dtFim).
                                     Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada ||
-                                              y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).
-                                    ToList();
+                                              y.tg_confirmada.ToString() == TipoConfirmacao.Pendente);
 
-                        var queryConf = queryPrincipal.
+                        if (Convert.ToInt32(userLoggedParceiroId) > 1)
+                        {
+                            var lst = ObtemDBAListaEmpresasParceiroId();
+
+                            queryPrincipal = queryPrincipal.Where(y => lst.Contains((long)y.fk_empresa));
+                        }
+
+                        var final_queryPrincipal = queryPrincipal.ToList();
+
+                        var queryConf = final_queryPrincipal.
                                 Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
                                 ToList();
 
-                        var queryPendentes = queryPrincipal.
+                        var queryPendentes = final_queryPrincipal.
                                     Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Pendente).
                                     ToList();
 
-                        var queryCanceladas = queryPrincipal.
+                        var queryCanceladas = final_queryPrincipal.
                                     Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Cancelada).
                                     ToList();
 

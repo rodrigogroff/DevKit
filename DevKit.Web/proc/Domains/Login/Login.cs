@@ -318,7 +318,7 @@ namespace DevKit.Web
                             var tUser = (from e in db.T_Usuario
                                          where e.st_empresa == empresa
                                          where e.st_nome == usuario
-                                         where e.tg_bloqueio == '0'
+                                         where e.tg_bloqueio == 0
                                          select e).
                                          FirstOrDefault();
 

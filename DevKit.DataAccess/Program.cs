@@ -19,7 +19,13 @@ namespace GetStarted
             Console.WriteLine("(0.22) Patch?");
             Console.WriteLine("------------------------");
 
-          //  LimpaScheduler();
+            //  LimpaScheduler();
+
+            //ForcaFech(1, new DateTime(2019, 12, 5, 0, 10, 0));
+
+          //  FixDeVelho("11", "2019", 1, "12", "2019", 2019, 12, 5);
+
+            //ReFecha("12", "2019", 1, 2019, 12, 5);
         }
 
         static void LimpaScheduler()
@@ -170,6 +176,238 @@ namespace GetStarted
             #endregion
         }
 
+        static void ForcaFech(int id, DateTime dt)
+        {
+            #region -  code - 
+
+            using (var db = new AutorizadorCNDB())
+            {
+                string currentEmpresa = "";
+
+                try
+                {
+                    var diaFechamento = dt.Day;
+                    var horaAtual = dt.ToString("HHmm");
+                    var ano = dt.ToString("yyyy");
+                    var mes = dt.ToString("MM").PadLeft(2, '0');
+
+                    var lstEmpresas = db.T_Empresa.Where(y => y.i_unique == id).ToList();
+
+                    foreach (var empresa in lstEmpresas)
+                    {
+                        // ------------------------------
+                        // só fecha uma vez no mes
+                        // ------------------------------
+
+                        if (db.LOG_Fechamento.Any(y => y.st_ano == ano &&
+                                                        y.st_mes == mes &&
+                                                        y.fk_empresa == empresa.i_unique))
+                            continue;
+
+                        currentEmpresa = empresa.st_empresa;
+
+                        db.Insert(new LOG_Audit
+                        {
+                            dt_operacao = DateTime.Now,
+                            fk_usuario = null,
+                            st_oper = "Fechamento [INICIO]",
+                            st_empresa = currentEmpresa,
+                            st_log = "Ano " + ano + " Mes " + mes
+                        });
+
+                        var g_job = new T_JobFechamento
+                        {
+                            dt_inicio = DateTime.Now,
+                            dt_fim = null,
+                            fk_empresa = (int)empresa.i_unique,
+                            st_ano = ano,
+                            st_mes = mes
+                        };
+
+                        // ----------------------------
+                        // registra job
+                        // ----------------------------
+
+                        g_job.i_unique = Convert.ToInt32(db.InsertWithIdentity(g_job));
+
+                        // ----------------------------
+                        // busca parcelas
+                        // ----------------------------
+
+                        long totValor = 0;
+
+                        foreach (var parc in db.T_Parcelas.Where(y => y.fk_empresa == empresa.i_unique && y.nu_parcela > 0).ToList())
+                        {
+                            // ----------------------------
+                            // somente confirmadas
+                            // ----------------------------
+
+                            var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
+
+                            if (logTrans == null)
+                                continue;
+                            else
+                            {
+                                if (logTrans.tg_confirmada == null)
+                                    continue;
+
+                                if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
+                                    continue;
+                            }
+
+                            // ----------------------------
+                            // decrementa parcela
+                            // ----------------------------
+
+                            var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == parc.i_unique);
+                            parcUpd.nu_parcela--;
+                            db.Update(parcUpd);
+
+                            // -------------------------------------------
+                            // insere fechamento quando parcela zerar 
+                            // -------------------------------------------
+
+                            if (parcUpd.nu_parcela == 0)
+                            {
+                                totValor += (int)parc.vr_valor;
+
+                                db.Insert(new LOG_Fechamento
+                                {
+                                    dt_compra = logTrans.dt_transacao,
+                                    dt_fechamento = DateTime.Now,
+                                    fk_cartao = parc.fk_cartao,
+                                    fk_empresa = parc.fk_empresa,
+                                    fk_loja = parc.fk_loja,
+                                    fk_parcela = (int)parc.i_unique,
+                                    nu_parcela = parc.nu_parcela,
+                                    st_afiliada = "",
+                                    st_ano = ano,
+                                    st_mes = mes,
+                                    vr_valor = parc.vr_valor
+                                });
+                            }
+                        }
+
+                        // ----------------------------
+                        // registra job / finalizado!
+                        // ----------------------------
+
+                        g_job.dt_fim = DateTime.Now;
+
+                        db.Update(g_job);
+
+                        db.Insert(new LOG_Audit
+                        {
+                            dt_operacao = DateTime.Now,
+                            fk_usuario = null,
+                            st_oper = "Fechamento [OK]",
+                            st_empresa = currentEmpresa,
+                            st_log = "Ano " + ano + " Mes " + mes + " Valor => " + totValor
+                        });
+                    }
+                }
+                catch (SystemException ex)
+                {
+                    db.Insert(new LOG_Audit
+                    {
+                        dt_operacao = DateTime.Now,
+                        fk_usuario = null,
+                        st_oper = "Fechamento [ERRO]",
+                        st_empresa = currentEmpresa,
+                        st_log = ex.ToString()
+                    });
+                }
+            }
+
+            #endregion
+        }
+
+        static void FixDeVelho(string mesAnt, string anoAnt, int fkEmpresa, string mesAtual, string anoAtual, int anoF, int mesF, int diaF)
+        {
+            #region - code -
+            using (var db = new AutorizadorCNDB())
+            {
+                //busca trans antigas
+
+                var targetDtFech = new DateTime(anoF, mesF, diaF, 0, 5, 0);
+
+                var lstOld = db.LOG_Fechamento.Where(y => y.fk_empresa == fkEmpresa && y.st_mes == mesAnt && y.st_ano == anoAnt).ToList();
+                var lstCurrentFech = db.LOG_Fechamento.Where(y => y.fk_empresa == fkEmpresa && y.st_mes == mesAtual && y.st_ano == anoAtual).ToList();
+
+                foreach (var itemFech in lstOld)
+                {
+                    var parcOldFech = db.T_Parcelas.FirstOrDefault(y => itemFech.fk_parcela == y.i_unique);
+
+                    if (parcOldFech == null)
+                        continue;
+
+                    var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parcOldFech.fk_log_transacoes);
+
+                    if (logTrans == null)
+                        continue;
+
+                    if (parcOldFech != null)
+                    {
+                        if (parcOldFech.nu_indice < parcOldFech.nu_tot_parcelas)
+                        {
+                            // tem continuação
+
+                            var lstTotParc = db.T_Parcelas.Where(y => y.fk_log_transacoes == parcOldFech.fk_log_transacoes).OrderBy(y => y.i_unique).ToList();
+
+                            var nuParc = 0;
+
+                            foreach (var currentParcela in lstTotParc)
+                            {
+                                if (currentParcela.nu_indice > parcOldFech.nu_indice)
+                                {
+                                    currentParcela.nu_parcela = nuParc;
+                                    db.Update(currentParcela);
+
+                                    if (nuParc == 0)
+                                    {
+                                        var fe = lstCurrentFech.FirstOrDefault(y => y.fk_parcela == currentParcela.i_unique);
+                                                                               
+                                        if (fe == null)
+                                        {
+                                            db.Insert(new LOG_Fechamento
+                                            {
+                                                dt_compra = logTrans.dt_transacao,
+                                                dt_fechamento = targetDtFech,
+                                                fk_cartao = parcOldFech.fk_cartao,
+                                                fk_empresa = parcOldFech.fk_empresa,
+                                                fk_loja = parcOldFech.fk_loja,
+                                                fk_parcela = (int)currentParcela.i_unique,
+                                                nu_parcela = currentParcela.nu_indice,
+                                                st_afiliada = "",
+                                                st_ano = anoAtual,
+                                                st_mes = mesAtual,
+                                                vr_valor = currentParcela.vr_valor
+                                            });
+                                        }
+                                        else
+                                        {
+                                            fe.st_mes = mesAtual;
+                                            fe.st_ano = anoAtual;
+                                            fe.dt_fechamento = targetDtFech;
+                                            fe.nu_parcela = currentParcela.nu_indice;
+
+                                            db.Update(fe);
+                                        }
+                                    }
+
+                                    nuParc++;
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+            }
+            #endregion
+        }
+
+
         static void ReFecha(string mes, string ano, int fkEmpresa, int anoF, int mesF, int diaF)
         {
             #region - code -
@@ -235,10 +473,15 @@ namespace GetStarted
 
                     var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
 
-                    if (logTrans.dt_transacao > new DateTime(anoF, mesF, diaF))
-                        continue;
+                    if (logTrans != null)
+                    {
+                        if (logTrans.dt_transacao > new DateTime(anoF, mesF, diaF))
+                            continue;
 
-                    if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
+                        if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
+                            continue;
+                    }
+                    else
                         continue;
 
                     var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == parc.i_unique);

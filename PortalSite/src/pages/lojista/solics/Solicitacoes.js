@@ -32,11 +32,8 @@ export default class LojistaSolicitacoes extends React.Component {
 	}
 
 	loadSolics = e => {
-
 		this.setState({ loading: true, error: '', aviso: '', solic: { id: 0 } });
-
 		var api = new Api();
-
 		api.getTokenPortal('lojistaSolicitacao', null).then(resp => {
 			if (resp.ok === false) {
 				this.setState({
@@ -51,36 +48,29 @@ export default class LojistaSolicitacoes extends React.Component {
 				});
 			}
 		});
-
 	}
 
 	cancelarSolic = e => {
-
 		e.preventDefault();
-
 		this.setState({ loading: true, error: '', aviso: '' });
-
 		var api = new Api();
-
-		api.postTokenPortal("cancelaSolicitacao", JSON.stringify(this.state.solic)).then(resp => {
+		api.postTokenPortal("solicitaVendaCancelamento", JSON.stringify(this.state.solic)).then(resp => {
 			if (resp.ok === true) {
 				this.setState({
 					loading: false,
-					aviso: "Venda confirmada com sucesso!",
+					aviso: "Venda cancelada com sucesso!",
 				});
 				this.loadSolics();
 			}
 			else {
 				this.setState({
-					loading: false,
-					alertIsOpen: true,
+					loading: false,					
 					error: resp.msg
 				});
 			}
 		}).catch(err => {
 			this.setState({
-				loading: false,
-				alertIsOpen: true,
+				loading: false,				
 				error: "Nao foi possivel verificar os dados de sua requisição"
 			});
 		});
@@ -96,7 +86,6 @@ export default class LojistaSolicitacoes extends React.Component {
 						{this.state.loading ? <div className="loader"><p className="loaderText"><i className='fa fa-spinner fa-spin'></i></p></div> : <div ></div>}
 					</li>
 				</ol>
-
 				<Modal isOpen={this.state.error.length > 0} toggle={() => this.setState({ error: "" })}>
 					<ModalHeader toggle={() => this.setState({ error: "" })}>
 						Aviso do Sistema
@@ -113,7 +102,6 @@ export default class LojistaSolicitacoes extends React.Component {
 						<Button color="primary" onClick={() => this.setState({ error: "" })}> Fechar </Button>
 					</ModalFooter>
 				</Modal>
-
 				<Modal isOpen={this.state.aviso.length > 0} toggle={() => this.setState({ aviso: "" })}>
 					<ModalHeader toggle={() => this.setState({ aviso: "" })}>
 						Aviso do Sistema
@@ -130,7 +118,23 @@ export default class LojistaSolicitacoes extends React.Component {
 						<Button color="primary" onClick={() => this.setState({ aviso: "" })}> Fechar </Button>
 					</ModalFooter>
 				</Modal>
-
+				<div align='center'>
+					<Button color="primary"
+						style={{ width: "200px" }}
+						onClick={this.loadSolics}
+						disabled={this.state.loading} >
+						{this.state.loading === true ? (
+							<span className="spinner">
+								<i className="fa fa-spinner fa-spin" />
+								&nbsp;&nbsp;&nbsp;
+											</span>
+						) : (
+								<div />
+							)}
+						Atualizar
+								</Button>
+				</div>
+				<br></br>
 				{
 					this.state.solic.id === 0 ? <div>
 						<br></br>
@@ -150,7 +154,7 @@ export default class LojistaSolicitacoes extends React.Component {
 							<Widget>
 								<FormGroup row>
 									<Label for="normal-field" md={12} className="text-md-left">
-										<h4>Cartão </h4>
+										<h5>Cartão </h5>
 										<Input className={this.state.error_name ? "input-transparent-red" : "input-transparent"}
 											type="text"
 											id="fieldName"
@@ -162,7 +166,7 @@ export default class LojistaSolicitacoes extends React.Component {
 								</FormGroup>
 								<FormGroup row>
 									<Label for="normal-field" md={12} className="text-md-left">
-										<h4>Data </h4>
+										<h5>Data </h5>
 										<Input className={this.state.error_name ? "input-transparent-red" : "input-transparent"}
 											type="text"
 											id="fieldName"
@@ -178,7 +182,7 @@ export default class LojistaSolicitacoes extends React.Component {
 											<td>
 												<FormGroup row>
 													<Label for="normal-field" md={4} className="text-md-left">
-														<h4>Valor </h4>
+														<h5>Valor </h5>
 													</Label>
 													<Col md={7}>
 														<Input className={this.state.error_name ? "input-transparent-red" : "input-transparent"}
@@ -195,7 +199,7 @@ export default class LojistaSolicitacoes extends React.Component {
 											<td>
 												<FormGroup row>
 													<Label for="normal-field" md={4} className="text-md-left">
-														<h4>Parcelas </h4>
+														<h5>Parcelas </h5>
 													</Label>
 													<Col md={7}>
 														<Input className={this.state.error_name ? "input-transparent-red" : "input-transparent"}
@@ -212,11 +216,10 @@ export default class LojistaSolicitacoes extends React.Component {
 									</tbody>
 								</table>
 							</Widget>
-							<br></br>
 							<div align='center'>
 								<Button color="danger"
 									style={{ width: "200px" }}
-									onClick={this.executeSolic}
+									onClick={this.cancelarSolic}
 									disabled={this.state.loading} >
 									{this.state.loading === true ? (
 										<span className="spinner">

@@ -1,5 +1,5 @@
 ﻿using Entities.Api.Associado;
-using Entities.Api.Login;
+using Entities.Api.Lojista;
 using Master.Repository;
 using Master.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +26,21 @@ namespace Api.Master.Controllers
         }
 
         [HttpPost]
+        [Route("api/v1/portal/solicitaVendaPos")]
+        public ActionResult SolicitaVendaPos([FromBody] ReqSolicitacaoVendaPOS obj)
+        {
+            var repo = new DapperRepository();
+            var srv = new SolicitaVendaPosV1(repo);
+
+            var au = GetCurrentAuthenticatedUser();
+
+            if (!srv.Exec(network, Convert.ToInt64(au._id), obj))
+                return BadRequest(srv.Error);
+
+            return Ok(new { });
+        }
+
+        [HttpPost]
         [Route("api/v1/portal/solicitaVenda")]
         public ActionResult SolicitaVenda([FromBody] ReqSolicitacaoVenda obj)
         {
@@ -37,10 +52,38 @@ namespace Api.Master.Controllers
             if (!srv.Exec(network, Convert.ToInt64(au._id), obj))
                 return BadRequest(srv.Error);
 
-            return Ok(new
-            {
-                            
-            });
+            return Ok(new { });
+        }
+
+        [HttpPost]
+        [Route("api/v1/portal/solicitaVendaCancelamento")]
+        public ActionResult SolicitaVendaCancelamento([FromBody] ReqSolicitacaoVenda obj)
+        {
+            var repo = new DapperRepository();
+            var srv = new SolicitaVendaCancelamentoV1(repo);
+
+            var au = GetCurrentAuthenticatedUser();
+
+            if (!srv.Exec(network, Convert.ToInt64(au._id), obj))
+                return BadRequest(srv.Error);
+
+            return Ok(new { });
+        }
+
+        [HttpGet]
+        [Route("api/v1/portal/lojistaAutorizacoes")]
+        public ActionResult<LojistaAutorizacoesDTO> lojistaAutorizacoes()
+        {
+            var auth = GetCurrentAuthenticatedUser();
+
+            var repo = new DapperRepository();
+            var srv = new LojistaAutorizacoesV1(repo);
+            var dto = new LojistaAutorizacoesDTO();
+
+            if (!srv.Exec(network, auth, ref dto))
+                return BadRequest(srv.Error);
+
+            return Ok(dto);
         }
     }
 }

@@ -8,7 +8,7 @@ export const ApiLocation = {
 
 export class Api {
 
-    versao = () => "v2.1.0006";
+    versao = () => "v2.1.007";
 
     isAuthenticated = () => localStorage.getItem('token');
 
@@ -83,13 +83,7 @@ export class Api {
                             ok: false,
                             unauthorized: true
                         })
-                    }
-                    else if (res.status === 400) {
-                        reject({
-                            ok: false,
-                            msg: 'Ops. Houve um erro e não pudemos concluir sua transação'
-                        })
-                    }
+                    }                    
                     else if (res.ok === true) {
                         res.json().then((data) => {
                             resolve({
@@ -135,12 +129,6 @@ export class Api {
                             unauthorized: true
                         })
                     }
-                    else if (res.status === 400) {
-                        reject({
-                            ok: false,
-                            msg: 'Ops. Houve um erro e não pudemos concluir sua transação'
-                        })
-                    }
                     else if (res.ok === true) {
                         res.json().then((data) => {
                             resolve({
@@ -150,11 +138,9 @@ export class Api {
                         })
                     }
                     else res.json().then((data) => {
-                        var jData = JSON.parse(data.value)
-
                         resolve({
                             ok: false,
-                            msg: jData.message,
+                            msg: data.message,
                         })
                     });
                 })
@@ -231,5 +217,112 @@ export class Api {
                     })
                 });
         })
+    };
+
+    trimStart = (character, string) => {
+        var startIndex = 0;
+        while (string[startIndex] === character) 
+            startIndex++;
+        return string.substr(startIndex);
+    }
+
+    cleanup = (strMoney) => {
+        var ret = '';
+        var i = 0;
+        for (; i < strMoney.length; i++) 
+            if (strMoney[i] === '0') { } else {
+                break;
+            }        
+        for (; i < strMoney.length; i++) 
+            ret += strMoney[i];
+        return ret;
+    };
+
+    extractNumbers = (strMoney) => {
+        var ret = '';
+        for (var i = 0; i < strMoney.length; i++) {
+            var va = strMoney[i];
+            if (va === '0' || va === '1' || va === '2' || va === '3' || va === '4' || va === '5' || va === '6' || va === '7' || va === '8' || va === '9')
+                ret += va;
+        }
+        return ret;
+    };
+
+    ValorNum = (v) => {
+        v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
+        return v;
+    }
+
+    ValorMoney = (v) => {
+        var extract = this.extractNumbers(v);
+        var clean = this.cleanup(extract);
+        var resp = '';
+        switch (clean.length) {
+            case 1: resp = '0,0' + clean; break;
+            case 2: resp = '0,' + clean; break;
+            case 3:
+                {
+                    let p1 = clean.substr(0, 1);
+                    let p2 = clean.substr(1, 2);
+                    resp = p1 + ',' + p2;
+                    break;
+                }
+
+            case 4:
+                {
+                    let p1 = clean.substr(0, 2);
+                    let p2 = clean.substr(2, 2);
+                    resp = p1 + ',' + p2;
+                    break;
+                }
+
+            case 5:
+                {
+                    let p1 = clean.substr(0, 3);
+                    let p2 = clean.substr(3, 2);
+                    resp = p1 + ',' + p2;
+                    break;
+                }
+
+            case 6:
+                {
+                    let p1 = clean.substr(0, 1);
+                    let p2 = clean.substr(1, 3);
+                    let p3 = clean.substr(4, 2);
+                    resp = p1 + '.' + p2 + ',' + p3;
+                    break;
+                }
+
+            case 7:
+                {
+                    let p1 = clean.substr(0, 2);
+                    let p2 = clean.substr(2, 3);
+                    let p3 = clean.substr(5, 2);
+                    resp = p1 + '.' + p2 + ',' + p3;
+                    break;
+                }
+
+            case 8:
+                {
+                    let p1 = clean.substr(0, 3);
+                    let p2 = clean.substr(3, 3);
+                    let p3 = clean.substr(6, 2);
+                    resp = p1 + '.' + p2 + ',' + p3;
+                    break;
+                }
+
+            case 9:
+                {
+                    let p1 = clean.substr(0, 1);
+                    let p2 = clean.substr(1, 3);
+                    let p3 = clean.substr(4, 3);
+                    let p4 = clean.substr(7, 2);
+                    resp = p1 + '.' + p2 + '.' + p3 + ',' + p4;
+                    break;
+                }
+
+            default: break;
+        }
+        return resp;
     }
 }

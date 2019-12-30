@@ -13,6 +13,10 @@ namespace Master
 
         public string sqlServerProd { get; set; }
 
+        public string conveynetApi { get; set; }
+
+        public string conveynetApiProd { get; set; }
+
         public string GetSqlServer ()
         {
 #if DEBUG
@@ -22,6 +26,18 @@ namespace Master
 
 #if RELEASE
             return sqlServerProd;
+#endif
+        }
+
+        public string GetConveyNetAPI()
+        {
+#if DEBUG
+            return conveynetApi;
+#endif
+
+
+#if RELEASE
+            return conveynetApiProd;
 #endif
         }
     }

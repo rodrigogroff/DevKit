@@ -3,6 +3,7 @@ using Master.Repository;
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace Master.Service
 {
@@ -51,6 +52,34 @@ namespace Master.Service
             }
 
             return strResp;
+
+            #endregion
+        }
+
+        public string DESCript(string dados, string chave = "12345678")
+        {
+            #region - code -
+
+            dados = dados.PadLeft(8, '*');
+
+            byte[] key = Encoding.ASCII.GetBytes(chave);
+            byte[] data = Encoding.ASCII.GetBytes(dados);
+
+            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+
+            des.Key = key;
+            des.Mode = CipherMode.ECB;
+
+            ICryptoTransform DESt = des.CreateEncryptor();
+            DESt.TransformBlock(data, 0, 8, data, 0);
+
+            string retorno = "";
+            for (int n = 0; n < 8; n++)
+            {
+                retorno += String.Format("{0:X2}", data[n]);
+            }
+
+            return retorno;
 
             #endregion
         }

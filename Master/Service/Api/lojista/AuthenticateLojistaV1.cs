@@ -86,7 +86,7 @@ namespace Master.Service
                         }
                     }
 
-                    loggedUser._id = lojista.i_unique.ToString();
+                    loggedUser._id = terminal.i_unique.ToString();
                     loggedUser._type = "2";
                     loggedUser.nome = lojista.st_nome;
                     loggedUser.terminal = login.terminal;

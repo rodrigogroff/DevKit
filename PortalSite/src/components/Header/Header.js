@@ -248,12 +248,17 @@ class Header extends React.Component {
                                     <DropdownMenu right className={`${s.dropdownMenu} ${s.account}`}>
                                       <DropdownItem>
                                         <NavLink href="#/app/lojista/venda">
-                                          Venda
+                                          Nova Venda
                                             </NavLink>
                                       </DropdownItem>
                                       <DropdownItem>
                                         <NavLink href="#/app/lojista/solics">
                                           Solicitações
+                                            </NavLink>
+                                      </DropdownItem>
+                                      <DropdownItem>
+                                        <NavLink href="#/app/lojista/autorizacoes">
+                                          Autorizações
                                             </NavLink>
                                       </DropdownItem>
                                       <DropdownItem>

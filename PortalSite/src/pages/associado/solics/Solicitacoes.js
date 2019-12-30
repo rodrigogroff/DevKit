@@ -8,6 +8,9 @@ import {
 	ModalHeader,
 	ModalBody,
 	ModalFooter,
+	InputGroup,
+	InputGroupAddon,
+	InputGroupText,
 	Button,
 	Label,
 	Input,
@@ -31,12 +34,18 @@ export default class AssociadoSolicitacoes extends React.Component {
 		this.loadSolics();
 	}
 
-	loadSolics = e => {
-
-		this.setState({ loading: true, error: '', aviso: '', solic: { id: 0 } });
-
+	processMoney(event) {
 		var api = new Api();
+		this.setState({ _valor: api.ValorMoney(event.target.value) })
+	}
 
+	processNumber(vlr) {
+		return new Api().ValorNum(vlr);		
+	}
+
+	loadSolics = e => {
+		this.setState({ loading: true, error: '', solic: { id: 0 } });
+		var api = new Api();
 		api.getTokenPortal('associadoSolicitacao', null).then(resp => {
 			if (resp.ok === false) {
 				this.setState({
@@ -51,18 +60,24 @@ export default class AssociadoSolicitacoes extends React.Component {
 				});
 			}
 		});
-
 	}
 
 	executeSolic = e => {
-
 		e.preventDefault();
-
-		this.setState({ loading: true, error: '', aviso: '' });
-
+		var falhou = false;
+		if (this.state._stSenha === undefined || this.state._stSenha === null)
+			falhou = true;
+		else if (this.state._stSenha.length !== 4)
+			falhou = true;
+		if (falhou === true) {
+			this.setState({ error: 'Favor informar uma senha corretamente ' + this.state._stSenha });
+			return;
+		}
+		var _solic = this.state.solic;
+		_solic.stSenha = this.state._stSenha;
+		this.setState({ loading: true, error: '', aviso: '', solic: _solic });
 		var api = new Api();
-
-		api.postTokenPortal("confirmaSolicitacao", JSON.stringify(this.state.solic)).then(resp => {
+		api.postTokenPortal("confirmaSolicitacao", JSON.stringify(_solic)).then(resp => {
 			if (resp.ok === true) {
 				this.setState({
 					loading: false,
@@ -73,15 +88,13 @@ export default class AssociadoSolicitacoes extends React.Component {
 			else {
 				this.setState({
 					loading: false,
-					alertIsOpen: true,
 					error: resp.msg
 				});
 			}
 		}).catch(err => {
 			this.setState({
 				loading: false,
-				alertIsOpen: true,
-				error: "Nao foi possivel verificar os dados de sua requisição"
+				error: err.msg
 			});
 		});
 	}
@@ -96,7 +109,23 @@ export default class AssociadoSolicitacoes extends React.Component {
 						{this.state.loading ? <div className="loader"><p className="loaderText"><i className='fa fa-spinner fa-spin'></i></p></div> : <div ></div>}
 					</li>
 				</ol>
-
+				<div align='center'>
+					<Button color="primary"
+						style={{ width: "200px" }}
+						onClick={this.loadSolics}
+						disabled={this.state.loading} >
+						{this.state.loading === true ? (
+							<span className="spinner">
+								<i className="fa fa-spinner fa-spin" />
+								&nbsp;&nbsp;&nbsp;
+											</span>
+						) : (
+								<div />
+							)}
+						Atualizar
+								</Button>
+				</div>
+				<br></br>
 				<Modal isOpen={this.state.error.length > 0} toggle={() => this.setState({ error: "" })}>
 					<ModalHeader toggle={() => this.setState({ error: "" })}>
 						Aviso do Sistema
@@ -113,7 +142,6 @@ export default class AssociadoSolicitacoes extends React.Component {
 						<Button color="primary" onClick={() => this.setState({ error: "" })}> Fechar </Button>
 					</ModalFooter>
 				</Modal>
-
 				<Modal isOpen={this.state.aviso.length > 0} toggle={() => this.setState({ aviso: "" })}>
 					<ModalHeader toggle={() => this.setState({ aviso: "" })}>
 						Aviso do Sistema
@@ -130,7 +158,6 @@ export default class AssociadoSolicitacoes extends React.Component {
 						<Button color="primary" onClick={() => this.setState({ aviso: "" })}> Fechar </Button>
 					</ModalFooter>
 				</Modal>
-
 				{
 					this.state.solic.id === 0 ? <div>
 						<br></br>
@@ -150,7 +177,7 @@ export default class AssociadoSolicitacoes extends React.Component {
 							<Widget>
 								<FormGroup row>
 									<Label for="normal-field" md={12} className="text-md-left">
-										<h4>Loja </h4>
+										<h5>Loja </h5>
 										<Input className={this.state.error_name ? "input-transparent-red" : "input-transparent"}
 											type="text"
 											id="fieldName"
@@ -166,13 +193,13 @@ export default class AssociadoSolicitacoes extends React.Component {
 											<td>
 												<FormGroup row>
 													<Label for="normal-field" md={4} className="text-md-left">
-														<h4>Valor </h4>
+														<h5>Valor </h5>
 													</Label>
 													<Col md={7}>
 														<Input className={this.state.error_name ? "input-transparent-red" : "input-transparent"}
 															type="text"
 															id="fieldName"
-															maxLength="50"
+															maxLength="10"
 															value={this.state.solic.stValor}
 															disabled
 														/>
@@ -183,13 +210,13 @@ export default class AssociadoSolicitacoes extends React.Component {
 											<td>
 												<FormGroup row>
 													<Label for="normal-field" md={4} className="text-md-left">
-														<h4>Parcelas </h4>
+														<h5>Parcelas </h5>
 													</Label>
 													<Col md={7}>
 														<Input className={this.state.error_name ? "input-transparent-red" : "input-transparent"}
 															type="text"
 															id="fieldName"
-															maxLength="50"
+															maxLength="2"
 															value={this.state.solic.nuParcelas}
 															disabled
 														/>
@@ -199,6 +226,20 @@ export default class AssociadoSolicitacoes extends React.Component {
 										</tr>
 									</tbody>
 								</table>
+								<FormGroup row>
+									<Label for="normal-field" md={12} className="text-md-left">
+										<h5>Senha Cartão</h5>
+									</Label>
+									<InputGroup className="input-group-no-border px-4">
+										<InputGroupAddon addonType="prepend">
+											<InputGroupText>
+												<i className="fa fa-lock text-white" />
+											</InputGroupText>
+										</InputGroupAddon>
+										<Input id="password-input" type="password" className="input" width='80px' maxLength="4" value={this.state._stSenha}
+											onChange={event => this.setState({ _stSenha: this.processNumber( event.target.value) })} />
+									</InputGroup>
+								</FormGroup>
 							</Widget>
 							<br></br>
 							<div align='center'>

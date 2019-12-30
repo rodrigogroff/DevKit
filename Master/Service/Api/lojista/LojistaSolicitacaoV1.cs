@@ -18,7 +18,7 @@ namespace Master.Service
             {
                 using (var db = new SqlConnection(network.GetSqlServer()))
                 {
-                    var solic = repository.ObterSolicLojista(db, Convert.ToInt64(au._id));
+                    var solic = repository.ObterSolicLojistaEmAberto(db, Convert.ToInt64(au._id));
 
                     if (solic != null)
                     {

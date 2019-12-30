@@ -15,6 +15,7 @@ import AssociadoSolicitacoes from "../../pages/associado/solics/Solicitacoes";
 
 import LojistaVenda from "../../pages/lojista/venda/venda";
 import LojistaSolicitacoes from "../../pages/lojista/solics/Solicitacoes";
+import LojistaAutorizacoes from "../../pages/lojista/autorizacoes/Autorizacoes";
 
 import s from "./Layout.module.scss";
 
@@ -48,6 +49,7 @@ export default class LayoutComponent extends React.Component {
                     <Route path="/app/associado/rede" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={AssociadoRede} />
                     <Route path="/app/lojista/venda" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={LojistaVenda} />
                     <Route path="/app/lojista/solics" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={LojistaSolicitacoes} />
+                    <Route path="/app/lojista/autorizacoes" exact mainVars={this.props.mainVars} updateMainVars={this.props.updateMainVars} component={LojistaAutorizacoes} />
                   </Switch>
                 </CSSTransition>
               </TransitionGroup>

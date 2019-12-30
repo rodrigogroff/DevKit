@@ -1,5 +1,6 @@
 ﻿using Entities.Api;
 using Entities.Api.Login;
+using Entities.Api.Lojista;
 using Entities.Database;
 using Master.Repository;
 using System;
@@ -56,7 +57,7 @@ namespace Master.Service
             #endregion
         }
 
-        public bool Exec ( LocalNetwork network, long fkLoja, ReqSolicitacaoVenda req )
+        public bool Exec ( LocalNetwork network, long fkTerminal, ReqSolicitacaoVenda req )
         {
             try
             {
@@ -68,6 +69,8 @@ namespace Master.Service
                 
                 using (var db = new SqlConnection(network.GetSqlServer()))
                 {
+                    var terminal = repository.ObterTerminal(db, fkTerminal);
+
                     var associadoPrincipal = repository.ObterCartao(db, req.empresa, req.matricula, "01");
 
                     if (associadoPrincipal == null)
@@ -145,7 +148,8 @@ namespace Master.Service
                         dtConf = null,
                         tgAberto = true,
                         fkCartao = (long) associadoPrincipal.i_unique,
-                        fkLoja = fkLoja,                        
+                        fkLoja = terminal.fk_loja,                        
+                        fkTerminal = fkTerminal,
                         vrValor = Convert.ToInt32(req.valor.Replace(".","").Replace(",","")),
                         nuParcelas = Convert.ToInt32(req.parcelas),
                     };

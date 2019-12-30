@@ -16,18 +16,21 @@ namespace Master.Repository
         T_Loja ObterLoja(SqlConnection db, long? idLoja);
         T_Empresa ObterEmpresa(SqlConnection db, string empresa);
         T_Terminal ObterTerminal(SqlConnection db, string codigo);
+        T_Terminal ObterTerminal(SqlConnection db, long id);
         List<T_Loja> ObterListaLojas(SqlConnection db, long idEmpresa, string pesquisa);
         List<T_Parcelas> ObterParcelaLista(SqlConnection db, List<long> lstFkParcela);
         List<T_Parcelas> ObterParcelaListaDeListaCartaoIgual(SqlConnection db, List<long> lstFkCartao, int nuParcela);
         List<T_Parcelas> ObterParcelaListaDeListaCartaoSuperior(SqlConnection db, List<long> lstFkCartao, int nuParcela);
         LOG_Transacoes ObterLogTransacao(SqlConnection db, long id);
+        LOG_Transacoes ObterLogTransacaoNSU(SqlConnection db, long nsu);
         List<LOG_Transacoes> ObterLogTransacaoLista(SqlConnection db, List<long> lstFkLog);
         List<LOG_Fechamento> ObterFechamentoLista(SqlConnection db, string mes, string ano, long fkEmpresa, long fkCartao);
         void InserirSolicitacaoVenda(SqlConnection db, SolicitacaoVenda tbl);
         void AtualizarSolicitacaoVenda(SqlConnection db, SolicitacaoVenda tbl);
         SolicitacaoVenda ObterSolicVendaCartao(SqlConnection db, long fkCartao);
-        SolicitacaoVenda ObterSolicLojista(SqlConnection db, long fkLoja);
+        SolicitacaoVenda ObterSolicLojistaEmAberto(SqlConnection db, long fkTerminal);
         SolicitacaoVenda ObterSolicVendaCartaoId(SqlConnection db, long id);
+        List<SolicitacaoVenda> ObterSolicitacoesLista(SqlConnection db, long fkTerminal);
     }
 
     public class DapperRepository : IDapperRepository
@@ -84,6 +87,12 @@ namespace Master.Repository
                                         where   i_unique = @id ", new { id }).FirstOrDefault();
         }
 
+        public LOG_Transacoes ObterLogTransacaoNSU(SqlConnection db, long nsu)
+        {
+            return db.Query<LOG_Transacoes>(@"select * from [LOG_Transacoes] (nolock) 
+                                        where   nu_nsu = @nsu ", new { nsu }).FirstOrDefault();
+        }
+
         public List<LOG_Transacoes> ObterLogTransacaoLista(SqlConnection db, List<long> lstFkLog)
         {
             return db.Query<LOG_Transacoes>(@"select * from [LOG_Transacoes] (nolock) 
@@ -137,8 +146,8 @@ namespace Master.Repository
 
         public void InserirSolicitacaoVenda(SqlConnection db, SolicitacaoVenda tbl)
         {
-            db.Execute(@"insert into [SolicitacaoVenda] (fkCartao,fkLoja,vrValor,nuParcelas,tgAberto,dtSolic,dtConf)
-                        values (@fkCartao,@fkLoja,@vrValor,@nuParcelas,@tgAberto,@dtSolic,@dtConf)", 
+            db.Execute(@"insert into [SolicitacaoVenda] (fkCartao,fkLoja,vrValor,nuParcelas,tgAberto,dtSolic,dtConf,fkTerminal,fkLogTrans)
+                        values (@fkCartao,@fkLoja,@vrValor,@nuParcelas,@tgAberto,@dtSolic,@dtConf,@fkTerminal,@fkLogTrans)", 
                         new { 
                             tbl.fkCartao,
                             tbl.fkLoja,
@@ -146,7 +155,9 @@ namespace Master.Repository
                             tbl.nuParcelas,
                             tbl.tgAberto,
                             tbl.dtSolic,
-                            tbl.dtConf 
+                            tbl.dtConf,
+                            tbl.fkTerminal,
+                            tbl.fkLogTrans,
                         } );
         }
 
@@ -159,7 +170,9 @@ namespace Master.Repository
                                     nuParcelas = @nuParcelas, 
                                     tgAberto = @tgAberto, 
                                     dtSolic = @dtSolic,
-                                    dtConf = @dtConf
+                                    dtConf = @dtConf,
+                                    fkTerminal = @fkTerminal,
+                                    fkLogTrans = @fkLogTrans
                                 where id = @id",
                         new
                         {
@@ -171,6 +184,8 @@ namespace Master.Repository
                             tbl.tgAberto,
                             tbl.dtSolic,
                             tbl.dtConf,
+                            tbl.fkTerminal,
+                            tbl.fkLogTrans,
                         });
         }
 
@@ -189,12 +204,24 @@ namespace Master.Repository
                                                 FirstOrDefault();
         }
 
-        public SolicitacaoVenda ObterSolicLojista(SqlConnection db, long fkLoja)
+        public SolicitacaoVenda ObterSolicLojistaEmAberto(SqlConnection db, long fkTerminal)
         {
             return db.Query<SolicitacaoVenda>(@"select * from [SolicitacaoVenda] (nolock) 
-                                                where fkLoja = @fkLoja and tgAberto = 1 
-                                                order by dtSolic desc", new { fkLoja }).
+                                                where fkTerminal = @fkTerminal and tgAberto = 1 
+                                                order by dtSolic desc", new { fkTerminal }).
                                                 FirstOrDefault();
+        }
+
+        public T_Terminal ObterTerminal(SqlConnection db, long id)
+        {
+            return db.Query<T_Terminal>(@"select * from [T_Terminal] (nolock) 
+                                        where   i_unique = @id ", new { id }).FirstOrDefault();
+        }
+
+        public List<SolicitacaoVenda> ObterSolicitacoesLista(SqlConnection db, long fkTerminal)
+        {
+            return db.Query<SolicitacaoVenda>(@"    select * from [SolicitacaoVenda] (nolock) 
+                                                    where fkTerminal = @fkTerminal order by dtSolic desc", new { fkTerminal }).ToList();
         }
     }
 }

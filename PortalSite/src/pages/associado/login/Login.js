@@ -23,7 +23,6 @@ export default class Login extends React.Component {
 
   state = {
     loading: false,
-    alertIsOpen: false,
     redirectDashboard: false,
     _empresa: "",
     _matricula: "",
@@ -78,16 +77,14 @@ export default class Login extends React.Component {
         } else {
           api.cleanLogin();
           this.setState({
-            loading: false,
-            alertIsOpen: true,
+            loading: false,            
             error: resp.msg
           });
         }
       })
       .catch(err => {
         this.setState({
-          loading: false,
-          alertIsOpen: true,
+          loading: false,          
           error: "Nao foi possivel verificar os dados de sua requisição"
         });
       });

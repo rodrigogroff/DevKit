@@ -43,6 +43,11 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('auditoria', { url: '/dba/auditoria', templateUrl: 'app/dba/dba_auditoria.html', controller: 'DBAAuditoriaController' })
             .state('empresas', { url: '/dba/empresas', templateUrl: 'app/dba/empresa/listingEmpresas.html', controller: 'ListingEmpresasController' })
             .state('novolote', { url: '/dba/lote', templateUrl: 'app/dba/lotes/novolote.html', controller: 'NovoLoteController' })
+
+            .state('parceiros', { url: '/dba/parceiros', templateUrl: 'app/dba/parceiros/listingParceiros.html', controller: 'ListingParceirosController' })
+            .state('parceiro', { url: '/dba/parceiro/:id', templateUrl: 'app/dba/parceiros/parceiro.html', controller: 'ParceiroController' })
+            .state('novoparceiro', { url: '/dba/parceiro', templateUrl: 'app/dba/parceiros/parceiro.html', controller: 'ParceiroController' })
+            
             .state('dbaUsuarios', { url: '/dba/usuarios', templateUrl: 'app/dba/dba_usuarios.html', controller: 'DBAListUsuariosController' })
             .state('usuario', { url: '/dba/usuario/:id', templateUrl: 'app/dba/dbaUsuario.html', controller: 'DBAEditUsuarioController' })
             .state('lote', { url: '/dba/lote/:id', templateUrl: 'app/dba/lotes/lote.html', controller: 'LoteController' })

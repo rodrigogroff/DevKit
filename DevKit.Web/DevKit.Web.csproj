@@ -266,6 +266,10 @@
     <Content Include="app\dba\lotes\novolote.js" />
     <Content Include="app\dba\lotes\listingLotes.html" />
     <Content Include="app\dba\lotes\listingLotes.js" />
+    <Content Include="app\dba\parceiros\parceiro.html" />
+    <Content Include="app\dba\parceiros\parceiro.js" />
+    <Content Include="app\dba\parceiros\listingParceiros.html" />
+    <Content Include="app\dba\parceiros\listingParceiros.js" />
     <Content Include="app\emissora\altCota.html" />
     <Content Include="app\emissora\altSegVia.html" />
     <Content Include="app\emissora\altDesbloq.html" />
@@ -729,6 +733,7 @@
     <Compile Include="proc\Domains\DBA\EmpresaDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ParceiroCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaMensagensCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\ParceiroDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\TerminalLojaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\EmpresaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojaCtrl.cs" />

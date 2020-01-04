@@ -1,12 +1,12 @@
 ﻿using LinqToDB;
 using System.Linq;
-using System.Collections.Generic;
 using System.Web.Http;
 using System.Net;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
-    public class ParceiroController : ApiControllerBase
+    public class ParceiroDBAController : ApiControllerBase
     {
         public IHttpActionResult Get()
         {
@@ -27,21 +27,10 @@ namespace DevKit.Web.Controllers
 
             query = query.OrderBy(y => y.stNome);
 
-            var lst = new List<EmpresaItem>();
-
-            foreach (var item in query.Skip(skip).Take(take).ToList())
-            {
-                lst.Add(new EmpresaItem
-                {
-                    id = item.id.ToString(),
-                    stName = item.stNome
-                });
-            }
-
             return Ok(new
             {
                 count = query.Count(),
-                results = lst
+                results = query.Skip(skip).Take(take).ToList()
             });
         }
 
@@ -58,11 +47,29 @@ namespace DevKit.Web.Controllers
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            return Ok(new EmpresaItem
-            {
-                id = mdl.id.ToString(),
-                stName = mdl.stNome
-            });
+            return Ok(mdl);
+        }
+
+        public IHttpActionResult Post(Parceiro mdl)
+        {
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            if (!mdl.Create(db, ref apiError))
+                return BadRequest(apiError);
+
+            return Ok();
+        }
+
+        public IHttpActionResult Put(long id, Parceiro mdl)
+        {
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            if (!mdl.Update(db, ref apiError))
+                return BadRequest(apiError);
+
+            return Ok();
         }
     }
 }

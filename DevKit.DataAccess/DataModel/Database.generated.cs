@@ -140,6 +140,17 @@ namespace DataModel
     {
         [PrimaryKey, Identity] public long id { get; set; }
         [Column, Nullable] public string stNome { get; set; }
+        [Column, Nullable] public DateTime? dtCadastro { get; set; }
+        [Column, Nullable] public string stTelefone { get; set; }
+        [Column, Nullable] public string stCelular { get; set; }
+        [Column, Nullable] public string stResp { get; set; }
+        [Column, Nullable] public string stSocial { get; set; }
+        [Column, Nullable] public string stCNPJ { get; set; }
+        [Column, Nullable] public string stEstado { get; set; }
+        [Column, Nullable] public string stCidade { get; set; }
+        [Column, Nullable] public string stEndereco { get; set; }
+        [Column, Nullable] public string stCep { get; set; }
+        [Column, Nullable] public string stObs { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "UsuarioParceiro")]

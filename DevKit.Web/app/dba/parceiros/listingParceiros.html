@@ -40,10 +40,18 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
+                            <th>CNPJ</th>
+                            <th>Telefone</th>
+                            <th>Celular</th>
+                            <th>Responsável</th>
                         </tr>
                     </thead>
                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                         <td>{{ mdl.stNome }}</td>
+                        <td>{{ mdl.stCNPJ }}</td>
+                        <td>{{ mdl.stTelefone }}</td>
+                        <td>{{ mdl.stCelular }}</td>
+                        <td>{{ mdl.stResp }}</td>
                     </tr>
                 </table>
                 <br />

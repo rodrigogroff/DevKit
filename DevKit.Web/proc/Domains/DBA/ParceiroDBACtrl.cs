@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Net;
 using DataModel;
+using System;
 
 namespace DevKit.Web.Controllers
 {
@@ -47,6 +48,8 @@ namespace DevKit.Web.Controllers
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
+            mdl.sdtCadastro = ObtemData(mdl.dtCadastro);
+
             return Ok(mdl);
         }
 
@@ -54,6 +57,8 @@ namespace DevKit.Web.Controllers
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
+
+            mdl.dtCadastro = DateTime.Now;
 
             if (!mdl.Create(db, ref apiError))
                 return BadRequest(apiError);

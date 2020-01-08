@@ -4,6 +4,8 @@ namespace DataModel
 {
     public partial class Parceiro
     {
+        public string sdtCadastro { get; set; }
+
         public bool Create(AutorizadorCNDB db, ref string apiError)
         {
             try

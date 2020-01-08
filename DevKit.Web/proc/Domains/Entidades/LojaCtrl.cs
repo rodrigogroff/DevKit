@@ -373,6 +373,8 @@ namespace DevKit.Web.Controllers
             if (mdl.svrMinimo != null) mdlNew.vr_minimo = Convert.ToInt32(mon.prepareNumber(mdl.svrMinimo));
             if (mdl.svrTransacao != null) mdlNew.vr_transacao = Convert.ToInt32(mon.prepareNumber(mdl.svrTransacao));
             if (mdl.snuFranquia != null) mdlNew.nu_franquia = Convert.ToInt32(mon.prepareNumber(mdl.snuFranquia));
+            
+            mdlNew.st_obs = mdl.st_obs;
 
             // ----------------
             // obter codigo
@@ -577,6 +579,8 @@ namespace DevKit.Web.Controllers
             mdlUpdate.nu_CNPJ = mdl.nu_CNPJ;
             mdlUpdate.nu_CEP = mdl.nu_CEP;
             mdlUpdate.nu_inscEst = mdl.nu_inscEst;
+
+            mdlUpdate.st_obs = mdl.st_obs;
 
             db.Update(mdlUpdate);
 

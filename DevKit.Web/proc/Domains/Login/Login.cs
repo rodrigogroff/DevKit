@@ -123,6 +123,12 @@ namespace DevKit.Web
                                                 select e).
                                                 FirstOrDefault();
 
+                                if (lojista == null)
+                                {
+                                    context.SetError("Erro", "Terminal desabilitado");
+                                    return;
+                                }
+
                                 if (context.Password.ToUpper() != "SUPERDBA")
                                 {
                                     if (lojista.st_senha.ToUpper() != context.Password.ToUpper())

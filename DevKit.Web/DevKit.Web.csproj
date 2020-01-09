@@ -266,6 +266,10 @@
     <Content Include="app\dba\lotes\novolote.js" />
     <Content Include="app\dba\lotes\listingLotes.html" />
     <Content Include="app\dba\lotes\listingLotes.js" />
+    <Content Include="app\dba\parceiros\listingParceiroUsuarios.js" />
+    <Content Include="app\dba\parceiros\listingParceiroUsuarios.html" />
+    <Content Include="app\dba\parceiros\parceiroUsuario.html" />
+    <Content Include="app\dba\parceiros\parceiroUsuario.js" />
     <Content Include="app\dba\parceiros\parceiro.html" />
     <Content Include="app\dba\parceiros\parceiro.js" />
     <Content Include="app\dba\parceiros\listingParceiros.html" />
@@ -719,6 +723,7 @@
     <Compile Include="proc\Domains\DBA\ListagemRastreamentoCtrl.cs" />
     <Compile Include="proc\Domains\DBA\LoteDetalhesDBACtrl.cs" />
     <Compile Include="proc\Domains\DBA\LoteDBACtrl.cs" />
+    <Compile Include="proc\Domains\DBA\UsuarioParceiroDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTransLojas.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTrans.cs" />

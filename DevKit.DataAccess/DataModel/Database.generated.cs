@@ -163,6 +163,8 @@ namespace DataModel
         [Column, Nullable] public int nuTipo { get; set; }
         [Column, Nullable] public long fkParceiro { get; set; }
         [Column, Nullable] public bool bAtivo { get; set; }
+        [Column, Nullable] public DateTime? dtCadastro { get; set; }
+        [Column, Nullable] public DateTime? dtLastLogin { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "T_SaldoConvenio")]

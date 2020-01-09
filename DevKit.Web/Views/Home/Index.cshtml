@@ -444,6 +444,14 @@
                     <ul id="side-nav" class="side-nav" style="color:black">
                         <li class="panel">
                             <a class="accordion-toggle " data-toggle="collapse"
+                               data-parent="#side-nav" href="#forms-collapseSystemAdmin"><span class="name">Administração</span></a>
+                            <ul id="forms-collapseSystemAdmin" class="panel-collapse collapse">
+                                <li><a ui-sref="parceiros"><span>Parceiros</span></a></li>
+                                <li><a ui-sref="parceirousuarios"><span>Usuários</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="panel">
+                            <a class="accordion-toggle " data-toggle="collapse"
                                data-parent="#side-nav" href="#forms-collapseEmiss"><span class="name">Emissão Cartões</span></a>
                             <ul id="forms-collapseEmiss" class="panel-collapse collapse">
                                 <li><a ui-sref="novolote"><span>Novo lote</span></a></li>
@@ -467,15 +475,7 @@
                                 <li><a ui-sref="admoperslanctx"><span>Despesas Admin.</span></a></li>
                                 <li><a ui-sref="empcancelamento"><span>Cancela NSU</span></a></li>
                             </ul>
-                        </li>
-                        <li class="panel">
-                            <a class="accordion-toggle " data-toggle="collapse"
-                               data-parent="#side-nav" href="#forms-collapseSystemAdmin"><span class="name">Administração</span></a>
-                            <ul id="forms-collapseSystemAdmin" class="panel-collapse collapse">
-                                <li><a ui-sref="parceiros"><span>Parceiros</span></a></li>
-                                <li><a ui-sref=""><span>Usuários</span></a></li>                                
-                            </ul>
-                        </li>
+                        </li>                        
                         <li class="panel">
                             <a class="accordion-toggle " data-toggle="collapse"
                                data-parent="#side-nav" href="#forms-collapsePortadores"><span class="name">Portadores</span></a>

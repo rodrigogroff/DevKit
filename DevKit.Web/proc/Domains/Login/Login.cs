@@ -400,6 +400,10 @@ namespace DevKit.Web
                                     context.SetError("Erro", "Credenciais Invalidas");
                                     return;
                                 }
+                                
+                                tUser.dtLastLogin = DateTime.Now;
+
+                                db.Update(tUser);
 
                                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 

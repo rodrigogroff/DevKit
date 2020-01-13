@@ -276,10 +276,10 @@ namespace DevKit.Web.Controllers
             {
                 var idParceiro = Convert.ToInt64(userLoggedParceiroId);
 
-                return db.T_Empresa.
-                    Where(y => y.fkParceiro == idParceiro).
-                    Select(y => (long)y.i_unique).
-                    ToList();
+                if (userLoggedParceiroId != "1")
+                    return db.T_Empresa.Where(y => y.fkParceiro == idParceiro).Select(y => (long)y.i_unique).ToList();
+                else
+                    return db.T_Empresa.Select(y => (long)y.i_unique).ToList();
             }
             catch (SystemException ex)
             {
@@ -294,10 +294,10 @@ namespace DevKit.Web.Controllers
             {
                 var idParceiro = Convert.ToInt64(userLoggedParceiroId);
 
-                return db.T_Empresa.
-                    Where(y => y.fkParceiro == idParceiro).
-                    Select(y => y.st_empresa).
-                    ToList();
+                if (userLoggedParceiroId != "1")
+                    return db.T_Empresa.Where(y => y.fkParceiro == idParceiro).Select(y => y.st_empresa).ToList();
+                else
+                    return db.T_Empresa.Select(y => y.st_empresa).ToList();
             }
             catch (SystemException ex)
             {

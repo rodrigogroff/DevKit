@@ -15,7 +15,8 @@ angular.module('app.controllers').controller('ListingParceiroUsuariosController'
                 var opcoes = {
                     skip: skip,
                     take: take,
-                    busca: $scope.campos.codigo,                    
+                    busca: $scope.campos.codigo,
+                    emp: $scope.campos.emp,
                 };
 
                 Api.UsuarioParceiroDBA.listPage(opcoes, function (data) {

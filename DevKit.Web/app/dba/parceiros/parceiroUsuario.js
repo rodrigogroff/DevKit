@@ -10,7 +10,7 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
                 if (id > 0) {
                     $scope.loading = true;
 
-                    Api.ParceiroDBA.get({ id: id }, function (data) {
+                    Api.UsuarioParceiroDBA.get({ id: id }, function (data) {
                         $scope.viewModel = data;
                         $scope.loading = false;
                     },
@@ -38,14 +38,15 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
 
                 $scope.msgErro = '';
 
-                $scope.st_fantasia_fail = invalidCheck($scope.viewModel.stNome);                
+                $scope.st_email_fail = invalidCheck($scope.viewModel.stEmail);
+                $scope.st_nome_fail = invalidCheck($scope.viewModel.stNome);
 
-                if ($scope.st_fantasia_fail === false )
+                if ($scope.st_email_fail === false && $scope.st_nome_fail === false )
                 {
                     if (id > 0) {
                         $scope.viewModel.updateCommand = "entity";
 
-                        Api.ParceiroDBA.update({ id: id }, $scope.viewModel, function (data) {
+                        Api.UsuarioParceiroDBA.update({ id: id }, $scope.viewModel, function (data) {
                             toastr.success('Dados atualizados!', 'Sucesso');
                             $scope.modalConf = false;
                         },
@@ -54,7 +55,7 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
                             });
                     }
                     else {
-                        Api.ParceiroDBA.add($scope.viewModel, function (data) {
+                        Api.UsuarioParceiroDBA.add($scope.viewModel, function (data) {
                             toastr.success('Parceiro adicionado!', 'Sucesso');
                             $scope.list();
                         },
@@ -73,7 +74,7 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
             };
 
             $scope.list = function () {
-                $state.go('parceiros');
+                $state.go('parceirousuarios');
             };
             
             function init()
@@ -82,6 +83,8 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
                     {
                         
                     };
+
+                $scope.selectTipoUsuario = ngSelects.obterConfiguracao(Api.TipoUsuario, {});
 
                 loadEntity();
             }

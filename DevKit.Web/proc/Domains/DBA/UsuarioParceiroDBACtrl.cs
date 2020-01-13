@@ -36,6 +36,7 @@ namespace DevKit.Web.Controllers
                 item._sbAtivo = item.bAtivo == true ? "Sim" : "Não";
                 item._dtCadastro = ObtemData(item.dtCadastro);
                 item._dtLastLogin = ObtemData(item.dtLastLogin);
+                item._tipo = item.nuTipo == 1 ? "Admin" : "Operador";
             }
 
             return Ok(new
@@ -50,7 +51,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = (from e in db.Parceiro
+            var mdl = (from e in db.UsuarioParceiro
                        where e.id == id
                        select e).
                        FirstOrDefault();
@@ -58,7 +59,7 @@ namespace DevKit.Web.Controllers
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            mdl.sdtCadastro = ObtemData(mdl.dtCadastro);
+            mdl._dtCadastro = ObtemData(mdl.dtCadastro);
 
             return Ok(mdl);
         }
@@ -67,8 +68,6 @@ namespace DevKit.Web.Controllers
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
-
-            mdl.dtCadastro = DateTime.Now;
 
             if (!mdl.Create(db, ref apiError))
                 return BadRequest(apiError);

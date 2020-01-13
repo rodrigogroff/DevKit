@@ -26,6 +26,17 @@
                         <button type="submit" class="btn btn-primary" ng-click="search()">Pesquisa</button>
                     </td>
                 </tr>
+                <!--<tr height="36px">
+                    <td ></td>
+                    <td ><b>Empresa</b></td>
+                    <td >
+                        <input type="text" focus="true" class="form-control input-transparent" ng-model="campos.emp" />
+                    </td>
+                    <td ></td>
+                    <td >
+                        
+                    </td>
+                </tr>-->
                 <tr height="22px"> </tr>
             </table>
             <div ng-show="list.length == 0">
@@ -41,6 +52,7 @@
                         <tr>
                             <th>Empresa</th>
                             <th>Nome</th>
+                            <th>Tipo</th>
                             <th>Email</th>
                             <th>Ativo</th>
                             <th>Dt. Cadastro</th>
@@ -50,6 +62,7 @@
                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                         <td>{{ mdl._stParceiro }}</td>
                         <td>{{ mdl.stNome }}</td>
+                        <td>{{ mdl._tipo }}</td>
                         <td>{{ mdl.stEmail }}</td>
                         <td>{{ mdl._sbAtivo }}</td>
                         <td>{{ mdl._dtCadastro }}</td>

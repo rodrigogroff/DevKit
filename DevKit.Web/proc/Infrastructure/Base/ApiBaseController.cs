@@ -13,6 +13,8 @@ using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Collections.Generic;
+using System.Net.Mail;
+using System.Text;
 
 namespace DevKit.Web.Controllers
 {
@@ -106,6 +108,24 @@ namespace DevKit.Web.Controllers
 
                 var id = identity.Claims.
                          Where(c => c.Type == "IdUsuario").
+                         Select(c => c.Value).
+                         SingleOrDefault();
+
+                if (id != null)
+                    return Convert.ToInt32(id);
+                else
+                    return null;
+            }
+        }
+
+        public int? parceiroIdLoggedUsuario
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+                var id = identity.Claims.
+                         Where(c => c.Type == "parceiro").
                          Select(c => c.Value).
                          SingleOrDefault();
 
@@ -451,6 +471,32 @@ namespace DevKit.Web.Controllers
             };
 
             return result;
+        }
+
+        [NonAction]
+        public void SendEmail(string assunto, string texto, string email)
+        {
+            var param_usuario = "conveynet@conveynet.com.br";
+
+            using (var client = new SmtpClient
+            {
+                Port = 587,
+                Host = "smtp.conveynet.com.br",
+                EnableSsl = false,
+                Timeout = 10000,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(param_usuario, "c917800")
+            })
+            {
+                var mm = new MailMessage(param_usuario, email, assunto, texto)
+                {
+                    BodyEncoding = UTF8Encoding.UTF8,
+                    DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
+                };
+
+                client.Send(mm);
+            }
         }
     }
 }

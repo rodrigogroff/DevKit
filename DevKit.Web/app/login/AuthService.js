@@ -28,7 +28,8 @@ function ($http, $q)
                     nameUser: response.nameUser,
                     m1: response.m1,
                     m2: response.m2,
-                    tipo: response.tipo
+                    tipo: response.tipo,
+                    parceiro: response.parceiro
                 }));
 
             _authentication.isAuth = true;
@@ -36,6 +37,7 @@ function ($http, $q)
             _authentication.m1 = response.m1;
             _authentication.m2 = response.m2;
             _authentication.tipo = loginData.tipo;
+            _authentication.parceiro = response.parceiro;
 
             deferred.resolve(response);
 
@@ -57,6 +59,7 @@ function ($http, $q)
         _authentication.m1 = '';
         _authentication.m2 = '';
         _authentication.tipo = '';
+        _authentication.parceiro = '';
     };
 
     var _fillAuthData = function () {
@@ -67,6 +70,7 @@ function ($http, $q)
             _authentication.m1 = authData.m1;
             _authentication.m2 = authData.m2;
             _authentication.tipo = authData.tipo;
+            _authentication.parceiro = authData.parceiro;
         }
     };
 	

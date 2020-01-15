@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('ListingParceiroUsuariosController',
-    ['$scope',  '$state', 'Api', 
-        function ($scope,  $state, Api) {
+    ['$scope', '$state', 'Api', 'AuthService', 'ngSelects',
+        function ($scope, $state, Api, AuthService, ngSelects ) {
             $scope.loading = false;
 
             $scope.search = function () {
@@ -16,7 +16,7 @@ angular.module('app.controllers').controller('ListingParceiroUsuariosController'
                     skip: skip,
                     take: take,
                     busca: $scope.campos.codigo,
-                    emp: $scope.campos.emp,
+                    fkParceiro: $scope.campos.fkParceiro,
                 };
 
                 Api.UsuarioParceiroDBA.listPage(opcoes, function (data) {
@@ -39,9 +39,17 @@ angular.module('app.controllers').controller('ListingParceiroUsuariosController'
             };
 
             function init() {
+
+                $scope.selectParceiro = ngSelects.obterConfiguracao(Api.Parceiro, {});
+
+                AuthService.fillAuthData();
+
+                $scope.authentication = AuthService.authentication;
+
                 $scope.campos = {
-                    codigo: ''
-                };                
+                    codigo: '',
+                    fkParceiro: AuthService.authentication.parceiro
+                };           
             }
 
             init();

@@ -14,6 +14,7 @@ namespace DevKit.Web.Controllers
             var busca = Request.GetQueryStringValue("busca");
             var skip = Request.GetQueryStringValue<int>("skip");
             var take = Request.GetQueryStringValue<int>("take");
+            var fkParceiro = Request.GetQueryStringValue<int?>("fkParceiro");
 
             if (take == 0)
                 take = 50;
@@ -21,7 +22,9 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var query = (from e in db.UsuarioParceiro select e);
+            var query =  (  from e in db.UsuarioParceiro
+                            where e.fkParceiro == fkParceiro || fkParceiro == null
+                            select e);
 
             if (!string.IsNullOrEmpty(busca))
                 query = query.Where(y => y.stNome.Contains(busca));
@@ -69,10 +72,28 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            mdl.stSenha = GetRandomString(6);
+
+            SendEmail("ConveyNET - Criação de usuário", 
+                      "Bem-vindo ao Sistema ConveyNET.\n\nSua senha inicial: " + mdl.stSenha + "\n\n" + DateTime.Now.ToString(), 
+                      mdl.stEmail);
+
             if (!mdl.Create(db, ref apiError))
                 return BadRequest(apiError);
 
             return Ok();
+        }
+
+        [NonAction]
+        private string GetRandomString(int length)
+        {
+            var rand = new Random();
+            var ret = "";
+
+            for (int i = 0; i < length; i++)
+                ret += rand.Next(0, 9);
+
+            return ret;
         }
 
         public IHttpActionResult Put(long id, UsuarioParceiro mdl)

@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('ParceiroUsuarioController',
-    ['$scope', '$state', '$stateParams', 'Api', 'ngSelects',
-        function ($scope, $state, $stateParams, Api, ngSelects) {
+    ['$scope', '$state', 'AuthService', '$stateParams', 'Api', 'ngSelects',
+        function ($scope, $state, AuthService, $stateParams, Api, ngSelects) {
             $scope.loading = false;
 
             var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
@@ -20,7 +20,13 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
                         });
                 }
                 else {
-                    $scope.viewModel = { bActive: true, nuYearBirth: 1980 };
+                    AuthService.fillAuthData();
+
+                    $scope.viewModel =
+                    {
+                        bAtivo: true,                        
+                        fkParceiro: AuthService.authentication.parceiro
+                    };
                 }
             }
 
@@ -56,7 +62,7 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
                     }
                     else {
                         Api.UsuarioParceiroDBA.add($scope.viewModel, function (data) {
-                            toastr.success('Parceiro adicionado!', 'Sucesso');
+                            toastr.success('Usuário adicionado!', 'Sucesso');
                             $scope.list();
                         },
                             function (response) {
@@ -85,6 +91,7 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
                     };
 
                 $scope.selectTipoUsuario = ngSelects.obterConfiguracao(Api.TipoUsuario, {});
+                $scope.selectParceiro = ngSelects.obterConfiguracao(Api.Parceiro, {});
 
                 loadEntity();
             }

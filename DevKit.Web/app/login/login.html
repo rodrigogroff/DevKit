@@ -543,7 +543,6 @@
                 <form id="validate" style="width:400px;">
                     <fieldset>
                         <br /><br />
-                        <br />
                         <div style="padding-left:0px">
                             <img src='../../images/logo.png' height="120px" /><br />
                         </div>
@@ -582,6 +581,10 @@
                                 <td colspan="3" align="center">
                                     <button type="submit" id="btn-login" class="btn btn-block btn-lg btn-primary" ng-click="login()">
                                         <div ng-show="!loading">Efetuar login </div> <div ng-show="loading">Processando... <i class="fa fa-spinner fa-spin"></i></div>
+                                    </button>
+
+                                    <button type="submit" id="btn-login" class="btn btn-block btn-danger" ng-click="esqueci()">
+                                        <div ng-show="!loadingSenha">Esqueci minha senha </div> <div ng-show="loadingSenha">Processando... <i class="fa fa-spinner fa-spin"></i></div>
                                     </button>
                                 </td>
                             </tr>

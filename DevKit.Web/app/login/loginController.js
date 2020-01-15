@@ -24,13 +24,36 @@ angular.module('app.controllers').controller('LoginController',
                     $rootScope.tipo = $location.search().tipo;
             }
 
+            $scope.esqueci = function () {
+                $scope.loadingSenha = true;
+
+                if ($scope.loginData.userName === '') {
+                    $scope.loading = false;
+                    $scope.mensagem = 'Favor entre com um email válido';
+                }
+                else {
+                    var opcoes = {
+                        email: $scope.loginData.userName,
+                    };
+
+                    Api.UsuarioParceiroDBAResetSenha.listPage(opcoes, function (data) {
+                        $scope.loadingSenha = false;
+                        $scope.mensagem = 'Email enviado com sua nova senha';
+                    },
+                        function (response) {
+                            $scope.loadingSenha = false;
+                            $scope.mensagem = 'Email não registrado no sistema';                            
+                        });
+                }
+            };
+
             $scope.login = function () {
                 $scope.loading = true;
 
                 if ($scope.loginData.userName == '' ||
                     $scope.loginData.password == '') {
                     $scope.loading = false;
-                    $scope.mensagem = 'Please enter valid credentials';
+                    $scope.mensagem = 'Favor entre com um email válido';
                 }
                 else {
                     var lData = {};

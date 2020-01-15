@@ -724,6 +724,7 @@
     <Compile Include="proc\Domains\DBA\ListagemRastreamentoCtrl.cs" />
     <Compile Include="proc\Domains\DBA\LoteDetalhesDBACtrl.cs" />
     <Compile Include="proc\Domains\DBA\LoteDBACtrl.cs" />
+    <Compile Include="proc\Domains\DBA\UsuarioParceiroDBAResetSenhaCtrl.cs" />
     <Compile Include="proc\Domains\DBA\UsuarioParceiroDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTransLojas.cs" />

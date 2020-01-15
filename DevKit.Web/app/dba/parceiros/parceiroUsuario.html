@@ -33,7 +33,6 @@
                                 </tr>
                             </thead>
                             <tr height="22px"></tr>
-
                             <tr height="40px">
                                 <td></td>
                                 <td>
@@ -41,15 +40,14 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                    <input type="hidden" 
-                                           style="width:100%" 
-                                           data-placeholder="(Selecione)" 
-                                           ui-select2="selectParceiro" 
-                                           ng-model="viewModel.fkParceiro" 
+                                    <input type="hidden"
+                                           style="width:100%"
+                                           data-placeholder="(Selecione)"
+                                           ui-select2="selectParceiro"
+                                           ng-model="viewModel.fkParceiro"
                                            ng-disabled="viewModel.fkParceiro !== '1'" />
                                 </td>
                             </tr>
-
                             <tr height="40px" ng-if="viewModel._dtCadastro.length > 0">
                                 <td></td>
                                 <td>
@@ -84,7 +82,28 @@
                                     <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.stNome">
                                 </td>
                             </tr>
-
+                            <tr height="40px" ng-if="authentication.parceiro === '1'">
+                                <td></td>
+                                <td>
+                                    <b>Senha</b>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="200" ng-model="viewModel.stSenha">
+                                </td>
+                            </tr>
+                            <tr height="40px">
+                                <td></td>
+                                <td>
+                                    <b>Tipo</b>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger" ng-show="st_tipo_fail">!</button>
+                                </td>
+                                <td>
+                                    <input type="hidden" style="width:100%" data-placeholder="(Selecione)" ui-select2="selectTipoUsuario" ng-model="viewModel.nuTipo" />
+                                </td>
+                            </tr>
                             <tr height="40px">
                                 <td></td>
                                 <td>
@@ -97,19 +116,6 @@
                                     <input type="checkbox" ng-model="viewModel.bAtivo" />
                                 </td>
                             </tr>
-
-                            <tr height="40px">
-                                <td></td>
-                                <td>
-                                    <b>Tipo</b>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <input type="hidden" style="width:100%" data-placeholder="(Selecione)" ui-select2="selectTipoUsuario" ng-model="viewModel.nuTipo" />
-                                </td>
-                            </tr>
-
                             <tr height="46px"></tr>
                         </table>
                     </div>

@@ -7,6 +7,9 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
             var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
             function loadEntity() {
+
+                AuthService.fillAuthData();
+
                 if (id > 0) {
                     $scope.loading = true;
 
@@ -18,10 +21,11 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
                             if (response.status === 404) { toastr.error('Invalid ID', 'Erro'); }
                             $scope.list();
                         });
-                }
-                else {
-                    AuthService.fillAuthData();
 
+                    $scope.authentication = AuthService.authentication;                    
+                }
+                else
+                {
                     $scope.viewModel =
                     {
                         bAtivo: true,                        
@@ -46,8 +50,9 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
 
                 $scope.st_email_fail = invalidCheck($scope.viewModel.stEmail);
                 $scope.st_nome_fail = invalidCheck($scope.viewModel.stNome);
+                $scope.st_tipo_fail = invalidCheck($scope.viewModel.nuTipo);
 
-                if ($scope.st_email_fail === false && $scope.st_nome_fail === false )
+                if ($scope.st_email_fail === false && $scope.st_nome_fail === false && $scope.st_tipo_fail === false)
                 {
                     if (id > 0) {
                         $scope.viewModel.updateCommand = "entity";

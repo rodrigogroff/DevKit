@@ -49,6 +49,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('parceirousuarios', { url: '/dba/parceirousuarios', templateUrl: 'app/dba/parceiros/listingParceiroUsuarios.html', controller: 'ListingParceiroUsuariosController' })
             .state('parceirousuario', { url: '/dba/parceirousuario/:id', templateUrl: 'app/dba/parceiros/parceiroUsuario.html', controller: 'ParceiroUsuarioController' })
             .state('novoparceirousuario', { url: '/dba/parceirousuario', templateUrl: 'app/dba/parceiros/parceiroUsuario.html', controller: 'ParceiroUsuarioController' })            
+            .state('parceirousuariotrocasenha', { url: '/dba/parceirousuariotrocasenha', templateUrl: 'app/dba/parceiros/parceiroUsuarioTrocaSenha.html', controller: 'ParceiroUsuarioTrocaSenhaController' })        
             .state('dbaUsuarios', { url: '/dba/usuarios', templateUrl: 'app/dba/dba_usuarios.html', controller: 'DBAListUsuariosController' })
             .state('usuario', { url: '/dba/usuario/:id', templateUrl: 'app/dba/dbaUsuario.html', controller: 'DBAEditUsuarioController' })
             .state('lote', { url: '/dba/lote/:id', templateUrl: 'app/dba/lotes/lote.html', controller: 'LoteController' })

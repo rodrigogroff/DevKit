@@ -62,6 +62,9 @@ namespace DevKit.Web.Controllers
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
+            if (this.userLoggedParceiroId != "1")
+                mdl.stSenha = "";
+
             mdl._dtCadastro = ObtemData(mdl.dtCadastro);
 
             return Ok(mdl);
@@ -101,8 +104,26 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            if (!mdl.Update(db, ref apiError))
-                return BadRequest(apiError);
+            if (mdl.updateCommand == "trocaSenha")
+            {
+                var m = (from e in db.UsuarioParceiro
+                         where e.id == this.userIdLoggedUsuario
+                         select e).
+                        FirstOrDefault();
+
+                m.stSenha = mdl._novaSenha;
+
+                db.Update(m);
+            }
+            else
+            {
+                if (this.userLoggedParceiroId != "1")
+                    mdl.stSenha = db.UsuarioParceiro.FirstOrDefault(y => y.id == mdl.id).stSenha;
+
+                if (!mdl.Update(db, ref apiError))
+                    return BadRequest(apiError);
+            }
+            
 
             return Ok();
         }

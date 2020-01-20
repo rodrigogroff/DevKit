@@ -409,6 +409,7 @@ namespace DevKit.Web
 
                                 identity.AddClaim(new Claim(ClaimTypes.Name, tUser.stNome));
                                 identity.AddClaim(new Claim("tipo", "5"));
+                                identity.AddClaim(new Claim("IdUsuario", tUser.id.ToString()));
                                 identity.AddClaim(new Claim("parceiro", tParceiro.id.ToString()));
                                 identity.AddClaim(new Claim("tipoDBA", tUser.nuTipo.ToString()));
                                 identity.AddClaim(new Claim("m1", tParceiro.stNome.ToString()));

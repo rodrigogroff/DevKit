@@ -21,6 +21,9 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            if (userLoggedParceiroId != "1")
+                return BadRequest();
+
             var query = (from e in db.Parceiro select e);
 
             if (!string.IsNullOrEmpty(busca))
@@ -38,6 +41,9 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Get(long id)
         {
             if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            if (userLoggedParceiroId != "1")
                 return BadRequest();
 
             var mdl = (from e in db.Parceiro
@@ -58,6 +64,9 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            if (userLoggedParceiroId != "1")
+                return BadRequest();
+
             mdl.dtCadastro = DateTime.Now;
 
             if (!mdl.Create(db, ref apiError))
@@ -69,6 +78,9 @@ namespace DevKit.Web.Controllers
         public IHttpActionResult Put(long id, Parceiro mdl)
         {
             if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            if (userLoggedParceiroId != "1")
                 return BadRequest();
 
             if (!mdl.Update(db, ref apiError))

@@ -22,6 +22,10 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            if (this.userLoggedParceiroId != "1")
+                if (userLoggedTypeDBA != "1")
+                    return BadRequest();
+
             var query =  (  from e in db.UsuarioParceiro
                             where e.fkParceiro == fkParceiro || fkParceiro == null
                             select e);
@@ -54,6 +58,10 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            if (this.userLoggedParceiroId != "1")
+                if (userLoggedTypeDBA != "1")
+                    return BadRequest();
+
             var mdl = (from e in db.UsuarioParceiro
                        where e.id == id
                        select e).
@@ -74,6 +82,10 @@ namespace DevKit.Web.Controllers
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
+
+            if (this.userLoggedParceiroId != "1")
+                if (userLoggedTypeDBA != "1")
+                    return BadRequest();
 
             mdl.stSenha = GetRandomString(6);
 
@@ -118,12 +130,15 @@ namespace DevKit.Web.Controllers
             else
             {
                 if (this.userLoggedParceiroId != "1")
+                    if (userLoggedTypeDBA != "1")
+                        return BadRequest();
+
+                if (this.userLoggedParceiroId != "1")
                     mdl.stSenha = db.UsuarioParceiro.FirstOrDefault(y => y.id == mdl.id).stSenha;
 
                 if (!mdl.Update(db, ref apiError))
                     return BadRequest(apiError);
-            }
-            
+            }            
 
             return Ok();
         }

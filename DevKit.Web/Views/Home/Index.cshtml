@@ -441,81 +441,130 @@
                 </section>
 
                 <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.tipo == '5'">
-                    <ul id="side-nav" class="side-nav" style="color:black">
-                        <li class="panel">
-                            <a class="accordion-toggle " data-toggle="collapse"
-                               data-parent="#side-nav" href="#forms-collapseSystemAdmin"><span class="name">Administração</span></a>
-                            <ul id="forms-collapseSystemAdmin" class="panel-collapse collapse">
-                                <li><a ui-sref="parceiros"><span>Parceiros</span></a></li>
-                                <li><a ui-sref="parceirousuarios"><span>Usuários</span></a></li>
-                                <li><a ui-sref="parceirousuariotrocasenha"><span>Troca de Senha</span></a></li>
-                            </ul>
-                        </li>
-                        <li class="panel">
-                            <a class="accordion-toggle " data-toggle="collapse"
-                               data-parent="#side-nav" href="#forms-collapseEmiss"><span class="name">Emissão Cartões</span></a>
-                            <ul id="forms-collapseEmiss" class="panel-collapse collapse">
-                                <li><a ui-sref="novolote"><span>Novo lote</span></a></li>
-                                <li><a ui-sref="lotes"><span>Lotes Gráfica (geração)</span></a></li>
-                                <li><a ui-sref="listingexp"><span>Listagem expedição</span></a></li>
-                                <li><a ui-sref="rastreamento"><span>Rastreamento</span></a></li>
-                                <li><a ui-sref="ativacartao"><span>Ativação Leitor</span></a></li>
-                                <li><a ui-sref="admopersativagrafica"><span>Ativação Manual</span></a></li>
-                            </ul>
-                        </li>
-                        <li class="panel">
-                            <a class="accordion-toggle " data-toggle="collapse"
-                               data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Configuração</span></a>
-                            <ul id="forms-collapseSystem" class="panel-collapse collapse">
-                                <li><a ui-sref="dbaListagemCartao"><span>Cartões</span></a></li>
-                                <li><a ui-sref="empresas"><span>Empresas</span></a></li>
-                                <li><a ui-sref="dbaUsuarios"><span>Usuários</span></a></li>
-                                <li><a ui-sref="lojas"><span>Lojistas</span></a></li>
-                                <li><a ui-sref="admopers"><span>Pendências</span></a></li>
-                                <li><a ui-sref="admoperslimites"><span>Limites</span></a></li>
-                                <li><a ui-sref="admoperslanctx"><span>Despesas Admin.</span></a></li>
-                                <li><a ui-sref="empcancelamento"><span>Cancela NSU</span></a></li>
-                            </ul>
-                        </li>                        
-                        <li class="panel">
-                            <a class="accordion-toggle " data-toggle="collapse"
-                               data-parent="#side-nav" href="#forms-collapsePortadores"><span class="name">Portadores</span></a>
-                            <ul id="forms-collapsePortadores" class="panel-collapse collapse">
-                                <li><a ui-sref="relAssociados"><span>Listagem</span></a></li>
-                                <li><a ui-sref="empNovoCartao"><span>Novo cartão</span></a></li>
-                                <li><a ui-sref="admopersbloq"><span>Bloqueio</span></a></li>
-                                <li><a ui-sref="admopersdesbloq"><span>Desbloqueio</span></a></li>
-                                <li><a ui-sref="admopersaltlim"><span>Limites</span></a></li>
-                                <li><a ui-sref="admopersaltsenha"><span>Alt. Senha</span></a></li>
-                                <li><a ui-sref="admopersaltsegvia"><span>Segunda Via</span></a></li>
-                                <li><a ui-sref="admopersaltcota"><span>Cota Extra</span></a></li>
-                            </ul>
-                        </li>
-                        <li class="panel">
-                            <a class="accordion-toggle " data-toggle="collapse"
-                               data-parent="#side-nav" href="#forms-collapseRel"><span class="name">Relatórios</span></a>
-                            <ul id="forms-collapseRel" class="panel-collapse collapse">
-                                <li><a ui-sref="dashboard"><span>Dashboard</span></a></li>
-                                <li><a ui-sref="auditoria"><span>Auditoria</span></a></li>
-                                <li><a ui-sref="empRelatorios"><span>Opções</span></a></li>
-                            </ul>
-                        </li>
-                        <li class="panel">
-                            <a class="accordion-toggle " data-toggle="collapse"
-                               data-parent="#side-nav" href="#forms-collapseEmpFech"><span class="name">Fechamento</span></a>
-                            <ul id="forms-collapseEmpFech" class="panel-collapse collapse">
-                                <li><a ui-sref="empListagemFechamento"><span>Demonstrativos</span></a></li>
-                                <li><a ui-sref="empExpFechamento"><span>Exportação</span></a></li>
-                            </ul>
-                        </li>
-                        <li class="panel">
-                            <a class="accordion-toggle " data-toggle="collapse"
-                               data-parent="#side-nav" href="#forms-collapseEmpFat"><span class="name">Faturamento</span></a>
-                            <ul id="forms-collapseEmpFat" class="panel-collapse collapse">
-                                <li><a ui-sref="empListagemFaturamento"><span>Demonstrativos</span></a></li>
-                            </ul>
-                        </li>
-                    </ul>
+
+                    <div ng-if="authentication.parceiro == '1'">
+
+                        <ul id="side-nav" class="side-nav" style="color:black">
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapseSystemAdmin"><span class="name">Administração</span></a>
+                                <ul id="forms-collapseSystemAdmin" class="panel-collapse collapse">
+                                    <li><a ui-sref="parceiros"><span>Parceiros</span></a></li>
+                                    <li><a ui-sref="parceirousuarios"><span>Usuários</span></a></li>
+                                    <li><a ui-sref="parceirousuariotrocasenha"><span>Troca de Senha</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapseEmiss"><span class="name">Emissão Cartões</span></a>
+                                <ul id="forms-collapseEmiss" class="panel-collapse collapse">
+                                    <li><a ui-sref="novolote"><span>Novo lote</span></a></li>
+                                    <li><a ui-sref="lotes"><span>Lotes Gráfica (geração)</span></a></li>
+                                    <li><a ui-sref="listingexp"><span>Listagem expedição</span></a></li>
+                                    <li><a ui-sref="rastreamento"><span>Rastreamento</span></a></li>
+                                    <li><a ui-sref="ativacartao"><span>Ativação Leitor</span></a></li>
+                                    <li><a ui-sref="admopersativagrafica"><span>Ativação Manual</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapseSystem"><span class="name">Configuração</span></a>
+                                <ul id="forms-collapseSystem" class="panel-collapse collapse">
+                                    <li><a ui-sref="dbaListagemCartao"><span>Cartões</span></a></li>
+                                    <li><a ui-sref="empresas"><span>Empresas</span></a></li>
+                                    <li><a ui-sref="dbaUsuarios"><span>Usuários</span></a></li>
+                                    <li><a ui-sref="lojas"><span>Lojistas</span></a></li>
+                                    <li><a ui-sref="admopers"><span>Pendências</span></a></li>
+                                    <li><a ui-sref="admoperslimites"><span>Limites</span></a></li>
+                                    <li><a ui-sref="admoperslanctx"><span>Despesas Admin.</span></a></li>
+                                    <li><a ui-sref="empcancelamento"><span>Cancela NSU</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapsePortadores"><span class="name">Portadores</span></a>
+                                <ul id="forms-collapsePortadores" class="panel-collapse collapse">
+                                    <li><a ui-sref="relAssociados"><span>Listagem</span></a></li>
+                                    <li><a ui-sref="empNovoCartao"><span>Novo cartão</span></a></li>
+                                    <li><a ui-sref="admopersbloq"><span>Bloqueio</span></a></li>
+                                    <li><a ui-sref="admopersdesbloq"><span>Desbloqueio</span></a></li>
+                                    <li><a ui-sref="admopersaltlim"><span>Limites</span></a></li>
+                                    <li><a ui-sref="admopersaltsenha"><span>Alt. Senha</span></a></li>
+                                    <li><a ui-sref="admopersaltsegvia"><span>Segunda Via</span></a></li>
+                                    <li><a ui-sref="admopersaltcota"><span>Cota Extra</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapseRel"><span class="name">Relatórios</span></a>
+                                <ul id="forms-collapseRel" class="panel-collapse collapse">
+                                    <li><a ui-sref="dashboard"><span>Dashboard</span></a></li>
+                                    <li><a ui-sref="auditoria"><span>Auditoria</span></a></li>
+                                    <li><a ui-sref="empRelatorios"><span>Opções</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapseEmpFech"><span class="name">Fechamento</span></a>
+                                <ul id="forms-collapseEmpFech" class="panel-collapse collapse">
+                                    <li><a ui-sref="empListagemFechamento"><span>Demonstrativos</span></a></li>
+                                    <li><a ui-sref="empExpFechamento"><span>Exportação</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapseEmpFat"><span class="name">Faturamento</span></a>
+                                <ul id="forms-collapseEmpFat" class="panel-collapse collapse">
+                                    <li><a ui-sref="empListagemFaturamento"><span>Demonstrativos</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div ng-if="authentication.parceiro != '1'">
+
+                        <ul id="side-nav" class="side-nav" style="color:black">
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapseSystemAdmin"><span class="name">Administração</span></a>
+                                <ul id="forms-collapseSystemAdmin" class="panel-collapse collapse">
+                                    <li><a ui-sref="parceirousuarios"><span>Usuários</span></a></li>
+                                    <li><a ui-sref="parceirousuariotrocasenha"><span>Troca de Senha</span></a></li>
+                                </ul>
+                            </li>                            
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapsePortadores"><span class="name">Portadores</span></a>
+                                <ul id="forms-collapsePortadores" class="panel-collapse collapse">
+                                    <li><a ui-sref="relAssociados"><span>Listagem</span></a></li>
+                                    <li><a ui-sref="empNovoCartao"><span>Novo cartão</span></a></li>
+                                    <li><a ui-sref="admopersbloq"><span>Bloqueio</span></a></li>
+                                    <li><a ui-sref="admopersdesbloq"><span>Desbloqueio</span></a></li>
+                                    <li><a ui-sref="admopersaltsegvia"><span>Segunda Via</span></a></li>                                    
+                                </ul>
+                            </li>
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapseRel"><span class="name">Relatórios</span></a>
+                                <ul id="forms-collapseRel" class="panel-collapse collapse">
+                                    <li><a ui-sref="dashboard"><span>Dashboard</span></a></li>
+                                    <li><a ui-sref="auditoria"><span>Auditoria</span></a></li>
+                                    <li><a ui-sref="empRelatorios"><span>Opções</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="panel">
+                                <a class="accordion-toggle " data-toggle="collapse"
+                                   data-parent="#side-nav" href="#forms-collapseEmpFech"><span class="name">Fechamento</span></a>
+                                <ul id="forms-collapseEmpFech" class="panel-collapse collapse">
+                                    <li><a ui-sref="empListagemFechamento"><span>Demonstrativos</span></a></li>
+                                    <li><a ui-sref="empExpFechamento"><span>Exportação</span></a></li>
+                                </ul>
+                            </li>                            
+                        </ul>
+
+                    </div>
+
                     <ul><li>&nbsp;</li></ul>
                     <ul><li>&nbsp;</li></ul>
                     <ul>

@@ -97,6 +97,11 @@ angular.module('app.controllers').controller('LoginController',
                             $rootScope.lojistaLogado = "DBA";
                             $rootScope.lojistaEnd = "Modo de configuração do portal";
 
+                            AuthService.fillAuthData();
+
+                            if (AuthService.authentication.parceiro != '1')
+                                $rootScope.modoParceiro = "true";
+
                             $state.go('dashboard', {});
                         }
                         else if ($rootScope.tipo == 2) {

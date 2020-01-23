@@ -61,6 +61,19 @@ namespace DevKit.Web.Controllers
             }
         }
 
+        public string userLoggedTypeDBA
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+                return identity.Claims.
+                    Where(c => c.Type == "tipoDBA").
+                    Select(c => c.Value).
+                    SingleOrDefault();
+            }
+        }
+
         public string userLoggedParceiroId
         {
             get

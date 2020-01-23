@@ -62,7 +62,7 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
                             $scope.modalConf = false;
                         },
                             function (response) {
-                                toastr.error(response.data.message, 'Erro');
+                                toastr.error('Acesso não autorizado!', 'Erro');
                             });
                     }
                     else {
@@ -71,7 +71,7 @@ angular.module('app.controllers').controller('ParceiroUsuarioController',
                             $scope.list();
                         },
                             function (response) {
-                                toastr.error(response.data.message, 'Erro');
+                                toastr.error('Acesso não autorizado!', 'Erro');
                             });
                     }
                 }

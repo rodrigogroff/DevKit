@@ -92,12 +92,10 @@ namespace DevKit.Web.Controllers
             var tEmp = db.currentEmpresa;
 
             if (idEmpresa != null)
-            {
                 tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
 
-                if (tEmp == null)
-                    return BadRequest();
-            }
+            if (tEmp == null)
+                return BadRequest();
 
             var query = (from e in db.T_Cartao
                          where e.st_empresa == tEmp.st_empresa
@@ -605,6 +603,12 @@ namespace DevKit.Web.Controllers
             {
                 case "altCota":
                     {
+                        var idParceiro = userLoggedParceiroId;
+
+                        if (idParceiro != null)
+                            if (Convert.ToInt32(idParceiro) > 1)
+                                return BadRequest();
+
                         if (mdl.valor.Length == 0)
                             return BadRequest("Informe a cota extra corretamente!");
 
@@ -626,6 +630,12 @@ namespace DevKit.Web.Controllers
 
                 case "altSenha":
                     {
+                        var idParceiro = userLoggedParceiroId;
+
+                        if (idParceiro != null)
+                            if (Convert.ToInt32(idParceiro) > 1)
+                                return BadRequest();
+
                         if (mdl.valor.Length != 4)
                             return BadRequest("Senha requer 4 caracteres numéricos!");
 
@@ -647,6 +657,12 @@ namespace DevKit.Web.Controllers
 
                 case "altLim":
                     {
+                        var idParceiro = userLoggedParceiroId;
+
+                        if (idParceiro != null)
+                            if ( Convert.ToInt32(idParceiro) > 1)
+                                return BadRequest();
+
                         if (mdl.valor.Length == 0)
                             return BadRequest("Informe os limites corretamente!");
 

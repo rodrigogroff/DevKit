@@ -48,7 +48,7 @@ angular.module('app.controllers').controller('DBABloqueioController',
                         $scope.loading = false;
                     },
                         function (response) {
-                            toastr.error(response.data.message, 'Erro');
+                            toastr.error('Cartão não encontrado', 'Erro');
                             $scope.loading = false;
                         });
                 }
@@ -73,7 +73,8 @@ angular.module('app.controllers').controller('DBABloqueioController',
                     $scope.loading = false;
                 },
                     function (response) {
-                        toastr.error(response.data.message, 'Erro');
+                        
+                        toastr.error('Falha no processo de bloqueio', 'Erro');
                         $scope.loading = false;
                     });
             };

@@ -48,7 +48,7 @@ angular.module('app.controllers').controller('DBADesbloqueioController',
                         $scope.loading = false;
                     },
                         function (response) {
-                            toastr.error(response.data.message, 'Erro');
+                            toastr.error('Cartão não encontrado', 'Erro');
                             $scope.loading = false;
                         });
                 }
@@ -74,7 +74,7 @@ angular.module('app.controllers').controller('DBADesbloqueioController',
                     $scope.loading = false;
                 },
                     function (response) {
-                        toastr.error(response.data.message, 'Erro');
+                        toastr.error('Falha no processo de desbloqueio', 'Erro');
                         $scope.loading = false;
                     });
             };

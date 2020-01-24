@@ -52,7 +52,7 @@ angular.module('app.controllers').controller('DBAAltCotaController',
                         $scope.loading = false;
                     },
                         function (response) {
-                            toastr.error(response.data.message, 'Erro');
+                            toastr.error('Cartão não encontrado', 'Erro');
                             $scope.loading = false;
                         });
                 }

@@ -1,5 +1,5 @@
 ﻿<div class="webFormPosition">
-    <section class="widgetForm" style="width:680px">
+    <section class="widgetForm" style="width:880px">
         <legend class="legendTop">
             <table><tr height="12px"><td> </td></tr></table>
             <table style="color:white; width:100%">
@@ -11,10 +11,10 @@
                 <tr height="12px"></tr>
             </table>
         </legend>
-        <div class="divWebForm">
-            <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:850px">
+        <div class="divWebForm" style="width:1050px">
+            <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:1050px">
                 <tab heading="Cartão">
-                    <table class="widget" style="color:white">
+                    <table class="widget" style="color:white;width:500px">
                         <tr height="12px"></tr>
                         <tr height="43px" ng-if="tipo==5">
                             <td></td>
@@ -24,22 +24,22 @@
                             <td>
                                 <button class="btn btn-xs btn-danger" ng-show="emp_fail">!</button>
                             </td>
-                            <td width="160px">
+                            <td>
                                 <input type="hidden" name="setor" style="width:100%" ui-select2="campos.selects.empresa" ng-model="viewModel.fkEmpresa" ng-disabled="id > 0" />
                             </td>
                             <td></td>
                         </tr>
                         <tr height="43px">
                             <td width="20px"></td>
-                            <td width="100px">
+                            <td width="70px">
                                 <b>Matrícula</b>
                             </td>
                             <td width="40px">
                                 <button class="btn btn-xs btn-danger" ng-show="mat_fail" title="matricula já cadastrada">!</button>
                                 <button class="btn btn-xs btn-success" ng-show="mat_ok" title="matricula disponível">OK</button>
                             </td>
-                            <td width="160px" ng-show="id > 0">{{viewModel.matricula}}</td>
-                            <td width="160px" ng-show="id == undefined">
+                            <td width="360px" ng-show="id > 0">{{viewModel.matricula}}</td>
+                            <td width="360px" ng-show="id == undefined">
                                 <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" ng-blur="checkMat()" maxlength="6" ng-model="viewModel.matricula">
                             </td>
                             <td width="20px"></td>
@@ -52,7 +52,7 @@
                             <td>
                                 <button class="btn btn-xs btn-danger" ng-show="venc_fail">!</button>
                             </td>
-                            <td width="160px">
+                            <td>
                                 <table>
                                     <tr>
                                         <td ng-if="id > 0">{{viewModel.vencMes}}</td>
@@ -77,7 +77,7 @@
                                 <b>Situação</b>
                             </td>
                             <td></td>
-                            <td width="160px">
+                            <td >
                                 {{ viewModel.situacao }}
                             </td>
                             <td></td>

@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('EmissoraRelExtratTransController',
-    ['$scope', '$rootScope', 'Api', 'ngSelects',
-        function ($scope, $rootScope, Api, ngSelects) {
+    ['$scope', '$rootScope', 'Api', 'AuthService', 'ngSelects',
+        function ($scope, $rootScope, Api, AuthService, ngSelects) {
 
             $rootScope.exibirMenu = true;
             $scope.loading = false;
@@ -37,6 +37,16 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransController',
 
             $scope.search = function () {
 
+                $scope.authentication = AuthService.authentication;
+
+                if ($scope.campos.idEmpresa === undefined)
+                    if ($scope.authentication.tipo === '5')
+                        if ($scope.authentication.parceiro !== '1') {
+                            $scope.empresa_fail = true;
+                            return;
+                        }
+
+                $scope.empresa_fail = false;
                 $scope.dt_ini_fail = $scope.campos.dtInicial == undefined;
                 $scope.dt_fim_fail = $scope.campos.dtFinal == undefined;
 

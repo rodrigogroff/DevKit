@@ -197,7 +197,7 @@ namespace DevKit.Web.Controllers
                             if (dtNow.Day > diaFech)
                                 dtNow = dtNow.AddMonths(1);
 
-                            if (new DateTime(ano, mes, 1) < new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1))
+                            if (new DateTime(ano, mes, 1) <= new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1))
                                 return BadRequest();
                             
                             int nuParc = 1;

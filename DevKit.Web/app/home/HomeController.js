@@ -41,7 +41,7 @@ angular.module('app.controllers').controller('HomeController',
                     init();
                 },
                     function (response) {
-                        toastr.error(response.data.message, 'Error');
+                        toastr.error(response.data.message, 'Erro');
                     });
             };
 
@@ -60,7 +60,7 @@ angular.module('app.controllers').controller('HomeController',
                     $scope.currentOption = undefined;
                 },
                     function (response) {
-                        toastr.error(response.data.message, 'Error');
+                        toastr.error(response.data.message, 'Erro');
                     });
             };
 

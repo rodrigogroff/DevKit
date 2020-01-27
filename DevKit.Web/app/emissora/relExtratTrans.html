@@ -20,6 +20,9 @@
                         <tr height="36px">
                             <td width="25px"></td>
                             <td width="110px"><b>Empresa</b></td>
+                            <td width="25px">
+                                <button class="btn btn-xs btn-danger" ng-show="empresa_fail">!</button>
+                            </td>
                             <td width="220px">
                                 <input type="hidden" name="empresa" style="width:100%" ui-select2="campos.selects.empresa" ng-model="campos.idEmpresa" />
                             </td>

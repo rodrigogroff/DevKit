@@ -36,7 +36,7 @@ angular.module('app.controllers').controller('LojaController',
                         $scope.loading = false;
                     },
                         function (response) {
-                            if (response.status === 404) { toastr.error('Invalid ID', 'Error'); }
+                            if (response.status === 404) { toastr.error('Invalid ID', 'Erro'); }
                             $scope.list();
                         });
                 }
@@ -66,7 +66,7 @@ angular.module('app.controllers').controller('LojaController',
                             init(); //recarrega mensagens
                         },
                             function (response) {
-                                toastr.error(response.data.message, 'Error');
+                                toastr.error(response.data.message, 'Erro');
                             });
                     }
                     else {
@@ -75,7 +75,7 @@ angular.module('app.controllers').controller('LojaController',
                             $state.go('loja', { id: data.i_unique });                            
                         },
                             function (response) {
-                                toastr.error(response.data.message, 'Error');
+                                toastr.error(response.data.message, 'Erro');
                             });
                     }
                 }
@@ -113,7 +113,7 @@ angular.module('app.controllers').controller('LojaController',
                     $scope.modalEditarTerminal = false;
                 },
                     function (response) {
-                        toastr.error(response.data.message, 'Error');
+                        toastr.error(response.data.message, 'Erro');
                     });
             };
 
@@ -138,7 +138,7 @@ angular.module('app.controllers').controller('LojaController',
                         };
                 },
                     function (response) {
-                        toastr.error(response.data.message, 'Error');
+                        toastr.error(response.data.message, 'Erro');
                     });
             };
 
@@ -162,7 +162,7 @@ angular.module('app.controllers').controller('LojaController',
                     init();
                 },
                 function (response) {
-                    toastr.error(response.data.message, 'Error');
+                    toastr.error(response.data.message, 'Erro');
                 });
             };
 
@@ -182,7 +182,7 @@ angular.module('app.controllers').controller('LojaController',
                     $scope.modalEditarConvenio = false;
                 },
                 function (response) {
-                    toastr.error(response.data.message, 'Error');
+                    toastr.error(response.data.message, 'Erro');
                 });
             };
 
@@ -207,7 +207,7 @@ angular.module('app.controllers').controller('LojaController',
                         };                    
                 },
                 function (response) {
-                    toastr.error(response.data.message, 'Error');
+                    toastr.error(response.data.message, 'Erro');
                 });
             };
 

@@ -36,7 +36,7 @@ angular.module('app.controllers').controller('SetupController',
                     $scope.loaded = true;
                 },
                     function (response) {
-                        if (response.status === 404) { toastr.error('Invalid ID', 'Error'); }
+                        if (response.status === 404) { toastr.error('Invalid ID', 'Erro'); }
                     });
             }
 
@@ -66,7 +66,7 @@ angular.module('app.controllers').controller('SetupController',
                             init();
                         },
                             function (response) {
-                                toastr.error(response.data.message, 'Error');
+                                toastr.error(response.data.message, 'Erro');
                             });
                     }
                 }

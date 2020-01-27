@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('EmissoraRelExtratTransLojasController',
-    ['$scope', '$rootScope', 'Api', 'ngSelects',
-        function ($scope, $rootScope, Api, ngSelects) {
+    ['$scope', '$rootScope', 'Api', 'AuthService', 'ngSelects',
+        function ($scope, $rootScope, Api, AuthService, ngSelects) {
 
             $rootScope.exibirMenu = true;
             $scope.loading = false;
@@ -26,6 +26,16 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransLojasControl
 
             $scope.search = function () {
 
+                $scope.authentication = AuthService.authentication;
+                
+                if ($scope.campos.idEmpresa === undefined)
+                    if ($scope.authentication.tipo === '5')
+                        if ($scope.authentication.parceiro !== '1') {
+                            $scope.empresa_fail = true;
+                            return;
+                        }
+
+                $scope.empresa_fail = false;
                 $scope.list = undefined;
 
                 $scope.dtIni_fail = invalidCheck($scope.campos.dtInicial);

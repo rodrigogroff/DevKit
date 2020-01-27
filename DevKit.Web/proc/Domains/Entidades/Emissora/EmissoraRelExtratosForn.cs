@@ -53,6 +53,9 @@ namespace DevKit.Web.Controllers
                               select e).
                               FirstOrDefault();
 
+            if (lojistaEsp == null)
+                return BadRequest();
+
             var tEmp = db.currentEmpresa;
 
             if (idEmpresa != null)
@@ -104,7 +107,11 @@ namespace DevKit.Web.Controllers
 
                         int nuParc = 1;
 
-                        var target = ano + mes.ToString().PadLeft(2, '0');                        
+                        var target = ano + mes.ToString().PadLeft(2, '0');
+
+                        if (new DateTime(ano, mes, 1) <= new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1))
+                            return BadRequest();
+
                         while (target != dtNow.Year + dtNow.Month.ToString("00"))
                         {
                             nuParc++;

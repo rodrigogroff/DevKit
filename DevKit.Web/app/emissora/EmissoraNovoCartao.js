@@ -36,7 +36,7 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                         $scope.loading = false;
                     },
                         function (response) {
-                            if (response.status === 404) { toastr.error('Invalid ID', 'Error'); }
+                            if (response.status === 404) { toastr.error('Invalid ID', 'Erro'); }
                             $scope.list();
                         });
                 }

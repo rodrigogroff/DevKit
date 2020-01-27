@@ -69,6 +69,7 @@ angular.module('app.controllers').controller('EmissoraRelRepFinancController',
                         $scope.loading = false;
                     },
                         function (response) {
+                            toastr.error('Parâmetros inválidos', 'Erro');
                             $scope.loading = false;
                             $scope.list = [];
                         });
@@ -104,6 +105,7 @@ angular.module('app.controllers').controller('EmissoraRelRepFinancController',
                         $scope.loading = false;
                     },
                         function (response) {
+                            toastr.error('Parâmetros inválidos', 'Erro');
                             $scope.loading = false;
                             $scope.list = [];
                         });

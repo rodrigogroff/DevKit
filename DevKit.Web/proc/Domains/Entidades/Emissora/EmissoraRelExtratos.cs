@@ -65,6 +65,9 @@ namespace DevKit.Web.Controllers
                                       select e).
                                       FirstOrDefault();
 
+                        if (cartao == null)
+                            return BadRequest();
+
                         var associado = (from e in db.T_Proprietario
                                          where cartao.fk_dadosProprietario == e.i_unique
                                          select e).
@@ -134,6 +137,9 @@ namespace DevKit.Web.Controllers
                                       where e.st_matricula == mat
                                       select e).
                                       FirstOrDefault();
+
+                        if (cartao == null)
+                            return BadRequest();
 
                         var diaFech = curEmp.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + curEmp.st_empresa) select e).FirstOrDefault().nu_monthly_day;
 
@@ -211,6 +217,9 @@ namespace DevKit.Web.Controllers
                                       where e.st_matricula == mat
                                       select e).
                                       FirstOrDefault();
+
+                        if (cartao == null)
+                            return BadRequest();
 
                         var associado = (from e in db.T_Proprietario
                                          where cartao.fk_dadosProprietario == e.i_unique

@@ -105,7 +105,11 @@ namespace DevKit.Web.Controllers
                                      select e).
                                      ToList();
 
-            var lst_log = lstParcelasTotais.Select(y => (int)y.fk_log_transacoes).Distinct().ToList();
+            var lst_log = lstParcelasTotais.
+                            Where ( y=> y.fk_log_transacoes != null).
+                            Select ( y=> (int)y.fk_log_transacoes).
+                            Distinct().
+                            ToList();
 
             var lstLogTrans = (from e in db.LOG_Transacoes
                                where lst_log.Contains((int)e.i_unique)

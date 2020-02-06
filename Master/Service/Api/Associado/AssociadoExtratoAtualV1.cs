@@ -71,7 +71,7 @@ namespace Master.Service
                         {
                             dtVenda = Convert.ToDateTime(item.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
                             nsu = item.nu_nsu.ToString(),
-                            parcela = item.nu_parcela + " / " + item.nu_tot_parcelas,
+                            parcela = item.nu_indice + " / " + item.nu_tot_parcelas,
                             valor = mon.setMoneyFormat((long)item.vr_valor),
                             estab = lstLoja.FirstOrDefault(y=> y.i_unique == item.fk_loja).st_nome,
                         });

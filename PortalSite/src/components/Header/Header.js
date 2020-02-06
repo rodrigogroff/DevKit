@@ -140,7 +140,7 @@ class Header extends React.Component {
                         <tbody>
                           <tr>
                             <td>
-                              <img className={s.imgLogo} alt='Limites' src={logoImg} onClick={this.redirectLimites} />
+                              <img className={s.imgLogo} alt='Limites' src={logoImg} />
                             </td>
                           </tr>
                         </tbody>
@@ -226,7 +226,7 @@ class Header extends React.Component {
                         <tbody>
                           <tr>
                             <td>
-                              <img className={s.imgLogo} alt='Limites' src={logoImg} onClick={this.redirectLimites} />
+                              <img className={s.imgLogo} alt='Limites' src={logoImg} />
                             </td>
                           </tr>
                         </tbody>

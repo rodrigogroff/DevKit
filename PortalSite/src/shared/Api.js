@@ -83,7 +83,7 @@ export class Api {
                             ok: false,
                             unauthorized: true
                         })
-                    }                    
+                    }
                     else if (res.ok === true) {
                         res.json().then((data) => {
                             resolve({
@@ -221,7 +221,7 @@ export class Api {
 
     trimStart = (character, string) => {
         var startIndex = 0;
-        while (string[startIndex] === character) 
+        while (string[startIndex] === character)
             startIndex++;
         return string.substr(startIndex);
     }
@@ -229,11 +229,11 @@ export class Api {
     cleanup = (strMoney) => {
         var ret = '';
         var i = 0;
-        for (; i < strMoney.length; i++) 
+        for (; i < strMoney.length; i++)
             if (strMoney[i] === '0') { } else {
                 break;
-            }        
-        for (; i < strMoney.length; i++) 
+            }
+        for (; i < strMoney.length; i++)
             ret += strMoney[i];
         return ret;
     };
@@ -249,6 +249,8 @@ export class Api {
     };
 
     ValorNum = (v) => {
+        if (v === undefined || v === null)
+            return "";
         v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
         return v;
     }

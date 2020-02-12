@@ -65,7 +65,7 @@ export default class LojistaVenda extends React.Component {
 	handleScan = data => {
 		if (data) {
 			this.setState({ result: data }, () => {
-				var field = 0; 
+				var field = 0;
 				var __empresa = '';
 				var __matricula = '';
 				var __codAcesso = '';
@@ -82,7 +82,7 @@ export default class LojistaVenda extends React.Component {
 						}
 				}
 
-				this.setState({ _empresa: __empresa, _matricula: __matricula,  _codAcesso: __codAcesso, _venc: __venc });
+				this.setState({ _empresa: __empresa, _matricula: __matricula, _codAcesso: __codAcesso, _venc: __venc });
 			});
 		}
 	}
@@ -100,6 +100,11 @@ export default class LojistaVenda extends React.Component {
 		this.setState({ _valor: api.ValorMoney(event.target.value) })
 	}
 
+	processParcela(event) {
+		var api = new Api();
+		this.setState({ _parcelas: api.ValorNum(event.target.value) })
+	}
+
 	processMoneyP1(event) { var api = new Api(); this.setState({ _valorP1: api.ValorMoney(event.target.value) }) }
 	processMoneyP2(event) { var api = new Api(); this.setState({ _valorP2: api.ValorMoney(event.target.value) }) }
 	processMoneyP3(event) { var api = new Api(); this.setState({ _valorP3: api.ValorMoney(event.target.value) }) }
@@ -111,7 +116,7 @@ export default class LojistaVenda extends React.Component {
 	processMoneyP9(event) { var api = new Api(); this.setState({ _valorP9: api.ValorMoney(event.target.value) }) }
 	processMoneyP10(event) { var api = new Api(); this.setState({ _valorP10: api.ValorMoney(event.target.value) }) }
 	processMoneyP11(event) { var api = new Api(); this.setState({ _valorP11: api.ValorMoney(event.target.value) }) }
-	processMoneyP12(event) { var api = new Api(); this.setState({ _valorP12: api.ValorMoney(event.target.value) }) }	
+	processMoneyP12(event) { var api = new Api(); this.setState({ _valorP12: api.ValorMoney(event.target.value) }) }
 
 	processNumber(vlr) {
 		return new Api().ValorNum(vlr);
@@ -396,7 +401,7 @@ export default class LojistaVenda extends React.Component {
 										<td width='90px'>Parcelas</td>
 										<td width='50px'>
 											<Input className="input-transparent form-control" id="parcelas" maxLength="2" type="tel" pattern="[0-9]*" inputmode="numeric"
-												value={this.state._parcelas} onChange={event => this.setState({ _parcelas: this.processNumber(event.target.value) })} />
+												onChange={event => this.setState({ _parcelas: this.processNumber(event.target.value) })} />
 										</td>
 									</tr>
 								</tbody>
@@ -463,25 +468,212 @@ export default class LojistaVenda extends React.Component {
 								</div>
 								:
 								<div>
+									{this.state._parcelas >= 2 && this.state._parcelas > 0 ?
+										<div>
+											<table>
+												<tbody>
+													<tr>
+														<td width='90px' >Parc. 1</td>
+														<td width='90px'>
+															{
+																this.state._parcelas >= 2 && this.state._parcelas > 0 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP1} onChange={this.processMoneyP1} />
+																	</div>
+																	: <div></div>
+															}
+														</td>
+														<td width='10px'> </td>
+														<td width='90px'>Parc. 2</td>
+														<td width='90px'>
+															{
+																this.state._parcelas >= 2 && this.state._parcelas > 0 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP2} onChange={this.processMoneyP2} />
+																	</div>
+																	: <div></div>
+															}
+														</td>
+													</tr>
+													<tr>
+														<td>
+															{
+																this.state._parcelas >= 3 ?
+																	<div>Parc. 3</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 3 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP3} onChange={this.processMoneyP3} />
+																	</div> : <div></div>
+															}
+														</td>
+														<td></td>
+														<td>
+															{
+																this.state._parcelas >= 4 ?
+																	<div>Parc. 4</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 4 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP4} onChange={this.processMoneyP4} />
+																	</div> : <div></div>
+															}
+														</td>
+													</tr>
 
-									<table>
-										<tbody>
-											<tr>
-												<td width='90px'>Parc. 1</td>
-												<td width='90px'>
-													<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-														value={this.state._valorP1} onChange={this.processMoneyP1} />
-												</td>
-												<td width='10px'> </td>
-												<td width='90px'>Parc. 2</td>
-												<td width='90px'>
-												<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-														value={this.state._valorP2} onChange={this.processMoneyP2} />
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									
+
+													<tr>
+														<td>
+															{
+																this.state._parcelas >= 5 ?
+																	<div>Parc. 5</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 5 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP5} onChange={this.processMoneyP5} />
+																	</div> : <div></div>
+															}
+														</td>
+														<td></td>
+														<td>
+															{
+																this.state._parcelas >= 6 ?
+																	<div>Parc. 6</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 6 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP6} onChange={this.processMoneyP6} />
+																	</div> : <div></div>
+															}
+														</td>
+													</tr>
+
+													<tr>
+														<td>
+															{
+																this.state._parcelas >= 7 ?
+																	<div>Parc. 7</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 7 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP7} onChange={this.processMoneyP7} />
+																	</div> : <div></div>
+															}
+														</td>
+														<td></td>
+														<td>
+															{
+																this.state._parcelas >= 8 ?
+																	<div>Parc. 8</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 8 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP8} onChange={this.processMoneyP8} />
+																	</div> : <div></div>
+															}
+														</td>
+													</tr>
+
+													<tr>
+														<td>
+															{
+																this.state._parcelas >= 9 ?
+																	<div>Parc. 9</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 9 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP9} onChange={this.processMoneyP9} />
+																	</div> : <div></div>
+															}
+														</td>
+														<td></td>
+														<td>
+															{
+																this.state._parcelas >= 10 ?
+																	<div>Parc. 10</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 10 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP10} onChange={this.processMoneyP10} />
+																	</div> : <div></div>
+															}
+														</td>
+													</tr>
+
+													<tr>
+														<td>
+															{
+																this.state._parcelas >= 11 ?
+																	<div>Parc. 11</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 11 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP11} onChange={this.processMoneyP11} />
+																	</div> : <div></div>
+															}
+														</td>
+														<td></td>
+														<td>
+															{
+																this.state._parcelas >= 12 ?
+																	<div>Parc. 12</div> : <div></div>
+															}
+														</td>
+														<td>
+															{
+																this.state._parcelas >= 12 ?
+																	<div>
+																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			value={this.state._valorP12} onChange={this.processMoneyP12} />
+																	</div> : <div></div>
+															}
+														</td>
+													</tr>
+
+												</tbody>
+											</table>
+
+										</div> : <div></div>
+									}
+
 									<br></br>
 
 									<Widget>
@@ -519,8 +711,8 @@ export default class LojistaVenda extends React.Component {
 						}
 						<br></br>
 						<br></br>
-					</div>
-				</div>
+					</div >
+				</div >
 			)
 	}
 }

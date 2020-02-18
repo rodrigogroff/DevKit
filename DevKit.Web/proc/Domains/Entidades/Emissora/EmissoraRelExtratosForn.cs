@@ -177,6 +177,12 @@ namespace DevKit.Web.Controllers
                                 var cart = carts.FirstOrDefault(y => y.i_unique == lt.fk_cartao);
                                 var prop = props.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
 
+                                if (cart == null)
+                                    cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == lt.fk_cartao);
+
+                                if (prop == null)
+                                    prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
+
                                 terminal.itens.Add(new ItensForn
                                 {
                                     serial = serial.ToString(),
@@ -282,13 +288,25 @@ namespace DevKit.Web.Controllers
 
                             long vrTotal = 0, vrRepasse = 0;
 
-                            foreach (var parc in from e in lstFechamento
-                                                 join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
-                                                 join ltr in db.LOG_Transacoes on parc.fk_log_transacoes equals (int)ltr.i_unique
-                                                 where ltr.fk_terminal == term
-                                                 select parc)
+                            var _mainList = (from e in lstFechamento
+                                             join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                             join ltr in db.LOG_Transacoes on parc.fk_log_transacoes equals (int)ltr.i_unique
+                                             where ltr.fk_terminal == term
+                                             select parc).ToList();
+
+                            var _ids_carts = _mainList.Select(y => (int)y.fk_cartao).Distinct().ToList();
+
+                            var lstCart = (from e in db.T_Cartao where _ids_carts.Contains((int)e.i_unique) select e);
+
+                            var _ids_prop = lstCart.Select(y => (int)y.fk_dadosProprietario).Distinct().ToList();
+
+                            var lstProps = (from e in db.T_Proprietario where _ids_prop.Contains((int)e.i_unique) select e);
+
+                            foreach (var parc in _mainList)
                             {
-                                var lt = ltrs.Where(y => y.i_unique == parc.fk_log_transacoes).FirstOrDefault();
+                                var lt = ltrs.Where(y => y.i_unique == parc.fk_log_transacoes).FirstOrDefault();                                
+                                var cart = lstCart.FirstOrDefault(y => y.i_unique == lt.fk_cartao);
+                                var prop = lstProps.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
 
                                 terminal.itens.Add(new ItensForn
                                 {
@@ -296,6 +314,8 @@ namespace DevKit.Web.Controllers
                                     dtVenda = ObtemData(parc.dt_inclusao),
                                     nsu = parc.nu_nsu.ToString(),
                                     parcela = parc.nu_indice + " / " + parc.nu_tot_parcelas,
+                                    cartao = prop?.st_nome,
+                                    matricula = cart?.st_matricula,
                                     valor = mon.setMoneyFormat((long)lt.vr_total),
                                     vlrParcela = mon.setMoneyFormat((long)parc.vr_valor)
                                 });

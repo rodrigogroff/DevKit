@@ -232,23 +232,25 @@
 
             <!--atual e futuro-->
 
+            <div ng-show="list.length == 0">
+                <br />
+                <br />
+                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                <br />
+                <br />
+            </div>
+
             <div ng-if="tipoDemonstrativoSel == 1 && porTerminalSel == true && list != undefined">
                 <table width="90%" data-ng-repeat="term in list">
                     <tr>
                         <td valign="top">
-                            <div ng-show="list.length == 0">
-                                <br />
-                                <br />
-                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
-                                <br />
-                                <br />
-                            </div>
+
                             <div ng-show="list.length > 0">
 
                                 <h3>Terminal: {{term.terminal}}</h3>
                                 Clique na linhas abaixo para visualizar as transações:<br />
                                 <br />
-                                <table class="table table-hover" >
+                                <table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>Mês / Ano<br />Vencimento</th>
@@ -316,16 +318,16 @@
                                 <br />
                                 <br />
                             </div>
-                            <div ng-show="transacoes.length > 0" >
-                                
+                            <div ng-show="transacoes.length > 0">
+
                                 <span style="color:black">
-                                    Mês/Ano: <b>{{mdlSelecionado.mesAno}}</b><br /> 
-                                    Convênio: <b>{{mdlSelecionado.convenio}}</b><br /> 
-                                    Situação: <b>{{mdlSelecionado.situacao}}</b><br /> 
-                                    Total vendas: <b>{{mdlSelecionado.totalVendas}}</b><br /> 
-                                    Total repasse: <b>{{mdlSelecionado.vlrRepasseMensal}}</b><br /> 
+                                    Mês/Ano: <b>{{mdlSelecionado.mesAno}}</b><br />
+                                    Convênio: <b>{{mdlSelecionado.convenio}}</b><br />
+                                    Situação: <b>{{mdlSelecionado.situacao}}</b><br />
+                                    Total vendas: <b>{{mdlSelecionado.totalVendas}}</b><br />
+                                    Total repasse: <b>{{mdlSelecionado.vlrRepasseMensal}}</b><br />
                                 </span>
-                                
+
                                 <div style="overflow-y: scroll; height:350px">
                                     <br />
                                     <table class="table table-hover">

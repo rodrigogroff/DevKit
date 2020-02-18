@@ -76,7 +76,7 @@ namespace DevKit.Web.Controllers
                         // todos os terminais, sem separação de terminal
                         // --------------------------------------------------
 
-                        if (idTerminal == null && separarPorTerminal == false)
+                        if (separarPorTerminal == false)
                         {
                             var results = new List<Demonstrativo>();
 
@@ -96,7 +96,7 @@ namespace DevKit.Web.Controllers
                                                 select e).
                                                 FirstOrDefault();
 
-                                var diaFech = tEmpresa.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa) select e).FirstOrDefault().nu_monthly_day;
+                                var diaFech = tEmpresa.nu_diaFech;
 
                                 if (dt.Day > diaFech)
                                     dt = dt.AddMonths(1);
@@ -114,6 +114,7 @@ namespace DevKit.Web.Controllers
                                                        where ltr.tg_confirmada.ToString() == TipoConfirmacao.Confirmada
                                                        where e.fk_empresa == tEmpresa.i_unique
                                                        where e.fk_loja == db.currentLojista.i_unique
+                                                       where idTerminal == null || e.fk_terminal == idTerminal
                                                        where e.nu_parcela == 1
                                                        select (long?)e.vr_valor).
                                                        Sum();
@@ -474,7 +475,7 @@ namespace DevKit.Web.Controllers
                             });
                         }
 
-                        if (idTerminal == null && separarPorTerminal == false)
+                        if (separarPorTerminal == false)
                         {
                             var results = new List<Demonstrativo>();
 
@@ -497,6 +498,7 @@ namespace DevKit.Web.Controllers
                                                        join ltr in db.T_Parcelas on e.fk_parcela equals (int)ltr.i_unique
                                                        where e.fk_empresa == tEmpresa.i_unique
                                                        where e.fk_loja == db.currentLojista.i_unique
+                                                       where idTerminal == null || ltr.fk_terminal == idTerminal 
                                                        where e.st_ano.ToString() == st_ano
                                                        where st_mes == "00" || e.st_mes == st_mes
                                                        select (long?)e.vr_valor).

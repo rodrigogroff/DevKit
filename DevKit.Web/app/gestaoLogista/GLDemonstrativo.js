@@ -44,6 +44,8 @@ angular.module('app.controllers').controller('GLDemonstrativoController',
                 $scope.tipoDemonstrativoSel = undefined;
                 $scope.porTerminalSel = undefined;
 
+                $scope.list = null;
+
                 Api.GLDemonstrativo.listPage(opcoes,
                     function (data) {
                         $scope.tipoDemonstrativoSel = $scope.tipoDemonstrativo;

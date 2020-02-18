@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using LinqToDB;
 using SyCrafEngine;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
@@ -227,15 +228,12 @@ namespace DevKit.Web.Controllers
                                 {
                                     var dt = DateTime.Now;
 
-                                    //    if (convenioAtual.fk_empresa == 11) // convey testes
-                                    //     continue;
-
                                     var tEmpresa = (from e in db.T_Empresa
                                                     where e.i_unique == convenioAtual.fk_empresa
                                                     select e).
                                                     FirstOrDefault();
 
-                                    var diaFech = tEmpresa.nu_diaFech; // (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa) select e).FirstOrDefault().nu_monthly_day;
+                                    var diaFech = tEmpresa.nu_diaFech;
 
                                     if (dt.Day > diaFech)
                                         dt = dt.AddMonths(1);
@@ -487,19 +485,12 @@ namespace DevKit.Web.Controllers
 
                             foreach (var convenioAtual in listConvenios)
                             {
-                                //if (convenioAtual.fk_empresa == 11) // convey testes
-                                  //  continue;
-
                                 var tEmpresa = (from e in db.T_Empresa
                                                 where e.i_unique == convenioAtual.fk_empresa
                                                 select e).
                                                 FirstOrDefault();
 
-                                //schedule_fech_mensal;empresa;001401;afiliada;
-
-                                //var tScheduler = (from e in db.I_Scheduler where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + tEmpresa.st_empresa) select e).FirstOrDefault();
-
-                                var hora = tEmpresa.st_horaFech; // tScheduler.st_monthly_hhmm.PadLeft(4, '0');
+                                var hora = tEmpresa.st_horaFech;
 
                                 {
                                     var totalVendas = (from e in db.LOG_Fechamento
@@ -556,6 +547,33 @@ namespace DevKit.Web.Controllers
                             long supertotAtual = 0,                                 
                                  supertotAtualRepasse = 0;
 
+                            var _lst_ids_terms = lstTerminais.Select(y => (int)y.i_unique).Distinct().ToList();
+                            var _lst_ids_empresas = listConvenios.Select ( y=> (int) y.fk_empresa).Distinct().ToList();
+
+                            var _lstFech = (from e in db.LOG_Fechamento
+                                           join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                           where _lst_ids_terms.Contains((int)parc.fk_terminal)
+                                           where _lst_ids_empresas.Contains((int)e.fk_empresa)
+                                           where e.fk_loja == db.currentLojista.i_unique
+                                           where st_mes == "00" || e.st_mes == st_mes
+                                           where st_ano == e.st_ano
+                                           select new LOG_Fechamento
+                                           {
+                                               fkTerminal = parc.fk_terminal,
+                                               fk_cartao = e.fk_cartao,
+                                               fk_empresa = e.fk_empresa,
+                                               fk_loja = e.fk_loja,
+                                               fk_parcela = e.fk_parcela,
+                                               vr_valor = e.vr_valor,
+                                               st_mes = e.st_mes,
+                                               st_ano = e.st_ano
+                                           }).
+                                           ToList();
+
+                            var _parc_ids = _lstFech.Select(y => (int)y.fk_parcela).Distinct().ToList();
+
+                            var _lstParcelas = db.T_Parcelas.Where(y => _parc_ids.Contains((int)y.i_unique)).ToList();
+
                             foreach (var term in lstTerminais)
                             {
                                 long totAtual = 0,
@@ -578,9 +596,8 @@ namespace DevKit.Web.Controllers
                                     // ----------------
 
                                     {
-                                        var totalVendas = (from e in db.LOG_Fechamento
-                                                           join parc in db.T_Parcelas on e.fk_parcela equals (int) parc.i_unique
-                                                           where parc.fk_terminal == term.i_unique
+                                        var totalVendas = (from e in _lstFech
+                                                           where e.fkTerminal == term.i_unique
                                                            where e.fk_empresa == tEmpresa.i_unique
                                                            where e.fk_loja == db.currentLojista.i_unique
                                                            where st_mes == "00" || e.st_mes == st_mes
@@ -612,8 +629,8 @@ namespace DevKit.Web.Controllers
                                             situacao = "FECHADO",
                                         };
 
-                                        var tListParcelas = (from e in db.LOG_Fechamento
-                                                             join parc in db.T_Parcelas on e.fk_parcela equals (int)parc.i_unique
+                                        var tListParcelas = (from e in _lstFech
+                                                             join parc in _lstParcelas on e.fk_parcela equals (int)parc.i_unique
                                                              where parc.fk_terminal == term.i_unique
                                                              where e.fk_empresa == tEmpresa.i_unique
                                                              where e.fk_loja == db.currentLojista.i_unique

@@ -1,5 +1,11 @@
 @import '../../../styles/app';
 
+.appBarHeader {
+  background-image: url('./appBar.png');  
+  background-size: cover;
+  margin-top: -30px;
+}
+
 .root {
   display: flex;
   justify-content: center;

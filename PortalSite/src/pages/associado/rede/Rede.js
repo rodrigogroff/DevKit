@@ -19,7 +19,7 @@ export default class AssociadoRede extends React.Component {
 
 	componentDidMount() {
 		this.setState({ loading: true, error: '' });
-		this.pesquisar();		
+		this.pesquisar();
 	}
 
 	pesquisar = e => {
@@ -59,8 +59,8 @@ export default class AssociadoRede extends React.Component {
 									Pesquisar
 								</td>
 								<td width='90px'>
-									<Input className="input-transparent form-control" id="pesquisa-input" 
-														onChange={event => this.setState({ _pesquisa: event.target.value })} />
+									<Input className="input-transparent form-control" id="pesquisa-input" autocomplete='off'
+										onChange={event => this.setState({ _pesquisa: event.target.value })} />
 								</td>
 								<td width='20px'></td>
 								<td width='120px'>

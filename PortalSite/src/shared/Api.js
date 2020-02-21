@@ -248,10 +248,23 @@ export class Api {
         return ret;
     };
 
+    round = (value, decimals) => {
+        return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+    }
+
     ValorNum = (v) => {
         if (v === undefined || v === null)
             return "";
-        v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
+        v = v.replace(/\D/g, "")
+        return v;
+    }
+
+    ValorNum12 = (v) => {
+        if (v === undefined || v === null)
+            v = "0";
+        v = v.replace(/\D/g, "")
+        for (var i = 0; i < 12 - v.length; i++)
+            v = '0' + v;
         return v;
     }
 

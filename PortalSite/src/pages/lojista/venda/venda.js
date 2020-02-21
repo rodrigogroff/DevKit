@@ -44,6 +44,18 @@ export default class LojistaVenda extends React.Component {
 			tipoVendaMobile: 'digitado',
 			result: 'Pendente de leitura...',
 			_valor: "0,00",
+			_valorP1: "0,00",
+			_valorP2: "0,00",
+			_valorP3: "0,00",
+			_valorP4: "0,00",
+			_valorP5: "0,00",
+			_valorP6: "0,00",
+			_valorP7: "0,00",
+			_valorP8: "0,00",
+			_valorP9: "0,00",
+			_valorP10: "0,00",
+			_valorP11: "0,00",
+			_valorP12: "0,00",
 			_parcelas: "1"
 		};
 
@@ -97,7 +109,24 @@ export default class LojistaVenda extends React.Component {
 
 	processMoney(event) {
 		var api = new Api();
-		this.setState({ _valor: api.ValorMoney(event.target.value) })
+		this.setState({ _valor: api.ValorMoney(event.target.value) }, () => {
+			this.setState({
+				_valorP1: '0,00',
+				_valorP2: '0,00',
+				_valorP3: '0,00',
+				_valorP4: '0,00',
+				_valorP5: '0,00',
+				_valorP6: '0,00',
+				_valorP7: '0,00',
+				_valorP8: '0,00',
+				_valorP9: '0,00',
+				_valorP10: '0,00',
+				_valorP11: '0,00',
+				_valorP12: '0,00'
+			}, () => {
+				this.recalc();
+			});
+		});
 	}
 
 	processParcela(event) {
@@ -105,21 +134,114 @@ export default class LojistaVenda extends React.Component {
 		this.setState({ _parcelas: api.ValorNum(event.target.value) })
 	}
 
-	processMoneyP1(event) { var api = new Api(); this.setState({ _valorP1: api.ValorMoney(event.target.value) }) }
-	processMoneyP2(event) { var api = new Api(); this.setState({ _valorP2: api.ValorMoney(event.target.value) }) }
-	processMoneyP3(event) { var api = new Api(); this.setState({ _valorP3: api.ValorMoney(event.target.value) }) }
-	processMoneyP4(event) { var api = new Api(); this.setState({ _valorP4: api.ValorMoney(event.target.value) }) }
-	processMoneyP5(event) { var api = new Api(); this.setState({ _valorP5: api.ValorMoney(event.target.value) }) }
-	processMoneyP6(event) { var api = new Api(); this.setState({ _valorP6: api.ValorMoney(event.target.value) }) }
-	processMoneyP7(event) { var api = new Api(); this.setState({ _valorP7: api.ValorMoney(event.target.value) }) }
-	processMoneyP8(event) { var api = new Api(); this.setState({ _valorP8: api.ValorMoney(event.target.value) }) }
-	processMoneyP9(event) { var api = new Api(); this.setState({ _valorP9: api.ValorMoney(event.target.value) }) }
-	processMoneyP10(event) { var api = new Api(); this.setState({ _valorP10: api.ValorMoney(event.target.value) }) }
-	processMoneyP11(event) { var api = new Api(); this.setState({ _valorP11: api.ValorMoney(event.target.value) }) }
-	processMoneyP12(event) { var api = new Api(); this.setState({ _valorP12: api.ValorMoney(event.target.value) }) }
+	processMoneyP1(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP1: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP2(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP2: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP3(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP3: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP4(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP4: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP5(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP5: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP6(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP6: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP7(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP7: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP8(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP8: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP9(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP9: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP10(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP10: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP11(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP11: vlr }, () => { if (vlr === '') this.recalc(); }); }
+	processMoneyP12(event) { var api = new Api(); var vlr = api.ValorMoney(event.target.value); this.setState({ _valorP12: vlr }, () => { if (vlr === '') this.recalc(); }); }
 
 	processNumber(vlr) {
 		return new Api().ValorNum(vlr);
+	}
+
+	processNumberMax12(vlr) {
+
+		if (vlr == null || vlr == undefined || vlr == '') {
+			this.setState({ _parcelas: '' })
+			return
+		}
+
+		var x = parseInt(new Api().ValorNum(vlr));
+		if (x > 12) x = 12;
+
+		this.setState({
+			_valorP1: '0,00',
+			_valorP2: '0,00',
+			_valorP3: '0,00',
+			_valorP4: '0,00',
+			_valorP5: '0,00',
+			_valorP6: '0,00',
+			_valorP7: '0,00',
+			_valorP8: '0,00',
+			_valorP9: '0,00',
+			_valorP10: '0,00',
+			_valorP11: '0,00',
+			_valorP12: '0,00'
+		}, () => {
+			this.recalc(x);
+		});
+	}
+
+	recalc(maxP) {
+
+		if (maxP === null || maxP === undefined)
+			maxP = this.state._parcelas;
+
+		var api = new Api();
+
+		var myCurrentParcs = parseInt(maxP);
+		var valorTotal = this.state._valor;
+
+		if (this.state._valorP1 === '' && maxP >= 1) myCurrentParcs--;
+		if (this.state._valorP2 === '' && maxP >= 2) myCurrentParcs--;
+		if (this.state._valorP3 === '' && maxP >= 3) myCurrentParcs--;
+		if (this.state._valorP4 === '' && maxP >= 4) myCurrentParcs--;
+		if (this.state._valorP5 === '' && maxP >= 5) myCurrentParcs--;
+		if (this.state._valorP6 === '' && maxP >= 6) myCurrentParcs--;
+		if (this.state._valorP7 === '' && maxP >= 7) myCurrentParcs--;
+		if (this.state._valorP8 === '' && maxP >= 8) myCurrentParcs--;
+		if (this.state._valorP9 === '' && maxP >= 9) myCurrentParcs--;
+		if (this.state._valorP10 === '' && maxP >= 10) myCurrentParcs--;
+		if (this.state._valorP11 === '' && maxP >= 11) myCurrentParcs--;
+		if (this.state._valorP12 === '' && maxP >= 12) myCurrentParcs--;
+
+		var totValorNumber = parseInt(api.extractNumbers(this.state._valor));
+
+		var valorCalcParcela = parseInt(api.round((totValorNumber / myCurrentParcs), 2));
+		var ultParc = valorCalcParcela;
+
+		if ((valorCalcParcela * myCurrentParcs).toString() != totValorNumber.toString())
+			ultParc = totValorNumber - (valorCalcParcela * (myCurrentParcs - 1));
+
+		var valorCalcParcelaStr = api.ValorMoney(valorCalcParcela.toString());
+
+		ultParc = api.ValorMoney(ultParc.toString());
+
+		if (this.state._valorP1 !== '' && maxP >= 1) { this.setState({ _valorP1: valorCalcParcelaStr }) }
+		if (this.state._valorP2 !== '' && maxP >= 2) { this.setState({ _valorP2: valorCalcParcelaStr }) }
+		if (this.state._valorP3 !== '' && maxP >= 3) { this.setState({ _valorP3: valorCalcParcelaStr }) }
+		if (this.state._valorP4 !== '' && maxP >= 4) { this.setState({ _valorP4: valorCalcParcelaStr }) }
+		if (this.state._valorP5 !== '' && maxP >= 5) { this.setState({ _valorP5: valorCalcParcelaStr }) }
+		if (this.state._valorP6 !== '' && maxP >= 6) { this.setState({ _valorP6: valorCalcParcelaStr }) }
+		if (this.state._valorP7 !== '' && maxP >= 7) { this.setState({ _valorP7: valorCalcParcelaStr }) }
+		if (this.state._valorP8 !== '' && maxP >= 8) { this.setState({ _valorP8: valorCalcParcelaStr }) }
+		if (this.state._valorP9 !== '' && maxP >= 9) { this.setState({ _valorP9: valorCalcParcelaStr }) }
+		if (this.state._valorP10 !== '' && maxP >= 10) { this.setState({ _valorP10: valorCalcParcelaStr }) }
+		if (this.state._valorP11 !== '' && maxP >= 11) { this.setState({ _valorP11: valorCalcParcelaStr }) }
+		if (this.state._valorP12 !== '' && maxP >= 12) { this.setState({ _valorP12: valorCalcParcelaStr }) }
+
+		if (ultParc != valorCalcParcela) {
+			if (this.state._valorP12 !== '' && maxP >= 12) { this.setState({ _valorP12: ultParc }) } else
+				if (this.state._valorP11 !== '' && maxP >= 11) { this.setState({ _valorP11: ultParc }) } else
+					if (this.state._valorP10 !== '' && maxP >= 10) { this.setState({ _valorP10: ultParc }) } else
+						if (this.state._valorP9 !== '' && maxP >= 9) { this.setState({ _valorP9: ultParc }) } else
+							if (this.state._valorP8 !== '' && maxP >= 8) { this.setState({ _valorP8: ultParc }) } else
+								if (this.state._valorP7 !== '' && maxP >= 7) { this.setState({ _valorP7: ultParc }) } else
+									if (this.state._valorP6 !== '' && maxP >= 6) { this.setState({ _valorP6: ultParc }) } else
+										if (this.state._valorP5 !== '' && maxP >= 5) { this.setState({ _valorP5: ultParc }) } else
+											if (this.state._valorP4 !== '' && maxP >= 4) { this.setState({ _valorP4: ultParc }) } else
+												if (this.state._valorP3 !== '' && maxP >= 3) { this.setState({ _valorP3: ultParc }) } else
+													if (this.state._valorP2 !== '' && maxP >= 2) { this.setState({ _valorP2: ultParc }) }
+		}
+
+		this.setState({ _parcelas: maxP });
 	}
 
 	trocarTipoVenda = e => {
@@ -206,8 +328,9 @@ export default class LojistaVenda extends React.Component {
 			return;
 		}
 
+		var pi = parseInt(parcelas);
+
 		{
-			var pi = parseInt(parcelas);
 			if (pi <= 0 || pi >= 12) {
 				this.setState({
 					loading: false,
@@ -243,14 +366,39 @@ export default class LojistaVenda extends React.Component {
 			});
 		}
 		else {
+			var api = new Api();
+
 			var senha = this.state._stSenha;
-			var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, valor, parcelas, senha });
+			var parcelas_str = '';
+
+			for (let i = 1; i <= pi; ++i) {
+
+				var vlr_parc_atual = this.state._valorP1;
+
+				switch (i) {
+					case 2: vlr_parc_atual = this.state._valorP2; break;
+					case 3: vlr_parc_atual = this.state._valorP3; break;
+					case 4: vlr_parc_atual = this.state._valorP4; break;
+					case 5: vlr_parc_atual = this.state._valorP5; break;
+					case 6: vlr_parc_atual = this.state._valorP6; break;
+					case 7: vlr_parc_atual = this.state._valorP7; break;
+					case 8: vlr_parc_atual = this.state._valorP8; break;
+					case 9: vlr_parc_atual = this.state._valorP9; break;
+					case 10: vlr_parc_atual = this.state._valorP10; break;
+					case 11: vlr_parc_atual = this.state._valorP11; break;
+					case 12: vlr_parc_atual = this.state._valorP12; break;
+				}
+
+				parcelas_str += api.ValorNum12(vlr_parc_atual)
+			}
+
+			var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, valor, parcelas, senha, parcelas_str });
 			var api = new Api();
 			api.postTokenPortal("solicitaVendaPos", serviceData).then(resp => {
 				if (resp.ok === true) {
 					this.setState({
 						loading: false,
-						aviso: "Venda POS feita com sucesso!",
+						aviso: "Venda feita com sucesso!",
 					});
 				}
 				else {
@@ -320,18 +468,17 @@ export default class LojistaVenda extends React.Component {
 							<table width='100%'>
 								<tbody>
 									<tr>
-										<td width='90px'><h5> Autorização</h5></td>
-										<td width='20px'></td>
+										<td width='70px'><h5>Modo</h5></td>
 										<td width='90px' style={{ paddingTop: '8px' }}>
 											<FormGroup className="radio abc-radio">
 												<Input type="radio" id="radio1" name="r" onClick={this.trocarTipoVenda} checked={this.state.vendaPos} />
-												<Label for="radio1" style={{ paddingTop: '4px' }}>POS</Label>
+												<Label for="radio1" style={{ paddingTop: '4px' }}>Digitado</Label>
 											</FormGroup>
 										</td>
 										<td width='90px' style={{ paddingTop: '8px' }}>
 											<FormGroup className="radio abc-radio">
 												<Input type="radio" id="radio2" name="r" onClick={this.trocarTipoVenda} checked={this.state.vendaMobile} />
-												<Label for="radio2" style={{ paddingTop: '4px' }}>Mobile</Label>
+												<Label for="radio2" style={{ paddingTop: '4px' }}>Cartão Virtual</Label>
 											</FormGroup>
 										</td>
 									</tr>
@@ -366,21 +513,25 @@ export default class LojistaVenda extends React.Component {
 									<tr>
 										<td>
 											<Input className="input-transparent form-control" id="empresa-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._empresa}
+												autocomplete='off'
 												onChange={event => this.setState({ _empresa: this.processNumber(event.target.value) })} />
 										</td>
 										<td width='10px'></td>
 										<td >
 											<Input className="input-transparent form-control" id="matricula-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._matricula}
+												autocomplete='off'
 												onChange={event => this.setState({ _matricula: this.processNumber(event.target.value) })} />
 										</td>
 										<td width='10px'></td>
 										<td >
 											<Input className="input-transparent form-control" id="codAcesso-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._codAcesso}
+												autocomplete='off'
 												onChange={event => this.setState({ _codAcesso: this.processNumber(event.target.value) })} />
 										</td>
 										<td width='10px'></td>
 										<td >
 											<Input className="input-transparent form-control" id="vencimento-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._venc}
+												autocomplete='off'
 												onChange={event => this.setState({ _venc: this.processNumber(event.target.value) })} />
 										</td>
 									</tr>
@@ -395,13 +546,15 @@ export default class LojistaVenda extends React.Component {
 										<td width='90px'>Valor</td>
 										<td width='150px'>
 											<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+												autocomplete='off'
 												value={this.state._valor} onChange={this.processMoney} />
 										</td>
 										<td width='60px'></td>
 										<td width='90px'>Parcelas</td>
 										<td width='50px'>
 											<Input className="input-transparent form-control" id="parcelas" maxLength="2" type="tel" pattern="[0-9]*" inputmode="numeric"
-												onChange={event => this.setState({ _parcelas: this.processNumber(event.target.value) })} />
+												value={this.state._parcelas} autocomplete='off'
+												onChange={event => this.processNumberMax12(event.target.value)} />
 										</td>
 									</tr>
 								</tbody>
@@ -479,6 +632,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 2 && this.state._parcelas > 0 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP1} onChange={this.processMoneyP1} />
 																	</div>
 																	: <div></div>
@@ -491,6 +645,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 2 && this.state._parcelas > 0 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP2} onChange={this.processMoneyP2} />
 																	</div>
 																	: <div></div>
@@ -509,6 +664,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 3 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP3} onChange={this.processMoneyP3} />
 																	</div> : <div></div>
 															}
@@ -525,6 +681,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 4 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP4} onChange={this.processMoneyP4} />
 																	</div> : <div></div>
 															}
@@ -544,6 +701,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 5 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP5} onChange={this.processMoneyP5} />
 																	</div> : <div></div>
 															}
@@ -560,6 +718,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 6 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP6} onChange={this.processMoneyP6} />
 																	</div> : <div></div>
 															}
@@ -578,6 +737,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 7 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP7} onChange={this.processMoneyP7} />
 																	</div> : <div></div>
 															}
@@ -594,6 +754,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 8 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP8} onChange={this.processMoneyP8} />
 																	</div> : <div></div>
 															}
@@ -612,6 +773,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 9 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP9} onChange={this.processMoneyP9} />
 																	</div> : <div></div>
 															}
@@ -628,6 +790,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 10 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP10} onChange={this.processMoneyP10} />
 																	</div> : <div></div>
 															}
@@ -646,6 +809,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 11 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP11} onChange={this.processMoneyP11} />
 																	</div> : <div></div>
 															}
@@ -662,6 +826,7 @@ export default class LojistaVenda extends React.Component {
 																this.state._parcelas >= 12 ?
 																	<div>
 																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																			autocomplete='off'
 																			value={this.state._valorP12} onChange={this.processMoneyP12} />
 																	</div> : <div></div>
 															}
@@ -688,6 +853,7 @@ export default class LojistaVenda extends React.Component {
 													</InputGroupText>
 												</InputGroupAddon>
 												<Input id="password-input" type="password" className="input" width='80px' maxLength="4" value={this.state._stSenha}
+													autocomplete='off'
 													onChange={event => this.setState({ _stSenha: this.processNumber(event.target.value) })} />
 											</InputGroup>
 										</FormGroup>

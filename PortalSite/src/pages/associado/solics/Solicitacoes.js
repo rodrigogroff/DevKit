@@ -40,7 +40,7 @@ export default class AssociadoSolicitacoes extends React.Component {
 	}
 
 	processNumber(vlr) {
-		return new Api().ValorNum(vlr);		
+		return new Api().ValorNum(vlr);
 	}
 
 	loadSolics = e => {
@@ -236,8 +236,8 @@ export default class AssociadoSolicitacoes extends React.Component {
 												<i className="fa fa-lock text-white" />
 											</InputGroupText>
 										</InputGroupAddon>
-										<Input id="password-input" type="password" className="input" width='80px' maxLength="4" value={this.state._stSenha}
-											onChange={event => this.setState({ _stSenha: this.processNumber( event.target.value) })} />
+										<Input id="password-input" type="password" className="input" width='80px' maxLength="4" value={this.state._stSenha} autocomplete='off'
+											onChange={event => this.setState({ _stSenha: this.processNumber(event.target.value) })} />
 									</InputGroup>
 								</FormGroup>
 							</Widget>

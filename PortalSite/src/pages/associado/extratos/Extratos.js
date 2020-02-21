@@ -1,5 +1,5 @@
 
-import React  from 'react';
+import React from 'react';
 
 import {
 	Col,
@@ -77,6 +77,7 @@ export default class AssociadoExtratos extends React.Component {
 											<Input className={this.state.error_name ? "input-transparent-red" : "input-transparent"}
 												type="text"
 												id="fieldName"
+												autocomplete='off'
 												maxLength="50"
 												value={this.state.totalExtrato}
 												disabled

@@ -12,6 +12,7 @@ namespace Entities.Api.Lojista
         public string valor { get; set; }
         public string parcelas { get; set; }
         public string senha { get; set; }
+        public string parcelas_str { get; set; }
     }
 
     public class ReqSolicitacaoVenda

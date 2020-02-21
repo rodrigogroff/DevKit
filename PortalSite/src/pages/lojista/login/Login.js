@@ -109,79 +109,82 @@ export default class LoginLojista extends React.Component {
           <div align='center' style={{ width: '330px' }}>
             <form className="mt" onSubmit={this.executeLogin}>
               <Widget className={`${s.widget}`} bodyClass="p-0">
-                <div className="logoClass" align="center">
-                  <img className={s.imgLogo} src={logoImg} alt=" " />
-                </div>
-                <table align='center' width='180px'>
-                  <tbody>
-                    <tr>
-                      <td valign="middle">
-                        <br></br>
-                        <div align='center' style={{ height: '32px' }}>Informe o terminal de lojista</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td width='100%'>
-                        <InputGroup className="input-group-no-border px-4">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="fa fa-user text-white" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input className="input-transparent form-control" id="empresa-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric"
-                            onChange={event => this.setState({ _terminal: event.target.value })} />
-                        </InputGroup>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td valign="middle">
-                        <br></br>
-                        <div align='center' style={{ height: '32px' }}>Senha</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td width='100%'>
-                        <InputGroup className="input-group-no-border px-4">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="fa fa-lock text-white" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Tooltip placement="top" isOpen={this.state.error_password} target="password-input">
-                            Informe a senha corretamente
+                <div className={s.appBarHeader}>
+                  <br></br>
+                  <div className="logoClass" align="center">
+                    <img className={s.imgLogo} src={logoImg} alt=" " />
+                  </div>
+                  <table align='center' width='180px'>
+                    <tbody>
+                      <tr>
+                        <td valign="middle">
+                          <br></br>
+                          <div align='center' style={{ height: '32px' }}>Informe o terminal de lojista</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width='100%'>
+                          <InputGroup className="input-group-no-border px-4">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="fa fa-user text-white" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input className="input-transparent form-control" id="empresa-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" autocomplete='off'
+                              onChange={event => this.setState({ _terminal: event.target.value })} />
+                          </InputGroup>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="middle">
+                          <br></br>
+                          <div align='center' style={{ height: '32px' }}>Senha</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width='100%'>
+                          <InputGroup className="input-group-no-border px-4">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="fa fa-lock text-white" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Tooltip placement="top" isOpen={this.state.error_password} target="password-input">
+                              Informe a senha corretamente
                         </Tooltip>
-                          <Input id="password-input" type="password" className="input-transparent" width='80px' maxLength="6"
-                            onChange={event => this.setState({ _senha: event.target.value })} />
-                        </InputGroup>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <br></br>
-                <div className="bg-widget-transparent mt-4">
-                  <div className="p-4">
-                    <br></br>
-                    <h4>
-                      <Button color={this.state.invalidForm ? "danger" : "primary"}
-                        style={{ width: "100%" }}
-                        type="submit"
-                        onClick={this.executeLogin}
-                        disabled={this.state.loading} >
-                        {this.state.loading === true ? (
-                          <span className="spinner">
-                            <i className="fa fa-spinner fa-spin" />
-                            &nbsp;&nbsp;&nbsp;
+                            <Input id="password-input" type="password" className="input-transparent" width='80px' maxLength="6" autocomplete='off'
+                              onChange={event => this.setState({ _senha: event.target.value })} />
+                          </InputGroup>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <br></br>
+                  <div className="bg-widget-transparent mt-4">
+                    <div className="p-4">
+                      <br></br>
+                      <h4>
+                        <Button color={this.state.invalidForm ? "danger" : "primary"}
+                          style={{ width: "100%" }}
+                          type="submit"
+                          onClick={this.executeLogin}
+                          disabled={this.state.loading} >
+                          {this.state.loading === true ? (
+                            <span className="spinner">
+                              <i className="fa fa-spinner fa-spin" />
+                              &nbsp;&nbsp;&nbsp;
                         </span>
-                        ) : (
-                            <div />
-                          )}
-                        Efetuar Login
+                          ) : (
+                              <div />
+                            )}
+                          Efetuar Login
                     </Button>
-                    </h4>
-                    <br></br>
-                    <br></br>
-                    <p className={s.widgetLoginInfo}>Sistema Convênios | {this.state._versao}</p>
-                    <br></br>
+                      </h4>
+                      <br></br>
+                      <br></br>
+                      <p className={s.widgetLoginInfo}>Sistema Convênios | {this.state._versao}</p>
+                      <br></br>
+                    </div>
                   </div>
                 </div>
               </Widget>

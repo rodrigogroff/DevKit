@@ -167,7 +167,7 @@ namespace Master.Service
 
                     {
                         var serviceClient = new RestClient(network.GetConveyNetAPI());
-                        var serviceRequest = new RestRequest("api/VendaServerWeb", Method.PUT);
+                        var serviceRequest = new RestRequest("api/VendaServerMobile", Method.PUT);
 
                         var _parcelas = Convert.ToInt32(req.parcelas);
                         var _valor = Convert.ToInt32(req.valor);
@@ -175,20 +175,9 @@ namespace Master.Service
                         var valores = "";
 
                         if (_parcelas == 1)
-                        {
                             valores = req.valor.PadLeft(12, '0');
-                        }
                         else
-                        {
-                            int val = _valor / _parcelas;
-
-                            for (int i = 0; i < _parcelas - 1; i++)
-                                valores += val.ToString().PadLeft(12, '0');
-
-                            // ajustar ultima
-                            var calc = _valor - (val * (_parcelas - 1));
-                            valores += calc.ToString().PadLeft(12, '0');
-                        }
+                            valores = req.parcelas_str;
 
                         var dadosVenda = new VendaIsoInputDTO
                         {

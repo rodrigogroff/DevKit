@@ -124,9 +124,10 @@
                             <td width="25px"></td>
                             <td width="110px"><b>Tipo Captura</b></td>
                             <td width="360px">
-                                <label><input type="radio" name="tipo1" value="3" ng-model="campos.tipo"> (Todas) </label>&nbsp;&nbsp;
+                                <label><input type="radio" name="tipo1" value="0" ng-model="campos.tipo"> (Todas) </label>&nbsp;&nbsp;
                                 <label><input type="radio" name="tipo2" value="1" ng-model="campos.tipo"> SITEF </label>&nbsp;&nbsp;
                                 <label><input type="radio" name="tipo3" value="2" ng-model="campos.tipo"> WEB </label>&nbsp;&nbsp;
+                                <label><input type="radio" name="tipo3" value="3" ng-model="campos.tipo"> MOBILE </label>&nbsp;&nbsp;
                             </td>
                             <td width="125px"></td>
                         </tr>
@@ -192,8 +193,6 @@
                 </tr>
                 <tr height="22px"></tr>
             </table>
-
-
 
             <div ng-show="list.length == 0">
                 <br />

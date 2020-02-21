@@ -143,9 +143,7 @@ namespace DevKit.Web.Controllers
             #region - code - 
 
             if (!string.IsNullOrEmpty (nsu))
-            {
                 q_trans = q_trans.Where(y => y.nu_nsu.ToString() == nsu);
-            }
             
             if (!string.IsNullOrEmpty(terminal))
             {
@@ -172,25 +170,17 @@ namespace DevKit.Web.Controllers
             }
 
             if (valorVenda > 0)
-            {
                 q_trans = q_trans.Where(y => y.vr_total == valorVenda);
-            }
 
             if (!string.IsNullOrEmpty(parcelas))
-            {
                 q_trans = q_trans.Where(y => y.nu_parcelas.ToString() == parcelas);
-            }
 
             if (!string.IsNullOrEmpty(operacao))
-            {
                 q_trans = q_trans.Where(y => y.st_msg_transacao.ToUpper().Contains (operacao.ToUpper()));
-            }
 
             if (!string.IsNullOrEmpty(tipo))
-            {
-                if (tipo != "3")
+                if (tipo != "0")
                     q_trans = q_trans.Where(y => y.tg_contabil.ToString() == tipo);
-            }
 
             if (!string.IsNullOrEmpty(sit))
             {
@@ -302,7 +292,7 @@ namespace DevKit.Web.Controllers
                     {
                         case "1": tipoTrans = "SITEF"; break;
                         case "2": tipoTrans = "Web"; break;
-                        case "3": tipoTrans = "LA"; break;
+                        case "3": tipoTrans = "Mobile"; break;
                     }
 
                     lstIT.itens.Add(new ItensTrans

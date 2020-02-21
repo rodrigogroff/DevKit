@@ -726,13 +726,18 @@ namespace DevKit.Web.Controllers
                                                             Where(y => y.tg_contabil.ToString() == TipoCaptura.PORTAL).
                                                             Count();
 
-                            var totalConfirmadas = confirmadasSitef + confirmadasPortal;
+                            var confirmadasMobile = queryX.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                                            Where(y => y.tg_contabil.ToString() == TipoCaptura.MOBILE).
+                                                            Count();
+
+                            var totalConfirmadas = confirmadasSitef + confirmadasPortal + confirmadasMobile;
 
                             a = new
                             {
                                 pendentesSitef,
                                 confirmadasSitef,
                                 confirmadasPortal,
+                                confirmadasMobile,
                                 totalConfirmadas,
                             };
                         }
@@ -748,10 +753,15 @@ namespace DevKit.Web.Controllers
                                                             Where(y => y.tg_contabil.ToString() == TipoCaptura.PORTAL).
                                                             Count();
 
+                            var confirmadasMobile = queryX.Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                                            Where(y => y.tg_contabil.ToString() == TipoCaptura.MOBILE).
+                                                            Count();
+
                             b = new
                             {
                                 totalSITEF = confirmadasSitef,
-                                totalPORTAL = confirmadasPortal
+                                totalPORTAL = confirmadasPortal,
+                                totalMOBILE = confirmadasMobile,
                             };
                         }
                         #endregion
@@ -771,13 +781,16 @@ namespace DevKit.Web.Controllers
                             var confPortal = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.PORTAL &&
                                                                 y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).Count();
 
+                            var totalMobile = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.MOBILE).Count();
+
                             c = new
                             {
                                 totalSitef,
                                 confSitef,
                                 pendSitef,
                                 totalPortal,
-                                confPortal
+                                confPortal,
+                                totalMobile
                             };
                         }
                         #endregion
@@ -786,11 +799,13 @@ namespace DevKit.Web.Controllers
                         {
                             var totalSitef = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.SITEF).Count();
                             var totalPortal = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.PORTAL).Count();
+                            var totalMobile = queryX.Where(y => y.tg_contabil.ToString() == TipoCaptura.MOBILE).Count();
 
                             d = new
                             {
                                 totTransacoesSITEF = totalSitef,
                                 totTransacoesPORTAL = totalPortal,
+                                totTransacoesMOBILE = totalMobile,
                             };
                         }
                         #endregion

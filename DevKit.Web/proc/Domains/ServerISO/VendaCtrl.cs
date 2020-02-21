@@ -63,12 +63,16 @@ namespace DevKit.Web.Controllers
 
         [AllowAnonymous]
         [HttpPut]
-        [Route("api/VendaServerWeb")]
+        [Route("api/VendaServerMobile")]
         public IHttpActionResult VendaWeb(VendaIsoInputDTO mdl)
         {
             using (var db = new AutorizadorCNDB())
             {
-                var v = new VendaEmpresarial { IsSitef = false };
+                var v = new VendaEmpresarial
+                {
+                    IsSitef = false,
+                    tipoCaptura = TipoCaptura.MOBILE
+                };
 
                 v.input_cont_pe.st_empresa = mdl.st_empresa;
                 v.input_cont_pe.st_matricula = mdl.st_matricula;

@@ -46,6 +46,8 @@ namespace DataModel
                       vr_valor;
 
         public bool   IsDigitado = false, IsSitef = false;
+
+        public string tipoCaptura = TipoCaptura.PORTAL;
         
         public ArrayList lstParcs = new ArrayList();
 
@@ -796,7 +798,7 @@ namespace DataModel
             if (IsSitef == true)
                 l_tr.tg_contabil = Convert.ToChar(TipoCaptura.SITEF);
             else
-                l_tr.tg_contabil = Convert.ToChar(TipoCaptura.PORTAL);
+                l_tr.tg_contabil = Convert.ToChar(tipoCaptura);
 
             l_tr.i_unique = Convert.ToInt32(db.InsertWithIdentity(l_tr));
 

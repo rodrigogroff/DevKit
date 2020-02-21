@@ -15,6 +15,7 @@ namespace DevKit.Web.Controllers
     public class TipoCaptura
     {
         public const string SITEF = "1",
-                            PORTAL = "2";
+                            PORTAL = "2",
+                            MOBILE = "3";
     }
 }

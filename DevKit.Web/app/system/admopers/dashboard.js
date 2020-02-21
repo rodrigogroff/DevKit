@@ -20,7 +20,8 @@ angular.module('app.controllers').controller('DashboardController',
 
 		            var dataPie = [
                         { label: "Sitef", data: Number($scope.b.totalSITEF)},
-                        { label: "Portal", data: Number($scope.b.totalPORTAL)}
+                        { label: "Portal", data: Number($scope.b.totalPORTAL) },
+                        { label: "Mobile", data: Number($scope.b.totalMOBILE) },
 		            ];
 
                     $.plot(placeholder102, dataPie, {
@@ -34,7 +35,7 @@ angular.module('app.controllers').controller('DashboardController',
                         }
                     });
 
-                    var data103 = [["Sitef", data.c.totalSitef], ["Portal", data.c.totalPortal]];
+                    var data103 = [["Sitef", data.c.totalSitef], ["Portal", data.c.totalPortal], ["Mobile", data.c.totalMobile]];
 
                     $.plot("#placeholder103", [data103], {
                         series: {

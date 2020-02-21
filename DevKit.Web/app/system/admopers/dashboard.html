@@ -42,7 +42,7 @@
                     <td width="600px" valign="top">
                         <h3>Indicadores </h3> <!--101-->
                         <br />
-                        <table class="table table-hover" ng-if="a.pendentesSitef != undefined">                            
+                        <table class="table table-hover" ng-if="a.pendentesSitef != undefined">
                             <tr>
                                 <td>No. PENDENTES SITEF</td>
                                 <td>{{a.pendentesSitef}}</td>
@@ -50,11 +50,14 @@
                             <tr>
                                 <td>CONFIRMADAS SITEF</td>
                                 <td>{{a.confirmadasSitef}}</td>
-                            </tr>                            
+                            </tr>
                             <tr>
                                 <td>No. CONFIRMADAS PORTAL</td>
                                 <td>{{a.confirmadasPortal}}</td>
                             </tr>
+                            <tr>
+                                <td>No. CONFIRMADAS MOBILE</td>
+                                <td>{{a.confirmadasMobile}}</td>
                             <tr>
                                 <td>TOTAL CONFIRMADAS</td>
                                 <td>{{a.totalConfirmadas}}</td>
@@ -67,7 +70,7 @@
                         <h3>Comparativo Autorizadores x Captura </h3> <!--102-->
                         <br />
                         <div align="center">
-                            SITEF: {{b.totalSITEF}}, PORTAL: {{b.totalPORTAL}}<br />
+                            SITEF: {{b.totalSITEF}}, PORTAL: {{b.totalPORTAL}}, MOBILE: {{b.totalMOBILE}}<br />
                         </div>                        
 
                         <div class="demo-container102">
@@ -98,6 +101,12 @@
                             <tr>
                                 <td>PORTAL</td>
                                 <td>{{c.totalPortal}}</td>
+                                <td>{{c.confPortal}}</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>MOBILE</td>
+                                <td>{{c.totalMobile}}</td>
                                 <td>{{c.confPortal}}</td>
                                 <td>0</td>
                             </tr>

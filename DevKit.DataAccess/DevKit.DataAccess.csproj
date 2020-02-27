@@ -95,6 +95,7 @@
     <Compile Include="DataModel\db\AutorizadorDB_CurrentUser.cs" />
     <Compile Include="DataModel\db\AutorizadorDB_db.cs" />
     <Compile Include="DataModel\Domains\Constantes.cs" />
+    <Compile Include="DataModel\DTO\T_Empresa.cs" />
     <Compile Include="DataModel\DTO\T_LoteCartao.cs" />
     <Compile Include="DataModel\Entities\Parceiro.cs" />
     <Compile Include="DataModel\Entities\T_Loja_DTO.cs" />

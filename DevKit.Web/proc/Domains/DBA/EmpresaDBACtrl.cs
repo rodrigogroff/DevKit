@@ -104,6 +104,9 @@ namespace DevKit.Web.Controllers
                                                                  Sum(y => y.vr_valor).ToString());
             }
 
+            mdl._tg_bloq = mdl.tg_bloq == 1;
+            mdl._tg_isentoFat = mdl.tg_isentoFat == 1;
+
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
@@ -138,6 +141,9 @@ namespace DevKit.Web.Controllers
 
             if (mdl.nu_diaFech == 0)
                 return BadRequest("Dia de fechamento não pode estar zerado");
+
+            if (mdl._tg_bloq == true) mdl.tg_bloq = 1; else mdl.tg_bloq = 0;
+            if (mdl._tg_isentoFat == true) mdl.tg_isentoFat = 1; else mdl.tg_isentoFat = 0;
 
             db.Update(mdl);
 

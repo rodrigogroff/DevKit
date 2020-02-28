@@ -290,7 +290,7 @@ namespace Master.Service
                     }
 
                     // -----------------------------
-                    // salvar autorização ok
+                    // salvar autorização ok ???
                     // -----------------------------
 
                     repository.InserirSolicitacaoVenda(db, new SolicitacaoVenda

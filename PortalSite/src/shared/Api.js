@@ -263,9 +263,13 @@ export class Api {
         if (v === undefined || v === null)
             v = "0";
         v = v.replace(/\D/g, "")
+
+        var prefix = '';
+
         for (var i = 0; i < 12 - v.length; i++)
-            v = '0' + v;
-        return v;
+            prefix += '0';
+
+        return prefix + v;
     }
 
     ValorMoney = (v) => {

@@ -389,7 +389,9 @@ export default class LojistaVenda extends React.Component {
 					case 12: vlr_parc_atual = this.state._valorP12; break;
 				}
 
-				parcelas_str += api.ValorNum12(vlr_parc_atual)
+				var vvv = api.ValorNum12(vlr_parc_atual);
+
+				parcelas_str += vvv
 			}
 
 			var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, valor, parcelas, senha, parcelas_str });
@@ -417,7 +419,7 @@ export default class LojistaVenda extends React.Component {
 	}
 
 	render() {
-		if (this.state.redirVenda === true) return <Redirect to="/app/lojista/solics" />;
+		if (this.state.redirVenda === true) return <Redirect to="/app/lojista/venda" />;
 		else
 			return (
 				<div className={s.root}>
@@ -451,7 +453,23 @@ export default class LojistaVenda extends React.Component {
 							</div>
 						</ModalBody>
 						<ModalFooter className="bg-white">
-							<Button color="primary" onClick={() => this.setState({ aviso: "", redirVenda: true })}> Fechar </Button>
+							<Button color="primary" onClick={() => this.setState({
+								aviso: "", _valor: "0,00",
+								_valorP1: "0,00",
+								_valorP2: "0,00",
+								_valorP3: "0,00",
+								_valorP4: "0,00",
+								_valorP5: "0,00",
+								_valorP6: "0,00",
+								_valorP7: "0,00",
+								_valorP8: "0,00",
+								_valorP9: "0,00",
+								_valorP10: "0,00",
+								_valorP11: "0,00",
+								_valorP12: "0,00",
+								_parcelas: "1",
+								_stSenha: ''
+							})}> Fechar </Button>
 						</ModalFooter>
 					</Modal>
 

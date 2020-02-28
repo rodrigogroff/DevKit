@@ -292,7 +292,7 @@ namespace Master.Service
                     // -----------------------------
                     // salvar autorização ok ???
                     // -----------------------------
-
+                    /*
                     repository.InserirSolicitacaoVenda(db, new SolicitacaoVenda
                     {
                         dtSolic = DateTime.Now.AddSeconds(-1),
@@ -305,7 +305,7 @@ namespace Master.Service
                         vrValor = Convert.ToInt32(req.valor.Replace(".", "").Replace(",", "")),
                         nuParcelas = Convert.ToInt32(req.parcelas),
                     });
-
+                    */
                     return true;
                 }
             }

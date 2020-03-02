@@ -19,13 +19,16 @@ namespace GetStarted
             Console.WriteLine("(0.22) Patch?");
             Console.WriteLine("------------------------");
 
-            //  LimpaScheduler();
+            Console.ReadLine();
 
-            //ForcaFech(1, new DateTime(2019, 12, 5, 0, 10, 0));
+            //9620,9621,9622,9623,9624,5041
 
-          //  FixDeVelho("11", "2019", 1, "12", "2019", 2019, 12, 5);
-
-            //ReFecha("12", "2019", 1, 2019, 12, 5);
+            //ForcaFech("009620", new DateTime(2020, 3, 1, 0, 12, 0));
+            //ForcaFech("009621", new DateTime(2020, 3, 1, 0, 12, 0));
+            //ForcaFech("009622", new DateTime(2020, 3, 1, 0, 12, 0));
+            //ForcaFech("009623", new DateTime(2020, 3, 1, 0, 12, 0));
+            //ForcaFech("009624", new DateTime(2020, 3, 1, 0, 12, 0));
+            ForcaFech("005041", new DateTime(2020, 3, 1, 0, 12, 0));
         }
 
         static void LimpaScheduler()
@@ -176,7 +179,7 @@ namespace GetStarted
             #endregion
         }
 
-        static void ForcaFech(int id, DateTime dt)
+        static void ForcaFech(string mat, DateTime dt)
         {
             #region -  code - 
 
@@ -191,7 +194,7 @@ namespace GetStarted
                     var ano = dt.ToString("yyyy");
                     var mes = dt.ToString("MM").PadLeft(2, '0');
 
-                    var lstEmpresas = db.T_Empresa.Where(y => y.i_unique == id).ToList();
+                    var lstEmpresas = db.T_Empresa.Where(y => y.st_empresa == mat).ToList();
 
                     foreach (var empresa in lstEmpresas)
                     {
@@ -234,9 +237,13 @@ namespace GetStarted
                         // busca parcelas
                         // ----------------------------
 
-                        long totValor = 0;
+                        long totValor = 0, ind_parc = 1, tot_parcs_sel;
 
-                        foreach (var parc in db.T_Parcelas.Where(y => y.fk_empresa == empresa.i_unique && y.nu_parcela > 0).ToList())
+                        var lst = db.T_Parcelas.Where(y => y.fk_empresa == empresa.i_unique && y.nu_parcela > 0).ToList();
+
+                        tot_parcs_sel = lst.Count();
+
+                        foreach (var parc in lst)
                         {
                             // ----------------------------
                             // somente confirmadas
@@ -253,7 +260,12 @@ namespace GetStarted
 
                                 if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
                                     continue;
+
+                                if (logTrans.dt_transacao > dt)
+                                    continue;
                             }
+
+                            Console.WriteLine(empresa.st_empresa + " > " + empresa.i_unique + " --> " + ind_parc++ + " / " + tot_parcs_sel);
 
                             // ----------------------------
                             // decrementa parcela

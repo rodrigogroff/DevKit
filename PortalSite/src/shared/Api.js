@@ -1,14 +1,14 @@
 ﻿
 export const ApiLocation = {
-    //api_host: 'http://localhost',
-    api_host: 'https://meuconvey.conveynet.com.br',
+    api_host: 'http://localhost',
+    //api_host: 'https://meuconvey.conveynet.com.br',
     api_port: '18524',
     api_portal: '/api/v1/portal/',
 }
 
 export class Api {
 
-    versao = () => "v2.1.007";
+    versao = () => "v2.1.008";
 
     isAuthenticated = () => localStorage.getItem('token');
 

@@ -218,6 +218,7 @@ namespace Master.Service
                                 fkLoja = terminal.fk_loja,
                                 fkTerminal = fkTerminal,
                                 fkLogTrans = null,
+                                stErro = "Falha comunicação servidor",
                                 vrValor = Convert.ToInt32(req.valor.Replace(".", "").Replace(",", "")),
                                 nuParcelas = Convert.ToInt32(req.parcelas),
                             });
@@ -236,20 +237,21 @@ namespace Master.Service
                             // -----------------------------
                             // salvar autorização nok
                             // -----------------------------
-
+                            
                             repository.InserirSolicitacaoVenda(db, new SolicitacaoVenda
                             {
                                 dtSolic = DateTime.Now.AddSeconds(-1),
                                 dtConf = DateTime.Now,
                                 tgAberto = false,
                                 fkCartao = (long)associadoPrincipal.i_unique,
-                                fkLoja = terminal.fk_loja,
+                                fkLoja = terminal.fk_loja,                                
                                 fkTerminal = fkTerminal,
                                 fkLogTrans = null,
+                                stErro = retornoVenda.st_msg,
                                 vrValor = Convert.ToInt32(req.valor.Replace(".", "").Replace(",", "")),
                                 nuParcelas = Convert.ToInt32(req.parcelas),
                             });
-
+                            
                             return false;
                         }
 
@@ -290,9 +292,9 @@ namespace Master.Service
                     }
 
                     // -----------------------------
-                    // salvar autorização ok ???
+                    // salvar autorização ok
                     // -----------------------------
-                    /*
+                    
                     repository.InserirSolicitacaoVenda(db, new SolicitacaoVenda
                     {
                         dtSolic = DateTime.Now.AddSeconds(-1),
@@ -302,10 +304,11 @@ namespace Master.Service
                         fkLoja = terminal.fk_loja,
                         fkTerminal = fkTerminal,
                         fkLogTrans = (long?)logTrans.i_unique,
+                        stErro = "",
                         vrValor = Convert.ToInt32(req.valor.Replace(".", "").Replace(",", "")),
                         nuParcelas = Convert.ToInt32(req.parcelas),
                     });
-                    */
+
                     return true;
                 }
             }

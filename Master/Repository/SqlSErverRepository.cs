@@ -146,8 +146,8 @@ namespace Master.Repository
 
         public void InserirSolicitacaoVenda(SqlConnection db, SolicitacaoVenda tbl)
         {
-            db.Execute(@"insert into [SolicitacaoVenda] (fkCartao,fkLoja,vrValor,nuParcelas,tgAberto,dtSolic,dtConf,fkTerminal,fkLogTrans)
-                        values (@fkCartao,@fkLoja,@vrValor,@nuParcelas,@tgAberto,@dtSolic,@dtConf,@fkTerminal,@fkLogTrans)", 
+            db.Execute(@"insert into [SolicitacaoVenda] (fkCartao,fkLoja,vrValor,nuParcelas,tgAberto,dtSolic,dtConf,fkTerminal,fkLogTrans,stErro)
+                        values (@fkCartao,@fkLoja,@vrValor,@nuParcelas,@tgAberto,@dtSolic,@dtConf,@fkTerminal,@fkLogTrans,@stErro)", 
                         new { 
                             tbl.fkCartao,
                             tbl.fkLoja,
@@ -158,6 +158,7 @@ namespace Master.Repository
                             tbl.dtConf,
                             tbl.fkTerminal,
                             tbl.fkLogTrans,
+                            tbl.stErro
                         } );
         }
 
@@ -172,7 +173,8 @@ namespace Master.Repository
                                     dtSolic = @dtSolic,
                                     dtConf = @dtConf,
                                     fkTerminal = @fkTerminal,
-                                    fkLogTrans = @fkLogTrans
+                                    fkLogTrans = @fkLogTrans,
+                                    stErro = @stErro
                                 where id = @id",
                         new
                         {
@@ -186,6 +188,7 @@ namespace Master.Repository
                             tbl.dtConf,
                             tbl.fkTerminal,
                             tbl.fkLogTrans,
+                            tbl.stErro,
                         });
         }
 

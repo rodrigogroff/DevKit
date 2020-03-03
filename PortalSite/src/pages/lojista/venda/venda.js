@@ -468,7 +468,11 @@ export default class LojistaVenda extends React.Component {
 								_valorP11: "0,00",
 								_valorP12: "0,00",
 								_parcelas: "1",
-								_stSenha: ''
+								_stSenha: '',
+								_empresa: '',
+								_matricula: '',
+								_codAcesso: '',
+								_venc: ''
 							})}> Fechar </Button>
 						</ModalFooter>
 					</Modal>

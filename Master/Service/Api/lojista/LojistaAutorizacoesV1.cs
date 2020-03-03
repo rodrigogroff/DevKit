@@ -44,6 +44,10 @@ namespace Master.Service
                                 case TipoConfirmacao.Cancelada: stSit = "Cancelada "; break;
                                 case TipoConfirmacao.Erro: stSit = "Erro " + logTrans.st_msg_transacao; break;
                             }
+                        }                       
+                        else
+                        {
+                            stSit = "Erro: " + item.stErro;
                         }                            
 
                         var x = new LojistaAutorizacaoDTO

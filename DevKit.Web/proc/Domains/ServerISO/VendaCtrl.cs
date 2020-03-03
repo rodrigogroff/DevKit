@@ -83,6 +83,7 @@ namespace DevKit.Web.Controllers
                 v.input_cont_pe.vr_valor = mdl.vr_valor;
                 v.input_cont_pe.st_valores = mdl.st_valores;
                 v.input_cont_pe.st_senha = mdl.st_senha;
+                v.input_cont_pe.tipoWeb = "mobile";
 
                 v.Run(db);
 

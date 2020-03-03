@@ -11,7 +11,7 @@ angular.module('app.controllers').controller('EmissoraRelExtratTransController',
             {
                 $scope.campos = {
                     sit: '1',
-                    tipo: '3',
+                    tipo: '0',
                     selects: {
                         empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 })
                     }

@@ -128,7 +128,6 @@ namespace DevKit.Web.Controllers
 
             var q_trans = from e in db.LOG_Transacoes
                           join emp in db.T_Empresa on e.fk_empresa equals (int)emp.i_unique
-                          where emp.tg_bloq == 0
                           where e.dt_transacao >= dt_inicial && e.dt_transacao <= dt_final
                           where lstCarts.Count() == 0 || lstCarts.Contains ((int)e.fk_cartao)                          
                           select e;

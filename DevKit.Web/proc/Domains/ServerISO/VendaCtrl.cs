@@ -64,7 +64,7 @@ namespace DevKit.Web.Controllers
         [AllowAnonymous]
         [HttpPut]
         [Route("api/VendaServerMobile")]
-        public IHttpActionResult VendaWeb(VendaIsoInputDTO mdl)
+        public IHttpActionResult VendaMobileWeb(VendaIsoInputDTO mdl)
         {
             using (var db = new AutorizadorCNDB())
             {

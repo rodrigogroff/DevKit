@@ -601,7 +601,11 @@ namespace DataModel
 
                     db.Update(cartPortador);
 
-                    output_st_msg = "Senha inválida";
+                    output_st_msg = "Senha inválida (" + senhasErradas + ")";
+
+                    if (senhasErradas == 3)
+                        output_st_msg += " Próximo erro bloqueará seu cartão!";
+
                     var_codResp = "4343";
 
                     return false;

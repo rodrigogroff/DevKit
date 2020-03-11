@@ -2,11 +2,7 @@
 using LinqToDB;
 using System;
 using System.Linq;
-using System.Collections;
 using System.IO;
-using System.Text;
-using System.Threading;
-using System.Net.Mail;
 using System.Collections.Generic;
 
 namespace GetStarted
@@ -28,7 +24,172 @@ namespace GetStarted
             //ForcaFech("009622", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009623", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009624", new DateTime(2020, 3, 1, 0, 12, 0));
-            ForcaFech("005041", new DateTime(2020, 3, 1, 0, 12, 0));
+          //  ForcaFech("008997", new DateTime(2020, 3, 11, 0, 09, 0));
+
+           /* MigraParcelas ( new T_Cartao
+                            {
+                                st_empresa = "001201",
+                                st_matricula = "859575"
+                            },
+                            new T_Cartao
+                            {
+                                st_empresa = "001201",
+                                st_matricula = "390531"
+                            }); */
+        }
+
+        static void MigraParcelas( T_Cartao cartOriginal, T_Cartao cartDestino)
+        {
+            using (var db = new AutorizadorCNDB())
+            {
+                var t_cartOriginal = (  from e in db.T_Cartao
+                                        where e.st_empresa == cartOriginal.st_empresa
+                                        where e.st_matricula == cartOriginal.st_matricula
+                                        select e).
+                                        FirstOrDefault();
+
+                var t_cartDestino = (from e in db.T_Cartao
+                                      where e.st_empresa == cartDestino.st_empresa
+                                      where e.st_matricula == cartDestino.st_matricula
+                                      select e).
+                                        FirstOrDefault();
+
+                var lstParcelasOriginais = (from e in db.T_Parcelas
+                                   where e.fk_cartao == t_cartOriginal.i_unique
+                                   where e.nu_parcela == 1
+                                   select e).
+                                        ToList();
+
+                foreach (var parcelaOriginal in lstParcelasOriginais)
+                {
+                    if (parcelaOriginal.nu_indice > 1)
+                    {
+                        // ---------------------------------------
+                        // antiga, com várias parcelas
+                        // ---------------------------------------
+
+                        // busco transacao original
+                        var tbLogTransOriginal = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parcelaOriginal.fk_log_transacoes);
+
+                        var totalParcsOriginal = tbLogTransOriginal.nu_parcelas;
+
+                        //                        2   =    3             - 1        
+                        var atualizaLogTransOrigParcs = parcelaOriginal.nu_indice - 1;
+
+                        tbLogTransOriginal.nu_parcelas = atualizaLogTransOrigParcs;
+
+                        // somar valores
+                        {
+                            tbLogTransOriginal.vr_total = 0;
+
+                            // atualizar parcelas desta transacao original
+                            var lst_parcs_antigas = db.T_Parcelas.
+                                                        Where(y => y.fk_log_transacoes == parcelaOriginal.fk_log_transacoes).
+                                                        Where(y => y.nu_indice <= atualizaLogTransOrigParcs).
+                                                        OrderBy(y => y.nu_indice).
+                                                        ToList();
+
+                            foreach (var itemParc in lst_parcs_antigas)
+                                tbLogTransOriginal.vr_total += itemParc.vr_valor;
+                        }
+
+                        // transação original com parcelas reduzidas e valor reduzido atualizada
+                        db.Update(tbLogTransOriginal);
+
+                        //gera nsu
+                        var novoNSU = new LOG_NSU();
+                        novoNSU.i_unique = Convert.ToInt32(db.InsertWithIdentity(novoNSU));
+
+                        // criar nova transação para as restantes
+                        var novaTransacao = new LOG_Transaco
+                        {
+                            vr_total = 0, // será calculada pelas parcelas restantes
+                            dt_transacao = DateTime.Now, // data de hoje
+                            en_operacao = tbLogTransOriginal.en_operacao,
+                            fk_cartao = (int)t_cartDestino.i_unique,
+                            fk_empresa = tbLogTransOriginal.fk_empresa,
+                            fk_loja = tbLogTransOriginal.fk_loja,
+                            fk_terminal = tbLogTransOriginal.fk_terminal,
+                            nu_cod_erro = tbLogTransOriginal.nu_cod_erro,
+                            nu_nsu = (int)novoNSU.i_unique,
+                            nu_nsuOrig = (int)novoNSU.i_unique,
+
+                            //       8  =  10                - 2           
+                            nu_parcelas = totalParcsOriginal - atualizaLogTransOrigParcs,
+
+                            st_doc = "",
+                            st_msg_transacao = tbLogTransOriginal.st_msg_transacao,
+                            tg_confirmada = tbLogTransOriginal.tg_confirmada,
+                            tg_contabil = tbLogTransOriginal.tg_contabil,
+                            vr_saldo_disp = tbLogTransOriginal.vr_saldo_disp,
+                            vr_saldo_disp_tot = tbLogTransOriginal.vr_saldo_disp_tot,
+                        };
+
+                        // acumular valores das outras parcelas
+                        {                            
+                            var lst_parcs_antigas = db.T_Parcelas.
+                                                        Where(y => y.fk_log_transacoes == parcelaOriginal.fk_log_transacoes).
+                                                        Where(y => y.nu_indice > atualizaLogTransOrigParcs).
+                                                        OrderBy(y => y.nu_indice).
+                                                        ToList();
+
+                            foreach (var itemParc in lst_parcs_antigas)
+                                novaTransacao.vr_total += itemParc.vr_valor;
+                        }
+
+                        novaTransacao.i_unique = Convert.ToInt32(db.InsertWithIdentity(novaTransacao));
+
+                        {
+                            // atualizar parcelas da nova transacao
+                            var lst_parcs_antigas = db.T_Parcelas.
+                                                        Where(y => y.fk_log_transacoes == parcelaOriginal.fk_log_transacoes).
+                                                        Where(y => y.nu_indice > atualizaLogTransOrigParcs).
+                                                        OrderBy ( y=> y.nu_indice).
+                                                        ToList();
+
+                            int index = 1;
+
+                            foreach (var itemParc in lst_parcs_antigas)
+                            {
+                                itemParc.fk_cartao = (int)t_cartDestino.i_unique;
+                                itemParc.fk_log_transacoes = (int) novaTransacao.i_unique;
+                                itemParc.dt_inclusao = novaTransacao.dt_transacao;
+                                itemParc.nu_parcela = index;
+                                itemParc.nu_indice = index;
+                                itemParc.nu_nsu = novaTransacao.nu_nsu;                                
+                                itemParc.nu_tot_parcelas = novaTransacao.nu_parcelas;
+
+                                db.Update(itemParc);
+
+                                index++;
+                            }                                
+                        }
+                    }
+                    else
+                    {
+                        // ----------------------------------------
+                        // deste mes, apenas trocar as chaves
+                        // ----------------------------------------
+
+                        // busco transacao original
+                        var tbLogTransOriginal = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parcelaOriginal.fk_log_transacoes);
+
+                        tbLogTransOriginal.fk_cartao = (int)t_cartDestino.i_unique;
+
+                        // transação original com chave nova do cartão novo
+                        db.Update(tbLogTransOriginal);
+
+                        // atualizar parcelas desta transacao original
+                        var lst_parcs_update = db.T_Parcelas.Where(y => y.fk_log_transacoes == parcelaOriginal.fk_log_transacoes).ToList();
+
+                        foreach (var pUp in lst_parcs_update)
+                        {
+                            pUp.fk_cartao = (int)t_cartDestino.i_unique;
+                            db.Update(pUp);
+                        }
+                    }
+                }
+            }
         }
 
         static void LimpaScheduler()

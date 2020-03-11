@@ -8,7 +8,7 @@ export const ApiLocation = {
 
 export class Api {
 
-    versao = () => "v2.1.008";
+    versao = () => "v2.1.010";
 
     isAuthenticated = () => localStorage.getItem('token');
 

@@ -70,7 +70,7 @@ export default class AssociadoSolicitacoes extends React.Component {
 		else if (this.state._stSenha.length !== 4)
 			falhou = true;
 		if (falhou === true) {
-			this.setState({ error: 'Favor informar uma senha corretamente ' + this.state._stSenha });
+			this.setState({ error: 'Favor informar uma senha corretamente' });
 			return;
 		}
 		var _solic = this.state.solic;
@@ -118,7 +118,7 @@ export default class AssociadoSolicitacoes extends React.Component {
 							<span className="spinner">
 								<i className="fa fa-spinner fa-spin" />
 								&nbsp;&nbsp;&nbsp;
-											</span>
+							</span>
 						) : (
 								<div />
 							)}
@@ -251,7 +251,7 @@ export default class AssociadoSolicitacoes extends React.Component {
 										<span className="spinner">
 											<i className="fa fa-spinner fa-spin" />
 											&nbsp;&nbsp;&nbsp;
-											</span>
+										</span>
 									) : (
 											<div />
 										)}

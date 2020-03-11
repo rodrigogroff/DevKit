@@ -56,7 +56,11 @@ export default class LojistaVenda extends React.Component {
 			_valorP10: "0,00",
 			_valorP11: "0,00",
 			_valorP12: "0,00",
-			_parcelas: "1"
+			_parcelas: "1",
+			_empresa: '',
+			_matricula: '',
+			_codAcesso: '',
+			_venc: ''
 		};
 
 		this.processMoney = this.processMoney.bind(this);
@@ -504,62 +508,73 @@ export default class LojistaVenda extends React.Component {
 											</FormGroup>
 										</td>
 									</tr>
-									{this.state.tipoVenda === 'mobile' ?
+								</tbody>
+							</table>
+
+							{this.state.tipoVenda === 'mobile' ?
+								<table width='100%'>
+									<tbody>
 										<tr>
-											<td><h5>Captura</h5></td>
-											<td ></td>
-											<td style={{ paddingTop: '8px' }}>
+											<td width='70px'><h5>Captura</h5></td>
+											<td width='90px' style={{ paddingTop: '8px' }}>
 												<FormGroup className="radio abc-radio">
 													<Input type="radio" id="radio3" name="m" onClick={this.trocarTipoVendaMobile} checked={this.state.vendaMobile_digitado} />
 													<Label for="radio3" style={{ paddingTop: '4px' }}>Digitado</Label>
 												</FormGroup>
 											</td>
-											<td style={{ paddingTop: '8px' }}>
+											<td width='90px' style={{ paddingTop: '8px' }}>
 												<FormGroup className="radio abc-radio">
 													<Input type="radio" id="radio4" name="m" onClick={this.trocarTipoVendaMobile} checked={this.state.vendaMobile_qrcode} />
 													<Label for="radio4" style={{ paddingTop: '4px' }}>QRCode</Label>
 												</FormGroup>
 											</td>
 										</tr>
-										:
-										<div></div>
-									}
-								</tbody>
-							</table>
+
+									</tbody>
+								</table>
+								:
+								<div></div>
+							}
 						</Widget>
 
-						<p> Informe o número do Cartão Benefícios ConveyNET</p>
-						<InputGroup >
-							<table>
-								<tbody>
-									<tr>
-										<td>
-											<Input className="input-transparent form-control" id="empresa-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._empresa}
-												autocomplete='off'
-												onChange={event => this.setState({ _empresa: this.processNumber(event.target.value) })} />
-										</td>
-										<td width='10px'></td>
-										<td >
-											<Input className="input-transparent form-control" id="matricula-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._matricula}
-												autocomplete='off'
-												onChange={event => this.setState({ _matricula: this.processNumber(event.target.value) })} />
-										</td>
-										<td width='10px'></td>
-										<td >
-											<Input className="input-transparent form-control" id="codAcesso-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._codAcesso}
-												autocomplete='off'
-												onChange={event => this.setState({ _codAcesso: this.processNumber(event.target.value) })} />
-										</td>
-										<td width='10px'></td>
-										<td >
-											<Input className="input-transparent form-control" id="vencimento-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._venc}
-												autocomplete='off'
-												onChange={event => this.setState({ _venc: this.processNumber(event.target.value) })} />
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</InputGroup>
+						{this.state.vendaMobile_digitado == true ?
+							<div>
+								<p> Informe o número do Cartão Benefícios ConveyNET</p>
+								<InputGroup >
+									<table>
+										<tbody>
+											<tr>
+												<td>
+													<Input className="input-transparent form-control" id="empresa-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._empresa}
+														autocomplete='off'
+														onChange={event => this.setState({ _empresa: this.processNumber(event.target.value) })} />
+												</td>
+												<td width='10px'></td>
+												<td >
+													<Input className="input-transparent form-control" id="matricula-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._matricula}
+														autocomplete='off'
+														onChange={event => this.setState({ _matricula: this.processNumber(event.target.value) })} />
+												</td>
+												<td width='10px'></td>
+												<td >
+													<Input className="input-transparent form-control" id="codAcesso-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._codAcesso}
+														autocomplete='off'
+														onChange={event => this.setState({ _codAcesso: this.processNumber(event.target.value) })} />
+												</td>
+												<td width='10px'></td>
+												<td >
+													<Input className="input-transparent form-control" id="vencimento-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._venc}
+														autocomplete='off'
+														onChange={event => this.setState({ _venc: this.processNumber(event.target.value) })} />
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</InputGroup>
+							</div> : <div>
+							</div>
+						}
+
 						<br></br>
 						<InputGroup >
 							<table width='100%'>
@@ -587,8 +602,10 @@ export default class LojistaVenda extends React.Component {
 							this.state.tipoVenda === 'mobile' ?
 								<div>
 									{
-										this.state.vendaMobile_digitado === true || (this.state.vendaMobile_qrcode === true && this.state.result) ?
+										this.state.vendaMobile_digitado === true || (this.state.vendaMobile_qrcode === true && this.state._empresa !== '') ?
 											<div>
+												<h1>{this.state._empresa}.{this.state._matricula}.{this.state._codAcesso}.{this.state._venc}</h1>
+												<br></br>
 												<Button color="primary"
 													style={{ width: "200px" }}
 													onClick={this.executeSolic}
@@ -597,7 +614,7 @@ export default class LojistaVenda extends React.Component {
 														<span className="spinner">
 															<i className="fa fa-spinner fa-spin" />
 															&nbsp;&nbsp;&nbsp;
-															</span>
+														</span>
 													) : (
 															<div />
 														)}
@@ -620,24 +637,8 @@ export default class LojistaVenda extends React.Component {
 															/>
 															<br></br>
 															<p>{this.state.result}</p>
-															<br></br>
-															<Button color="primary"
-																style={{ width: "200px" }}
-																onClick={this.forceQR}
-																disabled={this.state.loading} >
-																{this.state.loading === true ? (
-																	<span className="spinner">
-																		<i className="fa fa-spinner fa-spin" />
-																		&nbsp;&nbsp;&nbsp;
-															</span>
-																) : (
-																		<div />
-																	)}
-																Testar
-															</Button>
 														</div>
 												}
-
 											</div>
 									}
 								</div>
@@ -889,7 +890,7 @@ export default class LojistaVenda extends React.Component {
 											<span className="spinner">
 												<i className="fa fa-spinner fa-spin" />
 												&nbsp;&nbsp;&nbsp;
-													</span>
+											</span>
 										) : (
 												<div />
 											)}

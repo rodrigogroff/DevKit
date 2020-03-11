@@ -80,7 +80,7 @@ namespace Master.Service
 
                         { 
                             var serviceClient = new RestClient(network.GetConveyNetAPI());
-                            var serviceRequest = new RestRequest("api/VendaServerWeb", Method.PUT);
+                            var serviceRequest = new RestRequest("api/VendaServerMobile", Method.PUT);
 
                             var valores = "";
 
@@ -132,12 +132,25 @@ namespace Master.Service
                                 return false;
                             }
 
-                            if (!retornoVenda.st_codResp.StartsWith("00"))
+                            if (retornoVenda.st_codResp != null)
+                            {
+                                if (!retornoVenda.st_codResp.StartsWith("00"))
+                                {
+                                    Error = new ServiceError
+                                    {
+                                        message = retornoVenda.st_msg,
+                                        debugInfo = "retornoVenda == null"
+                                    };
+
+                                    return false;
+                                }
+                            }
+                            else
                             {
                                 Error = new ServiceError
                                 {
                                     message = retornoVenda.st_msg,
-                                    debugInfo = "retornoVenda == null"
+                                    debugInfo = "retornoVenda.st_codResp == null"
                                 };
 
                                 return false;

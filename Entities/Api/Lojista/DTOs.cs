@@ -23,6 +23,7 @@ namespace Entities.Api.Lojista
         public string venc { get; set; }
         public string valor { get; set; }
         public string parcelas { get; set; }
+        public string parcelas_str { get; set; }
     }
 
     public class LojistaAutorizacaoDTO

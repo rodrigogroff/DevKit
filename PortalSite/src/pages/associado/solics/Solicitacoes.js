@@ -54,9 +54,21 @@ export default class AssociadoSolicitacoes extends React.Component {
 				});
 			}
 			else {
+
+				var strParcelas = 'Parcelamento: ';
+
+				for (var i = 0; i < resp.payload.nuParcelas; i++) {
+					var st = api.ValorMoney(resp.payload.lstParcelas[i]);
+					if (st === '') st = '0,00';
+					strParcelas += st;
+					if (i < resp.payload.nuParcelas - 1)
+						strParcelas += ' / ';
+				}
+
 				this.setState({
 					loading: false,
-					solic: resp.payload
+					solic: resp.payload,
+					strParcelas: strParcelas
 				});
 			}
 		});
@@ -226,20 +238,39 @@ export default class AssociadoSolicitacoes extends React.Component {
 										</tr>
 									</tbody>
 								</table>
-								<FormGroup row>
-									<Label for="normal-field" md={12} className="text-md-left">
-										<h5>Senha Cartão</h5>
-									</Label>
-									<InputGroup className="input-group-no-border px-4">
-										<InputGroupAddon addonType="prepend">
-											<InputGroupText>
-												<i className="fa fa-lock text-white" />
-											</InputGroupText>
-										</InputGroupAddon>
-										<Input id="password-input" type="password" className="input" width='80px' maxLength="4" value={this.state._stSenha} autocomplete='off'
-											onChange={event => this.setState({ _stSenha: this.processNumber(event.target.value) })} />
-									</InputGroup>
-								</FormGroup>
+								<Input className={this.state.error_name ? "input-transparent-red" : "input-transparent"}
+									type="text"
+									id="fieldName"
+									maxLength="2"
+									value={this.state.strParcelas}
+									disabled
+								/>
+								<br></br>
+								<div align='center'>
+									<table>
+										<tbody>
+											<tr>
+												<td width='20px'></td>
+												<td width='120px'>
+													<h5>Senha Cartão</h5>
+												</td>
+												<td width='20px'></td>
+												<td width='200px'>
+													<InputGroup className="input-group-no-border px-4">
+														<InputGroupAddon addonType="prepend">
+															<InputGroupText>
+																<i className="fa fa-lock text-white" />
+															</InputGroupText>
+														</InputGroupAddon>
+														<Input id="password-input" type="password" className="input" width='80px' maxLength="4" value={this.state._stSenha} autoComplete='off'
+															onChange={event => this.setState({ _stSenha: this.processNumber(event.target.value) })} />
+													</InputGroup>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<br></br>
+								</div>
 							</Widget>
 							<br></br>
 							<div align='center'>

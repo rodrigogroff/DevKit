@@ -344,10 +344,38 @@ export default class LojistaVenda extends React.Component {
 			}
 		}
 
+		var api = new Api();
+
+		var senha = this.state._stSenha;
+		var parcelas_str = '';
+
+		for (let i = 1; i <= pi; ++i) {
+
+			var vlr_parc_atual = this.state._valorP1;
+
+			switch (i) {
+				case 2: vlr_parc_atual = this.state._valorP2; break;
+				case 3: vlr_parc_atual = this.state._valorP3; break;
+				case 4: vlr_parc_atual = this.state._valorP4; break;
+				case 5: vlr_parc_atual = this.state._valorP5; break;
+				case 6: vlr_parc_atual = this.state._valorP6; break;
+				case 7: vlr_parc_atual = this.state._valorP7; break;
+				case 8: vlr_parc_atual = this.state._valorP8; break;
+				case 9: vlr_parc_atual = this.state._valorP9; break;
+				case 10: vlr_parc_atual = this.state._valorP10; break;
+				case 11: vlr_parc_atual = this.state._valorP11; break;
+				case 12: vlr_parc_atual = this.state._valorP12; break;
+			}
+
+			var vvv = api.ValorNum12(vlr_parc_atual);
+
+			parcelas_str += vvv
+		}
+
 		this.setState({ loading: true });
 
 		if (this.state.tipoVenda === 'mobile') {
-			var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, valor, parcelas });
+			var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, valor, parcelas, parcelas_str });
 			var api = new Api();
 			api.postTokenPortal("solicitaVenda", serviceData).then(resp => {
 				if (resp.ok === true) {
@@ -370,33 +398,6 @@ export default class LojistaVenda extends React.Component {
 			});
 		}
 		else {
-			var api = new Api();
-
-			var senha = this.state._stSenha;
-			var parcelas_str = '';
-
-			for (let i = 1; i <= pi; ++i) {
-
-				var vlr_parc_atual = this.state._valorP1;
-
-				switch (i) {
-					case 2: vlr_parc_atual = this.state._valorP2; break;
-					case 3: vlr_parc_atual = this.state._valorP3; break;
-					case 4: vlr_parc_atual = this.state._valorP4; break;
-					case 5: vlr_parc_atual = this.state._valorP5; break;
-					case 6: vlr_parc_atual = this.state._valorP6; break;
-					case 7: vlr_parc_atual = this.state._valorP7; break;
-					case 8: vlr_parc_atual = this.state._valorP8; break;
-					case 9: vlr_parc_atual = this.state._valorP9; break;
-					case 10: vlr_parc_atual = this.state._valorP10; break;
-					case 11: vlr_parc_atual = this.state._valorP11; break;
-					case 12: vlr_parc_atual = this.state._valorP12; break;
-				}
-
-				var vvv = api.ValorNum12(vlr_parc_atual);
-
-				parcelas_str += vvv
-			}
 
 			var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, valor, parcelas, senha, parcelas_str });
 			var api = new Api();
@@ -519,13 +520,13 @@ export default class LojistaVenda extends React.Component {
 											<td width='90px' style={{ paddingTop: '8px' }}>
 												<FormGroup className="radio abc-radio">
 													<Input type="radio" id="radio3" name="m" onClick={this.trocarTipoVendaMobile} checked={this.state.vendaMobile_digitado} />
-													<Label for="radio3" style={{ paddingTop: '4px' }}>Digitado</Label>
+													<Label for="radio3" style={{ paddingTop: '4px' }}>Payfone</Label>
 												</FormGroup>
 											</td>
 											<td width='90px' style={{ paddingTop: '8px' }}>
 												<FormGroup className="radio abc-radio">
 													<Input type="radio" id="radio4" name="m" onClick={this.trocarTipoVendaMobile} checked={this.state.vendaMobile_qrcode} />
-													<Label for="radio4" style={{ paddingTop: '4px' }}>QRCode</Label>
+													<Label for="radio4" style={{ paddingTop: '4px' }}>Qrcode</Label>
 												</FormGroup>
 											</td>
 										</tr>
@@ -546,25 +547,25 @@ export default class LojistaVenda extends React.Component {
 											<tr>
 												<td>
 													<Input className="input-transparent form-control" id="empresa-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._empresa}
-														autocomplete='off'
+														autoComplete='off'
 														onChange={event => this.setState({ _empresa: this.processNumber(event.target.value) })} />
 												</td>
 												<td width='10px'></td>
 												<td >
 													<Input className="input-transparent form-control" id="matricula-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._matricula}
-														autocomplete='off'
+														autoComplete='off'
 														onChange={event => this.setState({ _matricula: this.processNumber(event.target.value) })} />
 												</td>
 												<td width='10px'></td>
 												<td >
 													<Input className="input-transparent form-control" id="codAcesso-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._codAcesso}
-														autocomplete='off'
+														autoComplete='off'
 														onChange={event => this.setState({ _codAcesso: this.processNumber(event.target.value) })} />
 												</td>
 												<td width='10px'></td>
 												<td >
 													<Input className="input-transparent form-control" id="vencimento-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" value={this.state._venc}
-														autocomplete='off'
+														autoComplete='off'
 														onChange={event => this.setState({ _venc: this.processNumber(event.target.value) })} />
 												</td>
 											</tr>
@@ -583,14 +584,14 @@ export default class LojistaVenda extends React.Component {
 										<td width='90px'>Valor</td>
 										<td width='150px'>
 											<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-												autocomplete='off'
+												autoComplete='off'
 												value={this.state._valor} onChange={this.processMoney} />
 										</td>
 										<td width='60px'></td>
 										<td width='90px'>Parcelas</td>
 										<td width='50px'>
 											<Input className="input-transparent form-control" id="parcelas" maxLength="2" type="tel" pattern="[0-9]*" inputmode="numeric"
-												value={this.state._parcelas} autocomplete='off'
+												value={this.state._parcelas} autoComplete='off'
 												onChange={event => this.processNumberMax12(event.target.value)} />
 										</td>
 									</tr>
@@ -598,6 +599,225 @@ export default class LojistaVenda extends React.Component {
 							</table>
 						</InputGroup>
 						<br></br>
+
+						{this.state._parcelas >= 2 && this.state._parcelas > 0 ?
+							<div>
+								<table>
+									<tbody>
+										<tr>
+											<td width='90px' >Parc. 1</td>
+											<td width='90px'>
+												{
+													this.state._parcelas >= 2 && this.state._parcelas > 0 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP1} onChange={this.processMoneyP1} />
+														</div>
+														: <div></div>
+												}
+											</td>
+											<td width='10px'> </td>
+											<td width='90px'>Parc. 2</td>
+											<td width='90px'>
+												{
+													this.state._parcelas >= 2 && this.state._parcelas > 0 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP2} onChange={this.processMoneyP2} />
+														</div>
+														: <div></div>
+												}
+											</td>
+										</tr>
+										<tr>
+											<td>
+												{
+													this.state._parcelas >= 3 ?
+														<div>Parc. 3</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 3 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP3} onChange={this.processMoneyP3} />
+														</div> : <div></div>
+												}
+											</td>
+											<td></td>
+											<td>
+												{
+													this.state._parcelas >= 4 ?
+														<div>Parc. 4</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 4 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP4} onChange={this.processMoneyP4} />
+														</div> : <div></div>
+												}
+											</td>
+										</tr>
+
+
+										<tr>
+											<td>
+												{
+													this.state._parcelas >= 5 ?
+														<div>Parc. 5</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 5 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP5} onChange={this.processMoneyP5} />
+														</div> : <div></div>
+												}
+											</td>
+											<td></td>
+											<td>
+												{
+													this.state._parcelas >= 6 ?
+														<div>Parc. 6</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 6 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP6} onChange={this.processMoneyP6} />
+														</div> : <div></div>
+												}
+											</td>
+										</tr>
+
+										<tr>
+											<td>
+												{
+													this.state._parcelas >= 7 ?
+														<div>Parc. 7</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 7 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP7} onChange={this.processMoneyP7} />
+														</div> : <div></div>
+												}
+											</td>
+											<td></td>
+											<td>
+												{
+													this.state._parcelas >= 8 ?
+														<div>Parc. 8</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 8 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP8} onChange={this.processMoneyP8} />
+														</div> : <div></div>
+												}
+											</td>
+										</tr>
+
+										<tr>
+											<td>
+												{
+													this.state._parcelas >= 9 ?
+														<div>Parc. 9</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 9 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP9} onChange={this.processMoneyP9} />
+														</div> : <div></div>
+												}
+											</td>
+											<td></td>
+											<td>
+												{
+													this.state._parcelas >= 10 ?
+														<div>Parc. 10</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 10 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP10} onChange={this.processMoneyP10} />
+														</div> : <div></div>
+												}
+											</td>
+										</tr>
+
+										<tr>
+											<td>
+												{
+													this.state._parcelas >= 11 ?
+														<div>Parc. 11</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 11 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP11} onChange={this.processMoneyP11} />
+														</div> : <div></div>
+												}
+											</td>
+											<td></td>
+											<td>
+												{
+													this.state._parcelas >= 12 ?
+														<div>Parc. 12</div> : <div></div>
+												}
+											</td>
+											<td>
+												{
+													this.state._parcelas >= 12 ?
+														<div>
+															<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
+																autoComplete='off'
+																value={this.state._valorP12} onChange={this.processMoneyP12} />
+														</div> : <div></div>
+												}
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+							</div> : <div></div>
+						}
+
 						{
 							this.state.tipoVenda === 'mobile' ?
 								<div>
@@ -644,226 +864,7 @@ export default class LojistaVenda extends React.Component {
 								</div>
 								:
 								<div>
-									{this.state._parcelas >= 2 && this.state._parcelas > 0 ?
-										<div>
-											<table>
-												<tbody>
-													<tr>
-														<td width='90px' >Parc. 1</td>
-														<td width='90px'>
-															{
-																this.state._parcelas >= 2 && this.state._parcelas > 0 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP1} onChange={this.processMoneyP1} />
-																	</div>
-																	: <div></div>
-															}
-														</td>
-														<td width='10px'> </td>
-														<td width='90px'>Parc. 2</td>
-														<td width='90px'>
-															{
-																this.state._parcelas >= 2 && this.state._parcelas > 0 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP2} onChange={this.processMoneyP2} />
-																	</div>
-																	: <div></div>
-															}
-														</td>
-													</tr>
-													<tr>
-														<td>
-															{
-																this.state._parcelas >= 3 ?
-																	<div>Parc. 3</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 3 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP3} onChange={this.processMoneyP3} />
-																	</div> : <div></div>
-															}
-														</td>
-														<td></td>
-														<td>
-															{
-																this.state._parcelas >= 4 ?
-																	<div>Parc. 4</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 4 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP4} onChange={this.processMoneyP4} />
-																	</div> : <div></div>
-															}
-														</td>
-													</tr>
-
-
-													<tr>
-														<td>
-															{
-																this.state._parcelas >= 5 ?
-																	<div>Parc. 5</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 5 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP5} onChange={this.processMoneyP5} />
-																	</div> : <div></div>
-															}
-														</td>
-														<td></td>
-														<td>
-															{
-																this.state._parcelas >= 6 ?
-																	<div>Parc. 6</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 6 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP6} onChange={this.processMoneyP6} />
-																	</div> : <div></div>
-															}
-														</td>
-													</tr>
-
-													<tr>
-														<td>
-															{
-																this.state._parcelas >= 7 ?
-																	<div>Parc. 7</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 7 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP7} onChange={this.processMoneyP7} />
-																	</div> : <div></div>
-															}
-														</td>
-														<td></td>
-														<td>
-															{
-																this.state._parcelas >= 8 ?
-																	<div>Parc. 8</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 8 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP8} onChange={this.processMoneyP8} />
-																	</div> : <div></div>
-															}
-														</td>
-													</tr>
-
-													<tr>
-														<td>
-															{
-																this.state._parcelas >= 9 ?
-																	<div>Parc. 9</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 9 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP9} onChange={this.processMoneyP9} />
-																	</div> : <div></div>
-															}
-														</td>
-														<td></td>
-														<td>
-															{
-																this.state._parcelas >= 10 ?
-																	<div>Parc. 10</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 10 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP10} onChange={this.processMoneyP10} />
-																	</div> : <div></div>
-															}
-														</td>
-													</tr>
-
-													<tr>
-														<td>
-															{
-																this.state._parcelas >= 11 ?
-																	<div>Parc. 11</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 11 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP11} onChange={this.processMoneyP11} />
-																	</div> : <div></div>
-															}
-														</td>
-														<td></td>
-														<td>
-															{
-																this.state._parcelas >= 12 ?
-																	<div>Parc. 12</div> : <div></div>
-															}
-														</td>
-														<td>
-															{
-																this.state._parcelas >= 12 ?
-																	<div>
-																		<Input className="input-transparent form-control" id="valor" maxLength="9" type="tel" pattern="[0-9]*" inputmode="numeric"
-																			autocomplete='off'
-																			value={this.state._valorP12} onChange={this.processMoneyP12} />
-																	</div> : <div></div>
-															}
-														</td>
-													</tr>
-
-												</tbody>
-											</table>
-
-										</div> : <div></div>
-									}
-
 									<br></br>
-
 									<Widget>
 										<FormGroup row>
 											<Label for="normal-field" md={12} className="text-md-left">

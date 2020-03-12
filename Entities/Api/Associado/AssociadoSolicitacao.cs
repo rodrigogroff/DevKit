@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Entities.Api.Associado
 {
     public class AssociadoSolicitacao
@@ -10,6 +12,7 @@ namespace Entities.Api.Associado
         public string stValor { get; set; }
         public string nuParcelas { get; set; }
         public string dtSolic { get; set; }
+        public List<string> lstParcelas { get; set; }
     }
 
     public class VendaIsoInputDTO

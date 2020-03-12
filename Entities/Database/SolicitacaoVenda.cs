@@ -14,7 +14,7 @@ namespace Entities.Database
         public bool? tgAberto { get; set; }
         public DateTime? dtSolic { get; set; }
         public DateTime? dtConf { get; set; }
-
         public string stErro { get; set; }
+        public string stParcelas { get; set; }
     }
 }

@@ -28,6 +28,15 @@ namespace Master.Service
                         dto.nuParcelas = solic.nuParcelas.ToString();
                         dto.stLoja = loja.st_nome;
                         dto.stValor = new money().setMoneyFormat((long)solic.vrValor);
+
+                        dto.lstParcelas = new System.Collections.Generic.List<string>();
+
+                        var nuParc = Convert.ToInt32(dto.nuParcelas);
+
+                        if (nuParc > 1)
+                            if (solic.stParcelas != null)
+                                for (int i = 0; i < nuParc; i++)
+                                    dto.lstParcelas.Add(solic.stParcelas.Substring(i * 12, 12).TrimStart('0').PadLeft(1, '0'));
                     }
                     else
                         dto.id = 0;

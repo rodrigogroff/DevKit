@@ -152,6 +152,7 @@ namespace Master.Service
                         fkTerminal = fkTerminal,
                         vrValor = Convert.ToInt32(req.valor.Replace(".","").Replace(",","")),
                         nuParcelas = Convert.ToInt32(req.parcelas),
+                        stParcelas = req.parcelas_str
                     };
 
                     repository.InserirSolicitacaoVenda(db, solic);

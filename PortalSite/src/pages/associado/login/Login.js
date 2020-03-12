@@ -130,22 +130,22 @@ export default class Login extends React.Component {
                       <tbody>
                         <tr>
                           <td width='100px'>
-                            <Input className="input-transparent form-control" id="empresa-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" autocomplete='off'
+                            <Input className="input-transparent form-control" id="empresa-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" autoComplete='off'
                               onChange={event => this.setState({ _empresa: event.target.value })} />
                           </td>
                           <td width='10px'></td>
                           <td width='100px'>
-                            <Input className="input-transparent form-control" id="matricula-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" autocomplete='off'
+                            <Input className="input-transparent form-control" id="matricula-input" maxLength="6" type="tel" pattern="[0-9]*" inputmode="numeric" autoComplete='off'
                               onChange={event => this.setState({ _matricula: event.target.value })} />
                           </td>
                           <td width='10px'></td>
                           <td width='80px'>
-                            <Input className="input-transparent form-control" id="codAcesso-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" autocomplete='off'
+                            <Input className="input-transparent form-control" id="codAcesso-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" autoComplete='off'
                               onChange={event => this.setState({ _codAcesso: event.target.value })} />
                           </td>
                           <td width='10px'></td>
                           <td width='80px'>
-                            <Input className="input-transparent form-control" id="vencimento-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" autocomplete='off'
+                            <Input className="input-transparent form-control" id="vencimento-input" maxLength="4" type="tel" pattern="[0-9]*" inputmode="numeric" autoComplete='off'
                               onChange={event => this.setState({ _venc: event.target.value })} />
                           </td>
                         </tr>
@@ -170,7 +170,7 @@ export default class Login extends React.Component {
                             <Tooltip placement="top" isOpen={this.state.error_password} target="password-input">
                               Informe a senha corretamente
                           </Tooltip>
-                            <Input id="password-input" type="password" className="input-transparent" width='80px' maxLength="4" pattern="[0-9]*" inputmode="numeric" autocomplete='off'
+                            <Input id="password-input" type="password" className="input-transparent" width='80px' maxLength="4" pattern="[0-9]*" inputmode="numeric" autoComplete='off'
                               onChange={event => this.setState({ _senha: event.target.value })} />
                           </InputGroup>
                         </td>
@@ -190,7 +190,7 @@ export default class Login extends React.Component {
                             <span className="spinner">
                               <i className="fa fa-spinner fa-spin" />
                               &nbsp;&nbsp;&nbsp;
-                          </span>
+                            </span>
                           ) : (
                               <div />
                             )}

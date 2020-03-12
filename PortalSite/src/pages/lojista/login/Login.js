@@ -152,7 +152,7 @@ export default class LoginLojista extends React.Component {
                             <Tooltip placement="top" isOpen={this.state.error_password} target="password-input">
                               Informe a senha corretamente
                         </Tooltip>
-                            <Input id="password-input" type="password" className="input-transparent" width='80px' maxLength="6" autocomplete='off'
+                            <Input id="password-input" type="password" className="input-transparent" width='80px' maxLength="6" autoComplete='off'
                               onChange={event => this.setState({ _senha: event.target.value })} />
                           </InputGroup>
                         </td>
@@ -173,7 +173,7 @@ export default class LoginLojista extends React.Component {
                             <span className="spinner">
                               <i className="fa fa-spinner fa-spin" />
                               &nbsp;&nbsp;&nbsp;
-                        </span>
+                            </span>
                           ) : (
                               <div />
                             )}

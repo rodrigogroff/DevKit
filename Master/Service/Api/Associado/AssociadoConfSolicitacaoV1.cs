@@ -4,7 +4,6 @@ using Entities.Api.Configuration;
 using Master.Repository;
 using Newtonsoft.Json;
 using RestSharp;
-using SyCrafEngine;
 using System;
 using System.Data.SqlClient;
 
@@ -90,17 +89,22 @@ namespace Master.Service
                             }
                             else
                             {
-                                int _nuParc = (int)solic.nuParcelas;
-                                int _vrValor = (int)solic.vrValor;
+                                if (solic.stParcelas == null)
+                                {
+                                    int _nuParc = (int)solic.nuParcelas;
+                                    int _vrValor = (int)solic.vrValor;
 
-                                int val = _vrValor / _nuParc;
+                                    int val = _vrValor / _nuParc;
 
-                                for (int i = 0; i < _nuParc - 1; i++)
-                                    valores += val.ToString().PadLeft(12, '0');
+                                    for (int i = 0; i < _nuParc - 1; i++)
+                                        valores += val.ToString().PadLeft(12, '0');
 
-                                // ajustar ultima
-                                var calc = _vrValor - (val * (_nuParc - 1));
-                                valores += calc.ToString().PadLeft(12, '0');                                
+                                    // ajustar ultima
+                                    var calc = _vrValor - (val * (_nuParc - 1));
+                                    valores += calc.ToString().PadLeft(12, '0');
+                                }
+                                else
+                                    valores = solic.stParcelas;
                             }
 
                             var dadosVenda = new VendaIsoInputDTO

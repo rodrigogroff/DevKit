@@ -26,6 +26,7 @@
                             <th>Finalizado?</th>
                             <th>Cartões</th>
                             <th>Valor Total</th>
+                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tr data-ng-repeat="mdl in h.fechamentos">
@@ -34,6 +35,9 @@
                         <td>{{ mdl.sfechFinalizado }}</td>
                         <td>{{ mdl.sfechCartoes }}</td>
                         <td>{{ mdl.sfechValorTotal }}</td>
+                        <td>
+                            <button class="btn btn-danger btn-xs" ng-click="forcarFech(mdl)" ng-if="mdl.sfechFinalizado !== 'Sim'" > Ajustar </button>
+                        </td>
                     </tr>
                 </table>
             </div>

@@ -24,7 +24,7 @@ namespace GetStarted
             //ForcaFech("009622", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009623", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009624", new DateTime(2020, 3, 1, 0, 12, 0));
-          //  ForcaFech("008997", new DateTime(2020, 3, 11, 0, 09, 0));
+            ForcaFech("001711", new DateTime(2020, 3, 13, 0, 09, 0));
 
            /* MigraParcelas ( new T_Cartao
                             {

@@ -8,6 +8,8 @@ angular.module('app.controllers').controller('DashboardController',
 
             function init()
             {
+                $scope.loading = true;
+
                 Api.AdmOper.listPage({ op: '100' }, function (data) {
 
                     $scope.a = data.a; $scope.b = data.b; $scope.c = data.c;
@@ -72,12 +74,24 @@ angular.module('app.controllers').controller('DashboardController',
                             tickLength: 0
                         }
                     });
-                    
+
+                    $scope.loading = false;
                 });
             }
 
             $scope.refresh = function () {
                 init();
+            };
+
+            $scope.forcarFech = function (e) {
+
+                $scope.loading = true;
+
+                Api.AdmOper.listPage({ op: '101', emp: e.st_empresa }, function (data) {
+
+                    $scope.loading = false;
+                    init();
+                });
             };
 
             init();

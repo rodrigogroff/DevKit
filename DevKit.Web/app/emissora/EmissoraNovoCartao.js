@@ -218,6 +218,7 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                 if (!$scope.mat_fail
                     && !$scope.nome_fail
                     && !$scope.venc_fail
+                    && !$scope.cpf_fail
 
                ////         && !$scope.cpf_fail
                    ////     && !$scope.dtNasc_fail

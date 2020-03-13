@@ -187,11 +187,11 @@ namespace DevKit.Web.Controllers
 
                 if (assoc != null)
                 {
-                    var codAcessoCalc = calcAcesso.Obter(  item.st_empresa,
+                    var codAcessoCalc = assoc.st_cpf != null ? calcAcesso.Obter(  item.st_empresa,
                                                            item.st_matricula,
                                                            item.st_titularidade,
                                                            item.nu_viaCartao,
-                                                           assoc.st_cpf);
+                                                           assoc.st_cpf) : "";
 
                     var exped = "Requerido";
 

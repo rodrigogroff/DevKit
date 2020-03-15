@@ -19,12 +19,14 @@ namespace GetStarted
 
             //9620,9621,9622,9623,9624,5041
 
+            ReFecha("03", "2020", 18, 2020, 3, 15);
+
             //ForcaFech("009620", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009621", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009622", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009623", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009624", new DateTime(2020, 3, 1, 0, 12, 0));
-            ForcaFech("001711", new DateTime(2020, 3, 13, 0, 09, 0));
+           // ForcaFech("001711", new DateTime(2020, 3, 13, 0, 09, 0));
 
            /* MigraParcelas ( new T_Cartao
                             {

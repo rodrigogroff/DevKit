@@ -1085,7 +1085,53 @@ namespace DevKit.Web.Controllers
                                     if (db.LOG_Fechamento.Any(y => y.st_ano == ano &&
                                                                     y.st_mes == mes &&
                                                                     y.fk_empresa == empresa.i_unique))
-                                        continue;
+                                    {
+                                        // ------------------------------
+                                        // desfaz fechamento
+                                        // ------------------------------
+
+                                        var lstDelFech = new List<long>();
+
+                                        var lstOld = db.LOG_Fechamento.Where(y => y.fk_empresa == empresa.i_unique && y.st_mes == mes && y.st_ano == ano).ToList();
+
+                                        int counterOld = 0;
+
+                                        foreach (var itemFech in lstOld)
+                                        {
+                                            ++counterOld;
+
+                                            lstDelFech.Add((long)itemFech.i_unique);
+
+                                            var parc = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemFech.fk_parcela);
+                                            var logTrans = parc.fk_log_transacoes.ToString();
+                                            var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == itemFech.fk_cartao);
+
+                                            var lstParcs = db.T_Parcelas.Where(y => y.fk_log_transacoes.ToString() == logTrans).OrderBy(y => y.nu_indice).ToList();
+
+                                            foreach (var itemParc in lstParcs)
+                                            {
+                                                if (itemParc.i_unique >= itemFech.fk_parcela)
+                                                {
+                                                    var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemParc.i_unique);
+                                                    parcUpd.nu_parcela++;
+                                                    db.Update(parcUpd);
+                                                }
+                                            }
+                                        }
+
+                                        foreach (var item in lstDelFech)
+                                        {
+                                            var itemF = db.LOG_Fechamento.FirstOrDefault(y => y.i_unique == item);
+                                            db.Delete(itemF);
+                                        }
+
+                                        // limpar T_JobFechamento
+
+                                        var it_job = db.T_JobFechamento.FirstOrDefault(y => y.fk_empresa == empresa.i_unique && y.st_ano == ano && y.st_mes == mes);
+
+                                        if (it_job!= null)
+                                            db.Delete(it_job);
+                                    }
 
                                     currentEmpresa = empresa.st_empresa;
 

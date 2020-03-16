@@ -999,6 +999,20 @@ namespace DevKit.Web.Controllers
                                                                                    y.st_mes == DateTime.Now.Month.ToString().PadLeft(2, '0') &&
                                                                                    y.dt_fim != null) ? "Sim" : "Não";
 
+
+                                long atu = 0, ult = 0;
+
+                                var dtUltimo = DateTime.Now.AddMonths(-1);
+
+
+                                ult = db.LOG_Fechamento.Where(y => y.fk_empresa == item.i_unique &&
+                                                                                   y.st_ano == dtUltimo.Year.ToString() &&
+                                                                                   y.st_mes == dtUltimo.Month.ToString().PadLeft(2, '0')).
+                                                                                     Sum(y => (long)y.vr_valor);
+
+                                item.sultimo = "R$ " + mon.setMoneyFormat(ult);
+                                
+
                                 if (item.sfechFinalizado == "Sim")
                                 {
                                     item.sfechCartoes = db.LOG_Fechamento.Where(y => y.fk_empresa == item.i_unique &&
@@ -1009,12 +1023,21 @@ namespace DevKit.Web.Controllers
                                                                                      Count().
                                                                                      ToString();
 
-                                    item.sfechValorTotal = "R$ " + mon.formatToMoney(db.LOG_Fechamento.Where(y => y.fk_empresa == item.i_unique &&
-                                                                                    y.st_ano == DateTime.Now.Year.ToString() &&
-                                                                                    y.st_mes == DateTime.Now.Month.ToString().PadLeft(2, '0')).
-                                                                                     Sum(y => y.vr_valor).ToString());
+                                    atu = db.LOG_Fechamento.Where(y => y.fk_empresa == item.i_unique &&
+                                                                                   y.st_ano == DateTime.Now.Year.ToString() &&
+                                                                                   y.st_mes == DateTime.Now.Month.ToString().PadLeft(2, '0')).
+                                                                                     Sum(y => (long) y.vr_valor);
+
+                                    item.sfechValorTotal = "R$ " + mon.setMoneyFormat(atu);
+
+                                    if (ult > 0)
+                                    {
+                                        var pct = mon.setMoneyFormat((long)100 * atu / ult) + " %";
+                                        var sig = atu - ult > 0 ? "+" : "-";
+
+                                        item.svariacao = sig + pct;
+                                    }
                                 }
-                                                                                 
                             }
 
                             h = new 
@@ -1034,11 +1057,11 @@ namespace DevKit.Web.Controllers
 
                 case "101": //forçar fech
                     {
-                        var mat = Request.GetQueryStringValue("emp").PadLeft(6,'0');
+                        #region -  code - 
+
+                        var mat = Request.GetQueryStringValue("emp").PadLeft(6, '0');
 
                         var dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 10, 0);
-
-                        #region -  code - 
 
                         using (var db = new AutorizadorCNDB())
                         {

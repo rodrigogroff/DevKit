@@ -18,14 +18,16 @@
 
             <div ng-if="h.fechamentos.length > 0">
                 <br />
-                <table class="table table-hover" style="width:600px" ng-if="h.fechamentos.length > 0">
+                <table class="table table-hover" style="width:1000px" ng-if="h.fechamentos.length > 0">
                     <thead>
                         <tr>
-                            <th>Fechamento de empresa</th>
+                            <th>Empresa</th>
                             <th>Data / Hora</th>
                             <th>Finalizado?</th>
                             <th>Cartões</th>
                             <th>Valor Total</th>
+                            <th>Ultimo</th>
+                            <th>Variação</th>
                             <th>Ação</th>
                         </tr>
                     </thead>
@@ -35,8 +37,10 @@
                         <td>{{ mdl.sfechFinalizado }}</td>
                         <td>{{ mdl.sfechCartoes }}</td>
                         <td>{{ mdl.sfechValorTotal }}</td>
+                        <td>{{ mdl.sultimo }}</td>
+                        <td>{{ mdl.svariacao }}</td>
                         <td>
-                            <button class="btn btn-danger btn-xs" ng-click="forcarFech(mdl)" ng-if="mdl.sfechFinalizado !== 'Sim'" > Ajustar </button>
+                            <button class="btn btn-danger btn-xs" ng-click="forcarFech(mdl)" ng-if="mdl.sfechFinalizado !== 'Sim'"> Ajustar </button>
                         </td>
                     </tr>
                 </table>

@@ -15,7 +15,9 @@ namespace DataModel
                         snuFranquia = "",
                         sfechFinalizado = "",
                         sfechCartoes = "",
-                        sfechValorTotal = "";
+                        sfechValorTotal = "",
+                        sultimo = "",
+                        svariacao = "";
 
         public List<T_JobFechamento> lstFechamento = new List<T_JobFechamento>();
     }

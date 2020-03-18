@@ -251,14 +251,37 @@ export default class LojistaVenda extends React.Component {
 	trocarTipoVenda = e => {
 		if (this.state.vendaPos) {
 			this.setState({
-				tipoVenda: 'qrcode',
+				tipoVenda: 'mobile',
 				vendaPos: false,
+				vendaMobile: true,
+				tipoVendaMobile: 'digitado',
+				vendaMobile_digitado: true,
+				vendaMobile_qrcode: false,
 			})
 		}
 		else {
 			this.setState({
 				tipoVenda: 'pos',
 				vendaPos: true,
+				vendaMobile: false,
+			})
+		}
+	}
+
+	trocarTipoVendaMobile = e => {
+		if (this.state.vendaMobile_digitado) {
+			this.setState({
+				tipoVendaMobile: 'qrcode',
+				result: '',
+				vendaMobile_digitado: false,
+				vendaMobile_qrcode: true,
+			})
+		}
+		else {
+			this.setState({
+				tipoVendaMobile: 'digitado',
+				vendaMobile_digitado: true,
+				vendaMobile_qrcode: false,
 			})
 		}
 	}
@@ -351,28 +374,53 @@ export default class LojistaVenda extends React.Component {
 
 		this.setState({ loading: true });
 
-		var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, valor, parcelas, senha, parcelas_str });
-		var api = new Api();
-		api.postTokenPortal("solicitaVendaPos", serviceData).then(resp => {
-			if (resp.ok === true) {
+		if (this.state.tipoVenda === 'mobile') {
+			var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, valor, parcelas, parcelas_str });
+			var api = new Api();
+			api.postTokenPortal("solicitaVenda", serviceData).then(resp => {
+				if (resp.ok === true) {
+					this.setState({
+						loading: false,
+						aviso: "Solicitação de venda feita com sucesso!",
+					});
+				}
+				else {
+					this.setState({
+						loading: false,
+						error: resp.msg
+					});
+				}
+			}).catch(err => {
 				this.setState({
 					loading: false,
-					aviso: "Venda feita com sucesso!",
+					error: "Nao foi possivel verificar os dados de sua requisição"
 				});
-			}
-			else {
-				this.setState({
-					loading: false,
-					error: resp.msg
-				});
-			}
-		}).catch(err => {
-			this.setState({
-				loading: false,
-				error: "Nao foi possivel verificar os dados de sua requisição"
 			});
-		});
+		}
+		else {
 
+			var serviceData = JSON.stringify({ empresa, matricula, codAcesso, venc, valor, parcelas, senha, parcelas_str });
+			var api = new Api();
+			api.postTokenPortal("solicitaVendaPos", serviceData).then(resp => {
+				if (resp.ok === true) {
+					this.setState({
+						loading: false,
+						aviso: "Venda feita com sucesso!",
+					});
+				}
+				else {
+					this.setState({
+						loading: false,
+						error: resp.msg
+					});
+				}
+			}).catch(err => {
+				this.setState({
+					loading: false,
+					error: "Nao foi possivel verificar os dados de sua requisição"
+				});
+			});
+		}
 	}
 
 	render() {
@@ -450,22 +498,47 @@ export default class LojistaVenda extends React.Component {
 										<td width='70px'><h5>Modo</h5></td>
 										<td width='90px' style={{ paddingTop: '8px' }}>
 											<FormGroup className="radio abc-radio">
-												<Input type="radio" id="radio1" name="r" onClick={this.trocarTipoVenda} checked={this.state.tipoVenda === 'pos'} />
+												<Input type="radio" id="radio1" name="r" onClick={this.trocarTipoVenda} checked={this.state.vendaPos} />
 												<Label for="radio1" style={{ paddingTop: '4px' }}>Digitado</Label>
 											</FormGroup>
 										</td>
 										<td width='90px' style={{ paddingTop: '8px' }}>
 											<FormGroup className="radio abc-radio">
-												<Input type="radio" id="radio2" name="r" onClick={this.trocarTipoVenda} checked={this.state.tipoVenda === 'qrcode'} />
+												<Input type="radio" id="radio2" name="r" onClick={this.trocarTipoVenda} checked={this.state.vendaMobile} />
 												<Label for="radio2" style={{ paddingTop: '4px' }}>Cartão Virtual</Label>
 											</FormGroup>
 										</td>
 									</tr>
 								</tbody>
 							</table>
+
+							{this.state.tipoVenda === 'mobile' ?
+								<table width='100%'>
+									<tbody>
+										<tr>
+											<td width='70px'><h5>Captura</h5></td>
+											<td width='90px' style={{ paddingTop: '8px' }}>
+												<FormGroup className="radio abc-radio">
+													<Input type="radio" id="radio3" name="m" onClick={this.trocarTipoVendaMobile} checked={this.state.vendaMobile_digitado} />
+													<Label for="radio3" style={{ paddingTop: '4px' }}>Payfone</Label>
+												</FormGroup>
+											</td>
+											<td width='90px' style={{ paddingTop: '8px' }}>
+												<FormGroup className="radio abc-radio">
+													<Input type="radio" id="radio4" name="m" onClick={this.trocarTipoVendaMobile} checked={this.state.vendaMobile_qrcode} />
+													<Label for="radio4" style={{ paddingTop: '4px' }}>Qrcode</Label>
+												</FormGroup>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+								:
+								<div></div>
+							}
 						</Widget>
 
-						{this.state.tipoVenda == 'pos' ?
+						{this.state.vendaMobile_digitado == true ?
 							<div>
 								<p> Informe o número do Cartão Benefícios ConveyNET</p>
 								<InputGroup >
@@ -501,31 +574,6 @@ export default class LojistaVenda extends React.Component {
 								</InputGroup>
 							</div> : <div>
 							</div>
-						}
-
-						{this.state.tipoVenda == 'qrcode' ?
-							<div>
-								{
-									this.state.result !== 'Pendente de leitura...' ? <div>
-										<h1>{this.state._empresa}.{this.state._matricula}.{this.state._codAcesso}.{this.state._venc}</h1>
-										<br></br>
-									</div>
-										:
-										<div>
-											<h5>Leia o QRCODE no celular do associado</h5>
-											<br></br>
-											<QrReader
-												delay={300}
-												onError={this.handleError}
-												onScan={this.handleScan}
-												style={{ width: '80%' }}
-											/>
-											<br></br>
-											<p>{this.state.result}</p>
-										</div>
-								}
-							</div>
-							: <div></div>
 						}
 
 						<br></br>
@@ -618,6 +666,8 @@ export default class LojistaVenda extends React.Component {
 												}
 											</td>
 										</tr>
+
+
 										<tr>
 											<td>
 												{
@@ -768,40 +818,87 @@ export default class LojistaVenda extends React.Component {
 							</div> : <div></div>
 						}
 
-						<br></br>
-						<Widget>
-							<FormGroup row>
-								<Label for="normal-field" md={12} className="text-md-left">
-									<h5>Senha Cartão</h5>
-								</Label>
-								<InputGroup className="input-group-no-border px-4">
-									<InputGroupAddon addonType="prepend">
-										<InputGroupText>
-											<i className="fa fa-lock text-white" />
-										</InputGroupText>
-									</InputGroupAddon>
-									<Input id="password-input" type="password" className="input" width='80px' maxLength="4" value={this.state._stSenha}
-										autocomplete='off'
-										onChange={event => this.setState({ _stSenha: this.processNumber(event.target.value) })} />
-								</InputGroup>
-							</FormGroup>
-						</Widget>
-						<br></br>
-						<Button color="primary"
-							style={{ width: "200px" }}
-							onClick={this.executeSolic}
-							disabled={this.state.loading} >
-							{this.state.loading === true ? (
-								<span className="spinner">
-									<i className="fa fa-spinner fa-spin" />
-											&nbsp;&nbsp;&nbsp;
-								</span>
-							) : (
-									<div />
-								)}
-									Efetuar Venda
-								</Button>
-
+						{
+							this.state.tipoVenda === 'mobile' ?
+								<div>
+									{
+										this.state.vendaMobile_digitado === true || (this.state.vendaMobile_qrcode === true && this.state._empresa !== '') ?
+											<div>
+												<h1>{this.state._empresa}.{this.state._matricula}.{this.state._codAcesso}.{this.state._venc}</h1>
+												<br></br>
+												<Button color="primary"
+													style={{ width: "200px" }}
+													onClick={this.executeSolic}
+													disabled={this.state.loading} >
+													{this.state.loading === true ? (
+														<span className="spinner">
+															<i className="fa fa-spinner fa-spin" />
+															&nbsp;&nbsp;&nbsp;
+														</span>
+													) : (
+															<div />
+														)}
+													Solicitar Autorização
+													</Button>
+											</div>
+											:
+											<div>
+												{
+													this.state.result !== '' ? <div></div>
+														:
+														<div>
+															<h5>Leia o QRCODE no celular do associado</h5>
+															<br></br>
+															<QrReader
+																delay={300}
+																onError={this.handleError}
+																onScan={this.handleScan}
+																style={{ width: '80%' }}
+															/>
+															<br></br>
+															<p>{this.state.result}</p>
+														</div>
+												}
+											</div>
+									}
+								</div>
+								:
+								<div>
+									<br></br>
+									<Widget>
+										<FormGroup row>
+											<Label for="normal-field" md={12} className="text-md-left">
+												<h5>Senha Cartão</h5>
+											</Label>
+											<InputGroup className="input-group-no-border px-4">
+												<InputGroupAddon addonType="prepend">
+													<InputGroupText>
+														<i className="fa fa-lock text-white" />
+													</InputGroupText>
+												</InputGroupAddon>
+												<Input id="password-input" type="password" className="input" width='80px' maxLength="4" value={this.state._stSenha}
+													autocomplete='off'
+													onChange={event => this.setState({ _stSenha: this.processNumber(event.target.value) })} />
+											</InputGroup>
+										</FormGroup>
+									</Widget>
+									<br></br>
+									<Button color="primary"
+										style={{ width: "200px" }}
+										onClick={this.executeSolic}
+										disabled={this.state.loading} >
+										{this.state.loading === true ? (
+											<span className="spinner">
+												<i className="fa fa-spinner fa-spin" />
+												&nbsp;&nbsp;&nbsp;
+											</span>
+										) : (
+												<div />
+											)}
+										Efetuar Venda
+									</Button>
+								</div>
+						}
 						<br></br>
 						<br></br>
 					</div >

@@ -202,6 +202,7 @@ $z-index-variants: (more: 1, less: -1, '10': 10, '-10': -10);
 
 @include bg-variant('.bg-danger-system', rgba(80,0,0,1));
 @include bg-variant('.bg-success-system', rgba(0,80,0,1));
+@include bg-variant('.bg-password-system', rgba(90,90,90,1));
 
 @include bg-variant('.bg-body', $body-bg);
 @include bg-variant('.bg-body-light', $body-bg-light);

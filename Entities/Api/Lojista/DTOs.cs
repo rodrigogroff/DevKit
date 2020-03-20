@@ -3,6 +3,14 @@ using System.Collections.Generic;
 
 namespace Entities.Api.Lojista
 {
+    public class ReqSolicitacaoVendaCartao
+    {
+        public string empresa { get; set; }
+        public string matricula { get; set; }
+        public string codAcesso { get; set; }
+        public string venc { get; set; }
+    }
+
     public class ReqSolicitacaoVendaPOS
     {
         public string empresa { get; set; }

@@ -252,11 +252,6 @@ class Header extends React.Component {
                                             </NavLink>
                                       </DropdownItem>
                                       <DropdownItem>
-                                        <NavLink href="#/app/lojista/solics">
-                                          Solicitações
-                                            </NavLink>
-                                      </DropdownItem>
-                                      <DropdownItem>
                                         <NavLink href="#/app/lojista/autorizacoes">
                                           Autorizações
                                             </NavLink>

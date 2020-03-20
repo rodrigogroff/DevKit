@@ -1,18 +1,13 @@
 
 import React from 'react';
-
+  
 import {
-	Col,
-	FormGroup,
 	Modal,
 	ModalHeader,
 	ModalBody,
 	ModalFooter,
 	Button,
-	Label,
-	Input,
 } from 'reactstrap';
-import Widget from '../../../components/Widget';
 
 import s from './Autorizacoes.module.scss';
 

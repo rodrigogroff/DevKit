@@ -26,6 +26,21 @@ namespace Api.Master.Controllers
         }
 
         [HttpPost]
+        [Route("api/v1/portal/solicitaVendaCartao")]
+        public ActionResult SolicitaVendaCartao([FromBody] ReqSolicitacaoVendaCartao obj)
+        {
+            var repo = new DapperRepository();
+            var srv = new SolicitaVendaCartaoV1(repo);
+
+            var nomeCartao = "";
+
+            if (!srv.Exec(network, obj, ref nomeCartao))
+                return BadRequest(srv.Error);
+
+            return Ok(new { nomeCartao });
+        }
+
+        [HttpPost]
         [Route("api/v1/portal/solicitaVendaPos")]
         public ActionResult SolicitaVendaPos([FromBody] ReqSolicitacaoVendaPOS obj)
         {

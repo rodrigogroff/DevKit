@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Entities.Database;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace Master.Repository
         SolicitacaoVenda ObterSolicLojistaEmAberto(SqlConnection db, long fkTerminal);
         SolicitacaoVenda ObterSolicVendaCartaoId(SqlConnection db, long id);
         List<SolicitacaoVenda> ObterSolicitacoesLista(SqlConnection db, long fkTerminal);
+        List<SolicitacaoVenda> ObterSolicitacoesListaHoje(SqlConnection db, long fkTerminal);
     }
 
     public class DapperRepository : IDapperRepository
@@ -226,6 +228,17 @@ namespace Master.Repository
         {
             return db.Query<SolicitacaoVenda>(@"    select * from [SolicitacaoVenda] (nolock) 
                                                     where fkTerminal = @fkTerminal order by dtSolic desc", new { fkTerminal }).ToList();
+        }
+
+        public List<SolicitacaoVenda> ObterSolicitacoesListaHoje(SqlConnection db, long fkTerminal)
+        {
+            return db.Query<SolicitacaoVenda>(@"    select * from [SolicitacaoVenda] (nolock) 
+                                                    where fkTerminal = @fkTerminal and dtSolic >= @dt 
+                                                    order by dtSolic desc", 
+                                                        new {   fkTerminal, 
+                                                                dt = new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) 
+                                                            }).
+                                                    ToList();
         }
     }
 }

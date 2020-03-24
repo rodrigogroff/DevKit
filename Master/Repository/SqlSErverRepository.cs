@@ -33,6 +33,7 @@ namespace Master.Repository
         SolicitacaoVenda ObterSolicVendaCartaoId(SqlConnection db, long id);
         List<SolicitacaoVenda> ObterSolicitacoesLista(SqlConnection db, long fkTerminal);
         List<SolicitacaoVenda> ObterSolicitacoesListaHoje(SqlConnection db, long fkTerminal);
+        SolicitacaoVenda ObterSolicitacaoId(SqlConnection db, long id);
     }
 
     public class DapperRepository : IDapperRepository
@@ -239,6 +240,14 @@ namespace Master.Repository
                                                                 dt = new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) 
                                                             }).
                                                     ToList();
+        }
+
+        public SolicitacaoVenda ObterSolicitacaoId(SqlConnection db, long id)
+        {
+            return db.Query<SolicitacaoVenda>(@"    select * from [SolicitacaoVenda] (nolock) 
+                                                    where id = @id ", 
+                                                    new { id } ).
+                                                    FirstOrDefault();
         }
     }
 }

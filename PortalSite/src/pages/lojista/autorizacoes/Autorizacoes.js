@@ -1,6 +1,6 @@
 
 import React from 'react';
-  
+
 import {
 	Modal,
 	ModalHeader,
@@ -84,7 +84,7 @@ export default class LojistaAutorizacoes extends React.Component {
 							<span className="spinner">
 								<i className="fa fa-spinner fa-spin" />
 								&nbsp;&nbsp;&nbsp;
-											</span>
+							</span>
 						) : (
 								<div />
 							)}
@@ -95,13 +95,15 @@ export default class LojistaAutorizacoes extends React.Component {
 
 				<table width='100%'>
 					<thead>
-						<th>Data</th>
-						<th></th>
-						<th>Valor R$</th>
-						<th></th>
-						<th>Cartão</th>
-						<th></th>
-						<th>Situação</th>
+						<tr>
+							<th>Data</th>
+							<th></th>
+							<th>Valor R$</th>
+							<th></th>
+							<th>Cartão</th>
+							<th></th>
+							<th>Situação</th>
+						</tr>
 					</thead>
 					<tbody>
 						{this.state.results.map((current, index) => (

@@ -107,13 +107,15 @@ export default class AssociadoExtratos extends React.Component {
 					{this.state.vendas !== undefined ? <div>
 						<table width='100%'>
 							<thead>
-								<th>Data</th>
-								<th></th>
-								<th>Valor R$</th>
-								<th></th>
-								<th>Parcela</th>
-								<th></th>
-								<th>Loja</th>
+								<tr>
+									<th>Data</th>
+									<th></th>
+									<th>Valor R$</th>
+									<th></th>
+									<th>Parcela</th>
+									<th></th>
+									<th>Loja</th>
+								</tr>
 							</thead>
 							<tbody>
 								{this.state.vendas.map((current, index) => (

@@ -61,6 +61,7 @@ export default class AssociadoFaturas extends React.Component {
 							<p>Valor: {current.valorTotal}</p>
 							<table width='100%'>
 								<thead>
+									<tr>									
 									<th width='110px'>Data</th>
 									<th></th>
 									<th width='90px'>Valor R$</th>
@@ -68,6 +69,7 @@ export default class AssociadoFaturas extends React.Component {
 									<th width='70px'>Parcela</th>
 									<th></th>
 									<th >Estab.</th>
+									</tr>
 								</thead>
 								<tbody>
 									{current.vendas.map((currentVenda, index) => (

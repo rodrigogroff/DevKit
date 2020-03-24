@@ -194,7 +194,7 @@ namespace Master.Service
                         serviceRequest.AddJsonBody(dadosVenda);
 
                         var response = serviceClient.Execute(serviceRequest);
-                        var retornoVenda = JsonConvert.DeserializeObject<VendaIsoOutputDTO>(response.Content);
+                        var retornoVenda = JsonConvert.DeserializeObject<Entities.Api.Associado.VendaIsoOutputDTO>(response.Content);
 
                         if (retornoVenda == null)
                         {

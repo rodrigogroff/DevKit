@@ -25,8 +25,8 @@ namespace Api.Master.Controllers
         }
 
         [HttpPost]
-        [Route("api/v1/portal/solicitaVendaCancelamento")]
-        public ActionResult SolicitaVendaCancelamento([FromBody] ReqSolicitacaoVendaCancelamento obj)
+        [Route("api/v1/portal/solicitaVendaCancelamentoPOS")]
+        public ActionResult SolicitaVendaCancelamentoPOS([FromBody] ReqSolicitacaoVendaCancelamento obj)
         {
             var repo = new DapperRepository();
             var srv = new SolicitaVendaPosCancelamentoV1(repo);

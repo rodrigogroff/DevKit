@@ -74,7 +74,9 @@ export default class AssociadoRede extends React.Component {
 					{this.state.lojas !== undefined ? <div>
 						<table width='100%'>
 							<thead>
-								<th>Loja / Endereço</th>
+								<tr>
+									<th>Loja / Endereço</th>
+								</tr>								
 							</thead>
 							<tbody>
 								{this.state.lojas.map((current, index) => (

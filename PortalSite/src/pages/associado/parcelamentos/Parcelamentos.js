@@ -57,6 +57,7 @@ export default class AssociadoParcelamentos extends React.Component {
 					{this.state.parcelamento !== undefined ? <div>
 						<table>
 							<thead>
+								<tr>
 								<th width='110px'>Mês / Ano</th>
 								<th></th>
 								<th width='90px'>Valor R$</th>
@@ -64,6 +65,7 @@ export default class AssociadoParcelamentos extends React.Component {
 								<th width='70px'>Pct.</th>
 								<th></th>
 								<th width='90px'>Disp. R$</th>
+								</tr>
 							</thead>
 							<tbody>
 								{this.state.parcelamento.map((current, index) => (

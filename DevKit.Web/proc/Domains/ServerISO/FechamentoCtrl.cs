@@ -22,11 +22,10 @@ namespace DevKit.Web.Controllers
                     var dt = DateTime.Now;
 
                     var diaFechamento = dt.Day;
-                    var horaAtual = dt.ToString("HHmm");
                     var ano = dt.ToString("yyyy");
                     var mes = dt.ToString("MM").PadLeft(2, '0');
 
-                    var lstEmpresas = db.T_Empresa.Where(y => y.nu_diaFech == diaFechamento && y.st_horaFech == horaAtual).ToList();
+                    var lstEmpresas = db.T_Empresa.Where(y => y.nu_diaFech == diaFechamento ).ToList();
 
                     foreach (var empresa in lstEmpresas)
                     {

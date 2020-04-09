@@ -17,27 +17,79 @@ namespace GetStarted
 
             Console.ReadLine();
 
+
+           // CompilaDash();
             //9620,9621,9622,9623,9624,5041
 
-            ReFecha("03", "2020", 18, 2020, 3, 15);
+            //ReFecha("03", "2020", 18, 2020, 3, 15);
 
             //ForcaFech("009620", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009621", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009622", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009623", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009624", new DateTime(2020, 3, 1, 0, 12, 0));
-           // ForcaFech("001711", new DateTime(2020, 3, 13, 0, 09, 0));
+            // ForcaFech("001711", new DateTime(2020, 3, 13, 0, 09, 0));
 
-           /* MigraParcelas ( new T_Cartao
-                            {
-                                st_empresa = "001201",
-                                st_matricula = "859575"
-                            },
-                            new T_Cartao
-                            {
-                                st_empresa = "001201",
-                                st_matricula = "390531"
-                            }); */
+            /* MigraParcelas ( new T_Cartao
+                             {
+                                 st_empresa = "001201",
+                                 st_matricula = "859575"
+                             },
+                             new T_Cartao
+                             {
+                                 st_empresa = "001201",
+                                 st_matricula = "390531"
+                             }); */
+        }
+
+        static void CompilaDash()
+        {
+            using (var db = new AutorizadorCNDB())
+            {
+                var dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+                dt = dt.AddDays(-1);
+                
+                var dt_final = dt.AddHours(23).AddMinutes(59);
+
+                while (true)
+                {
+                    var lst = db.LOG_Transacoes.
+                                    Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                    Where(y => y.dt_transacao > dt && y.dt_transacao < dt_final).
+                                    OrderByDescending(y => y.dt_transacao).
+                                    ToList();
+
+                    while ( dt_final > dt)
+                    {
+                        var dt_temp = new DateTime(dt_final.Year, dt_final.Month, dt_final.Day);
+                        var _tmp_list = lst.Where(y => y.dt_transacao > dt_temp && y.dt_transacao < dt_final);
+
+                        Console.WriteLine(dt_temp + " até " + dt_final);
+
+                        db.Insert( new DashboardGrafico
+                        { 
+                            nuAno = dt_temp.Year,
+                            nuMes = dt_temp.Month,
+                            nuDia = dt_temp.Day,
+                            totalTransacoes = lst.Count(),
+                            totalCartoes = _tmp_list.Select ( y=> y.fk_cartao).Distinct().Count(),
+                            totalFinanc = _tmp_list.Sum ( y=> (int) y.vr_total),
+                            totalLojas = _tmp_list.Select(y => y.fk_loja).Distinct().Count(),
+                        });
+
+                        if (dt_final.Day == 1)
+                        {
+                            dt_final = dt_final.AddDays(-1);
+                            break;
+                        }
+                        else
+                            dt_final = dt_final.AddDays(-1);
+                    }
+
+                    dt = dt.AddMonths(-1);                    
+                }
+            }
         }
 
         static void MigraParcelas( T_Cartao cartOriginal, T_Cartao cartDestino)

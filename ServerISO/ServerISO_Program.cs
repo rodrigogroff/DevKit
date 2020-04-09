@@ -114,7 +114,7 @@ public class SynchronousSocketListener
     
     public static int Main()
     {
-        Console.WriteLine("\n" + DateTime.Now + "] 1.00002");
+        Console.WriteLine("\n" + DateTime.Now + "] 1.3");
         Console.WriteLine("\nCNET ISO [" + portNum + "]");
 
         //new Thread(new ThreadStart(BatchService_Fechamento)).Start();

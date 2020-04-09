@@ -82,6 +82,8 @@ namespace DataModel
         public ITable<Parceiro> Parceiro { get { return this.GetTable<Parceiro>(); } }
         public ITable<UsuarioParceiro> UsuarioParceiro { get { return this.GetTable<UsuarioParceiro>(); } }
 
+        public ITable<DashboardGrafico> DashboardGrafico { get { return this.GetTable<DashboardGrafico>(); } }
+
         public AutorizadorCNDB()
         {
             InitDataContext();
@@ -133,6 +135,19 @@ namespace DataModel
         }
 
         #endregion
+    }
+
+    [Table(Schema = "dbo", Name = "DashboardGrafico")]
+    public partial class DashboardGrafico
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public int totalTransacoes { get; set; }
+        [Column, Nullable] public int totalCartoes { get; set; }
+        [Column, Nullable] public int totalFinanc { get; set; }
+        [Column, Nullable] public int totalLojas { get; set; }
+        [Column, Nullable] public int nuDia { get; set; }
+        [Column, Nullable] public int nuMes { get; set; }
+        [Column, Nullable] public int nuAno { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "Parceiro")]

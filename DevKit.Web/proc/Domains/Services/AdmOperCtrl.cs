@@ -8,6 +8,18 @@ using SyCrafEngine;
 
 namespace DevKit.Web.Controllers
 {
+    public class PointConvey
+    {
+        public long x { get; set; }
+        public long y { get; set; }
+    }
+
+    public class PointConveyLabel
+    {
+        public long x { get; set; }
+        public string label { get; set; }
+    }
+
     public class AdmOperController : ApiControllerBase
     {
         public IHttpActionResult Get()
@@ -710,7 +722,7 @@ namespace DevKit.Web.Controllers
                             queryX = queryX.Where(y => lst.Contains((long)y.fk_empresa));
                         }
 
-                        object a, b, c, d, e, f, g, h;
+                        object a, b, c, d, e, f, g, h, i;
 
                         #region - A - 
                         {
@@ -1047,9 +1059,93 @@ namespace DevKit.Web.Controllers
                         }
                         #endregion
 
+                        #region - I - 
+
+                        {
+                            int totMonths = 3;
+
+                            var strMonths = new List<string> { "", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
+
+                            var qAtual = db.DashboardGrafico.Where(y => y.dtDia > DateTime.Now.AddMonths(-totMonths)).ToList();
+                            var qPassado = db.DashboardGrafico.Where(y => y.dtDia > DateTime.Now.AddYears(-1).AddMonths(-totMonths) && y.dtDia < DateTime.Now.AddYears(-1)).ToList();
+
+                            var res = new List<PointConvey>();
+                            var resOld = new List<PointConvey>();
+                            var ticks = new List<PointConveyLabel>();
+
+                            var dt = DateTime.Now.AddDays(-1);
+                            var dtFinal = DateTime.Now.AddMonths(-totMonths);
+
+                            int index = 1;
+
+                            while (dt > dtFinal )
+                            {
+                                var qa = qAtual.FirstOrDefault(y => y.nuAno == dt.Year && y.nuMes == dt.Month && y.nuDia == dt.Day);
+
+                                if (qa == null)
+                                {
+                                    var lst = db.LOG_Transacoes.
+                                                Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                                Where(y => y.dt_transacao > dt && y.dt_transacao < dt.AddDays(1)).
+                                                ToList();
+
+                                    qa = new DashboardGrafico
+                                    {
+                                        nuAno = dt.Year,
+                                        nuMes = dt.Month,
+                                        nuDia = dt.Day,
+                                        totalTransacoes = lst.Count(),
+                                        totalCartoes = lst.Select(y => y.fk_cartao).Distinct().Count(),
+                                        totalFinanc = lst.Sum(y => (int)y.vr_total),
+                                        totalLojas = lst.Select(y => y.fk_loja).Distinct().Count(),
+                                        dtDia = dt
+                                    };
+
+                                    db.Insert(qa);
+                                }
+
+                                res.Add(new PointConvey
+                                {
+                                    x = index,
+                                    y = qa != null ? qa.totalTransacoes : 0,
+                                });
+                                
+                                var qp = qPassado.FirstOrDefault(y => y.nuAno == dt.Year - 1 && y.nuMes == dt.Month && y.nuDia == dt.Day);
+
+                                resOld.Add(new PointConvey
+                                {
+                                    x = index,
+                                    y = qp != null ? qp.totalTransacoes : 0,
+                                });
+
+                                if (dt.Day == 1)
+                                {
+                                    ticks.Add(new PointConveyLabel
+                                    {
+                                        label = strMonths [dt.Month],
+                                        x = index,
+                                    });
+                                }
+
+                                index++;
+                                dt = dt.AddDays(-1);
+                            }
+
+                            
+
+                            i = new
+                            {
+                                list = res,
+                                listOld = resOld,
+                                ticks
+                            };
+                        }
+
+                        #endregion
+
                         return Ok( new
                             {
-                                a,b,c,d,e,f,g,h
+                                a,b,c,d,e,f,g,h,i
                             });
 
                         #endregion

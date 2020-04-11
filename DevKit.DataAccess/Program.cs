@@ -17,8 +17,8 @@ namespace GetStarted
 
             Console.ReadLine();
 
+            CompilaDash();
 
-           // CompilaDash();
             //9620,9621,9622,9623,9624,5041
 
             //ReFecha("03", "2020", 18, 2020, 3, 15);
@@ -72,10 +72,11 @@ namespace GetStarted
                             nuAno = dt_temp.Year,
                             nuMes = dt_temp.Month,
                             nuDia = dt_temp.Day,
-                            totalTransacoes = lst.Count(),
+                            totalTransacoes = _tmp_list.Count(),
                             totalCartoes = _tmp_list.Select ( y=> y.fk_cartao).Distinct().Count(),
                             totalFinanc = _tmp_list.Sum ( y=> (int) y.vr_total),
                             totalLojas = _tmp_list.Select(y => y.fk_loja).Distinct().Count(),
+                            dtDia = dt_temp
                         });
 
                         if (dt_final.Day == 1)

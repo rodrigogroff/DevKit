@@ -14,7 +14,7 @@ angular.module('app.controllers').controller('DashboardController',
 
                     $scope.a = data.a; $scope.b = data.b; $scope.c = data.c;
                     $scope.d = data.d; $scope.e = data.e; $scope.f = data.f;
-                    $scope.g = data.g; $scope.h = data.h;
+                    $scope.g = data.g; $scope.h = data.h; 
 
                     // ----------------
                     // Pie Chart
@@ -73,6 +73,42 @@ angular.module('app.controllers').controller('DashboardController',
                             mode: "categories",
                             tickLength: 0
                         }
+                    });
+
+                    // -----------------------------------------------------
+
+                    var data120_a = [];
+                    var data120_b = [];
+                    var data120_c = [];
+
+                    for (var it = 0; it < data.i.list.length; it++) {
+                        var item = data.i.list[it]
+                        data120_a.push([item.x, item.y]);
+                    }
+
+                    for (var it = 0; it < data.i.listOld.length; it++) {
+
+                        var item = data.i.listOld[it]
+                        data120_b.push([item.x, item.y]);
+                    }
+
+                    data120_c.push([0, '']);
+
+                    for (var it = 0; it < data.i.ticks.length; it++) {
+                        var item = data.i.ticks[it]
+                        data120_c.push([item.x, item.label]);
+                    }
+                    
+                    $.plot("#placeholder120", [data120_a, data120_b], {
+                        series: {
+                            lines: {
+                                fill: true
+                            }
+                        },
+                        xaxis: {
+                            tickLength: 30,
+                            ticks: data120_c
+                        },                        
                     });
 
                     $scope.loading = false;

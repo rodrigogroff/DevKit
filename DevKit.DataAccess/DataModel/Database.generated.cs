@@ -148,6 +148,7 @@ namespace DataModel
         [Column, Nullable] public int nuDia { get; set; }
         [Column, Nullable] public int nuMes { get; set; }
         [Column, Nullable] public int nuAno { get; set; }
+        [Column, Nullable] public DateTime dtDia { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "Parceiro")]

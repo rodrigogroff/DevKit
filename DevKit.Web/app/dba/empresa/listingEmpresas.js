@@ -5,8 +5,12 @@ angular.module('app.controllers').controller('ListingEmpresasController',
             $scope.loading = false;
 
             $scope.search = function () {
-                $scope.load(0, $scope.itensporpagina);
+                $scope.load(0, 999);
                 $scope.paginador.reiniciar();
+            };
+
+            $scope.export = function () {
+                window.location.href = "/api/EmpresaDBA/exportar";
             };
 
             $scope.load = function (skip, take) {
@@ -14,23 +18,23 @@ angular.module('app.controllers').controller('ListingEmpresasController',
 
                 var opcoes = {
                     skip: skip,
-                    take: 200,
+                    take: take,
                     busca: $scope.campos.codigo,
                     cnpj: $scope.campos.cnpj,
                     cidade: $scope.campos.cidade,
                     estado: $scope.campos.estado,
                     parceiro: $scope.campos.fkParceiro,
                 };
-
+              
                 Api.EmpresaDBA.listPage(opcoes, function (data) {
                     $scope.list = data.results;
                     $scope.total = data.count;
                     $scope.loading = false;
-                },
-                    function (response) {
-                        $scope.loading = false;
-                        toastr.error('Acesso não autorizado!', 'Erro');
-                    });
+                    },
+                        function (response) {
+                            $scope.loading = false;
+                            toastr.error('Acesso não autorizado!', 'Erro');
+                        });              
             };
 
             $scope.show = function (mdl) {

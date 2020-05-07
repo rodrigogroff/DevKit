@@ -6,11 +6,60 @@ using System.Net;
 using DataModel;
 using System;
 using SyCrafEngine;
+using App.Web;
+using System.Net.Http;
 
 namespace DevKit.Web.Controllers
 {
     public class EmpresaDBAController : ApiControllerBase
     {
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/EmpresaDBA/exportar", Name = "ExportarEmpresaDBA")]
+        public HttpResponseMessage ExportarEmpresaDBA()
+        {
+            StartDatabase();
+
+            var abaString = "Listagem";
+
+            var x = new ExportMultiSheetWrapper("empresas.xlsx");
+
+            x.NovaAba_Header(abaString, (new List<string> 
+            { 
+                "Código",
+                "CNPJ", 
+                "Fantasia",
+                "Social", 
+                "Endereço",
+                "Telefone", 
+                "Cartões",
+                "Max. Parc.", 
+                "Dia Fat.", 
+                "Fechamento" 
+            }).
+            ToArray());
+
+            foreach (var mdl in (from e in db.T_Empresa select e).ToList())
+            {
+                x.AdicionarConteudo(abaString, (new List<string>
+                {
+                    mdl.st_empresa,
+                    mdl.nu_CNPJ,
+                    mdl.st_fantasia,
+                    mdl.st_social,
+                    mdl.st_endereco + " - " +mdl.st_estado + " " +mdl.st_cidade,
+                    mdl.nu_telefone,
+                    mdl.nu_cartoes.ToString(),
+                    mdl.nu_parcelas.ToString(),
+                    mdl.nu_periodoFat.ToString(),
+                    mdl.nu_diaFech?.ToString() + " - " +mdl.st_horaFech?.Substring(0,2) + ":" + mdl.st_horaFech?.Substring(2,2),
+                }).
+                ToArray());
+            }
+
+            return x.GeraXLS();
+        }
+
         public IHttpActionResult Get()
         {
             if (userLoggedParceiroId != "1")
@@ -157,6 +206,8 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             var mon = new money();
+
+            mdl.st_empresa = mdl.st_empresa.PadLeft(6, '0');
 
             if (!string.IsNullOrEmpty(mdl.svrMensalidade))
                 mdl.vr_mensalidade = (int)mon.getNumericValue(mdl.svrMensalidade);

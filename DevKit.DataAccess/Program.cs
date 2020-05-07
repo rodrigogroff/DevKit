@@ -12,12 +12,17 @@ namespace GetStarted
         static void Main(string[] args)
         {
             Console.WriteLine("------------------------");
-            Console.WriteLine("(0.22) Patch?");
+            Console.WriteLine("Patch!");
             Console.WriteLine("------------------------");
 
             Console.ReadLine();
 
-            CompilaDash();
+            //ImportaLimites();
+
+            /* MigraParcelas ( new T_Cartao { st_empresa = "001201", st_matricula = "859575" }, new T_Cartao { st_empresa = "001201", st_matricula = "390531" }); */
+            /* MigraParcelas ( new T_Cartao { st_empresa = "001201", st_matricula = "979040" }, new T_Cartao { st_empresa = "001201", st_matricula = "239089" }); */
+
+            //CompilaDash();
 
             //9620,9621,9622,9623,9624,5041
 
@@ -29,17 +34,133 @@ namespace GetStarted
             //ForcaFech("009623", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009624", new DateTime(2020, 3, 1, 0, 12, 0));
             // ForcaFech("001711", new DateTime(2020, 3, 13, 0, 09, 0));
+        }
 
-            /* MigraParcelas ( new T_Cartao
-                             {
-                                 st_empresa = "001201",
-                                 st_matricula = "859575"
-                             },
-                             new T_Cartao
-                             {
-                                 st_empresa = "001201",
-                                 st_matricula = "390531"
-                             }); */
+        static void ImportaLimites()
+        {
+            using (var sr = new StreamReader("C:\\bkp\\limites.csv"))
+            {
+                using (var db = new AutorizadorCNDB())
+                {
+                    var t_empresa = db.T_Empresa.FirstOrDefault(y => y.st_empresa == "009971");
+
+                    while (!sr.EndOfStream)
+                    {
+                        var line = sr.ReadLine();
+
+                        var dados = line.Split(';');
+
+                        // mat,nome,limite
+
+                        dados[0] = dados[0].PadLeft(6, '0');
+                        dados[1] = dados[1].Trim().PadRight(30, ' ').Substring(0, 30).Trim();
+                        dados[2] = dados[2].Replace(".", "").Replace(",", "").Replace("R$ ", "");
+
+                        var cart = db.T_Cartao.FirstOrDefault(y => y.st_empresa == t_empresa.st_empresa && y.st_matricula == dados[0]);
+
+                        if (cart == null)
+                        {
+                            Console.WriteLine(dados[0] + " " + dados[1] + " - matricula não encontrada");
+                        }
+                        else
+                        { 
+                            cart.vr_limiteMensal = Convert.ToInt32(dados[2]);
+                            cart.vr_limiteTotal = Convert.ToInt32(dados[2]);
+
+                            db.Update(cart);
+                        }
+                    }
+                }
+            }
+        }
+
+        static void ImportaCadastro()
+        {
+            using (var sr = new StreamReader("C:\\bkp\\cadastro.csv"))
+            {
+                using (var db = new AutorizadorCNDB())
+                {
+                    var t_empresa = db.T_Empresa.FirstOrDefault(y => y.st_empresa == "009971");
+
+                    while (!sr.EndOfStream)
+                    {
+                        var line = sr.ReadLine();
+
+                        var prop = new T_Proprietario();
+                        var cart = new T_Cartao();
+
+                        var dados = line.Split(';');
+
+                        // mat,nome,cpf
+
+                        dados[0] = dados[0].PadLeft(6, '0');
+                        dados[1] = dados[1].Trim().PadRight(30, ' ').Substring(0, 30).Trim();
+                        dados[2] = dados[2].Replace(".", "").Replace("-", "");
+
+                        prop.dt_nasc = new DateTime(1970, 1, 1);
+                        prop.st_bairro = "";
+                        prop.st_cep = "";
+                        prop.st_cidade = "SANTO ANGELO";
+                        prop.st_complemento = "";
+                        prop.st_cpf = dados[2];
+                        prop.st_ddd = "";
+                        prop.st_email = "";
+                        prop.st_endereco = "";
+                        prop.st_nome = dados[1];
+                        prop.st_numero = "";
+                        prop.st_senhaEdu = "";
+                        prop.st_telefone = "";
+                        prop.st_UF = "RS";
+                        prop.vr_renda = 1000;
+
+                        var id_prop = Convert.ToInt32(db.InsertWithIdentity(prop));
+
+                        cart.fk_dadosProprietario = id_prop;
+
+                        cart.st_empresa = t_empresa.st_empresa;
+                        cart.st_matricula = dados[0];
+                        cart.dt_inclusao = DateTime.Now;
+                                                
+                        cart.nu_webSenhaErrada = 0;
+                        cart.st_agencia = "";
+                        cart.st_aluno = "";
+                        cart.st_banco = "";
+                        cart.st_celCartao = "";
+                        cart.st_conta = "";
+                        cart.st_titularidade = "01";
+                        cart.st_venctoCartao = "1227";
+
+                        cart.tg_convenioComSaldo = false;
+
+                        cart.vr_extraCota = 0;
+                        cart.vr_limiteMensal = 100;
+                        cart.vr_limiteRotativo = 100;
+                        cart.vr_limiteTotal = 100;
+
+                        cart.nu_viaCartao = 1;
+
+                        cart.tg_status = Convert.ToChar(CartaoStatus.Habilitado);
+                        cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
+                        cart.tg_tipoCartao = Convert.ToChar(TipoCartao.empresarial);
+                        cart.nu_senhaErrada = Convert.ToInt32(Context.NONE);
+
+                        cart.i_unique = Convert.ToDecimal(db.InsertWithIdentity(cart));
+
+                        // ----------------------------------
+                        // log de auditoria
+                        // ----------------------------------
+
+                        db.Insert(new LOG_Audit
+                        {
+                            dt_operacao = DateTime.Now,
+                            fk_usuario = 1,
+                            st_empresa = t_empresa.st_empresa,
+                            st_oper = "Novo Cartão (carga)",
+                            st_log = "Mat: " + cart.st_matricula + " Nome:" + prop.st_nome
+                        });
+                    }
+                }
+            }
         }
 
         static void CompilaDash()

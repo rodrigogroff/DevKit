@@ -70,7 +70,7 @@ namespace DevKit.Web.Controllers
                     item.st_estado,
                     item.st_endereco,
                     item.nu_CEP,
-                    item.nu_telefone.ToString(),
+                    item.nu_telefone?.ToString(),
                     empresas,
                     terminais,
                     item.tg_blocked == '1' ? "Bloqueada" : "Ativa",
@@ -145,15 +145,18 @@ namespace DevKit.Web.Controllers
                         select e;
             }
             else
-            { 
-                if (userLoggedParceiroId != "1")
+            {
+                if (userLoggedParceiroId != null)
                 {
-                    var lstEmpsParceiro = ObtemDBAListaEmpresasParceiroId();
+                    if (userLoggedParceiroId != "1")
+                    {
+                        var lstEmpsParceiro = ObtemDBAListaEmpresasParceiroId();
 
-                    query = from e in query
-                            join emp in db.LINK_LojaEmpresa on Convert.ToInt32(e.i_unique) equals emp.fk_loja
-                            where lstEmpsParceiro.Contains((long)emp.fk_empresa)
-                            select e;
+                        query = from e in query
+                                join emp in db.LINK_LojaEmpresa on Convert.ToInt32(e.i_unique) equals emp.fk_loja
+                                where lstEmpsParceiro.Contains((long)emp.fk_empresa)
+                                select e;
+                    }
                 }
             }
 

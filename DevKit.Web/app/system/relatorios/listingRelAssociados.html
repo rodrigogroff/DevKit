@@ -32,7 +32,8 @@
                                 </td>
                                 <td width="20px"></td>
                                 <td colspan="3">
-                                    <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                                    <button class="btn btn-primary" ng-click="search()">Pesquisar</button> &nbsp;
+                                    <button ng-if="list.length > 0" class="btn btn-danger" ng-click="export()">Exportar</button>
                                 </td>                                
                             </tr>
                             <tr height="36px">

@@ -15,6 +15,10 @@ angular.module('app.controllers').controller('ListingRelAssociadosController',
                 }
             };
 
+            $scope.export = function () {
+                window.location.href = "/api/EmissoraCartao/exportar?idEmpresa=" + $scope.campos.idEmpresa;
+            };
+
             $scope.itensporpagina = 15;
 
             init();

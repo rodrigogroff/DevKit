@@ -6,6 +6,8 @@ using System.Web.Http;
 using SyCrafEngine;
 using LinqToDB;
 using DataModel;
+using System.Net.Http;
+using App.Web;
 
 namespace DevKit.Web.Controllers
 {
@@ -28,6 +30,7 @@ namespace DevKit.Web.Controllers
                         limAcc,
                         dispT, 
                         limT,
+                        ultMov,
                         colorBack, colorFront,
                         limCota;
 
@@ -70,7 +73,76 @@ namespace DevKit.Web.Controllers
 
     public class EmissoraCartaoController : ApiControllerBase
     {
-        public IHttpActionResult Get()
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/EmissoraCartao/exportar", Name = "ExportarEmissoraCartao")]
+        public HttpResponseMessage ExportarEmissoraCartao()
+        {
+            StartDatabase();
+
+            var abaString = "Listagem";
+
+            var x = new ExportMultiSheetWrapper("cartoes.xlsx");
+
+            x.NovaAba_Header(abaString, (new List<string>
+            {
+                "Empresa",
+                "Matricula",
+                "Associado",
+                "Situação",
+                "Expedição",
+                "Data Pedido",
+                "Data Expedição",
+                "Cartão",
+                "CPF",
+                "Titularidade",
+                "Via",                
+                "Disp. Mensal",
+                "Disponível Total",
+                "Limite Mensal",
+                "Limite Cota",
+                "Limite Acumulado",                
+                "Limite Total",
+                "Ult. Movimento",                
+            }).
+            ToArray());
+
+            Get(true);
+
+            if (exportList != null)
+                foreach (var mdl in exportList)
+                {
+                    x.AdicionarConteudo(abaString, (new List<string>
+                    {
+                        strEmp,
+                        mdl.matricula,
+                        mdl.associado,
+                        mdl.situacao,
+                        mdl.expedicao,
+                        mdl.dtInicial,
+                        mdl.dtUltExp,
+                        mdl.cartao,
+                        mdl.cpf,
+                        mdl.tit,
+                        mdl.via,
+                        mdl.dispM,
+                        mdl.dispT,
+                        mdl.limM,
+                        mdl.limCota,
+                        mdl.limAcc,                        
+                        mdl.limT,
+                        mdl.ultMov,
+                    }).
+                    ToArray());
+                }
+
+            return x.GeraXLS();
+        }
+
+        List<CartaoListagemDTO> exportList = null;
+        string strEmp = "";
+
+        public IHttpActionResult Get(bool exportar = false)
         {
             var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
 
@@ -92,7 +164,10 @@ namespace DevKit.Web.Controllers
             var tEmp = db.currentEmpresa;
 
             if (idEmpresa != null)
+            {
                 tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
+                strEmp = tEmp.st_empresa;
+            }
 
             if (tEmp == null)
                 return BadRequest();
@@ -186,7 +261,9 @@ namespace DevKit.Web.Controllers
                             select e).
                             ToList();
 
-            foreach (var cartaoAtual in query.Skip(skip).Take(take).ToList())
+            var _lst = exportar == true ? query.ToList() : query.Skip(skip).Take(take).ToList();
+
+            foreach (var cartaoAtual in _lst)
             {
                 var assoc = (from e in lstAssoc
                              where e.i_unique == cartaoAtual.fk_dadosProprietario
@@ -215,10 +292,20 @@ namespace DevKit.Web.Controllers
                     DateTime? dtPrimTtrans = null;
 
                     if (!listagemCota)
-                        dtPrimTtrans = (from e in db.LOG_Transacoes
-                                        where e.fk_cartao == cartaoAtual.i_unique
-                                        select e.dt_transacao).
+                    {
+                        dtPrimTtrans = (from e in db.T_LoteCartaoDetalhe 
+                                        where e.fk_cartao == cartaoAtual.i_unique 
+                                        orderby e.i_unique descending 
+                                        select e.dt_ativacao).
                                         FirstOrDefault();
+
+                        if (dtPrimTtrans == null)
+                            dtPrimTtrans = (from e in db.LOG_Transacoes
+                                            where e.fk_cartao == cartaoAtual.i_unique
+                                            orderby e.dt_transacao ascending
+                                            select e.dt_transacao ).
+                                            FirstOrDefault();
+                    }
 
                     if (!listagemCota)
                     {
@@ -252,6 +339,16 @@ namespace DevKit.Web.Controllers
                                 assocNome = depDados.st_nome;
                         }
 
+                        var ultMov = db.LOG_Transacoes.
+                                    Where(y => y.fk_cartao == cartaoAtual.i_unique && y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                        OrderByDescending(y => y.dt_transacao).
+                                        Select ( y=> y.dt_transacao ).
+                                        FirstOrDefault();
+
+                        if (cartaoAtual.dt_inclusao != null)
+                            if (Convert.ToDateTime(cartaoAtual.dt_inclusao).Year < 2000)
+                                cartaoAtual.dt_inclusao = null;
+
                         res.Add(new CartaoListagemDTO
                         {
                             colorBack = colorBack,
@@ -275,6 +372,7 @@ namespace DevKit.Web.Controllers
                             limCota = mon.setMoneyFormat((long)limEC),
                             dispM = mon.setMoneyFormat(dispM),
                             dispT = mon.setMoneyFormat(dispT),
+                            ultMov = ultMov != null ? Convert.ToDateTime(ultMov).ToString("dd/MM/yyyy") : "",
                         });
                     }
                     else
@@ -292,6 +390,12 @@ namespace DevKit.Web.Controllers
                         });
                     }
                 }
+            }
+
+            if (exportar == true)
+            {
+                exportList = res;
+                return Ok();
             }
 
             return Ok(new { count = query.Count(), results = res });

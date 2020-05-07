@@ -32,7 +32,8 @@ angular.module('app.services', ['ngResource'])
 {
 	var opcoes = {
 		'add': { method: 'POST' },
-		'list': { method: 'GET', isArray: true },
+        'list': { method: 'GET', isArray: true },
+        'export': { method: 'GET', isArray: false },
 		'listPage': { method: 'GET', isArray: false },
 		'get': { method: 'GET', isArray: false },
 		'update': { method: 'PUT' },

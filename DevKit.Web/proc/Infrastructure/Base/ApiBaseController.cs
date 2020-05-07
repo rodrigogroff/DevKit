@@ -150,6 +150,12 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
+        public void StartDatabase()
+        {
+            db = new AutorizadorCNDB();
+        }
+
+        [NonAction]
         public bool StartDatabaseAndAuthorize()
         {
             db = new AutorizadorCNDB();

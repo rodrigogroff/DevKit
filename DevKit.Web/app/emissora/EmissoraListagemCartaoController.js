@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('EmissoraListagemCartaoController',
-    ['$scope', '$rootScope', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
-        function ($scope, $rootScope, $state, ngHistoricoFiltro, Api, ngSelects) {
+    ['$scope', '$rootScope', 'AuthService', '$state', 'ngHistoricoFiltro', 'Api', 'ngSelects',
+        function ($scope, $rootScope, AuthService, $state, ngHistoricoFiltro, Api, ngSelects) {
 
             var invalidCheck = function (element) {
                 if (element == undefined)
@@ -43,6 +43,12 @@ angular.module('app.controllers').controller('EmissoraListagemCartaoController',
             $scope.search = function () {
                 $scope.load(0, $scope.itensporpagina);
                 $scope.paginador.reiniciar();
+            };
+
+            $scope.export = function () {
+                toastr.warning('Aguarde, solicitação em andamento', 'Exportar');
+                AuthService.fillAuthData();
+                window.location.href = "/api/EmissoraCartao/exportar?empresa=" + AuthService.authentication.m1;
             };
 
             $scope.load = function (skip, take) {

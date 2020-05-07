@@ -97,13 +97,10 @@ namespace DevKit.Web.Controllers
                 "CPF",
                 "Titularidade",
                 "Via",                
-                "Disp. Mensal",
-                "Disponível Total",
                 "Limite Mensal",
                 "Limite Cota",
                 "Limite Acumulado",                
                 "Limite Total",
-                "Ult. Movimento",                
             }).
             ToArray());
 
@@ -125,13 +122,10 @@ namespace DevKit.Web.Controllers
                         mdl.cpf,
                         mdl.tit,
                         mdl.via,
-                        mdl.dispM,
-                        mdl.dispT,
                         mdl.limM,
                         mdl.limCota,
                         mdl.limAcc,                        
                         mdl.limT,
-                        mdl.ultMov,
                     }).
                     ToArray());
                 }
@@ -146,6 +140,7 @@ namespace DevKit.Web.Controllers
         {
             var idEmpresa = Request.GetQueryStringValue<long?>("idEmpresa", null);
 
+            var stEmpresa = Request.GetQueryStringValue("empresa");
             var nome = Request.GetQueryStringValue("nome");
             var cpf = Request.GetQueryStringValue("cpf");
             var skip = Request.GetQueryStringValue<int>("skip", 0);
@@ -167,6 +162,15 @@ namespace DevKit.Web.Controllers
             {
                 tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == idEmpresa);
                 strEmp = tEmp.st_empresa;
+            }
+
+            if (tEmp == null)
+            {
+                if (!string.IsNullOrEmpty(stEmpresa))
+                {
+                    tEmp = db.T_Empresa.FirstOrDefault(y => y.st_fantasia == stEmpresa);
+                    strEmp = tEmp.st_empresa;
+                }
             }
 
             if (tEmp == null)
@@ -252,16 +256,14 @@ namespace DevKit.Web.Controllers
             var sd = new SaldoDisponivel();
             var cs = new CartaoStatus();
 
-            var lst = query.Skip(skip).Take(take).ToList();
+            var _lst = exportar == true ? query.ToList() : query.Skip(skip).Take(take).ToList();
 
-            var lstIdAssoc = lst.Select(y => y.fk_dadosProprietario).ToList();
+            var lstIdAssoc = _lst.Select(y => y.fk_dadosProprietario).ToList();
 
             var lstAssoc = (from e in db.T_Proprietario
                             where lstIdAssoc.Contains((int)e.i_unique)
                             select e).
                             ToList();
-
-            var _lst = exportar == true ? query.ToList() : query.Skip(skip).Take(take).ToList();
 
             foreach (var cartaoAtual in _lst)
             {
@@ -274,8 +276,9 @@ namespace DevKit.Web.Controllers
                 {
                     long dispM = 0, dispT = 0;
 
-                    if (!listagemCota)
-                        sd.Obter(db, cartaoAtual, ref dispM, ref dispT);
+                    if (exportar == false)
+                        if (!listagemCota)
+                            sd.Obter(db, cartaoAtual, ref dispM, ref dispT);
 
                     if (cartaoAtual.vr_extraCota == null) cartaoAtual.vr_extraCota = 0;
                     if (cartaoAtual.vr_limiteMensal == null) cartaoAtual.vr_limiteMensal = 0;
@@ -291,21 +294,22 @@ namespace DevKit.Web.Controllers
 
                     DateTime? dtPrimTtrans = null;
 
-                    if (!listagemCota)
-                    {
-                        dtPrimTtrans = (from e in db.T_LoteCartaoDetalhe 
-                                        where e.fk_cartao == cartaoAtual.i_unique 
-                                        orderby e.i_unique descending 
-                                        select e.dt_ativacao).
-                                        FirstOrDefault();
-
-                        if (dtPrimTtrans == null)
-                            dtPrimTtrans = (from e in db.LOG_Transacoes
-                                            where e.fk_cartao == cartaoAtual.i_unique
-                                            orderby e.dt_transacao ascending
-                                            select e.dt_transacao ).
+                    if (exportar == false)
+                        if (!listagemCota)
+                        {
+                            dtPrimTtrans = (from e in db.T_LoteCartaoDetalhe 
+                                            where e.fk_cartao == cartaoAtual.i_unique 
+                                            orderby e.i_unique descending 
+                                            select e.dt_ativacao).
                                             FirstOrDefault();
-                    }
+
+                            if (dtPrimTtrans == null)
+                                dtPrimTtrans = (from e in db.LOG_Transacoes
+                                                where e.fk_cartao == cartaoAtual.i_unique
+                                                orderby e.dt_transacao ascending
+                                                select e.dt_transacao ).
+                                                FirstOrDefault();
+                        }
 
                     if (!listagemCota)
                     {
@@ -339,11 +343,12 @@ namespace DevKit.Web.Controllers
                                 assocNome = depDados.st_nome;
                         }
 
-                        var ultMov = db.LOG_Transacoes.
-                                    Where(y => y.fk_cartao == cartaoAtual.i_unique && y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                        var ultMov = exportar == false ? 
+                                        db.LOG_Transacoes.
+                                        Where(y => y.fk_cartao == cartaoAtual.i_unique && y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
                                         OrderByDescending(y => y.dt_transacao).
                                         Select ( y=> y.dt_transacao ).
-                                        FirstOrDefault();
+                                        FirstOrDefault() : null;
 
                         if (cartaoAtual.dt_inclusao != null)
                             if (Convert.ToDateTime(cartaoAtual.dt_inclusao).Year < 2000)

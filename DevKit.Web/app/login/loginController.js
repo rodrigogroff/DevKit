@@ -79,6 +79,8 @@ angular.module('app.controllers').controller('LoginController',
                         lData.userName = "4." +
                             $scope.loginData.userEmp + "." +
                             $scope.loginData.userName;
+
+                        $rootScope.stEmpresa = $scope.loginData.m1;
                     }
                     else if ($rootScope.tipo == 1 ||
                         $rootScope.tipo == 3 ||

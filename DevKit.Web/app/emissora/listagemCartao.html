@@ -45,7 +45,7 @@
                     </td>
                     <td width="20px"></td>
                     <td width="120px" align="right">
-                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>                         
                     </td>
                     <td width="20px"></td>
                 </tr>
@@ -64,6 +64,10 @@
                                placeholder="(Todos)"
                                ui-select2="expedicoes"
                                ng-model="campos.idExp" />
+                    </td>
+                    <td></td>
+                    <td ng-if="list.length > 0" align="right">
+                        <button class="btn btn-danger" ng-click="export()">Exportar</button>
                     </td>
                 </tr>
                 <tr height="43px">

@@ -15,11 +15,10 @@ namespace ServerIsoV2
 
         public Encoding myEnconding = Encoding.ASCII;
 
-        //public string localHost = "http://localhost:4091";
         public string hostAPI = "http://192.168.15.26:80";
         public string hostMachine = "10.11.0.41";
 
-        public const int portHostSITEF = 2700,
+        public const int portHostSITEF = 3700,
                          maxQueue = 999,
                          maxPckSize = 99999;
 
@@ -71,12 +70,6 @@ namespace ServerIsoV2
 
             Console.WriteLine("Server on " + ipEndPoint.Address + " port: " + ipEndPoint.Port);
 
-            if (!Simulation)
-            {
-                new Thread(new ThreadStart(BatchService_Fechamento)).Start();
-                new Thread(new ThreadStart(BatchService_ConfirmacaoAuto)).Start();
-            }                       
-            
             while (true)
             {
                 Thread.Sleep(1000);

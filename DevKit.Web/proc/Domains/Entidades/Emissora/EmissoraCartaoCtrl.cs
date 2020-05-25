@@ -61,6 +61,7 @@ namespace DevKit.Web.Controllers
                         email,
                         situacao, expedicao,
                         via,
+                        dispM, dispT,
                         fkEmpresa,                      
                         uf, cidade, cep, end, numero, bairro,
                         modo, valor, array;
@@ -499,6 +500,12 @@ namespace DevKit.Web.Controllers
                 }                
             }
 
+            var sd = new SaldoDisponivel();
+
+            long dispTot =0 , dispMens = 0;
+
+            sd.Obter(db, cart, ref dispMens, ref dispTot);
+
             return Ok(new CartaoDTO
             {
                 // dados proprietário
@@ -520,6 +527,8 @@ namespace DevKit.Web.Controllers
                 tg_convenioComSaldo = cart.tg_convenioComSaldo,
                 limMes = mon.setMoneyFormat((long)cart.vr_limiteMensal),
                 limTot = mon.setMoneyFormat((long)cart.vr_limiteTotal),                
+                dispM = mon.setMoneyFormat(dispMens),
+                dispT = mon.setMoneyFormat(dispTot),
                 limAcc = cart.vr_saldoConvenio > 0 ? mon.setMoneyFormat((long)cart.vr_saldoConvenio) : "0,00",
                 vencMes = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(0, 2),
                 vencAno = cart.st_venctoCartao == null ? "" : cart.st_venctoCartao.Substring(2, 2),

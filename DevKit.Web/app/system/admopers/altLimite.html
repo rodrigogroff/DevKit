@@ -28,27 +28,26 @@
                     <td width="20px">
                         <button class="btn btn-xs btn-danger" ng-show="mat_fail">!</button>
                     </td>
-                    <td width="320px">
+                    <td width="200px">
                         <input type="text"
                                class="form-control input-transparent"
                                maxlength="6" numeric
                                ng-model="campos.mat" />
                     </td>
                     <td width="20px"></td>
-                    <td>
+                    <td width="120px">
                         <button class="btn btn-primary" ng-click="buscar()">Buscar</button>
                     </td>
+                    <td width="160px"></td>
                 </tr>
                 <tr ng-if="campos.id > 0" height="43px">
                     <td>
                         <b>Associado</b>
                     </td>
                     <td></td>
-                    <td>
+                    <td colspan="4">
                         <b>{{campos.nomeCartao}}</b>
-                    </td>
-                    <td></td>
-                    <td></td>
+                    </td>                    
                 </tr>
                 <tr ng-if="campos.id > 0" height="43px">
                     <td> <b>Limite Mensal</b></td>
@@ -56,11 +55,14 @@
                     <td>
                         <input type="text"
                                class="form-control input-transparent"
-                               maxlength="12"
+                               maxlength="12" onKeyUp="money(this,Valor);"
                                ng-model="campos.limMes" />
                     </td>
                     <td></td>
-                    <td></td>
+                    <td> <b>Disp. Mensal</b></td>
+                    <td>
+                        {{campos.dispM}}
+                    </td>
                 </tr>
                 <tr ng-if="campos.id > 0" height="43px">
                     <td> <b>Limite Total</b></td>
@@ -68,11 +70,14 @@
                     <td>
                         <input type="text"
                                class="form-control input-transparent"
-                               maxlength="12"
+                               maxlength="12" onKeyUp="money(this,Valor);"
                                ng-model="campos.limTot" />
                     </td>
                     <td></td>
-                    <td></td>
+                    <td> <b>Disp. Total</b></td>
+                    <td>
+                        {{campos.dispT}}
+                    </td>
                 </tr>
             </table>
             <br />

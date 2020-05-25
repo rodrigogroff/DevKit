@@ -276,6 +276,8 @@
     <Content Include="app\dba\parceiros\parceiro.js" />
     <Content Include="app\dba\parceiros\listingParceiros.html" />
     <Content Include="app\dba\parceiros\listingParceiros.js" />
+    <Content Include="app\emissora\altDesbloqLote.html" />
+    <Content Include="app\emissora\altBloqLote.html" />
     <Content Include="app\emissora\altCota.html" />
     <Content Include="app\emissora\altSegVia.html" />
     <Content Include="app\emissora\altDesbloq.html" />
@@ -284,6 +286,8 @@
     <Content Include="app\emissora\altSenhaUsuario.html" />
     <Content Include="app\emissora\cancelamentoEmissora.html" />
     <Content Include="app\emissora\CancelamentoEmissoraController.js" />
+    <Content Include="app\emissora\EmissoraAltDesbloqLote.js" />
+    <Content Include="app\emissora\EmissoraAltBloqLote.js" />
     <Content Include="app\emissora\EmissoraAltCota.js" />
     <Content Include="app\emissora\EmissoraAltSegVia.js" />
     <Content Include="app\emissora\EmissoraAltDesbloq.js" />
@@ -435,6 +439,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="images\ajuda.png" />
     <Content Include="images\arrow_left.png" />
     <Content Include="images\Check-icon.png" />
     <Content Include="images\dinheiro_318-138572.jpg" />
@@ -729,6 +734,7 @@
     <Compile Include="proc\Domains\DBA\UsuarioParceiroDBAResetSenhaCtrl.cs" />
     <Compile Include="proc\Domains\DBA\UsuarioParceiroDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\LoteCartaoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTransLojas.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTrans.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosForn.cs" />

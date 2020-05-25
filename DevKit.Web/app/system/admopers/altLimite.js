@@ -42,6 +42,8 @@ angular.module('app.controllers').controller('DBAAltLimiteController',
                             $scope.campos.id = data.results[0].id;
                             $scope.campos.limMes = data.results[0].limM;
                             $scope.campos.limTot = data.results[0].limT;
+                            $scope.campos.dispM = data.results[0].dispM;
+                            $scope.campos.dispT = data.results[0].dispT;
                         }
                         else
                             toastr.error('matrícula inválida', 'Erro');

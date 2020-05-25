@@ -81,6 +81,8 @@ namespace DevKit.Web
                 "~/app/dba/empresa/empresa.js",
                 "~/app/emissora/CancelamentoEmissoraController.js",
                 "~/app/emissora/EmissoraAltDesbloq.js",
+                "~/app/emissora/EmissoraAltBloqLote.js",
+                "~/app/emissora/EmissoraAltDesbloqLote.js",
                 "~/app/emissora/EmissoraRelatoriosController.js",
                 "~/app/emissora/EmissoraListagemCartaoController.js",
                 "~/app/emissora/EmissoraListagemLojaController.js",

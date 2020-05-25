@@ -4,6 +4,8 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Security.Cryptography;
 
 namespace GetStarted
 {
@@ -16,6 +18,11 @@ namespace GetStarted
             Console.WriteLine("------------------------");
 
             Console.ReadLine();
+
+
+            //SetaSenhaEmpresaPorMatricula("009971");
+
+            SetaValoresEmpresa("009971", 20000, 30000);
 
             //ImportaLimites();
 
@@ -34,6 +41,69 @@ namespace GetStarted
             //ForcaFech("009623", new DateTime(2020, 3, 1, 0, 12, 0));
             //ForcaFech("009624", new DateTime(2020, 3, 1, 0, 12, 0));
             // ForcaFech("001711", new DateTime(2020, 3, 13, 0, 09, 0));
+        }
+
+
+        static string DESCript(string dados, string chave = "12345678")
+        {
+            dados = dados.PadLeft(8, '*');
+
+            byte[] key = System.Text.Encoding.ASCII.GetBytes(chave);//{1,2,3,4,5,6,7,8};
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(dados);
+
+            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+
+            des.Key = key;
+            des.Mode = CipherMode.ECB;
+
+            ICryptoTransform DESt = des.CreateEncryptor();
+            DESt.TransformBlock(data, 0, 8, data, 0);
+
+            string retorno = "";
+            for (int n = 0; n < 8; n++)
+            {
+                retorno += String.Format("{0:X2}", data[n]);
+            }
+
+            return retorno;
+        }
+
+        static void SetaValoresEmpresa(string stEmpresa, int vlrantigo, int vlrnovo)
+        {
+            using (var db = new AutorizadorCNDB())
+            {
+                var t_empresa = db.T_Empresa.FirstOrDefault(y => y.st_empresa == stEmpresa);
+
+                var lstCarts = db.T_Cartao.Where(y => y.st_empresa == stEmpresa).ToList();
+
+                foreach (var item in lstCarts)
+                {
+                    if (item.vr_limiteMensal == vlrantigo)
+                    {
+                        item.vr_limiteMensal = vlrnovo;
+                        item.vr_limiteTotal = vlrnovo;
+
+                        db.Update(item);
+                    }
+                }
+            }
+        }
+
+        static void SetaSenhaEmpresaPorMatricula(string stEmpresa)
+        {
+            using (var db = new AutorizadorCNDB())
+            {
+                var t_empresa = db.T_Empresa.FirstOrDefault(y => y.st_empresa == stEmpresa);
+
+                var lstCarts = db.T_Cartao.Where(y => y.st_empresa == stEmpresa).ToList();
+
+                foreach (var item in lstCarts)
+                {
+                    item.st_senha = DESCript(item.st_matricula.Substring (2,4));
+
+                    db.Update(item);
+                }
+            }
         }
 
         static void ImportaLimites()

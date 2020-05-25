@@ -69,6 +69,8 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('empAltLim', { url: '/emissora/altlim', templateUrl: 'app/emissora/altLimite.html', controller: 'EmissoraAltLimiteController' })
             .state('empAltCota', { url: '/emissora/altCota', templateUrl: 'app/emissora/altCota.html', controller: 'EmissoraAltCotaController' })
             .state('empAltBloq', { url: '/emissora/altBloq', templateUrl: 'app/emissora/altBloq.html', controller: 'EmissoraAltBloqueioController' })
+            .state('empAltBloqLote', { url: '/emissora/altBloqLote', templateUrl: 'app/emissora/altBloqLote.html', controller: 'EmissoraAltBloqueioLoteController' })
+            .state('empAltDesbloqLote', { url: '/emissora/altDesbloqLote', templateUrl: 'app/emissora/altDesbloqLote.html', controller: 'EmissoraAltDesbloqueioLoteController' })
             .state('empAltDesbloq', { url: '/emissora/altDesbloq', templateUrl: 'app/emissora/altDesbloq.html', controller: 'EmissoraAltDesbloqueioController' })
             .state('empListagemFechamento', { url: '/emissora/listagemFechamento', templateUrl: 'app/emissora/listagemFechamento.html', controller: 'EmissoraListagemFechamentoController' })
             .state('empListagemFaturamento', { url: '/emissora/listagemFaturamento', templateUrl: 'app/dba/faturamento/listagemFaturamento.html', controller: 'EmissoraDBAListagemFaturamentoController' })

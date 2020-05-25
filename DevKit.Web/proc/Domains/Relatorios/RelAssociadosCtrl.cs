@@ -155,8 +155,6 @@ namespace DevKit.Web.Controllers
                          select e);
             }
 
-            
-
             var res = new List<RelAssociadosItem>();
 
             if (qtdDeps == 0)
@@ -164,13 +162,17 @@ namespace DevKit.Web.Controllers
                          join emp in db.T_Empresa on e.st_empresa equals emp.st_empresa
                          join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int)associado.i_unique
                          where emp.tg_bloq == 0
-                         orderby associado.st_nome
                          select e);
 
             var calcAcesso = new CodigoAcesso();
 
             var sd = new SaldoDisponivel();
             var mon = new money();
+
+            query = (from e in query
+                     join associado in db.T_Proprietario on e.fk_dadosProprietario equals (int)associado.i_unique
+                     orderby associado.st_nome
+                     select e);
 
             var lstFinal = query.Skip(skip).Take(take).ToList();
 
@@ -219,7 +221,7 @@ namespace DevKit.Web.Controllers
                     res.Add(new RelAssociadosItem
                     {
                         id = item.i_unique.ToString(),
-                        associado = nome,
+                        associado = nome.ToUpper(),
 
                         cartao = item.st_empresa + "." +
                                  item.st_matricula + "." +

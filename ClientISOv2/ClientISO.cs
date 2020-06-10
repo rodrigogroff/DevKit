@@ -122,10 +122,6 @@ namespace ClientISOv2
             {
                 #region - listener - 
 
-                SocketPermission permission = new SocketPermission( NetworkAccess.Connect, TransportType.Tcp, "", SocketPermission.AllPorts );
-
-                permission.Demand();
-
                 var ipHost = Dns.GetHostEntry("177.85.160.41");
 
                 for (int i = 0; i < ipHost.AddressList.Length; i++)
@@ -135,7 +131,7 @@ namespace ClientISOv2
 
                 //var ipHost = Dns.GetHostEntry("");
                 //var ipAddr = ipHost.AddressList[1];
-                var ipEndPoint = new IPEndPoint(ipAddr, 2700);
+                var ipEndPoint = new IPEndPoint(ipAddr, 3700);
                 var nsuRec = "";
 
                 ISO8583 isoReg;
@@ -151,6 +147,32 @@ namespace ClientISOv2
 
                 Console.WriteLine ( "Socket connected to " + senderSock.RemoteEndPoint.ToString() );
 
+                // SendSincrono(Get0200("100", "1").registro);
+
+              //  for (int i = 0; i < 10; i++)
+                    SendSincrono("0200B238040020C0100000000000000000000020000000000001000609163728090001163728060902137826766*******************************SE000001000000000005000****************");
+                
+                //for (int i = 0; i < 10; i++)
+                    Console.WriteLine("Resposta: " + ReceiveDataFromServer());
+
+                SendSincrono("0200B238040020C0100000000000000000000020000000000001000609163728090001163728060902137826766*******************************SE000001000000000005000****************");
+
+                Console.WriteLine("Resposta: " + ReceiveDataFromServer());
+
+                Thread.Sleep(9000);
+
+                SendSincrono("0200B238040020C0100000000000000000000020000000000001000609163728090001163728060902137826766*******************************SE000001000000000005000****************");
+
+                Console.WriteLine("Resposta: " + ReceiveDataFromServer());
+
+                Thread.Sleep(12000);
+
+                SendSincrono("0200B238040020C0100000000000000000000020000000000001000609163728090001163728060902137826766*******************************SE000001000000000005000****************");
+
+                Console.WriteLine("Resposta: " + ReceiveDataFromServer());
+
+
+                /*
                 //  while (true) { if (DateTime.Now.Second == 1) break; Thread.Sleep(10); }
 
                 for (int i = 0; i < 1; i++)
@@ -160,6 +182,7 @@ namespace ClientISOv2
                     //ExecutaCancelamentoSimples("99");
                     //ExecutaDesfazimentoSimples("110");
                 }
+                */
 
                 Disconnect();
             }

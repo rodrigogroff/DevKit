@@ -7,10 +7,19 @@ namespace ServerIsoV2
 {
     public partial class ServerISO
     {
+        public char sepPacotes = '\0';
+
+        public bool IsVerbose = false;
+
         public void ProcessaLote(IsoCommand cmd)
         {
             cmd.Ended = false;
             cmd.Running = true;
+
+            cmd.Text = cmd.Text.Replace("0200B", sepPacotes + "0200B");
+            cmd.Text = cmd.Text.Replace("0202B", sepPacotes + "0202B");
+            cmd.Text = cmd.Text.Replace("0400B", sepPacotes + "0400B");
+            cmd.Text = cmd.Text.Replace("0420B", sepPacotes + "0420B");
 
             foreach (var dadosRecebidos in cmd.Text.Split(sepPacotes))
             {
@@ -130,8 +139,6 @@ namespace ServerIsoV2
 
                                 cmd.Log(Iso210);
                                 SendSincrono(Iso210.registro, cmd);
-
-                                WaitMessage(cmd);
 
                                 #endregion
                             }
@@ -339,7 +346,7 @@ namespace ServerIsoV2
 
                             #endregion
                         }
-                    }
+                    }                    
                 }
                 catch (System.Exception ex)
                 {
@@ -348,6 +355,8 @@ namespace ServerIsoV2
                     cmd.LogFalha(ex.ToString());
                 }
             }
+
+            WaitMessage(cmd);
         }
     }
 }

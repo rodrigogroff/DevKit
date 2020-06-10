@@ -1451,6 +1451,85 @@ namespace DevKit.Web.Controllers
 
                         break;
                     }
+
+                case "200": //gráficos
+                    {
+                        #region - code - 
+
+                        var dtInicial = Request.GetQueryStringValue("dtInicial");
+                        var dtFinal = Request.GetQueryStringValue("dtFinal");
+
+                        DateTime? dt_inicial = ObtemData(dtInicial),
+                                  dt_final = ObtemData(dtFinal)?.AddDays(1);
+
+                        var strMonths = new List<string> { "", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                                                               "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
+
+                        var qAtual = db.DashboardGrafico.Where(y => y.dtDia > dt_inicial && y.dtDia < dt_final).ToList();
+
+                        var res = new List<PointConvey>();
+                        var resOld = new List<PointConvey>();
+                        var ticks = new List<PointConveyLabel>();
+
+                        int index = 1;
+                        var dt = Convert.ToDateTime(dt_inicial);
+
+                        while (dt < dt_final)
+                        {
+                            var qa = qAtual.FirstOrDefault(y => y.nuAno == dt.Year && y.nuMes == dt.Month && y.nuDia == dt.Day);
+
+                            if (qa == null)
+                            {
+                                var lst = db.LOG_Transacoes.
+                                            Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
+                                            Where(y => y.dt_transacao > dt && y.dt_transacao < dt.AddDays(1)).
+                                            ToList();
+
+                                qa = new DashboardGrafico
+                                {
+                                    nuAno = dt.Year,
+                                    nuMes = dt.Month,
+                                    nuDia = dt.Day,
+                                    totalTransacoes = lst.Count(),
+                                    totalCartoes = lst.Select(y => y.fk_cartao).Distinct().Count(),
+                                    totalFinanc = lst.Sum(y => (int)y.vr_total),
+                                    totalLojas = lst.Select(y => y.fk_loja).Distinct().Count(),
+                                    dtDia = dt
+                                };
+
+                                db.Insert(qa);
+                            }
+
+                            res.Add(new PointConvey
+                            {
+                                x = index,
+                                y = qa != null ? qa.totalTransacoes : 0,
+                            });
+
+                            if (dt.Day == 15 || dt.Day == 1)
+                            {
+                                ticks.Add(new PointConveyLabel
+                                {
+                                    label = dt.Day + "/" + strMonths[dt.Month],
+                                    x = index,
+                                });
+                            }
+
+                            index++;
+                            dt = dt.AddDays(1);
+                        }
+
+                        return Ok(new
+                        {
+                            list = res,
+                            listOld = resOld,
+                            ticks,
+                            label_a = DateTime.Now.Year.ToString(),
+                            label_b = DateTime.Now.AddYears(-1).Year.ToString(),
+                        });
+                        
+                        #endregion
+                    }
             }
 
             return BadRequest();            

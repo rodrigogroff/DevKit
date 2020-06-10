@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Linq;
 using RestSharp;
+using System.Security.Permissions;
 
 namespace ServerIsoV2
 {
@@ -15,15 +16,13 @@ namespace ServerIsoV2
 
         public Encoding myEnconding = Encoding.ASCII;
 
-        public string hostAPI = "http://192.168.15.26:80";
+        public string hostAPI = "http://localhost:80";
         public string hostMachine = "10.11.0.41";
 
         public const int portHostSITEF = 3700,
                          maxQueue = 999,
                          maxPckSize = 99999;
 
-        public char sepPacotes = '\0';
-        
         public List<IsoCommand> GlobalCommands = new List<IsoCommand>();
 
         public byte[] GetBuffer() { return new byte[maxPckSize]; }
@@ -34,8 +33,7 @@ namespace ServerIsoV2
         {
             #region - setup listener -
 
-            var permission = new SocketPermission(NetworkAccess.Accept, TransportType.Tcp, "", SocketPermission.AllPorts);
-            permission.Demand();
+            Console.WriteLine("x 1.2");
 
             IPHostEntry ipHost = Dns.GetHostEntry("");
 
@@ -56,10 +54,14 @@ namespace ServerIsoV2
 
             ipAddr = IPAddress.Parse(hostMachine);
 
-            Console.WriteLine(ipAddr.ToString());
+            Console.WriteLine("ip addr " + ipAddr.ToString());
 
             var ipEndPoint = new IPEndPoint(ipAddr, portHostSITEF);
+
+            Console.WriteLine(ipEndPoint.ToString());
+
             var sListener = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
             sListener.Bind(ipEndPoint);
             sListener.Listen(maxQueue);
 
@@ -70,6 +72,8 @@ namespace ServerIsoV2
 
             Console.WriteLine("Server on " + ipEndPoint.Address + " port: " + ipEndPoint.Port);
 
+            int last = -1;
+
             while (true)
             {
                 Thread.Sleep(1000);
@@ -77,15 +81,21 @@ namespace ServerIsoV2
                 var lstCmdsToExecute = GlobalCommands.Where(y => y.Running == false).ToList();
                 var count = lstCmdsToExecute.Count();
 
-                if (DateTime.Now.Second % 10 == 0)
+                if (last != count)
+                {
                     Console.WriteLine("[" + DateTime.Now.ToString() + "] >> Queue: " + count);
+                    last = count;
+                }
 
                 if (count > 0)
                 {
                     Console.WriteLine("Queue: " + count);
 
                     foreach (var cmd in lstCmdsToExecute)
+                    {
+                        Console.WriteLine("Start! "+ cmd.Text );
                         new Thread(() => ProcessaLote(cmd)).Start();
+                    }                        
                 }
 
                 GlobalCommands.RemoveAll(y => y.Ended == true);

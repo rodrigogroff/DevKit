@@ -330,6 +330,8 @@
     <Content Include="app\system\admopers\altBloq.html" />
     <Content Include="app\system\admopers\altCota.html" />
     <Content Include="app\system\admopers\altDesbloq.html" />
+    <Content Include="app\system\admopers\graficos.html" />
+    <Content Include="app\system\admopers\graficos.js" />
     <Content Include="app\system\admopers\altLimite.html" />
     <Content Include="app\system\admopers\altSegVia.html" />
     <Content Include="app\system\admopers\altSenha.html" />

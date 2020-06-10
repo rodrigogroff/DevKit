@@ -72,7 +72,7 @@ namespace ServerIsoV2
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
 
-                idLogFile = "logFile_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + "_" + Guid.NewGuid().ToString() + ".txt";
+                idLogFile = "_2_logFile_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + "_" + Guid.NewGuid().ToString() + ".txt";
 
                 strLogFile = dir + "\\" + idLogFile;
 
@@ -87,7 +87,7 @@ namespace ServerIsoV2
             }
 
             sw.WriteLine(st);
-            Console.WriteLine(st);
+            //Console.WriteLine(st);
         }
 
         int numFalha = 1;

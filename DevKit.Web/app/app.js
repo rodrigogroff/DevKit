@@ -29,6 +29,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('admopers', { url: '/system/admopers/:id', templateUrl: 'app/system/admopers/opers.html', controller: 'AdmOpersController' })
             .state('admoperslimites', { url: '/system/admoperslimites/:id', templateUrl: 'app/system/admopers/limites.html', controller: 'AdmOpersLimitesController' })
             .state('admopersativagrafica', { url: '/system/admopersativagrafica/:id', templateUrl: 'app/system/admopers/ativaGrafica.html', controller: 'AdmOpersAtivaGraficaController' })
+            .state('admopersgraficos', { url: '/system/admopergraficos/:id', templateUrl: 'app/system/admopers/graficos.html', controller: 'GraficosController' })
             .state('admoperslanctx', { url: '/system/admoperslanctx/:id', templateUrl: 'app/system/admopers/lanctx.html', controller: 'AdmOpersLancTxController' })
             .state('admopersbloq', { url: '/system/bloq', templateUrl: 'app/system/admopers/altBloq.html', controller: 'DBABloqueioController' })
             .state('admopersdesbloq', { url: '/system/desbloq', templateUrl: 'app/system/admopers/altDesBloq.html', controller: 'DBADesbloqueioController' })

@@ -13,7 +13,5 @@ namespace ServerIsoV2
         public string Text { get; set; }
 
         public Socket handler { get; set; }
-
-        public bool ChannelOpen { get; set; }
     }
 }

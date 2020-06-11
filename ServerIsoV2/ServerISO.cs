@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading;
 using System.Linq;
 using RestSharp;
-using System.Security.Permissions;
 
 namespace ServerIsoV2
 {
@@ -225,8 +224,6 @@ namespace ServerIsoV2
             Console.WriteLine("Send >> " + theMessageToSend);
             try
             {
-                cmd.ChannelOpen = false;
-
                 string str = string.Format("{0:X2}", (object)theMessageToSend.Length).PadLeft(4, '0');
                 byte[] numArray = new byte[2];
                 for (int index = 0; index < str.Length / 2; ++index)
@@ -237,8 +234,6 @@ namespace ServerIsoV2
 
                 // Sends data to a connected Socket. 
                 int bytesSend = cmd.handler.Send(bytes);
-
-                cmd.ChannelOpen = true;
 
                 cmd.Log("Envio completo!");
             }
@@ -263,8 +258,6 @@ namespace ServerIsoV2
                 obj[0] = byteData;
                 obj[1] = cmd.handler;
                 obj[2] = cmd.Id;
-
-                cmd.ChannelOpen = false;
 
                 cmd.handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), obj);                
             }
@@ -293,9 +286,6 @@ namespace ServerIsoV2
                 int bytesSend = handler.EndSend(ar);
 
                 var cmd = GlobalCommands.Where(y => y.Id == myGuid).FirstOrDefault();
-
-                if (cmd != null)
-                    cmd.ChannelOpen = true;
             }
             catch (SocketException exc)
             {

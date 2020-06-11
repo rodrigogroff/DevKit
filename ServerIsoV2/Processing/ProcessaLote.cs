@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using System;
-using System.Threading;
 
 namespace ServerIsoV2
 {
@@ -16,23 +15,18 @@ namespace ServerIsoV2
             cmd.Ended = false;
             cmd.Running = true;
 
-            cmd.Text = cmd.Text.Replace("0200B", sepPacotes + "0200B");
-            cmd.Text = cmd.Text.Replace("0202B", sepPacotes + "0202B");
-            cmd.Text = cmd.Text.Replace("0400B", sepPacotes + "0400B");
-            cmd.Text = cmd.Text.Replace("0420B", sepPacotes + "0420B");
+            var dadosRecebidos = cmd.Text;
 
-            foreach (var dadosRecebidos in cmd.Text.Split(sepPacotes))
+            try
             {
-                try
+                Console.WriteLine("[Processing] " + dadosRecebidos);
+
+                if (dadosRecebidos.Length < 20)
                 {
-                    Console.WriteLine("[Processing] " + dadosRecebidos);
-
-                    if (dadosRecebidos.Length < 20)
-                    {
-                        Console.WriteLine("[#Rejected!] ");
-                        continue;
-                    }
-
+                    Console.WriteLine("[#Rejected!] ");
+                }
+                else
+                {
                     cmd.Log("Dados recebidos =>" + dadosRecebidos + "<=");
 
                     var isoCode = dadosRecebidos.Substring(0, 4);
@@ -108,37 +102,36 @@ namespace ServerIsoV2
                                 if (retornoVenda == null)
                                 {
                                     cmd.LogFalha("*** Falha na comunicação com a API ****");
-                                    continue;
                                 }
-
-                                if (string.IsNullOrEmpty(retornoVenda.st_msg))
-                                    retornoVenda.st_msg = "  ";
-
-                                cmd.Log("NSU: " + retornoVenda.st_nsuRcb);
-                                cmd.Log("Código resp: " + retornoVenda.st_codResp);
-                                cmd.Log("Mensagem na log trans: " + retornoVenda.st_msg);
-
-                                var Iso210 = new ISO8583
+                                else
                                 {
-                                    codigo = "0210",
-                                    codResposta = retornoVenda.st_codResp,
-                                    nsuOrigem = regIso.nsuOrigem,
-                                    codProcessamento = regIso.codProcessamento,
-                                    valor = regIso.valor,
-                                    terminal = regIso.terminal,
-                                    codLoja = regIso.codLoja,
-                                    bit62 = dadosVenda.st_empresa +
-                                            dadosVenda.st_matricula +
-                                            dadosVenda.st_titularidade +
-                                            retornoVenda.st_via +
-                                            retornoVenda.st_nomeCliente.PadRight(40, ' '),
-                                    bit127 = retornoVenda.st_nsuRcb.PadLeft(9, '0')
-                                };
+                                    if (string.IsNullOrEmpty(retornoVenda.st_msg))
+                                        retornoVenda.st_msg = "  ";
 
-                                cmd.ChannelOpen = false;
+                                    cmd.Log("NSU: " + retornoVenda.st_nsuRcb);
+                                    cmd.Log("Código resp: " + retornoVenda.st_codResp);
+                                    cmd.Log("Mensagem na log trans: " + retornoVenda.st_msg);
 
-                                cmd.Log(Iso210);
-                                SendSincrono(Iso210.registro, cmd);
+                                    var Iso210 = new ISO8583
+                                    {
+                                        codigo = "0210",
+                                        codResposta = retornoVenda.st_codResp,
+                                        nsuOrigem = regIso.nsuOrigem,
+                                        codProcessamento = regIso.codProcessamento,
+                                        valor = regIso.valor,
+                                        terminal = regIso.terminal,
+                                        codLoja = regIso.codLoja,
+                                        bit62 = dadosVenda.st_empresa +
+                                                dadosVenda.st_matricula +
+                                                dadosVenda.st_titularidade +
+                                                retornoVenda.st_via +
+                                                retornoVenda.st_nomeCliente.PadRight(40, ' '),
+                                        bit127 = retornoVenda.st_nsuRcb.PadLeft(9, '0')
+                                    };
+
+                                    cmd.Log(Iso210);
+                                    SendSincrono(Iso210.registro, cmd);
+                                }
 
                                 #endregion
                             }
@@ -182,7 +175,7 @@ namespace ServerIsoV2
                         }
                         else if (dadosRecebidos.StartsWith("0400") || dadosRecebidos.StartsWith("0420"))
                         {
-                            #region - processa cancelamnto / desfazimento - 
+                            #region - processa cancelamento / desfazimento - 
 
                             var codigoIso = "";
                             var montar = false;
@@ -222,10 +215,7 @@ namespace ServerIsoV2
 
                                     cmd.Log(isoErro);
 
-                                    cmd.ChannelOpen = false;
                                     Send(isoErro.registro, cmd);
-                                    while (!cmd.ChannelOpen)
-                                        Thread.Sleep(10);
 
                                     #endregion
                                 }
@@ -246,116 +236,115 @@ namespace ServerIsoV2
 
                                     cmd.Log(IsoErro);
 
-                                    cmd.ChannelOpen = false;
                                     Send(IsoErro.registro, cmd);
-                                    while (!cmd.ChannelOpen)
-                                        Thread.Sleep(10);
 
                                     #endregion
                                 }
 
                                 #endregion
-
-                                continue;
-                            }
-
-                            if (codigoIso == "0410")
-                            {
-                                #region - cancelamento -
-
-                                cmd.Log("cancelamento " + regIso.bit125);
-
-                                var serviceClient = new RestClient(hostAPI);
-                                var serviceRequest = new RestRequest("api/VendaCancServerISO", Method.PUT);
-
-                                serviceRequest.AddJsonBody(new VendaCancIsoInputDTO
-                                {
-                                    st_nsu = regIso.bit125
-                                });
-
-                                var response = serviceClient.Execute(serviceRequest);
-                                var resp = JsonConvert.DeserializeObject<VendaCancIsoOutputDTO>(response.Content);
-
-                                if (resp == null)
-                                {
-                                    cmd.LogFalha("*** Falha na comunicação com a API ****");
-                                    continue;
-                                }
-
-                                var isoRegistro = new ISO8583
-                                {
-                                    codigo = codigoIso,
-                                    codProcessamento = regIso.codProcessamento,
-                                    codLoja = regIso.codLoja,
-                                    terminal = regIso.terminal,
-                                    codResposta = resp.st_codResp,
-                                    bit127 = regIso.bit125.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0'),
-                                    nsuOrigem = regIso.nsuOrigem,
-                                };
-
-                                cmd.Log(isoRegistro);
-                                
-                                SendSincrono(isoRegistro.registro, cmd);
-
-                                cmd.Log("cancelamento " + regIso.bit125 + " enviado!");
-
-                                #endregion
                             }
                             else
                             {
-                                #region - desfazimento - 
-
-                                var serviceClient = new RestClient(hostAPI);
-                                var serviceRequest = new RestRequest("api/VendaDesfazServerISO", Method.PUT);
-
-                                serviceRequest.AddJsonBody(new VendaDesfazIsoInputDTO
+                                if (codigoIso == "0410")
                                 {
-                                    st_nsu = regIso.nsuOrigem
-                                });
+                                    #region - cancelamento -
 
-                                var response = serviceClient.Execute(serviceRequest);
-                                var resp = JsonConvert.DeserializeObject<VendaDesfazIsoOutputDTO>(response.Content);
+                                    cmd.Log("cancelamento " + regIso.bit125);
 
-                                if (resp == null)
-                                {
-                                    cmd.LogFalha("*** Falha na comunicação com a API ****");
-                                    continue;
+                                    var serviceClient = new RestClient(hostAPI);
+                                    var serviceRequest = new RestRequest("api/VendaCancServerISO", Method.PUT);
+
+                                    serviceRequest.AddJsonBody(new VendaCancIsoInputDTO
+                                    {
+                                        st_nsu = regIso.bit125
+                                    });
+
+                                    var response = serviceClient.Execute(serviceRequest);
+                                    var resp = JsonConvert.DeserializeObject<VendaCancIsoOutputDTO>(response.Content);
+
+                                    if (resp == null)
+                                    {
+                                        cmd.LogFalha("*** Falha na comunicação com a API ****");
+                                    }
+                                    else
+                                    {
+                                        var isoRegistro = new ISO8583
+                                        {
+                                            codigo = codigoIso,
+                                            codProcessamento = regIso.codProcessamento,
+                                            codLoja = regIso.codLoja,
+                                            terminal = regIso.terminal,
+                                            codResposta = resp.st_codResp,
+                                            bit127 = regIso.bit125.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0'),
+                                            nsuOrigem = regIso.nsuOrigem,
+                                        };
+
+                                        cmd.Log(isoRegistro);
+
+                                        SendSincrono(isoRegistro.registro, cmd);
+
+                                        cmd.Log("cancelamento " + regIso.bit125 + " enviado!");
+                                    }
+
+                                    #endregion
                                 }
-
-                                cmd.Log("Desfazimento " + regIso.nsuOrigem);
-
-                                var Iso430 = new ISO8583
+                                else
                                 {
-                                    codigo = codigoIso,
-                                    codResposta = resp.st_codResp,
-                                    nsuOrigem = regIso.nsuOrigem,
-                                    valor = regIso.valor,
-                                    terminal = regIso.terminal,
-                                    codLoja = regIso.codLoja,
-                                    bit62 = regIso.nsuOrigem.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0')
-                                };
+                                    #region - desfazimento - 
 
-                                cmd.Log(Iso430);
-                                
-                                SendSincrono(Iso430.registro, cmd);
+                                    var serviceClient = new RestClient(hostAPI);
+                                    var serviceRequest = new RestRequest("api/VendaDesfazServerISO", Method.PUT);
 
-                                cmd.Log("Desfazimento " + regIso.nsuOrigem + " enviado!");
+                                    serviceRequest.AddJsonBody(new VendaDesfazIsoInputDTO
+                                    {
+                                        st_nsu = regIso.nsuOrigem
+                                    });
 
-                                #endregion
+                                    var response = serviceClient.Execute(serviceRequest);
+                                    var resp = JsonConvert.DeserializeObject<VendaDesfazIsoOutputDTO>(response.Content);
+
+                                    if (resp == null)
+                                    {
+                                        cmd.LogFalha("*** Falha na comunicação com a API ****");
+                                    }
+                                    else
+                                    {
+                                        cmd.Log("Desfazimento " + regIso.nsuOrigem);
+
+                                        var Iso430 = new ISO8583
+                                        {
+                                            codigo = codigoIso,
+                                            codResposta = resp.st_codResp.Substring(0, 2),
+                                            nsuOrigem = regIso.nsuOrigem,
+                                            valor = regIso.valor,
+                                            terminal = regIso.terminal,
+                                            codLoja = regIso.codLoja,
+                                            bit62 = regIso.nsuOrigem.PadLeft(6, '0') + regIso.valor.PadLeft(12, '0')
+                                        };
+
+                                        cmd.Log(Iso430);
+
+                                        SendSincrono(Iso430.registro, cmd);
+
+                                        cmd.Log("Desfazimento " + regIso.nsuOrigem + " enviado!");
+                                    }
+
+                                    #endregion
+                                }
                             }
 
                             #endregion
                         }
-                    }                    
-                }
-                catch (System.Exception ex)
-                {
-                    Console.WriteLine("FALHA:" + ex.ToString());
-
-                    cmd.LogFalha(ex.ToString());
+                    }
                 }
             }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine("FALHA:" + ex.ToString());
 
+                cmd.LogFalha(ex.ToString());
+            }
+            
             WaitMessage(cmd);
         }
     }

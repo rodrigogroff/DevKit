@@ -18,7 +18,7 @@ namespace ServerIsoV2
         public string hostAPI = "http://localhost:80";
         public string hostMachine = "10.11.0.41";
 
-        public const int portHostSITEF = 3700,
+        public const int portHostSITEF = 2700,   
                          maxQueue = 999,
                          maxPckSize = 99999;
 

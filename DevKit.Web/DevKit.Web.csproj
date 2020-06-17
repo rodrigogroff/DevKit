@@ -443,6 +443,7 @@
     <Content Include="Global.asax" />
     <Content Include="images\ajuda.png" />
     <Content Include="images\arrow_left.png" />
+    <Content Include="images\boleto.png" />
     <Content Include="images\Check-icon.png" />
     <Content Include="images\dinheiro_318-138572.jpg" />
     <Content Include="images\file.png" />

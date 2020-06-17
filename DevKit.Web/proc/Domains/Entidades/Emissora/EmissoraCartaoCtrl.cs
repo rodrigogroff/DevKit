@@ -693,9 +693,7 @@ namespace DevKit.Web.Controllers
                 {
                     _cart.vr_extraCota = (int)ObtemValor(mdl.valor);
 
-                    db.Update(_cart);
-
-                    
+                    db.Update(_cart);                    
                 }
 
                 return Ok();
@@ -832,7 +830,8 @@ namespace DevKit.Web.Controllers
                 case "altDesbloq":
                     {
                         cart.tg_status = Convert.ToChar(CartaoStatus.Habilitado);
-                        
+                        cart.nu_senhaErrada = (int) 0;
+
                         db.Update(cart);
 
                         db.Insert(new LOG_Audit

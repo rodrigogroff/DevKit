@@ -23,53 +23,44 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
+            T_Cartao cartDigitado = null;
+
             // busca associado
 
-            var associado = RestoreTimerCache("associadoEMV", empresa + matricula + vencimento, 1) as T_Cartao;
+            var associados = (from e in db.T_Cartao
+                              where e.st_empresa == empresa
+                              where e.st_matricula == matricula
+                              where e.st_venctoCartao == vencimento
+                              select e).
+                              ToList();
+                             
+            if (associados == null || associados.Count() == 0) 
+                return BadRequest();
 
-            if (associado == null)
-            {
-                associado = (from e in db.T_Cartao
-                             where e.st_empresa == empresa
-                             where e.st_matricula == matricula
-                             where e.st_venctoCartao == vencimento
-                             select e).
-                             FirstOrDefault();
-
-                if (associado == null)
-                    return BadRequest();
-
-                BackupCache(associado);
-            }
-
-            var tEmpresa = RestoreTimerCache("empresa", associado.st_empresa, 1) as T_Empresa;
+            var tEmpresa = (from e in db.T_Empresa
+                            where e.st_empresa == empresa
+                            select e).
+                            FirstOrDefault();
 
             if (tEmpresa == null)
-            {
-                tEmpresa = (from e in db.T_Empresa
-                           where e.st_empresa == associado.st_empresa
-                           select e).
-                           FirstOrDefault();
-
-                if (tEmpresa == null)
-                    return BadRequest();
-
-                BackupCache(tEmpresa);
-            }
+                return BadRequest();
 
             // busca dados proprietario
 
-            var dadosProprietario = (from e in db.T_Proprietario
-                                     where e.i_unique == associado.fk_dadosProprietario
-                                     select e).
-                                     FirstOrDefault();
+            var titular = associados.FirstOrDefault(y => y.st_titularidade == "01");
 
-            
+            cartDigitado = titular;
+
+            var fkdp = titular.fk_dadosProprietario;
+
+            var dadosProprietario = (from e in db.T_Proprietario where e.i_unique == fkdp select e).FirstOrDefault();
+
+            var nome = dadosProprietario.st_nome;
 
             var codAcessoCalc = new CodigoAcesso().Obter(empresa,
                                                            matricula,
-                                                           associado.st_titularidade,
-                                                           associado.nu_viaCartao,
+                                                           titular.st_titularidade,
+                                                           titular.nu_viaCartao,
                                                            dadosProprietario.st_cpf);
 
             // verificação de código de acesso
@@ -81,7 +72,7 @@ namespace DevKit.Web.Controllers
                 var lstCartoesDependentes = (from e in db.T_Cartao
                                              where e.st_empresa == empresa
                                              where e.st_matricula == matricula
-                                             where e.i_unique != associado.i_unique
+                                             where e.i_unique != titular.i_unique
                                              select e).
                                              ToList();
 
@@ -92,12 +83,14 @@ namespace DevKit.Web.Controllers
                     codAcessoCalc = new CodigoAcesso().Obter(empresa,
                                                            matricula,
                                                            cartDep.st_titularidade,
-                                                           associado.nu_viaCartao,
+                                                           cartDep.nu_viaCartao,
                                                            dadosProprietario.st_cpf);
 
                     if (acesso == codAcessoCalc)
                     {
                         found = true;
+                        nome = db.T_Dependente.Where(y => y.fk_proprietario == fkdp).FirstOrDefault()?.st_nome;
+                        cartDigitado = cartDep;
                         break;
                     }
                 }
@@ -109,7 +102,7 @@ namespace DevKit.Web.Controllers
             long dispMensal = 0, dispTotal = 0;
 
             new SaldoDisponivel().
-                Obter(db, associado, ref dispMensal, ref dispTotal);
+                Obter(db, cartDigitado, ref dispMensal, ref dispTotal);
 
             var lstParcelas = new List<string>();
 
@@ -118,7 +111,7 @@ namespace DevKit.Web.Controllers
             int it = 1, totParc = 0;
 
             foreach (var item in (from e in db.T_Parcelas
-                                  where e.fk_cartao == associado.i_unique
+                                  where e.fk_cartao == cartDigitado.i_unique
                                   where e.nu_parcela >= 1
                                   orderby e.nu_parcela, e.dt_inclusao
                                   select e).
@@ -162,13 +155,13 @@ namespace DevKit.Web.Controllers
                 {
                     new Associado
                     {
-                        id = associado.i_unique.ToString(),
-                        nome = dadosProprietario.st_nome,
+                        id = cartDigitado.i_unique.ToString(),
+                        nome = nome,
                         dispMensal = mon.setMoneyFormat (dispMensal),
                         dispTotal = mon.setMoneyFormat (dispTotal),
-                        dispExtra = mon.setMoneyFormat ((long)associado.vr_extraCota),
+                        dispExtra = mon.setMoneyFormat ((long)cartDigitado.vr_extraCota),
                         maxParcelasEmpresa = tEmpresa.nu_parcelas.ToString(),
-                        bloqueado = associado.tg_status == '1' ? true : false,
+                        bloqueado = titular.tg_status.ToString() == CartaoStatus.Bloqueado ? true : false,
                         lstParcelas = lstParcelas,
                         email = dadosProprietario.st_email
                     }

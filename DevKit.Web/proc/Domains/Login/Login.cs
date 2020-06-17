@@ -282,7 +282,7 @@ namespace DevKit.Web
                                 identity.AddClaim(new Claim("m1", "Administrador Lojista: " + lojista.st_nome));
                                 identity.AddClaim(new Claim("m2", (lojista.st_endereco + " / " +
                                                                     lojista.st_cidade + " " +
-                                                                    lojista.st_estado).Replace("{SE$3}", "")));
+                                                                    lojista.st_estado).Replace("{SE$3}", "") + " CNPJ: " + lojista.nu_CNPJ + " EMAIL:" + lojista.st_email ));
 
                                 identity.AddClaim(new Claim("tipo", "3"));
 

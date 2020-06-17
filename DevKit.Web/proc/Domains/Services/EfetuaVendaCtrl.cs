@@ -2,6 +2,8 @@
 using System;
 using System.Linq;
 using LinqToDB;
+using Microsoft.Ajax.Utilities;
+using System.Web;
 
 namespace DevKit.Web.Controllers
 {
@@ -52,8 +54,17 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest("Não autorizado!");
 
+            var tag = "venda" + empresa + matricula;
+
             try
-            {
+            {                
+                myApplication = HttpContext.Current.Application;
+
+                if (myApplication [tag] == null)
+                    myApplication [tag] = true;
+                else
+                    return BadRequest("Autorização em andamento. Aguarde o processamento para enviar uma nova venda!");
+                
                 // =============================
                 // obtem terminal
                 // =============================
@@ -170,6 +181,8 @@ namespace DevKit.Web.Controllers
 
                 if (cdResp != "0000")
                 {
+                    myApplication[tag] = null;
+
                     if (cdResp == "0505")
                     {
                         return BadRequest("(05) Cartão bloqueado, procure a instituição emissora do cartão");
@@ -220,6 +233,8 @@ namespace DevKit.Web.Controllers
                                valor,
                                p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
 
+                myApplication[tag] = null;
+
                 return Ok(new
                 {
                     count = 1,
@@ -228,6 +243,8 @@ namespace DevKit.Web.Controllers
             }
             catch (SystemException ex)
             {
+                myApplication[tag] = null;
+
                 return BadRequest(ex.ToString());
             }
         }

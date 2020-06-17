@@ -588,11 +588,11 @@ namespace DataModel
                 {
                     Registry("(x4) Senha Errada!");
 
-                    long senhasErradas = (int)cartPortador.nu_senhaErrada + 1;
+                    cartPortador.nu_senhaErrada++;
 
-                    Registry("(x5) senhasErradas: " + senhasErradas);
+                    Registry("(x5) senhasErradas: " + cartPortador.nu_senhaErrada);
 
-                    if (senhasErradas > 4)
+                    if ((int)cartPortador.nu_senhaErrada == 5)
                     {
                         cartPortador.tg_status = Convert.ToChar(CartaoStatus.Bloqueado);
                         cartPortador.tg_motivoBloqueio = Convert.ToChar(MotivoBloqueio.SENHA_ERRADA);
@@ -601,9 +601,9 @@ namespace DataModel
 
                     db.Update(cartPortador);
 
-                    output_st_msg = "Senha inválida (" + senhasErradas + ")";
+                    output_st_msg = "Senha inválida (" + cartPortador.nu_senhaErrada + ")";
 
-                    if (senhasErradas == 3)
+                    if (cartPortador.nu_senhaErrada == 4)
                         output_st_msg += " Próximo erro bloqueará seu cartão!";
 
                     var_codResp = "4343";

@@ -238,39 +238,56 @@
                     <table width="100%">
                         <tr>
                             <td width="900px">
-                                <table>
-                                    <tr>
-                                        <td width="290px">
-                                            <span ng-if="authentication.tipo == '1'" style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
-                                            <span ng-if="authentication.tipo == '2'" style="color:black;padding-top:12px">Cartão <b>{{authentication.nameUser}}</b></span>
-                                            <div ng-if="authentication.tipo == '3'" style="padding-top:12px">
-                                                <b>{{authentication.m1}}</b><br />
+
+                                <div ng-if="authentication.tipo == '3'">
+                                    <table>
+                                        <tr>
+                                            <td width="590px">
+                                                <div style="padding-top:12px">
+                                                    <b>{{authentication.m1}}</b><br />
+                                                    {{authentication.m2}}
+                                                </div>
+                                            </td>
+                                            <td width="40px"></td>
+                                            <td align="right" valign="top" style="padding-top:11px">
+                                                <br />
+                                                <span style="color:black">Sair</span> &nbsp;&nbsp;<a href="login" ng-click="logOut(authentication.tipo)"><i style="font-size:16px;color: black" class="glyphicon glyphicon-off"></i></a>
+                                            <td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div ng-if="authentication.tipo !== '3'">
+                                    <table>
+                                        <tr>
+                                            <td width="290px">
+                                                <span ng-if="authentication.tipo == '1'" style="color:black"><h3>Terminal <b>{{authentication.nameUser}}</b></h3></span>
+                                                <span ng-if="authentication.tipo == '2'" style="color:black;padding-top:12px">Cartão <b>{{authentication.nameUser}}</b></span>
+                                                <div ng-if="authentication.tipo == '4'" style="padding-top:12px">
+                                                    <span style="color:black;">
+                                                        Bem-vindo, <br>
+                                                        <b>{{authentication.nameUser}}</b>
+                                                    </span>
+                                                </div>
+                                                <span ng-if="authentication.tipo == '5'" style="color:black">Bem-vindo, <b>{{authentication.nameUser}}</b> ({{authentication.m2}})<br />Administração <i>{{authentication.m1}}</i></span>
+                                            </td>
+                                            <td width="20px"></td>
+                                            <td width="290px" ng-if="authentication.tipo == '1'" style="padding-top:12px">
+                                                <b>{{authentication.m1}}</b> / <br />
                                                 {{authentication.m2}}
-                                            </div>
-                                            <div ng-if="authentication.tipo == '4'" style="padding-top:12px">
-                                                <span style="color:black;">
-                                                    Bem-vindo, <br>
-                                                    <b>{{authentication.nameUser}}</b>
-                                                </span>
-                                            </div>
-                                            <span ng-if="authentication.tipo == '5'" style="color:black">Bem-vindo, <b>{{authentication.nameUser}}</b> ({{authentication.m2}})<br />Administração <i>{{authentication.m1}}</i></span>
-                                        </td>
-                                        <td width="20px"></td>
-                                        <td ng-if="authentication.tipo == '1'" style="padding-top:12px">
-                                            <b>{{authentication.m1}}</b> / <br />
-                                            {{authentication.m2}}
-                                        </td>
-                                        <td ng-if="authentication.tipo == '4'" style="padding-top:12px">
-                                            Emissora: <b>{{authentication.m1}}</b><br />
-                                            {{authentication.m2}}
-                                        </td>
-                                        <td width="40px"></td>
-                                        <td align="right" valign="top" style="padding-top:11px">
-                                            <br />
-                                            <span style="color:black">Sair</span> &nbsp;&nbsp;<a href="login" ng-click="logOut(authentication.tipo)"><i style="font-size:16px;color: black" class="glyphicon glyphicon-off"></i></a>
-                                        <td>
-                                    </tr>
-                                </table>
+                                            </td>
+                                            <td ng-if="authentication.tipo == '4'" style="padding-top:12px">
+                                                Emissora: <b>{{authentication.m1}}</b><br />
+                                                {{authentication.m2}}
+                                            </td>
+                                            <td width="40px"></td>
+                                            <td align="right" valign="top" style="padding-top:11px">
+                                                <br />
+                                                <span style="color:black">Sair</span> &nbsp;&nbsp;<a href="login" ng-click="logOut(authentication.tipo)"><i style="font-size:16px;color: black" class="glyphicon glyphicon-off"></i></a>
+                                            <td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </td>
                         </tr>
                     </table>
@@ -363,7 +380,7 @@
                             </ul>
                         </li>
                     </ul>
-                    @*<h4 style="color:orangered;padding-left:20px"><a style="color:white" href="https://conveynet.com.br/perguntas-e-respostas---emissor" target="_blank">Ajuda</a></h4>*@
+                    <h4 style="color:orangered;padding-left:20px"><img src="~/images/boleto.png" style="max-height:32px"/> <a style="color:black" href="https://www.contasonline.com.br/v2/fatura/" target="_blank">Boletos</a></h4>
                     <ul><li>&nbsp;</li></ul>
                     <ul><li>&nbsp;</li></ul>
                     <ul>

@@ -28,6 +28,7 @@ namespace Fechamento
                     serviceClient.Execute(serviceRequest);
                 }
 
+                /*
                 {
                     Console.WriteLine("ConfirmacaoAutoServerISO..." + DateTime.Now);
 
@@ -36,6 +37,7 @@ namespace Fechamento
 
                     serviceClient.Execute(serviceRequest);
                 }
+                */
 
                 Thread.Sleep(1000 * 60);
             }

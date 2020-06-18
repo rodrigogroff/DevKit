@@ -29,6 +29,16 @@ namespace ServerIsoV2
                 {
                     cmd.Log("Dados recebidos =>" + dadosRecebidos + "<=");
 
+                    if (dadosRecebidos.Length > 0)
+                    {
+                        if (dadosRecebidos[0] != '0')
+                        {
+                            dadosRecebidos = dadosRecebidos.Substring(2);
+
+                            cmd.Log("Dados recebidos ajustados =>" + dadosRecebidos + "<=");
+                        }
+                    }
+
                     var isoCode = dadosRecebidos.Substring(0, 4);
 
                     cmd.Log("isoCode " + isoCode);

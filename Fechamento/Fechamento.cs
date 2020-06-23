@@ -27,8 +27,7 @@ namespace Fechamento
 
                     serviceClient.Execute(serviceRequest);
                 }
-
-                /*
+                
                 {
                     Console.WriteLine("ConfirmacaoAutoServerISO..." + DateTime.Now);
 
@@ -36,8 +35,7 @@ namespace Fechamento
                     var serviceRequest = new RestRequest("api/ConfirmacaoAutoServerISO", Method.GET);
 
                     serviceClient.Execute(serviceRequest);
-                }
-                */
+                }                
 
                 Thread.Sleep(1000 * 60);
             }

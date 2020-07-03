@@ -15,10 +15,11 @@ namespace DevKit.Web.Controllers
         {
             using (var db = new AutorizadorCNDB())
             {
+                /*
                 var dtNow = DateTime.Now;
 
-                var dtIni = dtNow.AddSeconds(-60 * 6);
-                var dtFim = dtNow.AddDays(-2);
+                var dtIni = dtNow.AddSeconds(-60);
+                var dtFim = dtNow.AddSeconds(-120);
 
                 var queryX = db.LOG_Transacoes.
                                 Where(y => y.dt_transacao > dtFim && y.dt_transacao < dtIni &&
@@ -33,6 +34,7 @@ namespace DevKit.Web.Controllers
 
                     db.Update(item);
                 }
+                */
             }
 
             return Ok();

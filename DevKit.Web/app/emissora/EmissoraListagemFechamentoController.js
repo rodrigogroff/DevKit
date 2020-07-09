@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('EmissoraListagemFechamentoController',
-    ['$scope', '$rootScope', 'Api', 'ngSelects',
-        function ($scope, $rootScope, Api, ngSelects) {
+    ['$scope', '$rootScope', 'Api', 'ngSelects', 'AuthService',
+        function ($scope, $rootScope, Api, ngSelects, AuthService) {
 
             var invalidCheck = function (element) {
                 if (element == undefined)
@@ -16,14 +16,14 @@ angular.module('app.controllers').controller('EmissoraListagemFechamentoControll
             $rootScope.exibirMenu = true;
             $scope.loading = false;
             $scope.tipo = $rootScope.tipo;
-
-            $scope.sintetico = false;
-            $scope.tipoFech = 1;
             $scope.date = new Date();
 
             $scope.campos = {
                 mes_inicial: $scope.date.getMonth() + 1,
                 ano_inicial: $scope.date.getFullYear(),
+                tipoFech: 1,
+                detFech: 1,
+                tipoFechSel: 0,
                 selects: {
                     mes: ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 }),
                     empresa: ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 }),
@@ -31,6 +31,7 @@ angular.module('app.controllers').controller('EmissoraListagemFechamentoControll
             };
 
             $scope.search = function () {
+
                 if ($scope.tipo == '5') {
                     $scope.emp_fail = $scope.campos.idEmpresa == undefined;
                     if ($scope.emp_fail == true)
@@ -44,18 +45,20 @@ angular.module('app.controllers').controller('EmissoraListagemFechamentoControll
                 }
 
                 $scope.loading = true;
-                $scope.tipoFechSel = undefined;
+                $scope.campos.tipoFechSel = 0;
 
                 var opcoes = {
                     idEmpresa: $scope.campos.idEmpresa,
-                    tipoFech: $scope.tipoFech,
+                    tipoFech: $scope.campos.tipoFech,
+                    detFech: $scope.campos.detFech,
                     mes: $scope.campos.mes_inicial,
                     ano: $scope.campos.ano_inicial,
                 };
 
-                if ($scope.tipoFech == '1') {
+                if (opcoes.tipoFech == 1) {
+
                     Api.EmissoraFechamento.listPage(opcoes, function (data) {
-                        $scope.tipoFechSel = $scope.tipoFech;
+                        $scope.campos.tipoFechSel = 1;
                         $scope.list = data.results;
                         $scope.totalFechamento = data.totalFechamento;
                         $scope.totalCartoes = data.totalCartoes;
@@ -63,9 +66,10 @@ angular.module('app.controllers').controller('EmissoraListagemFechamentoControll
                         $scope.loading = false;
                     });
                 }
-                else if ($scope.tipoFech == '2') {
+                else if (opcoes.tipoFech == 2) {
+
                     Api.EmissoraFechamento.listPage(opcoes, function (data) {
-                        $scope.tipoFechSel = $scope.tipoFech;
+                        $scope.campos.tipoFechSel = 2;
                         $scope.list = data.results;
                         $scope.totalFechamento = data.totalFechamento;
                         $scope.totalRepasse = data.totalRepasse;
@@ -77,9 +81,32 @@ angular.module('app.controllers').controller('EmissoraListagemFechamentoControll
                 }
             };
 
+            $scope.exportar = function () {
+
+                toastr.warning('Aguarde, solicitação em andamento', 'Exportar');
+
+                AuthService.fillAuthData();
+
+                var opcoes = {
+                    idEmpresa: $scope.campos.idEmpresa,
+                    tipoFech: $scope.campos.tipoFech,
+                    detFech: $scope.campos.detFech,
+                    mes: $scope.campos.mes_inicial,
+                    ano: $scope.campos.ano_inicial,                    
+                };
+
+                console.log(AuthService.authentication);
+
+                if ($scope.tipo == 4) opcoes.idEmpresa = AuthService.authentication.IdEmpresa;                
+
+                window.location.href = "/api/EmissoraFechamento/exportar?" + $.param(opcoes);
+            }
+
             $scope.imprimir = function () {
-                if ($scope.tipoFech == '1') {
-                    var printContents = "<h2>CONVEYNET BENEFÍCIOS</h2>";
+
+                var printContents = "<h2>CONVEYNET BENEFÍCIOS</h2>";
+
+                if ($scope.campos.tipoFech == '1') {
 
                     printContents += "<h3>Relatório de Fechamento por cartões</h3>";
                     printContents += "Data de emissão: " + $scope.date.getDate() + "/" + ($scope.date.getMonth() + 1) + "/" + $scope.date.getFullYear();
@@ -118,20 +145,11 @@ angular.module('app.controllers').controller('EmissoraListagemFechamentoControll
                     popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
                     popupWin.document.close();
                 }
-                else if ($scope.tipoFech == '2') {
-                    var printContents = "<h2>CONVEYNET BENEFÍCIOS</h2>";
+                else if ($scope.campos.tipoFech == '2') {
 
                     printContents += "<h3>Relatório de Fechamento por lojistas</h3>";
                     printContents += "Data de emissão: " + $scope.date.getDate() + "/" + ($scope.date.getMonth() + 1) + "/" + $scope.date.getFullYear();
                     printContents += "<table>";
-
-                    //<h3>ConveyNET Benefícios</h3>
-                    //Convênio: <b> {{ convenio }}</b> <br />
-                    //Período: <b> {{ campos.mes_inicial }} / {{ campos.ano_inicial }}</b> <br />
-                    //Total fechamento convênio: <b>R$ {{ totalFechamento }}</b> <br />
-                    //Total repasse fornecedores: <b>R$ {{ totalRepasse }}</b> <br />
-                    //Total bonificação: <b>R$ {{ totalBonus }}</b> <br />
-                    //Quantidade lojistas: <b> {{ totalLojistas }}</b> <br />
 
                     printContents += "<tr><td>Convênio: " + $scope.convenio + "</td></tr>";
                     printContents += "<tr><td>Período: " + $scope.campos.mes_inicial + " / " + $scope.campos.ano_inicial + "</td></tr>";

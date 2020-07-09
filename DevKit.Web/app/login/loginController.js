@@ -106,6 +106,12 @@ angular.module('app.controllers').controller('LoginController',
 
                             $state.go('dashboard', {});
                         }
+                        else if ($rootScope.tipo == 4) {
+
+                            //AuthService.fillAuthData();
+                            //console.log(AuthService.authentication);
+
+                        }
                         else if ($rootScope.tipo == 2) {
                             if ($rootScope.mobileVersion == true)
                                 $state.go('limitesUsrMobile', {});

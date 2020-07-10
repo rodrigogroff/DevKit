@@ -119,25 +119,53 @@ angular.module('app.controllers').controller('EmissoraListagemFechamentoControll
 
                     printContents += "</table>";
 
-                    for (var i = 0; i < $scope.list.length; ++i) {
-                        var mdl = $scope.list[i];
+                    if ($scope.campos.detFech == "2") {
 
-                        printContents += "<br>Fechamento para: <b>" + mdl.associado + "</b> , Matrícula: " + mdl.matricula + "<br />";
-                        printContents += "<table><thead><tr><th align='left'>Estabelecimento</th><th align='left'>Data compra</th><th align='left'>Valor Parcela</th><th align='left'>Parcela</th></tr></thead>";
+                        printContents += "<table><thead><tr>";
+                        printContents += "<th align='left' width='450px'>Associado</th>";
+                        printContents += "<th align='left' width='120px'>Matricula</th>";
+                        printContents += "<th align='left' width='120px'>Total</th>";
+                        printContents += "</thead>";
 
-                        for (var t = 0; t < mdl.vendas.length; ++t) {
-                            var venda = mdl.vendas[t];
+                        for (var i = 0; i < $scope.list.length; ++i) {
+                            var mdl = $scope.list[i];
 
                             printContents += "<tr>";
-                            printContents += "<td width='350px'>" + venda.lojista + "</td>";
-                            printContents += "<td width='120px'>" + venda.dtCompra + "</td>";
-                            printContents += "<td width='120px'>" + venda.valor + "</td>";
-                            printContents += "<td width='120px'>" + venda.parcela + "</td>";
+                            printContents += "<td>" + mdl.associado + "</td>";
+                            printContents += "<td>" + mdl.matricula + "</td>";
+                            printContents += "<td>" + mdl.total + "</td>";
                             printContents += "</tr>";
+                        
                         }
 
                         printContents += "</table>";
-                        printContents += "<br>Total: R$ " + mdl.total + "<br><br>";
+                    }
+                    else {
+
+                        for (var i = 0; i < $scope.list.length; ++i) {
+                            var mdl = $scope.list[i];
+
+                            printContents += "<br>Fechamento para: <b>" + mdl.associado + "</b>, Matrícula: " + mdl.matricula + "<br />";
+                            printContents += "<table><thead><tr>";
+                            printContents += "<th align='left' width='450px'>Estabelecimento</th>";
+                            printContents += "<th align='left' width='120px'>Data compra</th>";
+                            printContents += "<th align='left' width='120px'>Valor Parcela</th>";
+                            printContents += "<th align='left' width='120px'>Parcela</th>";
+                            printContents += "</tr></thead>";
+
+                            for (var t = 0; t < mdl.vendas.length; ++t) {
+                                var venda = mdl.vendas[t];
+                                printContents += "<tr>";
+                                printContents += "<td>" + venda.lojista + "</td>";
+                                printContents += "<td>" + venda.dtCompra + "</td>";
+                                printContents += "<td>" + venda.valor + "</td>";
+                                printContents += "<td>" + venda.parcela + "</td>";
+                                printContents += "</tr>";
+                            }
+
+                            printContents += "</table>";
+                            printContents += "<br>Total: R$ " + mdl.total + "<br><br>";
+                        }
                     }
 
                     var popupWin = window.open('', '_blank', 'width=800,height=600');
@@ -160,44 +188,69 @@ angular.module('app.controllers').controller('EmissoraListagemFechamentoControll
 
                     printContents += "</table>";
 
-                    for (var i = 0; i < $scope.list.length; ++i) {
-                        var mdl = $scope.list[i];
-
-                        printContents += "<br>Fechamento para: <b>" + mdl.lojista + " - " + mdl.sigla + "</b> , Endereco: " + mdl.endereco + "<br />";
+                    if ($scope.campos.detFech == "2") {
 
                         printContents += "<table><thead><tr>";
-                        printContents += "<th width='50px' align='left'>ID</th>"
-                        printContents += "<th width='50px' align='left'>NSU</th>"
-                        printContents += "<th width='270px' align='left'>Associado</th>"
-                        printContents += "<th width='90px' align='left'>Cartão</th>"
-                        printContents += "<th width='120px' align='left'>Data Compra</th>"
-                        printContents += "<th width='90px' align='left'>Valor</th>"
-                        printContents += "<th width='70px' align='left'>Parcela</th>"
-                        printContents += "<th width='60px' align='left'>Terminal</th>"
-                        printContents += "</tr ></thead > ";
+                        printContents += "<th width='450px' align='left'>Lojista</th>"
+                        printContents += "<th width='150px' align='left'>Fechamento</th>"
+                        printContents += "<th width='150px' align='left'>Bonificação</th>"
+                        printContents += "<th width='150px' align='left'>A Pagar</th>"
+                        printContents += "</tr></thead> ";
 
-                        for (var t = 0; t < mdl.vendas.length; ++t) {
-                            var venda = mdl.vendas[t];
+                        for (var i = 0; i < $scope.list.length; ++i) {
+                            var mdl = $scope.list[i];
 
                             printContents += "<tr>";
-                            printContents += "<td>" + venda.id + "</td>";
-                            printContents += "<td>" + venda.nsu + "</td>";
-                            printContents += "<td>" + venda.associado + "</td>";
-                            printContents += "<td>" + venda.matricula + "</td>";
-                            printContents += "<td>" + venda.dtCompra + "</td>";
-                            printContents += "<td>" + venda.valor + "</td>";
-                            printContents += "<td>" + venda.parcela + "</td>";
-                            printContents += "<td>" + venda.terminal + "</td>";
-
+                            printContents += "<td>" + mdl.lojista + "</td>";
+                            printContents += "<td>" + mdl.total + "</td>";
+                            printContents += "<td>" + mdl.bonus + "</td>";
+                            printContents += "<td>" + mdl.repasse + "</td>";
                             printContents += "</tr>";
                         }
 
                         printContents += "</table>";
-                        printContents += "<br>Bonificação: " + mdl.taxa;
-                        printContents += "<br>Valor total: " + mdl.total;
-                        printContents += "<br>Valor bonificação: " + mdl.bonus;
-                        printContents += "<br>Valor a repassar: " + mdl.repasse;
-                        printContents += "<br><br>";
+                    }
+                    else {
+
+                        for (var i = 0; i < $scope.list.length; ++i) {
+                            var mdl = $scope.list[i];
+
+                            printContents += "<br>Fechamento para: <b>" + mdl.lojista + " - " + mdl.sigla + "</b> , Endereco: " + mdl.endereco + "<br />";
+
+                            printContents += "<table><thead><tr>";
+                            printContents += "<th width='50px' align='left'>ID</th>"
+                            printContents += "<th width='50px' align='left'>NSU</th>"
+                            printContents += "<th width='270px' align='left'>Associado</th>"
+                            printContents += "<th width='90px' align='left'>Cartão</th>"
+                            printContents += "<th width='120px' align='left'>Data Compra</th>"
+                            printContents += "<th width='90px' align='left'>Valor</th>"
+                            printContents += "<th width='70px' align='left'>Parcela</th>"
+                            printContents += "<th width='60px' align='left'>Terminal</th>"
+                            printContents += "</tr ></thead > ";
+
+                            for (var t = 0; t < mdl.vendas.length; ++t) {
+                                var venda = mdl.vendas[t];
+
+                                printContents += "<tr>";
+                                printContents += "<td>" + venda.id + "</td>";
+                                printContents += "<td>" + venda.nsu + "</td>";
+                                printContents += "<td>" + venda.associado + "</td>";
+                                printContents += "<td>" + venda.matricula + "</td>";
+                                printContents += "<td>" + venda.dtCompra + "</td>";
+                                printContents += "<td>" + venda.valor + "</td>";
+                                printContents += "<td>" + venda.parcela + "</td>";
+                                printContents += "<td>" + venda.terminal + "</td>";
+
+                                printContents += "</tr>";
+                            }
+
+                            printContents += "</table>";
+                            printContents += "<br>Bonificação: " + mdl.taxa;
+                            printContents += "<br>Valor total: " + mdl.total;
+                            printContents += "<br>Valor bonificação: " + mdl.bonus;
+                            printContents += "<br>Valor a repassar: " + mdl.repasse;
+                            printContents += "<br><br>";
+                        }
                     }
 
                     var popupWin = window.open('', '_blank', 'width=900,height=600');

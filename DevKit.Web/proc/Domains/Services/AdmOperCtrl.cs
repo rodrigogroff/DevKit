@@ -1011,6 +1011,11 @@ namespace DevKit.Web.Controllers
                                                                                    y.st_mes == DateTime.Now.Month.ToString().PadLeft(2, '0') &&
                                                                                    y.dt_fim != null) ? "Sim" : "Não";
 
+                                if (item.sfechFinalizado == "Sim")
+                                    item.sDtFech = db.T_JobFechamento.FirstOrDefault(y => y.fk_empresa == item.i_unique &&
+                                                                                      y.st_ano == DateTime.Now.Year.ToString() &&
+                                                                                      y.st_mes == DateTime.Now.Month.ToString().PadLeft(2, '0') &&
+                                                                                      y.dt_fim != null).dt_inicio?.ToString("dd/MM/yyyy HH:mm");
 
                                 long atu = 0, ult = 0;
 

@@ -14,6 +14,7 @@ namespace DataModel
                         svrTransacao = "",
                         snuFranquia = "",
                         sfechFinalizado = "",
+                        sDtFech = "",
                         sfechCartoes = "",
                         sfechValorTotal = "",
                         sultimo = "",

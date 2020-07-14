@@ -34,7 +34,7 @@
                     <tr data-ng-repeat="mdl in h.fechamentos">
                         <td>{{ mdl.st_empresa }}</td>
                         <td>Dia <b>{{mdl.nu_diaFech}}</b> / Hora <b>{{ mdl.st_horaFech.substring(0,2)}}:{{mdl.st_horaFech.substring(2)}}</b> </td>
-                        <td>{{ mdl.sfechFinalizado }}</td>
+                        <td>{{ mdl.sfechFinalizado }} {{mdl.sDtFech}}</td>
                         <td>{{ mdl.sfechCartoes }}</td>
                         <td>{{ mdl.sfechValorTotal }}</td>
                         <td>{{ mdl.sultimo }}</td>

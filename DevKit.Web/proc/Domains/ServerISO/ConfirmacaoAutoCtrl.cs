@@ -13,28 +13,28 @@ namespace DevKit.Web.Controllers
         [Route("api/ConfirmacaoAutoServerISO")]
         public IHttpActionResult Get()
         {
+            if (DateTime.Now.Minute % 2 != 0)
+                return Ok();
+
             using (var db = new AutorizadorCNDB())
             {
-                /*
                 var dtNow = DateTime.Now;
 
-                var dtIni = dtNow.AddSeconds(-60);
-                var dtFim = dtNow.AddSeconds(-120);
-
+                var dtIni = dtNow.AddSeconds(-120); // dois minutos
+                
                 var queryX = db.LOG_Transacoes.
-                                Where(y => y.dt_transacao > dtFim && y.dt_transacao < dtIni &&
-                                           y.tg_confirmada.ToString() == TipoConfirmacao.Pendente &&
-                                           y.tg_contabil.ToString() == TipoCaptura.SITEF).
+                                Where(y => y.dt_transacao < dtIni &&
+                                           y.tg_confirmada != null && y.tg_confirmada.ToString() == TipoConfirmacao.Pendente &&
+                                           y.tg_contabil != null && y.tg_contabil.ToString() == TipoCaptura.SITEF).
                                 ToList();
 
                 foreach (var item in queryX)
                 {
-                    item.tg_confirmada = Convert.ToChar(TipoConfirmacao.Confirmada);
-                    item.st_msg_transacao = "Conf. Auto";
+                    item.tg_confirmada = Convert.ToChar(TipoConfirmacao.Cancelada);
+                    item.st_msg_transacao = "Canc. Auto";
 
                     db.Update(item);
                 }
-                */
             }
 
             return Ok();

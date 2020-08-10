@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Http;
 using DataModel;
 using System;
+using System.IO;
+using System.Text;
 
 namespace DevKit.Web.Controllers
 {
@@ -25,7 +27,9 @@ namespace DevKit.Web.Controllers
                     var ano = dt.ToString("yyyy");
                     var mes = dt.ToString("MM").PadLeft(2, '0');
 
-                    var lstEmpresas = db.T_Empresa.Where(y => y.nu_diaFech == diaFechamento ).ToList();
+                    #region - fechamento - 
+
+                    var lstEmpresas = db.T_Empresa.Where(y => y.nu_diaFech == diaFechamento).ToList();
 
                     foreach (var empresa in lstEmpresas)
                     {
@@ -139,6 +143,46 @@ namespace DevKit.Web.Controllers
                             st_log = "Ano " + ano + " Mes " + mes + " Valor => " + totValor
                         });
                     }
+
+                    #endregion
+
+                    #region - confere geração auto de lotes -
+
+                    var configPla = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
+
+                    if (configPla != null)
+                    {
+                        if (configPla.bAtivo == true)
+                        {
+                            if (configPla.dom == true && DateTime.Now.DayOfWeek == DayOfWeek.Sunday ||
+                                configPla.seg == true && DateTime.Now.DayOfWeek == DayOfWeek.Monday ||
+                                configPla.ter == true && DateTime.Now.DayOfWeek == DayOfWeek.Tuesday ||
+                                configPla.qua == true && DateTime.Now.DayOfWeek == DayOfWeek.Wednesday ||
+                                configPla.qui == true && DateTime.Now.DayOfWeek == DayOfWeek.Thursday ||
+                                configPla.sex == true && DateTime.Now.DayOfWeek == DayOfWeek.Friday ||
+                                configPla.sab == true && DateTime.Now.DayOfWeek == DayOfWeek.Saturday )
+                            {
+                                if (dt.Hour.ToString().PadLeft(2,'0') + dt.Minute.ToString().PadLeft (2,'0') == configPla.stHorario )
+                                {
+                                    var arquivo = "teste.txt";
+
+                                    var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img//" + arquivo;
+
+                                    if (File.Exists(myPath))
+                                        File.Delete(myPath);
+
+                                    using (var sw = new StreamWriter(myPath, false, Encoding.UTF8))
+                                    {
+                                        sw.WriteLine("teste!");
+                                    }
+
+                                    new ApiControllerBase().SendEmail("Arquivo Plástico", "https://meuconvey.conveynet.com.br//img//"  + arquivo, configPla.stEmails);
+                                }
+                            }
+                        }
+                    }
+
+                    #endregion
                 }
                 catch (SystemException ex)
                 {

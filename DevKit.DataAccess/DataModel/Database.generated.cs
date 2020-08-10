@@ -84,6 +84,8 @@ namespace DataModel
 
         public ITable<DashboardGrafico> DashboardGrafico { get { return this.GetTable<DashboardGrafico>(); } }
 
+        public ITable<ConfigPlasticoEnvio> ConfigPlasticoEnvio { get { return this.GetTable<ConfigPlasticoEnvio>(); } }
+
         public AutorizadorCNDB()
         {
             InitDataContext();
@@ -149,6 +151,23 @@ namespace DataModel
         [Column, Nullable] public int nuMes { get; set; }
         [Column, Nullable] public int nuAno { get; set; }
         [Column, Nullable] public DateTime dtDia { get; set; }
+    }
+
+    [Table(Schema = "dbo", Name = "ConfigPlasticoEnvio")]
+    public partial class ConfigPlasticoEnvio
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public string stDias { get; set; }
+        [Column, Nullable] public string stHorario { get; set; }
+        [Column, Nullable] public string stEmails { get; set; }
+        [Column, Nullable] public bool? bAtivo { get; set; }
+        [Column, Nullable] public bool? dom { get; set; }
+        [Column, Nullable] public bool? seg { get; set; }
+        [Column, Nullable] public bool? ter { get; set; }
+        [Column, Nullable] public bool? qua { get; set; }
+        [Column, Nullable] public bool? qui { get; set; }
+        [Column, Nullable] public bool? sex { get; set; }
+        [Column, Nullable] public bool? sab { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "Parceiro")]

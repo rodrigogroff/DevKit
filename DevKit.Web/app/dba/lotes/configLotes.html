@@ -1,0 +1,75 @@
+﻿
+<div class="webFormPosition" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>DBA \ Configuração de <b>Envio Automático</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td width="20px"></td>
+                </tr>
+            </table>
+        </legend>        
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color:white" width="390px">
+                <tr height="22px"> </tr>
+                <tr height="143px">
+                    <td></td>
+                    <td valign="top">Dia da Semana</td>
+                    <td>
+                        <button class="btn btn-xs btn-danger" ng-show="sem_fail">!</button>
+                    </td>
+                    <td>
+                        <p><input type="checkbox" ng-model="viewModel.dom" /> Domingo </p>
+                        <p><input type="checkbox" ng-model="viewModel.seg" /> Segunda </p>
+                        <p><input type="checkbox" ng-model="viewModel.ter" /> Terça </p>
+                        <p><input type="checkbox" ng-model="viewModel.qua" /> Quarta </p>
+                        <p><input type="checkbox" ng-model="viewModel.qui" /> Quinta </p>
+                        <p><input type="checkbox" ng-model="viewModel.sex" /> Sexta </p>
+                        <p><input type="checkbox" ng-model="viewModel.sab" /> Sábado </p>
+                    </td>
+                    <td width="50px"></td>
+                </tr>
+                <tr height="43px">
+                    <td width="20px"></td>
+                    <td width="120px">Hora</td>
+                    <td width="20px">
+                        <button class="btn btn-xs btn-danger" ng-show="hr_fail">!</button>
+                    </td>
+                    <td width="320px">
+                        <input type="text" class="form-control input-transparent"
+                               maxlength="10" ui-mask="99:99" ui-mask-placeholder ui-mask-placeholder-char="_"
+                               ng-model="viewModel.stHorario">
+                    </td>
+                    <td width="50px"></td>
+                </tr>                
+                <tr height="43px">
+                    <td></td>
+                    <td>Emails</td>
+                    <td>
+                        <button class="btn btn-xs btn-danger" ng-show="ema_fail">!</button>
+                    </td>
+                    <td>
+                        <textarea class="form-control input-transparent" maxlength="999" rows="6" ng-model="viewModel.stEmails"></textarea>
+                    </td>
+                    <td width="50px"></td>
+                </tr>
+                <tr height="43px">
+                    <td></td>
+                    <td>Ativo</td>
+                    <td>
+                    </td>
+                    <td>
+                        <input type="checkbox" ng-model="viewModel.bAtivo" /> Sim
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="22px"> </tr>
+            </table>
+            <input type="submit" class="btn btn-success pull-left" value="Salvar" ng-click="salvar()"><br />
+            <br />
+            <br />
+        </div> 
+    </section>
+</div>

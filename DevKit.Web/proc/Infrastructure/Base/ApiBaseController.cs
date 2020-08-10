@@ -495,6 +495,23 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public void SendEmail(string assunto, string texto, string email)
         {
+            {
+                MailMessage message = new System.Net.Mail.MailMessage("conveynet@zohomail.com", email, assunto, texto);
+
+                SmtpClient smtp = new SmtpClient
+                {
+                    Host = "smtp.zoho.com",
+                    Port = 587,
+                    Credentials = new System.Net.NetworkCredential("conveynet@zohomail.com", "Gustavo@2012"),
+                    EnableSsl = true
+                };
+
+                message.IsBodyHtml = true;
+
+                smtp.Send(message);
+            }
+            /*
+
             var param_usuario = "conveynet@conveynet.com.br";
 
             using (var client = new SmtpClient
@@ -516,6 +533,7 @@ namespace DevKit.Web.Controllers
 
                 client.Send(mm);
             }
+            */
         }
     }
 }

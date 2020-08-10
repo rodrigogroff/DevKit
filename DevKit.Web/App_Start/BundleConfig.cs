@@ -77,6 +77,7 @@ namespace DevKit.Web
                 "~/app/dba/parceiros/parceiroUsuarioTrocaSenha.js",
                 "~/app/dba/lotes/listingRastreamento.js",
                 "~/app/dba/lotes/expedicao.js",
+                "~/app/dba/lotes/configLotes.js",
                 "~/app/dba/empresa/listingEmpresas.js",
                 "~/app/dba/faturamento/listagemFaturamento.js",
                 "~/app/dba/empresa/empresa.js",

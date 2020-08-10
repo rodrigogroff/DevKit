@@ -475,22 +475,31 @@ namespace DevKit.Web.Controllers
 
                         var lstRet = new List<object>();
 
+
+                        int tC = 0;
+
                         foreach (var item in lstEmp)
                         {
                             var e = lstEmbDb.FirstOrDefault(y => y.st_empresa == item);
 
                             if (e != null)
-                                lstRet.Add(new 
+                            {
+                                var co = lst.Count(y => y.empresa == item);
+
+                                lstRet.Add(new
                                 {
                                     sigla = e.st_empresa,
                                     nome = e.st_fantasia,
-                                    cartoes = lst.Count ( y=> y.empresa == item),
+                                    cartoes = co,
                                 });
+
+                                tC += co;
+                            }
                         }
 
                         return Ok(new
                         {
-                            nuCartoes = lstRet.Count(),
+                            nuCartoes = tC,
                             results = lstRet
                         });
 
@@ -1534,6 +1543,64 @@ namespace DevKit.Web.Controllers
                         });
                         
                         #endregion
+                    }
+
+                case "300":
+                    {
+                        var t = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
+
+                        if (t != null)
+                        {
+                            return Ok(t);
+                        }
+                        else
+                        {
+                            t = new ConfigPlasticoEnvio
+                            {
+                                bAtivo = false,
+                                ter = true,
+                                qui = true,
+                                stHorario = "06:00",
+                                stEmails = "printserv@printserv.com.br;Atendimento@conveynet.com.br"
+                            };
+
+                            db.Insert(t);
+
+                            return Ok(t);
+                        }
+                    }
+
+                case "301":
+                    {
+                        var bAtivo = Request.GetQueryStringValue<bool?>("bAtivo");
+                        var dom = Request.GetQueryStringValue<bool?>("dom");
+                        var seg = Request.GetQueryStringValue<bool?>("seg");
+                        var ter = Request.GetQueryStringValue<bool?>("ter");
+                        var qua = Request.GetQueryStringValue<bool?>("qua");
+                        var qui = Request.GetQueryStringValue<bool?>("qui");
+                        var sex = Request.GetQueryStringValue<bool?>("sex");
+                        var sab = Request.GetQueryStringValue<bool?>("sab");
+                        var stHorario = Request.GetQueryStringValue("stHorario");
+                        var stEmails = Request.GetQueryStringValue("stEmails");
+
+                        var t = new ConfigPlasticoEnvio
+                        {
+                            id = 1,
+                            bAtivo = bAtivo,
+                            dom = dom,
+                            seg = seg,
+                            ter = ter,
+                            qua = qua,
+                            qui = qui,
+                            sex= sex,
+                            sab = sab,
+                            stHorario = stHorario,
+                            stEmails = stEmails
+                        };
+
+                        db.Update(t);
+
+                        return Ok();
                     }
             }
 

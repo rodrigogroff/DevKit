@@ -25,7 +25,7 @@ namespace DevKit.Web.Controllers
                 if (string.IsNullOrEmpty(idCartao)) return BadRequest();
                 if (!stEmail.Contains("@")) return BadRequest();
 
-                var param_usuario = "conveynet@conveynet.com.br";
+                
 
                 var dadosCartao = db.T_Cartao.FirstOrDefault(y => y.i_unique.ToString() == idCartao);
                 var dadosProp = db.T_Proprietario.FirstOrDefault(y => y.i_unique == dadosCartao.fk_dadosProprietario);
@@ -47,36 +47,32 @@ namespace DevKit.Web.Controllers
                 // envia email
                 // ---------------------------
 
-                using (var client = new SmtpClient
-                {
-                    Port = 587,
-                    Host = "smtp.conveynet.com.br",
-                    EnableSsl = false,
-                    Timeout = 10000,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new System.Net.NetworkCredential(param_usuario, "c917800")
-                })
-                {
-                    string  assunto = "ConveyNET Mobile Payment",
+                string assunto = "ConveyNET Mobile Payment",
 
-                            texto = "CARTÃO CONVEYNET BENEFICIOS" + 
-                                    "\r\nVENDA AUTORIZADA - DATA / HORA:" + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") +
-                                    "\r\nVALOR TOTAL: " + new money().formatToMoney(dadosVenda.vr_total.ToString()) +
-                                    "\r\nPARCELAS: " + dadosVenda.nu_parcelas +
-                                    "\r\nNSU: " + dadosVenda.nu_nsu.ToString() +
-                                    "\r\nEstabelecimento: " + estab.st_nome +
-                                    "\r\nAssociado: " + dadosProp.st_nome +
-                                    "\r\nAssociação: " + dadosCartao.st_empresa +
-                                    "\r\nMatricula: " + dadosCartao.st_matricula;
+                texto = "CARTÃO CONVEYNET BENEFICIOS" +
+                        "\r\nVENDA AUTORIZADA - DATA / HORA:" + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") +
+                        "\r\nVALOR TOTAL: " + new money().formatToMoney(dadosVenda.vr_total.ToString()) +
+                        "\r\nPARCELAS: " + dadosVenda.nu_parcelas +
+                        "\r\nNSU: " + dadosVenda.nu_nsu.ToString() +
+                        "\r\nEstabelecimento: " + estab.st_nome +
+                        "\r\nAssociado: " + dadosProp.st_nome +
+                        "\r\nAssociação: " + dadosCartao.st_empresa +
+                        "\r\nMatricula: " + dadosCartao.st_matricula;
 
-                    var mm = new MailMessage(param_usuario, stEmail, assunto, texto)
+                {
+                    MailMessage message = new System.Net.Mail.MailMessage("conveynet@zohomail.com", stEmail, assunto, texto);
+
+                    SmtpClient smtp = new SmtpClient
                     {
-                        BodyEncoding = UTF8Encoding.UTF8,
-                        DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
+                        Host = "smtp.zoho.com",
+                        Port = 587,
+                        Credentials = new System.Net.NetworkCredential("conveynet@zohomail.com", "Gustavo@2012"),
+                        EnableSsl = true
                     };
 
-                    client.Send(mm);
+                    message.IsBodyHtml = true;
+
+                    smtp.Send(message);
                 }
             }
             catch (SystemException ex)

@@ -131,6 +131,17 @@ namespace DataModel
                 }
             }
 
+            {
+                Registry("(a4) tg_confirmada == " + var_ltr.tg_confirmada.ToString());
+
+                if (var_ltr.tg_confirmada.ToString() == TipoConfirmacao.Cancelada)
+                {
+                    output_st_msg = "Prev. Cancelada";
+                    var_codResp = "1219";
+                    return false;
+                }
+            }
+
             #endregion
 
             st.Stop();

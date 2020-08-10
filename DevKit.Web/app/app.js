@@ -55,6 +55,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('usuario', { url: '/dba/usuario/:id', templateUrl: 'app/dba/dbaUsuario.html', controller: 'DBAEditUsuarioController' })
             .state('lote', { url: '/dba/lote/:id', templateUrl: 'app/dba/lotes/lote.html', controller: 'LoteController' })
             .state('lotes', { url: '/dba/lotes', templateUrl: 'app/dba/lotes/listingLotes.html', controller: 'ListingLotesController' })
+            .state('configlotes', { url: '/dba/lotesConfig', templateUrl: 'app/dba/lotes/configLotes.html', controller: 'ConfigLotesController' })
             .state('rastreamento', { url: '/dba/rastreamento', templateUrl: 'app/dba/lotes/listingRastreamento.html', controller: 'ListingRastreamentoController' })
             .state('listingexp', { url: '/dba/listingexp', templateUrl: 'app/dba/lotes/expedicao.html', controller: 'ListingExpController' })
             .state('ativacartao', { url: '/dba/ativa', templateUrl: 'app/dba/lotes/ativaCartao.html', controller: 'AtivaCartaoController' })

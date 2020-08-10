@@ -16,7 +16,7 @@ namespace DevKit.Web.Controllers
             db = new AutorizadorCNDB();
 
             var user = (from e in db.UsuarioParceiro
-                         where email == e.stEmail
+                         where email.ToLower() == e.stEmail.ToLower()
                          select e).
                          FirstOrDefault();
 

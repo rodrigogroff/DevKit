@@ -260,6 +260,8 @@
     <Content Include="app\dba\lotes\ativaCartao.js" />
     <Content Include="app\dba\lotes\expedicao.html" />
     <Content Include="app\dba\lotes\expedicao.js" />
+    <Content Include="app\dba\lotes\configLotes.html" />
+    <Content Include="app\dba\lotes\configLotes.js" />
     <Content Include="app\dba\lotes\listingRastreamento.html" />
     <Content Include="app\dba\lotes\listingRastreamento.js" />
     <Content Include="app\dba\lotes\novolote.html" />

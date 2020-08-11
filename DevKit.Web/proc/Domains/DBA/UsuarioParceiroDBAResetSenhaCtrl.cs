@@ -16,7 +16,7 @@ namespace DevKit.Web.Controllers
             db = new AutorizadorCNDB();
 
             var user = (from e in db.UsuarioParceiro
-                         where email.ToLower() == e.stEmail.ToLower()
+                         where e.stEmail != null && email.ToLower() == e.stEmail.ToLower()
                          select e).
                          FirstOrDefault();
 
@@ -27,19 +27,27 @@ namespace DevKit.Web.Controllers
 
             db.Update(user);
 
-            SendEmail("ConveyNET - Segunda via de senha",
-                      "Prezado(a) PARCEIRO,\n\n" +
-                      "Conforme solicitado no site da CONVEY, segue abaixo a 2º via de senha para acesso ao site. \n" + 
-                      "Nome: " + user.stNome + "\n" + 
-                      "Nova senha:" + user.stSenha + "\n\n" +
-                      "Atenciosamente,\n" +
-                      "CONVEY\n\n" +
-                      "Para enviar seus comentários, envie e-mail para atendimento@conveynet.com.br\n" + 
-                      "Esta é uma mensagem gerada automaticamente, portanto, não deve ser respondida.\n" + 
-                      "CONVEY. Todos os direitos reservados.\n\n",
-                      user.stEmail);
+            try
+            {
+                SendEmail("ConveyNET - Segunda via de senha",
+                          "Prezado(a) PARCEIRO,\n\n" +
+                          "Conforme solicitado no site da CONVEY, segue abaixo a 2º via de senha para acesso ao site. \n" +
+                          "Nome: " + user.stNome + "\n" +
+                          "Nova senha:" + user.stSenha + "\n\n" +
+                          "Atenciosamente,\n" +
+                          "CONVEY\n\n" +
+                          "Para enviar seus comentários, envie e-mail para atendimento@conveynet.com.br\n" +
+                          "Esta é uma mensagem gerada automaticamente, portanto, não deve ser respondida.\n" +
+                          "CONVEY. Todos os direitos reservados.\n\n",
+                          user.stEmail);
 
-            return Ok();
+
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
 
         [NonAction]

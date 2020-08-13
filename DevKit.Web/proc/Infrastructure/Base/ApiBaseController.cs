@@ -509,31 +509,7 @@ namespace DevKit.Web.Controllers
                 message.IsBodyHtml = true;
 
                 smtp.Send(message);
-            }
-            /*
-
-            var param_usuario = "conveynet@conveynet.com.br";
-
-            using (var client = new SmtpClient
-            {
-                Port = 587,
-                Host = "smtp.conveynet.com.br",
-                EnableSsl = false,
-                Timeout = 10000,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(param_usuario, "c917800")
-            })
-            {
-                var mm = new MailMessage(param_usuario, email, assunto, texto)
-                {
-                    BodyEncoding = UTF8Encoding.UTF8,
-                    DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
-                };
-
-                client.Send(mm);
-            }
-            */
+            }            
         }
     }
 }

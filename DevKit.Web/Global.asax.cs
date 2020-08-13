@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Optimization;
 using DevKit.Web.Controllers;
+using System.Net;
 
 namespace DevKit.Web
 {
@@ -11,6 +12,9 @@ namespace DevKit.Web
 	{
 		protected void Application_Start()
 		{
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+			ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+
 			//AreaRegistration.RegisterAllAreas();
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);

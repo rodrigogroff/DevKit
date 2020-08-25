@@ -44,6 +44,17 @@ angular.module('app.controllers').controller('ListingLotesController',
                 });
             };
 
+            $scope.reenvio = function (mdl) {
+                $scope.loading = true;
+                Api.AdmOper.listPage({ op: '400', lote: mdl.i_unique }, function (data) {
+                    toastr.success('Lote re-enviado com sucesso!', 'Sistema');
+                    $scope.loading = false;
+                },
+                function (response) {
+                    $scope.loading = false;
+                });   
+            };
+
             $scope.remover = function (mdl) {
                 $scope.modalRemocao = true;
                 $scope.loteAtual = mdl;

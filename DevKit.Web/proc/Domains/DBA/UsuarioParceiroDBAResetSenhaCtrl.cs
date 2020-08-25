@@ -2,6 +2,7 @@
 using LinqToDB;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -27,26 +28,23 @@ namespace DevKit.Web.Controllers
 
             db.Update(user);
 
-            try
+            if (SendEmail("ConveyNET - Segunda via de senha",
+                        "<p>Prezado(a) PARCEIRO,</p>" +
+                        "<p>Conforme solicitado no site da CONVEY, segue abaixo a 2º via de senha para acesso ao site.</p>" +
+                        "<p>Nome: " + user.stNome + "<br>" +
+                        "<p>Nova senha:" + user.stSenha + "<br><br></p>" +
+                        "<p>Atenciosamente,</p>" +
+                        "<p>CONVEY</p><p>&nbsp;</p>" +
+                        "<p>Para enviar seus comentários, envie e-mail para atendimento@conveynet.com.br<br>" +
+                        "Esta é uma mensagem gerada automaticamente, portanto, não deve ser respondida.</p>" +
+                        "<p>CONVEY. Todos os direitos reservados.\n\n",
+                        user.stEmail))
             {
-                SendEmail("ConveyNET - Segunda via de senha",
-                          "Prezado(a) PARCEIRO,\n\n" +
-                          "Conforme solicitado no site da CONVEY, segue abaixo a 2º via de senha para acesso ao site. \n" +
-                          "Nome: " + user.stNome + "\n" +
-                          "Nova senha:" + user.stSenha + "\n\n" +
-                          "Atenciosamente,\n" +
-                          "CONVEY\n\n" +
-                          "Para enviar seus comentários, envie e-mail para atendimento@conveynet.com.br\n" +
-                          "Esta é uma mensagem gerada automaticamente, portanto, não deve ser respondida.\n" +
-                          "CONVEY. Todos os direitos reservados.\n\n",
-                          user.stEmail);
-
-
                 return Ok();
             }
-            catch (System.Exception ex)
+            else
             {
-                return BadRequest(ex.ToString());
+                return BadRequest("Falha no envio");
             }
         }
 
@@ -57,7 +55,10 @@ namespace DevKit.Web.Controllers
             var ret = "";
 
             for (int i = 0; i < length; i++)
+            {
+                Thread.Sleep(1);
                 ret += rand.Next(0, 9);
+            }
 
             return ret;
         }

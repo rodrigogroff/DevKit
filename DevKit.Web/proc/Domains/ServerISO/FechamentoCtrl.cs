@@ -6,36 +6,11 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
-using System.Web.Razor.Generator;
-using DocumentFormat.OpenXml.Bibliography;
 
 namespace DevKit.Web.Controllers
 {
     public class FechamentoServerISOController : ApiControllerBase
     {
-        public string calculaCodigoAcesso(string empresa, string matricula, string titularidade, string via, string cpf)
-        {
-            string chave = matricula + empresa + titularidade.PadLeft(2, '0') + via + cpf.PadRight(14, ' ');
-            int temp = 0;
-            for (int n = 0; n < chave.Length; n++)
-            {
-                string s = chave.Substring(n, 1);
-                char c = s[0]; // First character in s
-                int i = c; // ascii code
-                temp += i;
-            }
-            string calculado = temp.ToString("0000");
-            temp += int.Parse(calculado[3].ToString()) * 1000;
-            temp += int.Parse(calculado[2].ToString());
-            if (temp > 9999) temp -= 2000;
-            calculado = temp.ToString("0000");
-            calculado = calculado.Substring(2, 1) +
-                        calculado.Substring(0, 1) +
-                        calculado.Substring(3, 1) +
-                        calculado.Substring(1, 1);
-            return calculado;
-        }
-
         [AllowAnonymous]
         [HttpGet]
         [Route("api/FechamentoServerISO")]
@@ -44,6 +19,10 @@ namespace DevKit.Web.Controllers
             using (var db = new AutorizadorCNDB())
             {
                 string currentEmpresa = "";
+
+                var configPla = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
+                
+                bool homolog = true;
 
                 try
                 {
@@ -174,34 +153,33 @@ namespace DevKit.Web.Controllers
 
                     #region - confere geração auto de lotes -
 
-                    var configPla = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
-
                     if (configPla != null)
                     {
                         if (configPla.bAtivo == true)
-                        {
+                        {                            
                             if (configPla.dom == true && DateTime.Now.DayOfWeek == DayOfWeek.Sunday ||
                                 configPla.seg == true && DateTime.Now.DayOfWeek == DayOfWeek.Monday ||
                                 configPla.ter == true && DateTime.Now.DayOfWeek == DayOfWeek.Tuesday ||
                                 configPla.qua == true && DateTime.Now.DayOfWeek == DayOfWeek.Wednesday ||
                                 configPla.qui == true && DateTime.Now.DayOfWeek == DayOfWeek.Thursday ||
                                 configPla.sex == true && DateTime.Now.DayOfWeek == DayOfWeek.Friday ||
-                                configPla.sab == true && DateTime.Now.DayOfWeek == DayOfWeek.Saturday )
+                                configPla.sab == true && DateTime.Now.DayOfWeek == DayOfWeek.Saturday )                            
                             {
                                 if (dt.Hour.ToString().PadLeft(2,'0') + dt.Minute.ToString().PadLeft (2,'0') == configPla.stHorario )
                                 {
+                                    configPla.stStatus = "1";
+                                    db.Update(configPla);
+
                                     var lstCarts = (from e in db.T_Cartao
                                                     where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
                                                     where e.tg_status.ToString() == CartaoStatus.Habilitado
                                                     select (int)e.i_unique).
                                         ToList();
 
-                                    var lstLotesAbertos_ = db.T_LoteCartao.Where(y => y.tg_sitLote == 1).ToList();
-
-                                    var lstLotesAbertos = db.T_LoteCartao.Where(y => y.tg_sitLote == 1).ToList().Select( y=> (int)y.i_unique).ToList();
+                                    var lstLotesAbertos_ = db.T_LoteCartao.Where(y => y.tg_sitLote == 1).Select( y=> Convert.ToInt32(y.i_unique)).ToList();
 
                                     var lstLoteDets = db.T_LoteCartaoDetalhe.
-                                                            Where(y => lstLotesAbertos.Contains((int)y.fk_lote)).
+                                                            Where(y => lstLotesAbertos_.Contains(Convert.ToInt32(y.fk_lote))).
                                                             Select(y => (int)y.fk_cartao).
                                                             ToList();
 
@@ -211,7 +189,10 @@ namespace DevKit.Web.Controllers
                                         if (!lstLoteDets.Contains(lstCarts[i]))
                                             lstCartsDisp.Add(lstCarts[i]);
 
-                                    var lst = (from e in db.T_Cartao
+                                    configPla.stStatus = "2";
+                                    db.Update(configPla);
+
+                                    var lstMain = (from e in db.T_Cartao
                                                join d in db.T_Proprietario on e.fk_dadosProprietario equals (int)d.i_unique
                                                where lstCartsDisp.Contains((int)e.i_unique)
                                                select new
@@ -228,18 +209,22 @@ namespace DevKit.Web.Controllers
                                                }).
                                                ToList();
 
-                                    var lstEmp = lst.Select(y => y.empresa).Distinct().ToList();
+                                    configPla.stStatus = "3";
+                                    db.Update(configPla);
+
+                                    var lstEmp = lstMain.Select(y => y.empresa).Distinct().ToList();
                                     var lstEmbDb = db.T_Empresa.Where(y => lstEmp.Contains(y.st_empresa)).ToList();
 
                                     var lstArquivos = new List<string>();
-
+                                    
                                     foreach (var st_emp in lstEmp)
                                     {
-                                        if (st_emp != "000002")
-                                            continue;
+                                        if (homolog)
+                                            if (st_emp != "000002")
+                                                continue;
 
                                         var tEmp = lstEmbDb.FirstOrDefault(y => y.st_empresa == st_emp);
-                                        var cartList = lst.Where(y => y.empresa == st_emp);
+                                        var cartList = lstMain.Where(y => y.empresa == st_emp);
 
                                         // ----------------
                                         // cria novo lote
@@ -281,18 +266,22 @@ namespace DevKit.Web.Controllers
                                         // exporta em arquivo no servidor
                                         // ---------------------
 
-                                        var nomeArq = tEmp.st_fantasia.Trim() + "_" + tEmp.st_empresa + "_" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "_" +
+                                        var nomeArq = novoLote.i_unique + "_PEDIDO_PRODUCAO.txt";
+
+                                        var tituloArq = tEmp.st_fantasia.Trim() + "_" + tEmp.st_empresa + "_" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "_" +
                                             DateTime.Now.Month.ToString().PadLeft(2, '0') + "_" + DateTime.Now.Year.ToString() + "_PEDIDO_PRODUCAO.txt";
 
                                         var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + nomeArq;
 
-                                        lstArquivos.Add("https://meuconvey.conveynet.com.br/img/" + nomeArq);                                        
+                                        lstArquivos.Add("https://meuconvey.conveynet.com.br/img/" + tituloArq);
 
                                         if (File.Exists(myPath))
                                             File.Delete(myPath);
 
-                                        using (var sw = new StreamWriter(myPath, false, Encoding.UTF8))
+                                        try
                                         {
+                                            string total_file = "";
+
                                             var nome = "";
 
                                             foreach (var cart in cartList)
@@ -306,7 +295,7 @@ namespace DevKit.Web.Controllers
                                                 else
                                                 {
                                                     nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == cart.fkProp &&
-                                                                                               y.nu_titularidade == Convert.ToInt32(cart.titularidade)).st_nome;
+                                                                                                y.nu_titularidade == Convert.ToInt32(cart.titularidade)).st_nome;
                                                 }
 
                                                 line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
@@ -322,13 +311,14 @@ namespace DevKit.Web.Controllers
                                                                                 cart.via.ToString(),
                                                                                 cart.cpf) + ",";
 
+
                                                 line += nome + ",|";
 
                                                 line += "826766" + cart.empresa +
                                                                         cart.matricula +
                                                                         cart.titularidade +
                                                                         cart.via.ToString() +
-                                                             "65" + cart.venc;
+                                                                "65" + cart.venc;
 
                                                 line += "|";
 
@@ -341,29 +331,101 @@ namespace DevKit.Web.Controllers
                                                     db.Update(c_update);
                                                 }
 
-                                                sw.WriteLine(line);
+                                                total_file += line;
                                             }
+
+                                            File.WriteAllText(myPath, total_file);
+                                            
                                         }
+                                        catch (Exception ex1)
+                                        {
+                                            configPla.stStatus = "3.x " + ex1.ToString();
+                                            db.Update(configPla);
+                                            return Ok();
+                                        }                                        
                                     }
+
+                                    configPla.stStatus = "4";
+                                    db.Update(configPla);
 
                                     var textoEmail = "<p>Este é um arquivo gerado automaticamente - não responder.</p>" +
                                                      "<p>Arquivos para impressão de plástico:</p><p>";
 
                                     foreach (var item in lstArquivos)
-                                        textoEmail += item + "\n";
+                                        textoEmail += "<a href='" + item + "' download target='_blank'>" + item + "</a>\n";
 
-                                    textoEmail += "</p><p>CONVEYNET - " + DateTime.Now.Year + "</p>";
+                                    {
+                                        var myRelatName = "relat_envio_" + 
+                                                            DateTime.Now.Day.ToString().PadLeft(2, '0') + "_" +
+                                                            DateTime.Now.Month.ToString().PadLeft(2, '0') + "_" + 
+                                                            DateTime.Now.Year.ToString() + ".txt";
+                                                                                
+                                        var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + myRelatName;
 
-                                    new ApiControllerBase().SendEmail("Produção de Cartões", textoEmail, configPla.stEmails);                                    
+                                        if (File.Exists(myPath))
+                                            File.Delete(myPath);
+
+                                        using (var sw = new StreamWriter(myPath, false, Encoding.UTF8))
+                                        {
+                                            sw.WriteLine("CONVEY BENEFICIOS");
+                                            sw.WriteLine("RELATORIO DE ENVIO AUTOMATICO DE CARTÕES");
+                                            sw.WriteLine("DATA:" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Year.ToString() + " " + DateTime.Now.Hour.ToString().PadLeft(2,'0') + ":" + DateTime.Now.Minute.ToString().PadLeft(2, '0'));
+                                            sw.WriteLine("");
+
+                                            int iNumber = 1, tot_carts = 0;
+
+                                            foreach (var st_emp in lstEmp)
+                                            {
+                                                if (homolog)
+                                                    if (st_emp != "000002")
+                                                        continue;
+
+                                                var tEmp = lstEmbDb.FirstOrDefault(y => y.st_empresa == st_emp);
+                                                var cartList = lstMain.Where(y => y.empresa == st_emp);
+
+                                                sw.WriteLine("Empresa: " + st_emp + " - " + tEmp.st_fantasia );
+
+                                                foreach (var c in cartList)
+                                                {
+                                                    sw.WriteLine(iNumber++ + ") " + c.associado + " - " + st_emp + "." + c.matricula);
+                                                    tot_carts++;
+                                                }
+
+                                                sw.WriteLine("Cartões na empresa: " + cartList.Count());
+                                                sw.WriteLine("");
+                                            }
+
+                                            sw.WriteLine("");
+                                            sw.WriteLine("Total de cartões enviados: " + tot_carts);
+                                            sw.WriteLine("");
+                                        }
+
+                                        textoEmail += "</p><p><a href='https://meuconvey.conveynet.com.br/img/" + myRelatName + "' download target='_blank'>https://meuconvey.conveynet.com.br/img/" + myRelatName + "</a></p>";
+                                    }
+
+                                    textoEmail += "<p>&nbsp;</p><p>&nbsp;</p><p>CONVEYNET - " + DateTime.Now.Year + "</p>";
+
+                                    configPla.stStatus = "5";
+                                    db.Update(configPla);
+
+                                    if (SendEmail("Produção de Cartões", textoEmail, configPla.stEmails))
+                                    {
+                                        configPla.stStatus = "6";
+                                        db.Update(configPla);
+                                    }
                                 }
                             }
                         }
                     }
 
                     #endregion
+
                 }
-                catch (SystemException ex)
+                catch (Exception ex)                
                 {
+                    configPla.stStatus = ex.ToString();
+                    db.Update(configPla);
+
                     db.Insert(new LOG_Audit
                     {
                         dt_operacao = DateTime.Now,

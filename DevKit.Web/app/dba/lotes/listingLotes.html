@@ -66,6 +66,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tr data-ng-repeat="mdl in list">
@@ -76,6 +77,7 @@
                         <td>{{ mdl.data }}</td>
                         <td>{{ mdl.dataGrafica }}</td>
                         <td>{{ mdl.dataAtiv }}</td>
+                        <td><button type="submit" class="btn btn-primary" ng-click="reenvio(mdl)">Email</button></td>
                         <td><button type="submit" class="btn btn-primary" ng-click="show(mdl)">Cartões</button></td>
                         <td><button type="submit" class="btn btn-primary" ng-click="arquivo(mdl)">Arquivo gráfica</button></td>
                         <td><button type="submit" class="btn btn-primary" ng-click="ativar(mdl)">Ativação</button></td>

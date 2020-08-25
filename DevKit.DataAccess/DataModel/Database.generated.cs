@@ -168,6 +168,11 @@ namespace DataModel
         [Column, Nullable] public bool? qui { get; set; }
         [Column, Nullable] public bool? sex { get; set; }
         [Column, Nullable] public bool? sab { get; set; }
+        [Column, Nullable] public string stEmailSmtp { get; set; }
+        [Column, Nullable] public string stSenhaSmtp { get; set; }
+        [Column, Nullable] public string stHostSmtp { get; set; }
+        [Column, Nullable] public int? nuPortSmtp { get; set; }
+        [Column, Nullable] public string stStatus { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "Parceiro")]

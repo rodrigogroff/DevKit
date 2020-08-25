@@ -493,23 +493,64 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
-        public void SendEmail(string assunto, string texto, string email)
+        public string calculaCodigoAcesso(string empresa, string matricula, string titularidade, string via, string cpf)
         {
+            string chave = matricula + empresa + titularidade.PadLeft(2, '0') + via + cpf.PadRight(14, ' ');
+            int temp = 0;
+            for (int n = 0; n < chave.Length; n++)
             {
-                MailMessage message = new System.Net.Mail.MailMessage("conveynet@zohomail.com", email, assunto, texto);
+                string s = chave.Substring(n, 1);
+                char c = s[0]; // First character in s
+                int i = c; // ascii code
+                temp += i;
+            }
+            string calculado = temp.ToString("0000");
+            temp += int.Parse(calculado[3].ToString()) * 1000;
+            temp += int.Parse(calculado[2].ToString());
+            if (temp > 9999) temp -= 2000;
+            calculado = temp.ToString("0000");
+            calculado = calculado.Substring(2, 1) +
+                        calculado.Substring(0, 1) +
+                        calculado.Substring(3, 1) +
+                        calculado.Substring(1, 1);
+            return calculado;
+        }
 
-                SmtpClient smtp = new SmtpClient
+        [NonAction]
+        public bool SendEmail(string assunto, string texto, string email)
+        {
+            email = email.Trim().Replace(";", ",").Replace("\r\n", ",").Replace (" ",",").TrimEnd(',');
+
+            using (var db = new AutorizadorCNDB())
+            {
+                var config = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
+
+                var message = new MailMessage(config.stEmailSmtp, email, assunto, texto);
+
+                var smtp = new SmtpClient
                 {
-                    Host = "smtp.zoho.com",
-                    Port = 587,
-                    Credentials = new System.Net.NetworkCredential("conveynet@zohomail.com", "Gustavo@2012"),
+                    Host = config.stHostSmtp,
+                    Port = (int)config.nuPortSmtp,
+                    Credentials = new System.Net.NetworkCredential(config.stEmailSmtp, config.stSenhaSmtp),
                     EnableSsl = true
                 };
 
                 message.IsBodyHtml = true;
 
-                smtp.Send(message);
-            }            
+                try
+                {
+                    smtp.Send(message);
+                }
+                catch (Exception ex)
+                {
+                    config.stStatus = ex.ToString().PadLeft(500, ' ').Substring(0, 500);
+                    db.Update(config);
+
+                    return false;
+                }
+
+                return true;
+            }
         }
     }
 }

@@ -5,6 +5,9 @@ using LinqToDB;
 using DataModel;
 using System.Collections.Generic;
 using SyCrafEngine;
+using System.IO;
+using DocumentFormat.OpenXml.Bibliography;
+using System.Text;
 
 namespace DevKit.Web.Controllers
 {
@@ -1547,6 +1550,8 @@ namespace DevKit.Web.Controllers
 
                 case "300":
                     {
+                        #region - code - 
+
                         var t = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
 
                         if (t != null)
@@ -1561,17 +1566,25 @@ namespace DevKit.Web.Controllers
                                 ter = true,
                                 qui = true,
                                 stHorario = "06:00",
-                                stEmails = "printserv@printserv.com.br;Atendimento@conveynet.com.br"
+                                stEmails = "printserv@printserv.com.br,Atendimento@conveynet.com.br",
+                                stEmailSmtp = "conveynet@zohomail.com",
+                                stSenhaSmtp = "Gustavo@2012",
+                                stHostSmtp = "smtp.zoho.com",
+                                nuPortSmtp = 587,
                             };
 
                             db.Insert(t);
 
                             return Ok(t);
                         }
+
+                        #endregion
                     }
 
                 case "301":
                     {
+                        #region - code - 
+
                         var bAtivo = Request.GetQueryStringValue<bool?>("bAtivo");
                         var dom = Request.GetQueryStringValue<bool?>("dom");
                         var seg = Request.GetQueryStringValue<bool?>("seg");
@@ -1582,6 +1595,11 @@ namespace DevKit.Web.Controllers
                         var sab = Request.GetQueryStringValue<bool?>("sab");
                         var stHorario = Request.GetQueryStringValue("stHorario");
                         var stEmails = Request.GetQueryStringValue("stEmails");
+
+                        var stEmailSmtp = Request.GetQueryStringValue("stEmailSmtp");
+                        var stSenhaSmtp = Request.GetQueryStringValue("stSenhaSmtp");
+                        var stHostSmtp = Request.GetQueryStringValue("stHostSmtp");
+                        var nuPortSmtp = Request.GetQueryStringValue<int?>("nuPortSmtp");
 
                         var t = new ConfigPlasticoEnvio
                         {
@@ -1595,12 +1613,173 @@ namespace DevKit.Web.Controllers
                             sex= sex,
                             sab = sab,
                             stHorario = stHorario,
-                            stEmails = stEmails
+                            stEmails = stEmails,
+                            stEmailSmtp = stEmailSmtp,
+                            stSenhaSmtp = stSenhaSmtp,
+                            stHostSmtp = stHostSmtp,
+                            nuPortSmtp = nuPortSmtp,
                         };
 
                         db.Update(t);
 
                         return Ok();
+
+                        #endregion
+                    }
+
+                case "400": // re-envio de arquivo de lote via email
+                    {
+                        #region - code - 
+
+                        var idLote = Convert.ToInt32(Request.GetQueryStringValue("lote"));
+
+                        var tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == db.T_LoteCartaoDetalhe.Where(a => a.fk_lote == idLote).Select(b => b.fk_empresa).First());
+
+                        var configPla = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
+
+                        var nomeArq = idLote + "_PEDIDO_PRODUCAO.txt";
+
+                        var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + nomeArq;
+
+                        var cartList = db.T_LoteCartaoDetalhe.Where(y => y.fk_lote == idLote).ToList();
+
+                        if (!File.Exists(myPath))
+                        {
+                            #region - refaz arquivo no servidor - 
+                            
+                            if (File.Exists(myPath))
+                                File.Delete(myPath);
+
+                            try
+                            {
+                                string total_file = "";
+
+                                var nome = "";
+
+                                foreach (var cart in cartList)
+                                {
+                                    var line = "";
+
+                                    var _c = db.T_Cartao.FirstOrDefault(y => y.i_unique == cart.fk_cartao);
+
+                                    if (cart.nu_titularidade.ToString().PadLeft(2,'0') == "01")
+                                    {
+                                        nome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _c.fk_dadosProprietario).st_nome;
+                                    }
+                                    else
+                                    {
+                                        nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == _c.fk_dadosProprietario &&
+                                                                                    y.nu_titularidade == cart.nu_titularidade).st_nome;
+                                    }
+
+                                    line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
+                                    line += _c.st_empresa + ",";
+                                    line += _c.st_matricula.ToString().PadLeft(6, '0') + ",";
+
+                                    line += _c.st_venctoCartao.Substring(0, 2) + "/" +
+                                            _c.st_venctoCartao.Substring(2, 2) + ",";
+
+                                    line += calculaCodigoAcesso(_c.st_empresa,
+                                                                    _c.st_matricula,
+                                                                    _c.st_titularidade,
+                                                                    cart.nu_via_original.ToString(),
+                                                                    cart.nu_cpf) + ",";
+
+
+                                    line += nome + ",|";
+
+                                    line += "826766" + _c.st_empresa +
+                                                            _c.st_matricula +
+                                                            _c.st_titularidade +
+                                                            cart.nu_via_original.ToString() +
+                                                    "65" + _c.st_venctoCartao;
+
+                                    line += "|";
+                                    total_file += line;
+                                }
+
+                                configPla.stStatus = "3.9 - " + myPath + " - ";
+                                db.Update(configPla);
+
+                                File.WriteAllText(myPath, total_file);
+
+                                configPla.stStatus = "3.91 - " + myPath + " - ";
+                                db.Update(configPla);
+                            }
+                            catch (Exception ex1)
+                            {
+                                configPla.stStatus = "3.x " + ex1.ToString();
+                                db.Update(configPla);
+                                return Ok();
+                            }
+
+                            #endregion
+                        }
+
+                        // envia email
+
+                        var textoEmail = "<p>Este é um arquivo gerado automaticamente - não responder.</p>" +
+                                                     "<p>Arquivos para impressão de plástico:</p><p>";
+                        
+                        textoEmail += "<a href='https://meuconvey.conveynet.com.br/img/" + nomeArq +
+                                        "' download target='_blank'>" + tEmp.st_fantasia.Trim() + 
+                                        "_" + tEmp.st_empresa + "_" + 
+                                        DateTime.Now.Day.ToString().PadLeft(2, '0') + "_" +
+                                        DateTime.Now.Month.ToString().PadLeft(2, '0') + "_" + 
+                                        DateTime.Now.Year.ToString() + 
+                                        "_PEDIDO_PRODUCAO.txt</a>";
+
+                        {
+                            var myRelatName = "relat_envio_d" + idLote + ".txt";
+
+                            myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + myRelatName;
+
+                            if (File.Exists(myPath))
+                                File.Delete(myPath);
+
+                            using (var sw = new StreamWriter(myPath, false, Encoding.UTF8))
+                            {
+                                sw.WriteLine("CONVEY BENEFICIOS");
+                                sw.WriteLine("RELATORIO DE ENVIO AUTOMATICO DE CARTÕES");
+                                sw.WriteLine("DATA:" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Year.ToString() + " " + DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":" + DateTime.Now.Minute.ToString().PadLeft(2, '0'));
+                                sw.WriteLine("");
+
+                                int iNumber = 1, tot_carts = 0;
+                                 
+                                sw.WriteLine("Empresa: " + tEmp.st_empresa + " - " + tEmp.st_fantasia);
+
+                                foreach (var c in cartList)
+                                {
+                                    sw.WriteLine(iNumber++ + ") " + c.st_nome_cartao + " - " + tEmp.st_empresa + "." + c.nu_matricula);
+                                    tot_carts++;
+                                }
+
+                                sw.WriteLine("Cartões na empresa: " + cartList.Count());
+                                sw.WriteLine("");
+
+                                sw.WriteLine("");
+                                sw.WriteLine("Total de cartões enviados: " + tot_carts);
+                                sw.WriteLine("");
+                            }
+
+                            textoEmail += "</p><p><a href='https://meuconvey.conveynet.com.br/img/" + myRelatName + 
+                                                "' download target='_blank'>https://meuconvey.conveynet.com.br/img/" + myRelatName + "</a></p>";
+                        }
+
+                        textoEmail += "<p>&nbsp;</p><p>&nbsp;</p><p>CONVEYNET - " + DateTime.Now.Year + "</p>";
+
+                        configPla.stStatus = "5";
+                        db.Update(configPla);
+
+                        if (SendEmail("Produção de Cartões", textoEmail, configPla.stEmails))
+                        {
+                            configPla.stStatus = "6";
+                            db.Update(configPla);
+                        }
+
+                        return Ok();
+
+                        #endregion
                     }
             }
 

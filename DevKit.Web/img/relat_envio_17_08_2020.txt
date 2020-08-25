@@ -1,0 +1,11 @@
+﻿CONVEY BENEFICIOS
+RELATORIO DE ENVIO AUTOMATICO DE CARTÕES
+DATA:17/08/2020 19:12
+
+Empresa: 000002 - ConveyNet 
+1) ARQ PLASTICO - 000002.753159
+Cartões na empresa: 1
+
+
+Total de cartões enviados: 1
+

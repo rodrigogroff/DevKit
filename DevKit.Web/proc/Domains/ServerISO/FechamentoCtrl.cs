@@ -266,14 +266,11 @@ namespace DevKit.Web.Controllers
                                         // exporta em arquivo no servidor
                                         // ---------------------
 
-                                        var nomeArq = novoLote.i_unique + "_PEDIDO_PRODUCAO.txt";
+                                        var tituloArq = tEmp.st_fantasia.Trim() + "_" + tEmp.st_empresa + "_" + novoLote.i_unique + "_PEDIDO_PRODUCAO.txt";
 
-                                        var tituloArq = tEmp.st_fantasia.Trim() + "_" + tEmp.st_empresa + "_" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "_" +
-                                            DateTime.Now.Month.ToString().PadLeft(2, '0') + "_" + DateTime.Now.Year.ToString() + "_PEDIDO_PRODUCAO.txt";
+                                        var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + tituloArq;
 
-                                        var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + nomeArq;
-
-                                        lstArquivos.Add("https://meuconvey.conveynet.com.br/img/" + tituloArq);
+                                        lstArquivos.Add("https://meuconvey.conveynet.com.br/img/" + tituloArq );
 
                                         if (File.Exists(myPath))
                                             File.Delete(myPath);

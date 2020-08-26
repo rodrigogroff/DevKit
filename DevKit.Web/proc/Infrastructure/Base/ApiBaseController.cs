@@ -519,7 +519,7 @@ namespace DevKit.Web.Controllers
         [NonAction]
         public bool SendEmail(string assunto, string texto, string email)
         {
-            email = email.Trim().Replace(";", ",").Replace("\r\n", ",").Replace (" ",",").TrimEnd(',');
+            email = email.Trim().Replace(";", ",").Replace("\r\n", ",").Replace("\n", ",").Replace (" ",",").TrimEnd(',');
 
             using (var db = new AutorizadorCNDB())
             {

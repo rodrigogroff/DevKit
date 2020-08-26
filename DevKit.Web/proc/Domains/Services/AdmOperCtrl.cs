@@ -1698,13 +1698,7 @@ namespace DevKit.Web.Controllers
                                     total_file += line;
                                 }
 
-                                configPla.stStatus = "3.9 - " + myPath + " - ";
-                                db.Update(configPla);
-
                                 File.WriteAllText(myPath, total_file);
-
-                                configPla.stStatus = "3.91 - " + myPath + " - ";
-                                db.Update(configPla);
                             }
                             catch (Exception ex1)
                             {
@@ -1722,12 +1716,7 @@ namespace DevKit.Web.Controllers
                                                      "<p>Arquivos para impressão de plástico:</p><p>";
                         
                         textoEmail += "<a href='https://meuconvey.conveynet.com.br/img/" + nomeArq +
-                                        "' download target='_blank'>" + tEmp.st_fantasia.Trim() + 
-                                        "_" + tEmp.st_empresa + "_" + 
-                                        DateTime.Now.Day.ToString().PadLeft(2, '0') + "_" +
-                                        DateTime.Now.Month.ToString().PadLeft(2, '0') + "_" + 
-                                        DateTime.Now.Year.ToString() + 
-                                        "_PEDIDO_PRODUCAO.txt</a>";
+                                        "' download target='_blank'>https://meuconvey.conveynet.com.br/img/" + nomeArq + "</a>";
 
                         {
                             var myRelatName = "relat_envio_d" + idLote + ".txt";
@@ -1767,9 +1756,6 @@ namespace DevKit.Web.Controllers
                         }
 
                         textoEmail += "<p>&nbsp;</p><p>&nbsp;</p><p>CONVEYNET - " + DateTime.Now.Year + "</p>";
-
-                        configPla.stStatus = "5";
-                        db.Update(configPla);
 
                         if (SendEmail("Produção de Cartões", textoEmail, configPla.stEmails))
                         {

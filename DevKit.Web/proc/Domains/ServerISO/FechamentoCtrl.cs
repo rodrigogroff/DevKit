@@ -22,7 +22,7 @@ namespace DevKit.Web.Controllers
 
                 var configPla = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
                 
-                bool homolog = true;
+                bool homolog = false;
 
                 try
                 {
@@ -156,7 +156,7 @@ namespace DevKit.Web.Controllers
                     if (configPla != null)
                     {
                         if (configPla.bAtivo == true)
-                        {                            
+                        {                      
                             if (configPla.dom == true && DateTime.Now.DayOfWeek == DayOfWeek.Sunday ||
                                 configPla.seg == true && DateTime.Now.DayOfWeek == DayOfWeek.Monday ||
                                 configPla.ter == true && DateTime.Now.DayOfWeek == DayOfWeek.Tuesday ||
@@ -164,11 +164,15 @@ namespace DevKit.Web.Controllers
                                 configPla.qui == true && DateTime.Now.DayOfWeek == DayOfWeek.Thursday ||
                                 configPla.sex == true && DateTime.Now.DayOfWeek == DayOfWeek.Friday ||
                                 configPla.sab == true && DateTime.Now.DayOfWeek == DayOfWeek.Saturday )                            
+                            
                             {
                                 if (dt.Hour.ToString().PadLeft(2,'0') + dt.Minute.ToString().PadLeft (2,'0') == configPla.stHorario )
                                 {
                                     configPla.stStatus = "1";
                                     db.Update(configPla);
+
+                                    List<string> lstAttach = new List<string>();
+                                    List<string> lstLotesAbertos_lst = new List<string>();
 
                                     var lstCarts = (from e in db.T_Cartao
                                                     where e.tg_emitido.ToString() == StatusExpedicao.NaoExpedido
@@ -176,10 +180,13 @@ namespace DevKit.Web.Controllers
                                                     select (int)e.i_unique).
                                         ToList();
 
-                                    var lstLotesAbertos_ = db.T_LoteCartao.Where(y => y.tg_sitLote == 1).Select( y=> Convert.ToInt32(y.i_unique)).ToList();
+                                    var lstLotesAbertos_ = db.T_LoteCartao.Where(y => y.tg_sitLote == 1).ToList();
+
+                                    foreach (var item in lstLotesAbertos_)
+                                        lstLotesAbertos_lst.Add(item.i_unique.ToString());
 
                                     var lstLoteDets = db.T_LoteCartaoDetalhe.
-                                                            Where(y => lstLotesAbertos_.Contains(Convert.ToInt32(y.fk_lote))).
+                                                            Where(y => lstLotesAbertos_lst.Contains(y.fk_lote.ToString())).
                                                             Select(y => (int)y.fk_cartao).
                                                             ToList();
 
@@ -213,7 +220,6 @@ namespace DevKit.Web.Controllers
                                     db.Update(configPla);
 
                                     var lstEmp = lstMain.Select(y => y.empresa).Distinct().ToList();
-                                    var lstEmbDb = db.T_Empresa.Where(y => lstEmp.Contains(y.st_empresa)).ToList();
 
                                     var lstArquivos = new List<string>();
                                     
@@ -223,8 +229,8 @@ namespace DevKit.Web.Controllers
                                             if (st_emp != "000002")
                                                 continue;
 
-                                        var tEmp = lstEmbDb.FirstOrDefault(y => y.st_empresa == st_emp);
-                                        var cartList = lstMain.Where(y => y.empresa == st_emp);
+                                        var tEmp = db.T_Empresa.FirstOrDefault(y => y.st_empresa == st_emp);
+                                        var cartList = lstMain.Where(y => y.empresa == st_emp).ToList();
 
                                         // ----------------
                                         // cria novo lote
@@ -257,8 +263,7 @@ namespace DevKit.Web.Controllers
                                                 nu_titularidade = Convert.ToInt32(item.titularidade),
                                                 nu_via_original = item.via,
                                                 st_nome_cartao = item.associado,
-                                                dt_pedido = DateTime.Now,
-                                               
+                                                dt_pedido = DateTime.Now,                                               
                                             });
                                         }
 
@@ -266,9 +271,11 @@ namespace DevKit.Web.Controllers
                                         // exporta em arquivo no servidor
                                         // ---------------------
 
-                                        var tituloArq = tEmp.st_fantasia.Trim() + "_" + tEmp.st_empresa + "_" + novoLote.i_unique + "_PEDIDO_PRODUCAO.txt";
+                                        var tituloArq = tEmp.st_empresa + "_" + novoLote.i_unique + "_PEDIDO_PRODUCAO.txt";
 
                                         var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + tituloArq;
+
+                                        lstAttach.Add(myPath);
 
                                         lstArquivos.Add("https://meuconvey.conveynet.com.br/img/" + tituloArq );
 
@@ -326,7 +333,7 @@ namespace DevKit.Web.Controllers
                                                     c_update.tg_emitido = Convert.ToInt32(StatusExpedicao.EmExpedicao);
 
                                                     db.Update(c_update);
-                                                }
+                                                }                                                
 
                                                 total_file += line;
                                             }
@@ -362,6 +369,8 @@ namespace DevKit.Web.Controllers
                                         if (File.Exists(myPath))
                                             File.Delete(myPath);
 
+                                        lstAttach.Add(myPath);
+
                                         using (var sw = new StreamWriter(myPath, false, Encoding.UTF8))
                                         {
                                             sw.WriteLine("CONVEY BENEFICIOS");
@@ -377,7 +386,7 @@ namespace DevKit.Web.Controllers
                                                     if (st_emp != "000002")
                                                         continue;
 
-                                                var tEmp = lstEmbDb.FirstOrDefault(y => y.st_empresa == st_emp);
+                                                var tEmp = db.T_Empresa.FirstOrDefault(y => y.st_empresa == st_emp);
                                                 var cartList = lstMain.Where(y => y.empresa == st_emp);
 
                                                 sw.WriteLine("Empresa: " + st_emp + " - " + tEmp.st_fantasia );
@@ -405,7 +414,11 @@ namespace DevKit.Web.Controllers
                                     configPla.stStatus = "5";
                                     db.Update(configPla);
 
-                                    if (SendEmail("Produção de Cartões", textoEmail, configPla.stEmails))
+                                    var emails = configPla.stEmails;
+
+                                    //emails = "rodrigo.groff@gmail.com";
+
+                                    if (SendEmail("Produção de Cartões", textoEmail, emails, lstAttach ))
                                     {
                                         configPla.stStatus = "6";
                                         db.Update(configPla);

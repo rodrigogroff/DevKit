@@ -1718,6 +1718,11 @@ namespace DevKit.Web.Controllers
                         textoEmail += "<a href='https://meuconvey.conveynet.com.br/img/" + nomeArq +
                                         "' download target='_blank'>https://meuconvey.conveynet.com.br/img/" + nomeArq + "</a>";
 
+
+                        var lstAttach = new List<string>();
+
+                        lstAttach.Add(myPath);
+
                         {
                             var myRelatName = "relat_envio_d" + idLote + ".txt";
 
@@ -1755,9 +1760,11 @@ namespace DevKit.Web.Controllers
                                                 "' download target='_blank'>https://meuconvey.conveynet.com.br/img/" + myRelatName + "</a></p>";
                         }
 
+                        lstAttach.Add(myPath);
+
                         textoEmail += "<p>&nbsp;</p><p>&nbsp;</p><p>CONVEYNET - " + DateTime.Now.Year + "</p>";
 
-                        if (SendEmail("Produção de Cartões", textoEmail, configPla.stEmails))
+                        if (SendEmail("Produção de Cartões (Re-envio)", textoEmail, configPla.stEmails, lstAttach))
                         {
                             configPla.stStatus = "6";
                             db.Update(configPla);

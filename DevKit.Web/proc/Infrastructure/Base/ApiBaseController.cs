@@ -517,7 +517,7 @@ namespace DevKit.Web.Controllers
         }
 
         [NonAction]
-        public bool SendEmail(string assunto, string texto, string email)
+        public bool SendEmail(string assunto, string texto, string email, List<string> attachs = null)
         {
             email = email.Trim().Replace(";", ",").Replace("\r\n", ",").Replace("\n", ",").Replace (" ",",").TrimEnd(',');
 
@@ -536,6 +536,10 @@ namespace DevKit.Web.Controllers
                 };
 
                 message.IsBodyHtml = true;
+
+                if (attachs != null)
+                    foreach (var item in attachs)
+                        message.Attachments.Add(new Attachment(item));
 
                 try
                 {

@@ -619,6 +619,7 @@ namespace DataModel
         [Column, Nullable] public string st_horaFech { get; set; } // varchar(500)
         [Column, Nullable] public bool? tg_convenioComSaldo { get; set; } // varchar(500)
         [Column, Nullable] public long? fkParceiro { get; set; } // bigint
+        [Column, Nullable] public string st_emailPlastico { get; set; } // varchar(500)
     }
 
     [Table(Schema = "dbo", Name = "T_EmpresaAfiliada")]

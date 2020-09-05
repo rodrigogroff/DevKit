@@ -35,7 +35,8 @@ namespace DevKit.Web.Controllers
                 "Cartões",
                 "Max. Parc.", 
                 "Dia Fat.", 
-                "Fechamento" 
+                "Fechamento",
+                "Email Plastico",
             }).
             ToArray());
 
@@ -53,6 +54,7 @@ namespace DevKit.Web.Controllers
                     mdl.nu_parcelas.ToString(),
                     mdl.nu_periodoFat.ToString(),
                     mdl.nu_diaFech?.ToString() + " - " +mdl.st_horaFech?.Substring(0,2) + ":" + mdl.st_horaFech?.Substring(2,2),
+                    mdl.st_emailPlastico,
                 }).
                 ToArray());
             }

@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using LinqToDB;
-using Microsoft.Ajax.Utilities;
 using System.Web;
 
 namespace DevKit.Web.Controllers
@@ -221,20 +220,50 @@ namespace DevKit.Web.Controllers
                 vc.Run(db, v.output_cont_pr.st_nsuRcb);
 
                 #endregion
-                
+
+                var t_trans = db.LOG_Transacoes.
+                                    FirstOrDefault(y => y.dt_transacao > DateTime.Now.AddMinutes(-10) &&
+                                                        y.nu_nsu == Convert.ToInt32(nsu_retorno));
+                                
+                p1 = p2 = p3 = p4 = p5 = p6 = p7 = p8 = p9 = p10 = p11 = p12 = 0;
+
+                int index = 1;
+
+                foreach (var item in db.T_Parcelas.
+                                        Where ( y=> y.fk_log_transacoes == t_trans.i_unique).
+                                        OrderBy (y=> y.nu_indice).
+                                        ToList())
+                {
+                    switch (index++)
+                    {
+                        case 1: p1 = Convert.ToInt32(item.vr_valor); break;
+                        case 2: p2 = Convert.ToInt32(item.vr_valor); break;
+                        case 3: p3 = Convert.ToInt32(item.vr_valor); break;
+                        case 4: p4 = Convert.ToInt32(item.vr_valor); break;
+                        case 5: p5 = Convert.ToInt32(item.vr_valor); break;
+                        case 6: p6 = Convert.ToInt32(item.vr_valor); break;
+                        case 7: p7 = Convert.ToInt32(item.vr_valor); break;
+                        case 8: p8 = Convert.ToInt32(item.vr_valor); break;
+                        case 9: p9 = Convert.ToInt32(item.vr_valor); break;
+                        case 10: p10 = Convert.ToInt32(item.vr_valor); break;
+                        case 11: p11 = Convert.ToInt32(item.vr_valor); break;
+                        case 12: p12 = Convert.ToInt32(item.vr_valor); break;
+                    }
+                }
+
                 var cupom = new Cupom().
-                       Venda(db,
-                               associadoPrincipal,
-                               dadosProprietario,
-                               DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"),
-                               nsu_retorno,
-                               terminal,
-                               (int)parcelas,
-                               valor,
-                               p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+                        Venda(db,
+                                associadoPrincipal,
+                                dadosProprietario,
+                                DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"),
+                                nsu_retorno,
+                                terminal,
+                                (int)parcelas,
+                                Convert.ToInt64(t_trans.vr_total),
+                                p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
 
                 myApplication[tag] = null;
-
+                
                 return Ok(new
                 {
                     count = 1,

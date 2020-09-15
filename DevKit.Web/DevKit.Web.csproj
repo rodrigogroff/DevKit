@@ -727,6 +727,7 @@
     <Compile Include="proc\Base\Saldo.cs" />
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
+    <Compile Include="proc\Domains\Combos\BancosCtrl.cs" />
     <Compile Include="proc\Domains\Combos\TipoUsuarioCtrl.cs" />
     <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\DBA\AuditoriaCtrl.cs" />

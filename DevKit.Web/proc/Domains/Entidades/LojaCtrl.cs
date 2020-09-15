@@ -39,7 +39,8 @@ namespace DevKit.Web.Controllers
                                                                     "Empresas",
                                                                     "Terminais",
                                                                     "Bloqueio",
-                                                                    "Senha" });
+                                                                    "Senha" 
+                                                                });
 
             var lstEmpresas = db.T_Empresa.ToList();
             var lstLinks = db.LINK_LojaEmpresa.ToList();
@@ -349,14 +350,17 @@ namespace DevKit.Web.Controllers
                 st_enderecoInst = mdl.st_enderecoInst,
                 st_endereco = mdl.st_endereco,
                 st_contato = mdl.st_contato,
-                st_email = mdl.st_email,          
+                st_email = mdl.st_email,
                 nu_telefone = mdl.nu_telefone,
                 st_telCelular = mdl.st_telCelular,
                 st_cidade = mdl.st_cidade,
-                st_estado = mdl.st_estado,      
+                st_estado = mdl.st_estado,
                 nu_CEP = mdl.nu_CEP,
                 nu_inscEst = mdl.nu_inscEst,
-                nu_CNPJ = mdl.nu_CNPJ
+                nu_CNPJ = mdl.nu_CNPJ,
+                fk_banco = mdl.fk_banco,
+                st_agencia = mdl.st_agencia,
+                st_conta = mdl.st_conta,
             };
 
             // campos transformados
@@ -570,6 +574,10 @@ namespace DevKit.Web.Controllers
             mdlUpdate.vr_minimo = Convert.ToInt32(mon.prepareNumber(mdl.svrMinimo));
             mdlUpdate.vr_transacao = Convert.ToInt32(mon.prepareNumber(mdl.svrTransacao));
             mdlUpdate.nu_franquia = Convert.ToInt32(mon.prepareNumber(mdl.snuFranquia));
+
+            mdlUpdate.fk_banco = mdl.fk_banco;
+            mdlUpdate.st_agencia = mdl.st_agencia;            
+            mdlUpdate.st_conta = mdl.st_conta;
 
             mdlUpdate.st_email = mdl.st_email;
             mdlUpdate.nu_fax = mdl.nu_fax;

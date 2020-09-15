@@ -90,6 +90,7 @@ angular.module('app.services', ['ngResource'])
         RelLojistaTrans: $resource('api/relLojistaTrans/:id', {}, opcoes),
         GLDemonstrativo: $resource('api/glDemonstrativo/:id', {}, opcoes),
         MonthCombo: $resource('api/month/:id', {}, opcoes),
+        BancosCombo: $resource('api/bancos/:id', {}, opcoes),
         SituacoesCombo: $resource('api/situacoes/:id', {}, opcoes),
         ExpedicoesCombo: $resource('api/expedicoes/:id', {}, opcoes),
         ConveniosCombo: $resource('api/convenios/:id', {}, opcoes),

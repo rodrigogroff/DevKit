@@ -17,6 +17,7 @@ angular.module('app.controllers').controller('LojaController',
 
             function init()
             {
+                $scope.selectBanco = ngSelects.obterConfiguracao(Api.BancosCombo, { tamanhoPagina: 15 });
                 $scope.selectMes = ngSelects.obterConfiguracao(Api.MonthCombo, { tamanhoPagina: 15 });
                 $scope.selectEmpresa = ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 });    
 

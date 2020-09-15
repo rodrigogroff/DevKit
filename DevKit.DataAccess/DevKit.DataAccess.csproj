@@ -103,6 +103,7 @@
     <Compile Include="DataModel\Entities\Log_Fechamento.cs" />
     <Compile Include="DataModel\Entities\UsuarioParceiro.cs" />
     <Compile Include="DataModel\Enums\Expedicoes_enum.cs" />
+    <Compile Include="DataModel\Enums\Bancos_enum.cs" />
     <Compile Include="DataModel\Enums\TipoUsuario_enum.cs" />
     <Compile Include="DataModel\Enums\OrdemEmissorManutCartoes_enum.cs" />
     <Compile Include="DataModel\Enums\Situacoes_enum.cs" />

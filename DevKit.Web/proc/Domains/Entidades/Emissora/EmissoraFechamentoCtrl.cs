@@ -68,6 +68,9 @@ namespace DevKit.Web.Controllers
                       sigla,
                       taxa,
                       total,
+
+                      banco, agencia, conta, cnpj,
+
                       repasse;
 
         public List<FechamentoVendaLoja> vendas = new List<FechamentoVendaLoja>();
@@ -83,8 +86,6 @@ namespace DevKit.Web.Controllers
         public HttpResponseMessage ExportarEmpresaDBA()
         {
             Get(export: true);
-
-            
 
             var x = new ExportMultiSheetWrapper("fechamento.xlsx");
 
@@ -568,13 +569,13 @@ namespace DevKit.Web.Controllers
                                             select e).
                                             ToList();
 
-
-
                         var lst = new List<FechamentoListagemLoja>();
 
                         // ---------------------------------------
                         // ## iterar por todos os lojistas
                         // ---------------------------------------
+
+                        var bancoEnum = new EnumBancos();
 
                         foreach (var tLoj in lstLojistas)
                         {
@@ -589,7 +590,11 @@ namespace DevKit.Web.Controllers
                                 lojista = tLoj.st_nome,
                                 endereco = tLoj.st_endereco,
                                 sigla = tLoj.st_loja,
-                                _taxa = tr
+                                _taxa = tr,
+                                banco = tLoj.fk_banco != null ? bancoEnum.Get((int)tLoj.fk_banco).stName : "",
+                                agencia = tLoj.st_agencia,
+                                conta = tLoj.st_conta,
+                                cnpj = tLoj.nu_CNPJ,
                             });
                         }
 

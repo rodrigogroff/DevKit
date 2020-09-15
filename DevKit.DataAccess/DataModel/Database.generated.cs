@@ -6,6 +6,7 @@
 //---------------------------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+//using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
@@ -720,6 +721,9 @@ namespace DataModel
         [Column, Nullable] public int? tg_portalComSenha { get; set; } // int
         [Column, Nullable] public string st_email { get; set; } // varchar(200)
         [Column, Nullable] public string st_telCelular { get; set; } // varchar(20)
+        [Column, Nullable] public long? fk_banco { get; set; }
+        [Column, Nullable] public string st_agencia { get; set; } // varchar(20)
+        [Column, Nullable] public string st_conta { get; set; } // varchar(20)
     }
 
     [Table(Schema = "dbo", Name = "T_LojaMensagem")]

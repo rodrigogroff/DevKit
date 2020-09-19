@@ -6,6 +6,7 @@ using System.Net;
 using System;
 using DataModel;
 using App.Web;
+using Microsoft.ApplicationInsights.Metrics.Extensibility;
 
 namespace DevKit.Web.Controllers
 {
@@ -201,6 +202,8 @@ namespace DevKit.Web.Controllers
 
             var lstEmps = db.T_Empresa.ToList();
 
+            var bancoEnum = new EnumBancos();
+
             foreach (var item in query.Skip(skip).Take(take).ToList())
             {
                 var senha = "Com Senha";
@@ -217,7 +220,12 @@ namespace DevKit.Web.Controllers
                 {
                     var tE = lstEmps.FirstOrDefault(y => y.i_unique == itemT.fk_empresa);
                     strEmps += tE.st_empresa + ", ";
-                }                    
+                }
+
+                var banco = "";
+
+                if (item.fk_banco > 0)
+                    banco = bancoEnum.Get((int)item.fk_banco).stName;
 
                 lst.Add(new T_Loja
                 {
@@ -231,7 +239,10 @@ namespace DevKit.Web.Controllers
                     situacao = item.tg_blocked == '1' ? "Bloqueada" : "Ativa",
                     tipoVenda = senha,
                     strTerminais = strTerms,
-                    strEmpresas = strEmps
+                    strEmpresas = strEmps,
+                    banco = banco,
+                    st_agencia = item.st_agencia,
+                    st_conta = item.st_conta,
                 });
             }
 
@@ -247,7 +258,8 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var mdl = (from e in db.T_Loja where e.i_unique == id select e).FirstOrDefault();
+            var mdl = id == 0 ? (from e in db.T_Loja where e.i_unique == db.currentLojista.i_unique select e).FirstOrDefault() :
+                                (from e in db.T_Loja where e.i_unique == id select e).FirstOrDefault();
 
             if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);

@@ -49,6 +49,7 @@ namespace DataModel
                         situacao,
                         strTerminais,
                         strEmpresas,
+                        banco,
                         tipoVenda,
                         snuPctValor,
                         svrMensalidade,

@@ -15,6 +15,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('relLojistaTrans', { url: '/system/relLojistaTrans', templateUrl: 'app/system/relatorios/listingRelLojistaTrans.html', controller: 'ListingLojistaTransController' })
             .state('relLojistaPends', { url: '/system/relLojistaPends', templateUrl: 'app/system/relatorios/listingRelLojistaPends.html', controller: 'ListingLojistaPendsController' })
             .state('gestaoLojistaRelTrans', { url: '/gestaoLogista/transacoes', templateUrl: 'app/gestaoLogista/GLTrans.html', controller: 'GLTransController' })
+            .state('gestaoLojistaBanco', { url: '/gestaoLogista/banco', templateUrl: 'app/gestaoLogista/GLBanco.html', controller: 'GLBancoController' })
             .state('gestaoLojistaDemonstrativo', { url: '/gestaoLogista/demonstrativos', templateUrl: 'app/gestaoLogista/GLDemonstrativo.html', controller: 'GLDemonstrativoController' })
             .state('limitesUsr', { url: '/associado/limites', templateUrl: 'app/associado/limites.html', controller: 'LimitesController' })
             .state('limitesUsrMobile', { url: '/associado/limitesMobile', templateUrl: 'app/associado/limitesMobile.html', controller: 'LimitesMobileController' })

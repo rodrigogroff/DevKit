@@ -56,6 +56,7 @@ namespace DevKit.Web
                 "~/app/associado/associadoMenuController.js",
                 "~/app/gestaoLogista/GLTransController.js",
                 "~/app/gestaoLogista/GLDemonstrativo.js",
+                "~/app/gestaoLogista/GLBancoController.js",
                 "~/app/emissora/EmissoraNovoCartao.js",
                 "~/app/emissora/EmissoraAltSenha.js",
                 "~/app/emissora/EmissoraAltSenhaUsuario.js",

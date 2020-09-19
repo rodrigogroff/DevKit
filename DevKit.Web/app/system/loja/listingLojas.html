@@ -1,5 +1,5 @@
-﻿<div class="webFormPosition">
-	<section class="widgetForm" style="width:1275px">
+﻿<div class="webFormPosition" style="width:90%">
+	<section class="widgetForm" style="width:90%">
 		<legend class="legendTop">
 			<table><tr height="12px"><td> </td></tr></table>
 			<table style="color:white; width:100%">
@@ -13,7 +13,7 @@
 				<tr height="12px"></tr>
 			</table>
 		</legend>
-        <div class="divWebForm" width="1280px">
+        <div class="divWebForm" style="width:98%">
             <table>
                 <tr height="12px"> </tr>
                 <tr height="36px">
@@ -91,57 +91,56 @@
                 <tr height="22px"></tr>
             </table>
 
-            <input type="submit" class="btn btn-info" value="Pesquisar" ng-click="search()"><br />
-
-            <table width="100%">
-                <tr>
-                    <td valign="top">
-                        <div ng-show="list.length == 0">
-                            <br />
-                            <br />
-                            <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
-                            <br />
-                            <br />
-                        </div>
-                        <div ng-show="list.length > 0">
-                            <br />
-                            <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
-                            <br />
-                            <table class="table table-hover" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Código</th>
-                                        <th>CNPJ</th>
-                                        <th>Nome loja / Social</th>
-                                        <th>Cidade / Estado</th>
-                                        <th>Situação</th>
-                                        <th>Tipo Venda</th>
-                                        <th>Terminais</th>
-                                        <th>Empresas</th>
-                                    </tr>
-                                </thead>
-                                <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                    <td>{{ mdl.terminal }}</td>
-                                    <td>{{ mdl.nu_CNPJ }}</td>
-                                    <td>
-                                        -{{ mdl.nome }} <br />
-                                        -{{ mdl.st_social }}
-                                    </td>
-                                    <td>
-                                        {{ mdl.cidade }} <br />
-                                        {{ mdl.estado }}
-                                    </td>
-                                    <td>{{ mdl.situacao }}</td>
-                                    <td>{{ mdl.tipoVenda }}</td>
-                                    <td>{{ mdl.strTerminais }}</td>
-                                    <td>{{ mdl.strEmpresas }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <br />
-                    </td>
-                </tr>
-            </table>
+            <input type="submit" class="btn btn-info" value="Pesquisar" ng-click="search()">
+                <br />
+                <div ng-show="list.length == 0">
+                    <br />
+                    <br />
+                    <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                    <br />
+                    <br />
+                </div>
+                <div ng-show="list.length > 0" style="width:100%">
+                    <br />
+                    <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                    <br />
+                    <table class="table table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th width="80px">Código</th>
+                                <th width="120px">CNPJ</th>
+                                <th width="260px">Nome loja / Social</th>
+                                <th width="120px">Cidade / Estado</th>
+                                <th width="80px">Situação</th>
+                                <th width="80px">Tipo Venda</th>
+                                <th width="120px">Terminais</th>
+                                <th width="150px">Empresas</th>
+                                <th>Dados Bancários</th>
+                            </tr>
+                        </thead>
+                        <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                            <td>{{ mdl.terminal }}</td>
+                            <td>{{ mdl.nu_CNPJ }}</td>
+                            <td>
+                                -{{ mdl.nome }} <br />
+                                -{{ mdl.st_social }}
+                            </td>
+                            <td>
+                                {{ mdl.cidade }} <br />
+                                {{ mdl.estado }}
+                            </td>
+                            <td>{{ mdl.situacao }}</td>
+                            <td>{{ mdl.tipoVenda }}</td>
+                            <td>{{ mdl.strTerminais }}</td>
+                            <td>{{ mdl.strEmpresas }}</td>
+                            <td>
+                                <div ng-if="mdl.banco.length > 0">
+                                    {{ mdl.banco }}<br />{{mdl.agencia}} - {{mdl.conta}}
+                                </div>                                
+                            </td>
+                        </tr>
+                    </table>
+                </div>                        
             <input type="submit" class="btn btn-info" value="Exportar" ng-if="list.length > 0" ng-click="exportar()"><br />
             <br />
         </div>

@@ -324,6 +324,8 @@
     <Content Include="app\emissora\novoCartao.html" />
     <Content Include="app\gestaoLogista\GLDemonstrativo.html" />
     <Content Include="app\gestaoLogista\GLDemonstrativo.js" />
+    <Content Include="app\gestaoLogista\GLBanco.html" />
+    <Content Include="app\gestaoLogista\GLBancoController.js" />
     <Content Include="app\gestaoLogista\GLTransController.js" />
     <Content Include="app\gestaoLogista\GLTrans.html" />
     <Content Include="app\home\cache.html" />

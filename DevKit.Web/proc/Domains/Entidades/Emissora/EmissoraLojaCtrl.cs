@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Web.Http;
 using SyCrafEngine;
+using DataModel;
 
 namespace DevKit.Web.Controllers
 {
@@ -17,6 +18,7 @@ namespace DevKit.Web.Controllers
                         end,
                         cidade,
                         estado,
+                        banco, agencia, conta,
                         txAdmin;
     }
 
@@ -100,11 +102,18 @@ namespace DevKit.Web.Controllers
 
             var mon = new money();
 
+            var enumBanco = new EnumBancos();
+
             foreach (var item in page)
             {
                 var c = convenios.
                             Where(y => y.fk_loja == item.i_unique).
                                 FirstOrDefault();
+
+                var banco = "";
+
+                if (item.fk_banco != null)
+                    banco = enumBanco.Get((int)item.fk_banco).stName;
 
                 res.Add(new LojaListagemDTO
                 {
@@ -116,7 +125,10 @@ namespace DevKit.Web.Controllers
                     end = item.st_endereco.Replace ("{SE$3}",",").Replace("{SE$2}", ""),
                     cidade = item.st_cidade,
                     estado = item.st_estado,
-                    txAdmin = mon.setMoneyFormat((long)c.tx_admin)
+                    txAdmin = mon.setMoneyFormat((long)c.tx_admin),
+                    banco = banco,
+                    agencia = item.st_agencia,
+                    conta = item.st_conta
                 });
             }
 

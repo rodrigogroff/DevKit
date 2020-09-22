@@ -53,6 +53,7 @@ angular.module('app.controllers').controller('EmissoraAltSenhaController',
             };
 
             $scope.confirmar = function () {
+
                 $scope.senha_fail = invalidCheck($scope.campos.novaSenha);
 
                 if (!$scope.senha_fail) {

@@ -755,6 +755,7 @@
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraCartaoCtrl.cs" />
     <Compile Include="proc\Domains\DBA\EmpresaDBACtrl.cs" />
     <Compile Include="proc\Domains\DBA\ParceiroCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\LojaBancoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\LojistaMensagensCtrl.cs" />
     <Compile Include="proc\Domains\DBA\ParceiroDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\TerminalLojaCtrl.cs" />

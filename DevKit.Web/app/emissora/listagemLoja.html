@@ -7,7 +7,7 @@
                     <td width="20px"></td>
                     <td>Listagem de <b>Lojistas</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
                 </tr>
-                
+
             </table>
         </legend>
         <div class="divWebForm" style="max-width:95%;min-width:95%">
@@ -90,7 +90,7 @@
                                             <th>Dados Bancários<br />&nbsp;</th>
                                         </tr>
                                     </thead>
-                                    <tr data-ng-repeat="mdl in list">
+                                    <tr ng-click="abrirModal(mdl)" data-ng-repeat="mdl in list">
                                         <td style="min-width:80px;">{{ mdl.codigo}}</td>
                                         <td style="min-width:220px;"><b>{{ mdl.razSoc}}</b><br />{{ mdl.nome}}</td>
                                         <td style="min-width:120px;">{{ mdl.cnpj}}</td>
@@ -101,7 +101,7 @@
                                             <div ng-if="mdl.banco.length > 1">
                                                 {{ mdl.banco}}<br />
                                                 {{ mdl.agencia}} - {{mdl.conta}}
-                                            </div>                                            
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>
@@ -119,5 +119,82 @@
     <br />
     <br />
     <br />
+
+    <div class="modal-backdrop"
+         ng-if="modal == true"
+         style="background: rgba(55, 55, 55, 0.5 );">
+        <div class="modal-dialog" style="width:500px">
+            <br />
+            <br />
+            <br />
+            <div class="modal-content" style="color:black">
+                <legend style="color:black">
+                    Edição de dados bancários
+                    <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="cancelarModal()"> X </button> &nbsp;
+                </legend>
+                <p>
+                    <b>{{editLoja.nome}}</b><br />
+                    {{editLoja.razSoc}}
+                </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="24px"></th>
+                            <th width="120px"></th>
+                            <th width="20px"></th>
+                            <th width="240px"></th>
+                            <th width="20px"></th>
+                        </tr>
+                    </thead>
+                    <tr height="28px"></tr>
+                    <tr height="40px">
+                        <td></td>
+                        <td>Banco</td>
+                        <td></td>
+                        <td>
+                            <input type="hidden"
+                                   style="width:100%;"
+                                   data-placeholder="(Selecione)"
+                                   ui-select2="selectBanco"
+                                   ng-model="editLoja.fk_banco" />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr height="40px">
+                        <td></td>
+                        <td>Agência</td>
+                        <td></td>
+                        <td>
+                            <input type="text"
+                                   class="form-control input-transparent"
+                                   maxlength="20"
+                                   style="background-color:lightgrey"
+                                   ng-model="editLoja.st_agencia" />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr height="40px">
+                        <td></td>
+                        <td>Conta Corrente</td>
+                        <td></td>
+                        <td>
+                            <input type="text"
+                                   class="form-control input-transparent"
+                                   maxlength="20"
+                                   style="background-color:lightgrey"
+                                   ng-model="editLoja.st_conta" />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr height="20px"></tr>
+                </table>
+                <br />
+                <button class="btn btn-info pull-right" ng-click="fecharModal()">Confirmar</button>
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+
     <br />
 </div>

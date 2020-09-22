@@ -26,6 +26,30 @@ angular.module('app.controllers').controller('EmissoraListagemLojaController',
             function init() {
                 if (ngHistoricoFiltro.filtro)
                     ngHistoricoFiltro.filtro.exibeFiltro = false;
+
+                $scope.selectBanco = ngSelects.obterConfiguracao(Api.BancosCombo, { tamanhoPagina: 15 });
+            }
+
+            $scope.abrirModal = function (mdl) {
+                $scope.editLoja = mdl;
+                $scope.modal = true;
+            }
+
+            $scope.cancelarModal = function (mdl) {
+                $scope.modal = false;
+            }
+
+            $scope.fecharModal = function () {
+                $scope.modal = false;
+                if ($scope.editLoja.fk_banco > 0) {
+                    Api.LojaBanco.update({ id: $scope.campos.id }, $scope.editLoja, function (data) {
+                        $scope.search();
+                    },
+                        function (response) {
+                            toastr.error(response.data.message, 'Erro');
+                            $scope.loading = false;
+                        });
+                }
             }
 
             $scope.search = function () {

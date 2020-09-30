@@ -128,9 +128,8 @@ namespace DevKit.Web.Controllers
             {
                 var tagParcelaAtual = tagEmpMat + t.ToString();
 
-                var maxParcAtual = RestoreTimerCache("parcelasCartao", tagParcelaAtual, 1) as string;
-
-                if (maxParcAtual == null)
+                var maxParcAtual = "";
+                
                 {
                     var lstParcs = (from e in db.T_Parcelas
                                     where lstCarts.Contains((int)e.fk_cartao)

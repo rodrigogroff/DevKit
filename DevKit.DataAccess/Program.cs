@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Security.Cryptography;
 
 namespace GetStarted
@@ -19,12 +18,15 @@ namespace GetStarted
 
             Console.ReadLine();
 
+            //SetaValoresEmpresa("009622", 16000, 17200);
+            //SetaValoresEmpresa("009622", 56000, 57250);
 
-     //       MigraParcelas(new T_Cartao { st_empresa = "001201", st_matricula = "878870" }, new T_Cartao { st_empresa = "001201", st_matricula = "151806" });
+
+            //       MigraParcelas(new T_Cartao { st_empresa = "001201", st_matricula = "878870" }, new T_Cartao { st_empresa = "001201", st_matricula = "151806" });
 
             //SetaSenhaEmpresaPorMatricula("009971");
 
-            SetaValoresEmpresa("009971", 20000, 30000);
+            //SetaValoresEmpresa("009971", 20000, 30000);
 
             //ImportaLimites();
 

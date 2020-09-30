@@ -6,8 +6,9 @@ using DataModel;
 using System.Collections.Generic;
 using SyCrafEngine;
 using System.IO;
-using DocumentFormat.OpenXml.Bibliography;
 using System.Text;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace DevKit.Web.Controllers
 {
@@ -21,6 +22,18 @@ namespace DevKit.Web.Controllers
     {
         public long x { get; set; }
         public string label { get; set; }
+    }
+
+    public class RelatAtivCartao
+    {
+        public string id_lote { get; set; }
+        public string cod_empresa { get; set; }
+        public string empresa { get; set; }
+        public string nome { get; set; }
+        public string matricula { get; set; }
+        public string dt_pedido { get; set; }
+        public string dt_proc { get; set; }
+        public string dt_exp { get; set; }
     }
 
     public class AdmOperController : ApiControllerBase
@@ -660,6 +673,8 @@ namespace DevKit.Web.Controllers
                     {
                         #region - code -  
 
+                        List<RelatAtivCartao> lstDets = new List<RelatAtivCartao>();
+
                         var idLote = Request.GetQueryStringValue("lote");
 
                         var lote = db.T_LoteCartao.FirstOrDefault( y=> y.i_unique.ToString() == idLote);
@@ -684,12 +699,110 @@ namespace DevKit.Web.Controllers
                                     db.Update(cart);
                                 }
 
+                                var nome = "";
+
+                                if (cart.st_titularidade != "01")
+                                {
+                                    var t_dep = db.T_Dependente.FirstOrDefault(a => a.fk_proprietario == cart.fk_dadosProprietario);
+
+                                    nome = t_dep.st_nome;
+                                }
+                                else
+                                {
+                                    var t_prop = db.T_Proprietario.FirstOrDefault(a => a.i_unique == cart.fk_dadosProprietario);
+
+                                    nome = t_prop.st_nome;
+                                }
+
                                 item.dt_ativacao = DateTime.Now;
+
+                                var t_emp = db.T_Empresa.FirstOrDefault(a => a.st_empresa == cart.st_empresa);
+
+                                lstDets.Add(new RelatAtivCartao
+                                {
+                                    id_lote = lote.i_unique.ToString(),
+                                    cod_empresa = t_emp.st_empresa,
+                                    empresa = t_emp.st_fantasia,
+                                    nome = nome,
+                                    matricula = cart.st_matricula,
+                                    dt_exp = Convert.ToDateTime(item.dt_ativacao).ToString("dd/MM/yyyy HH:mm"),
+                                    dt_proc = Convert.ToDateTime(item.dt_pedido).ToString("dd/MM/yyyy HH:mm"),
+                                    dt_pedido = Convert.ToDateTime(cart.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
+                                });
 
                                 db.Update(item);
                             }
                         }
-                        
+
+                        // -------------------
+                        // enviar email
+                        // -------------------
+
+                        var lst_emissores = lstDets.Select(b => b.cod_empresa).Distinct().ToList();
+
+                        foreach (var cod_empresa in lst_emissores)
+                        {
+                            var t_emp = db.T_Empresa.FirstOrDefault(a => a.st_empresa == cod_empresa);
+
+                            var txt = new List<string>();
+
+                            txt.Add("CONVEY BENEFICIOS");
+                            txt.Add("RELATORIO DE EXPEDIÇÃO DE CARTÕES");
+                            txt.Add("DATA: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+                            txt.Add("");
+
+                            txt.Add("Empresa: " + cod_empresa + " " + t_emp.st_fantasia);
+
+                            int numLine = 1;
+
+                            // 6 20 10 20 20 20 
+                            txt.Add("#INDEX NOME                 MATRICULA PEDIDO               PROCESSAMENTO       EXPEDIÇÃO         " );
+                            txt.Add("--------------------------------------------------------------------------------------------------------");
+
+                            var lote_str = "";
+
+                            foreach (var detalhe in lstDets.Where(y => y.cod_empresa == cod_empresa).OrderBy(y=> y.nome).ToList())
+                            {
+                                if (lote_str == "")
+                                    lote_str = detalhe.id_lote;
+
+                                txt.Add(numLine.ToString().PadLeft(6, '0') + " " +
+                                        detalhe.nome.PadRight(20, ' ').Substring(0, 20) + " " +
+                                        detalhe.matricula.PadRight(10, ' ').Substring(0, 10) + " " +
+                                        detalhe.dt_pedido.PadRight(20, ' ').Substring(0, 20) + " " +
+                                        detalhe.dt_proc.PadRight(20, ' ').Substring(0, 20) + " " +
+                                        detalhe.dt_exp.PadRight(20, ' ').Substring(0, 20));
+
+                                numLine++;
+                            }
+
+                            var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\lote" + lote_str + "_proc.txt";
+
+                            if (File.Exists(myPath))
+                                File.Delete(myPath);
+
+                            using (var sw = new StreamWriter(myPath, false, Encoding.UTF8))
+                                foreach (var item in txt)
+                                    sw.WriteLine(item);
+
+                            var texto = "<p>Prezado Cliente,<br>" +
+                                "Informamos que os seus cartões foram emitidos e serão enviados hoje, é importante que no recebimento, seja realizada a <br>" +
+                                "1) Conferência com os cartões solicitados e recebidos;<br>" +
+                                "2) Confirmado os limites financeiros disponibilizados;<br>" +
+                                "3) O portador no recebimento do cartão, cadastre sua senha pessoal e intransferível. <br>" +
+                                "<br>Caso ainda tenha dúvidas, entre em contato com nossa central de atendimento ou converse com seu gerente de conta.<br>" +
+                                "Atenciosamente, <br>" +
+                                "Plataforma de Suporte a Emissores</p>";
+
+                            if (!string.IsNullOrEmpty(t_emp.st_emailPlastico))
+                            {
+                                SendEmail("CONVEY – AVISO EMISSAO / EXPEDICAO CARTÃO INSTITUIÇÃO EMISSORA", texto, t_emp.st_emailPlastico, new List<string>
+                                {
+                                    myPath
+                                });
+                            }
+                        }
+
                         return Ok();
 
                         #endregion 

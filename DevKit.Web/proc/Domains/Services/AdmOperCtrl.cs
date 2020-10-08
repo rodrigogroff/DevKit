@@ -756,7 +756,7 @@ namespace DevKit.Web.Controllers
                             int numLine = 1;
 
                             // 6 20 10 20 20 20 
-                            txt.Add("#INDEX NOME                 MATRICULA PEDIDO               PROCESSAMENTO       EXPEDIÇÃO         " );
+                            txt.Add("ID     NOME                 MATRICULA PEDIDO               PROCESSAMENTO       EXPEDIÇÃO         " );
                             txt.Add("--------------------------------------------------------------------------------------------------------");
 
                             var lote_str = "";
@@ -1181,7 +1181,7 @@ namespace DevKit.Web.Controllers
 
                                             item.svariacao = mon.setMoneyFormat( Convert.ToInt64(x2*10000)) + " %";
                                         }
-                                        else
+                                        else if (atu > 0)
                                         {
                                             float x1 = ult - atu;
                                             float x2 = x1 / atu;

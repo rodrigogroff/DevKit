@@ -17,6 +17,8 @@ namespace GetStarted
             Console.WriteLine("------------------------");
 
             Console.ReadLine();
+            
+            //SetaValoresEmpresa("009622", 17200, 17250);
 
             //SetaValoresEmpresa("009622", 16000, 17200);
             //SetaValoresEmpresa("009622", 56000, 57250);

@@ -514,6 +514,8 @@ namespace DataModel
         [Column, Nullable] public int? tg_excluido { get; set; } // int
         [Column, Nullable] public bool? tg_convenioComSaldo { get; set; }
         [Column, Nullable] public long? vr_saldoConvenio { get; set; }
+
+        [Column, Nullable] public DateTime? dtPedidoCartao { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "T_Chamado")]

@@ -649,6 +649,8 @@ namespace DevKit.Web.Controllers
             cart.vr_limiteTotal = LimpaValor(mdl.limTot);
             cart.vr_extraCota = 0;
 
+            cart.dtPedidoCartao = DateTime.Now;
+
             cart.i_unique = Convert.ToDecimal (db.InsertWithIdentity(cart));
 
             // ----------------------------------
@@ -854,6 +856,8 @@ namespace DevKit.Web.Controllers
                         cart.nu_viaCartao = cart.nu_viaCartao + 1;
                         cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
 
+                        cart.dtPedidoCartao = DateTime.Now;
+
                         db.Update(cart);
 
                         db.Insert(new LOG_Audit
@@ -895,7 +899,8 @@ namespace DevKit.Web.Controllers
                             st_banco = "",
                             st_agencia = "",
                             st_conta = "",
-                            st_senha = cart.st_senha // copiar senha do proprietario
+                            st_senha = cart.st_senha, // copiar senha do proprietario
+                            dtPedidoCartao = DateTime.Now,
                         });
 
                         db.Insert(new T_Dependente

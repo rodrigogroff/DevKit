@@ -718,6 +718,8 @@ namespace DevKit.Web.Controllers
 
                                 var t_emp = db.T_Empresa.FirstOrDefault(a => a.st_empresa == cart.st_empresa);
 
+                                var dtPedido = cart.dtPedidoCartao != null ? Convert.ToDateTime(cart.dtPedidoCartao) : Convert.ToDateTime(cart.dt_inclusao);
+
                                 lstDets.Add(new RelatAtivCartao
                                 {
                                     id_lote = lote.i_unique.ToString(),
@@ -727,7 +729,7 @@ namespace DevKit.Web.Controllers
                                     matricula = cart.st_matricula,
                                     dt_exp = Convert.ToDateTime(item.dt_ativacao).ToString("dd/MM/yyyy HH:mm"),
                                     dt_proc = Convert.ToDateTime(item.dt_pedido).ToString("dd/MM/yyyy HH:mm"),
-                                    dt_pedido = Convert.ToDateTime(cart.dt_inclusao).ToString("dd/MM/yyyy HH:mm"),
+                                    dt_pedido = dtPedido.ToString("dd/MM/yyyy HH:mm"),
                                 });
 
                                 db.Update(item);
@@ -776,7 +778,7 @@ namespace DevKit.Web.Controllers
                                 numLine++;
                             }
 
-                            var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\lote" + lote_str + "_proc.txt";
+                            var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\cartoes_expedidos_lote" + lote_str + "_proc.txt";
 
                             if (File.Exists(myPath))
                                 File.Delete(myPath);

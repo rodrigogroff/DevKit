@@ -331,6 +331,8 @@
     <Content Include="app\home\cache.html" />
     <Content Include="app\home\CacheController.js" />
     <Content Include="app\home\HomeController.js" />
+    <Content Include="app\onboarding\cadastro.html" />
+    <Content Include="app\onboarding\cadastroController.js" />
     <Content Include="app\system\admopers\altBloq.html" />
     <Content Include="app\system\admopers\altCota.html" />
     <Content Include="app\system\admopers\altDesbloq.html" />

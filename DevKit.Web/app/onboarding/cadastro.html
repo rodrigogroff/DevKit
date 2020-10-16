@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <script type="text/javascript">
+    </script>
+</head>
+<body class="background-white">
+    <div align="center">
+        <div style="padding-top:20px;padding-left:60px">
+            <br />
+            <img src='../../images/logo.png' height="140px" /><br />
+            <br />            
+            <div align="center" style="width:640px;height:500px;background-color:#e0e0e0;">
+                <br />
+                <h3>Adesão Comercial - Convey BENEFÍCIOS</h3>
+                <br />
+                <div disabled>
+                    <input type="radio" name="step" id="step" value="1" ng-model="stepAtual" disabled title="Email" style="cursor:default" /> &nbsp;
+                    <input type="radio" name="step" id="step" value="2" ng-model="stepAtual" disabled title="Senha" style="cursor:default" /> &nbsp;
+                    <input type="radio" name="step" id="step" value="3" ng-model="stepAtual" disabled title="CNPJ" style="cursor:default" /> &nbsp;
+                    <input type="radio" name="step" id="step" value="4" ng-model="stepAtual" disabled /> &nbsp;
+                    <input type="radio" name="step" id="step" value="5" ng-model="stepAtual" disabled /> &nbsp;
+                    <input type="radio" name="step" id="step" value="6" ng-model="stepAtual" disabled /> &nbsp;
+                </div>                
+                <div style="height:300px">
+                    <br />
+                    <br />
+                    <div ng-if="stepAtual == '1'">
+                        <div align="left" style="padding-left:140px">
+                            <h4 style="color:grey">Email para contato</h4>
+                        </div>
+                        <table width="400px">
+                            <tr height="48px">
+                                <td width="20px">
+                                    <button class="btn btn-xs btn-danger" ng-show="fail_email" title="Informe um email corretamente">!</button>
+                                </td>
+                                <td width="380px">
+                                    <input id="email" style="font-size: 12px; border: 1px solid #ccc;" class="form-control" ng-model="onboardingData.email">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div ng-if="stepAtual == '2'">
+                        <div align="left" style="padding-left:140px">
+                            <h4 style="color:grey">Informe sua Senha</h4>
+                        </div>
+                        <table width="400px">
+                            <tr height="48px">
+                                <td width="20px">
+                                    <button class="btn btn-xs btn-danger" ng-show="fail_senha" title="Informe uma senha corretamente">!</button>
+                                </td>
+                                <td width="380px">
+                                    <input id="senha" type="password" style="font-size: 12px; border: 1px solid #ccc;" class="form-control" ng-model="onboardingData.senha">
+                                </td>
+                            </tr>
+                        </table>
+                        <div align="left" style="padding-left:140px">
+                            <h4 style="color:grey">Confirme sua senha</h4>
+                        </div>
+                        <table width="400px">
+                            <tr height="48px">
+                                <td width="20px">
+                                    <button class="btn btn-xs btn-danger" ng-show="fail_conf_senha" title="Confirmação de senha inválida">!</button>
+                                </td>
+                                <td width="380px">
+                                    <input id="login-senha" type="password" style="font-size: 12px; border: 1px solid #ccc;" class="form-control" ng-model="onboardingData.senhaConf">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div ng-if="stepAtual == '3'">
+                        <div align="left" style="padding-left:140px">
+                            <h4 style="color:grey">Informe seu CNPJ</h4>
+                        </div>
+                        <table width="400px">
+                            <tr height="48px">
+                                <td width="20px">
+                                    <button class="btn btn-xs btn-danger" ng-show="fail_cnpj" title="Informe um CNPJ corretamente">!</button>
+                                </td>
+                                <td width="380px">
+                                    <input id="cnpj" style="font-size: 12px; border: 1px solid #ccc;" class="form-control" 
+                                           maxlength="14" onKeyUp="money(this,ValorNum);"
+                                           ng-model="onboardingData.cnpj">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div ng-if="stepAtual == 1">
+                    <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                        Próximo
+                    </button>
+                </div>
+                <div ng-if="stepAtual > 1">
+                    <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-primary" ng-click="anterior()">
+                        Anterior
+                    </button>
+                    <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                        Próximo
+                    </button>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -6,6 +6,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
         $stateProvider
 
             .state('login', { url: '/login', templateUrl: 'app/login/login.html', controller: 'LoginController', data: {} })
+            .state('onboarding', { url: '/onboarding', templateUrl: 'app/onboarding/cadastro.html', controller: 'CadastroController', data: {} })
 
             .state('associado', { url: '/system/associado', templateUrl: 'app/system/associado/listingAssociados.html', controller: 'ListingAssociadosController' })
             .state('venda', { url: '/system/venda', templateUrl: 'app/system/venda/venda.html', controller: 'VendaController' })

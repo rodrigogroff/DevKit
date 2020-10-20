@@ -1,13 +1,15 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('CadastroController',
-    ['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version', 'Api', 
-        function ($scope, $rootScope, $location, $state, AuthService, version, Api) {
+    ['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version', 'Api', '$window',
+        function ($scope, $rootScope, $location, $state, AuthService, version, Api, $window ) {
 
             $rootScope.exibirMenu = false;
             $scope.loading = false;
 
             $scope.stepAtual = 1;
+
+            $scope.MyWidth = $window.innerWidth - 15;
 
             $scope.onboardingData =
                 {
@@ -46,10 +48,67 @@ angular.module('app.controllers').controller('CadastroController',
 
             function init() {
                 setTimeout(function wait() {
+                    $scope.MyWidth = $window.innerWidth - 15;
+
+                    console.log($scope.MyWidth);
                     switch ($scope.stepAtual) {
                         case 1: document.getElementById("email").focus(); break;
                     }
                 }, 200)
+            }
+
+            function validarCNPJ(cnpj) {
+
+                cnpj = cnpj.replace(/[^\d]+/g, '');
+
+                if (cnpj == '') return false;
+
+                if (cnpj.length != 14)
+                    return false;
+
+                // Elimina CNPJs invalidos conhecidos
+                if (cnpj == "00000000000000" ||
+                    cnpj == "11111111111111" ||
+                    cnpj == "22222222222222" ||
+                    cnpj == "33333333333333" ||
+                    cnpj == "44444444444444" ||
+                    cnpj == "55555555555555" ||
+                    cnpj == "66666666666666" ||
+                    cnpj == "77777777777777" ||
+                    cnpj == "88888888888888" ||
+                    cnpj == "99999999999999")
+                    return false;
+
+                // Valida DVs
+                var tamanho = cnpj.length - 2
+                var numeros = cnpj.substring(0, tamanho);
+                var digitos = cnpj.substring(tamanho);
+                var soma = 0;
+                var pos = tamanho - 7;
+
+                for (let i = tamanho; i >= 1; i--) {
+                    soma += numeros.charAt(tamanho - i) * pos--;
+                    if (pos < 2)
+                        pos = 9;
+                }
+                var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(0))
+                    return false;
+
+                tamanho = tamanho + 1;
+                numeros = cnpj.substring(0, tamanho);
+                soma = 0;
+                pos = tamanho - 7;
+                for (let i = tamanho; i >= 1; i--) {
+                    soma += numeros.charAt(tamanho - i) * pos--;
+                    if (pos < 2)
+                        pos = 9;
+                }
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(1))
+                    return false;
+
+                return true;
             }
 
             $scope.proximo = function () {
@@ -75,7 +134,7 @@ angular.module('app.controllers').controller('CadastroController',
                                 $scope.stepAtual = $scope.stepAtual + 1;
                         break;
 
-                    case 3: $scope.fail_cnpj = invalidCheck($scope.onboardingData.cnpj);
+                    case 3: $scope.fail_cnpj = !validarCNPJ($scope.onboardingData.cnpj);
                             if (!$scope.fail_cnpj)
                                 $scope.stepAtual = $scope.stepAtual + 1;
                             break;

@@ -17,8 +17,6 @@ angular.module('app.controllers').controller('CadastroController',
                     senha: "",
                 };
 
-            init();
-
             var invalidCheck = function (element) {
 
                 if (element == undefined)
@@ -45,17 +43,6 @@ angular.module('app.controllers').controller('CadastroController',
 
                 return false;
             };
-
-            function init() {
-                setTimeout(function wait() {
-                    $scope.MyWidth = $window.innerWidth - 15;
-
-                    console.log($scope.MyWidth);
-                    switch ($scope.stepAtual) {
-                        case 1: document.getElementById("email").focus(); break;
-                    }
-                }, 200)
-            }
 
             function validarCNPJ(cnpj) {
 
@@ -116,6 +103,12 @@ angular.module('app.controllers').controller('CadastroController',
                 $scope.fail_senha = false;
                 $scope.fail_conf_senha = false;
                 $scope.fail_cnpj = false;
+                $scope.fail_razSoc = false;
+                $scope.fail_fantasia = false;
+                $scope.fail_cep = false;
+                $scope.fail_cepInst = false;
+                $scope.fail_tel_cel = false;
+                $scope.fail_resp = false;
 
                 switch ($scope.stepAtual) {
 
@@ -137,7 +130,33 @@ angular.module('app.controllers').controller('CadastroController',
                     case 3: $scope.fail_cnpj = !validarCNPJ($scope.onboardingData.cnpj);
                             if (!$scope.fail_cnpj)
                                 $scope.stepAtual = $scope.stepAtual + 1;
-                            break;
+                        break;
+
+                    case 4: $scope.fail_razSoc = invalidCheck($scope.onboardingData.razSoc);
+                        $scope.fail_fantasia = invalidCheck($scope.onboardingData.fantasia);
+                        if (!$scope.fail_razSoc && !$scope.fail_fantasia)
+                            $scope.stepAtual = $scope.stepAtual + 1;
+                        break;
+
+                    case 5: $scope.fail_cep = invalidCheck($scope.onboardingData.cep);                        
+                        if (!$scope.fail_cep)
+                            $scope.stepAtual = $scope.stepAtual + 1;
+                        break;
+
+                    case 6: $scope.fail_cepInst = invalidCheck($scope.onboardingData.cepInst);
+                        if (!$scope.fail_cepInst)
+                            $scope.stepAtual = $scope.stepAtual + 1;
+                        break;
+
+                    case 7: $scope.fail_tel_cel = invalidCheck($scope.onboardingData.telCel);
+                        if (!$scope.fail_tel_cel)
+                            $scope.stepAtual = $scope.stepAtual + 1;
+                        break;
+
+                    case 8: $scope.fail_resp = invalidCheck($scope.onboardingData.resp);
+                        if (!$scope.fail_resp)
+                            $scope.stepAtual = $scope.stepAtual + 1;
+                        break;
                 }
 
                 $scope.setaFocus();
@@ -149,6 +168,11 @@ angular.module('app.controllers').controller('CadastroController',
                         case 1: document.getElementById("email").focus(); break;
                         case 2: document.getElementById("senha").focus(); break;
                         case 3: document.getElementById("cnpj").focus(); break;
+                        case 4: document.getElementById("razSoc").focus(); break;
+                        case 5: document.getElementById("cep").focus(); break;
+                        case 6: document.getElementById("cepInst").focus(); break;
+                        case 7: document.getElementById("telCel").focus(); break;
+                        case 8: document.getElementById("resp").focus(); break;
                     }
                 }, 200)               
             }
@@ -159,6 +183,16 @@ angular.module('app.controllers').controller('CadastroController',
 
             $scope.anterior = function () {
                 $scope.stepAtual = $scope.stepAtual - 1;
+            }
+
+            init();
+
+            function init() {
+                setTimeout(function wait() {
+                    $scope.MyWidth = $window.innerWidth - 15;
+                    $scope.stepAtual = 1;
+                    $scope.setaFocus();
+                }, 200)
             }
         }]);
 

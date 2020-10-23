@@ -21,12 +21,16 @@
                     <h3>Adesão Comercial - Convey BENEFÍCIOS</h3>
                     <br />
                     <div disabled>
-                        <input type="radio" name="step" id="step" value="1" ng-model="stepAtual" disabled title="Email" style="cursor:default" /> &nbsp;
-                        <input type="radio" name="step" id="step" value="2" ng-model="stepAtual" disabled title="Senha" style="cursor:default" /> &nbsp;
-                        <input type="radio" name="step" id="step" value="3" ng-model="stepAtual" disabled title="CNPJ" style="cursor:default" /> &nbsp;
-                        <input type="radio" name="step" id="step" value="4" ng-model="stepAtual" disabled /> &nbsp;
-                        <input type="radio" name="step" id="step" value="5" ng-model="stepAtual" disabled /> &nbsp;
-                        <input type="radio" name="step" id="step" value="6" ng-model="stepAtual" disabled /> &nbsp;
+                        <input type="radio" name="step" id="step" value="1" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="2" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="3" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="4" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="5" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="6" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="7" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="8" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="9" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="10" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                     </div>
                     <div style="height:300px">
                         <br />
@@ -41,7 +45,11 @@
                                         <button class="btn btn-xs btn-danger" ng-show="fail_email" title="Informe um email corretamente">!</button>
                                     </td>
                                     <td width="380px">
-                                        <input id="email" style="font-size: 12px; border: 1px solid #ccc;" class="form-control" ng-model="onboardingData.email">
+                                        <input id="email"
+                                               maxlength="150"
+                                               style="font-size: 12px; border: 1px solid #ccc;"
+                                               class="form-control"
+                                               ng-model="onboardingData.email">
                                     </td>
                                 </tr>
                             </table>
@@ -56,7 +64,12 @@
                                         <button class="btn btn-xs btn-danger" ng-show="fail_senha" title="Informe uma senha corretamente">!</button>
                                     </td>
                                     <td width="380px">
-                                        <input id="senha" type="password" style="font-size: 12px; border: 1px solid #ccc;" class="form-control" ng-model="onboardingData.senha">
+                                        <input id="senha"
+                                               type="password"
+                                               maxlength="8"
+                                               style="font-size: 12px; border: 1px solid #ccc;"
+                                               class="form-control"
+                                               ng-model="onboardingData.senha">
                                     </td>
                                 </tr>
                             </table>
@@ -69,7 +82,12 @@
                                         <button class="btn btn-xs btn-danger" ng-show="fail_conf_senha" title="Confirmação de senha inválida">!</button>
                                     </td>
                                     <td width="380px">
-                                        <input id="login-senha" type="password" style="font-size: 12px; border: 1px solid #ccc;" class="form-control" ng-model="onboardingData.senhaConf">
+                                        <input id="login-senha"
+                                               type="password"
+                                               maxlength="8"
+                                               style="font-size: 12px; border: 1px solid #ccc;"
+                                               class="form-control"
+                                               ng-model="onboardingData.senhaConf">
                                     </td>
                                 </tr>
                             </table>
@@ -84,12 +102,150 @@
                                         <button class="btn btn-xs btn-danger" ng-show="fail_cnpj" title="Informe um CNPJ corretamente">!</button>
                                     </td>
                                     <td width="380px">
-                                        <input id="cnpj" type="text" class="form-control input-transparent"
-                                               maxlength="18" ui-mask="99.999.999/9999-99" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                        <input id="cnpj"
+                                               type="text"
+                                               class="form-control input-transparent"
+                                               maxlength="18"
+                                               ui-mask="99.999.999/9999-99" ui-mask-placeholder ui-mask-placeholder-char="_"
                                                ng-model="onboardingData.cnpj">
                                     </td>
                                 </tr>
                             </table>
+                        </div>
+                        <div ng-if="stepAtual == '4'">
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Informe sua razão social</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_razSoc" title="Informe corretamente sua razão social">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="razSoc"
+                                               maxlength="200"
+                                               style="font-size: 12px; border: 1px solid #ccc;"
+                                               class="form-control"
+                                               ng-model="onboardingData.razSoc">
+                                    </td>
+                                </tr>
+                            </table>
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Informe seu nome fantasia</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_fantasia" title="Informe corretamente seu nome fantasia">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="fantasia"
+                                               maxlength="200"
+                                               style="font-size: 12px; border: 1px solid #ccc;"
+                                               class="form-control"
+                                               ng-model="onboardingData.fantasia">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="stepAtual == '5'">
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Informe seu CEP comercial</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_cep" title="Informe seu CEP">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="cep"
+                                               type="text"
+                                               class="form-control input-transparent"
+                                               maxlength="9"
+                                               ui-mask="99999-999"
+                                               ui-mask-placeholder ui-mask-placeholder-char="_"
+                                               ng-model="onboardingData.cep">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="stepAtual == '6'">
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Informe seu CEP de instalação</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_cepInst" title="Informe seu CEP">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="cep"
+                                               type="text"
+                                               class="form-control input-transparent"
+                                               maxlength="9"
+                                               ui-mask="99999-999"
+                                               ui-mask-placeholder ui-mask-placeholder-char="_"
+                                               ng-model="onboardingData.cepInst">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="stepAtual == '7'">
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Informe um celular</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_tel_cel" title="Informe corretamente seu celular">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="telCel"
+                                               type="text"
+                                               class="form-control input-transparent"
+                                               maxlength="13"
+                                               ui-mask="(99) 999999999"
+                                               ui-mask-placeholder ui-mask-placeholder-char="_"
+                                               ng-model="onboardingData.telCel">
+                                    </td>
+                                </tr>
+                            </table>
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Informe um telefone fixo</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px"></td>
+                                    <td width="380px">
+                                        <input id="telFixo"
+                                               type="text"
+                                               class="form-control input-transparent"
+                                               maxlength="13"
+                                               ui-mask="(99) 999999999"
+                                               ui-mask-placeholder ui-mask-placeholder-char="_"
+                                               ng-model="onboardingData.telFixo">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="stepAtual == '8'">
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Informe o nome do responsável</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_resp" title="Informe corretamente um responsável">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="resp"
+                                               maxlength="50"
+                                               style="font-size: 12px; border: 1px solid #ccc;"
+                                               class="form-control"
+                                               ng-model="onboardingData.resp">
+                                    </td>
+                                </tr>
+                            </table>                            
                         </div>
                     </div>
                     <div ng-if="stepAtual == 1">
@@ -117,15 +273,19 @@
                 <div align="center" 
                      style="padding-left:20px;width:320px;height:420px;background-color:#e0e0e0;">
                     <br />
-                    <p style="font-size:xx-small">Adesão Comercial - Convey BENEFÍCIOS (Mobile v2)</p>
+                    <p style="font-size:xx-small">Adesão Comercial - Convey BENEFÍCIOS (Mobile v3)</p>
                     <br />
                     <div disabled>
-                        <input type="radio" name="step" id="step" value="1" ng-model="stepAtual" disabled title="Email" style="cursor:default" /> &nbsp;
-                        <input type="radio" name="step" id="step" value="2" ng-model="stepAtual" disabled title="Senha" style="cursor:default" /> &nbsp;
-                        <input type="radio" name="step" id="step" value="3" ng-model="stepAtual" disabled title="CNPJ" style="cursor:default" /> &nbsp;
-                        <input type="radio" name="step" id="step" value="4" ng-model="stepAtual" disabled /> &nbsp;
-                        <input type="radio" name="step" id="step" value="5" ng-model="stepAtual" disabled /> &nbsp;
-                        <input type="radio" name="step" id="step" value="6" ng-model="stepAtual" disabled /> &nbsp;
+                        <input type="radio" name="step" id="step" value="1" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="2" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="3" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="4" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="5" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="6" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="7" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="8" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="9" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="10" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                     </div>
                     <div style="height:260px">
                         <br />
@@ -135,14 +295,17 @@
                                 <table width="300px">
                                     <tr height="48px">
                                         <td width="20px">
-                                            <button class="btn btn-xs btn-danger" 
+                                            <button class="btn btn-xs btn-danger"
                                                     ng-show="fail_email"
-                                                    title="Informe um email corretamente">!</button>
+                                                    title="Informe um email corretamente">
+                                                !
+                                            </button>
                                         </td>
                                         <td width="260px">
-                                            <input id="email" 
+                                            <input id="email"
+                                                   maxlength="150"
                                                    style="font-size:xx-small;border:1px solid #ccc;"
-                                                   class="form-control" 
+                                                   class="form-control"
                                                    ng-model="onboardingData.email">
                                         </td>
                                         <td width="20px"></td>
@@ -164,6 +327,7 @@
                                         </td>
                                         <td width="260px">
                                             <input id="senha"
+                                                   maxlength="8"
                                                    type="password"
                                                    style="font-size:xx-small;border: 1px solid #ccc;"
                                                    class="form-control"
@@ -187,6 +351,7 @@
                                         <td width="260px">
                                             <input id="login-senha"
                                                    type="password"
+                                                   maxlength="8"
                                                    style="font-size: xx-small;border: 1px solid #ccc;"
                                                    class="form-control"
                                                    ng-model="onboardingData.senhaConf">
@@ -209,7 +374,10 @@
                                             </button>
                                         </td>
                                         <td width="260px">
-                                            <input id="cnpj" type="text" class="form-control input-transparent" style="font-size: xx-small;border: 1px solid #ccc;"
+                                            <input id="cnpj"
+                                                   type="text"
+                                                   class="form-control input-transparent"
+                                                   style="font-size: xx-small;border: 1px solid #ccc;"
                                                    maxlength="18" ui-mask="99.999.999/9999-99" ui-mask-placeholder ui-mask-placeholder-char="_"
                                                    ng-model="onboardingData.cnpj">
                                         </td>
@@ -218,22 +386,185 @@
                                 </table>
                             </div>
                         </div>
+                        <div ng-if="stepAtual == '4'">
+                            <div align="left">
+                                <p style="color:grey;padding-left:20px;">Informe sua razão social</p>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_razSoc"
+                                                    title="Informe sua razão social">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td width="260px">
+                                            <input id="razSoc"
+                                                   maxlength="150"
+                                                   style="font-size:xx-small;border: 1px solid #ccc;"
+                                                   class="form-control"
+                                                   ng-model="onboardingData.razSoc">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div align="left">
+                                <p style="color:grey;padding-left:20px;">Informe seu nome fantasia</p>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_fantasia"
+                                                    title="Informe seu nome fantasia">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td width="260px">
+                                            <input id="fantasia"
+                                                   maxlength="150"
+                                                   style="font-size: xx-small;border: 1px solid #ccc;"
+                                                   class="form-control"
+                                                   ng-model="onboardingData.fantasia">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div ng-if="stepAtual == '5'">
+                            <div align="left">
+                                <h4 style="color:grey;padding-left:20px;">Informe seu CEP comercial</h4>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_cep"
+                                                    title="Informe um CEP corretamente">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td width="260px">
+                                            <input id="cep"
+                                                   type="text"
+                                                   class="form-control input-transparent"
+                                                   style="font-size: xx-small;border: 1px solid #ccc;"
+                                                   maxlength="9" ui-mask="99999-999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                                   ng-model="onboardingData.cep">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div ng-if="stepAtual == '6'">
+                            <div align="left">
+                                <h4 style="color:grey;padding-left:20px;">Informe seu CEP de instalação</h4>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_cepInst"
+                                                    title="Informe um CEP corretamente">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td width="260px">
+                                            <input id="cep"
+                                                   type="text"
+                                                   class="form-control input-transparent"
+                                                   style="font-size: xx-small;border: 1px solid #ccc;"
+                                                   maxlength="9" ui-mask="99999-999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                                   ng-model="onboardingData.cepInst">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div ng-if="stepAtual == '7'">
+                            <div align="left">
+                                <h4 style="color:grey;padding-left:20px;">Informe um celular</h4>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_telCel"
+                                                    title="Informe um CNPJ corretamente">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td width="260px">
+                                            <input id="telCel"
+                                                   type="text"
+                                                   class="form-control input-transparent"
+                                                   style="font-size: xx-small;border: 1px solid #ccc;"
+                                                   maxlength="13" ui-mask="(99) 99999999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                                   ng-model="onboardingData.telCel">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div align="left">
+                                <h4 style="color:grey;padding-left:20px;">Informe um telefone fixo</h4>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                        </td>
+                                        <td width="260px">
+                                            <input id="telFixo"
+                                                   type="text"
+                                                   class="form-control input-transparent"
+                                                   style="font-size: xx-small;border: 1px solid #ccc;"
+                                                   maxlength="13" ui-mask="(99) 99999999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                                   ng-model="onboardingData.telFixo">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div ng-if="stepAtual == '8'">
+                            <div align="left">
+                                <p style="color:grey;padding-left:20px;">Informe o responsável</p>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_resp"
+                                                    title="Informe sua razão social">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td width="260px">
+                                            <input id="resp"
+                                                   maxlength="50"
+                                                   style="font-size:xx-small;border: 1px solid #ccc;"
+                                                   class="form-control"
+                                                   ng-model="onboardingData.resp">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div ng-if="stepAtual == 1">
+                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                                Próximo
+                            </button>
+                        </div>
+                        <div ng-if="stepAtual > 1">
+                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-primary" ng-click="anterior()">
+                                Anterior
+                            </button>
+                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                                Próximo
+                            </button>
+                        </div>
+                        <br />
                     </div>
-                    <div ng-if="stepAtual == 1">
-                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
-                            Próximo
-                        </button>
-                    </div>
-                    <div ng-if="stepAtual > 1">
-                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-primary" ng-click="anterior()">
-                            Anterior
-                        </button>
-                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
-                            Próximo
-                        </button>
-                    </div>
-                    <br />
-                </div>
             </div>
         </div>
     </div>

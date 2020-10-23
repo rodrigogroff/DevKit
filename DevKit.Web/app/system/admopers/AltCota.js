@@ -28,12 +28,14 @@ angular.module('app.controllers').controller('DBAAltCotaController',
 
             $scope.selectEmpresa = ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 });
 
-            $scope.buscar = function () {
+            $scope.buscar = function ()
+            {
                 $scope.campos.id = 0;
 
                 $scope.mat_fail = invalidCheck($scope.campos.mat);
+                $scope.emp_fail = $scope.campos.idEmpresa === null || $scope.campos.idEmpresa === undefined;
 
-                if (!$scope.mat_fail) {
+                if (!$scope.mat_fail && !$scope.emp_fail) {
                     $scope.loading = true;
 
                     var opcoes = { matricula: $scope.campos.mat, idEmpresa: $scope.campos.idEmpresa };
@@ -97,11 +99,17 @@ angular.module('app.controllers').controller('DBAAltCotaController',
                 }
             };
 
-            $scope.listar = function () {
+            $scope.listar = function ()
+            {
+                $scope.emp_fail = $scope.campos.idEmpresa == null || $scope.campos.idEmpresa == undefined;
+
+                if ($scope.emp_fail)
+                    return;
+
                 $scope.confirmado = false;
                 $scope.loading = true;
 
-                var opcoes = { skip: 0, take: 9000, cota: true, idOrdem: 1 };
+                var opcoes = { skip: 0, take: 9000, cota: true, idOrdem: 1, idEmpresa: $scope.campos.idEmpresa };
 
                 Api.EmissoraCartao.listPage(opcoes, function (data) {
                     $scope.list = data.results;

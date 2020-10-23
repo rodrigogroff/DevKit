@@ -22,7 +22,9 @@
                             <td>
                                 <b>Empresa</b>
                             </td>
-                            <td></td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-show="emp_fail">!</button>
+                            </td>
                             <td colspan="3">
                                 <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="selectEmpresa" ng-model="campos.idEmpresa" />
                             </td>
@@ -111,9 +113,21 @@
 
             <!--total-->
             <div ng-if="tipoCota == 2">
-
+                <table width="400px">
+                    <tr height="53px">
+                        <td width="120px">
+                            <b>Empresa</b>
+                        </td>
+                        <td width="20px">
+                            <button class="btn btn-xs btn-danger" ng-show="emp_fail">!</button>
+                        </td>
+                        <td width="200px">
+                            <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="selectEmpresa" ng-model="campos.idEmpresa" />
+                        </td>
+                    </tr>
+                </table>
                 <br />
-                <table >
+                <table>
                     <tr>
                         <td>
                             <button class="btn btn-primary" ng-click="listar()">Listar associados</button><br />

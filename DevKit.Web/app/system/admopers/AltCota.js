@@ -155,7 +155,7 @@ angular.module('app.controllers').controller('DBAAltCotaController',
                         array += $scope.list[i].matricula + ',';
 
                 var opcoes = {
-                    id: $scope.campos.id,
+                    id: $scope.campos.idEmpresa,
                     modo: 'altCotaGeral',
                     valor: $scope.campos.novaCota,
                     array: array

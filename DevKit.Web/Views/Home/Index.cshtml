@@ -79,6 +79,7 @@
             var resp = '';
 
             switch (clean.length) {
+                case 0: resp = '0,00' ; break;
                 case 1: resp = '0,0' + clean; break;
                 case 2: resp = '0,' + clean; break;
                 case 3:

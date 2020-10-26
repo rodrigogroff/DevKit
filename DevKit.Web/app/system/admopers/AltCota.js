@@ -24,6 +24,7 @@ angular.module('app.controllers').controller('DBAAltCotaController',
                 mat: '',
                 nomeCartao: '',
                 id: 0,
+                novaCota: '0,00',
             };
 
             $scope.selectEmpresa = ngSelects.obterConfiguracao(Api.Empresa, { tamanhoPagina: 15 });

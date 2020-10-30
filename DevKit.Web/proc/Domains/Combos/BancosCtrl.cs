@@ -5,8 +5,9 @@ using System.Web.Http;
 
 namespace DevKit.Web.Controllers
 {
-	public class BancosController : ApiControllerBase
+	public class BancosController : ApiController
 	{
+		[AllowAnonymous]
 		public IHttpActionResult Get()
 		{
             string busca = Request.GetQueryStringValue("busca", "").ToUpper();
@@ -25,6 +26,7 @@ namespace DevKit.Web.Controllers
             return Ok(ret);
 		}
 
+		[AllowAnonymous]
 		public IHttpActionResult Get(long id)
 		{
             var mdl = new EnumBancos().Get(id);

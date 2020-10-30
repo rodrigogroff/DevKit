@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app.controllers').controller('CadastroController',
-    ['$scope', '$rootScope', '$location', '$state', 'AuthService', 'version', 'Api', '$window',
-        function ($scope, $rootScope, $location, $state, AuthService, version, Api, $window ) {
+    ['$scope', '$rootScope', 'Api', '$window', 'ngSelects',
+        function ($scope, $rootScope, Api, $window, ngSelects ) {
 
             $rootScope.exibirMenu = false;
             $scope.loading = false;
@@ -13,8 +13,8 @@ angular.module('app.controllers').controller('CadastroController',
 
             $scope.onboardingData =
                 {
-                    email: "",
-                    senha: "",
+                    email: '',
+                    senha: '',                    
                 };
 
             var invalidCheck = function (element) {
@@ -28,6 +28,27 @@ angular.module('app.controllers').controller('CadastroController',
                 return false;
             };
 
+            var invalidCheckName = function (element, minLen) {
+
+                if (element == undefined)
+                    return true;
+                else
+                    if (element.trim().length === 0)
+                        return true;
+
+                if (element.length < minLen)
+                    return true;
+
+                var testChars = '@!#$%¨&*()-=+_0123456789<>:;?/'
+
+                for (var i = 0; i < testChars.length; i++) {
+                    if (element.indexOf(testChars[i]) > 0)
+                        return true;
+                }
+
+                return false;
+            };
+
             var invalidEmail = function (element) {
                 if (element == undefined)
                     return true;
@@ -35,10 +56,21 @@ angular.module('app.controllers').controller('CadastroController',
                     if (element.trim().length === 0)
                         return true;
 
+                    var testChars = '!"#$%¨&*()-=+ '
+
+                    for (var i = 0; i < testChars.length; i++)
+                        if (element.indexOf(testChars[i]) > 0)
+                            return true;
+
                     var indexArroba = element.indexOf('@');
 
                     if (indexArroba < 1 || indexArroba >= element.length - 3)
-                        return true;                    
+                        return true;    
+
+                    var ponto = element.indexOf('.', indexArroba);
+
+                    if (ponto < 1) return true;
+                    if (ponto > element.length - 3) return true;
                 }
 
                 return false;
@@ -98,7 +130,8 @@ angular.module('app.controllers').controller('CadastroController',
                 return true;
             }
 
-            $scope.proximo = function () {
+            $scope.confereValores = function ()
+            {
                 $scope.fail_email = false;
                 $scope.fail_senha = false;
                 $scope.fail_conf_senha = false;
@@ -108,44 +141,51 @@ angular.module('app.controllers').controller('CadastroController',
                 $scope.fail_cep = false;
                 $scope.fail_cepInst = false;
                 $scope.fail_tel_cel = false;
-                $scope.fail_resp = false;
+                $scope.fail_resp = false;                
+                $scope.fail_assInst = false;
 
                 switch ($scope.stepAtual) {
 
                     case 1: $scope.fail_email = invalidEmail($scope.onboardingData.email);
-                            if (!$scope.fail_email )
-                                $scope.stepAtual = $scope.stepAtual + 1;
-                            break;
+                        if (!$scope.fail_email)
+                            $scope.stepAtual = $scope.stepAtual + 1;
+                        break;
 
                     case 2: $scope.fail_senha = invalidCheck($scope.onboardingData.senha);
-                            $scope.fail_conf_senha = invalidCheck($scope.onboardingData.senhaConf);
+                        $scope.fail_conf_senha = invalidCheck($scope.onboardingData.senhaConf);
 
-                            if ($scope.onboardingData.senha !== $scope.onboardingData.senhaConf)
-                                $scope.fail_conf_senha = true;
+                        if ($scope.onboardingData.senha !== $scope.onboardingData.senhaConf)
+                            $scope.fail_conf_senha = true;
 
-                            if (!$scope.fail_senha && !$scope.fail_conf_senha)
-                                $scope.stepAtual = $scope.stepAtual + 1;
+                        if (!$scope.fail_senha && !$scope.fail_conf_senha)
+                            $scope.stepAtual = $scope.stepAtual + 1;
                         break;
 
                     case 3: $scope.fail_cnpj = !validarCNPJ($scope.onboardingData.cnpj);
-                            if (!$scope.fail_cnpj)
-                                $scope.stepAtual = $scope.stepAtual + 1;
+                        if (!$scope.fail_cnpj)
+                            $scope.stepAtual = $scope.stepAtual + 1;
                         break;
 
-                    case 4: $scope.fail_razSoc = invalidCheck($scope.onboardingData.razSoc);
-                        $scope.fail_fantasia = invalidCheck($scope.onboardingData.fantasia);
+                    case 4: $scope.fail_razSoc = invalidCheckName($scope.onboardingData.razSoc, 20);
+                        $scope.fail_fantasia = invalidCheckName($scope.onboardingData.fantasia, 20);
                         if (!$scope.fail_razSoc && !$scope.fail_fantasia)
                             $scope.stepAtual = $scope.stepAtual + 1;
                         break;
 
-                    case 5: $scope.fail_cep = invalidCheck($scope.onboardingData.cep);                        
-                        if (!$scope.fail_cep)
-                            $scope.stepAtual = $scope.stepAtual + 1;
+                    case 5: $scope.fail_cep = invalidCheck($scope.onboardingData.cep);
+                        if (!$scope.fail_cep) {
+                            if ($scope.onboardingData.cepStr.length > 0)
+                                $scope.stepAtual = $scope.stepAtual + 1;
+                            $scope.validaCep();                           
+                        }                                
                         break;
 
                     case 6: $scope.fail_cepInst = invalidCheck($scope.onboardingData.cepInst);
-                        if (!$scope.fail_cepInst)
-                            $scope.stepAtual = $scope.stepAtual + 1;
+                        if (!$scope.fail_cepInst) {
+                            if ($scope.onboardingData.cepInstStr.length > 0)
+                                $scope.stepAtual = $scope.stepAtual + 1;
+                            $scope.validaCepInst();                            
+                        }                            
                         break;
 
                     case 7: $scope.fail_tel_cel = invalidCheck($scope.onboardingData.telCel);
@@ -157,8 +197,72 @@ angular.module('app.controllers').controller('CadastroController',
                         if (!$scope.fail_resp)
                             $scope.stepAtual = $scope.stepAtual + 1;
                         break;
-                }
 
+                    case 9: $scope.fail_sitef = $scope.onboardingData.sitef == undefined;
+                        if (!$scope.fail_sitef)
+                            $scope.stepAtual = $scope.stepAtual + 1;
+                        break;
+
+                    case 10: $scope.fail_assInst = $scope.onboardingData.assInst == undefined;
+                        if (!$scope.fail_assInst)
+                            $scope.stepAtual = $scope.stepAtual + 1;
+                        break;
+                }
+            }
+
+            var getJSON = function (url, callback) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', url, true);
+                xhr.responseType = 'json';
+                xhr.onload = function () {
+                    var status = xhr.status;
+                    if (status === 200) {
+                        callback(null, xhr.response);
+                    } else {
+                        callback(status, xhr.response);
+                    }
+                };
+                xhr.send();
+            };
+
+            $scope.validaCep = function () {    
+                setTimeout(function wait() { 
+                    getJSON('https://viacep.com.br/ws/' + $scope.onboardingData.cep + '/json/',
+                        function (err, data) {
+                            if (err !== null) { } else {
+
+                                if (data.logradouro == undefined)
+                                    $scope.onboardingData.cepStr = '';
+                                else
+                                    $scope.onboardingData.cepStr = data.logradouro + ", " + data.localidade + ", " + data.uf
+
+                                $scope.$apply() 
+                            }
+                        });
+
+                }, 200)
+            }
+
+            $scope.validaCepInst = function () {
+                setTimeout(function wait() {
+                    getJSON('https://viacep.com.br/ws/' + $scope.onboardingData.cepInst + '/json/',
+                        function (err, data) {
+                            if (err !== null) { } else {
+
+                                if (data.logradouro == undefined)
+                                    $scope.onboardingData.cepInstStr = '';
+                                else
+                                    $scope.onboardingData.cepInstStr = data.logradouro + ", " + data.localidade + ", " + data.uf
+
+                                $scope.$apply()
+                            }
+                        });
+
+                }, 200)
+            }
+
+            $scope.proximo = function () {
+                $scope.confereValores();
                 $scope.setaFocus();
             }
 
@@ -188,6 +292,9 @@ angular.module('app.controllers').controller('CadastroController',
             init();
 
             function init() {
+
+                $scope.selectBanco = ngSelects.obterConfiguracao(Api.BancosCombo, { tamanhoPagina: 15 });
+
                 setTimeout(function wait() {
                     $scope.MyWidth = $window.innerWidth - 15;
                     $scope.stepAtual = 1;

@@ -31,6 +31,7 @@
                         <input type="radio" name="step" id="step" value="8" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="9" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="10" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="11" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;                        
                     </div>
                     <div style="height:300px">
                         <br />
@@ -48,7 +49,7 @@
                                         <input id="email"
                                                maxlength="150"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"
+                                               class="form-control"                                               
                                                ng-model="onboardingData.email">
                                     </td>
                                 </tr>
@@ -68,13 +69,13 @@
                                                type="password"
                                                maxlength="8"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"
+                                               class="form-control"                                               
                                                ng-model="onboardingData.senha">
                                     </td>
                                 </tr>
                             </table>
                             <div align="left" style="padding-left:140px">
-                                <h4 style="color:grey">Confirme sua senha</h4>
+                                <h4 style="color:grey"><br />Confirme sua senha</h4>
                             </div>
                             <table width="400px">
                                 <tr height="48px">
@@ -86,7 +87,7 @@
                                                type="password"
                                                maxlength="8"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"
+                                               class="form-control"                                               
                                                ng-model="onboardingData.senhaConf">
                                     </td>
                                 </tr>
@@ -105,7 +106,7 @@
                                         <input id="cnpj"
                                                type="text"
                                                class="form-control input-transparent"
-                                               maxlength="18"
+                                               maxlength="18"                                               
                                                ui-mask="99.999.999/9999-99" ui-mask-placeholder ui-mask-placeholder-char="_"
                                                ng-model="onboardingData.cnpj">
                                     </td>
@@ -125,13 +126,13 @@
                                         <input id="razSoc"
                                                maxlength="200"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"
+                                               class="form-control"                                               
                                                ng-model="onboardingData.razSoc">
                                     </td>
                                 </tr>
                             </table>
                             <div align="left" style="padding-left:140px">
-                                <h4 style="color:grey">Informe seu nome fantasia</h4>
+                                <h4 style="color:grey"><br />Informe seu nome fantasia</h4>
                             </div>
                             <table width="400px">
                                 <tr height="48px">
@@ -142,7 +143,7 @@
                                         <input id="fantasia"
                                                maxlength="200"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"
+                                               class="form-control"                                               
                                                ng-model="onboardingData.fantasia">
                                     </td>
                                 </tr>
@@ -157,7 +158,7 @@
                                     <td width="20px">
                                         <button class="btn btn-xs btn-danger" ng-show="fail_cep" title="Informe seu CEP">!</button>
                                     </td>
-                                    <td width="380px">
+                                    <td width="150px">
                                         <input id="cep"
                                                type="text"
                                                class="form-control input-transparent"
@@ -166,8 +167,19 @@
                                                ui-mask-placeholder ui-mask-placeholder-char="_"
                                                ng-model="onboardingData.cep">
                                     </td>
+                                    <td width="20px"></td>
+                                    <td width="90px">
+                                        <button id="btnCep" style="width:120px; font-size:11px" class="btn btn-info" ng-click="validaCep()">
+                                            Localizar
+                                        </button>
+                                    </td>
                                 </tr>
                             </table>
+                            <br />
+                            <br />
+                            {{onboardingData.cepStr}}
+                            <br />
+                            <br />
                         </div>
                         <div ng-if="stepAtual == '6'">
                             <div align="left" style="padding-left:140px">
@@ -178,8 +190,8 @@
                                     <td width="20px">
                                         <button class="btn btn-xs btn-danger" ng-show="fail_cepInst" title="Informe seu CEP">!</button>
                                     </td>
-                                    <td width="380px">
-                                        <input id="cep"
+                                    <td width="150px">
+                                        <input id="cepInst"
                                                type="text"
                                                class="form-control input-transparent"
                                                maxlength="9"
@@ -187,8 +199,19 @@
                                                ui-mask-placeholder ui-mask-placeholder-char="_"
                                                ng-model="onboardingData.cepInst">
                                     </td>
+                                    <td width="20px"></td>
+                                    <td width="90px">
+                                        <button id="btnCep" style="width:120px; font-size:11px" class="btn btn-info" ng-click="validaCepInst()">
+                                            Localizar
+                                        </button>
+                                    </td>
                                 </tr>
                             </table>
+                            <br />
+                            <br />
+                            {{onboardingData.cepInstStr}}
+                            <br />
+                            <br />
                         </div>
                         <div ng-if="stepAtual == '7'">
                             <div align="left" style="padding-left:140px">
@@ -203,15 +226,14 @@
                                         <input id="telCel"
                                                type="text"
                                                class="form-control input-transparent"
-                                               maxlength="13"
-                                               ui-mask="(99) 999999999"
-                                               ui-mask-placeholder ui-mask-placeholder-char="_"
+                                               maxlength="13"                                               
+                                               onKeyUp="money(this,ValorNum);"                                               
                                                ng-model="onboardingData.telCel">
                                     </td>
                                 </tr>
                             </table>
                             <div align="left" style="padding-left:140px">
-                                <h4 style="color:grey">Informe um telefone fixo</h4>
+                                <h4 style="color:grey"><br />Informe um telefone fixo</h4>
                             </div>
                             <table width="400px">
                                 <tr height="48px">
@@ -221,8 +243,7 @@
                                                type="text"
                                                class="form-control input-transparent"
                                                maxlength="13"
-                                               ui-mask="(99) 999999999"
-                                               ui-mask-placeholder ui-mask-placeholder-char="_"
+                                               onKeyUp="money(this,ValorNum);"                                               
                                                ng-model="onboardingData.telFixo">
                                     </td>
                                 </tr>
@@ -245,7 +266,89 @@
                                                ng-model="onboardingData.resp">
                                     </td>
                                 </tr>
-                            </table>                            
+                            </table>
+                        </div>
+                        <div ng-if="stepAtual == '9'">
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Possui SITEF?</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_sitef" title="Informe corretamente sitef">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input type="radio" name="stepSitef" id="stepSitef" value="true" ng-model="onboardingData.sitef" style="cursor:default" /> Sim &nbsp;
+                                        <input type="radio" name="stepSitef" id="stepSitef" value="false" ng-model="onboardingData.sitef" style="cursor:default" /> Não&nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="stepAtual == '10'">
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Assinado com instituição?</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_assInst" title="Informe corretamente instituição">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input type="radio" name="stepassInst" id="stepassInst" value="true" ng-model="onboardingData.assInst" style="cursor:default" /> Sim &nbsp;
+                                        <input type="radio" name="stepassInst" id="stepassInst" value="false" ng-model="onboardingData.assInst" style="cursor:default" /> Não &nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="stepAtual == '11'">
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Dados bancários - Banco</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                    </td>
+                                    <td width="380px">
+                                        <input type="hidden"
+                                               style="width:100%;"
+                                               data-placeholder="(Selecione)"
+                                               ui-select2="selectBanco"
+                                               ng-model="onboardingData.fk_banco" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey"><br />Dados bancários - Agência</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                    </td>
+                                    <td width="380px">
+                                        <input id="resp"
+                                               maxlength="9"
+                                               style="font-size:xx-small;border: 1px solid #ccc;"
+                                               class="form-control"
+                                               onKeyUp="money(this,ValorNum);"
+                                               ng-model="onboardingData.ag">
+                                </tr>
+                            </table>
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey"><br />Dados bancários - Conta</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                    </td>
+                                    <td width="380px">
+                                        <input id="resp"
+                                               maxlength="12"
+                                               style="font-size:xx-small;border: 1px solid #ccc;"
+                                               class="form-control"
+                                               onKeyUp="money(this,ValorNum);"
+                                               ng-model="onboardingData.conta">
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <div ng-if="stepAtual == 1">
@@ -268,13 +371,12 @@
     </div>
     <div ng-if="MyWidth < 600">
         <div align="center" style="width:100%;">
-            <div style="padding-top:20px;">                
-                <img src='../../images/logo.png' height="80px" /><br />                
-                <div align="center" 
-                     style="padding-left:20px;width:320px;height:420px;background-color:#e0e0e0;">
+            <div style="padding-top:20px;">
+                <img src='../../images/logo.png' height="80px" /><br />
+                <div align="center"
+                     style="padding-left:10px;width:320px;height:450px;background-color:#e0e0e0;">
                     <br />
-                    <p style="font-size:xx-small">Adesão Comercial - Convey BENEFÍCIOS (Mobile v3)</p>
-                    <br />
+                    <p style="font-size:xx-small">Adesão Comercial - Convey BENEFÍCIOS<br /><br /></p>
                     <div disabled>
                         <input type="radio" name="step" id="step" value="1" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="2" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
@@ -286,14 +388,15 @@
                         <input type="radio" name="step" id="step" value="8" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="9" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="10" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
+                        <input type="radio" name="step" id="step" value="11" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                     </div>
-                    <div style="height:260px">
+                    <div style="min-height:280px">
                         <br />
                         <div ng-if="stepAtual == '1'">
                             <div align="left">
                                 <p style="color:grey;padding-left:20px;">Email para contato</p>
                                 <table width="300px">
-                                    <tr height="48px">
+                                    <tr height="36px">
                                         <td width="20px">
                                             <button class="btn btn-xs btn-danger"
                                                     ng-show="fail_email"
@@ -338,7 +441,7 @@
                                 </table>
                             </div>
                             <div align="left">
-                                <p style="color:grey;padding-left:20px;">Confirme sua senha</p>
+                                <p style="color:grey;padding-left:20px;"><br />Confirme sua senha</p>
                                 <table width="300px">
                                     <tr height="48px">
                                         <td width="20px">
@@ -363,7 +466,7 @@
                         </div>
                         <div ng-if="stepAtual == '3'">
                             <div align="left">
-                                <h4 style="color:grey;padding-left:20px;">Informe seu CNPJ</h4>
+                                <p style="color:grey;padding-left:20px;">Informe seu CNPJ</p>
                                 <table width="300px">
                                     <tr height="48px">
                                         <td width="20px">
@@ -410,7 +513,7 @@
                                 </table>
                             </div>
                             <div align="left">
-                                <p style="color:grey;padding-left:20px;">Informe seu nome fantasia</p>
+                                <p style="color:grey;padding-left:20px;"><br />Informe seu nome fantasia</p>
                                 <table width="300px">
                                     <tr height="48px">
                                         <td width="20px">
@@ -444,7 +547,7 @@
                                                 !
                                             </button>
                                         </td>
-                                        <td width="260px">
+                                        <td width="150px">
                                             <input id="cep"
                                                    type="text"
                                                    class="form-control input-transparent"
@@ -453,8 +556,16 @@
                                                    ng-model="onboardingData.cep">
                                         </td>
                                         <td width="20px"></td>
+                                        <td width="70px">
+                                            <button id="btnCep" class="btn btn-info" ng-click="validaCep()">
+                                                Localizar
+                                            </button>
+                                        </td>
                                     </tr>
                                 </table>
+                                <p style="color:grey;padding-left:20px;">{{onboardingData.cepStr}}</p>
+                                <br />
+                                <br />
                             </div>
                         </div>
                         <div ng-if="stepAtual == '6'">
@@ -469,8 +580,8 @@
                                                 !
                                             </button>
                                         </td>
-                                        <td width="260px">
-                                            <input id="cep"
+                                        <td width="150px">
+                                            <input id="cepInst"
                                                    type="text"
                                                    class="form-control input-transparent"
                                                    style="font-size: xx-small;border: 1px solid #ccc;"
@@ -478,8 +589,16 @@
                                                    ng-model="onboardingData.cepInst">
                                         </td>
                                         <td width="20px"></td>
+                                        <td width="90px">
+                                            <button id="btnCep" class="btn btn-info" ng-click="validaCepInst()">
+                                                Localizar
+                                            </button>
+                                        </td>
                                     </tr>
-                                </table>
+                                </table>                                
+                                <p style="color:grey;padding-left:20px;">{{onboardingData.cepInstStr}}</p>
+                                <br />
+                                <br />
                             </div>
                         </div>
                         <div ng-if="stepAtual == '7'">
@@ -499,7 +618,7 @@
                                                    type="text"
                                                    class="form-control input-transparent"
                                                    style="font-size: xx-small;border: 1px solid #ccc;"
-                                                   maxlength="13" ui-mask="(99) 99999999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                                   onKeyUp="money(this,ValorNum);"
                                                    ng-model="onboardingData.telCel">
                                         </td>
                                         <td width="20px"></td>
@@ -507,7 +626,7 @@
                                 </table>
                             </div>
                             <div align="left">
-                                <h4 style="color:grey;padding-left:20px;">Informe um telefone fixo</h4>
+                                <h4 style="color:grey;padding-left:20px;"><br />Informe um telefone fixo</h4>
                                 <table width="300px">
                                     <tr height="48px">
                                         <td width="20px">
@@ -517,7 +636,7 @@
                                                    type="text"
                                                    class="form-control input-transparent"
                                                    style="font-size: xx-small;border: 1px solid #ccc;"
-                                                   maxlength="13" ui-mask="(99) 99999999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                                   onKeyUp="money(this,ValorNum);"
                                                    ng-model="onboardingData.telFixo">
                                         </td>
                                         <td width="20px"></td>
@@ -541,7 +660,7 @@
                                             <input id="resp"
                                                    maxlength="50"
                                                    style="font-size:xx-small;border: 1px solid #ccc;"
-                                                   class="form-control"
+                                                   class="form-control"                                                   
                                                    ng-model="onboardingData.resp">
                                         </td>
                                         <td width="20px"></td>
@@ -549,22 +668,119 @@
                                 </table>
                             </div>
                         </div>
-                        
-                        <div ng-if="stepAtual == 1">
-                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
-                                Próximo
-                            </button>
+                        <div ng-if="stepAtual == '9'">
+                            <div align="left">
+                                <p style="color:grey;padding-left:20px;">Possui SITEF?</p>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_sitef"
+                                                    title="Informe situação do sitef">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td width="260px">
+                                            <input type="radio" name="stepSitef" id="stepSitef" value="true" ng-model="onboardingData.sitef" style="cursor:default" /> Sim&nbsp;
+                                            <input type="radio" name="stepSitef" id="stepSitef" value="false" ng-model="onboardingData.sitef" style="cursor:default" /> Não&nbsp;
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <div ng-if="stepAtual > 1">
-                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-primary" ng-click="anterior()">
-                                Anterior
-                            </button>
-                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
-                                Próximo
-                            </button>
+                        <div ng-if="stepAtual == '10'">
+                            <div align="left">
+                                <p style="color:grey;padding-left:20px;">Assinado instituição?</p>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_assInst"
+                                                    title="Informe situação do sitef">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td width="260px">
+                                            <input type="radio" name="stepassInst" id="stepassInst" value="true" ng-model="onboardingData.assInst" style="cursor:default" /> Sim&nbsp;
+                                            <input type="radio" name="stepassInst" id="stepassInst" value="false" ng-model="onboardingData.assInst" style="cursor:default" /> Não&nbsp;
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <br />
+                        <div ng-if="stepAtual == '11'">
+                            <div align="left">
+                                <p style="color:grey;padding-left:20px;">Dados bancários - Banco</p>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                        </td>
+                                        <td width="260px">
+                                            <input type="hidden"
+                                                   style="width:100%;"
+                                                   data-placeholder="(Selecione)"
+                                                   ui-select2="selectBanco"
+                                                   ng-model="onboardingData.fk_banco" />
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div align="left">
+                                <p style="color:grey;padding-left:20px;"><br />Dados bancários - Agência</p>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                        </td>
+                                        <td width="260px">
+                                            <input id="resp"
+                                                   maxlength="9"
+                                                   style="font-size:xx-small;border: 1px solid #ccc;"
+                                                   class="form-control"
+                                                   onKeyUp="money(this,ValorNum);"
+                                                   ng-model="onboardingData.ag">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div align="left">
+                                <p style="color:grey;padding-left:20px;"><br />Dados bancários - Conta</p>
+                                <table width="300px">
+                                    <tr height="48px">
+                                        <td width="20px">
+                                        </td>
+                                        <td width="260px">
+                                            <input id="resp"
+                                                   maxlength="9"
+                                                   style="font-size:xx-small;border: 1px solid #ccc;"
+                                                   class="form-control"
+                                                   onKeyUp="money(this,ValorNum);"
+                                                   ng-model="onboardingData.conta">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+                    <div ng-if="stepAtual == 1">
+                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                            Próximo
+                        </button>
+                    </div>
+                    <div ng-if="stepAtual > 1">
+                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-primary" ng-click="anterior()">
+                            Anterior
+                        </button>
+                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                            Próximo
+                        </button>
+                    </div>
+                    <br />
+                </div>
             </div>
         </div>
     </div>

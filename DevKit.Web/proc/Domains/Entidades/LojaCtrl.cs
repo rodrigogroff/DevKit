@@ -581,11 +581,30 @@ namespace DevKit.Web.Controllers
 
             mdlUpdate.tg_blocked = mdl.tg_blocked;
 
-            mdlUpdate.nu_pctValor = Convert.ToInt32(mon.prepareNumber(mdl.snuPctValor));
-            mdlUpdate.vr_mensalidade = Convert.ToInt32(mon.prepareNumber(mdl.svrMensalidade));
-            mdlUpdate.vr_minimo = Convert.ToInt32(mon.prepareNumber(mdl.svrMinimo));
-            mdlUpdate.vr_transacao = Convert.ToInt32(mon.prepareNumber(mdl.svrTransacao));
-            mdlUpdate.nu_franquia = Convert.ToInt32(mon.prepareNumber(mdl.snuFranquia));
+            if (mdl.snuPctValor != null)
+                mdlUpdate.nu_pctValor = Convert.ToInt32(mon.prepareNumber(mdl.snuPctValor));
+            else
+                mdlUpdate.nu_pctValor = 0;
+
+            if (mdl.svrMensalidade != null)
+                mdlUpdate.vr_mensalidade = Convert.ToInt32(mon.prepareNumber(mdl.svrMensalidade));
+            else
+                mdlUpdate.vr_mensalidade = 0;
+
+            if (mdl.svrMinimo != null)
+                mdlUpdate.vr_minimo = Convert.ToInt32(mon.prepareNumber(mdl.svrMinimo));
+            else
+                mdlUpdate.vr_minimo = 0;
+
+            if (mdl.svrTransacao != null)
+                mdlUpdate.vr_transacao = Convert.ToInt32(mon.prepareNumber(mdl.svrTransacao));
+            else
+                mdlUpdate.vr_transacao = 0;
+
+            if (mdl.snuFranquia != null)
+                mdlUpdate.nu_franquia = Convert.ToInt32(mon.prepareNumber(mdl.snuFranquia));
+            else
+                mdlUpdate.nu_franquia = 0;
 
             mdlUpdate.fk_banco = mdl.fk_banco;
             mdlUpdate.st_agencia = mdl.st_agencia;            

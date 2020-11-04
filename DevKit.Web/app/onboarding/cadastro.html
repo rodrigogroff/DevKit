@@ -16,7 +16,7 @@
                 <br />
                 <img src='../../images/logo.png' height="140px" /><br />
                 <br />
-                <div align="center" style="width:640px;height:500px;background-color:#e0e0e0;">
+                <div align="center" style="width:640px;height:520px;background-color:#e0e0e0;">
                     <br />
                     <h3>Adesão Comercial - Convey BENEFÍCIOS</h3>
                     <br />
@@ -34,8 +34,7 @@
                         <input type="radio" name="step" id="step" value="11" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;                        
                     </div>
                     <div style="height:300px">
-                        <br />
-                        <br />
+                        <br />                        
                         <div ng-if="stepAtual == '1'">
                             <div align="left" style="padding-left:140px">
                                 <h4 style="color:grey">Email para contato</h4>
@@ -151,14 +150,14 @@
                         </div>
                         <div ng-if="stepAtual == '5'">
                             <div align="left" style="padding-left:140px">
-                                <h4 style="color:grey">Informe seu CEP comercial</h4>
+                                <h4 style="color:grey">Informe seu CEP cobrança</h4>
                             </div>
                             <table width="400px">
-                                <tr height="48px">
+                                <tr height="32px">
                                     <td width="20px">
-                                        <button class="btn btn-xs btn-danger" ng-show="fail_cep" title="Informe seu CEP">!</button>
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_cep" title="Informe seu CEP para cobrança">!</button>
                                     </td>
-                                    <td width="150px">
+                                    <td width="150px" valign="top">
                                         <input id="cep"
                                                type="text"
                                                class="form-control input-transparent"
@@ -168,29 +167,47 @@
                                                ng-model="onboardingData.cep">
                                     </td>
                                     <td width="20px"></td>
-                                    <td width="90px">
+                                    <td width="90px" valign="top">
                                         <button id="btnCep" style="width:120px; font-size:11px" class="btn btn-info" ng-click="validaCep()">
                                             Localizar
                                         </button>
                                     </td>
                                 </tr>
+                            </table>                            
+                            <div align="left" style="padding-left:140px">
+                                <br />
+                                <p style="color:blue">{{onboardingData.cepStr}}</p>
+                                <br />
+                                <h4 style="color:grey"><br />Informe seu numero e complemento</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="32px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_numero" title="Informe corretamente seu numero">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="fantasia"
+                                               maxlength="200"
+                                               style="font-size: 12px; border: 1px solid #ccc;"
+                                               class="form-control"
+                                               ng-model="onboardingData.numero">
+                                    </td>
+                                </tr>
                             </table>
-                            <br />
-                            <br />
-                            {{onboardingData.cepStr}}
                             <br />
                             <br />
                         </div>
                         <div ng-if="stepAtual == '6'">
                             <div align="left" style="padding-left:140px">
+                                <input type="checkbox" ng-click="mesmoCep()" ng-model="onboardingData.mesmoCep" /> Mesmo CEP cobrança
                                 <h4 style="color:grey">Informe seu CEP de instalação</h4>
                             </div>
                             <table width="400px">
-                                <tr height="48px">
+                                <tr height="32px">
                                     <td width="20px">
-                                        <button class="btn btn-xs btn-danger" ng-show="fail_cepInst" title="Informe seu CEP">!</button>
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_cepInst" title="Informe seu CEP de instalação">!</button>
                                     </td>
-                                    <td width="150px">
+                                    <td width="150px" valign="top">
                                         <input id="cepInst"
                                                type="text"
                                                class="form-control input-transparent"
@@ -201,19 +218,33 @@
 
                                     </td>
                                     <td width="20px"></td>
-                                    <td width="90px">
+                                    <td width="90px" valign="top">
                                         <button id="btnCep" style="width:120px; font-size:11px" class="btn btn-info" ng-click="validaCepInst()">
                                             Localizar
                                         </button>
                                     </td>
                                 </tr>
                             </table>
-                            <br />
-                            <input type="checkbox" ng-click="mesmoCep()" /> Mesmo CEP comercial
-                            <br />
-                            {{onboardingData.cepInstStr}}
-                            <br />
-                            <br />
+                            <div align="left" style="padding-left:140px">
+                                <br />
+                                <p style="color:blue">{{onboardingData.cepInstStr}}</p>
+                                <br />
+                                <h4 style="color:grey"><br />Informe seu numero e complemento</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="32px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_numeroInst" title="Informe corretamente seu numero">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="fantasia"
+                                               maxlength="200"
+                                               style="font-size: 12px; border: 1px solid #ccc;"
+                                               class="form-control"
+                                               ng-model="onboardingData.numeroInst">
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div ng-if="stepAtual == '7'">
                             <div align="left" style="padding-left:140px">
@@ -514,9 +545,7 @@
                                         </td>
                                         <td width="20px"></td>
                                     </tr>
-                                </table>
-                            </div>
-                            <div align="left">
+                                </table>                            
                                 <p style="color:grey;padding-left:20px;"><br />Informe seu nome fantasia</p>
                                 <table width="300px">
                                     <tr height="48px">
@@ -541,9 +570,9 @@
                         </div>
                         <div ng-if="stepAtual == '5'">
                             <div align="left">
-                                <h4 style="color:grey;padding-left:20px;">Informe seu CEP comercial</h4>
+                                <p style="color:grey;padding-left:20px;">Informe seu CEP cobrança</p>
                                 <table width="300px">
-                                    <tr height="48px">
+                                    <tr height="32px">
                                         <td width="20px">
                                             <button class="btn btn-xs btn-danger"
                                                     ng-show="fail_cep"
@@ -560,23 +589,45 @@
                                                    ng-model="onboardingData.cep">
                                         </td>
                                         <td width="20px"></td>
-                                        <td width="70px">
+                                        <td>
                                             <button id="btnCep" class="btn btn-info" ng-click="validaCep()">
                                                 Localizar
                                             </button>
                                         </td>
+                                        <td width="20px"></td>
                                     </tr>
                                 </table>
-                                <p style="color:grey;padding-left:20px;">{{onboardingData.cepStr}}</p>
                                 <br />
-                                <br />
+                                <p style="color:blue;padding-left:20px;">{{onboardingData.cepStr}}</p>
+                                <p style="color:grey;padding-left:20px;">Informe número e complemento</p>
+                                <table width="300px">
+                                    <tr height="32px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_numero"
+                                                    title="Informe um CEP corretamente">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td width="260px">
+                                            <input maxlength="20"
+                                                   style="font-size: xx-small;border: 1px solid #ccc;"
+                                                   class="form-control"
+                                                   ng-model="onboardingData.numero">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                         <div ng-if="stepAtual == '6'">
                             <div align="left">
-                                <h4 style="color:grey;padding-left:20px;">Informe seu CEP de instalação</h4>
+                                <div style="padding-left:20px">
+                                    <input type="checkbox" ng-click="mesmoCep()" /> Mesmo CEP cobrança
+                                </div>                                
+                                <p style="color:grey;padding-left:20px;">Informe seu CEP de instalação</p>
                                 <table width="300px">
-                                    <tr height="48px">
+                                    <tr height="32px">
                                         <td width="20px">
                                             <button class="btn btn-xs btn-danger"
                                                     ng-show="fail_cepInst"
@@ -593,26 +644,40 @@
                                                    ng-model="onboardingData.cepInst">
                                         </td>
                                         <td width="20px"></td>
-                                        <td width="90px">
+                                        <td>
                                             <button id="btnCep" class="btn btn-info" ng-click="validaCepInst()">
                                                 Localizar
                                             </button>
                                         </td>
+                                        <td width="20px"></td>
                                     </tr>
                                 </table>
-                                <div style="color:grey;padding-left:20px;font-size:small">
-                                    <br />
-                                    <input type="checkbox" ng-click="mesmoCep()" /> Mesmo CEP comercial
-                                </div>
                                 <br />
-                                <br />
-                                <p style="color:grey;padding-left:20px;">{{onboardingData.cepInstStr}}</p>
-                                
+                                <p style="color:blue;padding-left:20px;">{{onboardingData.cepInstStr}}</p>
+                                <p style="color:grey;padding-left:20px;">Informe numero / complemento</p>
+                                <table width="300px">
+                                    <tr height="32px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-show="fail_numeroInst"
+                                                    title="Informe um CEP corretamente">
+                                                !
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <input maxlength="20"
+                                                   style="font-size: xx-small;border: 1px solid #ccc;"
+                                                   class="form-control"
+                                                   ng-model="onboardingData.numeroInst">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                         <div ng-if="stepAtual == '7'">
                             <div align="left">
-                                <h4 style="color:grey;padding-left:20px;">Informe um celular</h4>
+                                <p style="color:grey;padding-left:20px;">Informe um celular</p>
                                 <table width="300px">
                                     <tr height="48px">
                                         <td width="20px">
@@ -635,7 +700,7 @@
                                 </table>
                             </div>
                             <div align="left">
-                                <h4 style="color:grey;padding-left:20px;"><br />Informe um telefone fixo</h4>
+                                <p style="color:grey;padding-left:20px;"><br />Informe um telefone fixo</p>
                                 <table width="300px">
                                     <tr height="48px">
                                         <td width="20px">

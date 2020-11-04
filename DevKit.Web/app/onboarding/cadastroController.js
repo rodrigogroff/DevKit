@@ -166,28 +166,29 @@ angular.module('app.controllers').controller('CadastroController',
                             $scope.stepAtual = $scope.stepAtual + 1;
                         break;
 
-                    case 4: $scope.fail_razSoc = invalidCheckName($scope.onboardingData.razSoc, 20);
-                        $scope.fail_fantasia = invalidCheckName($scope.onboardingData.fantasia, 20);
+                    case 4: $scope.fail_razSoc = invalidCheckName($scope.onboardingData.razSoc, 15);
+                        $scope.fail_fantasia = invalidCheckName($scope.onboardingData.fantasia, 15);
                         if (!$scope.fail_razSoc && !$scope.fail_fantasia)
                             $scope.stepAtual = $scope.stepAtual + 1;
                         break;
 
                     case 5: $scope.fail_cep = invalidCheck($scope.onboardingData.cep);
-                        $scope.validaCep();
-                        
-                        if (!$scope.fail_cep && $scope.onboardingData.cepStr != undefined) {
+                            $scope.fail_numero = invalidCheck($scope.onboardingData.numero);
+
+                        $scope.validaCep();                        
+                        if (!$scope.fail_cep && !$scope.fail_numero && $scope.onboardingData.cepStr != undefined) {
                             if ($scope.onboardingData.cepStr.length > 0)
-                                $scope.stepAtual = $scope.stepAtual + 1;
-                            $scope.validaCep();                           
+                                $scope.stepAtual = $scope.stepAtual + 1;                                                     
                         }                                
                         break;
 
                     case 6: $scope.fail_cepInst = invalidCheck($scope.onboardingData.cepInst);
+                            $scope.fail_numeroInst = invalidCheck($scope.onboardingData.numeroInst);
+
                         $scope.validaCepInst();
-                        if (!$scope.fail_cepInst && $scope.onboardingData.cepInstStr != undefined) {
+                        if (!$scope.fail_cepInst && !$scope.fail_numeroInst && $scope.onboardingData.cepInstStr != undefined) {
                             if ($scope.onboardingData.cepInstStr.length > 0)
                                 $scope.stepAtual = $scope.stepAtual + 1;
-                            $scope.validaCepInst();                            
                         }                            
                         break;
 
@@ -229,7 +230,8 @@ angular.module('app.controllers').controller('CadastroController',
             };
 
             $scope.mesmoCep = function () {                
-                $scope.onboardingData.cepInst = $scope.onboardingData.cep;                
+                $scope.onboardingData.cepInst = $scope.onboardingData.cep;
+                $scope.onboardingData.numeroInst = $scope.onboardingData.numero;
                 $scope.validaCepInst();
             }
 

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>Adesão Comercial</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -104,7 +104,7 @@
                                     </td>
                                     <td width="380px">
                                         <input id="cnpj"
-                                               type="text"
+                                               type="tel" pattern="[0-9]*" inputmode="numeric"
                                                class="form-control input-transparent"
                                                maxlength="18"                                               
                                                ui-mask="99.999.999/9999-99" ui-mask-placeholder ui-mask-placeholder-char="_"
@@ -197,7 +197,8 @@
                                                maxlength="9"
                                                ui-mask="99999-999"
                                                ui-mask-placeholder ui-mask-placeholder-char="_"
-                                               ng-model="onboardingData.cepInst">
+                                               ng-model="onboardingData.cepInst"> <br />
+
                                     </td>
                                     <td width="20px"></td>
                                     <td width="90px">
@@ -208,6 +209,7 @@
                                 </tr>
                             </table>
                             <br />
+                            <input type="checkbox" ng-click="mesmoCep()" /> Mesmo CEP comercial
                             <br />
                             {{onboardingData.cepInstStr}}
                             <br />
@@ -224,7 +226,7 @@
                                     </td>
                                     <td width="380px">
                                         <input id="telCel"
-                                               type="text"
+                                               type="tel" pattern="[0-9]*" inputmode="numeric"
                                                class="form-control input-transparent"
                                                maxlength="13"                                               
                                                onKeyUp="money(this,ValorNum);"                                               
@@ -240,7 +242,7 @@
                                     <td width="20px"></td>
                                     <td width="380px">
                                         <input id="telFixo"
-                                               type="text"
+                                               type="tel" pattern="[0-9]*" inputmode="numeric"
                                                class="form-control input-transparent"
                                                maxlength="13"
                                                onKeyUp="money(this,ValorNum);"                                               
@@ -305,7 +307,7 @@
                                 <h4 style="color:grey">Dados bancários - Banco</h4>
                             </div>
                             <table width="400px">
-                                <tr height="48px">
+                                <tr height="32px">
                                     <td width="20px">
                                     </td>
                                     <td width="380px">
@@ -321,11 +323,12 @@
                                 <h4 style="color:grey"><br />Dados bancários - Agência</h4>
                             </div>
                             <table width="400px">
-                                <tr height="48px">
+                                <tr height="32px">
                                     <td width="20px">
                                     </td>
                                     <td width="380px">
                                         <input id="resp"
+                                               type="tel" pattern="[0-9]*" inputmode="numeric"
                                                maxlength="9"
                                                style="font-size:xx-small;border: 1px solid #ccc;"
                                                class="form-control"
@@ -337,12 +340,13 @@
                                 <h4 style="color:grey"><br />Dados bancários - Conta</h4>
                             </div>
                             <table width="400px">
-                                <tr height="48px">
+                                <tr height="32px">
                                     <td width="20px">
                                     </td>
                                     <td width="380px">
                                         <input id="resp"
                                                maxlength="12"
+                                               type="tel" pattern="[0-9]*" inputmode="numeric"
                                                style="font-size:xx-small;border: 1px solid #ccc;"
                                                class="form-control"
                                                onKeyUp="money(this,ValorNum);"
@@ -478,7 +482,7 @@
                                         </td>
                                         <td width="260px">
                                             <input id="cnpj"
-                                                   type="text"
+                                                   type="tel" pattern="[0-9]*" inputmode="numeric"
                                                    class="form-control input-transparent"
                                                    style="font-size: xx-small;border: 1px solid #ccc;"
                                                    maxlength="18" ui-mask="99.999.999/9999-99" ui-mask-placeholder ui-mask-placeholder-char="_"
@@ -549,7 +553,7 @@
                                         </td>
                                         <td width="150px">
                                             <input id="cep"
-                                                   type="text"
+                                                   type="tel" pattern="[0-9]*" inputmode="numeric"
                                                    class="form-control input-transparent"
                                                    style="font-size: xx-small;border: 1px solid #ccc;"
                                                    maxlength="9" ui-mask="99999-999" ui-mask-placeholder ui-mask-placeholder-char="_"
@@ -582,7 +586,7 @@
                                         </td>
                                         <td width="150px">
                                             <input id="cepInst"
-                                                   type="text"
+                                                   type="tel" pattern="[0-9]*" inputmode="numeric"
                                                    class="form-control input-transparent"
                                                    style="font-size: xx-small;border: 1px solid #ccc;"
                                                    maxlength="9" ui-mask="99999-999" ui-mask-placeholder ui-mask-placeholder-char="_"
@@ -595,10 +599,15 @@
                                             </button>
                                         </td>
                                     </tr>
-                                </table>                                
+                                </table>
+                                <div style="color:grey;padding-left:20px;font-size:small">
+                                    <br />
+                                    <input type="checkbox" ng-click="mesmoCep()" /> Mesmo CEP comercial
+                                </div>
+                                <br />
+                                <br />
                                 <p style="color:grey;padding-left:20px;">{{onboardingData.cepInstStr}}</p>
-                                <br />
-                                <br />
+                                
                             </div>
                         </div>
                         <div ng-if="stepAtual == '7'">
@@ -615,7 +624,7 @@
                                         </td>
                                         <td width="260px">
                                             <input id="telCel"
-                                                   type="text"
+                                                   type="tel" pattern="[0-9]*" inputmode="numeric"
                                                    class="form-control input-transparent"
                                                    style="font-size: xx-small;border: 1px solid #ccc;"
                                                    onKeyUp="money(this,ValorNum);"
@@ -633,7 +642,7 @@
                                         </td>
                                         <td width="260px">
                                             <input id="telFixo"
-                                                   type="text"
+                                                   type="tel" pattern="[0-9]*" inputmode="numeric"
                                                    class="form-control input-transparent"
                                                    style="font-size: xx-small;border: 1px solid #ccc;"
                                                    onKeyUp="money(this,ValorNum);"
@@ -714,7 +723,7 @@
                             <div align="left">
                                 <p style="color:grey;padding-left:20px;">Dados bancários - Banco</p>
                                 <table width="300px">
-                                    <tr height="48px">
+                                    <tr height="32px">
                                         <td width="20px">
                                         </td>
                                         <td width="260px">
@@ -731,11 +740,12 @@
                             <div align="left">
                                 <p style="color:grey;padding-left:20px;"><br />Dados bancários - Agência</p>
                                 <table width="300px">
-                                    <tr height="48px">
+                                    <tr height="32px">
                                         <td width="20px">
                                         </td>
                                         <td width="260px">
                                             <input id="resp"
+                                                   type="tel" pattern="[0-9]*" inputmode="numeric"
                                                    maxlength="9"
                                                    style="font-size:xx-small;border: 1px solid #ccc;"
                                                    class="form-control"
@@ -749,11 +759,12 @@
                             <div align="left">
                                 <p style="color:grey;padding-left:20px;"><br />Dados bancários - Conta</p>
                                 <table width="300px">
-                                    <tr height="48px">
+                                    <tr height="32px">
                                         <td width="20px">
                                         </td>
                                         <td width="260px">
                                             <input id="resp"
+                                                   type="tel" pattern="[0-9]*" inputmode="numeric"
                                                    maxlength="9"
                                                    style="font-size:xx-small;border: 1px solid #ccc;"
                                                    class="form-control"

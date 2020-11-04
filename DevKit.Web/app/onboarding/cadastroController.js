@@ -173,7 +173,9 @@ angular.module('app.controllers').controller('CadastroController',
                         break;
 
                     case 5: $scope.fail_cep = invalidCheck($scope.onboardingData.cep);
-                        if (!$scope.fail_cep) {
+                        $scope.validaCep();
+                        
+                        if (!$scope.fail_cep && $scope.onboardingData.cepStr != undefined) {
                             if ($scope.onboardingData.cepStr.length > 0)
                                 $scope.stepAtual = $scope.stepAtual + 1;
                             $scope.validaCep();                           
@@ -181,7 +183,8 @@ angular.module('app.controllers').controller('CadastroController',
                         break;
 
                     case 6: $scope.fail_cepInst = invalidCheck($scope.onboardingData.cepInst);
-                        if (!$scope.fail_cepInst) {
+                        $scope.validaCepInst();
+                        if (!$scope.fail_cepInst && $scope.onboardingData.cepInstStr != undefined) {
                             if ($scope.onboardingData.cepInstStr.length > 0)
                                 $scope.stepAtual = $scope.stepAtual + 1;
                             $scope.validaCepInst();                            
@@ -224,6 +227,11 @@ angular.module('app.controllers').controller('CadastroController',
                 };
                 xhr.send();
             };
+
+            $scope.mesmoCep = function () {                
+                $scope.onboardingData.cepInst = $scope.onboardingData.cep;                
+                $scope.validaCepInst();
+            }
 
             $scope.validaCep = function () {    
                 setTimeout(function wait() { 

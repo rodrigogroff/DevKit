@@ -572,12 +572,18 @@
     <Content Include="LinqToDB.Templates\EditableObject.ttinclude" />
     <Content Include="LinqToDB.Templates\DataModel.ttinclude" />
     <Content Include="LinqToDB.Templates\DataAnnotations.ttinclude" />
+    <Content Include="CONTRATO_ESTABELECIMENTO_COMERCIAL_CONVEY_BENEFICIOS.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Dockerfile" />
     <None Include=".dockerignore">
       <DependentUpon>Dockerfile</DependentUpon>
     </None>
     <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.Tools.ttinclude" />
     <Content Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.Tools.ttinclude" />
+    <Content Include="FORMULARIO_DE_CREDENCIAMENTO_COMERCIAL_CONVEY_BENEFICIOS.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="scripts\jquery-2.1.0.js" />
@@ -766,6 +772,7 @@
     <Compile Include="proc\Domains\Combos\ExpedicoesCtrl.cs" />
     <Compile Include="proc\Domains\Combos\SituacoesCtrl.cs" />
     <Compile Include="proc\Domains\Combos\OrdemEmissorManutCartoesCtrl.cs" />
+    <Compile Include="proc\Domains\onboarding\lojista.cs" />
     <Compile Include="proc\Domains\ServerISO\VendaDesfazCtrl.cs" />
     <Compile Include="proc\Domains\ServerISO\VendaCancCtrl.cs" />
     <Compile Include="proc\Domains\ServerISO\VendaConfCtrl.cs" />

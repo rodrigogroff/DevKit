@@ -12,11 +12,13 @@
 <body class="background-white">
     <div ng-if="MyWidth > 600">
         <div align="center">
-            <div style="padding-top:20px;padding-left:60px">
+            <div style="padding-top:20px;">
                 <br />
-                <img src='../../images/logo.png' height="140px" /><br />
-                <br />
-                <div align="center" style="width:640px;height:520px;background-color:#e0e0e0;">
+                <div align="center" style="width:640px;height:650px;background-color:#e0e0e0;">
+                    <br />
+                    <br />
+                    <br />
+                    <img src='../../images/convey2020.png' height="60px" /><br />
                     <br />
                     <h3>Adesão Comercial - Convey BENEFÍCIOS</h3>
                     <br />
@@ -31,10 +33,10 @@
                         <input type="radio" name="step" id="step" value="8" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="9" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="10" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
-                        <input type="radio" name="step" id="step" value="11" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;                        
+                        <input type="radio" name="step" id="step" value="11" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                     </div>
                     <div style="height:300px">
-                        <br />                        
+                        <br />
                         <div ng-if="stepAtual == '1'">
                             <div align="left" style="padding-left:140px">
                                 <h4 style="color:grey">Email para contato</h4>
@@ -48,7 +50,7 @@
                                         <input id="email"
                                                maxlength="150"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"                                               
+                                               class="form-control"
                                                ng-model="onboardingData.email">
                                     </td>
                                 </tr>
@@ -68,7 +70,7 @@
                                                type="password"
                                                maxlength="8"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"                                               
+                                               class="form-control"
                                                ng-model="onboardingData.senha">
                                     </td>
                                 </tr>
@@ -86,7 +88,7 @@
                                                type="password"
                                                maxlength="8"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"                                               
+                                               class="form-control"
                                                ng-model="onboardingData.senhaConf">
                                     </td>
                                 </tr>
@@ -105,7 +107,7 @@
                                         <input id="cnpj"
                                                type="tel" pattern="[0-9]*" inputmode="numeric"
                                                class="form-control input-transparent"
-                                               maxlength="18"                                               
+                                               maxlength="18"
                                                ui-mask="99.999.999/9999-99" ui-mask-placeholder ui-mask-placeholder-char="_"
                                                ng-model="onboardingData.cnpj">
                                     </td>
@@ -125,7 +127,7 @@
                                         <input id="razSoc"
                                                maxlength="200"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"                                               
+                                               class="form-control"
                                                ng-model="onboardingData.razSoc">
                                     </td>
                                 </tr>
@@ -142,7 +144,7 @@
                                         <input id="fantasia"
                                                maxlength="200"
                                                style="font-size: 12px; border: 1px solid #ccc;"
-                                               class="form-control"                                               
+                                               class="form-control"
                                                ng-model="onboardingData.fantasia">
                                     </td>
                                 </tr>
@@ -173,7 +175,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                            </table>                            
+                            </table>
                             <div align="left" style="padding-left:140px">
                                 <br />
                                 <p style="color:blue">{{onboardingData.cepStr}}</p>
@@ -259,8 +261,8 @@
                                         <input id="telCel"
                                                type="tel" pattern="[0-9]*" inputmode="numeric"
                                                class="form-control input-transparent"
-                                               maxlength="13"                                               
-                                               onKeyUp="money(this,ValorNum);"                                               
+                                               maxlength="13"
+                                               onKeyUp="money(this,ValorNum);"
                                                ng-model="onboardingData.telCel">
                                     </td>
                                 </tr>
@@ -276,7 +278,7 @@
                                                type="tel" pattern="[0-9]*" inputmode="numeric"
                                                class="form-control input-transparent"
                                                maxlength="13"
-                                               onKeyUp="money(this,ValorNum);"                                               
+                                               onKeyUp="money(this,ValorNum);"
                                                ng-model="onboardingData.telFixo">
                                     </td>
                                 </tr>
@@ -401,15 +403,20 @@
                     </div>
                     <br />
                 </div>
+                <br>
+                <br>
+                <br>
             </div>
         </div>
     </div>
     <div ng-if="MyWidth < 600">
         <div align="center" style="width:100%;">
             <div style="padding-top:20px;">
-                <img src='../../images/logo.png' height="80px" /><br />
+                
                 <div align="center"
-                     style="padding-left:10px;width:320px;height:450px;background-color:#e0e0e0;">
+                     style="padding-left:10px;width:320px;height:600px;background-color:#e0e0e0;">
+                    <br />
+                    <img src='../../images/convey2020.png' height="50px" /><br />
                     <br />
                     <p style="font-size:xx-small">Adesão Comercial - Convey BENEFÍCIOS<br /><br /></p>
                     <div disabled>
@@ -545,7 +552,7 @@
                                         </td>
                                         <td width="20px"></td>
                                     </tr>
-                                </table>                            
+                                </table>
                                 <p style="color:grey;padding-left:20px;"><br />Informe seu nome fantasia</p>
                                 <table width="300px">
                                     <tr height="48px">
@@ -624,7 +631,7 @@
                             <div align="left">
                                 <div style="padding-left:20px">
                                     <input type="checkbox" ng-click="mesmoCep()" /> Mesmo CEP cobrança
-                                </div>                                
+                                </div>
                                 <p style="color:grey;padding-left:20px;">Informe seu CEP de instalação</p>
                                 <table width="300px">
                                     <tr height="32px">
@@ -734,7 +741,7 @@
                                             <input id="resp"
                                                    maxlength="50"
                                                    style="font-size:xx-small;border: 1px solid #ccc;"
-                                                   class="form-control"                                                   
+                                                   class="form-control"
                                                    ng-model="onboardingData.resp">
                                         </td>
                                         <td width="20px"></td>

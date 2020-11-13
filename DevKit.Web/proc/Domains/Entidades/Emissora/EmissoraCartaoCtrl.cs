@@ -678,11 +678,11 @@ namespace DevKit.Web.Controllers
 
             var st_empresa = userLoggedEmpresa;
 
-            if (string.IsNullOrEmpty(st_empresa))
-                st_empresa = db.T_Empresa.FirstOrDefault(y => y.i_unique == Convert.ToInt32(mdl.id)).st_empresa;
-
             if (mdl.modo == "altCotaGeral")
             {
+                if (string.IsNullOrEmpty(st_empresa))
+                    st_empresa = db.T_Empresa.FirstOrDefault(y => y.i_unique == Convert.ToInt32(mdl.id)).st_empresa;
+
                 if (mdl.valor.Length == 0)
                     return BadRequest("Informe a cota extra corretamente!");
 

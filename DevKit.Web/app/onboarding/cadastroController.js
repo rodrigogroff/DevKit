@@ -130,8 +130,7 @@ angular.module('app.controllers').controller('CadastroController',
                 return true;
             }
 
-            $scope.confereValores = function ()
-            {
+            $scope.confereValores = function () {
                 $scope.fail_email = false;
                 $scope.fail_senha = false;
                 $scope.fail_conf_senha = false;
@@ -141,8 +140,10 @@ angular.module('app.controllers').controller('CadastroController',
                 $scope.fail_cep = false;
                 $scope.fail_cepInst = false;
                 $scope.fail_tel_cel = false;
-                $scope.fail_resp = false;                
+                $scope.fail_resp = false;
                 $scope.fail_assInst = false;
+
+                console.log($scope.stepAtual)
 
                 switch ($scope.stepAtual) {
 
@@ -173,23 +174,23 @@ angular.module('app.controllers').controller('CadastroController',
                         break;
 
                     case 5: $scope.fail_cep = invalidCheck($scope.onboardingData.cep);
-                            $scope.fail_numero = invalidCheck($scope.onboardingData.numero);
+                        $scope.fail_numero = invalidCheck($scope.onboardingData.numero);
 
-                        $scope.validaCep();                        
+                        $scope.validaCep();
                         if (!$scope.fail_cep && !$scope.fail_numero && $scope.onboardingData.cepStr != undefined) {
                             if ($scope.onboardingData.cepStr.length > 0)
-                                $scope.stepAtual = $scope.stepAtual + 1;                                                     
-                        }                                
+                                $scope.stepAtual = $scope.stepAtual + 1;
+                        }
                         break;
 
                     case 6: $scope.fail_cepInst = invalidCheck($scope.onboardingData.cepInst);
-                            $scope.fail_numeroInst = invalidCheck($scope.onboardingData.numeroInst);
+                        $scope.fail_numeroInst = invalidCheck($scope.onboardingData.numeroInst);
 
                         $scope.validaCepInst();
                         if (!$scope.fail_cepInst && !$scope.fail_numeroInst && $scope.onboardingData.cepInstStr != undefined) {
                             if ($scope.onboardingData.cepInstStr.length > 0)
                                 $scope.stepAtual = $scope.stepAtual + 1;
-                        }                            
+                        }
                         break;
 
                     case 7: $scope.fail_tel_cel = invalidCheck($scope.onboardingData.telCel);
@@ -210,6 +211,11 @@ angular.module('app.controllers').controller('CadastroController',
                     case 10: $scope.fail_assInst = $scope.onboardingData.assInst == undefined;
                         if (!$scope.fail_assInst)
                             $scope.stepAtual = $scope.stepAtual + 1;
+                        break;
+
+                    case 11:
+                        $scope.stepAtual = $scope.stepAtual + 1;
+                        $scope.modalConf = true;
                         break;
                 }
             }
@@ -299,11 +305,24 @@ angular.module('app.controllers').controller('CadastroController',
                 $scope.stepAtual = $scope.stepAtual - 1;
             }
 
+            $scope.confirmar = function () {
+                Api.OnboardingLojista.add($scope.onboardingData, function (data) {                    
+                    $scope.modalConf = false;
+                    $scope.modalAviso = true;                    
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Erro');
+                    });
+            }
+
             init();
 
             function init() {
 
                 $scope.selectBanco = ngSelects.obterConfiguracao(Api.BancosCombo, { tamanhoPagina: 15 });
+
+                $scope.modalConf = false;
+                $scope.modalAviso = false;
 
                 setTimeout(function wait() {
                     $scope.MyWidth = $window.innerWidth - 15;

@@ -22,7 +22,7 @@
                     <br />
                     <h3>Adesão Comercial - Convey BENEFÍCIOS</h3>
                     <br />
-                    <div disabled>
+                    <div disabled ng-if="modalConf !== true && modalAviso != true">
                         <input type="radio" name="step" id="step" value="1" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="2" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="3" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
@@ -177,9 +177,7 @@
                                 </tr>
                             </table>
                             <div align="left" style="padding-left:140px">
-                                <br />
-                                <p style="color:blue">{{onboardingData.cepStr}}</p>
-                                <br />
+                                <p style="color:blue">{{onboardingData.cepStr}}</p>                                
                                 <h4 style="color:grey"><br />Informe seu numero e complemento</h4>
                             </div>
                             <table width="400px">
@@ -227,10 +225,8 @@
                                     </td>
                                 </tr>
                             </table>
-                            <div align="left" style="padding-left:140px">
-                                <br />
-                                <p style="color:blue">{{onboardingData.cepInstStr}}</p>
-                                <br />
+                            <div align="left" style="padding-left:140px">                                
+                                <p style="color:blue">{{onboardingData.cepInstStr}}</p>                                
                                 <h4 style="color:grey"><br />Informe seu numero e complemento</h4>
                             </div>
                             <table width="400px">
@@ -387,21 +383,53 @@
                                 </tr>
                             </table>
                         </div>
+                        <div ng-if="modalConf == true">
+                            <div align="center">
+                                <h4 style="color:grey">Confirma dados de cadastro?</h4>
+                            </div>
+                            <br />
+                            <br />
+                            <div align="center">
+                                <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="confirmar()">
+                                    Confirmar
+                                </button>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                        <div ng-if="modalAviso == true">
+                            <div align="center">
+                                <h4 style="color:grey">Bem-vindo à ConveyNET!</h4>
+                            </div>
+                            <br />
+                            <br />                            
+                            <div align='center'>
+                                <p>
+                                    Olá! Você receberá em instantes um email com as instruções para <br />
+                                    acessar nosso site e prosseguir com o seu encaminhamento comercial <br />
+                                    com o contrato de adesão.<br />
+                                </p>
+                            </div>                            
+                            <br />
+                            <br />                            
+                        </div>
                     </div>
-                    <div ng-if="stepAtual == 1">
-                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
-                            Próximo
-                        </button>
+                    <div ng-if="modalConf !== true && modalAviso != true">
+                        <div ng-if="stepAtual == 1">
+                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                                Próximo
+                            </button>
+                        </div>
+                        <div ng-if="stepAtual > 1">                            
+                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-primary" ng-click="anterior()">
+                                Anterior
+                            </button>
+                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                                Próximo
+                            </button>                            
+                            <br />
+                        </div>
                     </div>
-                    <div ng-if="stepAtual > 1">
-                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-primary" ng-click="anterior()">
-                            Anterior
-                        </button>
-                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
-                            Próximo
-                        </button>
-                    </div>
-                    <br />
                 </div>
                 <br>
                 <br>
@@ -412,14 +440,14 @@
     <div ng-if="MyWidth < 600">
         <div align="center" style="width:100%;">
             <div style="padding-top:20px;">
-                
+
                 <div align="center"
                      style="padding-left:10px;width:320px;height:600px;background-color:#e0e0e0;">
                     <br />
                     <img src='../../images/convey2020.png' height="50px" /><br />
                     <br />
                     <p style="font-size:xx-small">Adesão Comercial - Convey BENEFÍCIOS<br /><br /></p>
-                    <div disabled>
+                    <div disabled ng-if="modalConf !== true && modalAviso != true">
                         <input type="radio" name="step" id="step" value="1" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="2" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
                         <input type="radio" name="step" id="step" value="3" ng-model="stepAtual" disabled style="cursor:default" /> &nbsp;
@@ -848,21 +876,57 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div ng-if="modalConf == true">
+                            <div align="center">
+                                <h4 style="color:grey">Confirma dados de cadastro?</h4>
+                            </div>
+                            <br />
+                            <br />
+                            <div align="center">
+                                <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="confirmar()">
+                                    Confirmar
+                                </button>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                        <div ng-if="modalAviso == true">
+                            <div align="center">
+                                <h4 style="color:grey">Bem-vindo à ConveyNET!</h4>
+                            </div>
+                            <br />
+                            <br />
+                            <div align='center'>
+                                <p>
+                                    Olá! Você receberá em instantes um email com as instruções para <br />
+                                    acessar nosso site e prosseguir com o seu encaminhamento comercial <br />
+                                    com o contrato de adesão.<br />
+                                </p>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+
                     </div>
-                    <div ng-if="stepAtual == 1">
-                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
-                            Próximo
-                        </button>
+                    <div ng-if="modalConf !== true && modalAviso != true">
+                        <div ng-if="stepAtual == 1">
+                            <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                                Próximo
+                            </button>
+                        </div>
+                        <div ng-if="stepAtual > 1">
+                            <div ng-if="modalAviso !== true">
+                                <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-primary" ng-click="anterior()">
+                                    Anterior
+                                </button>
+                                <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
+                                    Próximo
+                                </button>
+                            </div>
+                            <br />
+                        </div>
                     </div>
-                    <div ng-if="stepAtual > 1">
-                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-primary" ng-click="anterior()">
-                            Anterior
-                        </button>
-                        <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="proximo()">
-                            Próximo
-                        </button>
-                    </div>
-                    <br />
                 </div>
             </div>
         </div>

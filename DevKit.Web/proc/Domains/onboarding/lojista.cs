@@ -20,10 +20,6 @@ namespace DevKit.Web.Controllers
 
         public string cep { get; set; }
 
-        public string cidade { get; set; }
-
-        public string estado { get; set; }
-
         public string cepStr { get; set; }
 
         public string numero { get; set; }
@@ -31,10 +27,6 @@ namespace DevKit.Web.Controllers
         public string cepInst { get; set; }
 
         public string cepInstStr { get; set; }
-
-        public string cidadeInst { get; set; }
-
-        public string estadoInst { get; set; }
 
         public string numeroInst { get; set; }
 
@@ -54,7 +46,7 @@ namespace DevKit.Web.Controllers
     public class OnboardingController : ApiControllerBase
     {
         [AllowAnonymous]
-        [HttpPut]
+        [HttpPost]
         [Route("api/onboarding_lojista")]
         public IHttpActionResult onboarding_lojista(OnboardingLojista mdl)
         {
@@ -66,15 +58,15 @@ namespace DevKit.Web.Controllers
                 {
                     st_nome = mdl.fantasia,
                     st_social = mdl.razSoc,
-                    st_enderecoInst = mdl.cepInstStr,
-                    st_endereco = mdl.cepStr,
+                    st_enderecoInst = mdl.cepInstStr.Split(',')[0] + " " + mdl.numeroInst,
+                    st_endereco = mdl.cepStr.Split(',')[0] + " " + mdl.numero,
                     st_contato = mdl.resp,
                     st_email = mdl.email,
                     st_senha = mdl.senha,
                     nu_telefone = mdl.telFixo,
                     st_telCelular = mdl.telCel,
-                    st_cidade = mdl.cidade,
-                    st_estado = mdl.estado,
+                    st_cidade = mdl.cepStr.Split(',')[1],
+                    st_estado = "RS",
                     nu_CEP = mdl.cep,
                     nu_inscEst = "",
                     nu_CNPJ = mdl.cnpj,
@@ -143,6 +135,11 @@ namespace DevKit.Web.Controllers
                               "<h3>Baixe o app vendas nas lojas Android</h3>" +
                               "<br>" +
                               "Conveynet.com.br<br>" +
+                              "<br><h3>DOCUMENTOS NECESSÁRIOS:</h3>" +
+                              "<a target='_blank' href='http://meuconvey.conveynet.com.br/FORMULARIO_DE_CREDENCIAMENTO_COMERCIAL_CONVEY_BENEFICIOS.docx'>FORMULARIO_DE_CREDENCIAMENTO_COMERCIAL_CONVEY_BENEFICIOS.docx</a><br>" +
+                              "<a target='_blank' href='http://meuconvey.conveynet.com.br/CONTRATO_ESTABELECIMENTO_COMERCIAL_CONVEY_BENEFICIOS.pdf'>CONTRATO_ESTABELECIMENTO_COMERCIAL_CONVEY_BENEFICIOS.pdf</a><br>" +
+                              "<br>" +
+                              "<br>" +
                               "Dúvidas: (51) 3500.8703 para capitais e regiões metropolitanas<br>" +
                               "Segunda a sexta, das 9h às 17hs<br>" +
                               "<br><i>Se você já contatou o canal de atendimento habitual, mas não ficou satisfeito,<br>" +

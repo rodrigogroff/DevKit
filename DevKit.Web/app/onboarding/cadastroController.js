@@ -9,6 +9,10 @@ angular.module('app.controllers').controller('CadastroController',
 
             $scope.stepAtual = 1;
 
+            $scope.campos = {
+                campoLimpo: false
+            };
+
             $scope.MyWidth = $window.innerWidth - 15;
 
             $scope.onboardingData =
@@ -305,7 +309,10 @@ angular.module('app.controllers').controller('CadastroController',
                 $scope.stepAtual = $scope.stepAtual - 1;
             }
 
+            $scope.loading = false;
+
             $scope.confirmar = function () {
+                $scope.campos.campoLimpo = true;
                 Api.OnboardingLojista.add($scope.onboardingData, function (data) {                    
                     $scope.modalConf = false;
                     $scope.modalAviso = true;                    

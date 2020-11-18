@@ -2,6 +2,7 @@
 using LinqToDB;
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -41,6 +42,39 @@ namespace DevKit.Web.Controllers
         public string ag { get; set; }
 
         public string conta { get; set; }
+
+        public string sitef { get; set; }
+
+        public string assInst { get; set; }
+    }
+
+    public static class HttpRequestMessageExtensions
+    {
+        private const string HttpContext = "MS_HttpContext";
+        private const string RemoteEndpointMessage = "System.ServiceModel.Channels.RemoteEndpointMessageProperty";
+
+        public static string GetClientIpAddress(this HttpRequestMessage request)
+        {
+            if (request.Properties.ContainsKey(HttpContext))
+            {
+                dynamic ctx = request.Properties[HttpContext];
+                if (ctx != null)
+                {
+                    return ctx.Request.UserHostAddress;
+                }
+            }
+
+            if (request.Properties.ContainsKey(RemoteEndpointMessage))
+            {
+                dynamic remoteEndpoint = request.Properties[RemoteEndpointMessage];
+                if (remoteEndpoint != null)
+                {
+                    return remoteEndpoint.Address;
+                }
+            }
+
+            return null;
+        }
     }
 
     public class OnboardingController : ApiControllerBase
@@ -124,7 +158,13 @@ namespace DevKit.Web.Controllers
                 var textoEmail = "<br><h3>PREZADO LOJISTA:</h3><br>";
 
                 textoEmail += "<p>Você está recebendo os anexos relativos ao contrato com a CONVEY BENEFÍCIOS,  que foi efetuado cadastro via adesão comercial eletrônica. <br>" +
-                              "<br>Veja seus dados de acesso: </p><br><b>Dados de acesso</b><br>Código Lojista: <b>" + mdlNew.st_loja + "</b><br>" +
+                              "<br>Veja seus dados de acesso: </p><br><b>Dados de acesso</b><br>" +
+                              "NÚMERO DE CONTRATO: Lojista: <b>" + mdlNew.st_loja + "</b><br>" +
+                              "RAZÃO SOCIAL: <b>" + mdlNew.st_social + "</b><br>" +
+                              "SITEF: <b>" + (mdl.sitef == "true" ? "SIM" : "NÃO") + "</b><br>" +
+                              "ASS. INSTITUIÇÃO: <b>" + (mdl.assInst == "true" ? "SIM" : "NÃO") + "</b><br>" +
+                              "DATA DE ADESÃO: <b>" + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "</b><br>" +
+                              "IP DO ENVIO: <b>" + HttpRequestMessageExtensions.GetClientIpAddress(this.Request) + "</b><br>" +
                               "Terminal de venda: <b>" + novo.nu_terminal + "</b><br>" +
                               "Senha: " + mdl.senha + "<br>" +
                               "<br><h3>ACESSO ÀS VENDAS:</h3>" +
@@ -147,7 +187,8 @@ namespace DevKit.Web.Controllers
                               "<a mailto='e-mail:atendimento@conveynet.com.br'>atendimento@conveynet.com.br</a><br:" +
                               "";
 
-                SendEmail("CONVEY - PROPOSTA COMERCIAL APROVADA – DADOS DE ACESSO", textoEmail, mdl.email);
+                SendEmail("CONVEY - PROPOSTA COMERCIAL APROVADA – DADOS DE ACESSO", textoEmail, mdl.email );
+                SendEmail("CONVEY - PROPOSTA COMERCIAL APROVADA – DADOS DE ACESSO", textoEmail, "atendimento@conveynet.com.br");
 
                 return Ok();
             }

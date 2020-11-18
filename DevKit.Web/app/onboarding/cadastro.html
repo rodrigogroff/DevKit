@@ -390,7 +390,9 @@
                             <br />
                             <br />
                             <div align="center">
-                                <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="confirmar()">
+                                <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success"
+                                        ng-if="campos.campoLimpo == false" 
+                                        ng-click="confirmar()">
                                     Confirmar
                                 </button>
                             </div>
@@ -884,7 +886,9 @@
                             <br />
                             <br />
                             <div align="center">
-                                <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" ng-click="confirmar()">
+                                <button id="btnProximo" style="width:120px; font-size:11px" class="btn btn-lg btn-success" 
+                                        ng-if="campos.campoLimpo == false" 
+                                        ng-click="confirmar()">
                                     Confirmar
                                 </button>
                             </div>

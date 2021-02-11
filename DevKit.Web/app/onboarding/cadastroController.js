@@ -172,7 +172,7 @@ angular.module('app.controllers').controller('CadastroController',
                         break;
 
                     case 4: $scope.fail_razSoc = invalidCheckName($scope.onboardingData.razSoc, 15);
-                        $scope.fail_fantasia = invalidCheckName($scope.onboardingData.fantasia, 15);
+                        $scope.fail_fantasia = invalidCheckName($scope.onboardingData.fantasia, 1);
                         if (!$scope.fail_razSoc && !$scope.fail_fantasia)
                             $scope.stepAtual = $scope.stepAtual + 1;
                         break;
@@ -203,7 +203,10 @@ angular.module('app.controllers').controller('CadastroController',
                         break;
 
                     case 8: $scope.fail_resp = invalidCheck($scope.onboardingData.resp);
-                        if (!$scope.fail_resp)
+                        $scope.fail_respCPF = !CheckCPF($scope.onboardingData.cpfResp);
+                        $scope.fail_respDATA = !CheckDATA($scope.onboardingData.dataResp);
+
+                        if (!$scope.fail_resp && !$scope.fail_respCPF && !$scope.fail_respDATA )
                             $scope.stepAtual = $scope.stepAtual + 1;
                         break;
 
@@ -243,6 +246,41 @@ angular.module('app.controllers').controller('CadastroController',
                 $scope.onboardingData.cepInst = $scope.onboardingData.cep;
                 $scope.onboardingData.numeroInst = $scope.onboardingData.numero;
                 $scope.validaCepInst();
+            }
+
+            function CheckCPF (strCPF) {
+
+                strCPF = strCPF.replace(/\D/g, '');
+
+                var Soma; var Resto;
+                Soma = 0;
+                if (strCPF == "00000000000") return false;
+                for (let i = 1; i <= 9; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+                Resto = (Soma * 10) % 11;
+                if ((Resto == 10) || (Resto == 11)) Resto = 0;
+                if (Resto != parseInt(strCPF.substring(9, 10))) return false;
+                Soma = 0;
+                for (let i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+                Resto = (Soma * 10) % 11;
+                if ((Resto == 10) || (Resto == 11)) Resto = 0;
+                if (Resto != parseInt(strCPF.substring(10, 11))) return false;
+                return true;
+            }
+
+            function CheckDATA(str) {
+
+                var campos = str.split('/');
+
+                if (parseInt(campos[2] < 1000))
+                    return false;
+
+                if (parseInt(campos[0] > 31))
+                    return false;
+
+                if (parseInt(campos[1] > 12))
+                    return false;
+
+                return true
             }
 
             $scope.validaCep = function () {    

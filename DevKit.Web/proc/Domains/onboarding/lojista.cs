@@ -37,6 +37,9 @@ namespace DevKit.Web.Controllers
 
         public string resp { get; set; }
 
+        public string cpfResp { get; set; }
+        public string dataResp { get; set; }
+
         public int fk_banco { get; set; }
 
         public string ag { get; set; }
@@ -107,6 +110,8 @@ namespace DevKit.Web.Controllers
                     fk_banco = mdl.fk_banco,
                     st_agencia = mdl.ag,
                     st_conta = mdl.conta,
+                    st_cpfResp = mdl.cpfResp,
+                    st_dataResp = mdl.dataResp,
                 };
 
                 mdlNew.tg_isentoFat = 0;
@@ -159,24 +164,28 @@ namespace DevKit.Web.Controllers
 
                 textoEmail += "<p>Você está recebendo os anexos relativos ao contrato com a CONVEY BENEFÍCIOS,  que foi efetuado cadastro via adesão comercial eletrônica. <br>" +
                               "<br>Veja seus dados de acesso: </p><br><b>Dados de acesso</b><br>" +
-                              "NÚMERO DE CONTRATO: Lojista: <b>" + mdlNew.st_loja + "</b><br>" +
                               "RAZÃO SOCIAL: <b>" + mdlNew.st_social + "</b><br>" +
                               "SITEF: <b>" + (mdl.sitef == "true" ? "SIM" : "NÃO") + "</b><br>" +
                               "ASS. INSTITUIÇÃO: <b>" + (mdl.assInst == "true" ? "SIM" : "NÃO") + "</b><br>" +
                               "DATA DE ADESÃO: <b>" + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "</b><br>" +
-                              "IP DO ENVIO: <b>" + HttpRequestMessageExtensions.GetClientIpAddress(this.Request) + "</b><br>" +
+                              "RESPONSAVEL PELO CONTRATO: <b>" + mdlNew.st_contato + "</b><br>" +
+                              "CPF RESPONSAVEL: <b>" + mdl.cpfResp + "</b><br>" +
+                              "CNPJ: <b>" + mdlNew.nu_CNPJ + "</b><br>" +
+                              "IP DO ENVIO: <b>" + HttpRequestMessageExtensions.GetClientIpAddress(this.Request) + "</b><br>" +                              
+                              "<br><h3>ACESSO ÀS VENDAS:</h3>" +
                               "Terminal de venda: <b>" + novo.nu_terminal + "</b><br>" +
                               "Senha: " + mdl.senha + "<br>" +
-                              "<br><h3>ACESSO ÀS VENDAS:</h3>" +
                               "<a href='https://meuconvey.conveynet.com.br/login?tipo=1'>https://meuconvey.conveynet.com.br/login?tipo=1</a><br>" +
+                              "<br>" + 
                               "<br><h3>ACESSO AS INFORMAÇÕES REPASSE FINANCEIRO:</h3>" +
+                              "Credencial Lojista: <b>" + mdlNew.st_loja + "</b><br>" +
+                              "Senha: " + mdl.senha + "<br>" +
                               "<a href='https://meuconvey.conveynet.com.br/login?tipo=3'>https://meuconvey.conveynet.com.br/login?tipo=3</a><br>" +
                               "<br><br>" +
                               "<h3>Baixe o app vendas nas lojas Android</h3>" +
                               "<br>" +
                               "Conveynet.com.br<br>" +
-                              "<br><h3>DOCUMENTOS NECESSÁRIOS:</h3>" +
-                              "<a target='_blank' href='http://meuconvey.conveynet.com.br/FORMULARIO_DE_CREDENCIAMENTO_COMERCIAL_CONVEY_BENEFICIOS.docx'>FORMULARIO_DE_CREDENCIAMENTO_COMERCIAL_CONVEY_BENEFICIOS.docx</a><br>" +
+                              "<br><h3>CONTRATO:</h3>" +
                               "<a target='_blank' href='http://meuconvey.conveynet.com.br/CONTRATO_ESTABELECIMENTO_COMERCIAL_CONVEY_BENEFICIOS.pdf'>CONTRATO_ESTABELECIMENTO_COMERCIAL_CONVEY_BENEFICIOS.pdf</a><br>" +
                               "<br>" +
                               "<br>" +
@@ -187,8 +196,8 @@ namespace DevKit.Web.Controllers
                               "<a mailto='e-mail:atendimento@conveynet.com.br'>atendimento@conveynet.com.br</a><br:" +
                               "";
 
-                SendEmail("CONVEY - PROPOSTA COMERCIAL APROVADA – DADOS DE ACESSO", textoEmail, mdl.email );
-                SendEmail("CONVEY - PROPOSTA COMERCIAL APROVADA – DADOS DE ACESSO", textoEmail, "atendimento@conveynet.com.br");
+                SendEmailOnboarding("CONVEY - PROPOSTA COMERCIAL APROVADA – DADOS DE ACESSO", textoEmail, mdl.email );
+                SendEmailOnboarding("CONVEY - PROPOSTA COMERCIAL APROVADA – DADOS DE ACESSO", textoEmail, "atendimento@conveynet.com.br");
 
                 return Ok();
             }

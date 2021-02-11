@@ -87,6 +87,19 @@ namespace DevKit.Web.Controllers
             }
         }
 
+        public bool userLoggedOperador
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+                return identity.Claims.
+                    Where(c => c.Type == "operador").
+                    Select(c => c.Value).
+                    SingleOrDefault() == "1";
+            }
+        }
+
         public string userLoggedEmpresa
         {
             get
@@ -526,6 +539,54 @@ namespace DevKit.Web.Controllers
                 var config = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
 
                 var message = new MailMessage(config.stEmailSmtp, email, assunto, texto);
+
+                var smtp = new SmtpClient
+                {
+                    Host = config.stHostSmtp,
+                    Port = (int)config.nuPortSmtp,
+                    Credentials = new System.Net.NetworkCredential(config.stEmailSmtp, config.stSenhaSmtp),
+                    EnableSsl = true
+                };
+
+                message.IsBodyHtml = true;
+
+                if (attachs != null)
+                    foreach (var item in attachs)
+                        message.Attachments.Add(new Attachment(item));
+
+                try
+                {
+                    smtp.Send(message);
+                }
+                catch (Exception ex)
+                {
+                    config.stStatus = ex.ToString().PadLeft(500, ' ').Substring(0, 500);
+                    db.Update(config);
+
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        public bool SendEmailOnboarding(string assunto, string texto, string email, List<string> attachs = null)
+        {
+            email = email.Trim().Replace(";", ",").Replace("\r\n", ",").Replace("\n", ",").Replace(" ", ",").TrimEnd(',');
+
+            using (var db = new AutorizadorCNDB())
+            {
+                var config = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
+
+                var message = new MailMessage
+                {
+                    From = new MailAddress(config.stEmailSmtp, "COMERCIAL CONVEY BENEFICIOS"),
+                    Subject = assunto,
+                    Body = texto,
+                    IsBodyHtml = true,
+                };
+
+                message.To.Add(new MailAddress(email));
 
                 var smtp = new SmtpClient
                 {

@@ -20,7 +20,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            string dir = "c:\\fechamento_dbf", file = "lote" + idLote, ext = "txt";
+            string dir = "c:\\fechamento_dbf", file = "lote" + idLote, ext = "csv";
 
             var t_lote = db.T_LoteCartao.FirstOrDefault(y => y.i_unique == idLote);
 
@@ -48,6 +48,8 @@ namespace DevKit.Web.Controllers
 
                 var oldEmp = "";
 
+                ts.WriteLine("Nome;Card1;Card2;Validade;Card 3;Empresa;Matrícula;Nome2;Tarja magnética");
+
                 foreach (var item in lstDetCartoes.OrderBy ( y=> y.fk_empresa).ToList())
                 {
                     var line = "";
@@ -69,9 +71,11 @@ namespace DevKit.Web.Controllers
 
                     var nome = "";
 
+                    T_Proprietario prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
+
                     if (cart.st_titularidade == "01")
                     {
-                        nome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario).st_nome;
+                        nome = prop.st_nome;
                     }
                     else
                     {
@@ -79,6 +83,7 @@ namespace DevKit.Web.Controllers
                                                                    y.nu_titularidade == Convert.ToInt32(cart.st_titularidade)).st_nome;
                     }
 
+                    /*
                     line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
                     line += emp.st_empresa + ",";
                     line += item.nu_matricula.ToString().PadLeft(6, '0') + ",";
@@ -101,15 +106,34 @@ namespace DevKit.Web.Controllers
                                  "65" + cart.st_venctoCartao;
 
                     line += "|";
+                    */
+
+                    line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
+                    line += cart.st_empresa + ";";
+                    line += cart.st_matricula.ToString().PadLeft(6, '0') + ";";
+                    line += cart.st_venctoCartao.Substring(0, 2) + "/" +
+                            cart.st_venctoCartao.Substring(2, 2) + ";";
+                    line += calculaCodigoAcesso(cart.st_empresa,
+                                                    cart.st_matricula,
+                                                    cart.st_titularidade,
+                                                    cart.nu_viaCartao.ToString(),
+                                                    prop.st_cpf) + ";";
+                    line += cart.st_empresa + ";";
+                    line += cart.st_matricula.ToString().PadLeft(6, '0') + ";";
+                    line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
+                    line += "826766" + cart.st_empresa +
+                                            cart.st_matricula +
+                                            cart.st_titularidade +
+                                            cart.nu_viaCartao.ToString() +
+                                    "65" + cart.st_venctoCartao + ";";
+
+                    ts.WriteLine(line);
 
                     if (cart.tg_emitido == Convert.ToInt32(StatusExpedicao.NaoExpedido))
                     {
                         cart.tg_emitido = Convert.ToInt32(StatusExpedicao.EmExpedicao);
-
                         db.Update(cart);
                     }                    
-
-                    ts.WriteLine(line);
                 }                
             }
 

@@ -680,6 +680,10 @@ namespace DevKit.Web.Controllers
 
             if (mdl.modo == "altCotaGeral")
             {
+                if (userLoggedType == "4")
+                    if (userLoggedOperador)
+                        return BadRequest();
+
                 if (string.IsNullOrEmpty(st_empresa))
                     st_empresa = db.T_Empresa.FirstOrDefault(y => y.i_unique == Convert.ToInt32(mdl.id)).st_empresa;
 
@@ -724,6 +728,10 @@ namespace DevKit.Web.Controllers
             {
                 case "altCota":
                     {
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         var idParceiro = userLoggedParceiroId;
 
                         if (idParceiro != null)
@@ -751,6 +759,10 @@ namespace DevKit.Web.Controllers
 
                 case "altSenha":
                     {
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         var idParceiro = userLoggedParceiroId;
 
                         if (idParceiro != null)
@@ -778,6 +790,10 @@ namespace DevKit.Web.Controllers
 
                 case "altLim":
                     {
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         var idParceiro = userLoggedParceiroId;
 
                         if (idParceiro != null)
@@ -815,6 +831,10 @@ namespace DevKit.Web.Controllers
                     
                 case "altBloq":
                     {
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         cart.tg_status = Convert.ToChar(CartaoStatus.Bloqueado);
                         cart.dt_bloqueio = DateTime.Now;
 
@@ -834,6 +854,10 @@ namespace DevKit.Web.Controllers
 
                 case "altDesbloq":
                     {
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         cart.tg_status = Convert.ToChar(CartaoStatus.Habilitado);
                         cart.nu_senhaErrada = (int) 0;
 
@@ -853,6 +877,10 @@ namespace DevKit.Web.Controllers
 
                 case "altSegVia":
                     {
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         if (cart.tg_status.ToString() == CartaoStatus.Bloqueado)
                             return BadRequest("Cartão Bloqueado!");
 
@@ -877,6 +905,10 @@ namespace DevKit.Web.Controllers
 
                 case "criaDep":
                     {
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         int proxTit = (from e in db.T_Cartao
                                        where e.st_matricula == cart.st_matricula
                                        where e.st_empresa == cart.st_empresa

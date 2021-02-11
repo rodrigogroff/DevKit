@@ -272,7 +272,7 @@ namespace DevKit.Web.Controllers
                                         // exporta em arquivo no servidor
                                         // ---------------------
 
-                                        var tituloArq = tEmp.st_empresa + "_" + novoLote.i_unique + "_PEDIDO_PRODUCAO.txt";
+                                        var tituloArq = tEmp.st_empresa + "_" + novoLote.i_unique + "_PEDIDO_PRODUCAO.csv";
 
                                         var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + tituloArq;
 
@@ -293,9 +293,11 @@ namespace DevKit.Web.Controllers
                                             {
                                                 var line = "";
 
+                                                var prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fkProp);
+
                                                 if (cart.titularidade == "01")
                                                 {
-                                                    nome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fkProp).st_nome;
+                                                    nome = prop.st_nome;
                                                 }
                                                 else
                                                 {
@@ -303,6 +305,7 @@ namespace DevKit.Web.Controllers
                                                                                                 y.nu_titularidade == Convert.ToInt32(cart.titularidade)).st_nome;
                                                 }
 
+                                                /*
                                                 line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
                                                 line += cart.empresa + ",";
                                                 line += cart.matricula.ToString().PadLeft(6, '0') + ",";
@@ -326,6 +329,28 @@ namespace DevKit.Web.Controllers
                                                                 "65" + cart.venc;
 
                                                 line += "|";
+                                                */
+
+                                                line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
+                                                line += cart.empresa + ";";
+                                                line += cart.matricula.ToString().PadLeft(6, '0') + ";";
+                                                line += cart.venc.Substring(0, 2) + "/" +
+                                                        cart.venc.Substring(2, 2) + ";";
+                                                line += calculaCodigoAcesso(cart.empresa,
+                                                                                cart.matricula,
+                                                                                cart.titularidade,
+                                                                                cart.via.ToString(),
+                                                                                cart.cpf) + ";";
+                                                line += cart.empresa + ";";
+                                                line += cart.matricula.ToString().PadLeft(6, '0') + ";";
+                                                line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
+                                                line += "826766" + cart.empresa +
+                                                                        cart.matricula +
+                                                                        cart.titularidade +
+                                                                        cart.via.ToString() +
+                                                                "65" + cart.venc + ";";
+
+                                                line += "\n";
 
                                                 var c_update = db.T_Cartao.FirstOrDefault(a => a.i_unique.ToString() == cart.id);
 
@@ -338,6 +363,9 @@ namespace DevKit.Web.Controllers
 
                                                 total_file += line;
                                             }
+
+                                            total_file = "Nome;Card1;Card2;Validade;Card 3;Empresa;Matrícula;Nome2;Tarja magnética\n" +
+                                                         total_file;
 
                                             File.WriteAllText(myPath, total_file);
 

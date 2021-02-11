@@ -81,6 +81,7 @@ namespace DevKit.Web
             string tipoDBA = context.Identity.Claims.Where(x => x.Type == "tipoDBA").Select(x => x.Value).FirstOrDefault();
             string parceiro = context.Identity.Claims.Where(x => x.Type == "parceiro").Select(x => x.Value).FirstOrDefault();
             string idEmpresa = context.Identity.Claims.Where(x => x.Type == "IdEmpresa").Select(x => x.Value).FirstOrDefault();
+            string operador = context.Identity.Claims.Where(x => x.Type == "operador").Select(x => x.Value).FirstOrDefault();
 
             context.AdditionalResponseParameters.Add("nameUser", nameUser);
             context.AdditionalResponseParameters.Add("m1", m1);
@@ -89,6 +90,7 @@ namespace DevKit.Web
             context.AdditionalResponseParameters.Add("tipoDBA", tipoDBA);
             context.AdditionalResponseParameters.Add("parceiro", parceiro);
             context.AdditionalResponseParameters.Add("IdEmpresa", idEmpresa);
+            context.AdditionalResponseParameters.Add("operador", operador);
 
             return System.Threading.Tasks.Task.FromResult<object>(null);
         }
@@ -366,6 +368,7 @@ namespace DevKit.Web
                             identity.AddClaim(new Claim("IdUsuario", tUser.i_unique.ToString()));
                             identity.AddClaim(new Claim("IdEmpresa", tEmp.i_unique.ToString()));
                             identity.AddClaim(new Claim("tipo", "4"));
+                            identity.AddClaim(new Claim("operador",  tUser.bOperador == true ? "1" : "0" ));
 
                             var ticket = new AuthenticationTicket(identity, null);
 

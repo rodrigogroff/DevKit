@@ -20,7 +20,7 @@ namespace DevKit.Web.Controllers
             {
                 var dtNow = DateTime.Now;
 
-                var dtIni = dtNow.AddSeconds(-120); // dois minutos
+                var dtIni = dtNow.AddSeconds(-60 * 10); // dez minutos
                 
                 var queryX = db.LOG_Transacoes.
                                 Where(y => y.dt_transacao < dtIni &&

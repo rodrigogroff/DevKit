@@ -127,6 +127,10 @@ namespace DevKit.Web.Controllers
                         if (emp == null)
                             return BadRequest();
 
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         foreach (var cart in db.T_Cartao.Where(y => y.st_empresa == emp.st_empresa).ToList())
                         {
                             var cartUpd = db.T_Cartao.FirstOrDefault(y => y.i_unique == cart.i_unique);
@@ -226,6 +230,10 @@ namespace DevKit.Web.Controllers
                     {
                         #region - code - 
 
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
                         var ids = Request.GetQueryStringValue("ids").TrimEnd(',').Split(',');
 
@@ -262,6 +270,10 @@ namespace DevKit.Web.Controllers
                 case "10":
                     {
                         #region - code - 
+                        
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
 
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
                         var dtInicial = ObtemData(Request.GetQueryStringValue("dtInicial"));
@@ -324,6 +336,10 @@ namespace DevKit.Web.Controllers
                 case "11":
                     {
                         #region - code - 
+
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
 
                         var idEmp = Request.GetQueryStringValue<long>("id_emp");
                         var fkCartao = Request.GetQueryStringValue<long>("fkCartao");
@@ -526,6 +542,10 @@ namespace DevKit.Web.Controllers
                     {
                         #region - code -
 
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
                         var lstEmp = Request.GetQueryStringValue("list").TrimEnd(';').Split(';').ToList();
 
                         var lstEmpDb = (from e in db.T_Empresa
@@ -593,6 +613,10 @@ namespace DevKit.Web.Controllers
                 case "20": // ativação via leitor
                     {
                         #region - code -  
+
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
 
                         if (userLoggedParceiroId != "1")
                             return BadRequest("Não autorizado!");
@@ -1752,7 +1776,7 @@ namespace DevKit.Web.Controllers
 
                         var configPla = db.ConfigPlasticoEnvio.FirstOrDefault(y => y.id == 1);
 
-                        var nomeArq = idLote + "_PEDIDO_PRODUCAO.txt";
+                        var nomeArq = idLote + "_PEDIDO_PRODUCAO.csv";
 
                         var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + nomeArq;
 
@@ -1777,9 +1801,11 @@ namespace DevKit.Web.Controllers
 
                                     var _c = db.T_Cartao.FirstOrDefault(y => y.i_unique == cart.fk_cartao);
 
+                                    var prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _c.fk_dadosProprietario);
+
                                     if (cart.nu_titularidade.ToString().PadLeft(2,'0') == "01")
                                     {
-                                        nome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == _c.fk_dadosProprietario).st_nome;
+                                        nome = prop.st_nome;
                                     }
                                     else
                                     {
@@ -1787,6 +1813,7 @@ namespace DevKit.Web.Controllers
                                                                                     y.nu_titularidade == cart.nu_titularidade).st_nome;
                                     }
 
+                                    /*
                                     line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
                                     line += _c.st_empresa + ",";
                                     line += _c.st_matricula.ToString().PadLeft(6, '0') + ",";
@@ -1810,8 +1837,33 @@ namespace DevKit.Web.Controllers
                                                     "65" + _c.st_venctoCartao;
 
                                     line += "|";
+                                    */
+
+                                    line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
+                                    line += _c.st_empresa + ";";
+                                    line += _c.st_matricula.ToString().PadLeft(6, '0') + ";";
+                                    line += _c.st_venctoCartao.Substring(0, 2) + "/" +
+                                            _c.st_venctoCartao.Substring(2, 2) + ";";
+                                    line += calculaCodigoAcesso(_c.st_empresa,
+                                                                    _c.st_matricula,
+                                                                    _c.st_titularidade,
+                                                                    _c.nu_viaCartao.ToString(),
+                                                                    prop.st_cpf) + ";";
+                                    line += _c.st_empresa + ";";
+                                    line += _c.st_matricula.ToString().PadLeft(6, '0') + ";";
+                                    line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
+                                    line += "826766" + _c.st_empresa +
+                                                            _c.st_matricula +
+                                                            _c.st_titularidade +
+                                                            _c.nu_viaCartao.ToString() +
+                                                    "65" + _c.st_venctoCartao + ";";
+
+                                    line += "\n";
+
                                     total_file += line;
                                 }
+                                
+                                total_file = "Nome;Card1;Card2;Validade;Card 3;Empresa;Matrícula;Nome2;Tarja magnética\n" + total_file;
 
                                 File.WriteAllText(myPath, total_file);
                             }

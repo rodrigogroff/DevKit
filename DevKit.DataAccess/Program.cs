@@ -53,7 +53,6 @@ namespace GetStarted
             // ForcaFech("001711", new DateTime(2020, 3, 13, 0, 09, 0));
         }
 
-
         static string DESCript(string dados, string chave = "12345678")
         {
             dados = dados.PadLeft(8, '*');

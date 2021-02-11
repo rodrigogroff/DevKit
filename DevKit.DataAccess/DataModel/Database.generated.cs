@@ -726,6 +726,8 @@ namespace DataModel
         [Column, Nullable] public long? fk_banco { get; set; }
         [Column, Nullable] public string st_agencia { get; set; } // varchar(20)
         [Column, Nullable] public string st_conta { get; set; } // varchar(20)
+        [Column, Nullable] public string st_cpfResp { get; set; } // varchar(20)
+        [Column, Nullable] public string st_dataResp { get; set; } // varchar(20)
     }
 
     [Table(Schema = "dbo", Name = "T_LojaMensagem")]
@@ -900,6 +902,7 @@ namespace DataModel
         [Column, Nullable] public string st_nome { get; set; } // varchar(20)
         [Column, Nullable] public int? fk_quiosque { get; set; } // int
         [Column, Nullable] public int? tg_aviso { get; set; } // int
+        [Column, Nullable] public bool? bOperador { get; set; } // int
     }
 
     [Table(Schema = "dbo", Name = "T_WebBlock")]

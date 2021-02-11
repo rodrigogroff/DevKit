@@ -298,6 +298,42 @@
                                     </td>
                                 </tr>
                             </table>
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Informe o cpf do responsável</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_respCPF" title="Informe corretamente um cpf">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="cnpj"
+                                               type="tel" pattern="[0-9]*" inputmode="numeric"
+                                               class="form-control input-transparent"
+                                               maxlength="14"
+                                               ui-mask="999.999.999-99" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                               ng-model="onboardingData.cpfResp">
+                                    </td>
+                                </tr>
+                            </table>
+                            <div align="left" style="padding-left:140px">
+                                <h4 style="color:grey">Informe a data de nascimento</h4>
+                            </div>
+                            <table width="400px">
+                                <tr height="48px">
+                                    <td width="20px">
+                                        <button class="btn btn-xs btn-danger" ng-show="fail_respDATA" title="Informe corretamente uma data">!</button>
+                                    </td>
+                                    <td width="380px">
+                                        <input id="cnpj"
+                                               type="tel" pattern="[0-9]*" inputmode="numeric"
+                                               class="form-control input-transparent"
+                                               maxlength="10"
+                                               ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                               ng-model="onboardingData.dataResp">
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div ng-if="stepAtual == '9'">
                             <div align="left" style="padding-left:140px">
@@ -777,6 +813,40 @@
                                         <td width="20px"></td>
                                     </tr>
                                 </table>
+                                <p style="color:grey;padding-left:20px;"><br />Informe o CPF</p>
+                                <table width="300px">
+                                    <tr height="32px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger" ng-show="fail_respCPF" title="Informe corretamente um cpf">!</button>
+                                        </td>
+                                        <td width="260px">
+                                            <input id="cnpj"
+                                                   type="tel" pattern="[0-9]*" inputmode="numeric"
+                                                   class="form-control input-transparent"
+                                                   maxlength="14"
+                                                   ui-mask="999.999.999-99" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                                   ng-model="onboardingData.cpfResp">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
+                                <p style="color:grey;padding-left:20px;"><br />Informe data nascimento</p>
+                                <table width="300px">
+                                    <tr height="32px">
+                                        <td width="20px">
+                                            <button class="btn btn-xs btn-danger" ng-show="fail_respDATA" title="Informe corretamente uma data">!</button>
+                                        </td>
+                                        <td width="260px">
+                                            <input id="cnpj"
+                                                   type="tel" pattern="[0-9]*" inputmode="numeric"
+                                                   class="form-control input-transparent"
+                                                   maxlength="10"
+                                                   ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                                   ng-model="onboardingData.dataResp">
+                                        </td>
+                                        <td width="20px"></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                         <div ng-if="stepAtual == '9'">
@@ -837,9 +907,7 @@
                                         </td>
                                         <td width="20px"></td>
                                     </tr>
-                                </table>
-                            </div>
-                            <div align="left">
+                                </table>                            
                                 <p style="color:grey;padding-left:20px;"><br />Dados bancários - Agência</p>
                                 <table width="300px">
                                     <tr height="32px">
@@ -857,8 +925,6 @@
                                         <td width="20px"></td>
                                     </tr>
                                 </table>
-                            </div>
-                            <div align="left">
                                 <p style="color:grey;padding-left:20px;"><br />Dados bancários - Conta</p>
                                 <table width="300px">
                                     <tr height="32px">

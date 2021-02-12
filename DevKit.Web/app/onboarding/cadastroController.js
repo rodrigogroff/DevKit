@@ -60,7 +60,7 @@ angular.module('app.controllers').controller('CadastroController',
                     if (element.trim().length === 0)
                         return true;
 
-                    var testChars = '!"#$%¨&*()-=+ '
+                    var testChars = '!"#$%¨&*()=+ '
 
                     for (var i = 0; i < testChars.length; i++)
                         if (element.indexOf(testChars[i]) > 0)

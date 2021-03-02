@@ -44,6 +44,7 @@ namespace DevKit.Web
                 "~/app/system/admopers/bloq.js",
                 "~/app/system/admopers/desbloq.js",
                 "~/app/system/admopers/altLimite.js",
+                "~/app/system/admopers/altDesbloqLote.js",
                 "~/app/system/admopers/graficos.js",
                 "~/app/system/admopers/altSenha.js",
                 "~/app/system/admopers/altSegVia.js",

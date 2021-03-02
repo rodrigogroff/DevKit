@@ -4,13 +4,60 @@ using System.Collections.Generic;
 using System.Web.Http;
 using SyCrafEngine;
 using DataModel;
+using System;
 
 namespace DevKit.Web.Controllers
 {
     public class AssociadoController : ApiControllerBase
     {
+        public IHttpActionResult GetByEmpresa(int? id_empresa)
+        {
+            if (!StartDatabaseAndAuthorize())
+                return BadRequest();
+
+            var emp = db.T_Empresa.FirstOrDefault(y => y.i_unique == id_empresa);
+
+            var associados = (from e in db.T_Cartao
+                              where e.st_empresa == emp.st_empresa
+                              select e).
+                              ToList();
+
+            var results = new List<Associado>();
+
+            foreach (var item in associados)
+            {
+                var nome = "";
+
+                if (Convert.ToInt32(item.st_titularidade) == 1)
+                    nome = db.T_Proprietario.FirstOrDefault(y => y.i_unique == item.fk_dadosProprietario).st_nome;
+                else
+                    nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == item.fk_dadosProprietario).st_nome;
+
+                results.Add(new Associado
+                {
+                    id = item.i_unique.ToString(),
+                    bloqueado = item.tg_status.ToString() == CartaoStatus.Bloqueado ? true : false,
+                    matricula = item.st_matricula,
+                    nome = nome
+                }); 
+            }
+
+            return Ok(new
+            {
+                count = results.Count,
+                results = results
+            }); ; 
+        }
+
         public IHttpActionResult Get()
         {
+            var idEmpresa = Request.GetQueryStringValue<int?>("idEmpresa");
+
+            if (idEmpresa != null)
+            {
+                return GetByEmpresa(idEmpresa);
+            }
+
             var empresa = Request.GetQueryStringValue("empresa");
             var matricula = Request.GetQueryStringValue("matricula");
             var vencimento = Request.GetQueryStringValue("vencimento");

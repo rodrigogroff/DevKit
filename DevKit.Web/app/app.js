@@ -35,6 +35,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('admoperslanctx', { url: '/system/admoperslanctx/:id', templateUrl: 'app/system/admopers/lanctx.html', controller: 'AdmOpersLancTxController' })
             .state('admopersbloq', { url: '/system/bloq', templateUrl: 'app/system/admopers/altBloq.html', controller: 'DBABloqueioController' })
             .state('admopersdesbloq', { url: '/system/desbloq', templateUrl: 'app/system/admopers/altDesBloq.html', controller: 'DBADesbloqueioController' })
+            .state('admopersdesbloqlote', { url: '/system/desbloqlote', templateUrl: 'app/system/admopers/altDesBloqLote.html', controller: 'DBADesbloqueioLoteController' })
             .state('admopersaltlim', { url: '/system/altlim', templateUrl: 'app/system/admopers/altlimite.html', controller: 'DBAAltLimiteController' })
             .state('admopersaltsenha', { url: '/system/altsenha', templateUrl: 'app/system/admopers/altSenha.html', controller: 'DBAAltSenhaController' })
             .state('admopersaltsegvia', { url: '/system/altsegvia', templateUrl: 'app/system/admopers/altSegvia.html', controller: 'DBAAltSegViaController' })

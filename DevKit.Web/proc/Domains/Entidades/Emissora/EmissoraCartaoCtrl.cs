@@ -707,7 +707,23 @@ namespace DevKit.Web.Controllers
 
                 return Ok();
             }
-            
+            else if (mdl.modo == "altDesbloqLote")
+            {                 
+                var arr = mdl.array.TrimEnd(',').Split();
+
+                foreach (var item in arr)
+                {
+                    var cUp = db.T_Cartao.FirstOrDefault(y => y.i_unique == Convert.ToInt32(item));
+
+                    cUp.tg_status = Convert.ToChar(CartaoStatus.Habilitado);
+                    cUp.nu_senhaErrada = (int)0;
+
+                    db.Update(cUp);
+                }
+
+                return Ok();
+            }
+
             var cart = (from e in db.T_Cartao
                         where e.i_unique == Convert.ToInt32(mdl.id)
                         select e).

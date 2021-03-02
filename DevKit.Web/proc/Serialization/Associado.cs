@@ -11,6 +11,7 @@ namespace DevKit.Web.Controllers
                       dispTotal = "",
                       dispExtra = "",
                       email = "",
+                      matricula = "",
                       maxParcelasEmpresa = "";
 
         public List<string> lstParcelas = new List<string>();

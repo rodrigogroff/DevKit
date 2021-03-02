@@ -1,0 +1,118 @@
+﻿<div class="webFormPosition">
+    <section class="widgetForm" style="width:680px">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>Desbloqueio para <b>cartão convênio</b> em lote <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm" ng-if="id == undefined">
+            <table width="550px">
+                <tr height="53px">
+                    <td width="80px">
+                        <b>Empresa</b>
+                    </td>
+                    <td width="20px"></td>
+                    <td>
+                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="selectEmpresa" ng-model="campos.idEmpresa" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="90px">
+                        <button class="btn btn-primary" ng-click="buscar()">Buscar</button>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div ng-if="cartoes.length > 0">
+                <br />
+                <table>
+                    <tr>
+                        <td>
+                            <button class="btn btn-primary" ng-click="marcarTodos()">Marcar todos</button>
+                        </td>
+                        <td width="20px">
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="desmarcarTodos()">Desmarcar todos</button>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+                <table class="table table-hover" style="width:400px">
+                    <thead>
+                        <tr>
+                            <th style="min-width:20px;"> </th>
+                            <th>Matrícula</th>
+                            <th>Associado</th>
+                        </tr>
+                    </thead>
+                    <tr data-ng-repeat="mdl in cartoes">
+                        <td>
+                            <input type="checkbox" ng-model="mdl.selecionado" ng-click="marcar(mdl)" />
+                        </td>
+                        <td>{{ mdl.matricula }} </td>
+                        <td>{{ mdl.nome }} </td>
+                    </tr>
+                </table>
+                <br />
+                <button class="btn btn-danger" ng-click="conf()">Desbloquear</button>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </section>
+</div>
+
+<div class="modal-backdrop"
+     ng-if="modalConfirma == true"
+     style="background: rgba(55, 55, 55, 0.5 );">
+    <div class="modal-dialog" style="width:500px">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="modal-content" style="color:black">
+            <h3>Desbloquear todos os cartões marcados?</h3>
+            <br />
+            <br />
+            <table>
+                <tr>
+                    <td>
+                        <button class="btn btn-info" ng-click="cancelar()">Cancelar</button>
+                    </td>
+                    <td width="20px"></td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="desbloquear()">Desbloquear</button>
+                    </td>
+                </tr>
+            </table>
+            <br />
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-backdrop"
+     ng-if="modal == true"
+     style="background: rgba(55, 55, 55, 0.5 );">
+    <div class="modal-dialog" style="width:500px">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="modal-content" style="color:black">
+            <h3>Cartões desbloqueados com sucesso!</h3>
+            <br />
+            <br />
+            <button class="btn btn-info" ng-click="fecharModal()">Fechar</button>
+            <br />
+        </div>
+    </div>
+</div>

@@ -335,7 +335,9 @@
     <Content Include="app\onboarding\cadastroController.js" />
     <Content Include="app\system\admopers\altBloq.html" />
     <Content Include="app\system\admopers\altCota.html" />
+    <Content Include="app\system\admopers\altDesbloqLote.html" />
     <Content Include="app\system\admopers\altDesbloq.html" />
+    <Content Include="app\system\admopers\altDesbloqLote.js" />
     <Content Include="app\system\admopers\graficos.html" />
     <Content Include="app\system\admopers\graficos.js" />
     <Content Include="app\system\admopers\altLimite.html" />

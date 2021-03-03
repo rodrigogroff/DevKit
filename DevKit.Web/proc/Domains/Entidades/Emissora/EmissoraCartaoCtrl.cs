@@ -709,7 +709,7 @@ namespace DevKit.Web.Controllers
             }
             else if (mdl.modo == "altDesbloqLote")
             {                 
-                var arr = mdl.array.TrimEnd(',').Split();
+                var arr = mdl.array.TrimEnd(',').Split(',');
 
                 foreach (var item in arr)
                 {

@@ -2,1199 +2,1545 @@
 using LinqToDB;
 using System;
 using System.Linq;
-using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+using Npgsql;
 
 namespace GetStarted
 {
+    #region - tabelas -
+
+    #region - done - 
+    public class Cartao
+    {
+        #region - code - 
+
+        public long id { get; set; }
+        public long? fkEmpresa { get; set; }
+        public long? nuMatricula { get; set; }
+        public long? nuTitularidade { get; set; }
+        public string stSenha { get; set; }
+        public long? nuTipoCartao { get; set; }
+        public string stVenctoCartao { get; set; }
+        public long? nuStatus { get; set; }
+        public long? nuSenhaErrada { get; set; }
+        public DateTime? dtInclusao { get; set; }
+        public DateTime? dtBloqueio { get; set; }
+        public long? nuMotivoBloqueio { get; set; }
+        public string stBanco { get; set; }
+        public string stAgencia { get; set; }
+        public string stConta { get; set; }
+        public string stMatExtra { get; set; }
+        public string stCelCartao { get; set; }
+        public string stCpf { get; set; }
+        public string stNome { get; set; }
+        public string stEndereco { get; set; }
+        public string stNumero { get; set; }
+        public string stCompl { get; set; }
+        public string stBairro { get; set; }
+        public string stEstado { get; set; }
+        public string stCidade { get; set; }
+        public string stCEP { get; set; }
+        public string stDDD { get; set; }
+        public string stTelefone { get; set; }
+        public DateTime? dtNasc { get; set; }
+        public string stEmail { get; set; }
+        public long? vrRenda { get; set; }
+        public long? nuViaCartao { get; set; }
+        public long? vrLimiteTotal  { get; set; }
+        public long? vrLimiteMensal { get; set; }
+        public long? vrLimiteRotativo { get; set; }
+        public long? vrCotaExtra { get; set; }
+        public long? nuEmitido { get; set; }
+        public bool? bConvenioComSaldo { get; set; }
+        public long? vrSaldoConvenio { get; set; }
+        public DateTime? dtPedidoCartao { get; set; }
+
+        #endregion
+    }
+
+    public class ConfigPlasticoEnvio
+    {
+        #region - code - 
+        public long id { get; set; }
+        public string stDias { get; set; }
+        public string stHorario { get; set; }
+        public string stEmails { get; set; }
+        public bool? bAtivo { get; set; }
+        public bool? dom { get; set; }
+        public bool? seg { get; set; }
+        public bool? ter { get; set; }
+        public bool? qua { get; set; }
+        public bool? qui { get; set; }
+        public bool? sex { get; set; }
+        public bool? sab { get; set; }
+        public string stEmailSmtp { get; set; }
+        public string stSenhaSmtp { get; set; }
+        public string stHostSmtp { get; set; }
+        public long? nuPortSmtp { get; set; }
+        public string stStatus { get; set; }
+        #endregion
+    }
+
+    public class DashboardGrafico
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? nuTotalTransacoes { get; set; }
+        public long? nuTotalCartoes { get; set; }
+        public long? nuTotalFinanc { get; set; }
+        public long? nuDia { get; set; }
+        public long? nuMes { get; set; }
+        public long? nuAno { get; set; }
+        public long? nuTotalLojas { get; set; }
+        public DateTime? dtDia { get; set; }
+        #endregion
+    }
+
+    public class Empresa
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? nuEmpresa { get; set; }
+        public string stCNPJ { get; set; }
+        public string stFantasia { get; set; }
+        public string stSocial { get; set; }
+        public string stEndereco { get; set; }
+        public string stCidade { get; set; }
+        public string stEstado { get; set; }
+        public string stCEP { get; set; }
+        public string stTelefone { get; set; }
+        public long? nuParcelas { get; set; }
+        public bool? bBlocked { get; set; }
+        public long? fkAdmin { get; set; }
+        public string stContaDeb { get; set; }
+        public long? vrMensalidade { get; set; }
+        public long? nuPctValor { get; set; }
+        public long? vrTransacao { get; set; }
+        public long? vrMinimo { get; set; }
+        public long? nuFranquiaTrans { get; set; }
+        public long? nuPeriodoFat { get; set; }
+        public long? nuDiaVenc { get; set; }
+        public string stBancoFat { get; set; }
+        public long? vrCartaoAtivo { get; set; }
+        public bool? bIsentoFat { get; set; }
+        public string stObs { get; set; }
+        public string stHomepage { get; set; }
+        public long? nuDiaFech { get; set; }
+        public string stHoraFech { get; set; }
+        public bool? bConvenioSaldo { get; set; }
+        public long? fkParceiro { get; set; }
+        public string stEmailPlastico { get; set; }
+        #endregion
+    }
+
+    public class Faturamento
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? fkEmpresa { get; set; }
+        public long? fkLoja { get; set; }
+        public long? vrCobranca { get; set; }
+        public DateTime? dtVencimento { get; set; }
+        public DateTime? dtBaixa { get; set; }
+        public long? nuSituacao { get; set; }
+        public long? nuRetBanco { get; set; }
+        #endregion
+    }
+
+    public class FaturamentoDetalhe
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? fkFatura { get; set; }
+        public long? nuTipoFat { get; set; }
+        public long? nuQuantidade { get; set; }
+        public long? vrCobranca { get; set; }
+        public bool? bDesconto { get; set; }
+        public string stExtras { get; set; }
+        public long? fkEmpresa { get; set; }
+        public long? fkLoja { get; set; }
+        #endregion
+    }
+
+    public class JobFechamento
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? fkEmpresa { get; set; }
+        public DateTime? dtInicio { get; set; }
+        public DateTime? dtFim { get; set; }
+        public long? nuMes { get; set; }
+        public long? nuAno { get; set; }
+        #endregion
+    }
+
+    public class LogAudit
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? fkUsuario { get; set; }
+        public long? nuOperacao { get; set; }
+        public DateTime? dtOperacao { get; set; }
+        public long? fkGeneric { get; set; }
+        public long? fkEmpresa { get; set; }
+        public string stOperacao { get; set; }
+        public string stLog { get; set; }
+        #endregion
+    }
+
+    public class LogFechamento
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? nuMes { get; set; }
+        public long? nuAno { get; set; }
+        public long? vrValor { get; set; }
+        public DateTime? dtFechamento { get; set; }
+        public long? fkEmpresa { get; set; }
+        public long? fkLoja { get; set; }
+        public long? fkCartao { get; set; }
+        public long? fkParcela { get; set; }
+        public DateTime? dtCompra { get; set; }
+        public long? nuParcela { get; set; }
+        public string stCartao { get; set; }
+        #endregion
+    }
+
+    public class LogNsu
+    {
+        #region - code - 
+        public long id { get; set; }
+        public DateTime? dtLog { get; set; }        
+        #endregion
+    }
+
+    public class LogTransacao
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? fkTerminal { get; set; }
+        public DateTime? dtTransacao { get; set; }
+        public long? nuNsu { get; set; }
+        public long? fkEmpresa { get; set; }
+        public long? fkCartao { get; set; }
+        public long? vrTotal { get; set; }
+        public long? nuParcelas { get; set; }
+        public long? nuCodErro { get; set; }
+        public long? nuConfirmada { get; set; }
+        public long? nuNsuOrig { get; set; }
+        public long? nuOperacao { get; set; }
+        public string stMsg { get; set; }
+        public bool? bContabil { get; set; }
+        public long? fkLoja { get; set; }
+        public string stDoc { get; set; }
+        #endregion
+    }
+
+    public class Loja
+    {
+        #region - code - 
+        public long id { get; set; }
+        public string stCNPJ { get; set; }
+        public string stNome { get; set; }
+        public string stSocial { get; set; }
+        public string stEndereco { get; set; }
+        public string stEnderecoInst { get; set; }
+        public string stInscEst { get; set; }
+        public string stCidade { get; set; }
+        public string stEstado { get; set; }
+        public string stCEP { get; set; }
+        public string stTelefone { get; set; }
+        public string stFax { get; set; }
+        public string stContato { get; set; }
+        public long? vrMensalidade { get; set; }
+        public string stContaDeb { get; set; }
+        public string stObs { get; set; }
+        public string stLoja { get; set; }
+        public bool? bBlocked { get; set; }
+        public long? nuPctValor { get; set; }
+        public long? vrTransacao { get; set; }
+        public long? vrMinimo { get; set; }
+        public long? nuFranquia { get; set; }
+        public long? nuPeriodoFat { get; set; }
+        public long? nuDiaVenc { get; set; }
+        public long? nuTipoCob { get; set; }
+        public long? nuBancoFat { get; set; }
+        public bool? bIsentoFat { get; set; }
+        public string stSenha { get; set; }
+        public bool? bCancel { get; set; }
+        public bool? bPortalSenha { get; set; }
+        public string stEmail { get; set; }
+        public string stCelular { get; set; }
+        public string stBanco { get; set; }
+        public string stAgencia { get; set; }
+        public string stConta { get; set; }
+        public long? fkBanco { get; set; }
+        public string stCPFResp { get; set; }
+        public string stDataResp { get; set; }
+        #endregion
+    }
+
+    public class LojaEmpresa
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? fkLoja { get; set; }
+        public long? fkEmpresa { get; set; }
+        public long? nuTxAdmin { get; set; }
+        public long? nuDiasRepasse { get; set; }
+        public string stAgencia { get; set; }
+        public string stConta { get; set; }
+        public string stBanco { get; set; }
+        #endregion
+    }
+
+    public class LojaMsg
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? fkLoja { get; set; }
+        public string stMsg { get; set; }
+        public string stLink { get; set; }
+        public DateTime? dtValidade { get; set; }
+        public DateTime? dtCriacao { get; set; }
+        public bool? bAtiva { get; set; }        
+        #endregion
+    }
+
+    public class LoteCartao
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? nuCartoes { get; set; }
+        public long? fkEmpresa { get; set; }
+        public long? nuSitLote { get; set; }
+        public DateTime? dtAbertura { get; set; }
+        public DateTime? dtEnvioGrafica { get; set; }
+        public DateTime? dtAtivacao { get; set; }
+        #endregion
+    }
+
+    public class LoteCartaoDetalhe
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? fkLote { get; set; }
+        public long? fkEmpresa { get; set; }
+        public long? fkCartao { get; set; }
+        public long? nuMatricula { get; set; }
+        public long? nuViaOriginal { get; set; }
+        public long? nuTitularidade { get; set; }
+        public string stCPF { get; set; }
+        public string stNomeCartao { get; set; }
+        public DateTime? dtAtivacao { get; set; }
+        public DateTime? dtPedido { get; set; }
+        #endregion
+    }
+
+    public class Parceiro
+    {
+        #region - code - 
+        public long id { get; set; }
+        public string stNome { get; set; }
+        public DateTime? dtCadastro { get; set; }
+        public string stTelefone { get; set; }
+        public string stCelular { get; set; }
+        public string stResp { get; set; }
+        public string stSocial { get; set; }
+        public string stCNPJ { get; set; }
+        public string stEstado { get; set; }
+        public string stCidade { get; set; }
+        public string stEndereco { get; set; }
+        public string stObs { get; set; }
+        public string stCEP { get; set; }
+        #endregion
+    }
+
+    public class Parcela
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? nuNsu { get; set; }
+        public long? fkEmpresa { get; set; }
+        public long? fkCartao { get; set; }
+        public DateTime? dtInclusao { get; set; }
+        public long? nuParcela { get; set; }
+        public long? vrValor { get; set; }
+        public long? nuIndice { get; set; }
+        public long? fkLoja { get; set; }
+        public long? nuTotParcelas { get; set; }
+        public long? fkTerminal { get; set; }
+        public long? fkLogTransacao { get; set; }
+        #endregion
+    }
+
+    #endregion
+
+    #endregion
+
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("------------------------");
-            Console.WriteLine("Patch!");
-            Console.WriteLine("------------------------");
+            var connStr = "User ID=postgres;Password=Gustavo123;Host=localhost;Port=5432;Database=Conveynet;";
 
-            // nunca tirar FDP
-            Console.ReadLine();
+            #region - Cartao - 
 
-            //ReFecha("09", "2020", 38, 2020, 9, 15, false);
-            //ForcaFech_9086("009086", new DateTime(2020, 9, 15, 0, 0, 0));
-
-            //SetaValoresEmpresa("009622", 17200, 17250);
-
-            //SetaValoresEmpresa("009622", 16000, 17200);
-            //SetaValoresEmpresa("009622", 56000, 57250);
-
-
-            //       MigraParcelas(new T_Cartao { st_empresa = "001201", st_matricula = "878870" }, new T_Cartao { st_empresa = "001201", st_matricula = "151806" });
-
-            //SetaSenhaEmpresaPorMatricula("009971");
-
-            //SetaValoresEmpresa("009971", 20000, 30000);
-
-            //ImportaLimites();
-
-            /* MigraParcelas ( new T_Cartao { st_empresa = "001201", st_matricula = "859575" }, new T_Cartao { st_empresa = "001201", st_matricula = "390531" }); */
-            /* MigraParcelas ( new T_Cartao { st_empresa = "001201", st_matricula = "979040" }, new T_Cartao { st_empresa = "001201", st_matricula = "239089" }); */
-
-            //CompilaDash();
-
-            //9620,9621,9622,9623,9624,5041
-
-            //ReFecha("03", "2020", 18, 2020, 3, 15);
-
-            //ForcaFech("009620", new DateTime(2020, 3, 1, 0, 12, 0));
-            //ForcaFech("009621", new DateTime(2020, 3, 1, 0, 12, 0));
-            //ForcaFech("009622", new DateTime(2020, 3, 1, 0, 12, 0));
-            //ForcaFech("009623", new DateTime(2020, 3, 1, 0, 12, 0));
-            //ForcaFech("009624", new DateTime(2020, 3, 1, 0, 12, 0));
-            // ForcaFech("001711", new DateTime(2020, 3, 13, 0, 09, 0));
-        }
-
-        static string DESCript(string dados, string chave = "12345678")
-        {
-            dados = dados.PadLeft(8, '*');
-
-            byte[] key = System.Text.Encoding.ASCII.GetBytes(chave);//{1,2,3,4,5,6,7,8};
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(dados);
-
-            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
-
-            des.Key = key;
-            des.Mode = CipherMode.ECB;
-
-            ICryptoTransform DESt = des.CreateEncryptor();
-            DESt.TransformBlock(data, 0, 8, data, 0);
-
-            string retorno = "";
-            for (int n = 0; n < 8; n++)
+            if (false)
             {
-                retorno += String.Format("{0:X2}", data[n]);
-            }
-
-            return retorno;
-        }
-
-        static void SetaValoresEmpresa(string stEmpresa, int vlrantigo, int vlrnovo)
-        {
-            using (var db = new AutorizadorCNDB())
-            {
-                var t_empresa = db.T_Empresa.FirstOrDefault(y => y.st_empresa == stEmpresa);
-
-                var lstCarts = db.T_Cartao.Where(y => y.st_empresa == stEmpresa).ToList();
-
-                foreach (var item in lstCarts)
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.T_Cartao.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
                 {
-                    if (item.vr_limiteMensal == vlrantigo)
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
                     {
-                        item.vr_limiteMensal = vlrnovo;
-                        item.vr_limiteTotal = vlrnovo;
+                        var lst = db.T_Cartao.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
 
-                        db.Update(item);
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var cart in lst)
+                        {
+                            var prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
+
+                            string cpf = "", nome = "";
+
+                            if (Convert.ToInt32(cart.st_titularidade) == 1)
+                            {
+                                cpf = prop.st_cpf;
+                                nome = prop.st_nome;
+                            }
+                            else
+                            {
+                                var dep = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == cart.fk_dadosProprietario);
+                                nome = dep.st_nome;
+                            }
+
+                            var novoCart = new Cartao
+                            {
+                                id = Convert.ToInt64(cart.i_unique),
+                                fkEmpresa = Convert.ToInt64(db.T_Empresa.Where(y => y.st_empresa == cart.st_empresa).FirstOrDefault().i_unique),
+                                nuMatricula = Convert.ToInt64(cart.st_matricula),
+                                nuTitularidade = Convert.ToInt64(cart.st_titularidade),
+                                stSenha = cart.st_senha,
+                                nuTipoCartao = Convert.ToInt64(cart.tg_tipoCartao.ToString()),
+                                stVenctoCartao = cart.st_venctoCartao,
+                                nuStatus = Convert.ToInt64(cart.tg_status.ToString()),
+                                nuSenhaErrada = cart.nu_senhaErrada,
+                                dtInclusao = cart.dt_inclusao,
+                                dtBloqueio = cart.dt_bloqueio,
+                                nuMotivoBloqueio = Convert.ToInt64(cart.tg_motivoBloqueio.ToString()),
+                                stBanco = cart.st_banco,
+                                stAgencia = cart.st_agencia,
+                                stConta = cart.st_conta,
+                                stMatExtra = cart.st_matriculaExtra,
+                                stCelCartao = cart.st_celCartao,
+                                stCpf = cpf,
+                                stNome = nome,
+                                stEndereco = prop.st_endereco,
+                                stNumero = prop.st_numero,
+                                stCompl = prop.st_complemento,
+                                stBairro = prop.st_bairro,
+                                stEstado = prop.st_UF,
+                                stCidade = prop.st_cidade,
+                                stCEP = prop.st_cep,
+                                stDDD = prop.st_ddd,
+                                stTelefone = prop.st_telefone,
+                                dtNasc = prop.dt_nasc,
+                                stEmail = prop.st_email,
+                                vrRenda = prop.vr_renda,
+                                nuViaCartao = cart.nu_viaCartao,
+                                vrLimiteTotal = cart.vr_limiteTotal,
+                                vrLimiteMensal = cart.vr_limiteMensal,
+                                vrLimiteRotativo = cart.vr_limiteRotativo,
+                                vrCotaExtra = cart.vr_extraCota,
+                                nuEmitido = Convert.ToInt64(cart.tg_emitido.ToString()),
+                                bConvenioComSaldo = cart.tg_convenioComSaldo,
+                                vrSaldoConvenio = cart.vr_saldoConvenio,
+                                dtPedidoCartao = cart.dtPedidoCartao
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"Cartao\" (\"id\",\"fkEmpresa\",\"nuMatricula\",\"nuTitularidade\",\"stSenha\",\"nuTipoCartao\"," +
+                                                                "\"stVenctoCartao\",\"nuStatus\",\"nuSenhaErrada\",\"dtInclusao\",\"dtBloqueio\",\"nuMotivoBloqueio\",\"stBanco\"," +
+                                                                "\"stAgencia\",\"stConta\",\"stMatExtra\",\"stCelCartao\",\"stCpf\",\"stNome\",\"stEndereco\",\"stNumero\",\"stCompl\"," +
+                                                                "\"stBairro\",\"stEstado\",\"stCidade\",\"stCEP\",\"stDDD\",\"stTelefone\",\"dtNasc\",\"stEmail\",\"vrRenda\",\"nuViaCartao\"," +
+                                                                "\"vrLimiteTotal\",\"vrLimiteMensal\",\"vrLimiteRotativo\",\"vrCotaExtra\",\"nuEmitido\",\"bConvenioComSaldo\",\"vrSaldoConvenio\"," +
+                                                                "\"dtPedidoCartao\" ) " +
+                                                                "VALUES ( @id,@fkEmpresa,@nuMatricula,@nuTitularidade,@stSenha,@nuTipoCartao,@stVenctoCartao,@nuStatus,@nuSenhaErrada," +
+                                                                "@dtInclusao,@dtBloqueio,@nuMotivoBloqueio,@stBanco,@stAgencia,@stConta,@stMatExtra,@stCelCartao," +
+                                                                "@stCpf,@stNome,@stEndereco,@stNumero,@stCompl,@stBairro,@stEstado,@stCidade,@stCEP,@stDDD,@stTelefone,@dtNasc,@stEmail,@vrRenda," +
+                                                                "@nuViaCartao,@vrLimiteTotal,@vrLimiteMensal,@vrLimiteRotativo,@vrCotaExtra,@nuEmitido,@bConvenioComSaldo,@vrSaldoConvenio,@dtPedidoCartao);", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novoCart.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novoCart.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuMatricula", ((object)novoCart.nuMatricula) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTitularidade", ((object)novoCart.nuTitularidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stSenha", ((object)novoCart.stSenha) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTipoCartao", ((object)novoCart.nuTipoCartao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stVenctoCartao", ((object)novoCart.stVenctoCartao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuStatus", ((object)novoCart.nuStatus) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuSenhaErrada", ((object)novoCart.nuSenhaErrada) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtInclusao", ((object)novoCart.dtInclusao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtBloqueio", ((object)novoCart.dtBloqueio) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuMotivoBloqueio", ((object)novoCart.nuMotivoBloqueio) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stBanco", ((object)novoCart.stBanco) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stAgencia", ((object)novoCart.stAgencia) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stConta", ((object)novoCart.stConta) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stMatExtra", ((object)novoCart.stMatExtra) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCelCartao", ((object)novoCart.stCelCartao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCpf", ((object)novoCart.stCpf) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stNome", ((object)novoCart.stNome) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEndereco", ((object)novoCart.stEndereco) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stNumero", ((object)novoCart.stNumero) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCompl", ((object)novoCart.stCompl) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stBairro", ((object)novoCart.stBairro) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEstado", ((object)novoCart.stEstado) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCidade", ((object)novoCart.stCidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCEP", ((object)novoCart.stCEP) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stDDD", ((object)novoCart.stDDD) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stTelefone", ((object)novoCart.stTelefone) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtNasc", ((object)novoCart.dtNasc) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEmail", ((object)novoCart.stEmail) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrRenda", ((object)novoCart.vrRenda) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuViaCartao", ((object)novoCart.nuViaCartao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrLimiteTotal", ((object)novoCart.vrLimiteTotal) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrLimiteMensal", ((object)novoCart.vrLimiteMensal) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrLimiteRotativo", ((object)novoCart.vrLimiteRotativo) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrCotaExtra", ((object)novoCart.vrCotaExtra) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuEmitido", ((object)novoCart.nuEmitido) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bConvenioComSaldo", ((object)novoCart.bConvenioComSaldo) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrSaldoConvenio", ((object)novoCart.vrSaldoConvenio) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtPedidoCartao", ((object)novoCart.dtPedidoCartao) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        dbPg.Close();
                     }
                 }
             }
-        }
 
-        static void SetaSenhaEmpresaPorMatricula(string stEmpresa)
-        {
-            using (var db = new AutorizadorCNDB())
-            {
-                var t_empresa = db.T_Empresa.FirstOrDefault(y => y.st_empresa == stEmpresa);
+            #endregion
 
-                var lstCarts = db.T_Cartao.Where(y => y.st_empresa == stEmpresa).ToList();
+            #region - ConfigPlasticoEnvio - 
 
-                foreach (var item in lstCarts)
-                {
-                    item.st_senha = DESCript(item.st_matricula.Substring (2,4));
-
-                    db.Update(item);
-                }
-            }
-        }
-
-        static void ImportaLimites()
-        {
-            using (var sr = new StreamReader("C:\\bkp\\limites.csv"))
+            if (false)
             {
                 using (var db = new AutorizadorCNDB())
+                using (var dbPg = new NpgsqlConnection(connStr))
                 {
-                    var t_empresa = db.T_Empresa.FirstOrDefault(y => y.st_empresa == "009971");
+                    var lst = db.ConfigPlasticoEnvio.OrderBy(y => y.id).ToList();
 
-                    while (!sr.EndOfStream)
+                    if (lst.Count() > 0)
                     {
-                        var line = sr.ReadLine();
+                        dbPg.Open();
 
-                        var dados = line.Split(';');
-
-                        // mat,nome,limite
-
-                        dados[0] = dados[0].PadLeft(6, '0');
-                        dados[1] = dados[1].Trim().PadRight(30, ' ').Substring(0, 30).Trim();
-                        dados[2] = dados[2].Replace(".", "").Replace(",", "").Replace("R$ ", "");
-
-                        var cart = db.T_Cartao.FirstOrDefault(y => y.st_empresa == t_empresa.st_empresa && y.st_matricula == dados[0]);
-
-                        if (cart == null)
+                        foreach (var item in lst)
                         {
-                            Console.WriteLine(dados[0] + " " + dados[1] + " - matricula não encontrada");
-                        }
-                        else
-                        { 
-                            cart.vr_limiteMensal = Convert.ToInt32(dados[2]);
-                            cart.vr_limiteTotal = Convert.ToInt32(dados[2]);
+                            var novo = new ConfigPlasticoEnvio
+                            {
+                                id = item.id,
+                                stDias = item.stDias,
+                                stHorario = item.stHorario,
+                                stEmails = item.stEmails,
+                                bAtivo = item.bAtivo,
+                                dom = item.dom,
+                                seg = item.seg,
+                                ter = item.ter,
+                                qua = item.qua,
+                                qui = item.qui,
+                                sex = item.sex,
+                                sab = item.sab,
+                                stEmailSmtp = item.stEmailSmtp,
+                                stSenhaSmtp = item.stSenhaSmtp,
+                                stHostSmtp = item.stHostSmtp,
+                                nuPortSmtp = item.nuPortSmtp,
+                                stStatus = item.stStatus,
+                            };
 
-                            db.Update(cart);
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"ConfigPlasticoEnvio\" (\"id\",\"stDias\",\"stHorario\",\"stEmails\",\"bAtivo\"," +
+                                                                "\"dom\",\"seg\",\"ter\",\"qua\",\"qui\",\"sex\",\"sab\",\"stEmailSmtp\",\"stSenhaSmtp\",\"stHostSmtp\",\"nuPortSmtp\",\"stStatus\" ) " +
+                                                                "VALUES ( @id,@stDias,@stHorario,@stEmails,@bAtivo," +
+                                                                "@dom,@seg,@ter,@qua,@qui,@sex,@sab,@stEmailSmtp,@stSenhaSmtp,@stHostSmtp,@nuPortSmtp,@stStatus );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stDias", ((object)novo.stDias) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stHorario", ((object)novo.stHorario) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEmails", ((object)novo.stEmails) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bAtivo", ((object)novo.bAtivo) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dom", ((object)novo.dom) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("seg", ((object)novo.seg) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("ter", ((object)novo.ter) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("qua", ((object)novo.qua) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("qui", ((object)novo.qui) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("sex", ((object)novo.sex) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("sab", ((object)novo.sab) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEmailSmtp", ((object)novo.stEmailSmtp) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stSenhaSmtp", ((object)novo.stSenhaSmtp) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stHostSmtp", ((object)novo.stHostSmtp) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuPortSmtp", ((object)novo.nuPortSmtp) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stStatus", ((object)novo.stStatus) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
                         }
                     }
                 }
             }
-        }
+            #endregion
 
-        static void ImportaCadastro()
-        {
-            using (var sr = new StreamReader("C:\\bkp\\cadastro.csv"))
+            #region - DashboardGrafico - 
+            if (false)
             {
+                long max = 9999999999;
                 using (var db = new AutorizadorCNDB())
+                    max = (long)db.DashboardGrafico.OrderByDescending(y => y.id).FirstOrDefault().id;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
                 {
-                    var t_empresa = db.T_Empresa.FirstOrDefault(y => y.st_empresa == "009971");
-
-                    while (!sr.EndOfStream)
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
                     {
-                        var line = sr.ReadLine();
+                        var lst = db.DashboardGrafico.Where(y => y.id >= g && y.id < t).OrderBy(y => y.id).ToList();
 
-                        var prop = new T_Proprietario();
-                        var cart = new T_Cartao();
+                        if (lst.Count() == 0)
+                            continue;
 
-                        var dados = line.Split(';');
+                        dbPg.Open();
 
-                        // mat,nome,cpf
-
-                        dados[0] = dados[0].PadLeft(6, '0');
-                        dados[1] = dados[1].Trim().PadRight(30, ' ').Substring(0, 30).Trim();
-                        dados[2] = dados[2].Replace(".", "").Replace("-", "");
-
-                        prop.dt_nasc = new DateTime(1970, 1, 1);
-                        prop.st_bairro = "";
-                        prop.st_cep = "";
-                        prop.st_cidade = "SANTO ANGELO";
-                        prop.st_complemento = "";
-                        prop.st_cpf = dados[2];
-                        prop.st_ddd = "";
-                        prop.st_email = "";
-                        prop.st_endereco = "";
-                        prop.st_nome = dados[1];
-                        prop.st_numero = "";
-                        prop.st_senhaEdu = "";
-                        prop.st_telefone = "";
-                        prop.st_UF = "RS";
-                        prop.vr_renda = 1000;
-
-                        var id_prop = Convert.ToInt32(db.InsertWithIdentity(prop));
-
-                        cart.fk_dadosProprietario = id_prop;
-
-                        cart.st_empresa = t_empresa.st_empresa;
-                        cart.st_matricula = dados[0];
-                        cart.dt_inclusao = DateTime.Now;
-                                                
-                        cart.nu_webSenhaErrada = 0;
-                        cart.st_agencia = "";
-                        cart.st_aluno = "";
-                        cart.st_banco = "";
-                        cart.st_celCartao = "";
-                        cart.st_conta = "";
-                        cart.st_titularidade = "01";
-                        cart.st_venctoCartao = "1227";
-
-                        cart.tg_convenioComSaldo = false;
-
-                        cart.vr_extraCota = 0;
-                        cart.vr_limiteMensal = 100;
-                        cart.vr_limiteRotativo = 100;
-                        cart.vr_limiteTotal = 100;
-
-                        cart.nu_viaCartao = 1;
-
-                        cart.tg_status = Convert.ToChar(CartaoStatus.Habilitado);
-                        cart.tg_emitido = Convert.ToInt32(StatusExpedicao.NaoExpedido);
-                        cart.tg_tipoCartao = Convert.ToChar(TipoCartao.empresarial);
-                        cart.nu_senhaErrada = Convert.ToInt32(Context.NONE);
-
-                        cart.i_unique = Convert.ToDecimal(db.InsertWithIdentity(cart));
-
-                        // ----------------------------------
-                        // log de auditoria
-                        // ----------------------------------
-
-                        db.Insert(new LOG_Audit
+                        foreach (var item in lst)
                         {
-                            dt_operacao = DateTime.Now,
-                            fk_usuario = 1,
-                            st_empresa = t_empresa.st_empresa,
-                            st_oper = "Novo Cartão (carga)",
-                            st_log = "Mat: " + cart.st_matricula + " Nome:" + prop.st_nome
-                        });
+                            var novo = new DashboardGrafico
+                            {
+                                id = item.id,
+                                nuTotalTransacoes = item.totalTransacoes,
+                                nuTotalCartoes = item.totalCartoes,
+                                nuTotalFinanc = item.totalFinanc,
+                                nuDia = item.nuDia,
+                                nuMes = item.nuMes,
+                                nuAno = item.nuAno,
+                                nuTotalLojas = item.totalLojas,
+                                dtDia = item.dtDia,
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"DashboardGrafico\" (\"id\",\"nuTotalTransacoes\",\"nuTotalCartoes\",\"nuTotalFinanc\"," +
+                                                                "\"nuDia\",\"nuMes\",\"nuAno\",\"nuTotalLojas\",\"dtDia\" ) " +
+                                                                "VALUES ( @id,@nuTotalTransacoes,@nuTotalCartoes,@nuTotalFinanc," +
+                                                                "@nuDia,@nuMes,@nuAno,@nuTotalLojas,@dtDia);", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTotalTransacoes", ((object)novo.nuTotalTransacoes) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTotalCartoes", ((object)novo.nuTotalCartoes) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTotalFinanc", ((object)novo.nuTotalFinanc) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuDia", ((object)novo.nuDia) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuMes", ((object)novo.nuMes) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuAno", ((object)novo.nuAno) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTotalLojas", ((object)novo.nuTotalLojas) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtDia", ((object)novo.dtDia) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
                     }
                 }
             }
-        }
+            #endregion
 
-        static void CompilaDash()
-        {
-            using (var db = new AutorizadorCNDB())
+            #region - Empresa - 
+            if (false)
             {
-                var dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
-                dt = dt.AddDays(-1);
-                
-                var dt_final = dt.AddHours(23).AddMinutes(59);
-
-                while (true)
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.T_Empresa.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
                 {
-                    var lst = db.LOG_Transacoes.
-                                    Where(y => y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
-                                    Where(y => y.dt_transacao > dt && y.dt_transacao < dt_final).
-                                    OrderByDescending(y => y.dt_transacao).
-                                    ToList();
-
-                    while ( dt_final > dt)
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
                     {
-                        var dt_temp = new DateTime(dt_final.Year, dt_final.Month, dt_final.Day);
-                        var _tmp_list = lst.Where(y => y.dt_transacao > dt_temp && y.dt_transacao < dt_final);
+                        var lst = db.T_Empresa.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
 
-                        Console.WriteLine(dt_temp + " até " + dt_final);
+                        if (lst.Count() == 0)
+                            continue;
 
-                        db.Insert( new DashboardGrafico
-                        { 
-                            nuAno = dt_temp.Year,
-                            nuMes = dt_temp.Month,
-                            nuDia = dt_temp.Day,
-                            totalTransacoes = _tmp_list.Count(),
-                            totalCartoes = _tmp_list.Select ( y=> y.fk_cartao).Distinct().Count(),
-                            totalFinanc = _tmp_list.Sum ( y=> (int) y.vr_total),
-                            totalLojas = _tmp_list.Select(y => y.fk_loja).Distinct().Count(),
-                            dtDia = dt_temp
-                        });
+                        dbPg.Open();
 
-                        if (dt_final.Day == 1)
+                        foreach (var item in lst)
                         {
-                            dt_final = dt_final.AddDays(-1);
+                            var novo = new Empresa
+                            {
+                                id = Convert.ToInt64(item.i_unique),
+                                nuEmpresa = Convert.ToInt64(item.st_empresa),
+                                stCNPJ = item.nu_CNPJ,
+                                stFantasia = item.st_fantasia,
+                                stSocial = item.st_social,
+                                stEndereco = item.st_endereco,
+                                stCidade = item.st_cidade,
+                                stEstado = item.st_estado,
+                                stCEP = item.nu_CEP.ToString(),
+                                stTelefone = item.nu_telefone,
+                                nuParcelas = Convert.ToInt64(item.nu_parcelas),
+                                bBlocked = item.tg_blocked.ToString() == "1" ? true : false,
+                                fkAdmin = item.fk_admin,
+                                stContaDeb = item.nu_contaDeb,
+                                vrMensalidade = item.vr_mensalidade,
+                                nuPctValor = item.nu_pctValor,
+                                vrTransacao = item.vr_transacao,
+                                vrMinimo = item.vr_minimo,
+                                nuFranquiaTrans = item.nu_franquia,
+                                nuPeriodoFat = item.nu_periodoFat,
+                                nuDiaVenc = item.nu_diaVenc,
+                                stBancoFat = item.nu_bancoFat.ToString(),
+                                vrCartaoAtivo = item.vr_cartaoAtivo,
+                                bIsentoFat = item.tg_isentoFat == 1 ? true : false,
+                                stObs = item.st_obs,
+                                stHomepage = item.st_homepage,
+                                nuDiaFech = item.nu_diaFech,
+                                stHoraFech = item.st_horaFech,
+                                bConvenioSaldo = item.tg_convenioComSaldo,
+                                fkParceiro = item.fkParceiro,
+                                stEmailPlastico = item.st_emailPlastico
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"Empresa\" (\"id\",\"nuEmpresa\",\"stCNPJ\",\"stFantasia\",\"stSocial\",\"stEndereco\",\"stCidade\"," +
+                                                                "\"stEstado\",\"stCEP\",\"stTelefone\",\"nuParcelas\",\"bBlocked\",\"fkAdmin\",\"stContaDeb\",\"vrMensalidade\",\"nuPctValor\",\"vrTransacao\"," +
+                                                                "\"vrMinimo\",\"nuFranquiaTrans\",\"nuPeriodoFat\",\"nuDiaVenc\",\"stBancoFat\",\"vrCartaoAtivo\",\"bIsentoFat\",\"stObs\"," +
+                                                                "\"stHomepage\",\"nuDiaFech\",\"stHoraFech\",\"bConvenioSaldo\",\"fkParceiro\",\"stEmailPlastico\" ) " +
+                                                                "VALUES ( @id,@nuEmpresa,@stCNPJ,@stFantasia,@stSocial,@stEndereco,@stCidade," +
+                                                                "@stEstado,@stCEP,@stTelefone,@nuParcelas,@bBlocked,@fkAdmin,@stContaDeb,@vrMensalidade,@nuPctValor,@vrTransacao," +
+                                                                "@vrMinimo,@nuFranquiaTrans,@nuPeriodoFat,@nuDiaVenc,@stBancoFat,@vrCartaoAtivo,@bIsentoFat,@stObs," +
+                                                                "@stHomepage,@nuDiaFech,@stHoraFech,@bConvenioSaldo,@fkParceiro,@stEmailPlastico );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuEmpresa", ((object)novo.nuEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCNPJ", ((object)novo.stCNPJ) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stFantasia", ((object)novo.stFantasia) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stSocial", ((object)novo.stSocial) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEndereco", ((object)novo.stEndereco) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCidade", ((object)novo.stCidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEstado", ((object)novo.stEstado) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCEP", ((object)novo.stCEP) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stTelefone", ((object)novo.stTelefone) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuParcelas", ((object)novo.nuParcelas) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bBlocked", ((object)novo.bBlocked) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkAdmin", ((object)novo.fkAdmin) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stContaDeb", ((object)novo.stContaDeb) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrMensalidade", ((object)novo.vrMensalidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuPctValor", ((object)novo.nuPctValor) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrTransacao", ((object)novo.vrTransacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrMinimo", ((object)novo.vrMinimo) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuFranquiaTrans", ((object)novo.nuFranquiaTrans) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuPeriodoFat", ((object)novo.nuPeriodoFat) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuDiaVenc", ((object)novo.nuDiaVenc) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stBancoFat", ((object)novo.stBancoFat) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrCartaoAtivo", ((object)novo.vrCartaoAtivo) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bIsentoFat", ((object)novo.bIsentoFat) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stObs", ((object)novo.stObs) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stHomepage", ((object)novo.stHomepage) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuDiaFech", ((object)novo.nuDiaFech) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stHoraFech", ((object)novo.stHoraFech) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bConvenioSaldo", ((object)novo.bConvenioSaldo) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkParceiro", ((object)novo.fkParceiro) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEmailPlastico", ((object)novo.stEmailPlastico) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region - Faturamento - 
+            if (false)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.T_Faturamento.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.T_Faturamento.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new Faturamento
+                            {
+                                id = Convert.ToInt64(item.i_unique),
+                                fkEmpresa = item.fk_empresa,
+                                fkLoja = item.fk_loja,
+                                dtBaixa = item.dt_baixa,
+                                dtVencimento = item.dt_vencimento,
+                                nuRetBanco = Convert.ToInt64(item.tg_retBanco),
+                                nuSituacao = Convert.ToInt64(item.tg_situacao),
+                                vrCobranca = Convert.ToInt64(item.vr_cobranca),
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"Faturamento\" (\"id\",\"fkEmpresa\",\"fkLoja\",\"dtBaixa\",\"dtVencimento\",\"nuRetBanco\",\"nuSituacao\",\"vrCobranca\" ) " +
+                                                                "VALUES ( @id,@fkEmpresa,@fkLoja,@dtBaixa,@dtVencimento,@nuRetBanco,@nuSituacao,@vrCobranca );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkLoja", ((object)novo.fkLoja) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtBaixa", ((object)novo.dtBaixa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtVencimento", ((object)novo.dtVencimento) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuRetBanco", ((object)novo.nuRetBanco) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuSituacao", ((object)novo.nuSituacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrCobranca", ((object)novo.vrCobranca) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+
                             break;
                         }
-                        else
-                            dt_final = dt_final.AddDays(-1);
-                    }
-
-                    dt = dt.AddMonths(-1);                    
-                }
-            }
-        }
-
-        static void MigraParcelas( T_Cartao cartOriginal, T_Cartao cartDestino)
-        {
-            using (var db = new AutorizadorCNDB())
-            {
-                var t_cartOriginal = (  from e in db.T_Cartao
-                                        where e.st_empresa == cartOriginal.st_empresa
-                                        where e.st_matricula == cartOriginal.st_matricula
-                                        select e).
-                                        FirstOrDefault();
-
-                var t_cartDestino = (from e in db.T_Cartao
-                                      where e.st_empresa == cartDestino.st_empresa
-                                      where e.st_matricula == cartDestino.st_matricula
-                                      select e).
-                                        FirstOrDefault();
-
-                var lstParcelasOriginais = (from e in db.T_Parcelas
-                                   where e.fk_cartao == t_cartOriginal.i_unique
-                                   where e.nu_parcela == 1
-                                   select e).
-                                        ToList();
-
-                foreach (var parcelaOriginal in lstParcelasOriginais)
-                {
-                    if (parcelaOriginal.nu_indice > 1)
-                    {
-                        // ---------------------------------------
-                        // antiga, com várias parcelas
-                        // ---------------------------------------
-
-                        // busco transacao original
-                        var tbLogTransOriginal = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parcelaOriginal.fk_log_transacoes);
-
-                        var totalParcsOriginal = tbLogTransOriginal.nu_parcelas;
-
-                        //                        2   =    3             - 1        
-                        var atualizaLogTransOrigParcs = parcelaOriginal.nu_indice - 1;
-
-                        tbLogTransOriginal.nu_parcelas = atualizaLogTransOrigParcs;
-
-                        // somar valores
-                        {
-                            tbLogTransOriginal.vr_total = 0;
-
-                            // atualizar parcelas desta transacao original
-                            var lst_parcs_antigas = db.T_Parcelas.
-                                                        Where(y => y.fk_log_transacoes == parcelaOriginal.fk_log_transacoes).
-                                                        Where(y => y.nu_indice <= atualizaLogTransOrigParcs).
-                                                        OrderBy(y => y.nu_indice).
-                                                        ToList();
-
-                            foreach (var itemParc in lst_parcs_antigas)
-                                tbLogTransOriginal.vr_total += itemParc.vr_valor;
-                        }
-
-                        // transação original com parcelas reduzidas e valor reduzido atualizada
-                        db.Update(tbLogTransOriginal);
-
-                        //gera nsu
-                        var novoNSU = new LOG_NSU();
-                        novoNSU.i_unique = Convert.ToInt32(db.InsertWithIdentity(novoNSU));
-
-                        // criar nova transação para as restantes
-                        var novaTransacao = new LOG_Transaco
-                        {
-                            vr_total = 0, // será calculada pelas parcelas restantes
-                            dt_transacao = DateTime.Now, // data de hoje
-                            en_operacao = tbLogTransOriginal.en_operacao,
-                            fk_cartao = (int)t_cartDestino.i_unique,
-                            fk_empresa = tbLogTransOriginal.fk_empresa,
-                            fk_loja = tbLogTransOriginal.fk_loja,
-                            fk_terminal = tbLogTransOriginal.fk_terminal,
-                            nu_cod_erro = tbLogTransOriginal.nu_cod_erro,
-                            nu_nsu = (int)novoNSU.i_unique,
-                            nu_nsuOrig = (int)novoNSU.i_unique,
-
-                            //       8  =  10                - 2           
-                            nu_parcelas = totalParcsOriginal - atualizaLogTransOrigParcs,
-
-                            st_doc = "",
-                            st_msg_transacao = tbLogTransOriginal.st_msg_transacao,
-                            tg_confirmada = tbLogTransOriginal.tg_confirmada,
-                            tg_contabil = tbLogTransOriginal.tg_contabil,
-                            vr_saldo_disp = tbLogTransOriginal.vr_saldo_disp,
-                            vr_saldo_disp_tot = tbLogTransOriginal.vr_saldo_disp_tot,
-                        };
-
-                        // acumular valores das outras parcelas
-                        {                            
-                            var lst_parcs_antigas = db.T_Parcelas.
-                                                        Where(y => y.fk_log_transacoes == parcelaOriginal.fk_log_transacoes).
-                                                        Where(y => y.nu_indice > atualizaLogTransOrigParcs).
-                                                        OrderBy(y => y.nu_indice).
-                                                        ToList();
-
-                            foreach (var itemParc in lst_parcs_antigas)
-                                novaTransacao.vr_total += itemParc.vr_valor;
-                        }
-
-                        novaTransacao.i_unique = Convert.ToInt32(db.InsertWithIdentity(novaTransacao));
-
-                        {
-                            // atualizar parcelas da nova transacao
-                            var lst_parcs_antigas = db.T_Parcelas.
-                                                        Where(y => y.fk_log_transacoes == parcelaOriginal.fk_log_transacoes).
-                                                        Where(y => y.nu_indice > atualizaLogTransOrigParcs).
-                                                        OrderBy ( y=> y.nu_indice).
-                                                        ToList();
-
-                            int index = 1;
-
-                            foreach (var itemParc in lst_parcs_antigas)
-                            {
-                                itemParc.fk_cartao = (int)t_cartDestino.i_unique;
-                                itemParc.fk_log_transacoes = (int) novaTransacao.i_unique;
-                                itemParc.dt_inclusao = novaTransacao.dt_transacao;
-                                itemParc.nu_parcela = index;
-                                itemParc.nu_indice = index;
-                                itemParc.nu_nsu = novaTransacao.nu_nsu;                                
-                                itemParc.nu_tot_parcelas = novaTransacao.nu_parcelas;
-
-                                db.Update(itemParc);
-
-                                index++;
-                            }                                
-                        }
-                    }
-                    else
-                    {
-                        // ----------------------------------------
-                        // deste mes, apenas trocar as chaves
-                        // ----------------------------------------
-
-                        // busco transacao original
-                        var tbLogTransOriginal = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parcelaOriginal.fk_log_transacoes);
-
-                        tbLogTransOriginal.fk_cartao = (int)t_cartDestino.i_unique;
-
-                        // transação original com chave nova do cartão novo
-                        db.Update(tbLogTransOriginal);
-
-                        // atualizar parcelas desta transacao original
-                        var lst_parcs_update = db.T_Parcelas.Where(y => y.fk_log_transacoes == parcelaOriginal.fk_log_transacoes).ToList();
-
-                        foreach (var pUp in lst_parcs_update)
-                        {
-                            pUp.fk_cartao = (int)t_cartDestino.i_unique;
-                            db.Update(pUp);
-                        }
                     }
                 }
-            }
-        }
-
-        static void LimpaScheduler()
-        {
-            using (var db = new AutorizadorCNDB())
-            {
-                var lstSchedul = (from e in db.I_Scheduler
-                                   where e.st_job.StartsWith("schedule_fech_mensal;empresa;")
-                                   select e).
-                                   ToList();
-
-                foreach (var item in lstSchedul)
-                {
-                    db.Delete(item);
-                }
-            }
-        }
-
-        static void CopiaDadosDoScheduler()
-        {
-            using (var db = new AutorizadorCNDB())
-            {
-                foreach (var item in db.T_Empresa.ToList())
-                {
-                    var t_scheduler = (from e in db.I_Scheduler
-                                       where e.st_job.StartsWith("schedule_fech_mensal;empresa;" + item.st_empresa)
-                                       select e).
-                                       FirstOrDefault();
-
-                    if (t_scheduler == null)
-                        continue;
-
-                    var dbEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == item.i_unique);
-
-                    dbEmp.st_horaFech = t_scheduler.st_monthly_hhmm;
-                    dbEmp.nu_diaFech = t_scheduler.nu_monthly_day;
-
-                    db.Update(dbEmp);
-                }
-            }
-        }
-
-        static void AjustaParcela(int idParcela)
-        {
-            #region - code - 
-            Console.WriteLine(idParcela);
-
-            using (var db = new AutorizadorCNDB())
-            {
-                var fech = db.LOG_Fechamento.FirstOrDefault(y => y.fk_parcela == idParcela);
-
-                var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == idParcela);
-                parcUpd.nu_parcela++;
-                db.Update(parcUpd);
-
-                db.Delete(fech);
             }
             #endregion
-        }
 
-        static void AjustaParcelasErradas(string arquivo, int fkEmpresa, string mes, string ano)
-        {
-            #region - code - 
-
-            using (var db = new AutorizadorCNDB())
+            #region - FaturamentoDetalhe - 
+            if (false)
             {
-                var dbEmpresa = db.T_Empresa.FirstOrDefault(y => y.i_unique == fkEmpresa);
-
-                var lstFech = db.LOG_Fechamento.Where(y => y.fk_empresa == fkEmpresa && y.st_mes == mes && y.st_ano == ano).ToList();
-
-                using (var sr = new StreamReader(arquivo))
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.T_FaturamentoDetalhes.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
                 {
-                    var loja = new T_Loja();
-
-                    while (!sr.EndOfStream)
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
                     {
-                        var line = sr.ReadLine();
+                        var lst = db.T_FaturamentoDetalhes.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
 
-                        if (line.StartsWith("="))
-                        {
-                            loja = db.T_Loja.FirstOrDefault(y => y.st_loja == line.Replace("=", ""));
-
-                            if (loja == null)
-                                throw new Exception("ERRO: " + line + " não existe loja!");
-                            else
-                            {
-                                Console.WriteLine(">> " + loja.st_nome);
-                            }
-                        }
-                        else if (line.StartsWith("*"))
-                        {
-                            Console.WriteLine(line);
-
-                            var dados = line.Split(';');
-
-                            var nsu = Convert.ToInt32(dados[1]);
-
-                            var cartao_mat = dados[3].Split('.')[0].PadLeft(6, '0');
-                            var cartao_tit = dados[3].Split('.')[1];
-
-                            var valor = Convert.ToInt64(dados[5].Replace(",", "").Replace(".", ""));
-                            var parcela = dados[6].Split('/')[0].Trim();
-
-                            var dbCart = db.T_Cartao.FirstOrDefault(y => y.st_empresa == dbEmpresa.st_empresa && y.st_matricula == cartao_mat && y.st_titularidade == cartao_tit);
-
-                            if (dbCart != null)
-                            {
-                                var log_fech = lstFech.Where(y => y.fk_loja == loja.i_unique &&
-                                                                      y.nu_parcela.ToString() == parcela &&
-                                                                      y.fk_cartao == dbCart.i_unique).ToList();
-
-                                bool found = false;
-
-                                foreach (var itemF in log_fech)
-                                {
-                                    var t_parc = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemF.fk_parcela);
-
-                                    if (t_parc != null)
-                                    {
-                                        if (t_parc.nu_nsu == nsu)
-                                        {
-                                            // ajusta a parcela
-                                            var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemF.fk_parcela);
-                                            parcUpd.nu_parcela++;
-                                            db.Update(parcUpd);
-
-                                            // deleta o fechamento
-                                            db.Delete(log_fech);
-                                            Console.WriteLine("Ajustado!");
-
-                                            found = true;
-                                        }
-                                    }
-                                }
-
-                                if (!found)
-                                    Console.WriteLine("Não achou fechamento!");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Não achou cartão!");
-                            }
-                        }
-                    }
-                }
-            }
-
-            #endregion
-        }
-
-        static void ForcaFech(string mat, DateTime dt)
-        {
-            #region -  code - 
-
-            using (var db = new AutorizadorCNDB())
-            {
-                string currentEmpresa = "";
-
-                try
-                {
-                    var diaFechamento = dt.Day;
-                    var horaAtual = dt.ToString("HHmm");
-                    var ano = dt.ToString("yyyy");
-                    var mes = dt.ToString("MM").PadLeft(2, '0');
-
-                    var lstEmpresas = db.T_Empresa.Where(y => y.st_empresa == mat).ToList();
-
-                    foreach (var empresa in lstEmpresas)
-                    {
-                        // ------------------------------
-                        // só fecha uma vez no mes
-                        // ------------------------------
-
-                        if (db.LOG_Fechamento.Any(y => y.st_ano == ano &&
-                                                        y.st_mes == mes &&
-                                                        y.fk_empresa == empresa.i_unique))
+                        if (lst.Count() == 0)
                             continue;
 
-                        currentEmpresa = empresa.st_empresa;
+                        dbPg.Open();
 
-                        db.Insert(new LOG_Audit
+                        foreach (var item in lst)
                         {
-                            dt_operacao = DateTime.Now,
-                            fk_usuario = null,
-                            st_oper = "Fechamento [INICIO]",
-                            st_empresa = currentEmpresa,
-                            st_log = "Ano " + ano + " Mes " + mes
-                        });
-
-                        var g_job = new T_JobFechamento
-                        {
-                            dt_inicio = DateTime.Now,
-                            dt_fim = null,
-                            fk_empresa = (int)empresa.i_unique,
-                            st_ano = ano,
-                            st_mes = mes
-                        };
-
-                        // ----------------------------
-                        // registra job
-                        // ----------------------------
-
-                        g_job.i_unique = Convert.ToInt32(db.InsertWithIdentity(g_job));
-
-                        // ----------------------------
-                        // busca parcelas
-                        // ----------------------------
-
-                        long totValor = 0, ind_parc = 1, tot_parcs_sel;
-
-                        var lst = db.T_Parcelas.Where(y => y.fk_empresa == empresa.i_unique && y.nu_parcela > 0).ToList();
-
-                        tot_parcs_sel = lst.Count();
-
-                        foreach (var parc in lst)
-                        {
-                            // ----------------------------
-                            // somente confirmadas
-                            // ----------------------------
-
-                            var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
-
-                            if (logTrans == null)
-                                continue;
-                            else
+                            var novo = new FaturamentoDetalhe
                             {
-                                if (logTrans.tg_confirmada == null)
-                                    continue;
+                                id = Convert.ToInt64(item.i_unique),
+                                bDesconto = item.tg_desconto.ToString() == "1" ? true : false,
+                                fkEmpresa = Convert.ToInt64(item.fk_empresa),
+                                fkFatura = Convert.ToInt64(item.fk_fatura),
+                                fkLoja = Convert.ToInt64(item.fk_loja),
+                                nuQuantidade = Convert.ToInt64(item.nu_quantidade),
+                                nuTipoFat = Convert.ToInt64(item.tg_tipoFat.ToString()),
+                                stExtras = item.st_extras,
+                                vrCobranca = Convert.ToInt64(item.vr_cobranca),
+                            };
 
-                                if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
-                                    continue;
-
-                                if (logTrans.dt_transacao > dt)
-                                    continue;
-                            }
-
-                            Console.WriteLine(empresa.st_empresa + " > " + empresa.i_unique + " --> " + ind_parc++ + " / " + tot_parcs_sel);
-
-                            // ----------------------------
-                            // decrementa parcela
-                            // ----------------------------
-
-                            var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == parc.i_unique);
-                            parcUpd.nu_parcela--;
-                            db.Update(parcUpd);
-
-                            // -------------------------------------------
-                            // insere fechamento quando parcela zerar 
-                            // -------------------------------------------
-
-                            if (parcUpd.nu_parcela == 0)
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"FaturamentoDetalhe\" (\"id\",\"bDesconto\",\"fkEmpresa\",\"fkFatura\",\"fkLoja\",\"nuQuantidade\",\"nuTipoFat\",\"stExtras\",\"vrCobranca\" ) " +
+                                                                "VALUES ( @id,@bDesconto,@fkEmpresa,@fkFatura,@fkLoja,@nuQuantidade,@nuTipoFat,@stExtras,@vrCobranca );", dbPg))
                             {
-                                totValor += (int)parc.vr_valor;
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bDesconto", ((object)novo.bDesconto) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkFatura", ((object)novo.fkFatura) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkLoja", ((object)novo.fkLoja) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuQuantidade", ((object)novo.nuQuantidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTipoFat", ((object)novo.nuTipoFat) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stExtras", ((object)novo.stExtras) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrCobranca", ((object)novo.vrCobranca) ?? DBNull.Value);
 
-                                db.Insert(new LOG_Fechamento
-                                {
-                                    dt_compra = logTrans.dt_transacao,
-                                    dt_fechamento = DateTime.Now,
-                                    fk_cartao = parc.fk_cartao,
-                                    fk_empresa = parc.fk_empresa,
-                                    fk_loja = parc.fk_loja,
-                                    fk_parcela = (int)parc.i_unique,
-                                    nu_parcela = parc.nu_parcela,
-                                    st_afiliada = "",
-                                    st_ano = ano,
-                                    st_mes = mes,
-                                    vr_valor = parc.vr_valor
-                                });
+                                cmd.ExecuteNonQuery();
                             }
                         }
-
-                        // ----------------------------
-                        // registra job / finalizado!
-                        // ----------------------------
-
-                        g_job.dt_fim = DateTime.Now;
-
-                        db.Update(g_job);
-
-                        db.Insert(new LOG_Audit
-                        {
-                            dt_operacao = DateTime.Now,
-                            fk_usuario = null,
-                            st_oper = "Fechamento [OK]",
-                            st_empresa = currentEmpresa,
-                            st_log = "Ano " + ano + " Mes " + mes + " Valor => " + totValor
-                        });
                     }
                 }
-                catch (SystemException ex)
-                {
-                    db.Insert(new LOG_Audit
-                    {
-                        dt_operacao = DateTime.Now,
-                        fk_usuario = null,
-                        st_oper = "Fechamento [ERRO]",
-                        st_empresa = currentEmpresa,
-                        st_log = ex.ToString()
-                    });
-                }
             }
-
             #endregion
-        }
 
-        static void ForcaFech_9086(string mat, DateTime dt)
-        {
-            #region -  code - 
-
-            using (var db = new AutorizadorCNDB())
+            #region - JobFechamento - 
+            if (false)
             {
-                string currentEmpresa = "";
-
-                try
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.T_JobFechamento.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
                 {
-                    var diaFechamento = dt.Day;
-                    var horaAtual = dt.ToString("HHmm");
-                    var ano = dt.ToString("yyyy");
-                    var mes = dt.ToString("MM").PadLeft(2, '0');
-
-                    var lstEmpresas = db.T_Empresa.Where(y => y.st_empresa == mat).ToList();
-
-                    foreach (var empresa in lstEmpresas)
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
                     {
-                        // ------------------------------
-                        // só fecha uma vez no mes
-                        // ------------------------------
+                        var lst = db.T_JobFechamento.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
 
-                        if (db.LOG_Fechamento.Any(y => y.st_ano == ano &&
-                                                        y.st_mes == mes &&
-                                                        y.fk_empresa == empresa.i_unique))
+                        if (lst.Count() == 0)
                             continue;
 
-                        currentEmpresa = empresa.st_empresa;
+                        dbPg.Open();
 
-                        db.Insert(new LOG_Audit
+                        foreach (var item in lst)
                         {
-                            dt_operacao = DateTime.Now,
-                            fk_usuario = null,
-                            st_oper = "Fechamento [INICIO]",
-                            st_empresa = currentEmpresa,
-                            st_log = "Ano " + ano + " Mes " + mes
-                        });
-
-                        var g_job = new T_JobFechamento
-                        {
-                            dt_inicio = DateTime.Now,
-                            dt_fim = null,
-                            fk_empresa = (int)empresa.i_unique,
-                            st_ano = ano,
-                            st_mes = mes
-                        };
-
-                        // ----------------------------
-                        // registra job
-                        // ----------------------------
-
-                        g_job.i_unique = Convert.ToInt32(db.InsertWithIdentity(g_job));
-
-                        var lst = new List<T_Parcela>();
-
-                        // ---------------------------------------------------------------------
-                        // ajustar parcelas futuras de agosto que ferraram o nu_parcela
-
-                        // no dia 10 de agosto, fiz 5 parcelas de 10 pila
-                        // a 1 fica 0, 2 fica 1, etc
-
-                        {
-                            var lst_fech_anterior = db.LOG_Fechamento.Where(y => y.fk_empresa == empresa.i_unique && 
-                                                                                 y.st_mes == "08" && 
-                                                                                 y.st_ano == "2020").
-                                                                                 ToList();
-
-                            int index = 1 , tot = lst_fech_anterior.Count();
-
-                            foreach (var fech in lst_fech_anterior)
+                            var novo = new JobFechamento
                             {
-                                Console.WriteLine(empresa.st_empresa + " > " + empresa.i_unique + " --> A " + index++ + " / " + tot);
+                                id = Convert.ToInt64(item.i_unique),
+                                dtFim = item.dt_fim,
+                                dtInicio = item.dt_inicio,
+                                fkEmpresa = item.fk_empresa,
+                                nuAno = Convert.ToInt64(item.st_ano),
+                                nuMes = Convert.ToInt64(item.st_mes),
+                            };
 
-                                using (var db2 = new AutorizadorCNDB())
-                                {
-                                    var t_parcela_anterior = db2.T_Parcelas.FirstOrDefault(y => y.i_unique == fech.fk_parcela);
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"JobFechamento\" (\"id\",\"dtFim\",\"dtInicio\",\"fkEmpresa\",\"nuAno\",\"nuMes\" ) " +
+                                                                "VALUES ( @id,@dtFim,@dtInicio,@fkEmpresa,@nuAno,@nuMes );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtFim", ((object)novo.dtFim) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtInicio", ((object)novo.dtInicio) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuAno", ((object)novo.nuAno) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuMes", ((object)novo.nuMes) ?? DBNull.Value);
 
-                                    var lst_parcs_to_fix = db2.T_Parcelas.Where(y => y.fk_log_transacoes == t_parcela_anterior.fk_log_transacoes &&
-                                                                                    y.nu_indice > t_parcela_anterior.nu_indice).
-                                                                                    OrderBy(y => y.nu_indice).
-                                                                                    ToList();
-
-                                    if (lst_parcs_to_fix.Any())
-                                    {
-                                        int nu_parcela = (int)t_parcela_anterior.nu_parcela + 1;
-
-                                        bool insert = false;
-
-                                        foreach (var item_fix in lst_parcs_to_fix)
-                                        {
-                                            item_fix.nu_parcela = nu_parcela;
-
-                                            db2.Update(item_fix);
-
-                                            if (!insert)
-                                            {
-                                                insert = true;
-                                                lst.Add(item_fix);
-                                            }
-
-                                            nu_parcela++;
-                                        }
-                                    }
-                                }
+                                cmd.ExecuteNonQuery();
                             }
                         }
-                        
-                        // ----------------------------
-                        // busca transações do periodo
-                        // ----------------------------
-
-                        var dt_ini = dt.AddMonths(-1);
-
-                        var lst_antigas_transacoes = db.LOG_Transacoes.Where(y => y.fk_empresa == empresa.i_unique && 
-                                                                                   y.dt_transacao > dt_ini && y.dt_transacao < dt && 
-                                                                                   y.tg_confirmada.ToString() == TipoConfirmacao.Confirmada).
-                                                                                   ToList();
-
-                        // ----------------------------------
-                        // ajusta nu_parcela das parcelas
-                        // ----------------------------------
-
-                        {
-                            int index = 1, tot = lst_antigas_transacoes.Count();
-
-                            foreach (var item in lst_antigas_transacoes)
-                            {
-                                Console.WriteLine(empresa.st_empresa + " > " + empresa.i_unique + " --> B " + index++ + " / " + tot);
-
-                                using (var db2 = new AutorizadorCNDB())
-                                {
-                                    var lst_parcs_to_fix = db2.T_Parcelas.Where(y => y.fk_log_transacoes == item.i_unique).
-                                                                                OrderBy(y => y.nu_indice).
-                                                                                ToList();
-
-                                    if (lst_parcs_to_fix.Any())
-                                    {
-                                        int nu_parcela = 1;
-
-                                        foreach (var item_fix in lst_parcs_to_fix)
-                                        {
-                                            if (nu_parcela == 1)
-                                                lst.Add(item_fix);
-
-                                            item_fix.nu_parcela = nu_parcela;
-
-                                            db2.Update(item_fix);
-
-                                            nu_parcela++;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        // ----------------------------
-                        // busca parcelas
-                        // ----------------------------
-
-                        int tot_parcs_sel = lst.Count(), ind_parc = 1;
-                        long totValor = 0;
-
-                        foreach (var parc in lst)
-                        {
-                            using (var db2 = new AutorizadorCNDB())
-                            {
-                                // ----------------------------
-                                // somente confirmadas
-                                // ----------------------------
-
-                                var logTrans = db2.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
-
-                                if (logTrans == null)
-                                    continue;
-                                else
-                                {
-                                    if (logTrans.tg_confirmada == null)
-                                        continue;
-
-                                    if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
-                                        continue;
-
-                                    if (logTrans.dt_transacao > dt)
-                                        continue;
-                                }
-
-                                Console.WriteLine(empresa.st_empresa + " > " + empresa.i_unique + " --> C " + ind_parc++ + " / " + tot_parcs_sel);
-
-                                // ----------------------------
-                                // decrementa parcela
-                                // ----------------------------
-
-                                var parcUpd = db2.T_Parcelas.FirstOrDefault(y => y.i_unique == parc.i_unique);
-                                parcUpd.nu_parcela--;
-                                db2.Update(parcUpd);
-
-                                // -------------------------------------------
-                                // insere fechamento quando parcela zerar 
-                                // -------------------------------------------
-
-                                if (parcUpd.nu_parcela == 0)
-                                {
-                                    totValor += (int)parc.vr_valor;
-
-                                    db2.Insert(new LOG_Fechamento
-                                    {
-                                        dt_compra = logTrans.dt_transacao,
-                                        dt_fechamento = DateTime.Now,
-                                        fk_cartao = parc.fk_cartao,
-                                        fk_empresa = parc.fk_empresa,
-                                        fk_loja = parc.fk_loja,
-                                        fk_parcela = (int)parc.i_unique,
-                                        nu_parcela = parc.nu_parcela,
-                                        st_afiliada = "",
-                                        st_ano = ano,
-                                        st_mes = mes,
-                                        vr_valor = parc.vr_valor
-                                    });
-                                }
-                            }
-                        }
-
-                        // ----------------------------
-                        // registra job / finalizado!
-                        // ----------------------------
-
-                        g_job.dt_fim = DateTime.Now;
-
-                        db.Update(g_job);
-
-                        db.Insert(new LOG_Audit
-                        {
-                            dt_operacao = DateTime.Now,
-                            fk_usuario = null,
-                            st_oper = "Fechamento [OK]",
-                            st_empresa = currentEmpresa,
-                            st_log = "Ano " + ano + " Mes " + mes + " Valor => " + totValor
-                        });
                     }
-                }
-                catch (SystemException ex)
-                {
-                    db.Insert(new LOG_Audit
-                    {
-                        dt_operacao = DateTime.Now,
-                        fk_usuario = null,
-                        st_oper = "Fechamento [ERRO]",
-                        st_empresa = currentEmpresa,
-                        st_log = ex.ToString()
-                    });
                 }
             }
-
             #endregion
-        }
 
-        static void FixDeVelho(string mesAnt, string anoAnt, int fkEmpresa, string mesAtual, string anoAtual, int anoF, int mesF, int diaF)
-        {
-            #region - code -
-            using (var db = new AutorizadorCNDB())
+            #region - LogAudit - 
+            if (false)
             {
-                //busca trans antigas
-
-                var targetDtFech = new DateTime(anoF, mesF, diaF, 0, 5, 0);
-
-                var lstOld = db.LOG_Fechamento.Where(y => y.fk_empresa == fkEmpresa && y.st_mes == mesAnt && y.st_ano == anoAnt).ToList();
-                var lstCurrentFech = db.LOG_Fechamento.Where(y => y.fk_empresa == fkEmpresa && y.st_mes == mesAtual && y.st_ano == anoAtual).ToList();
-
-                foreach (var itemFech in lstOld)
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.LOG_Audit.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
                 {
-                    var parcOldFech = db.T_Parcelas.FirstOrDefault(y => itemFech.fk_parcela == y.i_unique);
-
-                    if (parcOldFech == null)
-                        continue;
-
-                    var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parcOldFech.fk_log_transacoes);
-
-                    if (logTrans == null)
-                        continue;
-
-                    if (parcOldFech != null)
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
                     {
-                        if (parcOldFech.nu_indice < parcOldFech.nu_tot_parcelas)
-                        {
-                            // tem continuação
+                        var lst = db.LOG_Audit.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
 
-                            var lstTotParc = db.T_Parcelas.Where(y => y.fk_log_transacoes == parcOldFech.fk_log_transacoes).OrderBy(y => y.i_unique).ToList();
-
-                            var nuParc = 0;
-
-                            foreach (var currentParcela in lstTotParc)
-                            {
-                                if (currentParcela.nu_indice > parcOldFech.nu_indice)
-                                {
-                                    currentParcela.nu_parcela = nuParc;
-                                    db.Update(currentParcela);
-
-                                    if (nuParc == 0)
-                                    {
-                                        var fe = lstCurrentFech.FirstOrDefault(y => y.fk_parcela == currentParcela.i_unique);
-                                                                               
-                                        if (fe == null)
-                                        {
-                                            db.Insert(new LOG_Fechamento
-                                            {
-                                                dt_compra = logTrans.dt_transacao,
-                                                dt_fechamento = targetDtFech,
-                                                fk_cartao = parcOldFech.fk_cartao,
-                                                fk_empresa = parcOldFech.fk_empresa,
-                                                fk_loja = parcOldFech.fk_loja,
-                                                fk_parcela = (int)currentParcela.i_unique,
-                                                nu_parcela = currentParcela.nu_indice,
-                                                st_afiliada = "",
-                                                st_ano = anoAtual,
-                                                st_mes = mesAtual,
-                                                vr_valor = currentParcela.vr_valor
-                                            });
-                                        }
-                                        else
-                                        {
-                                            fe.st_mes = mesAtual;
-                                            fe.st_ano = anoAtual;
-                                            fe.dt_fechamento = targetDtFech;
-                                            fe.nu_parcela = currentParcela.nu_indice;
-
-                                            db.Update(fe);
-                                        }
-                                    }
-
-                                    nuParc++;
-                                }
-                            }
-
-                        }
-                    }
-                }
-
-            }
-            #endregion
-        }
-
-
-        static void ReFecha(string mes, string ano, int fkEmpresa, int anoF, int mesF, int diaF, bool reconstroi)
-        {
-            #region - code -
-            using (var db = new AutorizadorCNDB())
-            {
-                // ------------------------------
-                // desfaz fechamento
-                // ------------------------------
-
-                var lstDelFech = new List<long>();
-
-                Console.WriteLine("--------- ajustando parcelas antigas da empresa " + fkEmpresa);
-
-                var lstOld = db.LOG_Fechamento.Where(y => y.fk_empresa == fkEmpresa && y.st_mes == mes && y.st_ano == ano).ToList();
-
-                int counterOld = 0;
-
-                foreach (var itemFech in lstOld)
-                {
-                    ++counterOld;
-
-                    Console.WriteLine("--------- ajustando parcelas antigas " + counterOld + " de " + lstOld.Count());
-
-                    lstDelFech.Add((long)itemFech.i_unique);
-
-                    var parc = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemFech.fk_parcela);
-                    var logTrans = parc.fk_log_transacoes.ToString();
-                    var cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == itemFech.fk_cartao);
-
-                    var lstParcs = db.T_Parcelas.Where(y => y.fk_log_transacoes.ToString() == logTrans).OrderBy(y => y.nu_indice).ToList();
-
-                    foreach (var itemParc in lstParcs)
-                    {
-                        if (itemParc.i_unique >= itemFech.fk_parcela)
-                        {
-                            var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == itemParc.i_unique);
-                            parcUpd.nu_parcela++;
-                            db.Update(parcUpd);
-                        }
-                    }
-                }
-
-                Console.WriteLine("--------- Limpando antigo fechamento => " + lstDelFech.Count());
-
-                foreach (var item in lstDelFech)
-                {
-                    var itemF = db.LOG_Fechamento.FirstOrDefault(y => y.i_unique == item);
-                    db.Delete(itemF);
-                }
-
-                if (reconstroi)
-                {
-                    // reconstroi o fechamento
-                    Console.WriteLine("--------- Fechamento vai ser reconstruido");
-
-                    var lst = db.T_Parcelas.Where(y => y.fk_empresa == fkEmpresa && y.nu_parcela > 0).ToList();
-
-                    int index = 0;
-
-                    foreach (var parc in lst)
-                    {
-                        ++index;
-
-                        Console.WriteLine("--------- Fechamento vai ser reconstruido " + index + " de " + lst.Count());
-
-                        var logTrans = db.LOG_Transacoes.FirstOrDefault(y => y.i_unique == parc.fk_log_transacoes);
-
-                        if (logTrans != null)
-                        {
-                            if (logTrans.dt_transacao > new DateTime(anoF, mesF, diaF))
-                                continue;
-
-                            if (logTrans.tg_confirmada.ToString() != TipoConfirmacao.Confirmada)
-                                continue;
-                        }
-                        else
+                        if (lst.Count() == 0)
                             continue;
 
-                        var parcUpd = db.T_Parcelas.FirstOrDefault(y => y.i_unique == parc.i_unique);
-                        parcUpd.nu_parcela--;
-                        db.Update(parcUpd);
+                        dbPg.Open();
 
-                        if (parcUpd.nu_parcela == 0)
-                            db.Insert(new LOG_Fechamento
+                        foreach (var item in lst)
+                        {
+                            var novo = new LogAudit
                             {
-                                dt_compra = logTrans.dt_transacao,
-                                dt_fechamento = DateTime.Now,
-                                fk_cartao = parc.fk_cartao,
-                                fk_empresa = parc.fk_empresa,
-                                fk_loja = parc.fk_loja,
-                                fk_parcela = (int)parc.i_unique,
-                                nu_parcela = parc.nu_parcela,
-                                st_afiliada = "",
-                                st_ano = ano,
-                                st_mes = mes,
-                                vr_valor = parc.vr_valor
-                            });
+                                id = Convert.ToInt64(item.i_unique),
+                                dtOperacao = item.dt_operacao,
+                                fkEmpresa = item.st_empresa == null ? 0 : Convert.ToInt64(db.T_Empresa.FirstOrDefault(y=> y.st_empresa == item.st_empresa).i_unique),
+                                fkGeneric = item.fk_generic,
+                                fkUsuario = item.fk_usuario,
+                                nuOperacao = item.tg_operacao == null ? 0 : Convert.ToInt64(item.tg_operacao.ToString()),
+                                stLog = item.st_log,
+                                stOperacao = item.st_oper,                                
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"LogAudit\" (\"id\",\"dtOperacao\",\"fkEmpresa\",\"fkGeneric\",\"fkUsuario\",\"nuOperacao\",\"stLog\",\"stOperacao\" ) " +
+                                                                "VALUES ( @id,@dtOperacao,@fkEmpresa,@fkGeneric,@fkUsuario,@nuOperacao,@stLog,@stOperacao );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtOperacao", ((object)novo.dtOperacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkGeneric", ((object)novo.fkGeneric) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkUsuario", ((object)novo.fkUsuario) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuOperacao", ((object)novo.nuOperacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stLog", ((object)novo.stLog) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stOperacao", ((object)novo.stOperacao) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
                     }
-
-                    Console.WriteLine("##Fim!");
                 }
+            }
+            #endregion
 
+            #region - LogFechamento - 
+            if (false)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.LOG_Fechamento.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.LOG_Fechamento.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new LogFechamento
+                            {
+                                id = Convert.ToInt64(item.i_unique),
+                                dtCompra = item.dt_compra,
+                                dtFechamento = item.dt_fechamento,
+                                fkCartao = item.fk_cartao,
+                                fkEmpresa = item.fk_empresa,
+                                fkLoja = item.fk_loja,
+                                fkParcela = item.fk_parcela,
+                                nuAno = Convert.ToInt64(item.st_ano),
+                                nuMes = Convert.ToInt64(item.st_mes),
+                                nuParcela = item.nu_parcela,
+                                stCartao = item.st_cartao,
+                                vrValor = item.vr_valor                                
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"LogFechamento\" (\"id\",\"dtCompra\",\"dtFechamento\",\"fkCartao\",\"fkEmpresa\",\"fkLoja\",\"fkParcela\",\"nuAno\",\"nuMes\",\"nuParcela\",\"stCartao\",\"vrValor\" ) " +
+                                                                "VALUES ( @id,@dtCompra,@dtFechamento,@fkCartao,@fkEmpresa,@fkLoja,@fkParcela,@nuAno,@nuMes,@nuParcela,@stCartao,@vrValor );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtCompra", ((object)novo.dtCompra) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtFechamento", ((object)novo.dtFechamento) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkCartao", ((object)novo.fkCartao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkLoja", ((object)novo.fkLoja) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkParcela", ((object)novo.fkParcela) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuAno", ((object)novo.nuAno) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuMes", ((object)novo.nuMes) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuParcela", ((object)novo.nuParcela) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCartao", ((object)novo.stCartao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrValor", ((object)novo.vrValor) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region - LogTransacao - 
+            if (false)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.LOG_Transacoes.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.LOG_Transacoes.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new LogTransacao
+                            {
+                                id = Convert.ToInt64(item.i_unique),
+                                bContabil = item.tg_contabil.ToString() == "1" ? true : false,
+                                dtTransacao = item.dt_transacao,
+                                fkCartao = item.fk_cartao,
+                                fkEmpresa = item.fk_empresa,
+                                fkLoja = item.fk_loja,
+                                fkTerminal = item.fk_terminal,
+                                nuCodErro = item.nu_cod_erro,
+                                nuConfirmada = Convert.ToInt64(item.tg_confirmada.ToString()),
+                                nuNsu = item.nu_nsu,
+                                nuNsuOrig = item.nu_nsuOrig,
+                                nuOperacao = Convert.ToInt64(item.en_operacao),
+                                nuParcelas = item.nu_parcelas,
+                                stDoc = item.st_doc,
+                                stMsg = item.st_msg_transacao,
+                                vrTotal = item.vr_total
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"LogTransacao\" (\"id\",\"bContabil\",\"dtTransacao\",\"fkCartao\",\"fkEmpresa\",\"fkLoja\",\"fkTerminal\",\"nuCodErro\"," +
+                                                                "\"nuConfirmada\",\"nuNsu\",\"nuNsuOrig\",\"nuOperacao\",\"nuParcelas\",\"stDoc\",\"stMsg\",\"vrTotal\"  ) " +
+                                                                "VALUES ( @id,@bContabil,@dtTransacao,@fkCartao,@fkEmpresa,@fkLoja,@fkTerminal,@nuCodErro," +
+                                                                "@nuConfirmada,@nuNsu,@nuNsuOrig,@nuOperacao,@nuParcelas,@stDoc,@stMsg,@vrTotal );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bContabil", ((object)novo.bContabil) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtTransacao", ((object)novo.dtTransacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkCartao", ((object)novo.fkCartao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkLoja", ((object)novo.fkLoja) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkTerminal", ((object)novo.fkTerminal) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuCodErro", ((object)novo.nuCodErro) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuConfirmada", ((object)novo.nuConfirmada) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuNsu", ((object)novo.nuNsu) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuNsuOrig", ((object)novo.nuNsuOrig) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuOperacao", ((object)novo.nuOperacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuParcelas", ((object)novo.nuParcelas) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stDoc", ((object)novo.stDoc) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stMsg", ((object)novo.stMsg) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrTotal", ((object)novo.vrTotal) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region - Loja - 
+            if (false)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long) db.T_Loja.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max ; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.T_Loja.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new Loja
+                            {
+                                id = Convert.ToInt64(item.i_unique),
+                                bBlocked = item.tg_blocked.ToString() == "1" ? true : false,
+                                bCancel = item.tg_cancel == 1 ? true : false,
+                                bIsentoFat = item.tg_isentoFat == 1 ? true : false,
+                                bPortalSenha = item.tg_portalComSenha == 1 ? true : false,
+                                fkBanco = item.fk_banco,
+                                nuBancoFat = item.nu_bancoFat,
+                                nuDiaVenc = item.nu_diavenc,
+                                nuFranquia = item.nu_franquia,
+                                nuPctValor = item.nu_pctValor,
+                                nuPeriodoFat = item.nu_periodoFat,
+                                nuTipoCob = Convert.ToInt64(item.tg_tipoCobranca.ToString()),
+                                stAgencia = item.st_agencia,                                
+                                stCelular = item.st_telCelular,
+                                stCEP = item.nu_CEP,
+                                stCidade = item.st_cidade,
+                                stCNPJ = item.nu_CNPJ,
+                                stConta = item.st_conta,
+                                stContaDeb = item.nu_contaDeb,
+                                stContato = item.st_contato,
+                                stCPFResp = item.st_cpfResp,
+                                stDataResp = item.st_dataResp,
+                                stEmail = item.st_email,
+                                stEndereco = item.st_endereco,
+                                stEnderecoInst = item.st_enderecoInst,
+                                stEstado = item.st_estado,
+                                stFax = item.nu_fax,
+                                stInscEst = item.nu_inscEst,
+                                stLoja = item.st_loja,
+                                stNome = item.st_nome,
+                                stObs = item.st_obs,
+                                stSenha = item.st_senha,
+                                stSocial = item.st_social,
+                                stTelefone = item.nu_telefone,
+                                vrMensalidade = item.vr_mensalidade,
+                                vrMinimo = item.vr_minimo,
+                                vrTransacao = item.vr_transacao
+                            };
+
+                            using (var cmd = new NpgsqlCommand( "INSERT INTO \"Loja\" (\"id\",\"bBlocked\",\"bCancel\",\"bIsentoFat\",\"bPortalSenha\",\"fkBanco\",\"nuBancoFat\"," +
+                                                                "\"nuDiaVenc\",\"nuFranquia\",\"nuPctValor\",\"nuPeriodoFat\",\"nuTipoCob\",\"stAgencia\",\"stCelular\"," +
+                                                                "\"stCEP\",\"stCidade\",\"stCNPJ\",\"stConta\",\"stContaDeb\",\"stContato\",\"stCPFResp\"," +
+                                                                "\"stDataResp\",\"stEmail\",\"stEndereco\",\"stEnderecoInst\",\"stEstado\",\"stFax\",\"stInscEst\",\"stLoja\",\"stNome\"," +
+                                                                "\"stObs\",\"stSenha\",\"stSocial\",\"stTelefone\",\"vrMensalidade\",\"vrMinimo\",\"vrTransacao\" ) " +
+                                                                "VALUES ( @id,@bBlocked,@bCancel,@bIsentoFat,@bPortalSenha,@fkBanco,@nuBancoFat," +
+                                                                "@nuDiaVenc,@nuFranquia,@nuPctValor,@nuPeriodoFat,@nuTipoCob,@stAgencia,@stCelular," +
+                                                                "@stCEP,@stCidade,@stCNPJ,@stConta,@stContaDeb,@stContato,@stCPFResp," +
+                                                                "@stDataResp,@stEmail,@stEndereco,@stEnderecoInst,@stEstado,@stFax,@stInscEst,@stLoja,@stNome," +
+                                                                "@stObs,@stSenha,@stSocial,@stTelefone,@vrMensalidade,@vrMinimo,@vrTransacao );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bBlocked", ((object)novo.bBlocked) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bCancel", ((object)novo.bCancel) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bIsentoFat", ((object)novo.bIsentoFat) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bPortalSenha", ((object)novo.bPortalSenha) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkBanco", ((object)novo.fkBanco) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuBancoFat", ((object)novo.nuBancoFat) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuDiaVenc", ((object)novo.nuDiaVenc) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuFranquia", ((object)novo.nuFranquia) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuPctValor", ((object)novo.nuPctValor) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuPeriodoFat", ((object)novo.nuPeriodoFat) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTipoCob", ((object)novo.nuTipoCob) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stAgencia", ((object)novo.stAgencia) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCelular", ((object)novo.stCelular) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCEP", ((object)novo.stCEP) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCidade", ((object)novo.stCidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCNPJ", ((object)novo.stCNPJ) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stConta", ((object)novo.stConta) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stContaDeb", ((object)novo.stContaDeb) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stContato", ((object)novo.stContato) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCPFResp", ((object)novo.stCPFResp) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stDataResp", ((object)novo.stDataResp) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEmail", ((object)novo.stEmail) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEndereco", ((object)novo.stEndereco) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEnderecoInst", ((object)novo.stEnderecoInst) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEstado", ((object)novo.stEstado) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stFax", ((object)novo.stFax) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stInscEst", ((object)novo.stInscEst) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stLoja", ((object)novo.stLoja) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stNome", ((object)novo.stNome) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stObs", ((object)novo.stObs) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stSenha", ((object)novo.stSenha) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stSocial", ((object)novo.stSocial) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stTelefone", ((object)novo.stTelefone) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrMensalidade", ((object)novo.vrMensalidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrMinimo", ((object)novo.vrMinimo) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrTransacao", ((object)novo.vrTransacao) ?? DBNull.Value);                                
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region - LojaEmpresa -
+            if (false)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.LINK_LojaEmpresa.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.LINK_LojaEmpresa.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new LojaEmpresa
+                            {
+                                id = Convert.ToInt64(item.i_unique),
+                                fkEmpresa = item.fk_empresa,
+                                fkLoja = item.fk_loja,
+                                nuDiasRepasse = item.nu_dias_repasse,
+                                nuTxAdmin = item.tx_admin,
+                                stAgencia = item.st_ag,
+                                stBanco = item.st_banco,
+                                stConta = item.st_conta
+                            };
+
+                            using (var cmd = new NpgsqlCommand( "INSERT INTO \"LojaEmpresa\" (\"id\",\"fkEmpresa\",\"fkLoja\",\"nuDiasRepasse\",\"nuTxAdmin\",\"stAgencia\",\"stBanco\",\"stConta\" ) " +
+                                                                "VALUES ( @id,@fkEmpresa,@fkLoja,@nuDiasRepasse,@nuTxAdmin,@stAgencia,@stBanco,@stConta );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkLoja", ((object)novo.fkLoja) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuDiasRepasse", ((object)novo.nuDiasRepasse) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTxAdmin", ((object)novo.nuTxAdmin) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stAgencia", ((object)novo.stAgencia) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stBanco", ((object)novo.stBanco) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stConta", ((object)novo.stConta) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region - LojaMsg -
+            if (false)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.T_LojaMensagem.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.T_LojaMensagem.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new LojaMsg
+                            {
+                                id = Convert.ToInt64(item.i_unique),
+                                bAtiva = item.tg_ativa,
+                                dtCriacao = item.dt_criacao,
+                                dtValidade = item.dt_validade,
+                                fkLoja = item.fk_loja,
+                                stLink = item.st_link,
+                                stMsg = item.st_msg
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"LojaMsg\" (\"id\",\"bAtiva\",\"dtCriacao\",\"dtValidade\",\"fkLoja\",\"stLink\",\"stMsg\" ) " +
+                                                                "VALUES ( @id,@bAtiva,@dtCriacao,@dtValidade,@fkLoja,@stLink,@stMsg );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("bAtiva", ((object)novo.bAtiva) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtCriacao", ((object)novo.dtCriacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtValidade", ((object)novo.dtValidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkLoja", ((object)novo.fkLoja) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stLink", ((object)novo.stLink) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stMsg", ((object)novo.stMsg) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region - LoteCartao -
+            if (false)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.T_LoteCartao.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.T_LoteCartao.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new LoteCartao
+                            {
+                                id = Convert.ToInt64(item.i_unique),
+                                dtAbertura = item.dt_abertura,
+                                dtAtivacao = item.dt_ativacao,
+                                dtEnvioGrafica = item.dt_envio_grafica,
+                                fkEmpresa = item.fk_empresa,
+                                nuCartoes = item.nu_cartoes,
+                                nuSitLote = item.tg_sitLote
+                            };
+
+                            using (var cmd = new NpgsqlCommand( "INSERT INTO \"LoteCartao\" (\"id\",\"dtAbertura\",\"dtAtivacao\",\"dtEnvioGrafica\",\"fkEmpresa\",\"nuCartoes\",\"nuSitLote\" ) " +
+                                                                "VALUES ( @id,@dtAbertura,@dtAtivacao,@dtEnvioGrafica,@fkEmpresa,@nuCartoes,@nuSitLote );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtAbertura", ((object)novo.dtAbertura) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtAtivacao", ((object)novo.dtAtivacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtEnvioGrafica", ((object)novo.dtEnvioGrafica) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuCartoes", ((object)novo.nuCartoes) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuSitLote", ((object)novo.nuSitLote) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region - LoteCartaoDetalhe -
+            if (false)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.T_LoteCartaoDetalhe.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.T_LoteCartaoDetalhe.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new LoteCartaoDetalhe
+                            {
+                                id = Convert.ToInt64(item.i_unique),
+                                dtAtivacao = item.dt_ativacao,
+                                dtPedido = item.dt_pedido,
+                                fkCartao = item.fk_cartao,
+                                fkEmpresa = item.fk_empresa,
+                                fkLote = item.fk_lote,
+                                nuMatricula = item.nu_matricula,
+                                nuTitularidade = item.nu_titularidade,
+                                nuViaOriginal =  item.nu_via_original,
+                                stCPF = item.nu_cpf,
+                                stNomeCartao = item.st_nome_cartao
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"LoteCartaoDetalhe\" (\"id\",\"dtAtivacao\",\"dtPedido\",\"fkCartao\",\"fkEmpresa\",\"fkLote\",\"nuMatricula\",\"nuTitularidade\",\"nuViaOriginal\",\"stCPF\",\"stNomeCartao\" ) " +
+                                                                "VALUES ( @id,@dtAtivacao,@dtPedido,@fkCartao,@fkEmpresa,@fkLote,@nuMatricula,@nuTitularidade,@nuViaOriginal,@stCPF,@stNomeCartao );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtAtivacao", ((object)novo.dtAtivacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtPedido", ((object)novo.dtPedido) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkCartao", ((object)novo.fkCartao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkLote", ((object)novo.fkLote) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuMatricula", ((object)novo.nuMatricula) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTitularidade", ((object)novo.nuTitularidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuViaOriginal", ((object)novo.nuViaOriginal) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCPF", ((object)novo.stCPF) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stNomeCartao", ((object)novo.stNomeCartao) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region - Parceiro -
+            if (false)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.Parceiro.OrderByDescending(y => y.id).FirstOrDefault().id;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.Parceiro.Where(y => y.id >= g && y.id < t).OrderBy(y => y.id).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new Parceiro
+                            {
+                                id = Convert.ToInt64(item.id),
+                                dtCadastro = item.dtCadastro,
+                                stCelular = item.stCelular,
+                                stCEP = item.stCep,
+                                stCidade = item.stCidade,
+                                stCNPJ = item.stCNPJ,
+                                stEndereco = item.stEndereco,
+                                stEstado = item.stEstado,
+                                stNome = item.stNome,
+                                stObs = item.stObs,
+                                stResp = item.stResp,
+                                stSocial = item.stSocial,
+                                stTelefone = item.stTelefone                                
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"Parceiro\" (\"id\",\"dtCadastro\",\"stCelular\",\"stCEP\",\"stCidade\",\"stCNPJ\",\"stEndereco\",\"stEstado\",\"stNome\"," +
+                                "\"stObs\",\"stResp\",\"stSocial\",\"stTelefone\" ) " +
+                                                                "VALUES ( @id,@dtCadastro,@stCelular,@stCEP,@stCidade,@stCNPJ,@stEndereco,@stEstado,@stNome," +
+                                "@stObs,@stResp,@stSocial,@stTelefone );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("dtCadastro", ((object)novo.dtCadastro) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCelular", ((object)novo.stCelular) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCEP", ((object)novo.stCEP) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCidade", ((object)novo.stCidade) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stCNPJ", ((object)novo.stCNPJ) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEndereco", ((object)novo.stEndereco) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stEstado", ((object)novo.stEstado) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stNome", ((object)novo.stNome) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stObs", ((object)novo.stObs) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stResp", ((object)novo.stResp) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stSocial", ((object)novo.stSocial) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("stTelefone", ((object)novo.stTelefone) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region - Parcela -
+            if (true)
+            {
+                long max = 9999999999;
+                using (var db = new AutorizadorCNDB())
+                    max = (long)db.T_Parcelas.OrderByDescending(y => y.i_unique).FirstOrDefault().i_unique;
+                for (int t = 1000, g = 0; g < max; t += 1000, g += 1000)
+                {
+                    using (var db = new AutorizadorCNDB())
+                    using (var dbPg = new NpgsqlConnection(connStr))
+                    {
+                        var lst = db.T_Parcelas.Where(y => y.i_unique >= g && y.i_unique < t).OrderBy(y => y.i_unique).ToList();
+
+                        if (lst.Count() == 0)
+                            continue;
+
+                        dbPg.Open();
+
+                        foreach (var item in lst)
+                        {
+                            var novo = new Parcela
+                            {
+                                id = Convert.ToInt64(item.i_unique),                                
+                                dtInclusao = item.dt_inclusao,
+                                fkCartao = item.fk_cartao,
+                                fkEmpresa = item.fk_empresa,
+                                fkLogTransacao = item.fk_log_transacoes,
+                                fkLoja = item.fk_loja,
+                                fkTerminal = item.fk_terminal,
+                                nuIndice = item.nu_indice,
+                                nuNsu = item.nu_nsu,
+                                nuParcela = item.nu_parcela,
+                                nuTotParcelas = item.nu_tot_parcelas,
+                                vrValor = item.vr_valor,                                
+                            };
+
+                            using (var cmd = new NpgsqlCommand("INSERT INTO \"Parcela\" (\"id\",\"dtInclusao\",\"fkCartao\",\"fkEmpresa\",\"fkLogTransacao\",\"fkLoja\",\"fkTerminal\",\"nuIndice\",\"nuNsu\",\"nuParcela\",\"nuTotParcelas\",\"vrValor\" ) " +
+                                                                "VALUES ( @id,@dtInclusao,@fkCartao,@fkEmpresa,@fkLogTransacao,@fkLoja,@fkTerminal,@nuIndice,@nuNsu,@nuParcela,@nuTotParcelas,@vrValor );", dbPg))
+                            {
+                                cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
+
+                                cmd.Parameters.AddWithValue("dtInclusao", ((object)novo.dtInclusao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkCartao", ((object)novo.fkCartao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkEmpresa", ((object)novo.fkEmpresa) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkLogTransacao", ((object)novo.fkLogTransacao) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkLoja", ((object)novo.fkLoja) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("fkTerminal", ((object)novo.fkTerminal) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuIndice", ((object)novo.nuIndice) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuNsu", ((object)novo.nuNsu) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuParcela", ((object)novo.nuParcela) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("nuTotParcelas", ((object)novo.nuTotParcelas) ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("vrValor", ((object)novo.vrValor) ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
             }
             #endregion
         }

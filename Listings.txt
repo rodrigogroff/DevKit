@@ -1,9 +1,0 @@
-system/user
-system/profiles
-configuration/clients
-configuration/clientgroups
-configuration/projects
-configuration/taskTypes
-configuration/newsListing
-configuration/surveysListing
-task/tasks

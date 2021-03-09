@@ -1,0 +1,32 @@
+﻿
+INSERT INTO public."Country"( "stName" )	VALUES ( 'Brasil' );
+INSERT INTO public."Country"( "stName" )	VALUES ( 'Argentina' );
+INSERT INTO public."Country"( "stName" )	VALUES ( 'Mexico' );
+
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Acre', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Alagoas', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Amapá', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Amazonas', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Bahia', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Ceará', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Distrito Federal', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Espírito Santo', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Goiás', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Maranhão', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Mato Grosso', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Mato Grosso do Sul', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Minas Gerais', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Pará', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Paraíba', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Paraná', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Pernambuco', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Piauí', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Rio de Janeiro', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Rio Grande do Norte', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Rio Grande do Sul', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Rondônia', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Roraima', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Santa Catarina', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'São Paulo', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Sergipe', 1);
+INSERT INTO public."State"(	"stName", "fkCountry")	VALUES ( 'Tocantins', 1);

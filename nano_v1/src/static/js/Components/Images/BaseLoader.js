@@ -10,12 +10,12 @@ export function buildTable2TDEqual(html1, html2, id) {
 export function BaseLoader(id, _style) {
   if (id == undefined) id = "loading";
   if (_style == undefined) _style = "display:none;";
-  return `<div align='center'><div><span class="loadingio-spinner-spinner-4rb4hgyrsge" id='loading' style="display:none;">
+  return `<p align='center'><div><span class="loadingio-spinner-spinner-4rb4hgyrsge" id='loading' style="display:none;">
           <div class="ldio-k0jb5gkv3kn"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
           </div>
           </span><br>
           </div>
-          </div>`;
+          </p>`;
 }
 
 export function BaseLoaderIcon(id, _style) {

@@ -15,13 +15,9 @@ class AppRouter {
     var route_values = newState.split("/");
     newState = "/" + route_values[1];
     if (route_values.length >= 2) params.id = route_values[2];
-    return `<div class="wrapper" align="center">${Menu.getHtml()}<div class="wrapper-inline img shadow" >
-                    <header id='appHeader'>
-                    <img src='src/static/img/topLogo.png' alt='Nano Logo' style='margin-top:-7px;margin-left:-30px' />
-                        <div class="navi-menu-button"><em></em><em></em><em></em></div>
-                    </header>
+    return `<div class="wrapper" align="center">
                     <main><section class="container"><br><div id='mainFormApp'>${new Controller(params).getHtml()}</div></section></main>
-                </div></div>`;
+                </div>`;
   }
 }
 

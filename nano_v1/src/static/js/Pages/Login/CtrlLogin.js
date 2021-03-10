@@ -1,10 +1,8 @@
 
-import { getCurrentLanguage, MultiLanguage, MultiLanguageChange } from "./MultiLanguage";
 import { Endpoints, DtoLoginInformation, DtoAuthenticatedUser } from "@app/Infra/Endpoints";
 
 import {
   postPublicPortal,
-  SetLanguageHTMLSelect,
   IsLoading,
   loadingOn,
   loadingOff,
@@ -43,26 +41,24 @@ export default class LoginPage {
     this.params = params;
 
     $(document).ready(function () {
-      SetLanguageHTMLSelect();
-      $("#" + MyForm.elements().formMail)[0].focus();
+      var elements = MyForm.elements();
+      $("#" + elements.formEmpresa)[0].focus();
+      VMasker($("#" + elements.formEmpresa)).maskPattern("999999");
+      VMasker($("#" + elements.formMatricula)).maskPattern("999999");
+      VMasker($("#" + elements.formAcesso)).maskPattern("9999");
+      VMasker($("#" + elements.formVencimento)).maskPattern("9999");
+      VMasker($("#" + elements.formPass)).maskPattern("999999");
     });
 
     $(document).on("keydown", function (e) {
       switch (e.keyCode) {
-        case 9: MyForm.validate({ focus: false, msg: false, fields: null }); break;
         case 13: btnSubmit_Click(); break;
       }
     });
 
-    $(document).on("change", "#languageSel", function () {
-      if (MultiLanguageChange($("#languageSel").val()))
-        setTimeout(() => {
-          location.href = "/login";
-        }, 20);
-    });
-
     document.body.addEventListener("click", (e) => {
-      if (CheckPopUpCloseClick(e)) return;
+      if (CheckPopUpCloseClick(e))
+        return;
       var elements = MyForm.elements();
       switch ($(e.target).attr("id")) {
         case elements.btnSubmit: btnSubmit_Click(); break;
@@ -74,13 +70,20 @@ export default class LoginPage {
       if (IsLoading()) return;
       var elements = MyForm.elements();
       var formData = DtoLoginInformation(
-        document.getElementById(elements.formMail).value.trim(),
+        document.getElementById(elements.formEmpresa).value.trim(),
+        document.getElementById(elements.formMatricula).value.trim(),
+        document.getElementById(elements.formAcesso).value.trim(),
+        document.getElementById(elements.formVencimento).value.trim(),
+        '', // email
+        '', // login
         document.getElementById(elements.formPass).value.trim(),
-        getCurrentLanguage()
+        '2' // tipo de login       
       );
 
-      if (!MyForm.validate({ focus: false, msg: true, fields: formData }))
+      if (!MyForm.validate()) {        
+        displaySystemPopup('Aviso do Sistema', 'Preencha os campos corretamente!');
         return;
+      }       
 
       loadingOn("#" + elements.btnSubmit);
 
@@ -106,10 +109,10 @@ export default class LoginPage {
               serviceOk(resp.payload);
             // output service data
             else
-              displaySystemPopup(MultiLanguage(5), resp.msg);
+              displaySystemPopup('Aviso do Sistema', resp.msg);
           })
           .catch((resp) => {
-            displaySystemPopup(MultiLanguage(5), resp.msg);
+            displaySystemPopup('Aviso do Sistema', resp.msg);
           });
       }, 1000);
     }
@@ -117,9 +120,7 @@ export default class LoginPage {
     function serviceOk(payload) {
       loadingOff();
       var response = DtoAuthenticatedUser(payload);
-      loginOk(response);
-      //if ($("#" + MyForm.elements().keepLogged).is(":checked"))
-      //setToStorage("hsh", response.user.hsh);
+      loginOk(response);      
       location.href = "/";
     }
   }

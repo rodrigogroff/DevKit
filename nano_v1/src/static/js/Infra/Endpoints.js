@@ -14,13 +14,29 @@ export function Endpoints() {
   };
 }
 
-export function DtoLoginInformation(email, password, _language) {
+export function DtoLoginInformation(empresa,matricula,codAcesso,venc,email,login,senha,userType ) {
   return {
+    empresa: empresa,
+    matricula: matricula,
+    codAcesso: codAcesso,
+    venc: venc,
     email: email,
-    password: password,
-    _language: _language,
+    login: login,
+    senha: senha,
+    userType: userType,
+    _language: "2"
   };
 }
+/*
+public string empresa { get; set; }
+        public string matricula { get; set; }
+        public string codAcesso { get; set; }
+        public string venc { get; set; }
+        public string email { get; set; }
+        public string login { get; set; }
+        public string senha { get; set; }
+        public string userType { get; set; }
+        */
 
 export function DtoAuthenticatedUser(payload) {
   return {

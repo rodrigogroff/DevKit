@@ -1,31 +1,8 @@
 ﻿
-CREATE TABLE IF NOT EXISTS public."User" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
-ALTER TABLE public."User" OWNER to postgres;
-ALTER TABLE public."User" ADD COLUMN if not exists "stEmail" character varying(200);
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig1_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig2_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig3_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig4_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig5_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig6_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig7_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig8_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig9_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig10_Email" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig1_SocialID" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig2_SocialID" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig3_SocialID" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig4_SocialID" int;
-ALTER TABLE public."User" ADD COLUMN if not exists "stName" character varying(50);
-ALTER TABLE public."User" ADD COLUMN if not exists "bActive" boolean;
-ALTER TABLE public."User" ADD COLUMN if not exists "bAdmin" boolean;
-ALTER TABLE public."User" ADD COLUMN if not exists "bTokenized" boolean;
-ALTER TABLE public."User" ADD COLUMN if not exists "stSocialID" character varying(20);
-ALTER TABLE public."User" ADD COLUMN if not exists "stPassword" character varying(20);
-ALTER TABLE public."User" ADD COLUMN if not exists "dtLastLogin" timestamp without time zone;
-ALTER TABLE public."User" ADD COLUMN if not exists "dtCreation" timestamp without time zone;
-ALTER TABLE public."User" ADD COLUMN if not exists "dtTokenExpires" timestamp without time zone;
-ALTER TABLE public."User" ADD COLUMN if not exists "stToken" character varying(20);
-CREATE INDEX IF NOT EXISTS trigs_email ON public."User" ("nuTrig1_Email", "nuTrig2_Email", "nuTrig3_Email", "nuTrig4_Email", "nuTrig5_Email", "nuTrig6_Email", "nuTrig7_Email", "nuTrig8_Email", "nuTrig9_Email", "nuTrig10_Email");
-CREATE INDEX IF NOT EXISTS trigs_sid ON public."User" ("nuTrig1_SocialID", "nuTrig2_SocialID", "nuTrig3_SocialID", "nuTrig4_SocialID");
+--CREATE TABLE IF NOT EXISTS public."User" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+--ALTER TABLE public."User" OWNER to postgres;
+--ALTER TABLE public."User" ADD COLUMN if not exists "stEmail" character varying(200);
+--ALTER TABLE public."User" ADD COLUMN if not exists "nuTrig1_Email" int;
+--CREATE INDEX IF NOT EXISTS trigs_email ON public."User" ("nuTrig1_Email", "nuTrig2_Email", "nuTrig3_Email", "nuTrig4_Email", "nuTrig5_Email", "nuTrig6_Email", "nuTrig7_Email", "nuTrig8_Email", "nuTrig9_Email", "nuTrig10_Email");
+--CREATE INDEX IF NOT EXISTS trigs_sid ON public."User" ("nuTrig1_SocialID", "nuTrig2_SocialID", "nuTrig3_SocialID", "nuTrig4_SocialID");
 

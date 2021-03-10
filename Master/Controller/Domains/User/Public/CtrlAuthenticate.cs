@@ -19,12 +19,12 @@ namespace Api.Master.Controllers
         public ActionResult Post([FromBody] DtoLoginInformation obj)
         {
             var auth = new DtoAuthenticatedUser();
-            var repo = new DapperUserRepository();            
+            var repo = new DapperRepository();            
             var srv = new SrvAuthenticateV1(repo);
 
             if (!srv.Exec(network, obj, ref auth))
                 return BadRequest(srv.Error);
-                        
+
             var token = ComposeTokenForSession(auth);
             
             return Ok( new 

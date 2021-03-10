@@ -18,7 +18,7 @@ namespace Api.Master.Controllers
         [Route("api/CheckToken_v1")]
         public ActionResult Post([FromBody] DtoCheckToken obj)
         {
-            var repo = new DapperUserRepository();
+            var repo = new DapperRepository();
             var srv = new SrvCheckTokenV1(repo);
 
             if (!srv.Exec(network, obj))

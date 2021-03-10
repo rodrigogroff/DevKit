@@ -8,6 +8,7 @@ namespace UnitTesting
     [TestClass]
     public class UTstAuthenticate : UTstUserBase
     {
+        /*
         [TestMethod]
         public void OK()
         {
@@ -125,5 +126,7 @@ namespace UnitTesting
 
             #endregion
         }
+
+        */
     }
 }

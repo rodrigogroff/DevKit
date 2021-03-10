@@ -1,5 +1,6 @@
 ﻿using Entities.Api;
 using Entities.Api.User;
+using Master.Infra.Entity.Database;
 using Master.Repository;
 using System;
 using System.Collections.Generic;
@@ -42,28 +43,56 @@ namespace Master.Service
 
     public class SrvAuthenticateV1 : SrvML_Authenticate
     {
-        IDapperUserRepository repository;
+        IDapperRepository repository;
 
-        public SrvAuthenticateV1 (IDapperUserRepository _repository) 
+        public SrvAuthenticateV1 (IDapperRepository _repository) 
         {
             repository = _repository;
         }
 
         bool ValidadeRequest(DtoLoginInformation dto)
         {
-            if (string.IsNullOrEmpty(dto.email))
+            #region - code - 
+
+            if (dto.empresa == null)
             {
                 Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
                 return false;
             }
 
-            if (string.IsNullOrEmpty(dto.password))
+            if (dto.matricula == null)
+            {
+                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                return false;
+            }
+
+            if (dto.vencimento == null)
+            {
+                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                return false;
+            }
+
+            if (dto.codAcesso == null)
+            {
+                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                return false;
+            }
+
+            if (dto.senha == null)
+            {
+                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                return false;
+            }
+
+            if (dto._language == null)
             {
                 Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
                 return false;
             }
 
             return true;
+
+            #endregion
         }
 
         public bool Exec ( LocalNetwork network, DtoLoginInformation dto, ref DtoAuthenticatedUser loggedUser ) 
@@ -75,61 +104,100 @@ namespace Master.Service
                 
                 using (var db = GetConnection(network))
                 {
-                    dto.email = dto.email.Trim().ToLower();
-
-                    var user = repository.GetUserByEmail(db, dto.email);
-
-                    if (user == null)
+                    switch (dto.userType)
                     {
-                        Error = new DtoServiceError
-                        {
-                            message = getLanguage(dto._language, 1),
-                            debugInfo = "user == null"
-                        };
+                        case "2":
+                            {
+                                #region - code - 
 
-                        return false;
+                                var t_emp = repository.GetEmpresaNum(db, dto.empresa);
+
+                                if (t_emp == null)
+                                {
+                                    Error = new DtoServiceError
+                                    {
+                                        message = getLanguage(dto._language, 1),
+                                        debugInfo = ""
+                                    };
+
+                                    return false;
+                                }
+
+                                var t_associado = repository.GetCartao(db, t_emp.id, dto.matricula, 1);
+
+                                if (t_associado == null)
+                                {
+                                    Error = new DtoServiceError
+                                    {
+                                        message = getLanguage(dto._language, 1),
+                                        debugInfo = ""
+                                    };
+
+                                    return false;
+                                }
+
+                                var descript_senha = DESdeCript(t_associado.stSenha);
+
+                                if (descript_senha != dto.senha)
+                                {
+                                    Error = new DtoServiceError
+                                    {
+                                        message = getLanguage(dto._language, 1),
+                                        debugInfo = ""
+                                    };
+
+                                    return false;
+                                }
+
+                                if (t_associado.nuStatus != CartaoStatus.Habilitado)
+                                {
+                                    Error = new DtoServiceError
+                                    {
+                                        message = getLanguage(dto._language, 1),
+                                        debugInfo = ""
+                                    };
+
+                                    return false;
+                                }
+
+                                if (t_associado.stVenctoCartao != dto.vencimento)
+                                {
+                                    Error = new DtoServiceError
+                                    {
+                                        message = getLanguage(dto._language, 1),
+                                        debugInfo = ""
+                                    };
+
+                                    return false;
+                                }
+
+                                var codAcesso = this.ObterCodigoAcesso ( t_emp.nuEmpresa, 
+                                                                         t_associado.nuMatricula, 
+                                                                         1, 
+                                                                         t_associado.nuViaCartao, 
+                                                                         t_associado.stCpf );
+
+                                if (codAcesso != dto.codAcesso)
+                                {
+                                    Error = new DtoServiceError
+                                    {
+                                        message = getLanguage(dto._language, 1),
+                                        debugInfo = ""
+                                    };
+
+                                    return false;
+                                }
+
+                                loggedUser._id = t_associado.id.ToString();
+                                loggedUser.email = "";
+                                loggedUser.login = t_associado.stNome;
+                                loggedUser.userType = dto.userType;
+
+                                #endregion
+
+                                break;
+                            }
                     }
-                    
-                    if (user.stPassword != dto.password)
-                    {
-                        Error = new DtoServiceError
-                        {
-                            message = getLanguage(dto._language, 1),
-                            debugInfo = "user.stSenha != login.senha"
-                        };
-
-                        return false;
-                    }
-
-                    if (user.bActive != true)
-                    {
-                        Error = new DtoServiceError
-                        {
-                            message = getLanguage(dto._language, 1),
-                            debugInfo = "!user.bActive"
-                        };
-
-                        return false;
-                    }
-
-                    if (user.bTokenized != true)
-                    {
-                        Error = new DtoServiceError
-                        {
-                            message = getLanguage(dto._language, 1),
-                            debugInfo = "!user.bActive"
-                        };
-
-                        return false;
-                    }
-
-                    user.dtLastLogin = DateTime.Now;
-
-                    repository.UpdateUser(db, user);
-
-                    loggedUser._id = user.id.ToString();
-                    loggedUser.email = user.stEmail;
-                    loggedUser.login = user.stName;
                 }
     
                 return true;

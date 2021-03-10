@@ -11,8 +11,10 @@ namespace Integration
     [TestClass]
     public class InTstCheckToken : TstBaseIntegration
     {
+        /*
         CtrlCheckToken Setup(User u)
         {
+            
             #region - code - 
 
             var tst = new CtrlCheckToken(null,null) { network = new Master.LocalNetwork { sqlServer = connStr } };
@@ -24,7 +26,7 @@ namespace Integration
                 {
                     db.Open();
                     u.compile();
-                    new DapperUserRepository().InsertUser(db, u);
+                    new DapperRepository().InsertUser(db, u);
                     db.Close();
                 }
 
@@ -98,5 +100,6 @@ namespace Integration
             if (!ret.ToString().Contains("BadRequest"))
                 Assert.Fail();
         }
+        */
     }
 }

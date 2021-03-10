@@ -8,8 +8,9 @@ using Microsoft.Extensions.Options;
 
 namespace Api.Master.Controllers
 {
+    /*
     public partial class CtrlUserListing : MasterController
-    {
+    {        
         public CtrlUserListing(IOptions<LocalNetwork> _network, IMemoryCache _cache) : base(_network, _cache) { }
 
         [HttpGet]
@@ -18,7 +19,7 @@ namespace Api.Master.Controllers
         {
             var au = GetCurrentAuthenticatedUser();
 
-            var repo = new DapperUserRepository();
+            var repo = new DapperRepository();
             var srv = new SrvUserGetV1(repo);
             var dto = new User();
 
@@ -26,6 +27,7 @@ namespace Api.Master.Controllers
                 return BadRequest(srv.Error);
 
             return Ok(dto);
-        }
+        }        
     }
+    */
 }

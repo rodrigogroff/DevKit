@@ -48,9 +48,9 @@ namespace Master.Service
 
     public class SrvCheckTokenV1 : SrvML_CheckToken
     {
-        IDapperUserRepository repository;
+        IDapperRepository repository;
 
-        public SrvCheckTokenV1(IDapperUserRepository _repository) 
+        public SrvCheckTokenV1(IDapperRepository _repository) 
         {
             repository = _repository;
         }
@@ -61,6 +61,7 @@ namespace Master.Service
             {
                 using (var db = GetConnection(network))
                 {
+                    /*
                     var user = repository.GetUserBySocial(db, obj.sID);
 
                     if (user == null)
@@ -99,6 +100,7 @@ namespace Master.Service
                     user.bTokenized = true;
 
                     repository.UpdateUser(db, user);
+                    */
                 }
     
                 return true;

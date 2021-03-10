@@ -7,6 +7,7 @@ namespace UnitTesting
     [TestClass]
     public class UTstUserBase : UTBase
     {
+        /*
         public User Base_Ut_user = new User
             {
                 id = 1,
@@ -41,6 +42,6 @@ namespace UnitTesting
             stSocialID = "123456",
             bActive = true,
             bTokenized = false,
-        };
+        };*/
     }
 }

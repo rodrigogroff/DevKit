@@ -5,6 +5,7 @@ namespace Entities.Api.User
     {
         public string _id { get; set; }
         public string email { get; set; }
-        public string login { get; set; }        
+        public string login { get; set; }
+        public string userType { get; set; }
     }
 }

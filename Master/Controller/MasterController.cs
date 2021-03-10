@@ -51,6 +51,7 @@ namespace Api.Master.Controllers
                 _id = claims.FirstOrDefault(claim => claim.Type == "_id")?.Value,                
                 email = claims.FirstOrDefault(claim => claim.Type == "email")?.Value,
                 login = claims.FirstOrDefault(claim => claim.Type == "login")?.Value,
+                userType = claims.FirstOrDefault(claim => claim.Type == "userType")?.Value,
             };
         }
 
@@ -70,6 +71,7 @@ namespace Api.Master.Controllers
                     new Claim("_id", au._id),
                     new Claim("email", au.email),
                     new Claim("login", au.login),
+                    new Claim("userType", au.userType),
                 }),
                 Expires = DateTime.UtcNow.AddHours(24),
                 SigningCredentials = new SigningCredentials (   new SymmetricSecurityKey(key), 

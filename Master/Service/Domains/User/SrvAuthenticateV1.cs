@@ -54,34 +54,48 @@ namespace Master.Service
         {
             #region - code - 
 
-            if (dto.empresa == null)
+            switch (dto.userType)
             {
-                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
-                return false;
-            }
+                case "2":
+                    {
+                        if (dto.empresa == null)
+                        {
+                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            return false;
+                        }
 
-            if (dto.matricula == null)
-            {
-                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
-                return false;
-            }
+                        if (dto.matricula == null)
+                        {
+                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            return false;
+                        }
 
-            if (dto.vencimento == null)
-            {
-                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
-                return false;
-            }
+                        if (dto.venc == null)
+                        {
+                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            return false;
+                        }
 
-            if (dto.codAcesso == null)
-            {
-                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
-                return false;
-            }
+                        if (dto.codAcesso == null)
+                        {
+                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            return false;
+                        }
 
-            if (dto.senha == null)
-            {
-                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
-                return false;
+                        if (dto.senha == null)
+                        {
+                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            return false;
+                        }
+
+                        break;
+                    }
+
+                default:
+                    {
+                        Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                        return false;
+                    }
             }
 
             if (dto._language == null)
@@ -110,7 +124,7 @@ namespace Master.Service
                             {
                                 #region - code - 
 
-                                var t_emp = repository.GetEmpresaNum(db, dto.empresa);
+                                var t_emp = repository.GetEmpresaNum(db, Convert.ToInt64(dto.empresa));
 
                                 if (t_emp == null)
                                 {
@@ -123,7 +137,7 @@ namespace Master.Service
                                     return false;
                                 }
 
-                                var t_associado = repository.GetCartao(db, t_emp.id, dto.matricula, 1);
+                                var t_associado = repository.GetCartao(db, t_emp.id, Convert.ToInt64(dto.matricula), 1);
 
                                 if (t_associado == null)
                                 {
@@ -160,7 +174,7 @@ namespace Master.Service
                                     return false;
                                 }
 
-                                if (t_associado.stVenctoCartao != dto.vencimento)
+                                if (t_associado.stVenctoCartao != dto.venc)
                                 {
                                     Error = new DtoServiceError
                                     {

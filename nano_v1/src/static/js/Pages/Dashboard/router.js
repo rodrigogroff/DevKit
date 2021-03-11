@@ -1,5 +1,6 @@
 
 import "@app/Infra/global.script";
+import { LogoCut } from "@app/Components/Images/LogoCut";
 import Menu from "@app/Components/Menu";
 import Controller from "./CtrlDashboard";
 
@@ -18,7 +19,7 @@ class AppRouter {
     return `<div id='splash' align='center' style='display:none;width:100%;height:100%;'></div>
                 <div class="wrapper" align="center">${Menu.getHtml()}<div class="wrapper-inline img shadow" >
                     <header id='appHeader'>
-                      <img src='src/static/img/topLogo.png' alt='Nano Logo' style='margin-top:-7px;margin-left:-30px' />
+                      ${LogoCut()}
                       <div class="navi-menu-button"><em></em><em></em><em></em></div>                      
                     </header>
                     <main><section class="container"><br><div id='mainFormApp'>${new Controller(params).getHtml()}</div></section></main>

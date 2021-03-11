@@ -1,17 +1,18 @@
-// --------------------------------------------------
-//  back and front end contracts / endpoints HERE
-// --------------------------------------------------
 
 export function Endpoints() {
-  return {
-    authenticate: "authenticate_v1",
-    socialID: "socialID_v1",
-    onboarding: "onboarding_v1",
-    checkToken: "checkToken_v1",
-    resendToken: "resendToken_v1",
-    passRecovery: "passRecovery_v1",
-    brandListing: "brandListing_v1",
-  };
+
+  if (true) // POSTGRES
+  {
+    return {
+      authenticate: "authenticate_v1",      
+    };
+  }
+  else // SQL SERVER
+  {
+    return {
+      authenticate: "v1/portal/authenticate",      
+    };
+  } 
 }
 
 export function DtoLoginInformation(empresa,matricula,codAcesso,venc,email,login,senha,userType ) {

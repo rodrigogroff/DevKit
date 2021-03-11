@@ -1,5 +1,6 @@
 
 import { isAuthenticated } from "@app/Infra/Util";
+import { LogoWhite } from "@app/Components/Images/LogoCut";
 
 export class MenuAppLanguage {
   constructor() {
@@ -87,7 +88,6 @@ export default class {
     
     var itens = BuildMenuTranslation();
 
-    var usrMsg = "";
     var fullMenu = `<li>
                     <a href="javascript:void(0);">${itens.userItem}</a>
                     <ul>
@@ -99,17 +99,25 @@ export default class {
 
     var usr = isAuthenticated();
 
+    var usrMsg = '';
+
     if (usr != null) {
-      usrMsg = `<p style='color:white;padding-left:20px'>${itens.welcome}<br>
-                  <span style='padding-left:30px'>${usr.user_name}</span><br>
+      usrMsg = `<p style='color:white;padding-left:20px'>Bem-vindo,<br>
+                  ${usr.nome}<br>
                   <br>
-                  <a href="/exit" style='cursor:pointer'>${itens.exit}</a>
+                  <a href="/exit" style='cursor:pointer'>Sair</a>
                 </p>
                 `;
-      fullMenu = `<li>
-                  <a href="javascript:void(0);">${itens.admin}</a>
+      fullMenu = `<li class='active'>
+                  <a href="javascript:void(0);"><b>Meu Cartão</b></a>
                   <ul>
-                    <li><a href="/brand" style='cursor:pointer'>${itens.brand}</a></li>
+                    <li><a href="/brand" style='cursor:pointer'>Cartão virtual</a></li>
+                    <li><a href="/brand" style='cursor:pointer'>Solicitações</a></li>
+                    <li><a href="/brand" style='cursor:pointer'>Limites</a></li>
+                    <li><a href="/brand" style='cursor:pointer'>Extrato Atual</a></li>
+                    <li><a href="/brand" style='cursor:pointer'>Meus Parcelamentos</a></li>
+                    <li><a href="/brand" style='cursor:pointer'>Faturas Passadas</a></li>
+                    <li><a href="/brand" style='cursor:pointer'>Rede Lojas</a></li>
                   </ul>
                 </li>
                 `;
@@ -117,14 +125,12 @@ export default class {
 
     return `<div class="nav-menu" align='left'><nav class="menu">                
         <div class="nav-container">
-          ${usrMsg}
-          <ul class="main-menu">
-            <li class="active">
-              <a href="javascript:void(0);">${itens.pnlControl}</a>
-              <ul>
-								<li><a href="/" style='cursor:pointer'>${itens.dashboardItem}</a></li>								
-							</ul>
-            </li>
+          <br>  
+          ${LogoWhite()}          
+          <br>    
+          ${usrMsg}      
+          <br>
+          <ul class="main-menu">            
 						${fullMenu}
           </ul>
           <br>          

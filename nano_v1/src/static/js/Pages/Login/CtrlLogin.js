@@ -118,9 +118,8 @@ export default class LoginPage {
     }
 
     function serviceOk(payload) {
-      loadingOff();
-      var response = DtoAuthenticatedUser(payload);
-      loginOk(response);      
+      loadingOff(); 
+      loginOk(payload);      
       location.href = "/";
     }
   }

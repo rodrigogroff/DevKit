@@ -203,9 +203,12 @@ namespace Master.Service
                                 }
 
                                 loggedUser._id = t_associado.id.ToString();
+                                loggedUser._type = dto.userType;
                                 loggedUser.email = "";
-                                loggedUser.login = t_associado.stNome;
-                                loggedUser.userType = dto.userType;
+                                loggedUser.terminal = "";
+                                loggedUser.nome = t_associado.stNome;                                
+                                loggedUser.empresa = t_emp.nuEmpresa.ToString();
+                                loggedUser.matricula = t_associado.nuMatricula.ToString();
 
                                 #endregion
 

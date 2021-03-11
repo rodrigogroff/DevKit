@@ -1,5 +1,6 @@
 
 import "@app/Infra/global.script.js";
+import { LogoCut } from "@app/Components/Images/LogoCut";
 import Menu from "@app/Components/Menu";
 import Controller from "./CtrlExit";
 
@@ -17,8 +18,8 @@ class AppRouter {
     if (route_values.length >= 2) params.id = route_values[2];
     return `<div class="wrapper" align="center">${Menu.getHtml()}<div class="wrapper-inline img shadow" >
                     <header id='appHeader'>
-                    <img src='src/static/img/topLogo.png' alt='Nano Logo' style='margin-top:-7px;margin-left:-30px' />
-                        <div class="navi-menu-button"><em></em><em></em><em></em></div>
+                    ${LogoCut()}
+                    <div class="navi-menu-button"><em></em><em></em><em></em></div>
                     </header>
                     <main><section class="container"><br><div id='mainFormApp'>${new Controller(params).getHtml()}</div></section></main>
                 </div></div>`;

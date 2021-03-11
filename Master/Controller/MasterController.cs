@@ -50,8 +50,8 @@ namespace Api.Master.Controllers
             {
                 _id = claims.FirstOrDefault(claim => claim.Type == "_id")?.Value,                
                 email = claims.FirstOrDefault(claim => claim.Type == "email")?.Value,
-                login = claims.FirstOrDefault(claim => claim.Type == "login")?.Value,
-                userType = claims.FirstOrDefault(claim => claim.Type == "userType")?.Value,
+                nome = claims.FirstOrDefault(claim => claim.Type == "login")?.Value,
+                _type = claims.FirstOrDefault(claim => claim.Type == "userType")?.Value,
             };
         }
 
@@ -62,7 +62,7 @@ namespace Api.Master.Controllers
             var key = Encoding.ASCII.GetBytes(LocalNetwork.Secret);
 
             if (au.email == null) au.email = "";
-            if (au.login == null) au.login = "";
+            if (au.nome == null) au.nome = "";
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -70,8 +70,8 @@ namespace Api.Master.Controllers
                 {
                     new Claim("_id", au._id),
                     new Claim("email", au.email),
-                    new Claim("login", au.login),
-                    new Claim("userType", au.userType),
+                    new Claim("login", au.nome),
+                    new Claim("userType", au._type),
                 }),
                 Expires = DateTime.UtcNow.AddHours(24),
                 SigningCredentials = new SigningCredentials (   new SymmetricSecurityKey(key), 

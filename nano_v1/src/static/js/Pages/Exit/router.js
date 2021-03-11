@@ -1,6 +1,6 @@
 
 import "@app/Infra/global.script.js";
-import { LogoCut } from "@app/Components/Images/LogoCut";
+import { LogoCut } from "@app/Components/Images/Logo";
 import Menu from "@app/Components/Menu";
 import Controller from "./CtrlExit";
 

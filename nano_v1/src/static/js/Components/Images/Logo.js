@@ -6,3 +6,7 @@ export function LogoCut() {
 export function LogoWhite() {
     return `<img src='src/static/img/logo_white.png' alt='Nano Logo' style='margin-top:-7px;margin-left:30px;max-height:56px' />`
 }
+
+export function LogoBig() {
+    return `<img src='src/static/img/logo.png' style='max-height:60px' />`
+}

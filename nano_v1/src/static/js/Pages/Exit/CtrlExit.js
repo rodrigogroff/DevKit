@@ -31,10 +31,6 @@ export default class LoginPage {
   constructor(params) {
     this.params = params;
 
-    // ----------------------------------------------------------------
-    // page events here -----------------------------------------------
-    // ----------------------------------------------------------------
-
     $(document).ready(function () {
       
     });
@@ -52,13 +48,9 @@ export default class LoginPage {
       }
     });
 
-    // ----------------------------------------------------------------
-    // page functions here --------------------------------------------
-    // ----------------------------------------------------------------
-
     function btnSubmit_Click() {
       logout();
-      location.href = "/";
+      location.href = "/login";
     }
   }
 }

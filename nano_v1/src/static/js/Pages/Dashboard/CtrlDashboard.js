@@ -1,4 +1,5 @@
 
+/*
 import { 
   getFromSession, 
   setToSession, 
@@ -7,16 +8,14 @@ import {
 } from "@app/Infra/Util";
 
 import ViewSplash from "./Views/ViewSplash";
+*/
 
 export default class {
   constructor(params) {
     this.params = params;
 
-    // ----------------------------------------------------------------
-    // page events here -----------------------------------------------
-    // ----------------------------------------------------------------
-
     $(document).ready(function () {
+      /*
       if (getFromSession("splashed") !== "true") {
         setToSession("splashed", "true");
         $("body").css("background-color", "#FFFFFF");
@@ -36,6 +35,7 @@ export default class {
           }, 2000);
         }, 900);
       }
+      */
     });
   }
 

@@ -68,18 +68,15 @@ export default class MyForm {
   }
 
   static validate() {
-
     var elements = this.elements();
-
     var val_empresa = SimpleNumberField.validate(elements.formEmpresa);
     var val_mat = SimpleNumberField.validate(elements.formMatricula );
     var val_acesso = SimpleNumberField.validate(elements.formAcesso );
     var val_venc = SimpleNumberField.validate(elements.formVencimento );
     var valPass = SimpleNumberField.validate(elements.formPass );
-
     if (val_empresa && val_mat && val_acesso && val_venc && valPass)
-      return true;
-   
+      return true;   
     return false;
   }
+  
 }

@@ -25,7 +25,7 @@ export default class {
                 </p>`;
 
       fullMenu = `<li class='active'>
-                  <a href="javascript:void(0);"><b>Meu Cartão</b></a>
+                  <a href="javascript:void(0);"><b>Cartão Convênio</b></a>
                   <ul>
                     <li><a href="/brand" style='cursor:pointer'>Cartão virtual</a></li>
                     <li><a href="/brand" style='cursor:pointer'>Solicitações</a></li>

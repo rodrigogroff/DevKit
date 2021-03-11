@@ -1,3 +1,4 @@
+
 import { BaseLoader } from "@app/Components/Images/BaseLoader";
 
 export default class {

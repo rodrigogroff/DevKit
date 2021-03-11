@@ -1,13 +1,9 @@
 
 import SimpleNumberField from "@app/Components/Fields/SimpleNumber";
 import PasswordField from "@app/Components/Fields/Password";
-import { LogoBig } from "@app/Components/Images/Logo";
-
-import {
-  BaseLoader,
-} from "@app/Components/Images/BaseLoader";
-
 import Popup from "@app/Components/Modals/Popup";
+import { LogoBig } from "@app/Components/Images/Logo";
+import { BaseLoader } from "@app/Components/Images/BaseLoader";
 
 export default class MyForm {
   static elements() {
@@ -26,13 +22,10 @@ export default class MyForm {
   }
 
   static htmlMobile() {
-    var elements = this.elements();
-    
+    var elements = this.elements();    
     return `${Popup.getHtml()}
           <div style="width:296px;margin-top:-32px" class="form-row-group-dark"><br>              
-            <p>
-              ${LogoBig()}
-            </p>
+            <p>${LogoBig()}</p>
             <h4>Informe o número do seu<br>cartão benefícios</h4>
             <br>                    
             <div class="form-row">
@@ -79,5 +72,5 @@ export default class MyForm {
       return true;   
     return false;
   }
-  
+
 }

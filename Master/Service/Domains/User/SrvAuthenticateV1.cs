@@ -137,6 +137,17 @@ namespace Master.Service
                                     return false;
                                 }
 
+                                if (t_emp.bBlocked == true)
+                                {
+                                    Error = new DtoServiceError
+                                    {
+                                        message = getLanguage(dto._language, 1),
+                                        debugInfo = ""
+                                    };
+
+                                    return false;
+                                }
+
                                 var t_associado = repository.GetCartao(db, t_emp.id, Convert.ToInt64(dto.matricula), 1);
 
                                 if (t_associado == null)

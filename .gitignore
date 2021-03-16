@@ -241,3 +241,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /nano_v1/dist
+/.tools/linq2db.t4models

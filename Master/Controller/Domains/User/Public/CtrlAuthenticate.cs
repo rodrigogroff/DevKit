@@ -4,14 +4,13 @@ using Master.Repository;
 using Master.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
 namespace Api.Master.Controllers
 {
     public partial class CtrlAuthenticate : MasterController
     {
-        public CtrlAuthenticate(IOptions<LocalNetwork> _network, IMemoryCache _cache) : base(_network, _cache) { }
+        public CtrlAuthenticate(IOptions<LocalNetwork> _network) : base(_network) { }
 
         [AllowAnonymous]
         [HttpPost]
@@ -30,8 +29,7 @@ namespace Api.Master.Controllers
             return Ok( new 
             {
                 token,
-                user = auth,       
-                st_MasterVersion
+                user = auth,                
             });
         }
     }

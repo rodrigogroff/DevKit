@@ -1,17 +1,13 @@
-﻿using System.IO;
-using System.Text;
-using Dapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Npgsql;
+using System.Text;
 
 namespace Master
-{  
+{
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -23,10 +19,9 @@ namespace Master
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddControllers();
             services.Configure<LocalNetwork>(Configuration.GetSection("localNetwork"));
-            services.AddResponseCompression();
-            services.AddMemoryCache();
 
             var key = Encoding.ASCII.GetBytes(LocalNetwork.Secret);
             services.AddAuthentication(x =>
@@ -46,32 +41,18 @@ namespace Master
                     ValidateAudience = false
                 };
             });
-  
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-#if DEBUG
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
-#endif
+            app.UseRouting();
 
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseAuthorization();
 
-            app.UseResponseCompression();
-            app.UseAuthentication();
-            app.UseMvc();
-
-            //sql migrations
-            var connStr = Configuration["localNetwork:sqlServer"];
-            var baseDb = File.ReadAllText(@"Repository\CreateDB_pg.sql");
-            var db = new NpgsqlConnection(connStr);
-            db.Open();
-            db.Query(baseDb);
-            db.Close();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

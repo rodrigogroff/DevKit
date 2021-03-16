@@ -7,7 +7,6 @@ using Entities.Api.User;
 using Master;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,19 +17,13 @@ namespace Api.Master.Controllers
     public partial class MasterController : ControllerBase
     {
         public LocalNetwork network;
-        public IMemoryCache cache;
+        public bool _doNotSendEmail = false;
 
-        public bool _sendEmail = true;
-
-        public string st_MasterVersion = "01.0001";
-
-        public MasterController(IOptions<LocalNetwork> _network, IMemoryCache _cache)
+        public MasterController(IOptions<LocalNetwork> _network)
         {
             if (_network != null)
                 this.network = _network.Value;
 
-            if (_cache != null)
-                cache = _cache;
         }
 
         [NonAction]
@@ -48,7 +41,7 @@ namespace Api.Master.Controllers
 
             return new DtoAuthenticatedUser
             {
-                _id = claims.FirstOrDefault(claim => claim.Type == "_id")?.Value,                
+                _id = claims.FirstOrDefault(claim => claim.Type == "_id")?.Value,
                 email = claims.FirstOrDefault(claim => claim.Type == "email")?.Value,
                 nome = claims.FirstOrDefault(claim => claim.Type == "login")?.Value,
                 _type = claims.FirstOrDefault(claim => claim.Type == "userType")?.Value,
@@ -66,15 +59,20 @@ namespace Api.Master.Controllers
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                /*
+                 * email = claims.FirstOrDefault(claim => claim.Type == "email")?.Value,
+                nome = claims.FirstOrDefault(claim => claim.Type == "login")?.Value,
+                _type = claims.FirstOrDefault(claim => claim.Type == "userType")?.Value,*/
+
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("_id", au._id),
-                    new Claim("email", au.email),
-                    new Claim("login", au.nome),
-                    new Claim("userType", au._type),
+                    new Claim("_type", au._type),
+                    new Claim("nome", au.nome),
+                    new Claim("email", au.email),                    
                 }),
                 Expires = DateTime.UtcNow.AddHours(24),
-                SigningCredentials = new SigningCredentials (   new SymmetricSecurityKey(key), 
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                                                                 SecurityAlgorithms.HmacSha256Signature)
             };
 

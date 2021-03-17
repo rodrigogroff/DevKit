@@ -98,12 +98,6 @@ namespace Master.Service
                     }
             }
 
-            if (dto._language == null)
-            {
-                Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
-                return false;
-            }
-
             return true;
 
             #endregion

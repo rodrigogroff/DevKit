@@ -39,7 +39,33 @@ namespace IntegrationTest
                 codAcesso = "0864",
                 venc = "0716",
                 login = "",
-                userType = "2",                
+                userType = TipoUsuario.Associado.ToString(),
+                email = "",
+                senha = "1234"
+            });
+
+            if (!ret.ToString().Contains("BadRequest"))
+                Assert.Fail();
+
+            #endregion
+        }
+
+        [TestMethod]
+        public void TipoUsuarioInexistente()
+        {
+            #region - code - 
+
+            SetupDatabase();
+            var ctrl = SetupController();
+
+            var ret = ctrl.Post(new DtoLoginInformation
+            {
+                empresa = "4444",
+                matricula = "1",
+                codAcesso = "0864",
+                venc = "0716",
+                login = "",
+                userType = "9999",
                 email = "",
                 senha = "1234"
             });
@@ -80,7 +106,7 @@ namespace IntegrationTest
                 codAcesso = "0864",
                 venc = "0716",
                 login = "",
-                userType = "2",
+                userType = TipoUsuario.Associado.ToString(),
                 email = "",
                 senha = "1234"
             });
@@ -121,7 +147,7 @@ namespace IntegrationTest
                 codAcesso = "0864",
                 venc = "0716",
                 login = "",
-                userType = "2",
+                userType = TipoUsuario.Associado.ToString(),
                 email = "",
                 senha = "1234"
             });
@@ -180,7 +206,7 @@ namespace IntegrationTest
                 codAcesso = "0864",
                 venc = "0716",
                 login = "",
-                userType = "2",
+                userType = TipoUsuario.Associado.ToString(),
                 email = "",
                 senha = "1234"
             });
@@ -239,7 +265,7 @@ namespace IntegrationTest
                 codAcesso = "0864",
                 venc = "0716",
                 login = "",
-                userType = "2",
+                userType = TipoUsuario.Associado.ToString(),
                 email = "",
                 senha = "1234"
             });

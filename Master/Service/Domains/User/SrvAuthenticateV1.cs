@@ -51,9 +51,9 @@ namespace Master.Service
         {
             #region - code - 
 
-            switch (dto.userType)
+            switch (I(dto.userType))
             {
-                case "2":
+                case TipoUsuario.Associado:
                     {
                         if (dto.empresa == null)
                         {
@@ -109,9 +109,9 @@ namespace Master.Service
                 
                 using (var db = GetConnection(network))
                 {
-                    switch (dto.userType)
+                    switch (I(dto.userType))
                     {
-                        case "2":
+                        case TipoUsuario.Associado:
                             {
                                 #region - code - 
 

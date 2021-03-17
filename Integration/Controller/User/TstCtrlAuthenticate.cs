@@ -1,5 +1,8 @@
 using Api.Master.Controllers;
-using Master.Infra.Entity.Database;
+using Master.Data.Const;
+using Master.Data.Database;
+using Master.Data.Domains.User;
+using Master.Infra;
 using Master.Repository;
 using Master.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,7 +17,7 @@ namespace IntegrationTest
         {
             return new CtrlAuthenticate(null)
             { 
-                network = new Master.LocalNetwork
+                network = new LocalNetwork
                 {
                     sqlServer = connStr
                 }
@@ -29,7 +32,7 @@ namespace IntegrationTest
             SetupDatabase();
             var ctrl = SetupController();
 
-            var ret = ctrl.Post(new Entities.Api.User.DtoLoginInformation
+            var ret = ctrl.Post(new DtoLoginInformation
             {
                 empresa = "4444",
                 matricula = "1",
@@ -59,9 +62,9 @@ namespace IntegrationTest
             {
                 db.Open();
 
-                var da = new DapperRepository();
+                var da = new EmpresaDapperRepository();
 
-                da.InsertEmpresa(db, new Master.Infra.Entity.Database.Empresa
+                da.InsertEmpresa(db, new Empresa
                 {
                     bBlocked = true,
                     nuEmpresa = 4444,
@@ -70,7 +73,7 @@ namespace IntegrationTest
                 db.Close();
             }
 
-            var ret = ctrl.Post(new Entities.Api.User.DtoLoginInformation
+            var ret = ctrl.Post(new DtoLoginInformation
             {
                 empresa = "4444",
                 matricula = "1",
@@ -100,9 +103,9 @@ namespace IntegrationTest
             {
                 db.Open();
 
-                var da = new DapperRepository();
+                var da = new EmpresaDapperRepository();
 
-                da.InsertEmpresa(db, new Master.Infra.Entity.Database.Empresa
+                da.InsertEmpresa(db, new Empresa
                 {
                     bBlocked = false,
                     nuEmpresa = 2,
@@ -111,7 +114,7 @@ namespace IntegrationTest
                 db.Close();
             }
 
-            var ret = ctrl.Post(new Entities.Api.User.DtoLoginInformation
+            var ret = ctrl.Post(new DtoLoginInformation
             {
                 empresa = "2",
                 matricula = "1",
@@ -141,30 +144,36 @@ namespace IntegrationTest
             {
                 db.Open();
 
-                var da = new DapperRepository();
-
-                da.InsertEmpresa(db, new Master.Infra.Entity.Database.Empresa
                 {
-                    bBlocked = false,
-                    nuEmpresa = 2,
-                });
+                    var da = new EmpresaDapperRepository();
 
-                da.InsertCartao(db, new Master.Infra.Entity.Database.Cartao
+                    da.InsertEmpresa(db, new Empresa
+                    {
+                        bBlocked = false,
+                        nuEmpresa = 2,
+                    });
+                }
+
                 {
-                    fkEmpresa = 1,
-                    nuEmitido = 2,
-                    nuMatricula = 1,
-                    nuStatus = CartaoStatus.Bloqueado,
-                    nuViaCartao = 1,
-                    stVenctoCartao = "0716",
-                    stSenha = SrvBaseService.DESCript("1111"),
-                    nuTitularidade = 1,
-                });
+                    var da = new CartaoDapperRepository();
+
+                    da.InsertCartao(db, new Cartao
+                    {
+                        fkEmpresa = 1,
+                        nuEmitido = 2,
+                        nuMatricula = 1,
+                        nuStatus = CartaoStatus.Bloqueado,
+                        nuViaCartao = 1,
+                        stVenctoCartao = "0716",
+                        stSenha = SrvBaseService.DESCript("1111"),
+                        nuTitularidade = 1,
+                    });
+                }
 
                 db.Close();
             }
 
-            var ret = ctrl.Post(new Entities.Api.User.DtoLoginInformation
+            var ret = ctrl.Post(new DtoLoginInformation
             {
                 empresa = "2",
                 matricula = "1",
@@ -194,30 +203,36 @@ namespace IntegrationTest
             {
                 db.Open();
 
-                var da = new DapperRepository();
-
-                da.InsertEmpresa(db, new Master.Infra.Entity.Database.Empresa
                 {
-                    bBlocked = false,
-                    nuEmpresa = 2,
-                });
+                    var da = new EmpresaDapperRepository();
 
-                da.InsertCartao(db, new Master.Infra.Entity.Database.Cartao
+                    da.InsertEmpresa(db, new Empresa
+                    {
+                        bBlocked = false,
+                        nuEmpresa = 2,
+                    });
+                }
+
                 {
-                    fkEmpresa = 1,
-                    nuEmitido = 2,
-                    nuMatricula = 1,
-                    nuStatus = CartaoStatus.Bloqueado,
-                    nuViaCartao = 1,
-                    stVenctoCartao = "0716",
-                    stSenha = SrvBaseService.DESCript("1234"),
-                    nuTitularidade = 1,
-                });
+                    var da = new CartaoDapperRepository();
+
+                    da.InsertCartao(db, new Cartao
+                    {
+                        fkEmpresa = 1,
+                        nuEmitido = 2,
+                        nuMatricula = 1,
+                        nuStatus = CartaoStatus.Bloqueado,
+                        nuViaCartao = 1,
+                        stVenctoCartao = "0716",
+                        stSenha = SrvBaseService.DESCript("1234"),
+                        nuTitularidade = 1,
+                    });
+                }
 
                 db.Close();
             }
 
-            var ret = ctrl.Post(new Entities.Api.User.DtoLoginInformation
+            var ret = ctrl.Post(new DtoLoginInformation
             {
                 empresa = "2",
                 matricula = "1",
@@ -247,30 +262,36 @@ namespace IntegrationTest
             {
                 db.Open();
 
-                var da = new DapperRepository();
-
-                da.InsertEmpresa(db, new Master.Infra.Entity.Database.Empresa
                 {
-                    bBlocked = false,
-                    nuEmpresa = 2,
-                });
+                    var da = new EmpresaDapperRepository();
 
-                da.InsertCartao(db, new Master.Infra.Entity.Database.Cartao
+                    da.InsertEmpresa(db, new Empresa
+                    {
+                        bBlocked = false,
+                        nuEmpresa = 2,
+                    });
+                }
+
                 {
-                    fkEmpresa = 1,
-                    nuEmitido = 2,
-                    nuMatricula = 1,
-                    nuStatus = CartaoStatus.Habilitado,
-                    nuViaCartao = 1,
-                    stVenctoCartao = "0711",
-                    stSenha = SrvBaseService.DESCript("1234"),
-                    nuTitularidade = 1,
-                });
+                    var da = new CartaoDapperRepository();
+
+                    da.InsertCartao(db, new Cartao
+                    {
+                        fkEmpresa = 1,
+                        nuEmitido = 2,
+                        nuMatricula = 1,
+                        nuStatus = CartaoStatus.Habilitado,
+                        nuViaCartao = 1,
+                        stVenctoCartao = "0711",
+                        stSenha = SrvBaseService.DESCript("1234"),
+                        nuTitularidade = 1,
+                    });
+                }
 
                 db.Close();
             }
 
-            var ret = ctrl.Post(new Entities.Api.User.DtoLoginInformation
+            var ret = ctrl.Post(new DtoLoginInformation
             {
                 empresa = "2",
                 matricula = "1",
@@ -300,31 +321,37 @@ namespace IntegrationTest
             {
                 db.Open();
 
-                var da = new DapperRepository();
-
-                da.InsertEmpresa(db, new Master.Infra.Entity.Database.Empresa
                 {
-                    bBlocked = false,
-                    nuEmpresa = 2,
-                });
+                    var da = new EmpresaDapperRepository();
 
-                da.InsertCartao(db, new Master.Infra.Entity.Database.Cartao
+                    da.InsertEmpresa(db, new Empresa
+                    {
+                        bBlocked = false,
+                        nuEmpresa = 2,
+                    });
+                }
+
                 {
-                    fkEmpresa = 1,
-                    nuEmitido = 2,
-                    nuMatricula = 1,
-                    nuStatus = CartaoStatus.Habilitado,
-                    nuViaCartao = 1,
-                    stVenctoCartao = "0716",
-                    stSenha = SrvBaseService.DESCript("1234"),
-                    nuTitularidade = 1,
-                    stCpf = "57357552004",
-                });
+                    var da = new CartaoDapperRepository();
+
+                    da.InsertCartao(db, new Cartao
+                    {
+                        fkEmpresa = 1,
+                        nuEmitido = 2,
+                        nuMatricula = 1,
+                        nuStatus = CartaoStatus.Habilitado,
+                        nuViaCartao = 1,
+                        stVenctoCartao = "0716",
+                        stSenha = SrvBaseService.DESCript("1234"),
+                        nuTitularidade = 1,
+                        stCpf = "57357552004",
+                    });
+                }
 
                 db.Close();
             }
 
-            var ret = ctrl.Post(new Entities.Api.User.DtoLoginInformation
+            var ret = ctrl.Post(new DtoLoginInformation
             {
                 empresa = "2",
                 matricula = "1",
@@ -354,31 +381,36 @@ namespace IntegrationTest
             {
                 db.Open();
 
-                var da = new DapperRepository();
-
-                da.InsertEmpresa(db, new Master.Infra.Entity.Database.Empresa
                 {
-                    bBlocked = false,
-                    nuEmpresa = 2,
-                });
+                    var da = new EmpresaDapperRepository();
 
-                da.InsertCartao(db, new Master.Infra.Entity.Database.Cartao
+                    da.InsertEmpresa(db, new Empresa
+                    {
+                        bBlocked = false,
+                        nuEmpresa = 2,
+                    });
+                }
                 {
-                    fkEmpresa = 1,
-                    nuEmitido = 2,
-                    nuMatricula = 1,
-                    nuStatus = CartaoStatus.Habilitado,
-                    nuViaCartao = 1,
-                    stVenctoCartao = "0716",
-                    stSenha = SrvBaseService.DESCript("1234"),
-                    nuTitularidade = 1,
-                    stCpf = "57357552004",
-                });
+                    var da = new CartaoDapperRepository();
+
+                    da.InsertCartao(db, new Cartao
+                    {
+                        fkEmpresa = 1,
+                        nuEmitido = 2,
+                        nuMatricula = 1,
+                        nuStatus = CartaoStatus.Habilitado,
+                        nuViaCartao = 1,
+                        stVenctoCartao = "0716",
+                        stSenha = SrvBaseService.DESCript("1234"),
+                        nuTitularidade = 1,
+                        stCpf = "57357552004",
+                    });
+                }
 
                 db.Close();
             }
 
-            var ret = ctrl.Post(new Entities.Api.User.DtoLoginInformation
+            var ret = ctrl.Post(new DtoLoginInformation
             {
                 empresa = "2",
                 matricula = "1",

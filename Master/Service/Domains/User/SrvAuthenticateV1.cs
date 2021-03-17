@@ -1,6 +1,7 @@
-﻿using Entities.Api;
-using Entities.Api.User;
-using Master.Infra.Entity.Database;
+﻿using Master.Data.Const;
+using Master.Data.Domains;
+using Master.Data.Domains.User;
+using Master.Infra;
 using Master.Repository;
 using System;
 using System.Collections.Generic;
@@ -43,12 +44,8 @@ namespace Master.Service
 
     public class SrvAuthenticateV1 : SrvML_Authenticate
     {
-        IDapperRepository repository;
-
-        public SrvAuthenticateV1 (IDapperRepository _repository) 
-        {
-            repository = _repository;
-        }
+        public ICartaoDapperRepository cartaoRepository;
+        public IEmpresaDapperRepository empresaRepository;
 
         bool ValidadeRequest(DtoLoginInformation dto)
         {
@@ -60,31 +57,31 @@ namespace Master.Service
                     {
                         if (dto.empresa == null)
                         {
-                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            Error = new DtoServiceError { message = getLanguage(null, 1) };
                             return false;
                         }
 
                         if (dto.matricula == null)
                         {
-                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            Error = new DtoServiceError { message = getLanguage(null, 1) };
                             return false;
                         }
 
                         if (dto.venc == null)
                         {
-                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            Error = new DtoServiceError { message = getLanguage(null, 1) };
                             return false;
                         }
 
                         if (dto.codAcesso == null)
                         {
-                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            Error = new DtoServiceError { message = getLanguage(null, 1) };
                             return false;
                         }
 
                         if (dto.senha == null)
                         {
-                            Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                            Error = new DtoServiceError { message = getLanguage(null, 1) };
                             return false;
                         }
 
@@ -93,7 +90,7 @@ namespace Master.Service
 
                 default:
                     {
-                        Error = new DtoServiceError { message = getLanguage(dto._language, 1) };
+                        Error = new DtoServiceError { message = getLanguage(null, 1) };
                         return false;
                     }
             }
@@ -118,13 +115,13 @@ namespace Master.Service
                             {
                                 #region - code - 
 
-                                var t_emp = repository.GetEmpresaNum(db, Convert.ToInt64(dto.empresa));
+                                var t_emp = empresaRepository.GetEmpresaNum(db, Convert.ToInt64(dto.empresa));
 
                                 if (t_emp == null)
                                 {
                                     Error = new DtoServiceError
                                     {
-                                        message = getLanguage(dto._language, 1),
+                                        message = getLanguage(null, 1),
                                         debugInfo = ""
                                     };
 
@@ -135,33 +132,35 @@ namespace Master.Service
                                 {
                                     Error = new DtoServiceError
                                     {
-                                        message = getLanguage(dto._language, 1),
+                                        message = getLanguage(null, 1),
                                         debugInfo = ""
                                     };
 
                                     return false;
                                 }
 
-                                var t_associado = repository.GetCartao(db, t_emp.id, Convert.ToInt64(dto.matricula), 1);
+                                var titularidade = 1;
+
+                                var t_associado = cartaoRepository.GetCartao(db, t_emp.id, Convert.ToInt64(dto.matricula), titularidade);
 
                                 if (t_associado == null)
                                 {
                                     Error = new DtoServiceError
                                     {
-                                        message = getLanguage(dto._language, 1),
+                                        message = getLanguage(null, 1),
                                         debugInfo = ""
                                     };
 
                                     return false;
                                 }
 
-                                var descript_senha = DESdeCript(t_associado.stSenha);
+                                var senhaDes = DESdeCript(t_associado.stSenha);
 
-                                if (descript_senha != dto.senha)
+                                if (senhaDes != dto.senha)
                                 {
                                     Error = new DtoServiceError
                                     {
-                                        message = getLanguage(dto._language, 1),
+                                        message = getLanguage(null, 1),
                                         debugInfo = ""
                                     };
 
@@ -172,7 +171,7 @@ namespace Master.Service
                                 {
                                     Error = new DtoServiceError
                                     {
-                                        message = getLanguage(dto._language, 1),
+                                        message = getLanguage(null, 1),
                                         debugInfo = ""
                                     };
 
@@ -183,7 +182,7 @@ namespace Master.Service
                                 {
                                     Error = new DtoServiceError
                                     {
-                                        message = getLanguage(dto._language, 1),
+                                        message = getLanguage(null, 1),
                                         debugInfo = ""
                                     };
 
@@ -191,8 +190,8 @@ namespace Master.Service
                                 }
 
                                 var codAcesso = this.ObterCodigoAcesso ( t_emp.nuEmpresa, 
-                                                                         t_associado.nuMatricula, 
-                                                                         1, 
+                                                                         t_associado.nuMatricula,
+                                                                         titularidade, 
                                                                          t_associado.nuViaCartao, 
                                                                          t_associado.stCpf );
 
@@ -200,7 +199,7 @@ namespace Master.Service
                                 {
                                     Error = new DtoServiceError
                                     {
-                                        message = getLanguage(dto._language, 1),
+                                        message = getLanguage(null, 1),
                                         debugInfo = ""
                                     };
 
@@ -228,7 +227,7 @@ namespace Master.Service
             {
                 Error = new DtoServiceError
                 {
-                    message = getLanguage (dto._language, 0),
+                    message = getLanguage (null, 0),
                     debugInfo = ex.ToString()
                 };
 

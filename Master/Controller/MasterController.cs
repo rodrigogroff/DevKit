@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
-using Entities.Api.User;
-using Master;
+using Master.Data.Domains.User;
+using Master.Infra;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -214,54 +212,6 @@ namespace Api.Master.Controllers
             {
 
             }
-
-            #endregion
-        }
-
-        [NonAction]
-        public string OnlyNumbers(string text)
-        {
-            #region - code - 
-
-            var strResp = "";
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                var c = text[i];
-                if (Char.IsNumber(c))
-                    strResp += c.ToString();
-            }
-
-            return strResp;
-
-            #endregion
-        }
-
-        [NonAction]
-        public static string DESdeCript(string dados, string chave = "12345678")
-        {
-            #region - code - 
-
-            byte[] key = System.Text.Encoding.ASCII.GetBytes(chave);//{1,2,3,4,5,6,7,8};
-            byte[] data = new byte[8];
-
-            for (int n = 0; n < dados.Length / 2; n++)
-            {
-                data[n] = (byte)Convert.ToInt32(dados.Substring(n * 2, 2), 16);
-            }
-
-            DES des = new DESCryptoServiceProvider();
-            des.Key = key;
-            des.Mode = CipherMode.ECB;
-            ICryptoTransform crypto = des.CreateDecryptor();
-            MemoryStream cipherStream = new MemoryStream();
-            CryptoStream cryptoStream = new CryptoStream(cipherStream, crypto, CryptoStreamMode.Write);
-            cryptoStream.Write(data, 0, data.Length);
-            crypto.TransformBlock(data, 0, 8, data, 0);
-            System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
-            string retorno = enc.GetString(data);
-
-            return retorno;
 
             #endregion
         }

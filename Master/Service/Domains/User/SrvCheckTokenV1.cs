@@ -1,6 +1,6 @@
-﻿using Entities.Api;
-using Entities.Api.User;
-using Master.Repository;
+﻿using Master.Data.Domains;
+using Master.Data.Domains.User;
+using Master.Infra;
 using System;
 using System.Collections.Generic;
 
@@ -48,13 +48,6 @@ namespace Master.Service
 
     public class SrvCheckTokenV1 : SrvML_CheckToken
     {
-        IDapperRepository repository;
-
-        public SrvCheckTokenV1(IDapperRepository _repository) 
-        {
-            repository = _repository;
-        }
-
         public bool Exec ( LocalNetwork network, DtoCheckToken obj )
         {
             try
@@ -109,7 +102,7 @@ namespace Master.Service
             {
                 Error = new DtoServiceError
                 {
-                    message = getLanguage(obj._language, 0),
+                    message = getLanguage(null, 0),
                     debugInfo = ex.ToString()
                 };
 

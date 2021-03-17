@@ -1,5 +1,5 @@
 ﻿
-namespace Master
+namespace Master.Infra
 {
     public class LocalNetwork
     {

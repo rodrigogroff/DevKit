@@ -1,5 +1,5 @@
-﻿using Entities.Api.User;
-using Master;
+﻿using Master.Data.Domains.User;
+using Master.Infra;
 using Master.Repository;
 using Master.Service;
 using Microsoft.AspNetCore.Authorization;
@@ -18,8 +18,12 @@ namespace Api.Master.Controllers
         public ActionResult Post([FromBody] DtoLoginInformation obj)
         {
             var auth = new DtoAuthenticatedUser();
-            var repo = new DapperRepository();            
-            var srv = new SrvAuthenticateV1(repo);
+            
+            var srv = new SrvAuthenticateV1
+            {
+                cartaoRepository = new CartaoDapperRepository(),
+                empresaRepository = new EmpresaDapperRepository()
+            };
 
             if (!srv.Exec(network, obj, ref auth))
                 return BadRequest(srv.Error);

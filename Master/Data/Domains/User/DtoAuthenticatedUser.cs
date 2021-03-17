@@ -1,5 +1,5 @@
 ﻿
-namespace Entities.Api.User
+namespace Master.Data.Domains.User
 {
     public class DtoAuthenticatedUser : DtoBase
     {

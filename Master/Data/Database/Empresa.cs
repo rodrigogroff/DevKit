@@ -1,4 +1,5 @@
-﻿namespace Master.Infra.Entity.Database
+﻿
+namespace Master.Data.Database
 {
     public class Empresa
     {

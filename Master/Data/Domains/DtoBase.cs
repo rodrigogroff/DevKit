@@ -1,8 +1,8 @@
 ﻿
-namespace Entities.Api
+namespace Master.Data.Domains
 {
     public class DtoBase
     {
-        public int? _language { get; set; }        
+        
     }
 }

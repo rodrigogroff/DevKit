@@ -1,5 +1,4 @@
-﻿using Entities.Api;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
@@ -9,6 +8,8 @@ using System.Text;
 using RestSharp;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Caching.Memory;
+using Master.Infra;
+using Master.Data.Domains;
 
 namespace Master.Service
 {

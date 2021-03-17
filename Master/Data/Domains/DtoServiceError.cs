@@ -1,5 +1,5 @@
 ﻿
-namespace Entities.Api
+namespace Master.Data.Domains
 {
     public class DtoServiceError
     {

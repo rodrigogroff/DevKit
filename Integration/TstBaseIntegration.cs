@@ -7,7 +7,7 @@ namespace IntegrationTest
     public class TstBaseIntegration
     {
         public string connStr = "User ID=postgres;Password=Gustavo123;Host=localhost;Port=5432;Database=ConveynetIntegration;";
-        public string baseDb = File.ReadAllText(@"Repository\CreateDB_pg.sql");
+        public string baseDb = File.ReadAllText(@"Repository\_CreateDB_pg.sql");
         
         public string[] truncateTables =
         {

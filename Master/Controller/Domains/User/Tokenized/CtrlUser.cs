@@ -1,5 +1,4 @@
 ﻿using Master;
-using Master.Infra.Entity.Database;
 using Master.Repository;
 using Master.Service;
 using Microsoft.AspNetCore.Mvc;

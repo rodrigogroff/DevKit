@@ -1,4 +1,5 @@
-﻿namespace Master.Infra.Entity.Database
+﻿
+namespace Master.Data.Const
 {
     public class CartaoStatus
     {

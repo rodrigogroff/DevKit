@@ -74,7 +74,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Repository\CreateDB_pg.sql">
+    <None Update="Repository\_CreateDB_pg.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

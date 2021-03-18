@@ -13,8 +13,8 @@ namespace Api.Master.Controllers
         public CtrlAuthenticate(IOptions<LocalNetwork> _network) : base(_network) { }
 
         [AllowAnonymous]
-        [HttpPost]
-        [Route("api/authenticate_v1")]
+        [HttpPost]        
+        [Route("api/v1/portal/authenticate")]
         public ActionResult Post([FromBody] DtoLoginInformation obj)
         {
             var auth = new DtoAuthenticatedUser();

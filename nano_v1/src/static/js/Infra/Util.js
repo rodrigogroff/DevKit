@@ -307,6 +307,7 @@ export function getTokenPortal(location, parameters) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       }
@@ -378,6 +379,7 @@ export function postTokenPortal(location, _obj) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: obj,
@@ -446,7 +448,11 @@ export function postPublicPortal(location, _obj) {
       ApiLocation.api_host + ":" + ApiLocation.api_port + "/api/" + location,
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: 
+        { 
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: obj,
       }
     )

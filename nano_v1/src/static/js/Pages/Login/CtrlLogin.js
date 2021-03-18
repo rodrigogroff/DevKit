@@ -1,5 +1,6 @@
 
-import { Endpoints, DtoLoginInformation } from "@app/Infra/Endpoints";
+import { Endpoints } from "@app/Infra/Endpoints";
+import { DtoLoginInformation } from "@app/Infra/Dto/DtoLoginInformation";
 
 import {
   postPublicPortal,

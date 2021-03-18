@@ -20,7 +20,6 @@ namespace Master
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.Configure<LocalNetwork>(Configuration.GetSection("localNetwork"));
 
@@ -47,9 +46,11 @@ namespace Master
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

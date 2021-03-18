@@ -69,6 +69,12 @@ export default class LoginPage {
 
     function btnSubmit_Click() {
       if (IsLoading()) return;
+      
+      if (!MyForm.validate()) {        
+        displaySystemPopup('Aviso do Sistema', 'Preencha os campos corretamente!');
+        return;
+      }       
+
       var elements = MyForm.elements();
       var formData = DtoLoginInformation(
         document.getElementById(elements.formEmpresa).value.trim(),
@@ -80,11 +86,6 @@ export default class LoginPage {
         document.getElementById(elements.formPass).value.trim(),
         '2' // tipo de login       
       );
-
-      if (!MyForm.validate()) {        
-        displaySystemPopup('Aviso do Sistema', 'Preencha os campos corretamente!');
-        return;
-      }       
 
       loadingOn("#" + elements.btnSubmit);
 

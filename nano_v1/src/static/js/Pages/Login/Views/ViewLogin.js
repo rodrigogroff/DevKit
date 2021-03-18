@@ -17,11 +17,7 @@ export default class MyForm {
     };
   }
 
-  static getHtml() {
-     return this.htmlMobile();    
-  }
-
-  static htmlMobile() {
+  static getHtml() {     
     var elements = this.elements();    
     return `${Popup.getHtml()}
           <div style="width:296px;margin-top:-32px" class="form-row-group-dark"><br>              

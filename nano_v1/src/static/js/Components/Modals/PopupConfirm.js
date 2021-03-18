@@ -1,3 +1,4 @@
+
 export default class {
     static getHtml(mdlID, confirmID, confirmMsg) {
         return `<div class="popup-overlay" id="popUpSystemConfirm_${mdlID}">

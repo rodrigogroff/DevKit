@@ -1,3 +1,4 @@
+
 export default class {
   static getHtml() {
     return `<div class="popup-overlay" id="popUpSystem" align='center'>

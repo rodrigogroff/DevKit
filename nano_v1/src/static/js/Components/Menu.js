@@ -27,13 +27,13 @@ export default class {
       fullMenu = `<li class='active'>
                   <a href="javascript:void(0);"><b>Cartão Convênio</b></a>
                   <ul>
-                    <li><a href="/brand" style='cursor:pointer'>Cartão virtual</a></li>
-                    <li><a href="/brand" style='cursor:pointer'>Solicitações</a></li>
-                    <li><a href="/brand" style='cursor:pointer'>Limites</a></li>
-                    <li><a href="/brand" style='cursor:pointer'>Extrato Atual</a></li>
-                    <li><a href="/brand" style='cursor:pointer'>Meus Parcelamentos</a></li>
-                    <li><a href="/brand" style='cursor:pointer'>Faturas Passadas</a></li>
-                    <li><a href="/brand" style='cursor:pointer'>Rede Lojas</a></li>
+                    <li><a href="/" style='cursor:pointer'>Cartão virtual</a></li>
+                    <li><a href="/" style='cursor:pointer'>Solicitações</a></li>
+                    <li><a href="/" style='cursor:pointer'>Limites</a></li>
+                    <li><a href="/" style='cursor:pointer'>Extrato Atual</a></li>
+                    <li><a href="/" style='cursor:pointer'>Meus Parcelamentos</a></li>
+                    <li><a href="/" style='cursor:pointer'>Faturas Passadas</a></li>
+                    <li><a href="/" style='cursor:pointer'>Rede Lojas</a></li>
                   </ul>
                 </li>`;
     }

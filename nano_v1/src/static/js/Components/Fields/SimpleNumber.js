@@ -7,9 +7,8 @@
       return `<input id="${id}" type="text" class="form-element" ${numeric} placeholder="" maxlength='${length}'>`;
     }
 
-  static validate(id, _msg) {
+  static validate(id) {
     var val = document.getElementById(id).value.trim()
-    console.log('val >' + val + '<');    
     if (isNaN(val) || val == undefined || val == null || val == '')
       return false;
     return true;

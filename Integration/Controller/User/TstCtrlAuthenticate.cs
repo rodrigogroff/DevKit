@@ -186,7 +186,7 @@ namespace IntegrationTest
                     da.InsertCartao(db, new Cartao
                     {
                         fkEmpresa = 1,
-                        nuEmitido = 2,
+                        nuEmitido = StatusExpedicao.NaoExpedido,
                         nuMatricula = 1,
                         nuStatus = CartaoStatus.Bloqueado,
                         nuViaCartao = 1,
@@ -245,9 +245,68 @@ namespace IntegrationTest
                     da.InsertCartao(db, new Cartao
                     {
                         fkEmpresa = 1,
-                        nuEmitido = 2,
+                        nuEmitido = StatusExpedicao.NaoExpedido,
                         nuMatricula = 1,
                         nuStatus = CartaoStatus.Bloqueado,
+                        nuViaCartao = 1,
+                        stVenctoCartao = "0716",
+                        stSenha = SrvBaseService.DESCript("1234"),
+                        nuTitularidade = 1,
+                    });
+                }
+
+                db.Close();
+            }
+
+            var ret = ctrl.Post(new DtoLoginInformation
+            {
+                empresa = "2",
+                matricula = "1",
+                codAcesso = "0864",
+                venc = "0716",
+                login = "",
+                userType = TipoUsuario.Associado.ToString(),
+                email = "",
+                senha = "1234"
+            });
+
+            if (!ret.ToString().Contains("BadRequest"))
+                Assert.Fail();
+
+            #endregion
+        }
+
+        [TestMethod]
+        public void CartaoStatusNaoExpedido()
+        {
+            #region - code -
+
+            SetupDatabase();
+            var ctrl = SetupController();
+
+            using (var db = new NpgsqlConnection(connStr))
+            {
+                db.Open();
+
+                {
+                    var da = new EmpresaDapperRepository();
+
+                    da.InsertEmpresa(db, new Empresa
+                    {
+                        bBlocked = false,
+                        nuEmpresa = 2,
+                    });
+                }
+
+                {
+                    var da = new CartaoDapperRepository();
+
+                    da.InsertCartao(db, new Cartao
+                    {
+                        fkEmpresa = 1,                        
+                        nuMatricula = 1,
+                        nuStatus = CartaoStatus.Habilitado,
+                        nuEmitido = StatusExpedicao.NaoExpedido,
                         nuViaCartao = 1,
                         stVenctoCartao = "0716",
                         stSenha = SrvBaseService.DESCript("1234"),
@@ -304,7 +363,7 @@ namespace IntegrationTest
                     da.InsertCartao(db, new Cartao
                     {
                         fkEmpresa = 1,
-                        nuEmitido = 2,
+                        nuEmitido = StatusExpedicao.Expedido,
                         nuMatricula = 1,
                         nuStatus = CartaoStatus.Habilitado,
                         nuViaCartao = 1,
@@ -363,7 +422,7 @@ namespace IntegrationTest
                     da.InsertCartao(db, new Cartao
                     {
                         fkEmpresa = 1,
-                        nuEmitido = 2,
+                        nuEmitido = StatusExpedicao.Expedido,
                         nuMatricula = 1,
                         nuStatus = CartaoStatus.Habilitado,
                         nuViaCartao = 1,
@@ -422,7 +481,7 @@ namespace IntegrationTest
                     da.InsertCartao(db, new Cartao
                     {
                         fkEmpresa = 1,
-                        nuEmitido = 2,
+                        nuEmitido = StatusExpedicao.Expedido,
                         nuMatricula = 1,
                         nuStatus = CartaoStatus.Habilitado,
                         nuViaCartao = 1,

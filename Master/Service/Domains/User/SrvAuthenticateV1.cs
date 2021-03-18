@@ -178,6 +178,17 @@ namespace Master.Service
                                     return false;
                                 }
 
+                                if (t_associado.nuEmitido != StatusExpedicao.Expedido)
+                                {
+                                    Error = new DtoServiceError
+                                    {
+                                        message = getLanguage(null, 1),
+                                        debugInfo = ""
+                                    };
+
+                                    return false;
+                                }
+
                                 if (t_associado.stVenctoCartao != dto.venc)
                                 {
                                     Error = new DtoServiceError

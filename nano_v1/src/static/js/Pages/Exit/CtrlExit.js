@@ -22,7 +22,7 @@ window.addEventListener("resize", (e) => {
   sessionStorage.setItem('res', curWidth);
 });
 
-export default class LoginPage {
+export default class ExitPage {
 
   getHtml() {
     return MyForm.getHtml();
@@ -30,10 +30,6 @@ export default class LoginPage {
 
   constructor(params) {
     this.params = params;
-
-    $(document).ready(function () {
-      
-    });
 
     $(document).on("keydown", function (e) {
       switch (e.keyCode) {

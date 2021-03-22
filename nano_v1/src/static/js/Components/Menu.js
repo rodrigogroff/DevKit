@@ -29,7 +29,7 @@ export default class {
                   <ul>
                     <li><a href="/" style='cursor:pointer'>Cartão virtual</a></li>
                     <li><a href="/" style='cursor:pointer'>Solicitações</a></li>
-                    <li><a href="/" style='cursor:pointer'>Limites</a></li>
+                    <li><a href="/limites" style='cursor:pointer'>Limites</a></li>
                     <li><a href="/" style='cursor:pointer'>Extrato Atual</a></li>
                     <li><a href="/" style='cursor:pointer'>Meus Parcelamentos</a></li>
                     <li><a href="/" style='cursor:pointer'>Faturas Passadas</a></li>

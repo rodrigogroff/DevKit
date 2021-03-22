@@ -6,8 +6,8 @@ export function getLocation() {
   var indexPos = parseInt(_idx);
 
   var lstNodes = [
-    //{ api_host: "https://meuconvey.conveynet.com.br", api_port: "18524" },  // sql server
-    { api_host: "http://localhost", api_port: "18524" },                      // postgreSQL
+    { api_host: "https://meuconvey.conveynet.com.br", api_port: "18524" },  // sql server
+    //{ api_host: "http://localhost", api_port: "18524" },                      // postgreSQL
   ];
 
   indexPos++;
@@ -249,10 +249,6 @@ export function logout() {
 }
 
 export function loginOk(resp) {
-
-  console.log('resp');
-  console.log(resp);
-
   localStorage.setItem("token", resp.token);
   localStorage.setItem("email", resp.user.email);
   localStorage.setItem("nome", resp.user.nome);
@@ -262,14 +258,10 @@ export function isAuthenticated() {
   var ret  = localStorage.getItem("token");
   if (ret == null || ret == undefined)
     return null;
-
   var ret = {
     email: localStorage.getItem("email"),
     nome: localStorage.getItem("nome"),
   };
-
-  console.log(ret);
-
   return ret;
 }
 

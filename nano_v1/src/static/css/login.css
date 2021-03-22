@@ -353,6 +353,16 @@ select.form-element {
 	box-shadow: none;
 }
 
+.button.orange {
+	background-color: #d6622d;
+	color: #FFF;
+	border-color: transparent;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+
 .popup-overlay {
 	position: fixed;
 	z-index: 900;

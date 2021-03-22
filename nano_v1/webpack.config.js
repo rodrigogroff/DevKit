@@ -15,6 +15,7 @@ module.exports = {
     '/src/static/Login': './src/static/js/pages/Login/router.js',
     '/src/static/Dashboard': './src/static/js/pages/Dashboard/router.js',    
     '/src/static/Exit': './src/static/js/pages/Exit/router.js',    
+    '/src/static/Limites': './src/static/js/pages/Limites/router.js',    
   },
   output: {
     globalObject: "this",

@@ -6,6 +6,7 @@ using Master.Infra;
 using Master.Repository;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Master.Service
 {
@@ -53,8 +54,18 @@ namespace Master.Service
             {
                 using (var db = GetConnection(network))
                 {
-                    var t_associado = cartaoRepository.GetCartao(db, Convert.ToInt64(au._id));
+                    // cache
+                    var tagCache = "limites" + au.empresa + au.matricula;
+                    var str = GetCachedData(tagCache, null, 1);
 
+                    if (str != null)
+                    {
+                        dto = JsonSerializer.Deserialize<DtoAssociadoLimites>(str);
+                        return true;
+                    }
+                    // fim cache
+
+                    var t_associado = cartaoRepository.GetCartao(db, Convert.ToInt64(au._id));
                     var t_empresa = empresaRepository.GetEmpresa(db, t_associado.fkEmpresa);
 
                     long    dispMensal = 0,
@@ -88,8 +99,12 @@ namespace Master.Service
                     dto.mesVigente = new EnumMonth().Get(dt.Month).stName + " / " + dt.Year;
 
                     dto.pct = (dispMensal * 100 / varTotMensal).ToString();
+
+                    // cache
+                    UpdateCachedData(tagCache, JsonSerializer.Serialize(dto), null, 1);
+                    // fim cache
                 }
-    
+
                 return true;
             }
             catch (Exception ex)

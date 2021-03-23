@@ -19,8 +19,10 @@ namespace Master
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
+            services.AddMemoryCache();
             services.AddControllers();
+
             services.Configure<LocalNetwork>(Configuration.GetSection("localNetwork"));
 
             var key = Encoding.ASCII.GetBytes(LocalNetwork.Secret);

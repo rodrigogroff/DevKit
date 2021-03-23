@@ -36,16 +36,10 @@ export default class LimitesPage {
     $(document).ready(function () {      
       getTokenPortal(Endpoints().limites, null)
         .then((resp) => {
-
-          console.log(resp)
-
           if (resp.ok == true)
             serviceOk(resp.payload);
           else
-          {
-
-          }
-            //location.href = "/login";
+            location.href = "/login";
         })
         .catch((resp) => {
           location.href = "/login";

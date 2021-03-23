@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Master.Service
 {
-    public class SrvAssociadoSaldo
+    public class SrvAssociadoSaldo : SrvBaseService
     {
         public SrvAssociadoSaldo ( NpgsqlConnection db, 
                                     ICartaoDapperRepository cartaoRepository,
@@ -27,9 +27,7 @@ namespace Master.Service
             }
 
             var lstCartoes = cartaoRepository.GetListaCartoes(db, cart.fkEmpresa, cart.nuMatricula);                                
-
             var lstParcelasTotais = parcelaRepository.GetParcelasDeCartao(db, 1, lstCartoes);
-
             var lstTransacoesTotais = logTransacaoRepository.GetLogTransacaoLista(db, lstParcelasTotais.Select(y => (long)y.fkLogTransacao).ToList());
 
             foreach (var parc in lstParcelasTotais)

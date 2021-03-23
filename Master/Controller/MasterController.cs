@@ -22,18 +22,17 @@ namespace Api.Master.Controllers
     public partial class MasterController : ControllerBase
     {
         public LocalNetwork network { get; set; }
-        public IMemoryCache _cache { get; set; }
+        public IMemoryCache hostCache { get; set; }
 
         public bool _doNotSendEmail = false,
                       _doNotUseCache = false;
 
-
-        public MasterController(IOptions<LocalNetwork> _network)
+        public MasterController(IOptions<LocalNetwork> _network, IMemoryCache memoryCache)
         {
             if (_network != null)
                 this.network = _network.Value;
 
-            _cache = new MemoryCache(new MemoryCacheOptions { });
+            hostCache = memoryCache;
         }
 
         [NonAction]
@@ -159,7 +158,7 @@ namespace Api.Master.Controllers
             {
                 // check for internal cache
                 string data;
-                if (_cache.TryGetValue(tagCache, out data))
+                if (hostCache.TryGetValue(tagCache, out data))
                     return data;
 
                 // search cache server
@@ -174,7 +173,7 @@ namespace Api.Master.Controllers
                 var final = r1.Replace("\\\"", "\"");
 
                 // update internal
-                _cache.Set(tagCache, final, DateTimeOffset.Now.AddMinutes(minutes_boost));
+                hostCache.Set(tagCache, final, DateTimeOffset.Now.AddMinutes(minutes_boost));
 
                 // return to service
                 return final;
@@ -206,7 +205,7 @@ namespace Api.Master.Controllers
                 cli.Execute(restRequest);
 
                 // update internal
-                _cache.Set(tagCache, final, DateTimeOffset.Now.AddMinutes(minutes_boost));
+                hostCache.Set(tagCache, final, DateTimeOffset.Now.AddMinutes(minutes_boost));
             }
             catch
             {

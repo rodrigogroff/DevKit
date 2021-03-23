@@ -3,13 +3,14 @@ using Master.Infra;
 using Master.Repository;
 using Master.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
 namespace Api.Master.Controllers
 {
     public partial class CtrlLimites : MasterController
     {
-        public CtrlLimites(IOptions<LocalNetwork> _network) : base(_network) { }
+        public CtrlLimites(IOptions<LocalNetwork> _network, IMemoryCache _cache) : base(_network, _cache) { }
 
         [HttpGet]        
         [Route("api/v1/portal/associadoLimites")]
@@ -23,6 +24,7 @@ namespace Api.Master.Controllers
                 empresaRepository = new EmpresaDapperRepository(),
                 parcelaDapperRepository = new ParcelaDapperRepository(),
                 logTransacaoDapperRepository = new LogTransacaoDapperRepository(),
+                serverCache = hostCache
             };
 
             var dto = new DtoAssociadoLimites();

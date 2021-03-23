@@ -16,11 +16,10 @@ namespace Master.Service
     public class SrvBaseService 
     {
         public bool _sendEmail = true;
+        public IMemoryCache serverCache = null;
 
         public DtoServiceError Error;
-
-        public IMemoryCache _cache;
-
+        
         #region - const values - 
 
         public const string _emailSmtp = "server@nanojs.com.br";
@@ -96,7 +95,7 @@ namespace Master.Service
             
             #endregion
         }
-        
+
         public string GetCachedData(string tagCache, string cacheServer, int minutes_boost)
         {
             #region - code - 
@@ -105,12 +104,15 @@ namespace Master.Service
             {
                 // check for internal cache
                 string data;
-                if (_cache.TryGetValue(tagCache, out data))
+                if (serverCache.TryGetValue(tagCache, out data))
                     return data;
+
+                if (cacheServer == null)
+                    return null;
                 
                 // search cache server
                 var restRequest = new RestRequest("api/getCache", Method.GET);
-                restRequest.AddParameter("_tag", tagCache);                
+                restRequest.AddParameter("_tag", tagCache);
                 var cli = new RestClient(cacheServer);
                 var retCache = cli.Execute(restRequest);
                 if (retCache.StatusCode.ToString() == "BadRequest")
@@ -120,7 +122,8 @@ namespace Master.Service
                 var final = r1.Replace("\\\"", "\"");
 
                 // update internal
-                _cache.Set(tagCache, final, DateTimeOffset.Now.AddMinutes(minutes_boost));
+                if (minutes_boost > 0)
+                    serverCache.Set(tagCache, final, DateTimeOffset.Now.AddMinutes(minutes_boost));
 
                 // return to service
                 return final;
@@ -139,20 +142,31 @@ namespace Master.Service
 
             try
             {
-                // update cache server
-                var restRequest = new RestRequest("api/updateCache", Method.GET);
-                var final = JObject.Parse(cacheValue).ToString().Replace("\r\n", "");
-                restRequest.AddParameter("_tag", tagCache);
-                restRequest.AddParameter("_value", final);                                
-                var cli = new RestClient(cacheServer);
-                cli.Execute(restRequest);
+                if (cacheServer == null)
+                {
+                    if (minutes_boost > 0)
+                        serverCache.Set(tagCache, cacheValue, DateTimeOffset.Now.AddMinutes(minutes_boost));
+                    else
+                        serverCache.Set(tagCache, cacheValue);
+                }
+                else
+                {
+                    // update cache server
+                    var restRequest = new RestRequest("api/updateCache", Method.GET);
+                    var final = JObject.Parse(cacheValue).ToString().Replace("\r\n", "");
+                    restRequest.AddParameter("_tag", tagCache);
+                    restRequest.AddParameter("_value", final);
+                    var cli = new RestClient(cacheServer);
+                    cli.Execute(restRequest);
 
-                // update internal
-                _cache.Set(tagCache, final, DateTimeOffset.Now.AddMinutes(minutes_boost));
-            }
-            catch
+                    // update internal
+                    if (minutes_boost > 0)
+                        serverCache.Set(tagCache, cacheValue, DateTimeOffset.Now.AddMinutes(minutes_boost));
+                }                
+            } 
+            catch (System.Exception ex)
             {
-
+                var st = ex.ToString();
             }
 
             #endregion

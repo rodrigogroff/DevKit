@@ -15,11 +15,11 @@ namespace IntegrationTest
     {
         CtrlAuthenticate SetupController()
         {
-            return new CtrlAuthenticate(null)
+            return new CtrlAuthenticate(null,null)
             { 
                 network = new LocalNetwork
                 {
-                    sqlServer = connStr
+                    sqlServer = connStr,
                 }
             };
         }

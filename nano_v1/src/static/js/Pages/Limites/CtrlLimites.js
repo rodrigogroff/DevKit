@@ -33,24 +33,27 @@ export default class LimitesPage {
 
   constructor(params) {
     this.params = params;
-
-    $(document).ready(function () {
+    $(document).ready(function () {      
       getTokenPortal(Endpoints().limites, null)
         .then((resp) => {
+
+          console.log(resp)
+
           if (resp.ok == true)
             serviceOk(resp.payload);
-          // output service data
           else
-            displaySystemPopup('Aviso do Sistema', resp.msg);
+          {
+
+          }
+            //location.href = "/login";
         })
         .catch((resp) => {
-          displaySystemPopup('Aviso do Sistema', resp.msg);
-        });
+          location.href = "/login";
+        });   
     });
-    
+
     function serviceOk(payload) {
       MyForm.update(payload);
     }
-  }
- 
+  } 
 }

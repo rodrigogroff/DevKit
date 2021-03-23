@@ -2,6 +2,8 @@
 using Master.Data.Database;
 using Npgsql;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Master.Repository
 {
@@ -10,6 +12,8 @@ namespace Master.Repository
         Cartao GetCartao(NpgsqlConnection db, long? id);
 
         Cartao GetCartao(NpgsqlConnection db, long? fkEmpresa, long? nuMatricula, long? fkTitularidade);
+
+        List<long> GetListaCartoes(NpgsqlConnection db, long? fkEmpresa, long? nuMatricula);
 
         void InsertCartao(NpgsqlConnection db, Cartao mdl);        
     }
@@ -24,6 +28,14 @@ namespace Master.Repository
         public Cartao GetCartao(NpgsqlConnection db, long? id)
         {
             return db.QueryFirstOrDefault<Cartao>("select * from \"Cartao\" where \"id\" = " + id);
+        }
+
+        public List<long> GetListaCartoes(NpgsqlConnection db, long? fkEmpresa, long? nuMatricula)
+        {
+            return db.Query<Cartao>("select * from \"Cartao\" where \"fkEmpresa\"=" + fkEmpresa + " and \"nuMatricula\"=" + nuMatricula ).
+                        ToList().
+                        Select(y=> y.id).
+                        ToList();
         }
 
         public void InsertCartao(NpgsqlConnection db, Cartao mdl)

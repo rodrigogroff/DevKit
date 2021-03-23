@@ -13,8 +13,7 @@ namespace Master.Data.Database
         public string stSenha { get; set; }
         public long? nuTipoCartao { get; set; }
         public string stVenctoCartao { get; set; }
-        public long? nuStatus { get; set; }
-        
+        public long? nuStatus { get; set; }        
         public long? nuSenhaErrada { get; set; }
         public DateTime? dtInclusao { get; set; }
         public DateTime? dtBloqueio { get; set; }

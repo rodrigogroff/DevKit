@@ -46,6 +46,12 @@ namespace Master.Service
             return Convert.ToInt32(myNumber);
         }
 
+        public string money(long vr)
+        {
+            decimal d = Convert.ToDecimal(vr) / 100;
+            return d.ToString("C2").Split(' ')[1];
+        }
+
         public DateTime D(string myDate)
         {
             return new DateTime(I(myDate.Substring(6)),

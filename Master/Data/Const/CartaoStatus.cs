@@ -1,6 +1,7 @@
 ﻿
 namespace Master.Data.Const
 {
+
     public class CartaoStatus
     {
         public const int Habilitado = 0,

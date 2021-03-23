@@ -47,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controller\Domains\User\Tokenized\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

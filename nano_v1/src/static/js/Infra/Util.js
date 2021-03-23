@@ -6,8 +6,8 @@ export function getLocation() {
   var indexPos = parseInt(_idx);
 
   var lstNodes = [
-    { api_host: "https://meuconvey.conveynet.com.br", api_port: "18524" },  // sql server
-    //{ api_host: "http://localhost", api_port: "18524" },                      // postgreSQL
+    //{ api_host: "https://meuconvey.conveynet.com.br", api_port: "18524" },  // sql server
+    { api_host: "http://localhost", api_port: "18524" },                      // postgreSQL
   ];
 
   indexPos++;

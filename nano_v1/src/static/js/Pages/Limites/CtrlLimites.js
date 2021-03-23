@@ -1,8 +1,11 @@
 
 import {
   updateHTML,
-  logout,  
+  getTokenPortal,
+  displaySystemPopup,
 } from "@app/Infra/Util";
+
+import { Endpoints } from "@app/Infra/Endpoints";
 
 import MyForm from "./Views/ViewLimite";
 
@@ -31,6 +34,23 @@ export default class LimitesPage {
   constructor(params) {
     this.params = params;
 
+    $(document).ready(function () {
+      getTokenPortal(Endpoints().limites, null)
+        .then((resp) => {
+          if (resp.ok == true)
+            serviceOk(resp.payload);
+          // output service data
+          else
+            displaySystemPopup('Aviso do Sistema', resp.msg);
+        })
+        .catch((resp) => {
+          displaySystemPopup('Aviso do Sistema', resp.msg);
+        });
+    });
     
+    function serviceOk(payload) {
+      MyForm.update(payload);
+    }
   }
+ 
 }

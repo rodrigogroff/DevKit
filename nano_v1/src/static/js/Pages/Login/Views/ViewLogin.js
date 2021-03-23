@@ -46,7 +46,7 @@ export default class MyForm {
             </div>                    
             <p align='center'>
               ${BaseLoader()}
-            </p>                    
+            </p>
             <div class="form-row">
                 <div align='center' id="${elements.btnSubmit}" class="button circle block green">
                   Efetuar Login

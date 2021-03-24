@@ -24,8 +24,10 @@ namespace Api.Master.Controllers
         public LocalNetwork network { get; set; }
         public IMemoryCache hostCache { get; set; }
 
-        public bool _doNotSendEmail = false,
-                      _doNotUseCache = false;
+        public bool     _doNotSendEmail = false,
+                        _doNotUseCache = false;
+
+        public string _testToken { get; set; }
 
         public MasterController(IOptions<LocalNetwork> _network, IMemoryCache memoryCache)
         {
@@ -41,7 +43,8 @@ namespace Api.Master.Controllers
             #region - code -
 
             var handler = new JwtSecurityTokenHandler();
-            var authHeader = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+                        
+            var authHeader = Request == null ? _testToken : Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
             if (string.IsNullOrEmpty(authHeader))
                 return null;

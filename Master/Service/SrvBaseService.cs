@@ -16,6 +16,10 @@ namespace Master.Service
     public class SrvBaseService 
     {
         public bool _sendEmail = true;
+        public bool _disableCache = true;
+
+        public string tagCache;
+
         public IMemoryCache serverCache = null;
 
         public DtoServiceError Error;

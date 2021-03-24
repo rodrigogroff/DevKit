@@ -16,14 +16,18 @@ namespace Cache
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddMemoryCache();
-            services.AddMvc();
+            services.AddControllers();            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

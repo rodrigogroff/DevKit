@@ -14,7 +14,7 @@ namespace Api.Master.Controllers
 
         [HttpGet]        
         [Route("api/v1/portal/associadoLimites")]
-        public ActionResult<DtoAssociadoLimites> associadoLimites(long id)
+        public ActionResult associadoLimites()
         {
             var au = GetCurrentAuthenticatedUser();
 
@@ -24,7 +24,8 @@ namespace Api.Master.Controllers
                 empresaRepository = new EmpresaDapperRepository(),
                 parcelaDapperRepository = new ParcelaDapperRepository(),
                 logTransacaoDapperRepository = new LogTransacaoDapperRepository(),
-                serverCache = hostCache
+                serverCache = hostCache,
+                _disableCache = this._doNotUseCache,
             };
 
             var dto = new DtoAssociadoLimites();

@@ -31,9 +31,9 @@ namespace Api.Master.Controllers
 
             var token = ComposeTokenForSession(auth);
             
-            return Ok( new 
+            return Ok( new DtoToken
             {
-                token,
+                token = token,
                 user = auth,                
             });
         }

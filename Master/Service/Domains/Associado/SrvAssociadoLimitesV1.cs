@@ -54,17 +54,17 @@ namespace Master.Service
             {
                 using (var db = GetConnection(network))
                 {
-                    // cache
-                    var tagCache = "limites" + au.empresa + au.matricula;
-                    var str = GetCachedData(tagCache, null, 1);
-
-                    if (str != null)
+                    if (!_disableCache)
                     {
-                        dto = JsonSerializer.Deserialize<DtoAssociadoLimites>(str);
-                        return true;
+                        tagCache = "limites" + au.empresa + au.matricula;
+                        var str = GetCachedData(tagCache, null, 1);
+                        if (str != null)
+                        {
+                            dto = JsonSerializer.Deserialize<DtoAssociadoLimites>(str);
+                            return true;
+                        }
                     }
-                    // fim cache
-
+                    
                     var t_associado = cartaoRepository.GetCartao(db, Convert.ToInt64(au._id));
                     var t_empresa = empresaRepository.GetEmpresa(db, t_associado.fkEmpresa);
 
@@ -100,9 +100,10 @@ namespace Master.Service
 
                     dto.pct = (dispMensal * 100 / varTotMensal).ToString();
 
-                    // cache
-                    UpdateCachedData(tagCache, JsonSerializer.Serialize(dto), null, 1);
-                    // fim cache
+                    if (!_disableCache)
+                    {
+                        UpdateCachedData(tagCache, JsonSerializer.Serialize(dto), null, 1);
+                    }                    
                 }
 
                 return true;

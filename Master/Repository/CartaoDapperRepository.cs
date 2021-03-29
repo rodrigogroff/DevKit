@@ -47,11 +47,11 @@ namespace Master.Repository
                                                                     "\"stAgencia\",\"stConta\",\"stMatExtra\",\"stCelCartao\",\"stCpf\",\"stNome\",\"stEndereco\",\"stNumero\",\"stCompl\"," +
                                                                     "\"stBairro\",\"stEstado\",\"stCidade\",\"stCEP\",\"stDDD\",\"stTelefone\",\"dtNasc\",\"stEmail\",\"vrRenda\",\"nuViaCartao\"," +
                                                                     "\"vrLimiteTotal\",\"vrLimiteMensal\",\"vrLimiteRotativo\",\"vrCotaExtra\",\"nuEmitido\",\"bConvenioComSaldo\",\"vrSaldoConvenio\"," +
-                                                                    "\"dtPedidoCartao\" ) " +
+                                                                    "\"dtPedidoCartao\",\"stCodigoFOPA\"  ) " +
                                                                     "VALUES ( @fkEmpresa,@nuMatricula,@nuTitularidade,@stSenha,@nuTipoCartao,@stVenctoCartao,@nuStatus,@nuSenhaErrada," +
                                                                     "@dtInclusao,@dtBloqueio,@nuMotivoBloqueio,@stBanco,@stAgencia,@stConta,@stMatExtra,@stCelCartao," +
                                                                     "@stCpf,@stNome,@stEndereco,@stNumero,@stCompl,@stBairro,@stEstado,@stCidade,@stCEP,@stDDD,@stTelefone,@dtNasc,@stEmail,@vrRenda," +
-                                                                    "@nuViaCartao,@vrLimiteTotal,@vrLimiteMensal,@vrLimiteRotativo,@vrCotaExtra,@nuEmitido,@bConvenioComSaldo,@vrSaldoConvenio,@dtPedidoCartao);", db))
+                                                                    "@nuViaCartao,@vrLimiteTotal,@vrLimiteMensal,@vrLimiteRotativo,@vrCotaExtra,@nuEmitido,@bConvenioComSaldo,@vrSaldoConvenio,@dtPedidoCartao,@stCodigoFOPA);", db))
             {
                 cmd.Parameters.AddWithValue("fkEmpresa", ((object)mdl.fkEmpresa) ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("nuMatricula", ((object)mdl.nuMatricula) ?? DBNull.Value);
@@ -92,6 +92,7 @@ namespace Master.Repository
                 cmd.Parameters.AddWithValue("bConvenioComSaldo", ((object)mdl.bConvenioComSaldo) ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("vrSaldoConvenio", ((object)mdl.vrSaldoConvenio) ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("dtPedidoCartao", ((object)mdl.dtPedidoCartao) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("stCodigoFOPA", ((object)mdl.stCodigoFOPA) ?? DBNull.Value);
 
                 cmd.ExecuteNonQuery();
             }

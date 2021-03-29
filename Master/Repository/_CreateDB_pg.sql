@@ -41,6 +41,7 @@ ALTER TABLE public."Cartao" ADD COLUMN if not exists "nuEmitido" int;
 ALTER TABLE public."Cartao" ADD COLUMN if not exists "vrSaldoConvenio" int;
 ALTER TABLE public."Cartao" ADD COLUMN if not exists "dtPedidoCartao" timestamp without time zone;
 ALTER TABLE public."Cartao" ADD COLUMN if not exists "bConvenioComSaldo" boolean;
+ALTER TABLE public."Cartao" ADD COLUMN if not exists "stCodigoFOPA" character varying(20);
 
 CREATE INDEX IF NOT EXISTS idx_cartao ON public."Cartao" USING btree
     ("fkEmpresa" ASC NULLS LAST, "nuMatricula" ASC NULLS LAST, "nuTitularidade" ASC NULLS LAST)
@@ -112,9 +113,20 @@ ALTER TABLE public."Empresa" ADD COLUMN if not exists "fkParceiro" int;
 ALTER TABLE public."Empresa" ADD COLUMN if not exists "stEmailPlastico" character varying(999);
 ALTER TABLE public."Empresa" ADD COLUMN if not exists "bBlocked" boolean;
 ALTER TABLE public."Empresa" ADD COLUMN if not exists "bIsentoFat" boolean;
+ALTER TABLE public."Empresa" ADD COLUMN if not exists "bContaCorrenteAssociado" boolean;
 
 CREATE INDEX IF NOT EXISTS idx_empresa ON public."Empresa" USING btree
     ("nuEmpresa" ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+CREATE TABLE IF NOT EXISTS public."EmpresaDespesa" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);
+ALTER TABLE public."EmpresaDespesa" OWNER to postgres;
+ALTER TABLE public."EmpresaDespesa" ADD COLUMN if not exists "fkEmpresa" int;
+ALTER TABLE public."EmpresaDespesa" ADD COLUMN if not exists "stCodigo" character varying(2);
+ALTER TABLE public."EmpresaDespesa" ADD COLUMN if not exists "stDescricao" character varying(30);
+
+CREATE INDEX IF NOT EXISTS idx_empresaDespesa ON public."EmpresaDespesa" USING btree
+    ("fkEmpresa" ASC NULLS LAST)
     TABLESPACE pg_default;
 
 CREATE TABLE IF NOT EXISTS public."Faturamento" ( id bigserial NOT NULL, PRIMARY KEY (id)) WITH (OIDS = FALSE);

@@ -46,7 +46,7 @@ namespace Master.Data.Database
         public bool? bConvenioComSaldo { get; set; }
         public long? vrSaldoConvenio { get; set; }
         public DateTime? dtPedidoCartao { get; set; }
-
+        public string stCodigoFOPA { get; set; }
         #endregion
     }
 }

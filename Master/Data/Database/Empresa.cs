@@ -35,6 +35,7 @@ namespace Master.Data.Database
         public bool? bConvenioSaldo { get; set; }
         public long? fkParceiro { get; set; }
         public string stEmailPlastico { get; set; }
+        public bool? bContaCorrenteAssociado { get; set; }
         #endregion
     }
 }

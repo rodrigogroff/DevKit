@@ -53,6 +53,7 @@ namespace GetStarted
         public bool? bConvenioComSaldo { get; set; }
         public long? vrSaldoConvenio { get; set; }
         public DateTime? dtPedidoCartao { get; set; }
+        public string stCodigoFOPA { get; set; }        
 
         #endregion
     }
@@ -129,6 +130,18 @@ namespace GetStarted
         public bool? bConvenioSaldo { get; set; }
         public long? fkParceiro { get; set; }
         public string stEmailPlastico { get; set; }
+        public bool? bContaCorrenteAssociado { get; set; }
+
+        #endregion
+    }
+
+    public class EmpresaDespesa
+    {
+        #region - code - 
+        public long id { get; set; }
+        public long? fkEmpresa { get; set; }
+        public string stCodigo { get; set; }
+        public string stDescricao { get; set; }
         #endregion
     }
 
@@ -551,7 +564,8 @@ namespace GetStarted
                                     nuEmitido = Convert.ToInt64(cart.tg_emitido.ToString()),
                                     bConvenioComSaldo = cart.tg_convenioComSaldo,
                                     vrSaldoConvenio = cart.vr_saldoConvenio,
-                                    dtPedidoCartao = cart.dtPedidoCartao
+                                    dtPedidoCartao = cart.dtPedidoCartao,
+                                    stCodigoFOPA = cart.stCodigoFOPA,
                                 };
 
                                 using (var cmd = new NpgsqlCommand("INSERT INTO \"Cartao\" (\"id\",\"fkEmpresa\",\"nuMatricula\",\"nuTitularidade\",\"stSenha\",\"nuTipoCartao\"," +
@@ -559,11 +573,11 @@ namespace GetStarted
                                                                     "\"stAgencia\",\"stConta\",\"stMatExtra\",\"stCelCartao\",\"stCpf\",\"stNome\",\"stEndereco\",\"stNumero\",\"stCompl\"," +
                                                                     "\"stBairro\",\"stEstado\",\"stCidade\",\"stCEP\",\"stDDD\",\"stTelefone\",\"dtNasc\",\"stEmail\",\"vrRenda\",\"nuViaCartao\"," +
                                                                     "\"vrLimiteTotal\",\"vrLimiteMensal\",\"vrLimiteRotativo\",\"vrCotaExtra\",\"nuEmitido\",\"bConvenioComSaldo\",\"vrSaldoConvenio\"," +
-                                                                    "\"dtPedidoCartao\" ) " +
+                                                                    "\"dtPedidoCartao\",\"stCodigoFOPA\") " +
                                                                     "VALUES ( @id,@fkEmpresa,@nuMatricula,@nuTitularidade,@stSenha,@nuTipoCartao,@stVenctoCartao,@nuStatus,@nuSenhaErrada," +
                                                                     "@dtInclusao,@dtBloqueio,@nuMotivoBloqueio,@stBanco,@stAgencia,@stConta,@stMatExtra,@stCelCartao," +
                                                                     "@stCpf,@stNome,@stEndereco,@stNumero,@stCompl,@stBairro,@stEstado,@stCidade,@stCEP,@stDDD,@stTelefone,@dtNasc,@stEmail,@vrRenda," +
-                                                                    "@nuViaCartao,@vrLimiteTotal,@vrLimiteMensal,@vrLimiteRotativo,@vrCotaExtra,@nuEmitido,@bConvenioComSaldo,@vrSaldoConvenio,@dtPedidoCartao);", dbPg))
+                                                                    "@nuViaCartao,@vrLimiteTotal,@vrLimiteMensal,@vrLimiteRotativo,@vrCotaExtra,@nuEmitido,@bConvenioComSaldo,@vrSaldoConvenio,@dtPedidoCartao,@stCodigoFOPA);", dbPg))
                                 {
                                     cmd.Parameters.AddWithValue("id", ((object)novoCart.id) ?? DBNull.Value);
                                     cmd.Parameters.AddWithValue("fkEmpresa", ((object)novoCart.fkEmpresa) ?? DBNull.Value);
@@ -605,6 +619,7 @@ namespace GetStarted
                                     cmd.Parameters.AddWithValue("bConvenioComSaldo", ((object)novoCart.bConvenioComSaldo) ?? DBNull.Value);
                                     cmd.Parameters.AddWithValue("vrSaldoConvenio", ((object)novoCart.vrSaldoConvenio) ?? DBNull.Value);
                                     cmd.Parameters.AddWithValue("dtPedidoCartao", ((object)novoCart.dtPedidoCartao) ?? DBNull.Value);
+                                    cmd.Parameters.AddWithValue("stCodigoFOPA", ((object)novoCart.stCodigoFOPA) ?? DBNull.Value);
 
                                     cmd.ExecuteNonQuery();
                                 }
@@ -792,17 +807,18 @@ namespace GetStarted
                                     stHoraFech = item.st_horaFech,
                                     bConvenioSaldo = item.tg_convenioComSaldo,
                                     fkParceiro = item.fkParceiro,
-                                    stEmailPlastico = item.st_emailPlastico
+                                    stEmailPlastico = item.st_emailPlastico,
+                                    bContaCorrenteAssociado = item.bContaCorrenteAssociado
                                 };
 
                                 using (var cmd = new NpgsqlCommand("INSERT INTO \"Empresa\" (\"id\",\"nuEmpresa\",\"stCNPJ\",\"stFantasia\",\"stSocial\",\"stEndereco\",\"stCidade\"," +
                                                                     "\"stEstado\",\"stCEP\",\"stTelefone\",\"nuParcelas\",\"bBlocked\",\"fkAdmin\",\"stContaDeb\",\"vrMensalidade\",\"nuPctValor\",\"vrTransacao\"," +
                                                                     "\"vrMinimo\",\"nuFranquiaTrans\",\"nuPeriodoFat\",\"nuDiaVenc\",\"stBancoFat\",\"vrCartaoAtivo\",\"bIsentoFat\",\"stObs\"," +
-                                                                    "\"stHomepage\",\"nuDiaFech\",\"stHoraFech\",\"bConvenioSaldo\",\"fkParceiro\",\"stEmailPlastico\" ) " +
+                                                                    "\"stHomepage\",\"nuDiaFech\",\"stHoraFech\",\"bConvenioSaldo\",\"fkParceiro\",\"stEmailPlastico\", \"bContaCorrenteAssociado\" ) " +
                                                                     "VALUES ( @id,@nuEmpresa,@stCNPJ,@stFantasia,@stSocial,@stEndereco,@stCidade," +
                                                                     "@stEstado,@stCEP,@stTelefone,@nuParcelas,@bBlocked,@fkAdmin,@stContaDeb,@vrMensalidade,@nuPctValor,@vrTransacao," +
                                                                     "@vrMinimo,@nuFranquiaTrans,@nuPeriodoFat,@nuDiaVenc,@stBancoFat,@vrCartaoAtivo,@bIsentoFat,@stObs," +
-                                                                    "@stHomepage,@nuDiaFech,@stHoraFech,@bConvenioSaldo,@fkParceiro,@stEmailPlastico );", dbPg))
+                                                                    "@stHomepage,@nuDiaFech,@stHoraFech,@bConvenioSaldo,@fkParceiro,@stEmailPlastico,@bContaCorrenteAssociado );", dbPg))
                                 {
                                     cmd.Parameters.AddWithValue("id", ((object)novo.id) ?? DBNull.Value);
                                     cmd.Parameters.AddWithValue("nuEmpresa", ((object)novo.nuEmpresa) ?? DBNull.Value);
@@ -835,10 +851,39 @@ namespace GetStarted
                                     cmd.Parameters.AddWithValue("bConvenioSaldo", ((object)novo.bConvenioSaldo) ?? DBNull.Value);
                                     cmd.Parameters.AddWithValue("fkParceiro", ((object)novo.fkParceiro) ?? DBNull.Value);
                                     cmd.Parameters.AddWithValue("stEmailPlastico", ((object)novo.stEmailPlastico) ?? DBNull.Value);
+                                    cmd.Parameters.AddWithValue("bContaCorrenteAssociado", ((object)novo.bContaCorrenteAssociado) ?? DBNull.Value);
 
                                     cmd.ExecuteNonQuery();
                                 }
+
+                                var lstDespesas = db.EmpresaDespesa.Where(y => y.fkEmpresa == item.i_unique).ToList();
+
+                                foreach (var desp in lstDespesas)
+                                {
+                                    var d = new EmpresaDespesa
+                                    { 
+                                        id = desp.id,
+                                        fkEmpresa= desp.fkEmpresa,
+                                        stCodigo = desp.stCodigo,
+                                        stDescricao = desp.stDescricao
+                                    };
+
+                                    using (var cmd = new NpgsqlCommand("INSERT INTO \"EmpresaDespesa\" (\"id\",\"fkEmpresa\",\"stCodigo\",\"stDescricao\" ) " +
+                                                                    "VALUES ( @id,@fkEmpresa,@stCodigo,@stDescricao );", dbPg))
+                                    {
+                                        cmd.Parameters.AddWithValue("id", ((object)d.id) ?? DBNull.Value);
+                                        cmd.Parameters.AddWithValue("fkEmpresa", ((object)d.fkEmpresa) ?? DBNull.Value);
+                                        cmd.Parameters.AddWithValue("stCodigo", ((object)d.stCodigo) ?? DBNull.Value);
+                                        cmd.Parameters.AddWithValue("stDescricao", ((object)d.stDescricao) ?? DBNull.Value);                                        
+
+                                        cmd.ExecuteNonQuery();
+                                    }
+
+                                }
                             }
+
+                            
+
                         }
                     }
                 }

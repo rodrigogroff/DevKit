@@ -46,6 +46,7 @@ namespace DataModel
         public ITable<LOG_NS_FAT> LOG_NS_FAT { get { return this.GetTable<LOG_NS_FAT>(); } }
         public ITable<LOG_NSA> LOG_NSA { get { return this.GetTable<LOG_NSA>(); } }
         public ITable<LOG_NSU> LOG_NSU { get { return this.GetTable<LOG_NSU>(); } }
+        public ITable<EmpresaDespesa> EmpresaDespesa { get { return this.GetTable<EmpresaDespesa>(); } }
         public ITable<LOG_Transaco> LOG_Transacoes { get { return this.GetTable<LOG_Transaco>(); } }
         public ITable<LOG_VendaCartaoGift> LOG_VendaCartaoGift { get { return this.GetTable<LOG_VendaCartaoGift>(); } }
         public ITable<LOG_VendaProdutoGift> LOG_VendaProdutoGift { get { return this.GetTable<LOG_VendaProdutoGift>(); } }
@@ -138,6 +139,15 @@ namespace DataModel
         }
 
         #endregion
+    }
+
+    [Table(Schema = "dbo", Name = "EmpresaDespesa")]
+    public partial class EmpresaDespesa
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public long? fkEmpresa { get; set; }
+        [Column, Nullable] public string stCodigo { get; set; }
+        [Column, Nullable] public string stDescricao { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "DashboardGrafico")]
@@ -514,8 +524,8 @@ namespace DataModel
         [Column, Nullable] public int? tg_excluido { get; set; } // int
         [Column, Nullable] public bool? tg_convenioComSaldo { get; set; }
         [Column, Nullable] public long? vr_saldoConvenio { get; set; }
-
         [Column, Nullable] public DateTime? dtPedidoCartao { get; set; }
+        [Column, Nullable] public string stCodigoFOPA { get; set; } // varchar(40)
     }
 
     [Table(Schema = "dbo", Name = "T_Chamado")]
@@ -623,6 +633,7 @@ namespace DataModel
         [Column, Nullable] public bool? tg_convenioComSaldo { get; set; } // varchar(500)
         [Column, Nullable] public long? fkParceiro { get; set; } // bigint
         [Column, Nullable] public string st_emailPlastico { get; set; } // varchar(500)
+        [Column, Nullable] public bool? bContaCorrenteAssociado { get; set; } // varchar(500)
     }
 
     [Table(Schema = "dbo", Name = "T_EmpresaAfiliada")]

@@ -33,11 +33,11 @@ namespace Master.Repository
             using (var cmd = new NpgsqlCommand("INSERT INTO \"Empresa\" (\"nuEmpresa\",\"stCNPJ\",\"stFantasia\",\"stSocial\",\"stEndereco\",\"stCidade\"," +
                                                                     "\"stEstado\",\"stCEP\",\"stTelefone\",\"nuParcelas\",\"bBlocked\",\"fkAdmin\",\"stContaDeb\",\"vrMensalidade\",\"nuPctValor\",\"vrTransacao\"," +
                                                                     "\"vrMinimo\",\"nuFranquiaTrans\",\"nuPeriodoFat\",\"nuDiaVenc\",\"stBancoFat\",\"vrCartaoAtivo\",\"bIsentoFat\",\"stObs\"," +
-                                                                    "\"stHomepage\",\"nuDiaFech\",\"stHoraFech\",\"bConvenioSaldo\",\"fkParceiro\",\"stEmailPlastico\" ) " +
+                                                                    "\"stHomepage\",\"nuDiaFech\",\"stHoraFech\",\"bConvenioSaldo\",\"fkParceiro\",\"stEmailPlastico\",\"bContaCorrenteAssociado\" ) " +
                                                                     "VALUES ( @nuEmpresa,@stCNPJ,@stFantasia,@stSocial,@stEndereco,@stCidade," +
                                                                     "@stEstado,@stCEP,@stTelefone,@nuParcelas,@bBlocked,@fkAdmin,@stContaDeb,@vrMensalidade,@nuPctValor,@vrTransacao," +
                                                                     "@vrMinimo,@nuFranquiaTrans,@nuPeriodoFat,@nuDiaVenc,@stBancoFat,@vrCartaoAtivo,@bIsentoFat,@stObs," +
-                                                                    "@stHomepage,@nuDiaFech,@stHoraFech,@bConvenioSaldo,@fkParceiro,@stEmailPlastico );", db))
+                                                                    "@stHomepage,@nuDiaFech,@stHoraFech,@bConvenioSaldo,@fkParceiro,@stEmailPlastico,@bContaCorrenteAssociado );", db))
             {
                 cmd.Parameters.AddWithValue("nuEmpresa", ((object)mdl.nuEmpresa) ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("stCNPJ", ((object)mdl.stCNPJ) ?? DBNull.Value);
@@ -69,6 +69,7 @@ namespace Master.Repository
                 cmd.Parameters.AddWithValue("bConvenioSaldo", ((object)mdl.bConvenioSaldo) ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("fkParceiro", ((object)mdl.fkParceiro) ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("stEmailPlastico", ((object)mdl.stEmailPlastico) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("bContaCorrenteAssociado", ((object)mdl.bContaCorrenteAssociado) ?? DBNull.Value);                
 
                 cmd.ExecuteNonQuery();
             }

@@ -77,7 +77,7 @@
                                 <b>Situação</b>
                             </td>
                             <td></td>
-                            <td >
+                            <td>
                                 {{ viewModel.situacao }}
                             </td>
                             <td></td>
@@ -122,7 +122,7 @@
                                        ng-model="viewModel.cpf">
                             </td>
                             <td></td>
-                        </tr>
+                        </tr>                        
                         <tr height="20px"></tr>
                     </table>
                 </tab>
@@ -135,7 +135,6 @@
                             <td width="260px"></td>
                             <td width="20px"></td>
                         </tr>
-
                         <tr height="43px">
                             <td></td>
                             <td>
@@ -148,6 +147,18 @@
                                 <input type="text" class="form-control input-transparent"
                                        maxlength="10" ui-mask="99/99/9999" ui-mask-placeholder ui-mask-placeholder-char="_"
                                        ng-model="viewModel.dtNasc">
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr height="43px">
+                            <td></td>
+                            <td>
+                                <b>Código FOPA</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-transparent" maxlength="90" ng-model="viewModel.stCodigoFOPA">
                             </td>
                             <td></td>
                         </tr>
@@ -238,7 +249,6 @@
                             </td>
                             <td></td>
                         </tr>
-
                         <tr height="43px">
                             <td></td>
                             <td>
@@ -251,7 +261,6 @@
                             </td>
                             <td></td>
                         </tr>
-
                         <tr height="43px">
                             <td></td>
                             <td>
@@ -517,7 +526,6 @@
             <button class="btn btn-primary" ng-click="save()" ng-disabled="loading == true">Salvar</button>
             <br />
             <br />
-
             <div class="modal-backdrop"
                  ng-if="modalSave == true"
                  style="background: rgba(55, 55, 55, 0.5 );">
@@ -552,7 +560,6 @@
                     </div>
                 </div>
             </div>
-
             <br />
             <br />
         </div>

@@ -125,6 +125,67 @@ angular.module('app.controllers').controller('EmpresaController',
             };
 
             // ============================================
+            // despesa
+            // ============================================
+
+            $scope.addDespesa = false;
+
+            $scope.removeDespesa = function (index, lista) {
+                $scope.modalDespesa = true;
+                $scope.delDespesa = $scope.viewModel.despesas[index];
+            };
+
+            $scope.closeModalDespesa = function () {
+                $scope.modalDespesa = false;
+            };
+
+            $scope.removerDespesaModal = function () {
+                $scope.viewModel.updateCommand = "removeDespesa";
+                $scope.viewModel.anexedDespesa = $scope.delDespesa;
+                Api.EmpresaDBA.update({ id: id }, $scope.viewModel, function (data) {
+                    $scope.modalDespesa = false;
+                    loadEntity();
+                });
+            };
+
+            $scope.addNewDespesa = function () {
+                $scope.addDespesa = !$scope.addDespesa;
+            };
+
+            $scope.newDespesa = {};
+
+            $scope.editDespesa = function (mdl) {
+                $scope.addDespesa = true;
+                $scope.newDespesa = mdl;
+            };
+
+            $scope.cancelDespesa = function () {
+                $scope.addDespesa = false;
+                $scope.newDespesa = {};
+            };
+
+            $scope.saveNewDespesa = function () {
+                $scope.desp_stCodigo_fail = invalidCheck($scope.newDespesa.stCodigo);
+                $scope.desp_stDesc_fail = invalidCheck($scope.newDespesa.stDescricao);
+
+                if (!$scope.desp_stCodigo_fail && !$scope.desp_stDesc_fail)
+                {
+                    $scope.addDespesa = false;
+
+                    $scope.viewModel.updateCommand = "newDespesa";
+                    $scope.viewModel.anexedDespesa = $scope.newDespesa;
+
+                    Api.EmpresaDBA.update({ id: id }, $scope.viewModel, function (data) {
+                        $scope.newDespesa = {};                        
+                        loadEntity();
+                    },
+                    function (response) {
+                        toastr.error(response.data.message, 'Erro');
+                    });
+                }
+            };
+
+            // ============================================
             // phone 
             // ============================================
 

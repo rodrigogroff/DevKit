@@ -21,6 +21,8 @@ namespace DataModel
                         svariacao = "";
 
         public List<T_JobFechamento> lstFechamento = new List<T_JobFechamento>();
+
+        public List<EmpresaDespesa> despesas = new List<EmpresaDespesa>();
     }
 
     public partial class T_JobFechamento

@@ -116,6 +116,9 @@ namespace DevKit.Web.Controllers
 
             var mdl = (from e in db.T_Empresa where e.i_unique == id select e).FirstOrDefault();
 
+            if (mdl == null)
+                return StatusCode(HttpStatusCode.NotFound);
+
             if (mdl.vr_mensalidade != null)
                 mdl.svrMensalidade = new money().setMoneyFormat((long)mdl.vr_mensalidade);
 
@@ -155,11 +158,13 @@ namespace DevKit.Web.Controllers
                                                                  Sum(y => y.vr_valor).ToString());
             }
 
+            foreach (var item in db.EmpresaDespesa.Where(y => y.fkEmpresa == (long)mdl.i_unique).OrderBy(y => y.stCodigo) )
+            {
+                mdl.despesas.Add(item);
+            }
+
             mdl._tg_bloq = mdl.tg_bloq == 1;
             mdl._tg_isentoFat = mdl.tg_isentoFat == 1;
-
-            if (mdl == null)
-                return StatusCode(HttpStatusCode.NotFound);
 
             return Ok(mdl);
         }
@@ -169,6 +174,40 @@ namespace DevKit.Web.Controllers
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
+
+            if (mdl.updateCommand == "newDespesa")
+            {
+                if (mdl.anexedDespesa.id != 0)
+                {
+                    var d = db.EmpresaDespesa.FirstOrDefault(y => y.id == mdl.anexedDespesa.id);
+
+                    d.stCodigo = mdl.anexedDespesa.stCodigo;
+                    d.stDescricao = mdl.anexedDespesa.stDescricao;
+
+                    db.Update(d);
+                }
+                else
+                {
+                    db.Insert(new EmpresaDespesa
+                    {
+                        fkEmpresa = (int)mdl.i_unique,
+                        stCodigo = mdl.anexedDespesa.stCodigo,
+                        stDescricao = mdl.anexedDespesa.stDescricao
+                    });
+                }
+                
+                return Ok();
+            }
+
+            if (mdl.updateCommand == "removeDespesa")
+            {
+                var d = db.EmpresaDespesa.FirstOrDefault(y => y.id == mdl.anexedDespesa.id);
+
+                if (d != null)
+                    db.Delete(d);
+
+                return Ok();
+            }
 
             var mon = new money();
 
@@ -196,6 +235,7 @@ namespace DevKit.Web.Controllers
             if (mdl._tg_bloq == true) mdl.tg_bloq = 1; else mdl.tg_bloq = 0;
             if (mdl._tg_isentoFat == true) mdl.tg_isentoFat = 1; else mdl.tg_isentoFat = 0;
 
+            
             db.Update(mdl);
 
             return Ok();

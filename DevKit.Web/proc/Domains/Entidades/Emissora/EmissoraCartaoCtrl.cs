@@ -63,6 +63,7 @@ namespace DevKit.Web.Controllers
                         via,
                         dispM, dispT,
                         fkEmpresa,                      
+                        stCodigoFOPA,
                         uf, cidade, cep, end, numero, bairro,
                         modo, valor, array;
 
@@ -524,6 +525,7 @@ namespace DevKit.Web.Controllers
                 // cartão
                 id = id.ToString(),
                 matricula = cart.st_matricula,
+                stCodigoFOPA = cart.stCodigoFOPA,
                 tg_convenioComSaldo = cart.tg_convenioComSaldo,
                 limMes = mon.setMoneyFormat((long)cart.vr_limiteMensal),
                 limTot = mon.setMoneyFormat((long)cart.vr_limiteTotal),                
@@ -640,6 +642,7 @@ namespace DevKit.Web.Controllers
             cart.nu_senhaErrada = Convert.ToInt32(Context.NONE);
 
             cart.tg_convenioComSaldo = mdl.tg_convenioComSaldo;
+            cart.stCodigoFOPA = mdl.stCodigoFOPA;
 
             cart.dt_bloqueio = DateTime.Now;
             cart.dt_inclusao = DateTime.Now;
@@ -982,6 +985,7 @@ namespace DevKit.Web.Controllers
 
             // custom field
             cart.tg_convenioComSaldo = mdl.tg_convenioComSaldo;
+            cart.stCodigoFOPA = mdl.stCodigoFOPA;
 
             db.Update(cart);
 

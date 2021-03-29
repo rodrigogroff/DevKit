@@ -39,6 +39,7 @@ namespace DataModel
         public ITable<LINK_RepasseParcela> LINK_RepasseParcela { get { return this.GetTable<LINK_RepasseParcela>(); } }
         public ITable<LINK_UsuarioTerminal> LINK_UsuarioTerminal { get { return this.GetTable<LINK_UsuarioTerminal>(); } }
         public ITable<LOG_Audit> LOG_Audit { get { return this.GetTable<LOG_Audit>(); } }
+        public ITable<EmpresaDespesa> EmpresaDespesa { get { return this.GetTable<EmpresaDespesa>(); } }
         public ITable<LOG_Chamado> LOG_Chamado { get { return this.GetTable<LOG_Chamado>(); } }
         public ITable<LOG_Edu_RendimentoEmpresa> LOG_Edu_RendimentoEmpresa { get { return this.GetTable<LOG_Edu_RendimentoEmpresa>(); } }
         public ITable<LOG_Fechamento> LOG_Fechamento { get { return this.GetTable<LOG_Fechamento>(); } }
@@ -138,6 +139,15 @@ namespace DataModel
         }
 
         #endregion
+    }
+
+    [Table(Schema = "dbo", Name = "EmpresaDespesa")]
+    public partial class EmpresaDespesa
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public long? fkEmpresa { get; set; }
+        [Column, Nullable] public string stCodigo { get; set; }
+        [Column, Nullable] public string stDescricao { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "DashboardGrafico")]
@@ -516,6 +526,7 @@ namespace DataModel
         [Column, Nullable] public long? vr_saldoConvenio { get; set; }
 
         [Column, Nullable] public DateTime? dtPedidoCartao { get; set; }
+        [Column, Nullable] public string stCodigoFOPA { get; set; } // varchar(40)
     }
 
     [Table(Schema = "dbo", Name = "T_Chamado")]
@@ -623,6 +634,7 @@ namespace DataModel
         [Column, Nullable] public bool? tg_convenioComSaldo { get; set; } // varchar(500)
         [Column, Nullable] public long? fkParceiro { get; set; } // bigint
         [Column, Nullable] public string st_emailPlastico { get; set; } // varchar(500)
+        [Column, Nullable] public bool? bContaCorrenteAssociado { get; set; } // varchar(500)
     }
 
     [Table(Schema = "dbo", Name = "T_EmpresaAfiliada")]

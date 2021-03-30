@@ -181,8 +181,14 @@ namespace DevKit.Web.Controllers
                 {
                     var d = db.EmpresaDespesa.FirstOrDefault(y => y.id == mdl.anexedDespesa.id);
 
-                    d.stCodigo = mdl.anexedDespesa.stCodigo;
-                    d.stDescricao = mdl.anexedDespesa.stDescricao;
+                    if (string.IsNullOrEmpty(mdl.anexedDespesa.stCodigo))
+                        return BadRequest("Código de despesa não pode ser nulo");
+
+                    if (string.IsNullOrEmpty(mdl.anexedDespesa.stDescricao))
+                        return BadRequest("Descrição de despesa não pode ser nulo");
+
+                    d.stCodigo = mdl.anexedDespesa.stCodigo?.PadLeft(2, '0');
+                    d.stDescricao = mdl.anexedDespesa.stDescricao?.PadRight(30, ' ').Trim();
 
                     db.Update(d);
                 }

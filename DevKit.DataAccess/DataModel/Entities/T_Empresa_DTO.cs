@@ -23,6 +23,8 @@ namespace DataModel
         public List<T_JobFechamento> lstFechamento = new List<T_JobFechamento>();
 
         public List<EmpresaDespesa> despesas = new List<EmpresaDespesa>();
+
+        public List<EmpresaDespesaRecorrente> despesasRec = new List<EmpresaDespesaRecorrente>();
     }
 
     public partial class T_JobFechamento

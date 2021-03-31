@@ -163,6 +163,11 @@ namespace DevKit.Web.Controllers
                 mdl.despesas.Add(item);
             }
 
+            foreach (var item in db.EmpresaDespesaRecorrente.Where(y => y.fkEmpresa == (long)mdl.i_unique).OrderBy(y => y.stCodigo))
+            {
+                mdl.despesasRec.Add(item);
+            }
+
             mdl._tg_bloq = mdl.tg_bloq == 1;
             mdl._tg_isentoFat = mdl.tg_isentoFat == 1;
 
@@ -174,6 +179,8 @@ namespace DevKit.Web.Controllers
         {
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
+
+            #region - despesa - 
 
             if (mdl.updateCommand == "newDespesa")
             {
@@ -215,6 +222,52 @@ namespace DevKit.Web.Controllers
                 return Ok();
             }
 
+            #endregion
+
+            #region - despesa recorrente - 
+
+            if (mdl.updateCommand == "newDespesaRec")
+            {
+                if (mdl.anexedDespesaRec.id != 0)
+                {
+                    var d = db.EmpresaDespesaRecorrente.FirstOrDefault(y => y.id == mdl.anexedDespesaRec.id);
+
+                    if (string.IsNullOrEmpty(mdl.anexedDespesaRec.stCodigo))
+                        return BadRequest("Código de despesa não pode ser nulo");
+
+                    if (string.IsNullOrEmpty(mdl.anexedDespesaRec.stDescricao))
+                        return BadRequest("Descrição de despesa não pode ser nulo");
+
+                    d.stCodigo = mdl.anexedDespesaRec.stCodigo?.PadLeft(2, '0');
+                    d.stDescricao = mdl.anexedDespesaRec.stDescricao?.PadRight(30, ' ').Trim();
+
+                    db.Update(d);
+                }
+                else
+                {
+                    db.Insert(new EmpresaDespesaRecorrente
+                    {
+                        fkEmpresa = (int)mdl.i_unique,
+                        stCodigo = mdl.anexedDespesaRec.stCodigo,
+                        stDescricao = mdl.anexedDespesaRec.stDescricao
+                    });
+                }
+
+                return Ok();
+            }
+
+            if (mdl.updateCommand == "removeDespesaRec")
+            {
+                var d = db.EmpresaDespesaRecorrente.FirstOrDefault(y => y.id == mdl.anexedDespesaRec.id);
+
+                if (d != null)
+                    db.Delete(d);
+
+                return Ok();
+            }
+
+            #endregion
+
             var mon = new money();
 
             if (!string.IsNullOrEmpty(mdl.svrMensalidade))
@@ -240,7 +293,6 @@ namespace DevKit.Web.Controllers
 
             if (mdl._tg_bloq == true) mdl.tg_bloq = 1; else mdl.tg_bloq = 0;
             if (mdl._tg_isentoFat == true) mdl.tg_isentoFat = 1; else mdl.tg_isentoFat = 0;
-
             
             db.Update(mdl);
 

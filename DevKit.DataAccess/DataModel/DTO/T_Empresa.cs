@@ -11,6 +11,7 @@ namespace DataModel
         public string updateCommand { get; set; }
 
         [NotMapped]
-        public EmpresaDespesa anexedDespesa { get; set; }        
+        public EmpresaDespesa anexedDespesa { get; set; }
+        public EmpresaDespesa anexedDespesaRec { get; set; }
     }
 }

@@ -186,6 +186,66 @@ angular.module('app.controllers').controller('EmpresaController',
             };
 
             // ============================================
+            // despesas recorrentes
+            // ============================================
+
+            $scope.addDespesaRec = false;
+
+            $scope.removeDespesaRec = function (index, lista) {
+                $scope.modalDespesaRec = true;
+                $scope.delDespesaRec = $scope.viewModel.despesasRec[index];
+            };
+
+            $scope.closeModalDespesaRec = function () {
+                $scope.modalDespesaRec = false;
+            };
+
+            $scope.removerDespesaRecModal = function () {
+                $scope.viewModel.updateCommand = "removeDespesaRec";
+                $scope.viewModel.anexedDespesaRec = $scope.delDespesaRec;
+                Api.EmpresaDBA.update({ id: id }, $scope.viewModel, function (data) {
+                    $scope.modalDespesa = false;
+                    loadEntity();
+                });
+            };
+
+            $scope.addNewDespesaRec = function () {
+                $scope.addDespesaRec = !$scope.addDespesaRec;
+            };
+
+            $scope.newDespesaRec = {};
+
+            $scope.editDespesaRec = function (mdl) {
+                $scope.addDespesaRec = true;
+                $scope.newDespesaRec = mdl;
+            };
+
+            $scope.cancelDespesaRec = function () {
+                $scope.addDespesaRec = false;
+                $scope.newDespesaRec = {};
+            };
+
+            $scope.saveNewDespesaRec = function () {
+                $scope.despRec_stCodigo_fail = invalidCheck($scope.newDespesaRec.stCodigo);
+                $scope.despRec_stDesc_fail = invalidCheck($scope.newDespesaRec.stDescricao);
+
+                if (!$scope.despRec_stCodigo_fail && !$scope.despRec_stDesc_fail) {
+                    $scope.addDespesaRec = false;
+
+                    $scope.viewModel.updateCommand = "newDespesaRec";
+                    $scope.viewModel.anexedDespesaRec = $scope.newDespesaRec;
+
+                    Api.EmpresaDBA.update({ id: id }, $scope.viewModel, function (data) {
+                        $scope.newDespesaRec = {};
+                        loadEntity();
+                    },
+                        function (response) {
+                            toastr.error(response.data.message, 'Erro');
+                        });
+                }
+            };
+
+            // ============================================
             // phone 
             // ============================================
 

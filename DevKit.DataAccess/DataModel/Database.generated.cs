@@ -40,6 +40,7 @@ namespace DataModel
         public ITable<LINK_UsuarioTerminal> LINK_UsuarioTerminal { get { return this.GetTable<LINK_UsuarioTerminal>(); } }
         public ITable<LOG_Audit> LOG_Audit { get { return this.GetTable<LOG_Audit>(); } }
         public ITable<EmpresaDespesa> EmpresaDespesa { get { return this.GetTable<EmpresaDespesa>(); } }
+        public ITable<EmpresaDespesaRecorrente> EmpresaDespesaRecorrente { get { return this.GetTable<EmpresaDespesaRecorrente>(); } }
         public ITable<LOG_Chamado> LOG_Chamado { get { return this.GetTable<LOG_Chamado>(); } }
         public ITable<LOG_Edu_RendimentoEmpresa> LOG_Edu_RendimentoEmpresa { get { return this.GetTable<LOG_Edu_RendimentoEmpresa>(); } }
         public ITable<LOG_Fechamento> LOG_Fechamento { get { return this.GetTable<LOG_Fechamento>(); } }
@@ -143,6 +144,15 @@ namespace DataModel
 
     [Table(Schema = "dbo", Name = "EmpresaDespesa")]
     public partial class EmpresaDespesa
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public long? fkEmpresa { get; set; }
+        [Column, Nullable] public string stCodigo { get; set; }
+        [Column, Nullable] public string stDescricao { get; set; }
+    }
+
+    [Table(Schema = "dbo", Name = "EmpresaDespesaRecorrente")]
+    public partial class EmpresaDespesaRecorrente
     {
         [PrimaryKey, Identity] public long id { get; set; }
         [Column, Nullable] public long? fkEmpresa { get; set; }

@@ -1,0 +1,73 @@
+﻿<div class="webFormPosition" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>Listagem de <b>Despesas Recorrentes</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td><input type="submit" class="btn btn-success pull-right" value="Nova Despesa" ng-click="new()"></td>
+                    <td width="20px"></td>
+                </tr>                
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color: white">
+                <tr height="22px"> </tr>
+                <tr height="43px">
+                    <td width="20px"></td>
+                    <td width="150px"><b>Nome</b></td>
+                    <td width="120px">
+                        <input type="text" focus="true"
+                               class="form-control input-transparent"
+                               ng-model="campos.nome" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="120px" align="right">
+                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>                         
+                    </td>
+                    <td width="20px"></td>
+                </tr>
+                <tr height="22px"></tr>
+            </table>
+            <div style="overflow-x:scroll;overflow:auto;">
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div ng-show="list.length == 0">
+                                <br />
+                                <br />
+                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="list.length > 0">
+                                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
+                                <br />
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Codigo</th>
+                                            <th>Descrição</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
+                                        <td style="min-width:120px;">{{ mdl.stCodigo }}</td>
+                                        <td style="min-width:120px;">{{ mdl.stDescricao }}</td>                                        
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <br />
+        </div>
+    </section>
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

@@ -13,6 +13,7 @@ namespace DevKit.Web.Controllers
 
     public class EmpresaController : ApiControllerBase
     {
+        [HttpGet]
         public IHttpActionResult Get()
         {
             var busca = Request.GetQueryStringValue("busca");
@@ -56,6 +57,7 @@ namespace DevKit.Web.Controllers
             });
         }
 
+        [HttpGet]
         public IHttpActionResult Get(long id)
         {
             if (!StartDatabaseAndAuthorize())

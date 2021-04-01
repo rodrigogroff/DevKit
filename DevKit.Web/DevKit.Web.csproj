@@ -288,6 +288,7 @@
     <Content Include="app\emissora\altSenhaUsuario.html" />
     <Content Include="app\emissora\cancelamentoEmissora.html" />
     <Content Include="app\emissora\CancelamentoEmissoraController.js" />
+    <Content Include="app\emissora\despesaRec.html" />
     <Content Include="app\emissora\EmissoraAltDesbloqLote.js" />
     <Content Include="app\emissora\EmissoraAltBloqLote.js" />
     <Content Include="app\emissora\EmissoraAltCota.js" />
@@ -297,8 +298,12 @@
     <Content Include="app\emissora\EmissoraAltLimite.js" />
     <Content Include="app\emissora\EmissoraAltSenhaUsuario.js" />
     <Content Include="app\emissora\EmissoraAltSenha.js" />
+    <Content Include="app\emissora\EmissoraDespesaRec.js" />
+    <Content Include="app\emissora\EmissoraListagemDespesaRecController.js" />
+    <Content Include="app\emissora\EmissoraListagemDespesaController.js" />
     <Content Include="app\emissora\EmissoraListagemLojaController.js" />
     <Content Include="app\emissora\EmissoraListagemUsuarioController.js" />
+    <Content Include="app\emissora\EmissoraDespesa.js" />
     <Content Include="app\emissora\EmissoraRelExtratTransLojasController.js" />
     <Content Include="app\emissora\EmissoraRelExtratTransController.js" />
     <Content Include="app\emissora\EmissoraRelExtratFornController.js" />
@@ -308,8 +313,11 @@
     <Content Include="app\emissora\EmissoraExpFechamentoController.js" />
     <Content Include="app\emissora\EmissoraListagemFechamentoController.js" />
     <Content Include="app\emissora\EmissoraNovoCartao.js" />
+    <Content Include="app\emissora\listagemDespesaRec.html" />
+    <Content Include="app\emissora\listagemDespesa.html" />
     <Content Include="app\emissora\listagemLoja.html" />
     <Content Include="app\emissora\listagemUsuario.html" />
+    <Content Include="app\emissora\despesa.html" />
     <Content Include="app\emissora\relExtratTransLojas.html" />
     <Content Include="app\emissora\relExtratTrans.html" />
     <Content Include="app\emissora\relExtratForn.html" />
@@ -753,6 +761,8 @@
     <Compile Include="proc\Domains\DBA\UsuarioParceiroDBAResetSenhaCtrl.cs" />
     <Compile Include="proc\Domains\DBA\UsuarioParceiroDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaRecCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\LoteCartaoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTransLojas.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTrans.cs" />

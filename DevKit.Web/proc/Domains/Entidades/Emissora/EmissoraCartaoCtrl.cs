@@ -627,6 +627,14 @@ namespace DevKit.Web.Controllers
                 return BadRequest("Matrícula já cadastrada nesta empresa!");
             }
 
+            if (db.currentEmpresa.bContaCorrenteAssociado == true)
+            {
+                if (string.IsNullOrEmpty(mdl.stCodigoFOPA))
+                {
+                    return BadRequest("Informe o codigo FOPA do cartão");
+                }
+            }
+
             CopiaDadosProprietario(mdl, ref prop);
             
             var id_prop = Convert.ToInt32(db.InsertWithIdentity(prop));
@@ -976,7 +984,15 @@ namespace DevKit.Web.Controllers
                         return Ok();
                     }
             }
-            
+
+            if (db.currentEmpresa.bContaCorrenteAssociado == true)
+            {
+                if (string.IsNullOrEmpty(mdl.stCodigoFOPA))
+                {
+                    return BadRequest("Informe o codigo FOPA do cartão");
+                }
+            }
+
             CopiaDadosProprietario(mdl, ref prop);
 
             db.Update(prop);

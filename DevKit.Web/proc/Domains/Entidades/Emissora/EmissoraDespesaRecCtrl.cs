@@ -65,6 +65,7 @@ namespace DevKit.Web.Controllers
 
             db_t.stCodigo = desp.stCodigo.PadLeft(2,'0');
             db_t.stDescricao = desp.stDescricao;
+            db_t.bAtivo = desp.bAtivo;
 
             db.Update(db_t);
 
@@ -88,7 +89,8 @@ namespace DevKit.Web.Controllers
             {
                 fkEmpresa = (long)tEmp.i_unique,
                 stCodigo = desp.stCodigo,
-                stDescricao = desp.stDescricao
+                stDescricao = desp.stDescricao,
+                bAtivo = desp.bAtivo,
             };
 
             db.Insert(db_t);

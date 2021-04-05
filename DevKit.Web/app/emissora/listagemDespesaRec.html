@@ -49,11 +49,13 @@
                                         <tr>
                                             <th>Codigo</th>
                                             <th>Descrição</th>
+                                            <th>Ativo</th>
                                         </tr>
                                     </thead>
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                                         <td style="min-width:120px;">{{ mdl.stCodigo }}</td>
-                                        <td style="min-width:120px;">{{ mdl.stDescricao }}</td>                                        
+                                        <td style="min-width:120px;">{{ mdl.stDescricao }}</td>
+                                        <td style="min-width:120px;">{{ mdl.bAtivo == true ? 'Sim' : 'Não' }}</td>
                                     </tr>
                                 </table>
                             </div>

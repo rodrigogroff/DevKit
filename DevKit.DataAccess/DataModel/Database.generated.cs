@@ -158,6 +158,7 @@ namespace DataModel
         [Column, Nullable] public long? fkEmpresa { get; set; }
         [Column, Nullable] public string stCodigo { get; set; }
         [Column, Nullable] public string stDescricao { get; set; }
+        [Column, Nullable] public bool? bAtivo { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "DashboardGrafico")]

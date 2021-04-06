@@ -240,6 +240,7 @@ namespace DevKit.Web.Controllers
 
                     d.stCodigo = mdl.anexedDespesaRec.stCodigo?.PadLeft(2, '0');
                     d.stDescricao = mdl.anexedDespesaRec.stDescricao?.PadRight(30, ' ').Trim();
+                    d.bAtivo = mdl.anexedDespesaRec.bAtivo;
 
                     db.Update(d);
                 }
@@ -249,7 +250,8 @@ namespace DevKit.Web.Controllers
                     {
                         fkEmpresa = (int)mdl.i_unique,
                         stCodigo = mdl.anexedDespesaRec.stCodigo,
-                        stDescricao = mdl.anexedDespesaRec.stDescricao
+                        stDescricao = mdl.anexedDespesaRec.stDescricao,
+                        bAtivo = mdl.anexedDespesaRec.bAtivo,
                     });
                 }
 

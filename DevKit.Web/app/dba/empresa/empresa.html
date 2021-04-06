@@ -644,6 +644,18 @@
                                                                 <input type="text" class="form-control input-transparent" maxlength="30" ng-model="newDespesaRec.stDescricao">
                                                             </td>
                                                         </tr>
+
+                                                        <tr height="42px">
+                                                            <td>
+                                                                <b>Ativo</b>
+                                                            </td>
+                                                            <td width="20px">
+                                                                <button class="btn btn-xs btn-danger" ng-show="despRec_stDesc_fail">!</button>
+                                                            </td>
+                                                            <td>
+                                                                <input type="checkbox" class="form-control input-transparent" ng-model="newDespesaRec.bAtivo"> Sim
+                                                            </td>
+                                                        </tr>
                                                     </table>
                                                 </td>
                                             </tr>
@@ -660,12 +672,14 @@
                                                 <tr>
                                                     <th>Código</th>
                                                     <th>Descrição</th>
+                                                    <th>Ativo</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tr data-ng-repeat="mdl in viewModel.despesasRec">
                                                 <td>{{ mdl.stCodigo }}</td>
                                                 <td>{{ mdl.stDescricao }}</td>
+                                                <td>{{ mdl.bAtivo == true ? 'Sim' : 'Não' }}</td>
                                                 <td>
                                                     <div class="pull-right">
                                                         <i class="fa fa-edit" style="color:white" ng-click="editDespesaRec(mdl)" title="Editar"></i>

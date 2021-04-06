@@ -12,6 +12,6 @@ namespace DataModel
 
         [NotMapped]
         public EmpresaDespesa anexedDespesa { get; set; }
-        public EmpresaDespesa anexedDespesaRec { get; set; }
+        public EmpresaDespesaRecorrente anexedDespesaRec { get; set; }
     }
 }

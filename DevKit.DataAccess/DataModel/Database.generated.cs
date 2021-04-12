@@ -41,6 +41,7 @@ namespace DataModel
         public ITable<LOG_Audit> LOG_Audit { get { return this.GetTable<LOG_Audit>(); } }
         public ITable<EmpresaDespesa> EmpresaDespesa { get { return this.GetTable<EmpresaDespesa>(); } }
         public ITable<EmpresaDespesaRecorrente> EmpresaDespesaRecorrente { get { return this.GetTable<EmpresaDespesaRecorrente>(); } }
+        public ITable<LancamentosCC> LancamentosCC { get { return this.GetTable<LancamentosCC>(); } }
         public ITable<LOG_Chamado> LOG_Chamado { get { return this.GetTable<LOG_Chamado>(); } }
         public ITable<LOG_Edu_RendimentoEmpresa> LOG_Edu_RendimentoEmpresa { get { return this.GetTable<LOG_Edu_RendimentoEmpresa>(); } }
         public ITable<LOG_Fechamento> LOG_Fechamento { get { return this.GetTable<LOG_Fechamento>(); } }
@@ -158,6 +159,21 @@ namespace DataModel
         [Column, Nullable] public string stCodigo { get; set; }
         [Column, Nullable] public string stDescricao { get; set; }
         [Column, Nullable] public bool? bAtivo { get; set; }
+    }
+
+    [Table(Schema = "dbo", Name = "LancamentosCC")]
+    public partial class LancamentosCC
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public long? fkEmpresa { get; set; }
+        [Column, Nullable] public long? fkCartao { get; set; }
+        [Column, Nullable] public long? nuMes { get; set; }
+        [Column, Nullable] public long? nuAno { get; set; }
+        [Column, Nullable] public long? fkTipo { get; set; }
+        [Column, Nullable] public long? vrValor { get; set; }
+        [Column, Nullable] public long? nuParcela { get; set; }
+        [Column, Nullable] public long? nuTotParcelas { get; set; }
+        [Column, Nullable] public bool? bRecorrente { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "DashboardGrafico")]

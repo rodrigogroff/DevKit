@@ -463,6 +463,21 @@ namespace DevKit.Web.Controllers
             }
         }
 
+        public static string removerAcentosMaisculo(string texto)
+        {
+            if (string.IsNullOrEmpty(texto))
+                texto = "";
+
+            string comAcentos = "ÄÅÁÂÀÃäáâàãÉÊËÈéêëèÍÎÏÌíîïìÖÓÔÒÕöóôòõÜÚÛüúûùÇç";
+            string semAcentos = "AAAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUuuuuCc";
+
+            for (int i = 0; i < comAcentos.Length; i++)
+            {
+                texto = texto.Replace(comAcentos[i].ToString(), semAcentos[i].ToString());
+            }
+            return texto.ToUpper();
+        }
+
         [NonAction]
         public string DESCript(string dados, string chave = "12345678")
         {

@@ -357,8 +357,8 @@ namespace DevKit.Web.Controllers
 
             var mdlNew = new T_Loja
             {
-                st_nome = mdl.st_nome,
-                st_social = mdl.st_social,
+                st_nome = removerAcentosMaisculo( mdl.st_nome),
+                st_social = removerAcentosMaisculo ( mdl.st_social),
                 st_enderecoInst = mdl.st_enderecoInst,
                 st_endereco = mdl.st_endereco,
                 st_contato = mdl.st_contato,

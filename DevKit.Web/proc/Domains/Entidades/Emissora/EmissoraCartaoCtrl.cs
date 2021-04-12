@@ -576,7 +576,7 @@ namespace DevKit.Web.Controllers
             if (prop.dt_nasc == null)
                 prop.dt_nasc = new DateTime(1976, 1, 1);
 
-            prop.st_nome = mdl.nome;
+            prop.st_nome = removerAcentosMaisculo(mdl.nome);
             prop.st_cpf = mdl.cpf;
             prop.st_telefone = mdl.tel;
             prop.st_email = mdl.email;

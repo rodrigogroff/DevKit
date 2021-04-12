@@ -93,8 +93,8 @@ namespace DevKit.Web.Controllers
 
                 var mdlNew = new T_Loja
                 {
-                    st_nome = mdl.fantasia,
-                    st_social = mdl.razSoc,
+                    st_nome = removerAcentosMaisculo(mdl.fantasia),
+                    st_social = removerAcentosMaisculo(mdl.razSoc),
                     st_enderecoInst = mdl.cepInstStr.Split(',')[0] + " " + mdl.numeroInst,
                     st_endereco = mdl.cepStr.Split(',')[0] + " " + mdl.numero,
                     st_contato = mdl.resp,

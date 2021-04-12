@@ -299,6 +299,7 @@
     <Content Include="app\emissora\EmissoraAltSenhaUsuario.js" />
     <Content Include="app\emissora\EmissoraAltSenha.js" />
     <Content Include="app\emissora\EmissoraDespesaRec.js" />
+    <Content Include="app\emissora\EmissoraListagemLancCCController.js" />
     <Content Include="app\emissora\EmissoraListagemDespesaRecController.js" />
     <Content Include="app\emissora\EmissoraListagemDespesaController.js" />
     <Content Include="app\emissora\EmissoraListagemLojaController.js" />
@@ -313,6 +314,7 @@
     <Content Include="app\emissora\EmissoraExpFechamentoController.js" />
     <Content Include="app\emissora\EmissoraListagemFechamentoController.js" />
     <Content Include="app\emissora\EmissoraNovoCartao.js" />
+    <Content Include="app\emissora\listagemLancCC.html" />
     <Content Include="app\emissora\listagemDespesaRec.html" />
     <Content Include="app\emissora\listagemDespesa.html" />
     <Content Include="app\emissora\listagemLoja.html" />

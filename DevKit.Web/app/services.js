@@ -53,6 +53,7 @@ angular.module('app.services', ['ngResource'])
         Empresa: $resource('api/empresa/:id', {}, opcoes),
         LojaBanco: $resource('api/LojaBanco/:id', {}, opcoes),
         EmpresaDBA: $resource('api/empresaDBA/:id', {}, opcoes),
+        EmissoraLancCC: $resource('api/EmissoraLancCC/:id', {}, opcoes),
         UsuarioParceiroDBAResetSenha: $resource('api/UsuarioParceiroDBAResetSenha/:id', {}, opcoes),
         LoteDBA: $resource('api/loteDBA/:id', {}, opcoes),
         DBAUsuario: $resource('api/DBAUsuario/:id', {}, opcoes),

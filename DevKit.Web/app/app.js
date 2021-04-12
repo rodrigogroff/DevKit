@@ -7,7 +7,6 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
 
             .state('login', { url: '/login', templateUrl: 'app/login/login.html', controller: 'LoginController', data: {} })
             .state('onboarding', { url: '/onboarding', templateUrl: 'app/onboarding/cadastro.html', controller: 'CadastroController', data: {} })
-
             .state('associado', { url: '/system/associado', templateUrl: 'app/system/associado/listingAssociados.html', controller: 'ListingAssociadosController' })
             .state('venda', { url: '/system/venda', templateUrl: 'app/system/venda/venda.html', controller: 'VendaController' })
             .state('vendamobile', { url: '/system/vendamobile', templateUrl: 'app/system/venda/vendamobile.html', controller: 'VendaMobileController' })
@@ -65,12 +64,11 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('empNovoCartao', { url: '/emissora/novoCartao', templateUrl: 'app/emissora/novoCartao.html', controller: 'EmissoraNovoCartaoController' })
             .state('empManutCartao', { url: '/emissora/manutCartao/:id', templateUrl: 'app/emissora/novoCartao.html', controller: 'EmissoraNovoCartaoController' })
             .state('empListagemCartao', { url: '/emissora/listagemCartao', templateUrl: 'app/emissora/listagemCartao.html', controller: 'EmissoraListagemCartaoController' })
-
             .state('empDespesa', { url: '/emissora/manutDespesa/:id', templateUrl: 'app/emissora/despesa.html', controller: 'EmissoraDespesaController' })
             .state('empListagemDespesa', { url: '/emissora/listagemDespesa', templateUrl: 'app/emissora/listagemDespesa.html', controller: 'EmissoraListagemDespesaController' })
             .state('empDespesaRec', { url: '/emissora/manutDespesaRec/:id', templateUrl: 'app/emissora/despesaRec.html', controller: 'EmissoraDespesaRecController' })
             .state('empListagemDespesaRec', { url: '/emissora/listagemDespesaRec', templateUrl: 'app/emissora/listagemDespesaRec.html', controller: 'EmissoraListagemDespesaRecController' })
-
+            .state('empListagemLancCC', { url: '/emissora/listagemLancCC', templateUrl: 'app/emissora/listagemLancCC.html', controller: 'EmissoraListagemLancCCController' })
             .state('empListagemLoja', { url: '/emissora/listagemLoja', templateUrl: 'app/emissora/listagemLoja.html', controller: 'EmissoraListagemLojaController' })
             .state('empListagemUsuario', { url: '/emissora/listagemUsuario', templateUrl: 'app/emissora/listagemUsuario.html', controller: 'EmissoraListagemUsuarioController' })
             .state('empAltSenhaUsuario', { url: '/emissora/altsenhausuario', templateUrl: 'app/emissora/altSenhaUsuario.html', controller: 'EmissoraAltSenhaUsuarioController' })
@@ -95,6 +93,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('dashboard', { url: '/system/dash', templateUrl: 'app/system/admopers/dashboard.html', controller: 'DashboardController' })
             .state('dbaListagemCartao', { url: '/dba/listagemCartao', templateUrl: 'app/dba/dba_listagemCartao.html', controller: 'DBAListagemCartaoController' })
             .state('otherwise', { url: '*path', templateUrl: 'app/_shared/404.html', controller: 'Erro404Controller' });
+
         $locationProvider.html5Mode(true);
     }]);
 

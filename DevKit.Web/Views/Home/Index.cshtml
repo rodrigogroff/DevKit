@@ -73,6 +73,10 @@
             return v;
         }
 
+        function ValorSemAcento(v) {
+            return v.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase();
+        }
+
         function Valor(v) {
             var extract = extractNumbers(v);
             var clean = cleanup(extract);

@@ -6,7 +6,7 @@
                 <tr height="48px">
                     <td width="20px"></td>
                     <td>Listagem de <b>Lançamentos em conta corrente</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
-                    <td><input type="submit" class="btn btn-success pull-right" value="Novo Lançamento" ng-click="new()"></td>
+                    <td><input type="submit" class="btn btn-success pull-right" value="Novo Lançamento" ng-click="novoLanc()"></td>
                     <td width="20px"></td>
                 </tr>                
             </table>
@@ -23,10 +23,28 @@
                                ng-model="campos.nome" />
                     </td>
                     <td width="20px"></td>
-                    <td width="120px" align="right">
-                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>                         
+                    <td width="150px"><b>Matricula / FOPA</b></td>
+                    <td width="120px">
+                        <input type="text" class="form-control input-transparent" ng-model="campos.mat" />
                     </td>
                     <td width="20px"></td>
+                    <td width="120px" align="right">
+                        <button class="btn btn-primary" ng-click="search()">Pesquisar</button>
+                    </td>
+                    <td width="20px"></td>
+                </tr>                
+                <tr height="43px">
+                    <td width="20px"></td>
+                    <td width="150px"><b>Ano</b></td>
+                    <td width="120px">
+                        <input type="text" class="form-control input-transparent" maxlength="4"
+                               ng-model="campos.ano_inicial">
+                    </td>
+                    <td width="20px"></td>
+                    <td width="150px"><b>Mês</b></td>
+                    <td width="120px">
+                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                    </td>
                 </tr>
                 <tr height="22px"></tr>
             </table>
@@ -41,29 +59,264 @@
                                 <br />
                                 <br />
                             </div>
-                            <div ng-show="list.length > 0">
-                                <ng-paginacao carregar="load" list="list" total="total" itensporpagina="itensporpagina" paginador="paginador"></ng-paginacao>
-                                <br />
+                            <div ng-show="list.length > 0">                                
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Codigo</th>
-                                            <th>Descrição</th>
+                                            <th>Dt. Criação</th>
+                                            <th>Ano</th>
+                                            <th>Mês</th>
+                                            <th>Cartão</th>
+                                            <th>Cd. FOPA</th>
+                                            <th>Nome</th>
+                                            <th>Tipo</th>
+                                            <th>Valor</th>
+                                            <th>Parcela</th>
+                                            <th>Ações</th>
                                         </tr>
                                     </thead>
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
-                                        <td style="min-width:120px;">{{ mdl.stCodigo }}</td>
-                                        <td style="min-width:120px;">{{ mdl.stDescricao }}</td>                                        
+                                        <td style="min-width:120px;">{{ mdl.dtCriacao }}</td>
+                                        <td style="min-width:120px;">{{ mdl.nuAno }}</td>
+                                        <td style="min-width:120px;">{{ mdl.nuMes }}</td>
+                                        <td style="min-width:120px;">{{ mdl.nuMatricula }}</td>
+                                        <td style="min-width:120px;">{{ mdl.stFOPA }}</td>
+                                        <td style="min-width:120px;">{{ mdl.stNome }}</td>
+                                        <td style="min-width:120px;">{{ mdl.stTipo }}</td>
+                                        <td style="min-width:120px;">{{ mdl.vrValor }}</td>
+                                        <td style="min-width:120px;">{{ mdl.nuParcela }}</td>
+                                        <td>
+                                            <div class="pull-right">
+                                                <i class="fa fa-edit" style="color:white" ng-click="editar(mdl)" title="Editar"></i>
+                                                <i class="fa fa-times" style="color:white" ng-click="remover(mdl)" title="Remover"></i>
+                                            </div>
+
+                                            <div class="modal-backdrop"
+                                                 ng-if="modalRemove == true"
+                                                 style="background: rgba(55, 55, 55, 0.5 );">
+                                                <div class="modal-dialog" style="width:500px">
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <div class="modal-content" style="color:black">
+                                                        <legend style="color:black">
+                                                            Remoção de lançamento
+                                                            <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModalRemover()"> X </button> &nbsp;
+                                                        </legend>
+                                                        Confirma remoção do item abaixo?<br /><br />
+                                                        {{delLanc.stNome}}<br />
+                                                        {{delLanc.stFOPA}} <br />
+                                                        {{delLanc.nuMes}} / {{delLanc.nuAno}} <br />
+                                                        <br />
+                                                        <b>{{delLanc.stTipo}}</b> <br />
+                                                        {{delLanc.vrValor}}<br />
+                                                        <br />
+                                                        <p>
+                                                            Obs: esta exclusão eliminará todas as parcelas do lançamento!
+                                                        </p>
+                                                        <br />
+                                                        <div class="pull-right">
+                                                            <button class="btn btn-primary" ng-click="removerLancModal()"> Remover </button>
+                                                        </div>
+                                                        <br />
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-backdrop"
+                                                 ng-if="modalEdit == true"
+                                                 style="background: rgba(55, 55, 55, 0.5 );">
+                                                <div class="modal-dialog" style="width:500px">
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <div class="modal-content" style="color:black">
+                                                        <legend style="color:black">
+                                                            Edição de lançamento
+                                                            <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModalEdit()"> X </button> &nbsp;
+                                                        </legend>
+                                                        <br />
+                                                        <table class="widget" style="color:black">
+                                                            <tr height="32px">
+                                                                <td width="20px"></td>
+                                                                <td width="150px"><b>Nome</b></td>
+                                                                <td width="250px">
+                                                                    {{editLanc.stNome}}
+                                                                </td>
+                                                                <td width="20px"></td>
+                                                            </tr>
+                                                            <tr height="32px">
+                                                                <td></td>
+                                                                <td><b>Código FOPA</b></td>
+                                                                <td>
+                                                                    <input type="text"
+                                                                           class="form-control"
+                                                                           maxlength="12"
+                                                                           ng-model="editLanc.stFOPA" />
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr height="32px">
+                                                                <td></td>
+                                                                <td><b>Tipo Lançamento</b></td>
+                                                                <td>
+                                                                    {{editLanc.stTipo}}
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr height="32px">
+                                                                <td></td>
+                                                                <td><b>Data</b></td>
+                                                                <td>
+                                                                    {{editLanc.nuMes}} / {{editLanc.nuAno}}
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr height="32px">
+                                                                <td></td>
+                                                                <td><b>Parcela</b></td>
+                                                                <td>
+                                                                    {{editLanc.nuParcela}}
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr height="32px">
+                                                                <td></td>
+                                                                <td><b>Valor Total</b></td>
+                                                                <td>
+                                                                    <input type="text"
+                                                                           class="form-control" focus="true"
+                                                                           maxlength="12"
+                                                                           onKeyUp="money(this,Valor);"
+                                                                           ng-model="editLanc.vrValor" />
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr height="22px">
+                                                                <td> </td>
+                                                            </tr>
+                                                        </table>
+                                                        <br />
+                                                        <div class="pull-right">
+                                                            <button class="btn btn-primary" ng-click="editarLancModal()"> Confirmar </button>
+                                                        </div>
+                                                        <br />
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
-
                         </td>
                     </tr>
                 </table>
             </div>
             <br />
             <br />
+
+            <div class="modal-backdrop"
+                 ng-if="modalNew == true"
+                 style="background: rgba(55, 55, 55, 0.5 );">
+                <div class="modal-dialog" style="width:500px">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="modal-content" style="color:black">
+                        <legend style="color:black">
+                            Novo lançamento
+                            <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModalNew()"> X </button> &nbsp;
+                        </legend>
+                        <br />
+                        <table class="widget" style="color:black">
+                            <tr height="12px">
+                                <td> </td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td><b>Cartão</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.cartao" ng-model="newLanc._fkCartao" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td><b>Código FOPA</b></td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" maxlength="12"
+                                           ng-model="newLanc.stFOPA">
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="22px">
+                                <td> </td>
+                            </tr>
+                            <tr height="42px">
+                                <td width="20px"></td>
+                                <td width="150px"><b>Ano</b></td>
+                                <td width="250px">
+                                    <input type="text" class="form-control input-transparent" maxlength="4"
+                                           ng-model="newLanc.nuAno">
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td><b>Mês</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="newLanc.nuMes" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td><b>Tipo Lançamento</b></td>
+                                <td>
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.despesa" ng-model="newLanc._fkTipo" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td><b>Valor Total</b></td>
+                                <td>
+                                    <input type="text"
+                                           class="form-control"
+                                           maxlength="12"
+                                           onKeyUp="money(this,Valor);"
+                                           ng-model="newLanc.vrValor" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="42px">
+                                <td></td>
+                                <td><b>Número de Parcelas</b></td>
+                                <td>
+                                    <input type="text"
+                                           class="form-control"
+                                           maxlength="2"
+                                           onKeyUp="money(this,ValorNum);"
+                                           ng-model="newLanc._totParcelas" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr height="22px">
+                                <td> </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <div class="pull-right">
+                            <button class="btn btn-primary" ng-click="newLancModal()"> Confirmar </button>
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
     <br />

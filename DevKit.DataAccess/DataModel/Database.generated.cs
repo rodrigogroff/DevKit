@@ -174,6 +174,8 @@ namespace DataModel
         [Column, Nullable] public long? nuParcela { get; set; }
         [Column, Nullable] public long? nuTotParcelas { get; set; }
         [Column, Nullable] public bool? bRecorrente { get; set; }
+        [Column, Nullable] public DateTime? dtLanc { get; set; }
+        [Column, Nullable] public long? fkInicial { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "DashboardGrafico")]

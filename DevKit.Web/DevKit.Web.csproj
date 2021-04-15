@@ -751,6 +751,8 @@
     <Compile Include="proc\Definitions\CodigoAcesso.cs" />
     <Compile Include="proc\Definitions\TipoConfirmacao.cs" />
     <Compile Include="proc\Domains\Combos\BancosCtrl.cs" />
+    <Compile Include="proc\Domains\Combos\CartaoComboCtrl.cs" />
+    <Compile Include="proc\Domains\Combos\DespesasCtrl.cs" />
     <Compile Include="proc\Domains\Combos\TipoUsuarioCtrl.cs" />
     <Compile Include="proc\Domains\Combos\OrdemRelLojistaTransCtrl.cs" />
     <Compile Include="proc\Domains\DBA\AuditoriaCtrl.cs" />
@@ -765,6 +767,7 @@
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaRecCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraLancCC.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\LoteCartaoCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTransLojas.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelExtratosTrans.cs" />

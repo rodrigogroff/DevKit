@@ -1,9 +1,13 @@
 ﻿using DataModel;
 using LinqToDB;
+using SocialExplorer.IO.FastDBF;
 using SyCrafEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
@@ -237,6 +241,118 @@ namespace DevKit.Web.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/EmissoraLancCC/exportar", Name = "EmissoraLancFechamentoExp")]
+        public IHttpActionResult Exportar()
+        {
+            try
+            {
+                var emp = Request.GetQueryStringValue("emp");
+                var mes = Request.GetQueryStringValue("mes").PadLeft(2, '0');
+                var ano = Request.GetQueryStringValue("ano");
+
+                if (!StartDatabaseAndAuthorize())
+                    return BadRequest();
+
+                var tEmpresa = new T_Empresa();
+
+                try
+                {
+                    tEmpresa = (from e in db.T_Empresa
+                                where e.i_unique == Convert.ToInt32(emp)
+                                select e).
+                                FirstOrDefault();
+                }
+                catch (System.Exception ex)
+                {
+                    ex.ToString();
+
+                    tEmpresa = (from e in db.T_Empresa
+                                where e.st_fantasia == emp
+                                select e).
+                                FirstOrDefault();
+                }
+
+                string dir = "C:\\fechamento_dbf",
+                        file = "FL" + tEmpresa.st_empresa + "-" + mes + ano.Substring(2),
+                        ext = "txt";
+                
+                // ------------------------------------------------------
+                // acrescenta o movimento do mes/ano desejado
+                // ------------------------------------------------------
+
+                var lstFechamento = (from e in db.LOG_Fechamento
+                                     join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
+                                     where e.fk_empresa == tEmpresa.i_unique
+                                     where e.st_mes == mes
+                                     where e.st_ano == ano
+                                     orderby cart.st_matricula
+                                     select e).
+                                     ToList();
+
+                var lstIdsLojistas = lstFechamento.Select(y => y.fk_loja).
+                                     Distinct().
+                                     ToList();
+
+                var lstLojistas = (from e in db.T_Loja
+                                   where lstIdsLojistas.Contains((int)e.i_unique)
+                                   select e).
+                                   ToList();
+
+                var lstIdsParcelas = lstFechamento.Select(y => y.fk_parcela).
+                                     Distinct().
+                                     ToList();
+
+                var lstParcelas = (from e in db.T_Parcelas
+                                   where lstIdsParcelas.Contains((int)e.i_unique)
+                                   select e).
+                                   ToList();
+
+                var lstIdsCartoes = lstFechamento.Select(y => y.fk_cartao).
+                                    Distinct().
+                                    ToList();
+
+                var lstCartoes = (from e in db.T_Cartao
+                                  where lstIdsCartoes.Contains((int)e.i_unique)
+                                  select e).
+                                   ToList();
+                
+                var lancsCC = (  from e in db.LancamentosCC
+                                    where e.fkEmpresa == tEmpresa.i_unique
+                                    where e.nuAno == Convert.ToInt32(ano)
+                                    where e.nuMes == Convert.ToInt32(mes)
+                                    select e).
+                                    ToList();
+
+                using (var fs = new StreamWriter(dir + "\\" +  file + "." + ext, false, Encoding.UTF8))
+                {
+                    var hsh = new Hashtable();
+
+                    foreach (var item in lstCartoes)
+                    {
+                        if (item.stCodigoFOPA != null)
+                            if (hsh[item.i_unique] == null)
+                            {
+                                var tot = lstFechamento.Where(y => y.fk_cartao == item.i_unique).Sum(y => y.vr_valor);
+
+                                tot += lancsCC.Where(y => y.fkCartao == item.i_unique).Sum(y => (int)y.vrValor);
+                            
+                                fs.WriteLine(item.stCodigoFOPA.PadLeft(5, '0') + " ".PadRight(8, ' ') + tot.ToString().PadLeft(8, '0'));
+
+                                hsh[item.i_unique] = true;
+                            }
+                    }
+                }
+
+                return ResponseMessage(TransferirConteudo(dir, file, ext));
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
     }
 }

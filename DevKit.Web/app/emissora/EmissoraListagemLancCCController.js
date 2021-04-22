@@ -1,7 +1,7 @@
 ﻿
 angular.module('app.controllers').controller('EmissoraListagemLancCCController',
-    ['$scope', '$rootScope', 'ngHistoricoFiltro', 'ngSelects',  'Api', 
-        function ($scope, $rootScope, ngHistoricoFiltro, ngSelects, Api) {
+    ['$scope', '$rootScope', 'ngHistoricoFiltro', 'ngSelects', 'AuthService', 'Api', 
+        function ($scope, $rootScope, ngHistoricoFiltro, ngSelects, AuthService, Api) {
 
             $rootScope.exibirMenu = true;
             $scope.loading = false;
@@ -34,6 +34,8 @@ angular.module('app.controllers').controller('EmissoraListagemLancCCController',
             };
 
             $scope.$watch("newLanc._fkCartao", function (novo, antigo) {
+
+                if (antigo != undefined)
                 Api.EmissoraCartao.get({ id: novo }, function (data) {
                     $scope.newLanc.stFOPA = data.stCodigoFOPA;
                     $scope.loading = false;
@@ -137,5 +139,26 @@ angular.module('app.controllers').controller('EmissoraListagemLancCCController',
                     $scope.search();
                 }, function (response) { toastr.error(response.data.message, 'Erro'); });
             }
+
+            $scope.exportar = function () {
+                
+                var t_emp = '';
+
+                AuthService.fillAuthData();
+                $scope.authentication = AuthService.authentication;
+                t_emp = $scope.authentication.m1;
+                
+                if ($scope.campos.mes_inicial === undefined &&
+                    $scope.campos.ano_inicial === undefined) {
+                    toastr.error('Informe os filtros corretamente', 'Erro');
+                    return;
+                }
+
+                window.location.href = "/api/EmissoraLancCC/exportar?" + $.param({
+                    emp: t_emp,
+                    mes: $scope.campos.mes_inicial,
+                    ano: $scope.campos.ano_inicial,
+                });
+            };
 
         }]);

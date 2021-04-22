@@ -121,15 +121,36 @@ namespace DevKit.Web.Controllers
                     odbf.Write(orec, true);
                 }
 
+                {
+                    var query = (from e in db.LancamentosCC
+                                 where e.fkEmpresa == tEmpresa.i_unique
+                                 where e.nuAno == Convert.ToInt32(ano)
+                                 where e.nuMes == Convert.ToInt32(mes)                                 
+                                 select e);
+
+                    foreach (var item in query.ToList())
+                    {
+                        var t_cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == item.fkCartao);
+
+                        var orec = new DbfRecord(odbf.Header);
+
+                        orec[0] = ObtemData(item.dtLanc).Substring(0, 10);
+                        orec[1] = " ";
+                        orec[2] = t_cart.stCodigoFOPA;
+                        orec[3] = item.vrValor.ToString();
+                        orec[4] = item.nuParcela + "/" + item.nuTotParcelas;
+                        orec[5] = " ";
+
+                        odbf.Write(orec, true);
+                    }
+                }
+
                 // -----------
                 // finaliza
                 // -----------
 
                 odbf.WriteHeader();
-
-                odbf.Close();
-
-                //dbf.save();
+                odbf.Close();               
 
                 return ResponseMessage(TransferirConteudo(dir, file, ext));
             }

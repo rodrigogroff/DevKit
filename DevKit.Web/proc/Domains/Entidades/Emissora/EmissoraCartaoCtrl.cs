@@ -22,6 +22,7 @@ namespace DevKit.Web.Controllers
                         dtUltExp,
                         cartao,
                         cartaoTitVia,
+                        fopa,
                         cpf, 
                         tit, 
                         via,
@@ -96,6 +97,7 @@ namespace DevKit.Web.Controllers
                 "Data Pedido",
                 "Data Expedição",
                 "Cartão",
+                "FOPA",
                 "CPF",
                 "Titularidade",
                 "Via",                
@@ -121,6 +123,7 @@ namespace DevKit.Web.Controllers
                         mdl.dtInicial,
                         mdl.dtUltExp,
                         mdl.cartao,
+                        mdl.fopa,
                         mdl.cpf,
                         mdl.tit,
                         mdl.via,
@@ -372,6 +375,7 @@ namespace DevKit.Web.Controllers
                             matricula = cartaoAtual.st_matricula,
                             dtInicial = cartaoAtual.dt_inclusao != null ? Convert.ToDateTime(cartaoAtual.dt_inclusao).ToString("dd/MM/yyyy") : "",
                             dtUltExp = dtPrimTtrans != null ? Convert.ToDateTime(dtPrimTtrans).ToString("dd/MM/yyyy") : "",
+                            fopa = cartaoAtual.stCodigoFOPA,
                             tit = cartaoAtual.st_titularidade,
                             limM = mon.setMoneyFormat((long)limM),
                             limAcc = cartaoAtual.vr_saldoConvenio > 0 ? mon.setMoneyFormat((long)cartaoAtual.vr_saldoConvenio) : "0,00",
@@ -393,6 +397,7 @@ namespace DevKit.Web.Controllers
                             cartaoTitVia = cartaoAtual.st_matricula + "." +
                                             cartaoAtual.st_titularidade + ":" +
                                             cartaoAtual.nu_viaCartao,
+                            fopa = cartaoAtual.stCodigoFOPA,
                             selecionado = false,
                         });
                     }

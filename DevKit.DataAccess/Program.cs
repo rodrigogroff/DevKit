@@ -19,6 +19,75 @@ namespace GetStarted
             // nunca tirar FDP
             Console.ReadLine();
 
+            using (var db = new AutorizadorCNDB())
+            {
+                using (var txt = new StreamReader("c:\\bkp\\1401-depara-cartao-fopag.txt"))
+                {
+                    txt.ReadLine();
+
+                    while (!txt.EndOfStream)
+                    {
+                        var line = txt.ReadLine().Split('\t');
+
+                        var t_cart = db.T_Cartao.FirstOrDefault(y => y.st_empresa == line[3].PadLeft(6, '0') && y.st_matricula == line[1].PadLeft(6, '0'));
+
+                        t_cart.stCodigoFOPA = line[0];
+
+                        db.Update(t_cart);
+                    }
+                }
+
+                using (var txt = new StreamReader("c:\\bkp\\1402-depara-cartao-fopag.txt"))
+                {
+                    txt.ReadLine();
+
+                    while (!txt.EndOfStream)
+                    {
+                        var line = txt.ReadLine().Split('\t');
+
+                        var t_cart = db.T_Cartao.FirstOrDefault(y => y.st_empresa == line[3].PadLeft(6, '0') && y.st_matricula == line[1].PadLeft(6, '0'));
+
+                        t_cart.stCodigoFOPA = line[0];
+
+                        db.Update(t_cart);
+                    }
+                }
+
+                using (var txt = new StreamReader("c:\\bkp\\1403-depara-cartao-fopag.txt"))
+                {
+                    txt.ReadLine();
+
+                    while (!txt.EndOfStream)
+                    {
+                        var line = txt.ReadLine().Split('\t');
+
+                        var t_cart = db.T_Cartao.FirstOrDefault(y => y.st_empresa == line[3].PadLeft(6, '0') && y.st_matricula == line[1].PadLeft(6, '0'));
+
+                        t_cart.stCodigoFOPA = line[0];
+
+                        db.Update(t_cart);
+                    }
+                }
+
+                using (var txt = new StreamReader("c:\\bkp\\1404-depara-cartao-fopag.txt"))
+                {
+                    txt.ReadLine();
+
+                    while (!txt.EndOfStream)
+                    {
+                        var line = txt.ReadLine().Split('\t');
+
+                        var t_cart = db.T_Cartao.FirstOrDefault(y => y.st_empresa == line[3].PadLeft(6, '0') && y.st_matricula == line[1].PadLeft(6, '0'));
+
+                        t_cart.stCodigoFOPA = line[0];
+
+                        db.Update(t_cart);
+                    }
+                }
+            }
+
+            Console.WriteLine("DONE!");
+
             //ReFecha("09", "2020", 38, 2020, 9, 15, false);
             //ForcaFech_9086("009086", new DateTime(2020, 9, 15, 0, 0, 0));
 

@@ -316,7 +316,8 @@ namespace DevKit.Web.Controllers
                                     ToList();
 
                 var lstCartoes = (from e in db.T_Cartao
-                                  where lstIdsCartoes.Contains((int)e.i_unique)
+                                  where e.st_titularidade == "01"
+                                  where e.st_empresa == tEmpresa.st_empresa
                                   select e).
                                    ToList();
                 
@@ -331,19 +332,74 @@ namespace DevKit.Web.Controllers
                 {
                     var hsh = new Hashtable();
 
+                    var tot_lancs_final = 0;
+                    var tot_fech_final = 0;
+
+                    //mostrar coluna com nome associado, cod fopag, cartao, vla lancamento, vlr fechamento
+
                     foreach (var item in lstCartoes)
                     {
-                        if (item.stCodigoFOPA != null)
-                            if (hsh[item.i_unique] == null)
-                            {
-                                var tot = lstFechamento.Where(y => y.fk_cartao == item.i_unique).Sum(y => y.vr_valor);
+                        if (hsh[item.i_unique] == null)
+                        {
+                            hsh[item.i_unique] = true;
 
-                                tot += lancsCC.Where(y => y.fkCartao == item.i_unique).Sum(y => (int)y.vrValor);
+                            var tot_fech = lstFechamento.Where(y => y.fk_cartao == item.i_unique).Sum(y => (int) y.vr_valor);
+                            var tot_lancs = lancsCC.Where(y => y.fkCartao == item.i_unique).Sum(y => (int)y.vrValor);
+
+                            if (tot_fech == 0 && tot_lancs == 0)
+                                continue;
+
+                            var t_prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == item.fk_dadosProprietario);
+
+                            if (t_prop == null)
+                                continue;
+
+                            tot_fech_final += tot_fech;
+                            tot_lancs_final += tot_lancs;
                             
-                                fs.WriteLine(item.stCodigoFOPA.PadLeft(5, '0') + " ".PadRight(8, ' ') + tot.ToString().PadLeft(8, '0'));
+                            var tot = tot_fech + tot_lancs;
 
-                                hsh[item.i_unique] = true;
-                            }
+                            var st = t_prop.st_nome.PadRight(50, ' ');
+
+                            if (!string.IsNullOrEmpty(item.stCodigoFOPA))
+                                st += item.stCodigoFOPA.PadLeft(5, '0');
+                            else
+                                st += "XXXXX";
+
+                            st += " " + item.st_matricula+ " ";
+
+                            st += tot_lancs.ToString().PadLeft(12,'0') + " ";
+                            st += tot_fech.ToString().PadLeft(12, '0') + " ";
+                                
+                            fs.WriteLine(st);                                                        
+                        }
+                    }
+
+                    fs.WriteLine("".PadRight(63, ' ') + tot_lancs_final.ToString().PadLeft(12,'0') + " " + tot_fech_final.ToString().PadLeft(12, '0'));
+
+                    hsh = new Hashtable();
+
+                    fs.WriteLine();
+
+                    foreach (var item in lstCartoes)
+                    {
+                        if (hsh[item.i_unique] == null)
+                        {
+                            hsh[item.i_unique] = true;
+
+                            var tot_fech = lstFechamento.Where(y => y.fk_cartao == item.i_unique).Sum(y => (int)y.vr_valor);
+                            var tot_lancs = lancsCC.Where(y => y.fkCartao == item.i_unique).Sum(y => (int)y.vrValor);
+
+                            if (tot_fech == 0 && tot_lancs == 0)
+                                continue;
+
+                            var tot = tot_fech + tot_lancs;
+
+                            if (item.stCodigoFOPA != null)
+                                fs.WriteLine(item.stCodigoFOPA.PadLeft(5, '0') + " ".PadRight(8, ' ') + tot.ToString().PadLeft(8, '0'));
+                            else
+                                fs.WriteLine("XXXXX" + " ".PadRight(8, ' ') + tot.ToString().PadLeft(8, '0'));
+                        }
                     }
                 }
 

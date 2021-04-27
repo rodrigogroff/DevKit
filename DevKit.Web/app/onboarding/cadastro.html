@@ -66,6 +66,10 @@
         }
 
         function ValorSemAcento(text) {
+
+            if (text == null || text == undefined)
+                return "";
+
             text = text.toLowerCase();
             text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
             text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');

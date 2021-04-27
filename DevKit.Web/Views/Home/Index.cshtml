@@ -73,8 +73,34 @@
             return v;
         }
 
-        function ValorSemAcento(v) {
-            return v.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase();
+        function ValorSemAcento(text) {
+
+            if (text == null || text == undefined)
+                return "";
+
+            text = text.toLowerCase();
+            text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
+            text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
+            text = text.replace(new RegExp('[ÍÌÎ]', 'gi'), 'i');
+            text = text.replace(new RegExp('[ÓÒÔÕ]', 'gi'), 'o');
+            text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u');
+            text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
+
+            
+            text = text.replace('!', ' ');
+            text = text.replace('.', ' ');
+            text = text.replace(';', ' ');
+            text = text.replace('/', ' ');
+            text = text.replace('$', ' ');
+            text = text.replace('%', ' ');
+            text = text.replace('¨', ' ');
+            text = text.replace('&', ' ');
+            text = text.replace('*', ' ');
+            text = text.replace('(', ' ');
+            text = text.replace(')', ' ');
+            text = text.replace('#', ' ');
+
+            return text.toUpperCase();
         }
 
         function Valor(v) {

@@ -67,6 +67,7 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('empDespesa', { url: '/emissora/manutDespesa/:id', templateUrl: 'app/emissora/despesa.html', controller: 'EmissoraDespesaController' })
             .state('empListagemDespesa', { url: '/emissora/listagemDespesa', templateUrl: 'app/emissora/listagemDespesa.html', controller: 'EmissoraListagemDespesaController' })
             .state('empDespesaRec', { url: '/emissora/manutDespesaRec/:id', templateUrl: 'app/emissora/despesaRec.html', controller: 'EmissoraDespesaRecController' })
+            .state('empEmitCartVirtual', { url: '/emissora/emitCartVirtual/:id', templateUrl: 'app/emissora/emitCartVirtual.html', controller: 'EmissoraEmitCartVirtualController' })
             .state('empListagemDespesaRec', { url: '/emissora/listagemDespesaRec', templateUrl: 'app/emissora/listagemDespesaRec.html', controller: 'EmissoraListagemDespesaRecController' })
             .state('empListagemLancCC', { url: '/emissora/listagemLancCC', templateUrl: 'app/emissora/listagemLancCC.html', controller: 'EmissoraListagemLancCCController' })
             .state('empListagemLoja', { url: '/emissora/listagemLoja', templateUrl: 'app/emissora/listagemLoja.html', controller: 'EmissoraListagemLojaController' })

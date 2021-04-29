@@ -63,7 +63,8 @@ namespace DevKit.Web.Controllers
                         situacao, expedicao,
                         via,
                         dispM, dispT,
-                        fkEmpresa,                      
+                        fkEmpresa,
+                        digitos,
                         stCodigoFOPA,
                         uf, cidade, cep, end, numero, bairro,
                         modo, valor, array;
@@ -512,9 +513,10 @@ namespace DevKit.Web.Controllers
 
             sd.Obter(db, cart, ref dispMens, ref dispTot);
 
+            var acesso = calculaCodigoAcesso(cart.st_empresa, cart.st_matricula, cart.st_titularidade, cart.nu_viaCartao.ToString(), prop.st_cpf);
+
             return Ok(new CartaoDTO
-            {
-                // dados proprietário
+            {                
                 nome = prop.st_nome,
                 cpf = prop.st_cpf,
                 tel = prop.st_telefone,
@@ -526,8 +528,7 @@ namespace DevKit.Web.Controllers
                 end = prop.st_endereco,
                 numero = prop.st_numero,
                 bairro = prop.st_bairro,
-                fkEmpresa = t_Emp.i_unique.ToString(),
-                // cartão
+                fkEmpresa = t_Emp.i_unique.ToString(),                
                 id = id.ToString(),
                 matricula = cart.st_matricula,
                 stCodigoFOPA = cart.stCodigoFOPA,
@@ -544,9 +545,10 @@ namespace DevKit.Web.Controllers
                 bancoCta = cart.st_conta,
                 situacao = cs.Convert(cart.tg_status),
                 expedicao = se.Convert(cart.tg_emitido),
-                via = cart.nu_viaCartao.ToString(),
+                via = cart.nu_viaCartao.ToString(),            
                 
-                // listas
+                digitos = cart.st_empresa + " "  + cart.st_matricula + " " + acesso + " " + cart.st_venctoCartao,
+                
                 lstDeps = lstDeps,
                 lstLotes = lstLotes
             });

@@ -278,6 +278,8 @@
     <Content Include="app\dba\parceiros\parceiro.js" />
     <Content Include="app\dba\parceiros\listingParceiros.html" />
     <Content Include="app\dba\parceiros\listingParceiros.js" />
+    <Content Include="app\emissora\EmissoraEmitCartVirtual.js" />
+    <Content Include="app\emissora\emitCartVirtual.html" />
     <Content Include="app\emissora\altDesbloqLote.html" />
     <Content Include="app\emissora\altBloqLote.html" />
     <Content Include="app\emissora\altCota.html" />

@@ -303,16 +303,6 @@ namespace DataModel
                         var_codResp = "0505";
                         return false;
                     }
-
-                Registry("(a10) cartPortador.tg_emitido " + (cartPortador.tg_emitido == null ? "NULO" : cartPortador.tg_emitido.ToString()));
-
-                if (cartPortador.tg_emitido == null)
-                    if (cartPortador.tg_emitido.ToString() == StatusExpedicao.Expedido)
-                    {
-                        output_st_msg = "Cartão inválido";
-                        var_codResp = "0505";
-                        return false;
-                    }
             }
 
             var_vr_total = input_cont_pe.vr_valor;

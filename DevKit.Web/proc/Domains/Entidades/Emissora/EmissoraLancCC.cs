@@ -332,10 +332,11 @@ namespace DevKit.Web.Controllers
                 {
                     var hsh = new Hashtable();
 
+                    //mostrar coluna com nome associado, cod fopag, cartao, vla lancamento, vlr fechamento
+                    /*
+                    
                     var tot_lancs_final = 0;
                     var tot_fech_final = 0;
-
-                    //mostrar coluna com nome associado, cod fopag, cartao, vla lancamento, vlr fechamento
 
                     foreach (var item in lstCartoes)
                     {
@@ -380,6 +381,7 @@ namespace DevKit.Web.Controllers
                     hsh = new Hashtable();
 
                     fs.WriteLine();
+                    */
 
                     foreach (var item in lstCartoes)
                     {

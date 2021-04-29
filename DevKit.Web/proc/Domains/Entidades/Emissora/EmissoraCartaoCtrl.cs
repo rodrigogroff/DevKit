@@ -867,6 +867,9 @@ namespace DevKit.Web.Controllers
                             if (userLoggedOperador)
                                 return BadRequest();
 
+                        if (cart.tg_emitido.ToString() != StatusExpedicao.Expedido)
+                            return BadRequest("Cartão precisa estar expedido para bloqueio");
+
                         cart.tg_status = Convert.ToChar(CartaoStatus.Bloqueado);
                         cart.dt_bloqueio = DateTime.Now;
 

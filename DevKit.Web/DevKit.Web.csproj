@@ -500,12 +500,16 @@
     <Content Include="images\iconeExpandir.gif" />
     <Content Include="images\iconeGrafico.png" />
     <Content Include="images\iconeTabela.png" />
+    <Content Include="images\image001.png" />
+    <Content Include="images\left.jpg" />
     <Content Include="images\list.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\icon-copy.png" />
     <Content Include="images\icon-paste.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\logoLetras.png" />
     <Content Include="images\lojas.jpg" />
+    <Content Include="images\openICS.png" />
     <Content Include="images\progressbar.gif" />
     <Content Include="images\user.png" />
     <Content Include="img\error.png" />

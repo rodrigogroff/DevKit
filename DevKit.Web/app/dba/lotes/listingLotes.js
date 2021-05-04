@@ -84,7 +84,7 @@ angular.module('app.controllers').controller('ListingLotesController',
             $scope.arquivo = function (mdl) {
                 window.location.href = "/api/LoteDBA/exportar?" + $.param({
                     idLote: mdl.i_unique
-                });
+                });                
             };
 
             $scope.ativar = function (mdl) {

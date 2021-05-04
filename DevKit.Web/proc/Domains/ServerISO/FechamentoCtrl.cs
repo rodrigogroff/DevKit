@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.ApplicationInsights;
+using App.Web;
 
 namespace DevKit.Web.Controllers
 {
@@ -271,104 +272,84 @@ namespace DevKit.Web.Controllers
                                         // ---------------------
                                         // exporta em arquivo no servidor
                                         // ---------------------
+                                        // daqui para baixo
 
-                                        var tituloArq = tEmp.st_empresa + "_" + novoLote.i_unique + "_PEDIDO_PRODUCAO.csv";
+                                        var abaString = "Exportar";
 
-                                        var myPath = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + tituloArq;
+                                        var tit = tEmp.st_empresa + "_" + novoLote.i_unique + "_PEDIDO_PRODUCAO.xlsx";
+                                        var tituloArq = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + tit;
 
-                                        lstAttach.Add(myPath);
+                                        var x = new ExportMultiSheetWrapper(tituloArq);
 
-                                        lstArquivos.Add("https://meuconvey.conveynet.com.br/img/" + tituloArq);
+                                        x.NovaAba_Header(abaString, (new List<string>
+                                        {
+                                            "Nome",
+                                            "Card1",
+                                            "Card2",
+                                            "Validade",
+                                            "Card3",
+                                            "Empresa",
+                                            "Matrícula",
+                                            "Nome2",
+                                            "Tarja magnética",
+                                        }).
+                                        ToArray());
 
-                                        if (File.Exists(myPath))
-                                            File.Delete(myPath);
+                                        lstAttach.Add(tituloArq);
+
+                                        lstArquivos.Add("https://meuconvey.conveynet.com.br/img/" + tit);
+
+                                        if (File.Exists(tituloArq))
+                                            File.Delete(tituloArq);
 
                                         try
                                         {
-                                            string total_file = "";
-
                                             var nome = "";
 
                                             foreach (var cart in cartList)
                                             {
-                                                var line = "";
-
                                                 var prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fkProp);
 
                                                 if (cart.titularidade == "01")
-                                                {
                                                     nome = prop.st_nome;
-                                                }
                                                 else
-                                                {
                                                     nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == cart.fkProp &&
                                                                                                 y.nu_titularidade == Convert.ToInt32(cart.titularidade)).st_nome;
-                                                }
 
-                                                /*
-                                                line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
-                                                line += cart.empresa + ",";
-                                                line += cart.matricula.ToString().PadLeft(6, '0') + ",";
-
-                                                line += cart.venc.Substring(0, 2) + "/" +
-                                                        cart.venc.Substring(2, 2) + ",";
-
-                                                line += calculaCodigoAcesso(cart.empresa,
-                                                                                cart.matricula,
-                                                                                cart.titularidade,
-                                                                                cart.via.ToString(),
-                                                                                cart.cpf) + ",";
-
-
-                                                line += nome + ",|";
-
-                                                line += "826766" + cart.empresa +
-                                                                        cart.matricula +
-                                                                        cart.titularidade +
-                                                                        cart.via.ToString() +
-                                                                "65" + cart.venc;
-
-                                                line += "|";
-                                                */
-
-                                                line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
-                                                line += cart.empresa + ";";
-                                                line += cart.matricula.ToString().PadLeft(6, '0') + ";";
-                                                line += cart.venc.Substring(0, 2) + "/" +
-                                                        cart.venc.Substring(2, 2) + ";";
-                                                line += calculaCodigoAcesso(cart.empresa,
-                                                                                cart.matricula,
-                                                                                cart.titularidade,
-                                                                                cart.via.ToString(),
-                                                                                cart.cpf) + ";";
-                                                line += cart.empresa + ";";
-                                                line += cart.matricula.ToString().PadLeft(6, '0') + ";";
-                                                line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
-                                                line += "826766" + cart.empresa +
-                                                                        cart.matricula +
-                                                                        cart.titularidade +
-                                                                        cart.via.ToString() +
-                                                                "65" + cart.venc + ";";
-
-                                                line += "\n";
 
                                                 var c_update = db.T_Cartao.FirstOrDefault(a => a.i_unique.ToString() == cart.id);
 
                                                 if (c_update.tg_emitido == Convert.ToInt32(StatusExpedicao.NaoExpedido))
                                                 {
                                                     c_update.tg_emitido = Convert.ToInt32(StatusExpedicao.EmExpedicao);
-
                                                     db.Update(c_update);
                                                 }
 
-                                                total_file += line;
+                                                x.AdicionarConteudo(abaString, (new List<string>
+                                                {
+                                                    nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' '),
+                                                    cart.empresa,
+                                                    cart.matricula,
+                                                    cart.venc.Substring(0, 2) + "/" + cart.venc.Substring(2, 2),
+                                                    calculaCodigoAcesso(cart.empresa,
+                                                                                    cart.matricula,
+                                                                                    cart.titularidade,
+                                                                                    cart.via.ToString(),
+                                                                                    prop.st_cpf),
+                                                    cart.empresa,
+                                                    cart.matricula,
+                                                    nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' '),
+                                                    "826766" + cart.empresa +
+                                                                                cart.matricula +
+                                                                                cart.titularidade +
+                                                                                cart.via.ToString() +
+                                                                        "65" + cart.venc
+                                                }).
+                                                ToArray());
                                             }
 
-                                            total_file = "Nome;Card1;Card2;Validade;Card 3;Empresa;Matrícula;Nome2;Tarja magnética\n" +
-                                                         total_file;
-
-                                            File.WriteAllText(myPath, total_file);
-
+                                            x.Save();
+                                            // daqui para cima
                                         }
                                         catch (Exception ex1)
                                         {

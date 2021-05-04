@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Net;
 using System.IO;
 using System.Text;
+using App.Web;
+using System.Net.Http;
 
 namespace DevKit.Web.Controllers
 {
@@ -15,12 +17,9 @@ namespace DevKit.Web.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("api/LoteDBA/exportar", Name = "ExportarLoteDBA")]
-        public IHttpActionResult Exportar(int idLote)
+        public HttpResponseMessage Exp(int idLote)
         {
-            if (!StartDatabaseAndAuthorize())
-                return BadRequest();
-
-            string dir = "c:\\fechamento_dbf", file = "lote" + idLote, ext = "csv";
+            StartDatabase();
 
             var t_lote = db.T_LoteCartao.FirstOrDefault(y => y.i_unique == idLote);
 
@@ -31,113 +30,192 @@ namespace DevKit.Web.Controllers
 
             db.Update(t_lote);
 
-            string FileName = dir + "\\" + file + "." + ext;
+            var abaString = "Exportar";
 
-            if (File.Exists(FileName))
-                File.Delete(FileName);
+            var x = new ExportMultiSheetWrapper("lote"+ idLote + ".xlsx");
 
-            using (var ts = new StreamWriter(dir + "\\" + file + "." + ext, false, Encoding.Default))
+            x.NovaAba_Header(abaString, (new List<string>
             {
-                var lstDetCartoes = db.T_LoteCartaoDetalhe.Where(y => y.fk_lote == idLote).ToList();
+                "Nome",
+                "Card1",
+                "Card2",
+                "Validade",
+                "Card3",
+                "Empresa",
+                "Matrícula",
+                "Nome2",
+                "Tarja magnética",
+            }).
+            ToArray());
 
-                var lstIdsEmps = lstDetCartoes.Select(y => y.fk_empresa).Distinct().ToList();
-                var lstIdsCartoes = lstDetCartoes.Select(y => y.fk_cartao).Distinct().ToList();
+            var lstDetCartoes = db.T_LoteCartaoDetalhe.Where(y => y.fk_lote == idLote).ToList();
+
+            var lstIdsEmps = lstDetCartoes.Select(y => y.fk_empresa).Distinct().ToList();
+            var lstIdsCartoes = lstDetCartoes.Select(y => y.fk_cartao).Distinct().ToList();
+
+            var lstEmp = db.T_Empresa.Where(y => lstIdsEmps.Contains((int)y.i_unique));
+            var lstCartoes = db.T_Cartao.Where(y => lstIdsCartoes.Contains((int)y.i_unique));
+
+            foreach (var item in lstDetCartoes.OrderBy(y => y.fk_empresa).ToList())
+            {
+                var emp = lstEmp.FirstOrDefault(y => y.i_unique == item.fk_empresa);
+
+                var cart = lstCartoes.FirstOrDefault(y => y.i_unique == item.fk_cartao);
+                var venctoCartao = cart.st_venctoCartao.PadLeft(4, '0');
+
+                var nome = "";
+
+                T_Proprietario prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
+
+                if (cart.st_titularidade == "01")
+                    nome = prop.st_nome;
+                else
+                    nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == cart.fk_dadosProprietario &&
+                                                               y.nu_titularidade == Convert.ToInt32(cart.st_titularidade)).st_nome;
                 
-                var lstEmp = db.T_Empresa.Where(y => lstIdsEmps.Contains((int)y.i_unique));
-                var lstCartoes = db.T_Cartao.Where(y => lstIdsCartoes.Contains((int)y.i_unique));
-
-                var oldEmp = "";
-
-                ts.WriteLine("Nome;Card1;Card2;Validade;Card 3;Empresa;Matrícula;Nome2;Tarja magnética");
-
-                foreach (var item in lstDetCartoes.OrderBy ( y=> y.fk_empresa).ToList())
+                x.AdicionarConteudo(abaString, (new List<string>
                 {
-                    var line = "";
-
-                    var emp = lstEmp.FirstOrDefault(y => y.i_unique == item.fk_empresa);
-
-                    if (oldEmp == "")
-                    {
-                        oldEmp = emp.st_empresa;
-                    }                        
-                    else if (oldEmp != emp.st_empresa)
-                    {
-                        ts.WriteLine("");
-                        ts.WriteLine("");
-                    }
-
-                    var cart = lstCartoes.FirstOrDefault(y => y.i_unique == item.fk_cartao);
-                    var venctoCartao = cart.st_venctoCartao.PadLeft(4, '0');
-
-                    var nome = "";
-
-                    T_Proprietario prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fk_dadosProprietario);
-
-                    if (cart.st_titularidade == "01")
-                    {
-                        nome = prop.st_nome;
-                    }
-                    else
-                    {
-                        nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == cart.fk_dadosProprietario &&
-                                                                   y.nu_titularidade == Convert.ToInt32(cart.st_titularidade)).st_nome;
-                    }
-
-                    /*
-                    line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ",";
-                    line += emp.st_empresa + ",";
-                    line += item.nu_matricula.ToString().PadLeft(6, '0') + ",";
-
-                    line += venctoCartao.Substring(0, 2) + "/" +
-                            venctoCartao.Substring(2, 2) + ",";
-
-                    line += calculaCodigoAcesso (   cart.st_empresa,
-                                                    cart.st_matricula,
-                                                    cart.st_titularidade,
-                                                    item.nu_via_original.ToString(),
-                                                    item.nu_cpf ) + ",";
-
-                    line += nome + ",|";
-
-                    line += "826766" + cart.st_empresa +
-                                            cart.st_matricula +
-                                            cart.st_titularidade +
-                                            item.nu_via_original.ToString() +
-                                 "65" + cart.st_venctoCartao;
-
-                    line += "|";
-                    */
-
-                    line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
-                    line += cart.st_empresa + ";";
-                    line += cart.st_matricula.ToString().PadLeft(6, '0') + ";";
-                    line += cart.st_venctoCartao.Substring(0, 2) + "/" +
-                            cart.st_venctoCartao.Substring(2, 2) + ";";
-                    line += calculaCodigoAcesso(cart.st_empresa,
+                    nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' '),
+                    cart.st_empresa,
+                    cart.st_matricula,
+                    cart.st_venctoCartao.Substring(0, 2) + "/" + cart.st_venctoCartao.Substring(2, 2),
+                    calculaCodigoAcesso(cart.st_empresa,
                                                     cart.st_matricula,
                                                     cart.st_titularidade,
                                                     cart.nu_viaCartao.ToString(),
-                                                    prop.st_cpf) + ";";
-                    line += cart.st_empresa + ";";
-                    line += cart.st_matricula.ToString().PadLeft(6, '0') + ";";
-                    line += nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' ') + ";";
-                    line += "826766" + cart.st_empresa +
-                                            cart.st_matricula +
-                                            cart.st_titularidade +
-                                            cart.nu_viaCartao.ToString() +
-                                    "65" + cart.st_venctoCartao + ";";
-
-                    ts.WriteLine(line);
-
-                    if (cart.tg_emitido == Convert.ToInt32(StatusExpedicao.NaoExpedido))
-                    {
-                        cart.tg_emitido = Convert.ToInt32(StatusExpedicao.EmExpedicao);
-                        db.Update(cart);
-                    }                    
-                }                
+                                                    prop.st_cpf),
+                    cart.st_empresa,
+                    cart.st_matricula,
+                    nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' '),
+                    "826766" + cart.st_empresa +
+                                                cart.st_matricula +
+                                                cart.st_titularidade +
+                                                cart.nu_viaCartao.ToString() +
+                                        "65" + cart.st_venctoCartao
+                }).
+                ToArray());
             }
 
-            return ResponseMessage(TransferirConteudo(dir, file, ext));
+            return x.GeraXLS();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/LoteDBA/exportarEmail", Name = "ExportarLoteDBAEmail")]
+        public HttpResponseMessage exportarEmail(int idLote)
+        {
+            StartDatabase();
+
+            var novoLote = db.T_LoteCartao.FirstOrDefault(y => y.i_unique == idLote);
+            var tEmp = db.T_Empresa.FirstOrDefault(y => y.i_unique == novoLote.fk_empresa);
+            List<string> lstAttach = new List<string>();
+            List<string> lstArquivos = new List<string>();
+
+            var cartList = (from e in db.T_Cartao
+                           join d in db.T_Proprietario on e.fk_dadosProprietario equals (int)d.i_unique
+                           where e.st_empresa == "000002"
+                           select new
+                           {
+                               id = e.i_unique.ToString(),
+                               empresa = e.st_empresa,
+                               matricula = e.st_matricula,
+                               associado = d.st_nome,
+                               cpf = d.st_cpf,
+                               titularidade = e.st_titularidade,
+                               via = e.nu_viaCartao,
+                               venc = e.st_venctoCartao,
+                               fkProp = e.fk_dadosProprietario
+                           }).
+                           ToList();
+
+            // ----------------------------------
+            // daqui para baixo
+            // ----------------------------------
+
+            var abaString = "Exportar";
+
+            var tit = tEmp.st_empresa + "_" + novoLote.i_unique + "_PEDIDO_PRODUCAO.xlsx";
+            var tituloArq = System.Web.Hosting.HostingEnvironment.MapPath("/") + "img\\" + tit;
+
+            var x = new ExportMultiSheetWrapper(tituloArq);
+
+            x.NovaAba_Header(abaString, (new List<string>
+                                        {
+                                            "Nome",
+                                            "Card1",
+                                            "Card2",
+                                            "Validade",
+                                            "Card3",
+                                            "Empresa",
+                                            "Matrícula",
+                                            "Nome2",
+                                            "Tarja magnética",
+                                        }).
+            ToArray());
+
+            lstAttach.Add(tituloArq);
+
+            lstArquivos.Add("https://meuconvey.conveynet.com.br/img/" + tit);
+
+            if (File.Exists(tituloArq))
+                File.Delete(tituloArq);
+
+            try
+            {
+                var nome = "";
+
+                foreach (var cart in cartList)
+                {
+                    var prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == cart.fkProp);
+
+                    if (cart.titularidade == "01")
+                        nome = prop.st_nome;
+                    else
+                        nome = db.T_Dependente.FirstOrDefault(y => y.fk_proprietario == cart.fkProp &&
+                                                                    y.nu_titularidade == Convert.ToInt32(cart.titularidade)).st_nome;
+
+
+                    var c_update = db.T_Cartao.FirstOrDefault(a => a.i_unique.ToString() == cart.id);
+
+                    if (c_update.tg_emitido == Convert.ToInt32(StatusExpedicao.NaoExpedido))
+                    {
+                        c_update.tg_emitido = Convert.ToInt32(StatusExpedicao.EmExpedicao);
+                        db.Update(c_update);
+                    }
+
+                    x.AdicionarConteudo(abaString, (new List<string>
+                                                {
+                                                    nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' '),
+                                                    cart.empresa,
+                                                    cart.matricula,
+                                                    cart.venc.Substring(0, 2) + "/" + cart.venc.Substring(2, 2),
+                                                    calculaCodigoAcesso(cart.empresa,
+                                                                                    cart.matricula,
+                                                                                    cart.titularidade,
+                                                                                    cart.via.ToString(),
+                                                                                    prop.st_cpf),
+                                                    cart.empresa,
+                                                    cart.matricula,
+                                                    nome.PadRight(30, ' ').Substring(0, 30).TrimEnd(' '),
+                                                    "826766" + cart.empresa +
+                                                                                cart.matricula +
+                                                                                cart.titularidade +
+                                                                                cart.via.ToString() +
+                                                                        "65" + cart.venc
+                                                }).
+                    ToArray());
+                }
+                
+                x.Save();
+
+                return x.GeraXLS();
+            }
+            catch (Exception ex1)
+            {
+
+
+                return x.GeraXLS();
+            }            
         }
 
         // calculo codigo de acesso para cartoes convenio

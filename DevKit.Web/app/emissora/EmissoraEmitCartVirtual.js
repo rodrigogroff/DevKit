@@ -62,6 +62,31 @@ angular.module('app.controllers').controller('EmissoraEmitCartVirtualController'
             };
 
             $scope.imprimir = function () {
+
+                var printContents = '';
+
+                printContents = "<table width='900px' height='900px' background='/images/image001.png'><tr><td valign='top'><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><p style='font-size:40px;color:white;padding-left:240px'>" + $scope.campos.digitos + "</p><br><br><br><br><br><br><br><br><br>";
+
+                printContents += "<h2 style='padding-left:240px'>" + $scope.campos.nomeCartao  + "</h2> </td></td></table>";
+
+                var popupWin = window.open('', '_blank', 'width=800,height=600');
+                popupWin.document.open();
+                popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
+                popupWin.document.close();
+            }
+
+            $scope.imprimirTexto = function () {
+
+                var printContents = '';
+
+                printContents = "<table width='900px' height='900px' background='/images/image001.png'><tr><td valign='top'><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><p style='font-size:40px;color:white;padding-left:240px'>" + $scope.campos.digitos + "</p><br><br><br><br><br><br><br><br><br>";
+
+                printContents += "<h2 style='padding-left:240px'>" + $scope.campos.nomeCartao + "</h2> </td></td></table>";
+
+                var popupWin = window.open('', '_blank', 'width=800,height=600');
+                popupWin.document.open();
+                popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
+                popupWin.document.close();
             }
 
         }]);

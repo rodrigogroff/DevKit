@@ -39,6 +39,37 @@ namespace App.Web
             (_tblContents[name] as List<string[]>).Add(contents);
         }
 
+        public void Save()
+        {
+            using (var stream = new MemoryStream())
+            {
+                spreadsheet = Excel.CreateWorkbook(stream);
+                Excel.AddBasicStyles(spreadsheet);
+
+                int index = 0;
+
+                foreach (var aba in _lstSheets)
+                {
+                    Excel.AddWorksheet(spreadsheet, aba);
+
+                    worksheet = spreadsheet.WorkbookPart.WorksheetParts.ElementAt(index).Worksheet;
+                    sheetData = worksheet.GetFirstChild<SheetData>();
+                    lstCol = new List<Column>();
+                    linha = 1;
+
+                    CreateLine(_tblHeaders[aba] as string[]);
+                    foreach (var c in _tblContents[aba] as List<string[]>) CreateLine(c);
+
+                    worksheet.Save();
+                    index++;
+                }
+
+                spreadsheet.Close();
+
+                File.WriteAllBytes(_fileName, stream.ToArray());
+            }
+        }
+
         public HttpResponseMessage GeraXLS()
         {
             using (var stream = new MemoryStream())

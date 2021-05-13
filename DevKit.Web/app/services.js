@@ -47,6 +47,7 @@ angular.module('app.services', ['ngResource'])
         Loja: $resource('api/loja/:id', {}, opcoes),
         Parceiro: $resource('api/parceiro/:id', {}, opcoes),
         TipoUsuario: $resource('api/TipoUsuario/:id', {}, opcoes),
+        EmissoraRelLancCC: $resource('api/EmissoraRelLancCC/:id', {}, opcoes),
         UsuarioParceiroDBA: $resource('api/usuarioparceiroDBA/:id', {}, opcoes),
         ParceiroDBA: $resource('api/parceiroDBA/:id', {}, opcoes),
         LoteCartao: $resource('api/LoteCartao/:id', {}, opcoes),

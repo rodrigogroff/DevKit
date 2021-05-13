@@ -76,6 +76,30 @@ angular.module('app.controllers').controller('EmissoraAltBloqueioController',
                     });
             };
 
+            $scope.cancelar = function () {
+                $scope.loading = true;
+
+                var opcoes = {
+                    id: $scope.campos.id,
+                    modo: 'altBloqCanc',
+                };
+
+                $scope.modal = false;
+
+                Api.EmissoraCartao.update({ id: $scope.campos.id }, opcoes, function (data) {
+                    $scope.campos.mat = '';
+                    $scope.campos.nomeCartao = '';
+                    $scope.campos.situacao = '';
+                    $scope.campos.id = 0;
+                    $scope.modal = true;
+                    $scope.loading = false;
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Erro');
+                        $scope.loading = false;
+                    });
+            };
+
             $scope.fecharModal = function () {
                 $scope.modal = false;
             };

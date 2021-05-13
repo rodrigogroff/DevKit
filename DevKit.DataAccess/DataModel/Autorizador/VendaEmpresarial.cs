@@ -297,7 +297,7 @@ namespace DataModel
                 Registry("(a9) cartPortador.tg_status " + (cartPortador.tg_status == null ? "NULO" : cartPortador.tg_status.ToString()));
 
                 if (cartPortador.tg_status != null)
-                    if (cartPortador.tg_status.ToString() == CartaoStatus.Bloqueado)
+                    if (cartPortador.tg_status.ToString() != CartaoStatus.Habilitado)
                     {
                         output_st_msg = "Cartão inválido";
                         var_codResp = "0505";

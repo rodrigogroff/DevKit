@@ -10,7 +10,7 @@
                 <tr height="12px"></tr>
             </table>
         </legend>
-        <div class="divWebForm" ng-if="id == undefined">            
+        <div class="divWebForm" ng-if="id == undefined">
             <table>
                 <tr height="53px">
                     <td width="130px">
@@ -30,9 +30,10 @@
                         <button class="btn btn-primary" ng-click="buscar()">Buscar</button>
                     </td>
                 </tr>
-                <tr ng-if="campos.id > 0" height="43px"> 
+                <tr ng-if="campos.id > 0" height="43px">
                     <td>
-                        <b>Associado</b></td>
+                        <b>Associado</b>
+                    </td>
                     <td></td>
                     <td>
                         <b>{{campos.nomeCartao}}</b>
@@ -50,11 +51,12 @@
                     </td>
                     <td></td>
                     <td></td>
-                </tr>                
+                </tr>
             </table>
             <br />
             <br />
             <button ng-if="campos.situacao == 'Habilitado'" class="btn btn-primary" ng-click="confirmar()">Confirmar bloqueio</button>
+            <button ng-if="campos.situacao == 'Bloqueado'" class="btn btn-danger" ng-click="cancelar()">Cancelar Cartão</button>
             <br />
             <br />
             <br />

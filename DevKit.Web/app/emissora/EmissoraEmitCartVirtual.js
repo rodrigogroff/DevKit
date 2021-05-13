@@ -65,23 +65,37 @@ angular.module('app.controllers').controller('EmissoraEmitCartVirtualController'
 
                 var printContents = '';
 
-                printContents = "<table width='900px' height='900px' background='/images/image001.png'><tr><td valign='top'><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><p style='font-size:40px;color:white;padding-left:240px'>" + $scope.campos.digitos + "</p><br><br><br><br><br><br><br><br><br>";
+                var ca = $scope.campos.digitos.split(' ');
 
-                printContents += "<h2 style='padding-left:240px'>" + $scope.campos.nomeCartao  + "</h2> </td></td></table>";
+                console.log(ca);
 
-                var popupWin = window.open('', '_blank', 'width=800,height=600');
-                popupWin.document.open();
-                popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
-                popupWin.document.close();
-            }
+                printContents = "<style> table, th, td { border: 1px solid black; border-collapse: collapse; } th, td { padding: 5px; text-align: left; } </style>" + 
 
-            $scope.imprimirTexto = function () {
+"<div align='center'><br><img src='/images/convey2020.png' style='height:50px' /><p align='center'>-------------------------------------------------------------------<br><h3>CARTÃO VIRTUAL</h3></p>" +
 
-                var printContents = '';
+"<p align='center'>CONVEY BENEFÍCIOS</p>"+
+"<p align='center'>Prezado Associado:</p>"+
+"<table align='center'><tr><td width='100px'>TITULAR</td><td width='300px'><b>" + $scope.campos.nomeCartao + "</b></td></tr></table>"+ 
+"<br>"+ 
 
-                printContents = "<table width='900px' height='900px' background='/images/image001.png'><tr><td valign='top'><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><p style='font-size:40px;color:white;padding-left:240px'>" + $scope.campos.digitos + "</p><br><br><br><br><br><br><br><br><br>";
+"<p style='width:450px'>É um prazer tê-lo conosco, você está recebendo o cartão virtual <b>CONVEY Benefícios</b>, assim, que você cadastrar seu acesso seguro/senha, na sua entidade, já poderá utilizar para suas compras no modo DIGITADO.</p>"+
+"<p align='center'>Este cartão estará disponível também, através do <b>APP MEU CONVEY</b> ou através do código abaixo, </p>"+
+"<p align='center'>CONVEY VIRTUAL</p>"+
 
-                printContents += "<h2 style='padding-left:240px'>" + $scope.campos.nomeCartao + "</h2> </td></td></table>";
+"<table align='center' width='400px'>"+
+"<tr>" + 
+"<td width='100px'><div align='center'><h1>" + ca[0] + "</h1></div></td>"+
+                    "<td width='100px'><div align='center'><h1>" + ca[1] + "</h1></div></td>"+
+                    "<td width='100px'><div align='center'><h1>" + ca[2] + "</h1></div></td>"+
+                    "<td width='100px'><div align='center'><h1>" + ca[3] + "</h1></div></td>"+
+"</tr>"+
+"</table>"+
+
+"<p align='center'>*Utilize sempre no modo DIGITADO.<br><br><b>SUA ENTIDADE SEMPRE JUNTO COM VOCÊ!</b></p><br>"+
+
+"<table align='center' width='400px'><tr><td width='200px'><img src='/images/barra_1x.png' style='height:90px' /></td>"+
+"<td width='200px'><img src='/images/conveyvirtual.png' style='height:90px' /></td></tr><tr><td>LOJISTA<br>CAPTURE A IMAGEM<br>CELULAR</td><td></td></table>" +
+"</div>"
 
                 var popupWin = window.open('', '_blank', 'width=800,height=600');
                 popupWin.document.open();

@@ -140,6 +140,75 @@ angular.module('app.controllers').controller('EmissoraListagemLancCCController',
                 }, function (response) { toastr.error(response.data.message, 'Erro'); });
             }
 
+            $scope.relatorio = function () {
+
+                $scope.loading = true;
+
+                var opcoes = {
+                    mes: $scope.campos.mes_inicial,
+                    ano: $scope.campos.ano_inicial
+                };
+
+                Api.EmissoraRelLancCC.listPage(opcoes, function (data)
+                {                    
+                    $scope.loading = false;
+
+                    var printContents = '';
+
+                    var mes = $scope.campos.mes_inicial;
+                    var ano = $scope.campos.ano_inicial;
+
+                    var emissao = data.emissao;
+                    var dtEnvio = data.envio;
+                    var totRegistros = data.totRegistros;
+                    var totalRemessa = data.totalRemessa;
+                    var lancs = data.lancs;
+
+                    printContents = "<style> table, th, td { border: 1px solid black; border-collapse: collapse; } th, td { padding: 5px; text-align: left; } </style>" +
+                        "<div align='center'><img src='/images/convey2020.png' style='height:50px' /><p align='center'><h3>RELATÓRIO DE REMESSA FOLHA DE PAGAMENTO</h3></p>" +
+                        "<p align='center'>FILTRO: MÊS " + mes + " ANO " + ano + "<br>EMISSÃO: " + emissao + "<br>DT. ENVIO: " + dtEnvio + "<br>TOTAL REGISTROS: <b>" + totRegistros + "</b> TOTAL REMESSA: <b>R$ " + totalRemessa + "</b></p>";
+
+                    if (lancs.length > 0) {
+                        printContents += "<table align='center' width='100%'>";
+                        printContents +=
+                            "<tr>" +
+                            "<td ><div align='center'><b>ID</b></div></td>" +
+                            "<td ><div align='center'><b>CARTÃO</b></div></td>" +
+                            "<td ><div align='center'><b>CD. FOLHA</b></div></td>" +
+                            "<td ><div align='center'><b>ASSOCIADO</b></div></td>" +
+                            "<td ><div align='center'><b>VALOR CARTAO</b></div></td>" +
+                            "<td ><div align='center'><b>VALOR LANC.</b></div></td>" +
+                            "<td ><div align='center'><b>TOTAL</b></div></td>" +
+                            "</tr>";
+
+                        for (var i = 0; i < lancs.length; i++) {
+                            var lanc = lancs[i];
+                            printContents +=
+                                "<tr>" +
+                                "<td ><div align='center'>" + (i + 1).toString() + "</div></td>" +
+                                "<td ><div align='center'>" + lanc.cartao + "</div></td>" +
+                                "<td ><div align='center'>" + lanc.folha + "</div></td>" +
+                                "<td ><div align='center'>" + lanc.associado + "</div></td>" +
+                                "<td ><div align='center'>" + lanc.valor + "</div></td>" +
+                                "<td ><div align='center'>" + lanc.valorLanc + "</div></td>" +
+                                "<td ><div align='center'>" + lanc.total + "</div></td>" +
+                                "</tr>";
+                        }
+
+                        printContents += "</table>";
+                    }
+
+                    var popupWin = window.open('', '_blank', 'width=800,height=600');
+                    popupWin.document.open();
+                    popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
+                    popupWin.document.close();
+                },
+                    function (response) {
+                        toastr.error('Parâmetros inválidos!', 'Erro');
+                        $scope.loading = false;                        
+                    });
+            }
+
             $scope.exportar = function () {
                 
                 var t_emp = '';

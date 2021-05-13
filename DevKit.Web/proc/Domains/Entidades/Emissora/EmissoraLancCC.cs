@@ -332,56 +332,7 @@ namespace DevKit.Web.Controllers
                 {
                     var hsh = new Hashtable();
 
-                    //mostrar coluna com nome associado, cod fopag, cartao, vla lancamento, vlr fechamento
-                    /*
-                    
-                    var tot_lancs_final = 0;
-                    var tot_fech_final = 0;
-
-                    foreach (var item in lstCartoes)
-                    {
-                        if (hsh[item.i_unique] == null)
-                        {
-                            hsh[item.i_unique] = true;
-
-                            var tot_fech = lstFechamento.Where(y => y.fk_cartao == item.i_unique).Sum(y => (int) y.vr_valor);
-                            var tot_lancs = lancsCC.Where(y => y.fkCartao == item.i_unique).Sum(y => (int)y.vrValor);
-
-                            if (tot_fech == 0 && tot_lancs == 0)
-                                continue;
-
-                            var t_prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == item.fk_dadosProprietario);
-
-                            if (t_prop == null)
-                                continue;
-
-                            tot_fech_final += tot_fech;
-                            tot_lancs_final += tot_lancs;
-                            
-                            var tot = tot_fech + tot_lancs;
-
-                            var st = t_prop.st_nome.PadRight(50, ' ');
-
-                            if (!string.IsNullOrEmpty(item.stCodigoFOPA))
-                                st += item.stCodigoFOPA.PadLeft(5, '0');
-                            else
-                                st += "XXXXX";
-
-                            st += " " + item.st_matricula+ " ";
-
-                            st += tot_lancs.ToString().PadLeft(12,'0') + " ";
-                            st += tot_fech.ToString().PadLeft(12, '0') + " ";
-                                
-                            fs.WriteLine(st);                                                        
-                        }
-                    }
-
-                    fs.WriteLine("".PadRight(63, ' ') + tot_lancs_final.ToString().PadLeft(12,'0') + " " + tot_fech_final.ToString().PadLeft(12, '0'));
-
-                    hsh = new Hashtable();
-
-                    fs.WriteLine();
-                    */
+                    long vrTotal = 0;
 
                     foreach (var item in lstCartoes)
                     {
@@ -397,11 +348,35 @@ namespace DevKit.Web.Controllers
 
                             var tot = tot_fech + tot_lancs;
 
+                            vrTotal += tot;
+
                             if (item.stCodigoFOPA != null)
                                 fs.WriteLine(item.stCodigoFOPA.PadLeft(5, '0') + " ".PadRight(8, ' ') + tot.ToString().PadLeft(8, '0'));
                             else
                                 fs.WriteLine("XXXXX" + " ".PadRight(8, ' ') + tot.ToString().PadLeft(8, '0'));
                         }
+                    }
+
+                    var t_emissao = db.LancamentosCCEmissao.FirstOrDefault(y => y.fkEmpresa == tEmpresa.i_unique && y.nuAno.ToString() == ano && y.nuMes.ToString() == mes);
+
+                    if (t_emissao == null)
+                    {
+                        t_emissao = new LancamentosCCEmissao
+                        {
+                            dtLanc = DateTime.Now,
+                            fkEmpresa = (int)tEmpresa.i_unique,
+                            nuAno = Convert.ToInt32(ano),
+                            nuMes = Convert.ToInt32(mes),
+                            vrTotalValor = vrTotal,
+                        };
+
+                        db.Insert(t_emissao);
+                    }
+                    else
+                    {
+                        t_emissao.dtLanc = DateTime.Now;
+
+                        db.Update(t_emissao);
                     }
                 }
 

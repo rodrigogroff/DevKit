@@ -621,6 +621,7 @@ namespace DevKit.Web.Controllers
                     on e.fk_dadosProprietario equals (int) p.i_unique
                   where e.st_empresa == st_empresa
                   where p.st_cpf == mdl.cpf
+                  where e.tg_status.ToString() != CartaoStatus.Cancelado
                   select e).Any() )
             {
                 return BadRequest("CPF já cadastrado nesta empresa!");
@@ -635,16 +636,25 @@ namespace DevKit.Web.Controllers
             }
 
             if (db.currentEmpresa.bContaCorrenteAssociado == true)
-            {
                 if (string.IsNullOrEmpty(mdl.stCodigoFOPA))
-                {
                     return BadRequest("Informe o codigo FOPA do cartão");
-                }
-            }
 
             CopiaDadosProprietario(mdl, ref prop);
-            
-            var id_prop = Convert.ToInt32(db.InsertWithIdentity(prop));
+
+            var id_prop = 0;
+
+            if (db.T_Proprietario.Any(y => y.st_cpf == prop.st_cpf))
+            {
+                var uProp = db.T_Proprietario.FirstOrDefault(y => y.st_cpf == prop.st_cpf);
+
+                CopiaDadosProprietario(mdl, ref uProp);
+
+                db.Update(uProp);
+
+                id_prop = (int) uProp.i_unique;
+            }
+            else
+                id_prop = Convert.ToInt32(db.InsertWithIdentity(prop));
             
             CopiaDadosCartao(mdl, ref cart, id_prop, st_empresa);
 
@@ -884,6 +894,32 @@ namespace DevKit.Web.Controllers
                             st_empresa = userLoggedEmpresa,
                             st_oper = "Cartão / Bloqueio ",
                             st_log = "Mat: " + cart.st_matricula 
+                        });
+
+                        return Ok();
+                    }
+
+                case "altBloqCanc":
+                    {
+                        if (userLoggedType == "4")
+                            if (userLoggedOperador)
+                                return BadRequest();
+
+                        if (cart.tg_emitido.ToString() != StatusExpedicao.Expedido)
+                            return BadRequest("Cartão precisa estar expedido para bloqueio");
+
+                        cart.tg_status = Convert.ToChar(CartaoStatus.Cancelado);
+                        cart.dt_bloqueio = DateTime.Now;
+
+                        db.Update(cart);
+
+                        db.Insert(new LOG_Audit
+                        {
+                            dt_operacao = DateTime.Now,
+                            fk_usuario = userIdLoggedUsuario,
+                            st_empresa = userLoggedEmpresa,
+                            st_oper = "Cartão / Cancelado ",
+                            st_log = "Mat: " + cart.st_matricula
                         });
 
                         return Ok();

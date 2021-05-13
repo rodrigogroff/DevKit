@@ -47,7 +47,7 @@ namespace DataModel
     {
         public const string Habilitado = "0",
                             Bloqueado = "1",
-                            EmDesativacao = "2";
+                            Cancelado = "2";
 
         public string Convert(char? vlr)
         {
@@ -60,7 +60,7 @@ namespace DataModel
             {
                 case Habilitado: sit = "Habilitado"; break;
                 case Bloqueado: sit = "Bloqueado"; break;
-                case EmDesativacao: sit = "Em desativacao"; break;
+                case Cancelado: sit = "Cancelado"; break;                
             }
 
             return sit;

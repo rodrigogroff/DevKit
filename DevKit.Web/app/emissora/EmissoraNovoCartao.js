@@ -124,6 +124,7 @@ angular.module('app.controllers').controller('EmissoraNovoCartaoController',
                     skip: 0,
                     take: 1,
                     matricula: $scope.viewModel.matricula,
+                    bloqueado: false,
                 };
 
                 Api.RelAssociados.listPage(opcoes, function (data) {

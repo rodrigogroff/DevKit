@@ -59,6 +59,9 @@ namespace DevKit.Web.Controllers
                 int vlrFech = lstFechamento.Where(y => y.fk_cartao == item).Sum(y => (int) y.vr_valor);
                 int vlrLanc = lstLancs.Where(y => y.fkCartao == item).Sum(y => (int)y.vrValor);
 
+                if (vlrFech == 0 && vlrLanc == 0)
+                    continue;
+
                 vlrRemessa += vlrFech + vlrLanc;
 
                 lancs.Add(new DtoRelLancItem

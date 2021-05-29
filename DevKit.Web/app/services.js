@@ -103,5 +103,9 @@ angular.module('app.services', ['ngResource'])
         ExpedicoesCombo: $resource('api/expedicoes/:id', {}, opcoes),
         ConveniosCombo: $resource('api/convenios/:id', {}, opcoes),
         EnvioEmail: $resource('api/envioemail/:id', {}, opcoes),
+        EmissoraLancCCExtratoUsuario: $resource('api/EmissoraLancCCExtratoUsuario/:id', {}, opcoes),
+        EmissoraLancCCExtratoReceber: $resource('api/EmissoraLancCCExtratoReceber/:id', {}, opcoes),
+        EmissoraLancCCExtratoPagar: $resource('api/EmissoraLancCCExtratoPagar/:id', {}, opcoes),
+        EmissoraLancCCExtratoLojista: $resource('api/EmissoraLancCCExtratoLojista/:id', {}, opcoes),
 	};
 }]);

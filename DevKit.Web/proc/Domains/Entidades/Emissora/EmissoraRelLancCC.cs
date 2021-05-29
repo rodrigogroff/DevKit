@@ -75,6 +75,8 @@ namespace DevKit.Web.Controllers
                 });
             }
 
+            lancs = lancs.OrderBy(y => y.associado).ToList();
+
             return Ok(new
             {
                 emissao = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),

@@ -1,0 +1,93 @@
+﻿<div class="webFormPosition" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>Extrato de <b>Lojista</b> / Conta Corrente <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td width="20px"></td>
+                </tr>                
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color: white">
+                <tr height="22px"> </tr>
+                <tr height="43px">
+                    <td width="20px"></td>
+                    <td width="120px"><b>Código</b></td>
+                    <td width="90px">
+                        <input type="text" class="form-control input-transparent" focus="true" ng-model="campos.codigo" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="90px"><b>Ano</b></td>
+                    <td width="100px">
+                        <input type="text" class="form-control input-transparent" maxlength="4"
+                               ng-model="campos.ano_inicial">
+                    </td>
+                    <td width="20px"></td>
+                    <td width="60px"><b>Mês</b></td>
+                    <td width="80px">
+                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="120px" align="right">
+                        <button class="btn btn-primary" style="width:110px" ng-click="search()" style="">Pesquisar</button>                        
+                    </td>
+                    <td width="20px"></td>
+                </tr>                
+                <tr height="22px"></tr>
+            </table>
+            <div style="overflow-x:scroll;overflow:auto;">
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div ng-show="result == null">
+                                <br />
+                                <br />
+                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="result != null">
+                                <h4>Extrato Completo Lojista</h4>
+                                <br />
+                                <b>CNPJ</b>: {{result.cnpj}}<br />
+                                <b>Razão Social</b>: {{result.social}}<br />
+                                <b>Nome / Fantasia</b>: {{result.fantasia}}<br />
+                                <p>Mês / Ano Ref.: <b>{{campos.mes_inicial}} / {{campos.ano_inicial}}</p>
+                                <h4>Total: {{result.valor}}</h4>
+                                <br />
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Ano / Mês</th>
+                                            <th>Vlr. Total</th>
+                                            <th>Situação</th>
+                                        </tr>
+                                    </thead>
+                                    <tr data-ng-repeat="mdl in result.list">
+                                        <td>{{ mdl.ano }} / {{ mdl.mes }}</td>
+                                        <td>{{ mdl.valor }}</td>
+                                        <td>{{ mdl.situacao }}</td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <br />
+                                <button class="btn btn-primary" style="width:110px" ng-click="imprimir()" style="">Imprimir</button>
+                                <br />
+                                <br />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <br />
+        </div>
+    </section>
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

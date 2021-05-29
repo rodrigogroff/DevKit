@@ -279,6 +279,10 @@
     <Content Include="app\dba\parceiros\listingParceiros.html" />
     <Content Include="app\dba\parceiros\listingParceiros.js" />
     <Content Include="app\emissora\EmissoraEmitCartVirtual.js" />
+    <Content Include="app\emissora\EmissoraExtratosPagarCCController.js" />
+    <Content Include="app\emissora\EmissoraExtratosReceberCCController.js" />
+    <Content Include="app\emissora\EmissoraExtratosLojistaCCController.js" />
+    <Content Include="app\emissora\EmissoraExtratosUsuariosCCController.js" />
     <Content Include="app\emissora\emitCartVirtual.html" />
     <Content Include="app\emissora\altDesbloqLote.html" />
     <Content Include="app\emissora\altBloqLote.html" />
@@ -316,6 +320,10 @@
     <Content Include="app\emissora\EmissoraExpFechamentoController.js" />
     <Content Include="app\emissora\EmissoraListagemFechamentoController.js" />
     <Content Include="app\emissora\EmissoraNovoCartao.js" />
+    <Content Include="app\emissora\extratosPagarCC.html" />
+    <Content Include="app\emissora\extratosReceberCC.html" />
+    <Content Include="app\emissora\extratosLojistaCC.html" />
+    <Content Include="app\emissora\extratosUsuariosCC.html" />
     <Content Include="app\emissora\listagemLancCC.html" />
     <Content Include="app\emissora\listagemDespesaRec.html" />
     <Content Include="app\emissora\listagemDespesa.html" />
@@ -775,6 +783,10 @@
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaRecCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraLancCCExtratoPagarCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraLancCCExtratoReceberCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraLancCCExtratoLojistaCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraLancCCExtratoUsuarioCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraLancCC.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraRelLancCC.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\LoteCartaoCtrl.cs" />

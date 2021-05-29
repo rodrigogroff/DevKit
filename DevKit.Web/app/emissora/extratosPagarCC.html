@@ -1,0 +1,97 @@
+﻿<div class="webFormPosition" style="width:99%">
+    <section class="widgetForm" style="width:95%">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>Receitas associação <b>Contas a pagar | Repasse</b> / Conta Corrente <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                    <td width="20px"></td>
+                </tr>                
+            </table>
+        </legend>
+        <div class="divWebForm" style="max-width:95%;min-width:95%">
+            <table class="widget" style="color: white">
+                <tr height="22px"> </tr>
+                <tr height="43px">
+                    <td width="20px"></td>
+                    <td width="90px"><b>Ano</b></td>
+                    <td width="100px">
+                        <input type="text" class="form-control input-transparent" maxlength="4"
+                               ng-model="campos.ano_inicial">
+                    </td>
+                    <td width="20px"></td>
+                    <td width="60px"><b>Mês</b></td>
+                    <td width="80px">
+                        <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                    </td>
+                    <td width="20px"></td>
+                    <td width="120px" align="right">
+                        <button class="btn btn-primary" style="width:110px" ng-click="search()">Pesquisar</button>                        
+                    </td>
+                    <td width="20px"></td>
+                </tr>                
+                <tr height="22px"></tr>
+            </table>
+            <div style="overflow-x:scroll;overflow:auto;">
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div ng-show="result == null">
+                                <br />
+                                <br />
+                                <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
+                                <br />
+                                <br />
+                            </div>
+                            <div ng-show="result != null">
+                                <h4>RELATÓRIO CONTAS A PAGAR</h4>
+                                <br />
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Razão Social</th>
+                                            <th>Lojista</th>
+                                            <th>CNPJ</th>
+                                            <th>Dados Bancários</th>
+                                            <th>Valor Total</th>
+                                            <th>Valor Comissão</th>
+                                            <th>Valor Repasse</th>
+                                        </tr>
+                                    </thead>
+                                    <tr data-ng-repeat="mdl in result.listPagarCC">
+                                        <td>{{ mdl.codLojista }}</td>
+                                        <td>{{ mdl.razSoc }}</td>
+                                        <td>{{ mdl.lojista }}</td>
+                                        <td>{{ mdl.cnpj }}</td>
+                                        <td>{{ mdl.banco }}<br />{{ mdl.agencia }}<br />{{ mdl.conta }}</td>
+                                        <td>{{ mdl.vlrTot }}</td>
+                                        <td>{{ mdl.vlrComissao }}</td>
+                                        <td>{{ mdl.vlrRepasse }}</td>
+                                    </tr>
+                                </table>
+                                <p>Total: {{result.vlrTotal}} </p>
+                                <p>Total Comissão: {{result.vlrTotComissao}} </p>
+                                <br />
+                                <p>Total contas a pagar: {{result.vlrTotRep}} </p>
+                                <br />
+                                <br />
+                                <br />
+                                <button class="btn btn-primary" style="width:110px" ng-click="imprimir()" style="">Imprimir</button>
+                                <br />
+                                <br />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <br />
+        </div>
+    </section>
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

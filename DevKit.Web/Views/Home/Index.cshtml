@@ -467,10 +467,21 @@
                         <li class="panel">
                             <a class="accordion-toggle " data-toggle="collapse"
                                data-parent="#side-nav" href="#forms-collapseEmpFech"><span class="name">Fechamento</span></a>
-                            <ul id="forms-collapseEmpFech" class="panel-collapse collapse">
-                                <li><a ui-sref="empListagemLancCC"><span>Lançamentos CC</span></a></li>
+                            <ul id="forms-collapseEmpFech" class="panel-collapse collapse">                                
                                 <li><a ui-sref="empListagemFechamento"><span>Demonstrativos</span></a></li>
                                 <li><a ui-sref="empExpFechamento"><span>Exportação</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="panel">
+                            <a class="accordion-toggle " data-toggle="collapse"
+                               data-parent="#side-nav" href="#forms-collapseEmpCC"><span class="name">Conta Corrente</span></a>
+                            <ul id="forms-collapseEmpCC" class="panel-collapse collapse">
+                                <li><a ui-sref="empExtratosUsuariosCC"><span>Extrato Associado</span></a></li>
+                                <li><a ui-sref="empExtratosLojistaCC"><span>Extrato Lojista</span></a></li>
+                                <li><a ui-sref="empExtratosReceberCC"><span>Rel. a receber</span></a></li>
+                                <li><a ui-sref="empExtratosPagarCC"><span>Rel. a pagar</span></a></li>                                
+                                <li><a ui-sref="empListagemLancCC"><span>Lançamentos CC</span></a></li>
+                                <li><a ui-sref=""><span>Baixa Lançamentos</span></a></li>
                             </ul>
                         </li>
                         <li class="panel">
@@ -507,9 +518,7 @@
                 </section>
 
                 <section class="widget" style="height:100%;font-size:11px" ng-if="authentication.tipo == '5'">
-
                     <div ng-if="authentication.parceiro == '1'">
-
                         <ul id="side-nav" class="side-nav" style="color:black">
                             <li class="panel">
                                 <a class="accordion-toggle " data-toggle="collapse"

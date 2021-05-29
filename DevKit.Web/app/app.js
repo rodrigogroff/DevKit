@@ -70,6 +70,12 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('empEmitCartVirtual', { url: '/emissora/emitCartVirtual/:id', templateUrl: 'app/emissora/emitCartVirtual.html', controller: 'EmissoraEmitCartVirtualController' })
             .state('empListagemDespesaRec', { url: '/emissora/listagemDespesaRec', templateUrl: 'app/emissora/listagemDespesaRec.html', controller: 'EmissoraListagemDespesaRecController' })
             .state('empListagemLancCC', { url: '/emissora/listagemLancCC', templateUrl: 'app/emissora/listagemLancCC.html', controller: 'EmissoraListagemLancCCController' })
+            .state('empExtratosUsuariosCC', { url: '/emissora/extratosUsuariosCC', templateUrl: 'app/emissora/extratosUsuariosCC.html', controller: 'EmissoraExtratosUsuariosCCController' })
+            .state('empExtratosReceberCC', { url: '/emissora/empExtratosReceberCC', templateUrl: 'app/emissora/extratosReceberCC.html', controller: 'EmissoraExtratosReceberCCController' })
+            .state('empExtratosPagarCC', { url: '/emissora/empExtratosPagarCC', templateUrl: 'app/emissora/extratosPagarCC.html', controller: 'EmissoraExtratosPagarCCController' })
+
+            .state('empExtratosLojistaCC', { url: '/emissora/empExtratosLojistaCC', templateUrl: 'app/emissora/extratosLojistaCC.html', controller: 'EmissoraExtratosLojistaCCController' })
+
             .state('empListagemLoja', { url: '/emissora/listagemLoja', templateUrl: 'app/emissora/listagemLoja.html', controller: 'EmissoraListagemLojaController' })
             .state('empListagemUsuario', { url: '/emissora/listagemUsuario', templateUrl: 'app/emissora/listagemUsuario.html', controller: 'EmissoraListagemUsuarioController' })
             .state('empAltSenhaUsuario', { url: '/emissora/altsenhausuario', templateUrl: 'app/emissora/altSenhaUsuario.html', controller: 'EmissoraAltSenhaUsuarioController' })

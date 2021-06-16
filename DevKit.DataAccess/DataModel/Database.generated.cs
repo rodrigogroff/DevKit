@@ -42,6 +42,7 @@ namespace DataModel
         public ITable<EmpresaDespesa> EmpresaDespesa { get { return this.GetTable<EmpresaDespesa>(); } }
         public ITable<EmpresaDespesaRecorrente> EmpresaDespesaRecorrente { get { return this.GetTable<EmpresaDespesaRecorrente>(); } }
         public ITable<LancamentosCC> LancamentosCC { get { return this.GetTable<LancamentosCC>(); } }
+        public ITable<LancamentosCCBaixa> LancamentosCCBaixa { get { return this.GetTable<LancamentosCCBaixa>(); } }
         public ITable<LancamentosCCEmissao> LancamentosCCEmissao { get { return this.GetTable<LancamentosCCEmissao>(); } }
         public ITable<LOG_Chamado> LOG_Chamado { get { return this.GetTable<LOG_Chamado>(); } }
         public ITable<LOG_Edu_RendimentoEmpresa> LOG_Edu_RendimentoEmpresa { get { return this.GetTable<LOG_Edu_RendimentoEmpresa>(); } }
@@ -177,6 +178,7 @@ namespace DataModel
         [Column, Nullable] public bool? bRecorrente { get; set; }
         [Column, Nullable] public DateTime? dtLanc { get; set; }
         [Column, Nullable] public long? fkInicial { get; set; }
+        [Column, Nullable] public long? fkBaixa { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "LancamentosCCEmissao")]
@@ -188,6 +190,17 @@ namespace DataModel
         [Column, Nullable] public long? nuAno { get; set; }        
         [Column, Nullable] public long? vrTotalValor { get; set; }
         [Column, Nullable] public DateTime? dtLanc { get; set; }        
+    }
+
+    [Table(Schema = "dbo", Name = "LancamentosCCBaixa")]
+    public partial class LancamentosCCBaixa
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public long? fkEmpresa { get; set; }
+        [Column, Nullable] public long? fkUser { get; set; }
+        [Column, Nullable] public long? nuMonth { get; set; }
+        [Column, Nullable] public long? nuYear { get; set; }
+        [Column, Nullable] public DateTime? dtLog { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "DashboardGrafico")]

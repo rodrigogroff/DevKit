@@ -11,7 +11,7 @@ angular.module('app.controllers').controller('EmissoraExtratosUsuariosCCControll
 
             $scope.date = new Date();
 
-            $scope.result = null;
+            $scope.result = {};
 
             $scope.campos = {
                 mes_inicial: $scope.date.getMonth() + 1,
@@ -23,13 +23,13 @@ angular.module('app.controllers').controller('EmissoraExtratosUsuariosCCControll
 
             $scope.search = function () {
 
-                $scope.loading = true;
-                $scope.result = null;
-
+                if ($scope.campos.mat === undefined || $scope.campos.mat === '') {
+                    toastr.error('Informar matrícula!', 'Erro');
+                    return;
+                }
+                
                 if ($scope.campos.mes_inicial !== undefined &&
-                    $scope.campos.ano_inicial !== undefined &&
-                    $scope.campos.mat !== undefined &&
-                    $scope.campos.mat !== '') {
+                    $scope.campos.ano_inicial !== undefined ) {
 
                     var opcoes = {
                         mat: $scope.campos.mat,
@@ -37,11 +37,19 @@ angular.module('app.controllers').controller('EmissoraExtratosUsuariosCCControll
                         ano: $scope.campos.ano_inicial,
                     };
 
+                    $scope.loading = true;
+
                     Api.EmissoraLancCCExtratoUsuario.listPage(opcoes, function (data) {
-                        $scope.result = data;                        
+                        $scope.result = data;
+
+                        if (data.length == 0)
+                            $scope.result = null;
+
                         $scope.loading = false;
                     });
                 }
+                else
+                    $scope.result = null;
             };
 
             $scope.imprimir = function () {

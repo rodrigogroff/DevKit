@@ -16,6 +16,8 @@ namespace DevKit.Web.Controllers
     {
         public long id { get; set; }
         public string stName { get; set; }
+        public string stCodigoFOPA { get; set; }
+        public string matricula { get; set; }
     }
 
     public class CartaoComboController : ApiControllerBase
@@ -24,7 +26,7 @@ namespace DevKit.Web.Controllers
 		{
             string busca = Request.GetQueryStringValue("busca", "").ToUpper();
 
-            if (busca == "" || busca.Length < 3)
+            if (busca == "")
                 return Ok( new CartaoComboReport
                 {
                     count = 0,
@@ -37,7 +39,7 @@ namespace DevKit.Web.Controllers
             var query = (from e in db.T_Cartao
                          join prop in db.T_Proprietario on (int)e.fk_dadosProprietario equals prop.i_unique
                          where e.st_empresa == db.currentEmpresa.st_empresa && e.st_titularidade == "01"
-                         where busca != "" && prop.st_nome.Contains(busca)
+                         where busca != "" && (prop.st_nome.Contains(busca) || e.st_matricula.Contains (busca))
                          select e);
 
             var lst = new List<DtoCartaoCombo>();
@@ -47,7 +49,7 @@ namespace DevKit.Web.Controllers
                 lst.Add(new DtoCartaoCombo
                 {
                     id = (int) item.i_unique,
-                    stName = db.T_Proprietario.FirstOrDefault ( y=> y.i_unique == item.fk_dadosProprietario )?.st_nome
+                    stName = item.st_matricula + " - " + db.T_Proprietario.FirstOrDefault ( y=> y.i_unique == item.fk_dadosProprietario )?.st_nome
                 });
             }
 
@@ -65,17 +67,19 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            var query = (from e in db.EmpresaDespesa where e.fkEmpresa == db.currentEmpresa.i_unique && e.id == id select e);
+            var query = (from e in db.T_Cartao where e.i_unique == id select e);
 
             var mdl = query.FirstOrDefault();
 
 			if (mdl == null)
                 return StatusCode(HttpStatusCode.NotFound);
 
-            return Ok(new DtoDespesa
+            return Ok(new DtoCartaoCombo
             {
-                id = mdl.id,
-                stName = mdl.stCodigo + " - " + mdl.stDescricao
+                id = id,
+                stName = mdl.st_matricula + " - " + db.T_Proprietario.FirstOrDefault(y => y.i_unique == mdl.fk_dadosProprietario).st_nome,
+                stCodigoFOPA = mdl.stCodigoFOPA,
+                matricula = mdl.st_matricula
             });
 		}
 	}

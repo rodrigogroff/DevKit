@@ -6,7 +6,7 @@ angular.module('app.controllers').controller('EmissoraDespesaRecController',
             $rootScope.exibirMenu = true;
             $scope.loading = false;
 
-            $scope.viewModel = {  };
+            $scope.viewModel = { bAtivo: true};
             $scope.campos = {  };
 
             var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;

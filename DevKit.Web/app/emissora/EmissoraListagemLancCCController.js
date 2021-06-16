@@ -33,16 +33,14 @@ angular.module('app.controllers').controller('EmissoraListagemLancCCController',
                 $scope.paginador.reiniciar();
             };
 
-            $scope.$watch("newLanc._fkCartao", function (novo, antigo) {
-
-                if (antigo != undefined)
-                Api.EmissoraCartao.get({ id: novo }, function (data) {
-                    $scope.newLanc.stFOPA = data.stCodigoFOPA;
+            $scope.$watch("newLanc._fkCartao", function (novo, antigo) {                                
+                Api.EmissoraCartao.get({ id: novo }, function (data) {                    
+                    $scope.newLanc.stFOPA = data.stCodigoFOPA === "" ? data.matricula : data.stCodigoFOPA;
                     $scope.loading = false;
                 },
                 function (response) {
                     if (response.status === 404) { toastr.error('Invalid ID', 'Erro'); }
-                });
+                });                    
             });
 
             $scope.load = function (skip, take) {

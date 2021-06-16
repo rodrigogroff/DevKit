@@ -1,0 +1,109 @@
+﻿<div class="webFormPosition">
+    <section class="widgetForm" style="width:900px">
+        <legend class="legendTop">
+            <table><tr height="12px"><td> </td></tr></table>
+            <table style="color:white; width:100%">
+                <tr height="48px">
+                    <td width="20px"></td>
+                    <td>Importação Retorno Folha de Pagamento <b>(Baixa)</b> <i class="fa fa-spinner fa-spin" ng-show="loading"></i></td>
+                </tr>
+                <tr height="12px"></tr>
+            </table>
+        </legend>
+        <div class="divWebForm">
+            <tabset class="tabs-left" style="min-height:320px;font-size:13px;width:1050px">
+                <tab heading="Baixa Automática">
+                    <div style="margin-left:30px;margin-top:20px">
+                        <table>
+                            <tr height="43px">
+                                <td width="90px"><b>Ano</b></td>
+                                <td width="120px">
+                                    <input type="text" class="form-control input-transparent" maxlength="4"
+                                           ng-model="campos.ano_inicial">
+                                </td>
+                                <td width="20px"></td>
+                                <td width="70px"><b>Mês</b></td>
+                                <td width="120px">
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr height="43px">
+                                <td width="90px">
+                                    <b>Arquivo</b>
+                                </td>
+                                <td width="150px">
+                                    <input id="my-input" type="file">
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <button class="btn btn-primary" ng-click="importar()">Importar Arquivo</button>
+                        <br />
+                        <br />
+                    </div>
+                </tab>
+                <tab heading="Baixa Manual">
+                    <div style="margin-left:30px;margin-top:20px">
+                        <table>
+                            <tr height="43px">
+                                <td width="90px"><b>Ano</b></td>
+                                <td width="120px">
+                                    <input type="text" class="form-control input-transparent" maxlength="4"
+                                           ng-model="campos.ano_inicial">
+                                </td>
+                                <td width="20px"></td>
+                                <td width="70px"><b>Mês</b></td>
+                                <td width="120px">
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                            <tr height="43px">
+                                <td>Matricula</td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="6" ng-model="campos.matricula">
+                                </td>
+                                <td></td>
+                                <td>Valor</td>
+                                <td>
+                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="6" ng-model="campos.valor">
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <br />
+                        <button class="btn btn-primary" ng-click="baixaManual()">Confirmar</button>
+                        <br />
+                        <br />
+                    </div>
+                </tab>
+                <tab heading="Histórico">
+                    <div style="margin-left:30px;margin-top:20px">
+                        <table>
+                            <tr height="43px">
+                                <td width="90px"><b>Ano</b></td>
+                                <td width="120px">
+                                    <input type="text" class="form-control input-transparent" maxlength="4"
+                                           ng-model="campos.ano_inicial">
+                                </td>
+                                <td width="20px"></td>
+                                <td width="70px"><b>Mês</b></td>
+                                <td width="120px">
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                        <br />
+                        <button class="btn btn-primary" ng-click="pesquisarHistorico()">Buscar</button>
+                        <br />
+                        <br />
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    </section>
+</div>

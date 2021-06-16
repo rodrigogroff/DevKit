@@ -278,6 +278,8 @@
     <Content Include="app\dba\parceiros\parceiro.js" />
     <Content Include="app\dba\parceiros\listingParceiros.html" />
     <Content Include="app\dba\parceiros\listingParceiros.js" />
+    <Content Include="app\emissora\baixaCC.html" />
+    <Content Include="app\emissora\EmissoraBaixaCC.js" />
     <Content Include="app\emissora\EmissoraEmitCartVirtual.js" />
     <Content Include="app\emissora\EmissoraExtratosPagarCCController.js" />
     <Content Include="app\emissora\EmissoraExtratosReceberCCController.js" />
@@ -783,6 +785,7 @@
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaRecCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraBaixaCC.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraLancCCExtratoPagarCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraLancCCExtratoReceberCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraLancCCExtratoLojistaCtrl.cs" />

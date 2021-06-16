@@ -231,7 +231,7 @@
                             <th>Vlr. Total</th>
                             <th>Parcelas</th>
                             <th>Data</th>
-                            <th>Operação</th>
+                            <th>Situação</th>
                         </tr>
                     </thead>
                     <tr data-ng-repeat="mdl in listaFiltrada">
@@ -243,7 +243,7 @@
                         <td>{{ mdl.valorTot }}</td>
                         <td>{{ mdl.parcelas }}</td>
                         <td>{{ mdl.dt }}</td>
-                        <td>VENDA</td>
+                        <td>{{ mdl.status }}</td>
                     </tr>
                 </table>
 
@@ -263,6 +263,7 @@
                             <th>Status</th>
                             <th>Tipo</th>
                             <th>Operação</th>
+                            <th>Situação</th>
                         </tr>
                     </thead>
                     <tr data-ng-repeat="mdl in listaFiltrada">
@@ -284,6 +285,7 @@
                         </td>
                         <td>{{ mdl.tipo }}</td>
                         <td>{{ mdl.motivo }}</td>
+                        <td>{{ mdl.status }}</td>
                     </tr>
                 </table>
                 <br />

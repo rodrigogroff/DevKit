@@ -44,7 +44,16 @@ namespace DevKit.Web.Controllers
                                 select e).
                                 ToList();
 
+            var queryLancFech = (from e in db.LOG_Fechamento
+                               where e.fk_empresa == tEmp.i_unique
+                               where e.st_ano == ano.ToString()
+                               where e.st_mes == mes.ToString().PadLeft(2, '0')
+                               select e).
+                                ToList();
+
             var idsCartoes = queryLancCC.Select(y => (long)y.fkCartao).Distinct().ToList();
+
+            idsCartoes.AddRange(queryLancFech.Select(y => (long)y.fk_cartao).Distinct().ToList());
 
             var lstCards = db.T_Cartao.Where(y => idsCartoes.Contains((long)y.i_unique)).ToList();
 
@@ -57,9 +66,11 @@ namespace DevKit.Web.Controllers
 
                 var tot = queryLancCC.Where(y => y.fkCartao == item).Sum(y => (long)y.vrValor);
 
+                tot += queryLancFech.Where(y => y.fk_cartao == item).Sum(y => (long)y.vr_valor);
+
                 var rec = new DtoExtratoReceber_LancCC
                 {
-                    id = _id,
+                    id = 1,
                     associado = t_prop.st_nome,
                     cartao = t_card.st_matricula,
                     vlrTotal = mon.setMoneyFormat(tot),
@@ -70,6 +81,10 @@ namespace DevKit.Web.Controllers
             }
 
             lstCC = lstCC.OrderBy(y => y.associado).ToList();
+
+            var idN = 1;
+            foreach (var item in lstCC)
+                item.id = idN++;
 
             return Ok(new 
             {

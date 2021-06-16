@@ -11,7 +11,7 @@ angular.module('app.controllers').controller('EmissoraExtratosReceberCCControlle
 
             $scope.date = new Date();
 
-            $scope.result = null;
+            $scope.result = {};
 
             $scope.campos = {
                 mes_inicial: $scope.date.getMonth() + 1,
@@ -24,7 +24,7 @@ angular.module('app.controllers').controller('EmissoraExtratosReceberCCControlle
             $scope.search = function () {
 
                 $scope.loading = true;
-                $scope.result = null;
+                $scope.result = {};
 
                 if ($scope.campos.mes_inicial !== undefined &&
                     $scope.campos.ano_inicial !== undefined) {
@@ -40,6 +40,8 @@ angular.module('app.controllers').controller('EmissoraExtratosReceberCCControlle
                         $scope.loading = false;
                     });
                 }
+                else
+                    $scope.result = null;
             };
 
             $scope.imprimir = function () {

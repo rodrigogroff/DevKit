@@ -83,29 +83,31 @@ namespace DevKit.Web.Controllers
 
             foreach (var item in queryLancCC)
             {
-                if (item.bRecorrente == true)
+                if (item.bRecorrente == false)
                 {
                     var d = tmp_lstCCsEmpRec.FirstOrDefault(y => y.id == item.fkTipo);
 
-                    lstCC.Add(new DtoExtratoUsuario_LancCC
-                    {
-                        cod = d.stCodigo,
-                        desc = d.stDescricao,
-                        parc = item.nuParcela.ToString(),
-                        vlrParc = mon.setMoneyFormat((long)item.vrValor),
-                    });
+                    if (d != null)
+                        lstCC.Add(new DtoExtratoUsuario_LancCC
+                        {
+                            cod = d.stCodigo,
+                            desc = d.stDescricao,
+                            parc = item.nuParcela.ToString(),
+                            vlrParc = mon.setMoneyFormat((long)item.vrValor),
+                        });
                 }
                 else
                 {
                     var d = tmp_lstCCsEmp.FirstOrDefault(y => y.id == item.fkTipo);
 
-                    lstCC.Add(new DtoExtratoUsuario_LancCC
-                    {
-                        cod = d.stCodigo,
-                        desc = d.stDescricao,
-                        parc = "Recorrente",
-                        vlrParc = mon.setMoneyFormat((long)item.vrValor),
-                    });
+                    if (d != null)
+                        lstCC.Add(new DtoExtratoUsuario_LancCC
+                        {
+                            cod = d.stCodigo,
+                            desc = d.stDescricao,
+                            parc = "Recorrente",
+                            vlrParc = mon.setMoneyFormat((long)item.vrValor),
+                        });
                 }
             }
 

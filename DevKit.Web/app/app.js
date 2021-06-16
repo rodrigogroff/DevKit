@@ -73,8 +73,9 @@ var app = angular.module('app', ['ui.bootstrap', 'chieffancypants.loadingBar', '
             .state('empExtratosUsuariosCC', { url: '/emissora/extratosUsuariosCC', templateUrl: 'app/emissora/extratosUsuariosCC.html', controller: 'EmissoraExtratosUsuariosCCController' })
             .state('empExtratosReceberCC', { url: '/emissora/empExtratosReceberCC', templateUrl: 'app/emissora/extratosReceberCC.html', controller: 'EmissoraExtratosReceberCCController' })
             .state('empExtratosPagarCC', { url: '/emissora/empExtratosPagarCC', templateUrl: 'app/emissora/extratosPagarCC.html', controller: 'EmissoraExtratosPagarCCController' })
-
             .state('empExtratosLojistaCC', { url: '/emissora/empExtratosLojistaCC', templateUrl: 'app/emissora/extratosLojistaCC.html', controller: 'EmissoraExtratosLojistaCCController' })
+
+            .state('empBaixaCC', { url: '/emissora/empBaixaCC', templateUrl: 'app/emissora/baixaCC.html', controller: 'EmissoraBaixaCCController' })
 
             .state('empListagemLoja', { url: '/emissora/listagemLoja', templateUrl: 'app/emissora/listagemLoja.html', controller: 'EmissoraListagemLojaController' })
             .state('empListagemUsuario', { url: '/emissora/listagemUsuario', templateUrl: 'app/emissora/listagemUsuario.html', controller: 'EmissoraListagemUsuarioController' })

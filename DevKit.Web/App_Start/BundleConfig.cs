@@ -104,6 +104,7 @@ namespace DevKit.Web
                 "~/app/emissora/EmissoraDespesa.js",
                 "~/app/emissora/EmissoraListagemDespesaRecController.js",
                 "~/app/emissora/EmissoraDespesaRec.js",
+                "~/app/emissora/EmissoraBaixaCC.js",
                 "~/app/emissora/EmissoraRelExtratFornController.js",
                 "~/app/emissora/EmissoraRelExtratTransController.js",
                 "~/app/emissora/EmissoraRelExtratTransLojasController.js",

@@ -68,9 +68,6 @@ namespace DevKit.Web.Controllers
             {
                 var t_loja = lstLojistas.FirstOrDefault(y => y.i_unique == item);
 
-                if (t_loja.fk_banco == null)
-                    continue;
-
                 var convenio = (from e in db.T_Loja
                                 from eConv in db.LINK_LojaEmpresa
                                 where eConv.fk_empresa == tEmp.i_unique
@@ -89,7 +86,7 @@ namespace DevKit.Web.Controllers
                     codLojista = t_loja.st_loja,
                     agencia = t_loja.st_agencia,
                     conta = t_loja.st_conta,
-                    banco = bancos.Get((int)t_loja.fk_banco).stName,
+                    banco = t_loja.fk_banco == null ? "": bancos.Get((int)t_loja.fk_banco).stName,
                     cnpj = t_loja.nu_CNPJ,
                     razSoc = t_loja.st_social,
                     vlrTot = mon.setMoneyFormat(tot),

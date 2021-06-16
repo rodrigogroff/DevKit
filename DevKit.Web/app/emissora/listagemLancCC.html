@@ -232,7 +232,7 @@
             <div class="modal-backdrop"
                  ng-if="modalNew == true"
                  style="background: rgba(55, 55, 55, 0.5 );">
-                <div class="modal-dialog" style="width:500px">
+                <div class="modal-dialog" style="width:600px">
                     <br />
                     <br />
                     <br />
@@ -241,8 +241,7 @@
                             Novo lançamento
                             <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="closeModalNew()"> X </button> &nbsp;
                         </legend>
-                        <br />
-                        <table class="widget" style="color:black">
+                        <table class="widget" style="color:black" width="100%">
                             <tr height="12px">
                                 <td> </td>
                             </tr>
@@ -262,9 +261,6 @@
                                            ng-model="newLanc.stFOPA">
                                 </td>
                                 <td></td>
-                            </tr>
-                            <tr height="22px">
-                                <td> </td>
                             </tr>
                             <tr height="42px">
                                 <td width="20px"></td>
@@ -305,7 +301,7 @@
                             </tr>
                             <tr height="42px">
                                 <td></td>
-                                <td><b>Número de Parcelas</b></td>
+                                <td><b>Núm. de Parcelas</b></td>
                                 <td>
                                     <input type="text"
                                            class="form-control"
@@ -315,11 +311,10 @@
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr height="22px">
+                            <tr height="10px">
                                 <td> </td>
                             </tr>
                         </table>
-                        <br />
                         <div class="pull-right">
                             <button class="btn btn-primary" ng-click="newLancModal()"> Confirmar </button>
                         </div>

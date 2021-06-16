@@ -11,6 +11,13 @@ namespace DevKit.Web.Controllers
     
     public class EmissoraLancCCExtratoPagarController : ApiControllerBase
     {
+        public class DtoTipoDespesaSoma
+        {
+            public string nome { get; set; }
+            public string total { get; set; }
+            public string tipo { get; set; }
+        }
+
         public class DtoExtratoPagar_LancCC
         {
             public string codLojista { get; set; }
@@ -41,6 +48,45 @@ namespace DevKit.Web.Controllers
             var tEmp = db.currentEmpresa;
             
             var lstCC = new List<DtoExtratoPagar_LancCC>();
+            var lstTipoDesp = new List<DtoTipoDespesaSoma>();
+
+            // ---------------------------------------------------------------
+
+            var queryLancCCDesp = (from e in db.LancamentosCC
+                               where e.fkEmpresa == tEmp.i_unique
+                               where e.nuAno == ano
+                               where e.nuMes == mes
+                               select e).
+                                ToList();
+
+            var lst_tipos_rec = queryLancCCDesp.Where(y => y.bRecorrente == true).Select(y => (int)y.fkTipo).Distinct().ToList();
+            var lst_tipos_normal = queryLancCCDesp.Where(y => y.bRecorrente == false).Select(y => (int)y.fkTipo).Distinct().ToList();
+
+            foreach (var item in lst_tipos_rec)
+            {
+                var tDesp = db.EmpresaDespesaRecorrente.FirstOrDefault(y => y.id == item);
+
+                if (tDesp != null)
+                    lstTipoDesp.Add(new DtoTipoDespesaSoma
+                    {
+                        nome = tDesp.stCodigo + " - " + tDesp.stDescricao,
+                        tipo = "Recorrente",
+                        total = mon.setMoneyFormat(queryLancCCDesp.Where ( y=> y.bRecorrente == true && y.fkTipo == item).Sum ( y=> (long)y.vrValor)),
+                    });
+            }
+
+            foreach (var item in lst_tipos_normal)
+            {
+                var tDesp = db.EmpresaDespesa.FirstOrDefault(y => y.id == item);
+
+                if (tDesp != null)
+                    lstTipoDesp.Add(new DtoTipoDespesaSoma
+                    {
+                        nome = tDesp.stCodigo + " - " + tDesp.stDescricao,
+                        tipo = "Avulso",
+                        total = mon.setMoneyFormat(queryLancCCDesp.Where(y => y.bRecorrente == false && y.fkTipo == item).Sum(y => (long)y.vrValor)),
+                    });
+            }
 
             // ---------------------------------------------------------------
 
@@ -52,12 +98,7 @@ namespace DevKit.Web.Controllers
                                 ToList();
 
             if (queryLancCC.Count == 0 )
-            {
-                return Ok(new
-                {
-                    listPagarCC = lstCC,
-                });
-            }
+                return BadRequest();
 
             var idsLojistas = queryLancCC.Select(y => (long)y.fk_loja).Distinct().ToList();
             var lstLojistas = db.T_Loja.Where(y => idsLojistas.Contains((long)y.i_unique)).ToList();
@@ -109,6 +150,7 @@ namespace DevKit.Web.Controllers
                 vlrTotComissao = "R$ " + mon.setMoneyFormat(totComissao),
                 vlrTotRep = "R$ " + mon.setMoneyFormat(totRep),
                 listPagarCC = lstCC,
+                lstTipoDesp, 
             }); 
         }        
     }

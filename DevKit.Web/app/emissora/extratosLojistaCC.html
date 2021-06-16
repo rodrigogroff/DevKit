@@ -42,14 +42,14 @@
                 <table>
                     <tr>
                         <td valign="top">
-                            <div ng-show="result == null">
+                            <div ng-show="result.list.length == 0">
                                 <br />
                                 <br />
                                 <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
                                 <br />
                                 <br />
                             </div>
-                            <div ng-show="result != null">
+                            <div ng-show="result.list.length > 0">
                                 <h4>Extrato Completo Lojista</h4>
                                 <br />
                                 <b>CNPJ</b>: {{result.cnpj}}<br />

@@ -22,6 +22,25 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
                 }
             };
 
+            $scope.baixaManual = function () {
+
+                var mdl = {
+                    idCartao: $scope.campos.fkCartao,
+                    valor: $scope.campos.valor,
+                    ano: $scope.campos.ano_inicial,
+                    mes: $scope.campos.mes_inicial,
+                };
+
+                Api.EmissoraBaixaCC.add(mdl, function (data) {
+                    toastr.success('Despesa salva!', 'Sucesso');
+                    $scope.campos.valor = null;
+                },
+                    function (response) {
+                        toastr.error(response.data.message, 'Erro');
+                        $scope.loading = false;
+                    });
+            };
+
             $scope.importar = function () {
                 var input = document.querySelector('input[type="file"]')
                 const files = input.files

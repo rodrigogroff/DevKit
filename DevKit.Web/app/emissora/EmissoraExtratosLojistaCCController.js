@@ -9,7 +9,7 @@ angular.module('app.controllers').controller('EmissoraExtratosLojistaCCControlle
 
             $scope.date = new Date();
 
-            $scope.result = null;
+            $scope.result = {};
 
             $scope.campos = {
                 mes_inicial: $scope.date.getMonth() + 1,
@@ -21,7 +21,10 @@ angular.module('app.controllers').controller('EmissoraExtratosLojistaCCControlle
 
             $scope.search = function () {
 
-                $scope.result = null;
+                if ($scope.campos.codigo == undefined || $scope.campos.codigo == '') {
+                    toastr.error('Informe um lojista!', 'Erro');
+                    return;
+                }
 
                 if ($scope.campos.mes_inicial !== undefined &&
                     $scope.campos.ano_inicial !== undefined &&
@@ -37,9 +40,18 @@ angular.module('app.controllers').controller('EmissoraExtratosLojistaCCControlle
                     $scope.loading = true;
 
                     Api.EmissoraLancCCExtratoLojista.listPage(opcoes, function (data) {
-                        $scope.result = data;                        
+                        $scope.result = data;
+                        $scope.loading = false;
+                    },
+                        function () {
+                           $scope.result = null;
+                        toastr.error('Parâmetros inválidos!', 'Erro');
                         $scope.loading = false;
                     });
+                }
+                else {                    
+                    toastr.error('Parâmetros inválidos!', 'Erro');
+                    return;                    
                 }
             };
 

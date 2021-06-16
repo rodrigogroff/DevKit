@@ -51,8 +51,7 @@
                             <tr height="43px">
                                 <td width="90px"><b>Ano</b></td>
                                 <td width="120px">
-                                    <input type="text" class="form-control input-transparent" maxlength="4"
-                                           ng-model="campos.ano_inicial">
+                                    <input type="text" class="form-control input-transparent" maxlength="4" ng-model="campos.ano_inicial">
                                 </td>
                                 <td width="20px"></td>
                                 <td width="70px"><b>Mês</b></td>
@@ -63,15 +62,16 @@
                             </tr>
                             <tr height="43px">
                                 <td>Matricula</td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,ValorNum);" maxlength="6" ng-model="campos.matricula">
+                                <td colspan="4">
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.cartao" ng-model="campos.fkCartao" />
                                 </td>
-                                <td></td>
-                                <td>Valor</td>
+                            </tr>
+                            <tr height="43px">
+                                <td>R$ Devido</td>
                                 <td>
                                     <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="6" ng-model="campos.valor">
                                 </td>
-                                <td></td>
+                                <td></td>                                
                             </tr>
                         </table>
                         <br />

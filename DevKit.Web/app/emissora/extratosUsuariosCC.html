@@ -42,14 +42,14 @@
                 <table>
                     <tr>
                         <td valign="top">
-                            <div ng-show="result == null">
+                            <div ng-show="result.failed == true">
                                 <br />
                                 <br />
                                 <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
                                 <br />
                                 <br />
                             </div>
-                            <div ng-show="result.nome != null">
+                            <div ng-show="result.failed == false">
                                 <h4>Extrato Completo Associado (Cartão e Despesas Associativas)</h4>
                                 <br />
                                 <table>
@@ -61,7 +61,7 @@
                                         <td>Nome: <b>{{result.nome}}</b> </td>
                                     </tr>
                                     <tr>
-                                        <td>Mês / Ano Ref.: <b>{{campos.mes_inicial}} / {{campos.ano_inicial}}</b></td>
+                                        <td>Mês / Ano Ref.: <b>{{result.mes_inicial}} / {{result.ano_inicial}}</b></td>
                                     </tr>
                                 </table>
                                 <br />

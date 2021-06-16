@@ -85,20 +85,20 @@ namespace DevKit.Web.Controllers
             {
                 if (item.bRecorrente == false)
                 {
-                    var d = tmp_lstCCsEmpRec.FirstOrDefault(y => y.id == item.fkTipo);
+                    var d = tmp_lstCCsEmp.FirstOrDefault(y => y.id == item.fkTipo);
 
                     if (d != null)
                         lstCC.Add(new DtoExtratoUsuario_LancCC
                         {
                             cod = d.stCodigo,
                             desc = d.stDescricao,
-                            parc = item.nuParcela.ToString(),
+                            parc = item.nuParcela.ToString() + " / " + item.nuTotParcelas,
                             vlrParc = mon.setMoneyFormat((long)item.vrValor),
                         });
                 }
                 else
                 {
-                    var d = tmp_lstCCsEmp.FirstOrDefault(y => y.id == item.fkTipo);
+                    var d = tmp_lstCCsEmpRec.FirstOrDefault(y => y.id == item.fkTipo);
 
                     if (d != null)
                         lstCC.Add(new DtoExtratoUsuario_LancCC

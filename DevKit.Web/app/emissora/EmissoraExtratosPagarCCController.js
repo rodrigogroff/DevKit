@@ -11,7 +11,7 @@ angular.module('app.controllers').controller('EmissoraExtratosPagarCCController'
 
             $scope.date = new Date();
 
-            $scope.result = null;
+            $scope.result = { };
 
             $scope.campos = {
                 mes_inicial: $scope.date.getMonth() + 1,
@@ -23,22 +23,31 @@ angular.module('app.controllers').controller('EmissoraExtratosPagarCCController'
 
             $scope.search = function () {
 
-                $scope.loading = true;
-                $scope.result = null;
+                $scope.loading = true;                
 
                 if ($scope.campos.mes_inicial !== undefined &&
-                    $scope.campos.ano_inicial !== undefined) {
-
+                    $scope.campos.ano_inicial !== undefined)
+                {
                     var opcoes = {
-                        mat: $scope.campos.mat,
                         mes: $scope.campos.mes_inicial,
                         ano: $scope.campos.ano_inicial,
                     };
 
                     Api.EmissoraLancCCExtratoPagar.listPage(opcoes, function (data) {
-                        $scope.result = data;                        
+                        $scope.result = data;
+                        $scope.result.failed = false;
+                        $scope.loading = false;
+                    },
+                    function () {
+                        $scope.result = {}
+                        $scope.result.failed = true;                        
                         $scope.loading = false;
                     });
+                }
+                else {
+                    toastr.error('Parâmetros inválidos!', 'Erro');
+                    $scope.result = {}
+                    $scope.result.failed = true;
                 }
             };
 
@@ -81,11 +90,25 @@ angular.module('app.controllers').controller('EmissoraExtratosPagarCCController'
                             "<td>" + m.vlrRepasse + "</td></tr>";
                     }
 
-                    printContents += "<br>";
+                    printContents += "</table><br>";
                     printContents += "<h4>Total: " + data.vlrTotal + "</h4>";
                     printContents += "<h4>Total Comissão: " + data.vlrTotComissao + "</h4>";
                     printContents += "<br>";
                     printContents += "<h4>Total contas a pagar: " + data.vlrTotRep + "</h4>";
+                    printContents += "<br>";
+                    printContents += "<h4>Contabilização de despesas por tipo</h4>";
+                    printContents += "<table class='table table-hover'><thead>" +
+                        "<tr><th>Despesa</th><th>Total R$</th><th>Tipo</th><th></tr></thead>";
+
+                    for (var i = 0; i < data.lstTipoDesp.length; i++) {
+                        var m = data.lstTipoDesp[i];
+                        printContents += "<tr>" +
+                            "<td>" + m.nome + "</td>" +
+                            "<td>" + m.total + "</td>" +
+                            "<td>" + m.tipo + "</td>" +
+                            "</tr>";
+                    }
+                    printContents += "</table><br>";
 
                     var popupWin = window.open('', '_blank', 'width=800,height=600');
                     popupWin.document.open();

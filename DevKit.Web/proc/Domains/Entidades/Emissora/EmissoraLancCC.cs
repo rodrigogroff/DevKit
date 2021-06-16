@@ -114,8 +114,8 @@ namespace DevKit.Web.Controllers
                     stFOPA = t_cart.stCodigoFOPA,
                     stNome = t_cart.st_titularidade == "01" ? db.T_Proprietario.FirstOrDefault(y => y.i_unique == t_cart.fk_dadosProprietario).st_nome :
                                                               db.T_Dependente.FirstOrDefault(y => y.i_unique == t_cart.fk_dadosProprietario).st_nome,
-                    stTipo = item.bRecorrente != true ? db.EmpresaDespesa.FirstOrDefault(y => y.id == item.fkTipo).stDescricao :
-                                                        db.EmpresaDespesaRecorrente.FirstOrDefault(y => y.id == item.fkTipo).stDescricao,
+                    stTipo = item.bRecorrente == false ? db.EmpresaDespesa.FirstOrDefault(y => y.id == item.fkTipo).stDescricao :
+                                                         db.EmpresaDespesaRecorrente.FirstOrDefault(y => y.id == item.fkTipo).stDescricao,
                     nuParcela = item.nuTotParcelas > 1 ? item.nuParcela + " / " + item.nuTotParcelas : "1",
                     vrValor = mon.setMoneyFormat((long)item.vrValor),
                 });

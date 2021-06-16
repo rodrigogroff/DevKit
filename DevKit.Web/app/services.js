@@ -43,6 +43,7 @@ angular.module('app.services', ['ngResource'])
     return {
 
         BaixaCC: $resource('api/baixacc', {}, opcoes),
+        EmissoraBaixaCC: $resource('api/EmissoraBaixaCC/:id', {}, opcoes),
         Setup: $resource('api/setup/:id', {}, opcoes),
         Associado: $resource('api/associado/:id', {}, opcoes),
         Loja: $resource('api/loja/:id', {}, opcoes),

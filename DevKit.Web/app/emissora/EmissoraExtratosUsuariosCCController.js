@@ -24,12 +24,14 @@ angular.module('app.controllers').controller('EmissoraExtratosUsuariosCCControll
             $scope.search = function () {
 
                 if ($scope.campos.mat === undefined || $scope.campos.mat === '') {
+                    $scope.result = {};
+                    $scope.result.failed = true;
                     toastr.error('Informar matrícula!', 'Erro');
                     return;
                 }
-                
+
                 if ($scope.campos.mes_inicial !== undefined &&
-                    $scope.campos.ano_inicial !== undefined ) {
+                    $scope.campos.ano_inicial !== undefined) {
 
                     var opcoes = {
                         mat: $scope.campos.mat,
@@ -41,16 +43,25 @@ angular.module('app.controllers').controller('EmissoraExtratosUsuariosCCControll
 
                     Api.EmissoraLancCCExtratoUsuario.listPage(opcoes, function (data) {
                         $scope.result = data;
-
-                        if (data.length == 0)
-                            $scope.result = null;
-
+                        $scope.result.failed = false;
+                        $scope.result.mes_inicial = $scope.campos.mes_inicial;
+                        $scope.result.ano_inicial = $scope.campos.ano_inicial;
+                        $scope.loading = false;
+                    },
+                    function () {
+                        $scope.result = {};
+                        $scope.result.failed = true;
+                        toastr.error('Parâmetros inválidos!', 'Erro');
                         $scope.loading = false;
                     });
                 }
-                else
-                    $scope.result = null;
-            };
+                else {
+                    $scope.result = {};
+                    $scope.result.failed = true;
+                    toastr.error('Parâmetros inválidos!', 'Erro');
+                    $scope.result = {};
+                }
+            }
 
             $scope.imprimir = function () {
 

@@ -53,19 +53,24 @@
                                             <th>ID</th>
                                             <th>Cartão</th>
                                             <th>Associado</th>
-                                            <th>Valor em Aberto</th>                                            
+                                            <th>Valor Vendas</th>
+                                            <th>Valor Despesas</th>
+                                            <th>Valor Total</th>
                                         </tr>
                                     </thead>
                                     <tr data-ng-repeat="mdl in result.listDespCC">
                                         <td>{{ mdl.id }}</td>
                                         <td>{{ mdl.cartao }}</td>
                                         <td>{{ mdl.associado }}</td>
-                                        <td>{{ mdl.vlrTotal }}</td>                                        
+                                        <td>{{ mdl.vlrFech }}</td>
+                                        <td>{{ mdl.vlrDesp }}</td>
+                                        <td>{{ mdl.vlrTotal }}</td>
                                     </tr>
                                 </table>
+                                <p>Total Despesas: {{result.vlrTotDesp}} </p>
+                                <p>Total Fechamento: {{result.vlrTotFech}} </p>
+                                <br />
                                 <p>Total: {{result.vlrTotCC}} </p>
-                                <br />
-                                <br />
                                 <br />
                                 <button class="btn btn-primary" style="width:110px" ng-click="imprimir()" style="">Imprimir</button>
                                 <br />

@@ -37,14 +37,14 @@
                 <table>
                     <tr>
                         <td valign="top">
-                            <div ng-show="result == null">
+                            <div ng-show="result.failed == true">
                                 <br />
                                 <br />
                                 <div class="btn btn-info btn-lg">Nenhum registro encontrado.</div>
                                 <br />
                                 <br />
                             </div>
-                            <div ng-show="result != null">
+                            <div ng-show="result.failed == false">
                                 <h4>RELATÓRIO CONTAS A PAGAR</h4>
                                 <br />
                                 <table class="table table-hover">
@@ -75,6 +75,23 @@
                                 <p>Total Comissão: {{result.vlrTotComissao}} </p>
                                 <br />
                                 <p>Total contas a pagar: {{result.vlrTotRep}} </p>
+                                <br />
+                                <h4>Contabilização de despesas por tipo</h4>
+                                <br />
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Despesa</th>
+                                            <th>Total R$</th>
+                                            <th>Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tr data-ng-repeat="mdl in result.lstTipoDesp">
+                                        <td>{{ mdl.nome }}</td>
+                                        <td>{{ mdl.total }}</td>
+                                        <td>{{ mdl.tipo }}</td>
+                                    </tr>
+                                </table>
                                 <br />
                                 <br />
                                 <br />

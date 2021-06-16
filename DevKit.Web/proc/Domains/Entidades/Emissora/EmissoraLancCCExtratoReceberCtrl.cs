@@ -6,8 +6,7 @@ using System.Linq;
 using System.Web.Http;
 
 namespace DevKit.Web.Controllers
-{
-    
+{    
     public class EmissoraLancCCExtratoReceberController : ApiControllerBase
     {
         public class DtoExtratoReceber_LancCC
@@ -15,6 +14,8 @@ namespace DevKit.Web.Controllers
             public long id { get; set; }
             public string cartao { get; set; }
             public string associado { get; set; }
+            public string vlrFech { get; set; }
+            public string vlrDesp { get; set; }
             public string vlrTotal { get; set; }            
         }
 
@@ -30,6 +31,8 @@ namespace DevKit.Web.Controllers
                 return BadRequest();
 
             long totCC = 0;
+            long totDespFinal = 0;
+            long totFechFinal = 0;
 
             var tEmp = db.currentEmpresa;
             
@@ -51,33 +54,41 @@ namespace DevKit.Web.Controllers
                                select e).
                                 ToList();
 
-            var idsCartoes = queryLancCC.Select(y => (long)y.fkCartao).Distinct().ToList();
+            var idsCartoes = queryLancCC.Select(y => (long)y.fkCartao).Distinct().ToList();            
 
             idsCartoes.AddRange(queryLancFech.Select(y => (long)y.fk_cartao).Distinct().ToList());
 
+            idsCartoes = idsCartoes.Distinct().ToList();
+
             var lstCards = db.T_Cartao.Where(y => idsCartoes.Contains((long)y.i_unique)).ToList();
 
-            var _id = 1;
+            var idsProps = lstCards.Select(y => (long)y.fk_dadosProprietario).Distinct().ToList();
+            var lstProps = db.T_Proprietario.Where(y => idsProps.Contains((long)y.i_unique)).ToList();
 
             foreach (var item in idsCartoes)
             {
                 var t_card = lstCards.FirstOrDefault(y => y.i_unique == item);
-                var t_prop = db.T_Proprietario.FirstOrDefault(y => y.i_unique == t_card.fk_dadosProprietario);
+                var t_prop = lstProps.FirstOrDefault(y => y.i_unique == t_card.fk_dadosProprietario);
 
-                var tot = queryLancCC.Where(y => y.fkCartao == item).Sum(y => (long)y.vrValor);
+                var totDesp = queryLancCC.Where(y => y.fkCartao == item).Sum(y => (long)y.vrValor);
+                var totFech = queryLancFech.Where(y => y.fk_cartao == item).Sum(y => (long)y.vr_valor);
+                var tot = totDesp + totFech;
 
-                tot += queryLancFech.Where(y => y.fk_cartao == item).Sum(y => (long)y.vr_valor);
+                totDespFinal += totDesp;
+                totFechFinal += totFech;
+                totCC += tot;
 
                 var rec = new DtoExtratoReceber_LancCC
                 {
                     id = 1,
                     associado = t_prop.st_nome,
                     cartao = t_card.st_matricula,
+                    vlrDesp = mon.setMoneyFormat(totDesp),
+                    vlrFech = mon.setMoneyFormat(totFech),
                     vlrTotal = mon.setMoneyFormat(tot),
                 };
 
-                lstCC.Add(rec);
-                totCC += tot;
+                lstCC.Add(rec);                
             }
 
             lstCC = lstCC.OrderBy(y => y.associado).ToList();
@@ -89,6 +100,8 @@ namespace DevKit.Web.Controllers
             return Ok(new 
             {
                 vlrTotCC = "R$ " + mon.setMoneyFormat(totCC),
+                vlrTotDesp = "R$ " + mon.setMoneyFormat(totDespFinal),
+                vlrTotFech = "R$ " + mon.setMoneyFormat(totFechFinal),
                 listDespCC = lstCC,
             }); 
         }        

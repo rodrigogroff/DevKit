@@ -109,6 +109,9 @@ angular.module('app.controllers').controller('EmissoraExtratosPagarCCController'
                             "</tr>";
                     }
                     printContents += "</table><br>";
+                    printContents += "<h4>Total despesas: " + data.vlrTotDesp + "</h4>";
+                    printContents += "<br>";
+                    printContents += "<br>";
 
                     var popupWin = window.open('', '_blank', 'width=800,height=600');
                     popupWin.document.open();

@@ -350,10 +350,9 @@ namespace DevKit.Web.Controllers
 
                             vrTotal += tot;
 
-                            if (item.stCodigoFOPA != null)
-                                fs.WriteLine(item.stCodigoFOPA.PadLeft(5, '0') + " ".PadRight(8, ' ') + tot.ToString().PadLeft(8, '0'));
-                            else
-                                fs.WriteLine("XXXXX" + " ".PadRight(8, ' ') + tot.ToString().PadLeft(8, '0'));
+                            var cod = item.stCodigoFOPA != null ? item.stCodigoFOPA.TrimStart('0') : "XXXX";
+
+                            fs.WriteLine(cod.PadLeft(5, '0') + " ".PadRight(8, ' ') + tot.ToString().PadLeft(8, '0'));
                         }
                     }
 

@@ -101,6 +101,49 @@
                         <button class="btn btn-primary" ng-click="pesquisarHistorico()">Buscar</button>
                         <br />
                         <br />
+                        <table class="table table-hover" style="width:500px" ng-if="list.length > 0">
+                            <thead>
+                                <tr>
+                                    <th width="140px">Data</th>
+                                    <th width="90px">Registros</th>
+                                    <th width="120px">Total R$</th>
+                                    <th width="120px">Ações</th>
+                                </tr>
+                            </thead>
+                            <tr data-ng-repeat="mdl in list">
+                                <td>{{ mdl.data }}</td>
+                                <td>{{ mdl.records }}</td>
+                                <td>{{ mdl.vlrTot }}</td>
+                                <td>
+                                    <button class="btn btn-primary" ng-click="desfazerBaixa(mdl)">Desfazer</button>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="modal-backdrop"
+                             ng-if="modalDesfaz == true"
+                             style="background: rgba(55, 55, 55, 0.5 );">
+                            <div class="modal-dialog" style="width:500px">
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <div class="modal-content" style="color:black">
+                                    <h3>Deseja desfazer estes lançamentos? </h3>
+                                    <br />
+                                    Data: {{desfaz.data}}<br />
+                                    Registros: {{desfaz.records}}<br />
+                                    R$ {{desfaz.vlrTot}}<br />
+                                    <br />
+                                    <button class="btn btn-info" ng-click="cancelaModalDesfaz()">Cancelar</button>
+                                    &nbsp;&nbsp;
+                                    <button class="btn btn-danger" ng-click="confirmaModalDesfaz()">Sim, desfazer</button>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </tab>
             </tabset>

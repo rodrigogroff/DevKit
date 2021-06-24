@@ -43,7 +43,7 @@ namespace DevKit.Web.Controllers
             if (!StartDatabaseAndAuthorize())
                 return BadRequest();
 
-            long totCC = 0, totComissao = 0, totRep = 0;
+            long totCC = 0, totComissao = 0, totRep = 0, totDesp = 0;
 
             var tEmp = db.currentEmpresa;
             
@@ -67,12 +67,18 @@ namespace DevKit.Web.Controllers
                 var tDesp = db.EmpresaDespesaRecorrente.FirstOrDefault(y => y.id == item);
 
                 if (tDesp != null)
+                {
+                    var vr = queryLancCCDesp.Where(y => y.bRecorrente == true && y.fkTipo == item).Sum(y => (long)y.vrValor);
+
                     lstTipoDesp.Add(new DtoTipoDespesaSoma
                     {
                         nome = tDesp.stCodigo + " - " + tDesp.stDescricao,
                         tipo = "Recorrente",
-                        total = mon.setMoneyFormat(queryLancCCDesp.Where ( y=> y.bRecorrente == true && y.fkTipo == item).Sum ( y=> (long)y.vrValor)),
+                        total = mon.setMoneyFormat(vr),
                     });
+
+                    totDesp += vr;
+                }
             }
 
             foreach (var item in lst_tipos_normal)
@@ -80,12 +86,18 @@ namespace DevKit.Web.Controllers
                 var tDesp = db.EmpresaDespesa.FirstOrDefault(y => y.id == item);
 
                 if (tDesp != null)
+                {
+                    var vr = queryLancCCDesp.Where(y => y.bRecorrente == false && y.fkTipo == item).Sum(y => (long)y.vrValor);
+
                     lstTipoDesp.Add(new DtoTipoDespesaSoma
                     {
                         nome = tDesp.stCodigo + " - " + tDesp.stDescricao,
                         tipo = "Avulso",
-                        total = mon.setMoneyFormat(queryLancCCDesp.Where(y => y.bRecorrente == false && y.fkTipo == item).Sum(y => (long)y.vrValor)),
+                        total = mon.setMoneyFormat(vr),
                     });
+
+                    totDesp += vr;
+                }
             }
 
             // ---------------------------------------------------------------
@@ -150,7 +162,8 @@ namespace DevKit.Web.Controllers
                 vlrTotComissao = "R$ " + mon.setMoneyFormat(totComissao),
                 vlrTotRep = "R$ " + mon.setMoneyFormat(totRep),
                 listPagarCC = lstCC,
-                lstTipoDesp, 
+                lstTipoDesp,
+                vlrTotDesp = "R$ " + mon.setMoneyFormat(totDesp),
             }); 
         }        
     }

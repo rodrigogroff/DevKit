@@ -134,7 +134,7 @@ namespace DevKit.Web.Controllers
                         var stLine = line.Replace("\t", " ");
 
                         var mat = stLine.Substring(0, 5).PadLeft(5,'0');
-                        var t_cart = db.T_Cartao.FirstOrDefault(y => (y.st_matricula == mat || y.stCodigoFOPA == mat) && y.st_empresa == t_emp.st_empresa);
+                        var t_cart = db.T_Cartao.FirstOrDefault(y => (y.st_matricula == mat.PadLeft(6,'0') || y.stCodigoFOPA == mat) && y.st_empresa == t_emp.st_empresa);
                         var vlrBaixa = Convert.ToInt64(stLine.Substring(6).Trim().TrimStart('0'));
                         var vlrLancsCartao = db.LancamentosCC.Where(y => y.nuAno == ano && y.nuMes == mes && y.fkCartao == t_cart.i_unique).Sum(y => (long) y.vrValor);
                         var vrFinal = vlrLancsCartao - vlrBaixa;

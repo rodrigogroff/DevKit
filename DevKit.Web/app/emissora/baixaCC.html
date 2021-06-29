@@ -71,7 +71,7 @@
                                 <td>
                                     <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="6" ng-model="campos.valor">
                                 </td>
-                                <td></td>                                
+                                <td></td>
                             </tr>
                         </table>
                         <br />
@@ -119,7 +119,6 @@
                                 </td>
                             </tr>
                         </table>
-
                         <div class="modal-backdrop"
                              ng-if="modalDesfaz == true"
                              style="background: rgba(55, 55, 55, 0.5 );">
@@ -142,8 +141,47 @@
                                 </div>
                             </div>
                         </div>
-
-
+                    </div>
+                </tab>
+                <tab heading="Conferência">
+                    <div style="margin-left:30px;margin-top:20px">
+                        <table>
+                            <tr height="43px">
+                                <td width="90px"><b>Ano</b></td>
+                                <td width="120px">
+                                    <input type="text" class="form-control input-transparent" maxlength="4"
+                                           ng-model="campos.ano_inicial">
+                                </td>
+                                <td width="20px"></td>
+                                <td width="70px"><b>Mês</b></td>
+                                <td width="120px">
+                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
+                                </td>
+                                <td width="20px"></td>
+                            </tr>
+                        </table>
+                        <br />
+                        <button class="btn btn-primary" ng-click="pesquisarConferencia()">Buscar</button>
+                        <br />
+                        <br />
+                        <table class="table table-hover" style="width:600px" ng-if="list.length > 0">
+                            <thead>
+                                <tr>
+                                    <th width="140px">Nome</th>
+                                    <th width="90px">Matricula</th>
+                                    <th width="120px">Lançamentos R$</th>
+                                    <th width="120px">Baixa R$</th>
+                                    <th width="120px">Situação</th>
+                                </tr>
+                            </thead>
+                            <tr data-ng-repeat="mdl in list">
+                                <td>{{ mdl.nome }}</td>
+                                <td>{{ mdl.mat }}</td>
+                                <td>{{ mdl.vlrTotLanc }}</td>
+                                <td>{{ mdl.vlrTotBaixa }}</td>
+                                <td>{{ mdl.status }}</td>
+                            </tr>
+                        </table>
                     </div>
                 </tab>
             </tabset>

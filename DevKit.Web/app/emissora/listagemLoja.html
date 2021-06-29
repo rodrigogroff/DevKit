@@ -11,7 +11,6 @@
             </table>
         </legend>
         <div class="divWebForm" style="max-width:95%;min-width:95%">
-
             <table width="500px" ng-if="tipo==5">
                 <tr>
                     <td width="20px"></td>
@@ -27,7 +26,6 @@
                 </tr>
                 <tr height="22px"> </tr>
             </table>
-
             <table class="widget" style="color: white">
                 <tr height="22px"> </tr>
                 <tr height="43px">
@@ -119,7 +117,6 @@
     <br />
     <br />
     <br />
-
     <div class="modal-backdrop"
          ng-if="modal == true"
          style="background: rgba(55, 55, 55, 0.5 );">
@@ -132,10 +129,8 @@
                     Edição de dados bancários
                     <button class="btn btn-transparent btn-lg pull-right" style="margin-top:-10px" ng-click="cancelarModal()"> X </button> &nbsp;
                 </legend>
-                <p>
-                    <b>{{editLoja.nome}}</b><br />
-                    {{editLoja.razSoc}}
-                </p>
+                <b>{{editLoja.nome}}</b><br />
+                {{editLoja.razSoc}}<br />                
                 <table>
                     <thead>
                         <tr>
@@ -183,6 +178,20 @@
                                    maxlength="20"
                                    style="background-color:lightgrey"
                                    ng-model="editLoja.st_conta" />
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr height="40px">
+                        <td></td>
+                        <td>Taxa Administrativa</td>
+                        <td></td>
+                        <td>
+                            <input type="text"
+                                   class="form-control input-transparent"
+                                   maxlength="20"
+                                   onKeyUp="money(this,Valor);"
+                                   style="background-color:lightgrey"
+                                   ng-model="editLoja.txAdmin" />
                         </td>
                         <td></td>
                     </tr>

@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using System;
 using System.Linq;
 using System.Web.Http;
 
@@ -8,9 +9,10 @@ namespace DevKit.Web.Controllers
     {
         public int fk_banco = 0;
 
-        public string   codigo = "", 
-                        st_agencia = "", 
-                        st_conta = "";
+        public string codigo = "",
+                        st_agencia = "",
+                        st_conta = "",
+                        txAdmin = "";
     }
 
     public class LojaBancoController : ApiControllerBase
@@ -33,6 +35,17 @@ namespace DevKit.Web.Controllers
 
                     db.Update(upd);
                 }
+            }
+
+            var t_emp = db.currentEmpresa;
+
+            if (t_emp != null)
+            {
+                var conv = db.LINK_LojaEmpresa.FirstOrDefault(y => y.fk_loja == upd.i_unique && y.fk_empresa == t_emp.i_unique);
+
+                conv.tx_admin = (int) ObtemValor(mdl.txAdmin);
+
+                db.Update(conv);
             }
 
             return Ok();

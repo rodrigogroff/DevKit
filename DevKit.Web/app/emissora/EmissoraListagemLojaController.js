@@ -31,7 +31,19 @@ angular.module('app.controllers').controller('EmissoraListagemLojaController',
             }
 
             $scope.abrirModal = function (mdl) {
-                $scope.editLoja = mdl;
+
+                $scope.editLoja = {
+                    nome: mdl.nome,
+                    codigo: mdl.codigo,
+                    razSoc: mdl.razSoc,
+                    fk_banco: mdl.fk_banco,
+                    txAdmin: mdl.txAdmin,
+                    st_agencia: mdl.agencia,
+                    st_conta: mdl.conta,
+                };
+
+                console.log($scope.editLoja);
+
                 $scope.modal = true;
             }
 
@@ -41,15 +53,13 @@ angular.module('app.controllers').controller('EmissoraListagemLojaController',
 
             $scope.fecharModal = function () {
                 $scope.modal = false;
-                if ($scope.editLoja.fk_banco > 0) {
-                    Api.LojaBanco.update({ id: $scope.campos.id }, $scope.editLoja, function (data) {
-                        $scope.search();
-                    },
-                        function (response) {
-                            toastr.error(response.data.message, 'Erro');
-                            $scope.loading = false;
-                        });
-                }
+                Api.LojaBanco.update({ id: $scope.campos.id }, $scope.editLoja, function (data) {
+                    $scope.search();
+                },
+                function (response) {
+                    toastr.error(response.data.message, 'Erro');
+                    $scope.loading = false;
+                });                
             }
 
             $scope.search = function () {

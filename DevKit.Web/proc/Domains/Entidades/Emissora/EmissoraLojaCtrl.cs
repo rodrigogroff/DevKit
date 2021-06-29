@@ -10,7 +10,9 @@ namespace DevKit.Web.Controllers
 {
     public class LojaListagemDTO
     {
-        public string nome, 
+        public long fk_banco;
+
+        public string nome,                        
                         razSoc,
                         cnpj,
                         telefone,
@@ -117,6 +119,7 @@ namespace DevKit.Web.Controllers
 
                 res.Add(new LojaListagemDTO
                 {
+                    fk_banco = item.fk_banco != null ? (int)item.fk_banco : 0,
                     nome = item.st_nome,
                     razSoc = item.st_social,
                     cnpj = item.nu_CNPJ,

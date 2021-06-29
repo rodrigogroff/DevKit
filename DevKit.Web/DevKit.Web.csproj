@@ -783,6 +783,7 @@
     <Compile Include="proc\Domains\DBA\UsuarioParceiroDBAResetSenhaCtrl.cs" />
     <Compile Include="proc\Domains\DBA\UsuarioParceiroDBACtrl.cs" />
     <Compile Include="proc\Domains\Entidades\ConveniosCtrl.cs" />
+    <Compile Include="proc\Domains\Entidades\Emissora\EmissoraBaixaCCConfController.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraBaixaCCHistController.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaRecCtrl.cs" />
     <Compile Include="proc\Domains\Entidades\Emissora\EmissoraDespesaCtrl.cs" />

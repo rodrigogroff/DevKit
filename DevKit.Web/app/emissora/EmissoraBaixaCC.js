@@ -80,6 +80,22 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
                 });
             }
 
+            $scope.pesquisarConferencia = function () {
+
+                $scope.loading = true;
+
+                var opcoes = {
+                    ano: $scope.campos.ano_inicial,
+                    mes: $scope.campos.mes_inicial,
+                };
+
+                Api.EmissoraBaixaCCConf.listPage(opcoes, function (data) {
+                    $scope.list = data.results;
+                    $scope.total = data.count;
+                    $scope.loading = false;
+                });
+            }
+
             $scope.desfazerBaixa = function (mdl) {
                 $scope.modalDesfaz = true;
                 $scope.desfaz = mdl;

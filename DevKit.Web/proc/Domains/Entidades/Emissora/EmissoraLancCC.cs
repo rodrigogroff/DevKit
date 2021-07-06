@@ -1,6 +1,5 @@
 ﻿using DataModel;
 using LinqToDB;
-using SocialExplorer.IO.FastDBF;
 using SyCrafEngine;
 using System;
 using System.Collections;
@@ -34,9 +33,6 @@ namespace DevKit.Web.Controllers
         [HttpGet]
         public IHttpActionResult Get()
         {
-            var skip = Request.GetQueryStringValue<int>("skip");
-            var take = Request.GetQueryStringValue<int>("take");
-
             var del_item = Request.GetQueryStringValue<int?>("del_item");
 
             var nome = Request.GetQueryStringValue("nome");
@@ -73,10 +69,17 @@ namespace DevKit.Web.Controllers
                 }
             }
 
+            var lstDespValidIds = db.EmpresaDespesa.
+                Where(y => y.fkEmpresa == tEmp.i_unique).
+                Select(y => (int)y.id).
+                Distinct().
+                ToList();
+
             var query = (from e in db.LancamentosCC
                          where e.fkEmpresa == tEmp.i_unique
                          where e.nuAno == ano
                          where e.nuMes == mes
+                         where lstDespValidIds.Contains( (int) e.fkTipo)
                          select e);
 
             if (!string.IsNullOrEmpty(nome))
@@ -100,9 +103,19 @@ namespace DevKit.Web.Controllers
 
             var res = new List<DtoEmissoraLancCC>();
 
-            foreach (var item in query.Skip(skip).Take(take).ToList())
+            var lstRes = query.ToList();
+
+            var lst_cards_ids = lstRes.Select(y =>  (int) y.fkCartao).Distinct().ToList();
+            var lst_empresa_desp = db.EmpresaDespesa.Where(y => y.fkEmpresa == tEmp.i_unique).ToList();
+            var lst_empresa_desp_rec = db.EmpresaDespesaRecorrente.Where(y => y.fkEmpresa == tEmp.i_unique).ToList();
+
+            var lst_cards = db.T_Cartao.Where(y => lst_cards_ids.Contains((int)y.i_unique)).ToList();
+            var lst_prop_ids = lst_cards.Select(y => (int)y.fk_dadosProprietario).Distinct().ToList();
+            var lst_props = db.T_Proprietario.Where(y => lst_prop_ids.Contains((int)y.i_unique)).ToList();
+
+            foreach (var item in lstRes)
             {
-                var t_cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == item.fkCartao);
+                var t_cart = lst_cards.FirstOrDefault(y => y.i_unique == item.fkCartao);
 
                 res.Add(new DtoEmissoraLancCC
                 {
@@ -112,14 +125,15 @@ namespace DevKit.Web.Controllers
                     nuMes = item.nuMes.ToString(),
                     nuMatricula = t_cart.st_matricula,
                     stFOPA = t_cart.stCodigoFOPA,
-                    stNome = t_cart.st_titularidade == "01" ? db.T_Proprietario.FirstOrDefault(y => y.i_unique == t_cart.fk_dadosProprietario).st_nome :
-                                                              db.T_Dependente.FirstOrDefault(y => y.i_unique == t_cart.fk_dadosProprietario).st_nome,
-                    stTipo = item.bRecorrente == false ? db.EmpresaDespesa.FirstOrDefault(y => y.id == item.fkTipo).stDescricao :
-                                                         db.EmpresaDespesaRecorrente.FirstOrDefault(y => y.id == item.fkTipo).stDescricao,
+                    stNome = lst_props.FirstOrDefault(y => y.i_unique == t_cart.fk_dadosProprietario).st_nome,
+                    stTipo = item.bRecorrente == false ? "[" + lst_empresa_desp.FirstOrDefault(y => y.id == item.fkTipo).stCodigo + "] " + lst_empresa_desp.FirstOrDefault(y => y.id == item.fkTipo).stDescricao :
+                                                         "[" + lst_empresa_desp_rec.FirstOrDefault(y => y.id == item.fkTipo).stCodigo + "] " + lst_empresa_desp_rec.FirstOrDefault(y => y.id == item.fkTipo).stDescricao,
                     nuParcela = item.nuTotParcelas > 1 ? item.nuParcela + " / " + item.nuTotParcelas : "1",
                     vrValor = mon.setMoneyFormat((long)item.vrValor),
                 });
             }
+
+            res = res.OrderBy(y => y.stNome).ToList();
 
             return Ok(new { count = query.Count(), results = res });
         }
@@ -279,10 +293,16 @@ namespace DevKit.Web.Controllers
                 string dir = "C:\\fechamento_dbf",
                         file = "FL" + tEmpresa.st_empresa + "-" + mes + ano.Substring(2),
                         ext = "txt";
-                
+
                 // ------------------------------------------------------
                 // acrescenta o movimento do mes/ano desejado
                 // ------------------------------------------------------
+
+                var lstDespValidIds = db.EmpresaDespesa.
+                Where(y => y.stCodigo != "10" && y.stCodigo != "11" && y.fkEmpresa == tEmpresa.i_unique).
+                Select(y => (int)y.id).
+                Distinct().
+                ToList();
 
                 var lstFechamento = (from e in db.LOG_Fechamento
                                      join cart in db.T_Cartao on e.fk_cartao equals (int)cart.i_unique
@@ -321,10 +341,11 @@ namespace DevKit.Web.Controllers
                                   select e).
                                    ToList();
                 
-                var lancsCC = (  from e in db.LancamentosCC
+                var lancsCC = (     from e in db.LancamentosCC
                                     where e.fkEmpresa == tEmpresa.i_unique
                                     where e.nuAno == Convert.ToInt32(ano)
                                     where e.nuMes == Convert.ToInt32(mes)
+                                    where lstDespValidIds.Contains((int)e.fkTipo)
                                     select e).
                                     ToList();
 

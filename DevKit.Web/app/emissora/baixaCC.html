@@ -1,5 +1,5 @@
 ﻿<div class="webFormPosition">
-    <section class="widgetForm" style="width:900px">
+    <section class="widgetForm" style="width:1200px">
         <legend class="legendTop">
             <table><tr height="12px"><td> </td></tr></table>
             <table style="color:white; width:100%">
@@ -101,19 +101,23 @@
                         <button class="btn btn-primary" ng-click="pesquisarHistorico()">Buscar</button>
                         <br />
                         <br />
-                        <table class="table table-hover" style="width:500px" ng-if="list.length > 0">
+                        <table class="table table-hover" style="width:500px" ng-if="listHist.length > 0">
                             <thead>
                                 <tr>
                                     <th width="140px">Data</th>
                                     <th width="90px">Registros</th>
-                                    <th width="120px">Total R$</th>
+                                    <th width="120px">Saldo R$</th>
+                                    <th width="120px">Liquidado R$</th>
+                                    <th width="120px">Pendente R$</th>
                                     <th width="120px">Ações</th>
                                 </tr>
                             </thead>
-                            <tr data-ng-repeat="mdl in list">
+                            <tr data-ng-repeat="mdl in listHist">
                                 <td>{{ mdl.data }}</td>
                                 <td>{{ mdl.records }}</td>
+                                <td>{{ mdl.vlrSaldo }}</td>
                                 <td>{{ mdl.vlrTot }}</td>
+                                <td>{{ mdl.vlrPend }}</td>
                                 <td>
                                     <button class="btn btn-primary" ng-click="desfazerBaixa(mdl)">Desfazer</button>
                                 </td>
@@ -147,41 +151,118 @@
                     <div style="margin-left:30px;margin-top:20px">
                         <table>
                             <tr height="43px">
-                                <td width="90px"><b>Ano</b></td>
-                                <td width="120px">
+                                <td width="90px" valign="top"><b>Ano</b></td>
+                                <td width="120px" valign="top">
                                     <input type="text" class="form-control input-transparent" maxlength="4"
                                            ng-model="campos.ano_inicial">
                                 </td>
                                 <td width="20px"></td>
-                                <td width="70px"><b>Mês</b></td>
-                                <td width="120px">
+                                <td width="70px" valign="top"><b>Mês</b></td>
+                                <td width="120px" valign="top">
                                     <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
                                 </td>
                                 <td width="20px"></td>
+                                <td width="70px" valign="top">
+                                    <button class="btn btn-primary" ng-click="pesquisarConferencia()">Buscar</button>
+                                </td>
+                                <td width="20px" valign="top"></td>
+                                <td width="170px">
+                                    <label style="display:block;"><input type="radio" name="status" id="rdConf" value="1" ng-model="tipoConf"> Todos {{vlr_tot}} </label>
+                                    <label style="display:block;"><input type="radio" name="status" id="rdConf" value="2" ng-model="tipoConf"> Não Liquidados {{vlr_nliq}}</label>
+                                    <label style="display:block;"><input type="radio" name="status" id="rdConf" value="4" ng-model="tipoConf"> Liquidados {{vlr_liq}}</label>
+                                    <label style="display:block;"><input type="radio" name="status" id="rdConf" value="3" ng-model="tipoConf"> Pendentes {{vlr_pend}}</label>
+                                </td>
                             </tr>
                         </table>
                         <br />
-                        <button class="btn btn-primary" ng-click="pesquisarConferencia()">Buscar</button>
-                        <br />
-                        <br />
-                        <table class="table table-hover" style="width:600px" ng-if="list.length > 0">
-                            <thead>
-                                <tr>
-                                    <th width="140px">Nome</th>
-                                    <th width="90px">Matricula</th>
-                                    <th width="120px">Lançamentos R$</th>
-                                    <th width="120px">Baixa R$</th>
-                                    <th width="120px">Situação</th>
+                        <div ng-if="tipoConf == 1">
+                            <table class="table table-hover" style="width:900px" ng-if="listConf.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Matricula</th>
+                                        <th>Remessa Mensal R$</th>
+                                        <th>Liquidado R$</th>
+                                        <th>Saldo R$</th>
+                                        <th>Situação</th>
+                                    </tr>
+                                </thead>
+                                <tr data-ng-repeat="mdl in listConf">
+                                    <td>{{ mdl.nome }}</td>
+                                    <td>{{ mdl.mat }}</td>
+                                    <td>{{ mdl.vlrTotLanc }}</td>
+                                    <td>{{ mdl.vlrTotBaixa }}</td>
+                                    <td>{{ mdl.vlrSaldo}}</td>
+                                    <td>{{ mdl.status }}</td>
                                 </tr>
-                            </thead>
-                            <tr data-ng-repeat="mdl in list">
-                                <td>{{ mdl.nome }}</td>
-                                <td>{{ mdl.mat }}</td>
-                                <td>{{ mdl.vlrTotLanc }}</td>
-                                <td>{{ mdl.vlrTotBaixa }}</td>
-                                <td>{{ mdl.status }}</td>
-                            </tr>
-                        </table>
+                            </table>
+                        </div>
+                        <div ng-if="tipoConf == 2">
+                            <table class="table table-hover" style="width:900px" ng-if="listConf.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Matricula</th>
+                                        <th>Remessa Mensal R$</th>
+                                        <th>Liquidado R$</th>
+                                        <th>Saldo R$</th>
+                                        <th>Situação</th>
+                                    </tr>
+                                </thead>
+                                <tr data-ng-repeat="mdl in listConf | filter: { nuStatus: '3' }">
+                                    <td>{{ mdl.nome }}</td>
+                                    <td>{{ mdl.mat }}</td>
+                                    <td>{{ mdl.vlrTotLanc }}</td>
+                                    <td>{{ mdl.vlrTotBaixa }}</td>
+                                    <td>{{ mdl.vlrSaldo}}</td>
+                                    <td>{{ mdl.status }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="tipoConf == 3">
+                            <table class="table table-hover" style="width:900px" ng-if="listConf.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Matricula</th>
+                                        <th>Remessa Mensal R$</th>
+                                        <th>Liquidado R$</th>
+                                        <th>Saldo R$</th>
+                                        <th>Situação</th>
+                                    </tr>
+                                </thead>
+                                <tr data-ng-repeat="mdl in listConf | filter: { nuStatus: '1' }">
+                                    <td>{{ mdl.nome }}</td>
+                                    <td>{{ mdl.mat }}</td>
+                                    <td>{{ mdl.vlrTotLanc }}</td>
+                                    <td>{{ mdl.vlrTotBaixa }}</td>
+                                    <td>{{ mdl.vlrSaldo}}</td>
+                                    <td>{{ mdl.status }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-if="tipoConf == 4">
+                            <table class="table table-hover" style="width:900px" ng-if="listConf.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Matricula</th>
+                                        <th>Remessa Mensal R$</th>
+                                        <th>Liquidado R$</th>
+                                        <th>Saldo R$</th>
+                                        <th>Situação</th>
+                                    </tr>
+                                </thead>
+                                <tr data-ng-repeat="mdl in listConf | filter: { nuStatus: '2' }">
+                                    <td>{{ mdl.nome }}</td>
+                                    <td>{{ mdl.mat }}</td>
+                                    <td>{{ mdl.vlrTotLanc }}</td>
+                                    <td>{{ mdl.vlrTotBaixa }}</td>
+                                    <td>{{ mdl.vlrSaldo}}</td>
+                                    <td>{{ mdl.status }}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </tab>
             </tabset>

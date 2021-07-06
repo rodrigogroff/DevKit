@@ -31,8 +31,18 @@ namespace DevKit.Web.Controllers
 
             var t_empresa = db.currentEmpresa;
 
+            var lstDespValidIds = db.EmpresaDespesa.
+                Where(y => y.stCodigo != "10" && y.stCodigo != "11" && y.fkEmpresa == t_empresa.i_unique).
+                Select(y => (int)y.id).
+                Distinct().
+                ToList();
+
             var lstFechamento = db.LOG_Fechamento.Where(y => y.fk_empresa == t_empresa.i_unique && y.st_mes == mes.PadLeft(2, '0') && y.st_ano == ano).ToList();
-            var lstLancs = db.LancamentosCC.Where(y => y.fkEmpresa == t_empresa.i_unique && y.nuMes == Convert.ToInt32(mes) && y.nuAno == Convert.ToInt32(ano)).ToList();
+
+            var lstLancs = db.LancamentosCC.
+                    Where(y => y.fkEmpresa == t_empresa.i_unique && y.nuMes == Convert.ToInt32(mes) && y.nuAno == Convert.ToInt32(ano)).
+                    Where (y=> lstDespValidIds.Contains( (int)y.fkTipo)).
+                    ToList();
 
             var env = db.LancamentosCCEmissao.FirstOrDefault(y => y.fkEmpresa == t_empresa.i_unique && y.nuMes == Convert.ToInt32(mes) && y.nuAno == Convert.ToInt32(ano));
 
@@ -52,9 +62,14 @@ namespace DevKit.Web.Controllers
             var m = new money();
             var vlrRemessa = 0;
 
+            var dbCarts = db.T_Cartao.Where(y => lstCarts.Contains((int)y.i_unique)).ToList();
+
+            var lst_ids_prop = dbCarts.Select(y => (int)y.fk_dadosProprietario).Distinct().ToList();
+            var dbProps = db.T_Proprietario.Where(y => lst_ids_prop.Contains((int)y.i_unique)).ToList();
+
             foreach (var item in lstCarts)
             {
-                var t_cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == item);
+                var t_cart = dbCarts.FirstOrDefault(y => y.i_unique == item);
 
                 int vlrFech = lstFechamento.Where(y => y.fk_cartao == item).Sum(y => (int) y.vr_valor);
                 int vlrLanc = lstLancs.Where(y => y.fkCartao == item).Sum(y => (int)y.vrValor);
@@ -66,7 +81,7 @@ namespace DevKit.Web.Controllers
 
                 lancs.Add(new DtoRelLancItem
                 { 
-                    associado = db.T_Proprietario.FirstOrDefault(y=> y.i_unique == t_cart.fk_dadosProprietario)?.st_nome,
+                    associado = dbProps.FirstOrDefault(y=> y.i_unique == t_cart.fk_dadosProprietario)?.st_nome,
                     cartao = t_cart.st_matricula,
                     folha = t_cart.stCodigoFOPA,
                     valor = m.setMoneyFormat(vlrFech),

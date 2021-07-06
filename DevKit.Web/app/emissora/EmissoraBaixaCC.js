@@ -23,6 +23,8 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
                 }
             };
 
+            $scope.tipoConf = 1;
+
             $scope.baixaManual = function () {
 
                 var mdl = {
@@ -74,7 +76,7 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
                 };
 
                 Api.EmissoraBaixaCCHist.listPage(opcoes, function (data) {
-                    $scope.list = data.results;
+                    $scope.listHist = data.results;
                     $scope.total = data.count;
                     $scope.loading = false;
                 });
@@ -89,10 +91,19 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
                     mes: $scope.campos.mes_inicial,
                 };
 
+                $scope.vlr_tot = "";
+                $scope.vlr_nliq = "";
+                $scope.vlr_liq = "";
+                $scope.vlr_pend = "";
+
                 Api.EmissoraBaixaCCConf.listPage(opcoes, function (data) {
-                    $scope.list = data.results;
+                    $scope.listConf = data.results;
                     $scope.total = data.count;
                     $scope.loading = false;
+                    $scope.vlr_tot = data.vlr_tot;
+                    $scope.vlr_nliq = data.vlr_nliq;
+                    $scope.vlr_liq = data.vlr_liq;
+                    $scope.vlr_pend = data.vlr_pend;
                 });
             }
 

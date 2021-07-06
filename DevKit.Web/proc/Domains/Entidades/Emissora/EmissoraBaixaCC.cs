@@ -112,13 +112,17 @@ namespace DevKit.Web.Controllers
                     t_lanc_tipo = db.EmpresaDespesa.FirstOrDefault(y => y.fkEmpresa == t_emp.i_unique && y.stCodigo == "11");
                 }
 
+                var lstFechamento = db.LOG_Fechamento.Where(y => y.fk_empresa == t_emp.i_unique && y.st_ano == ano.ToString() && y.st_mes == mes.ToString().PadLeft(2,'0')).ToList();
+                var lstDespesas = db.LancamentosCC.Where(y => y.nuAno == ano && y.nuMes == mes ).ToList();
+                var lstCartoes = db.T_Cartao.Where(y => y.st_empresa == t_emp.st_empresa).ToList();
+
                 foreach (string file in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[file];
                     var binReader = new BinaryReader(postedFile.InputStream);
                     byte[] byteArray = binReader.ReadBytes(postedFile.ContentLength);
 
-                    string result = System.Text.Encoding.UTF8.GetString(byteArray);
+                    string result = System.Text.Encoding.UTF8.GetString(byteArray);                   
 
                     var fkBaixa = Convert.ToInt64(db.InsertWithIdentity(new LancamentosCCBaixa
                     {
@@ -129,33 +133,103 @@ namespace DevKit.Web.Controllers
                         nuYear = ano
                     }));
 
+                    var dtAnoMes = new DateTime(ano, mes, 1);
+                    var dtAnoMesProx = new DateTime(ano, mes, 1).AddMonths(1);
+
+                    int nuRecords = 0;
+
+                    var report = "";
+
                     foreach (var line in result.Split ('\n'))
                     {
                         var stLine = line.Replace("\t", " ");
 
-                        var mat = stLine.Substring(0, 5).PadLeft(5,'0');
-                        var t_cart = db.T_Cartao.FirstOrDefault(y => (y.st_matricula == mat.PadLeft(6,'0') || y.stCodigoFOPA == mat) && y.st_empresa == t_emp.st_empresa);
+                        if (stLine == "")
+                            continue;
+
+                        var mat = stLine.Substring(0, 6);
+
+                        if (mat[0] == 65279)
+                            mat = mat.Substring(1);
+
+                        report += "--------------------------------------\n";
+                        report += "Recebido fopa: " + mat + "\n";
+
+                        mat = mat.TrimStart('0');
+
+                        var t_cart = lstCartoes.FirstOrDefault(y => y.stCodigoFOPA != null && Convert.ToInt32(y.stCodigoFOPA) == Convert.ToInt32(mat));
+
+                        if (t_cart == null)
+                        {
+                            t_cart = lstCartoes.FirstOrDefault(y => y.st_matricula == mat.PadLeft(6, '0'));
+
+                            if (t_cart == null)
+                            {
+                                report += "Cartão não existe!\n";
+                                continue;
+                            }
+                        }
+
+                        report += "Cartão existe: " + t_cart.i_unique + "\n"; ;
+
+                        nuRecords++;
+
                         var vlrBaixa = Convert.ToInt64(stLine.Substring(6).Trim().TrimStart('0'));
-                        var vlrLancsCartao = db.LancamentosCC.Where(y => y.nuAno == ano && y.nuMes == mes && y.fkCartao == t_cart.i_unique).Sum(y => (long) y.vrValor);
+
+                        var vlrLancsCartao = lstDespesas.Where(y => y.fkCartao == t_cart.i_unique).Sum(y => (long) y.vrValor) +
+                                             lstFechamento.Where ( y=> y.fk_cartao == t_cart.i_unique).Sum(y => (long)y.vr_valor);
+
                         var vrFinal = vlrLancsCartao - vlrBaixa;
 
-                        if (vrFinal > 0)
+                        report += "vlrBaixa: " + vlrBaixa + " lancs e fech: " + vlrLancsCartao + " Final: " + vrFinal + "\n";
+
+                        if (vrFinal >= 0)
+                        {
+                            report += "Registro baixado!\n";
+
                             db.Insert(new LancamentosCC
                             {
                                 bRecorrente = false,
                                 dtLanc = DateTime.Now,
                                 fkBaixa = fkBaixa,
-                                fkCartao = (long) t_cart.i_unique,
-                                fkEmpresa = (long) t_emp.i_unique,
+                                fkCartao = (long)t_cart.i_unique,
+                                fkEmpresa = (long)t_emp.i_unique,
                                 fkInicial = null,
                                 fkTipo = t_lanc_tipo.id,
-                                nuAno = ano,
-                                nuMes = mes,
+                                nuAno = dtAnoMes.Year,
+                                nuMes = dtAnoMes.Month,
+                                nuParcela = 1,
+                                nuTotParcelas = 1,
+                                vrValor = vlrBaixa,
+                            });
+
+                            db.Insert(new LancamentosCC
+                            {
+                                bRecorrente = false,
+                                dtLanc = DateTime.Now,
+                                fkBaixa = fkBaixa,
+                                fkCartao = (long)t_cart.i_unique,
+                                fkEmpresa = (long)t_emp.i_unique,
+                                fkInicial = null,
+                                fkTipo = t_lanc_tipo.id,
+                                nuAno = dtAnoMesProx.Year,
+                                nuMes = dtAnoMesProx.Month,
                                 nuParcela = 1,
                                 nuTotParcelas = 1,
                                 vrValor = vrFinal,
                             });
+                        }
+                        else
+                        {
+                            report += "Registro não baixado, por valor negativo ou zerado \n";
+                        }
                     }
+
+                    var tBaixa = db.LancamentosCCBaixa.FirstOrDefault(y => y.id == fkBaixa);
+
+                    tBaixa.nuRecords = nuRecords;
+
+                    db.Update(tBaixa);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.Created);

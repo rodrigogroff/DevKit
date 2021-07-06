@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerIsoV2", "ServerIsoV2\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fechamento", "Fechamento\Fechamento.csproj", "{761BFCFA-A534-407E-AB4E-160E05A409E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calc", "Calc\Calc.csproj", "{5A79368B-91E6-4F23-BC7B-D20F1F2F9C7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,14 @@ Global
 		{761BFCFA-A534-407E-AB4E-160E05A409E9}.Stress|Any CPU.Build.0 = Release|Any CPU
 		{761BFCFA-A534-407E-AB4E-160E05A409E9}.Validation|Any CPU.ActiveCfg = Release|Any CPU
 		{761BFCFA-A534-407E-AB4E-160E05A409E9}.Validation|Any CPU.Build.0 = Release|Any CPU
+		{5A79368B-91E6-4F23-BC7B-D20F1F2F9C7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A79368B-91E6-4F23-BC7B-D20F1F2F9C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A79368B-91E6-4F23-BC7B-D20F1F2F9C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A79368B-91E6-4F23-BC7B-D20F1F2F9C7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A79368B-91E6-4F23-BC7B-D20F1F2F9C7F}.Stress|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A79368B-91E6-4F23-BC7B-D20F1F2F9C7F}.Stress|Any CPU.Build.0 = Debug|Any CPU
+		{5A79368B-91E6-4F23-BC7B-D20F1F2F9C7F}.Validation|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A79368B-91E6-4F23-BC7B-D20F1F2F9C7F}.Validation|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

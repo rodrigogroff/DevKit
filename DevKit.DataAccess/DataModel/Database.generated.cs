@@ -201,6 +201,8 @@ namespace DataModel
         [Column, Nullable] public long? nuMonth { get; set; }
         [Column, Nullable] public long? nuYear { get; set; }
         [Column, Nullable] public DateTime? dtLog { get; set; }
+        [Column, Nullable] public long? nuRecords { get; set; }
+        [Column, Nullable] public string stReport { get; set; }
     }
 
     [Table(Schema = "dbo", Name = "DashboardGrafico")]

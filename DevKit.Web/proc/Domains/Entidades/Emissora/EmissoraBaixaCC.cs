@@ -50,15 +50,22 @@ namespace DevKit.Web.Controllers
                 t_lanc_tipo = db.EmpresaDespesa.FirstOrDefault(y => y.fkEmpresa == tEmp.i_unique && y.stCodigo == "10");
             }
 
+            var vlrLancsCartao = db.LancamentosCC.Where(y => y.nuAno == desp.ano && y.nuMes == desp.mes && y.fkCartao == desp.idCartao).Sum(y => (long)y.vrValor) +
+                                 db.LOG_Fechamento.Where(y => y.st_ano == desp.ano.ToString() && y.st_mes == desp.mes.ToString().PadLeft(2, '0') && y.fk_cartao == desp.idCartao).Sum(y => (long)y.vr_valor);
+
             var vlrBaixa = ObtemValor(desp.valor);
-            var vlrLancsCartao = db.LancamentosCC.Where(y => y.nuAno == desp.ano && y.nuMes == desp.mes && y.fkCartao == desp.idCartao).Sum(y => (long)y.vrValor);
-            var vrFinal = vlrLancsCartao - vlrBaixa;
+
+            if (vlrBaixa > vlrLancsCartao)
+                return BadRequest("Valor deve ser inferior ou igual ao saldo em aberto");
+
+            var t_cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == desp.idCartao);
 
             db.Insert(new LancamentosCC
             {
                 bRecorrente = false,
                 dtLanc = System.DateTime.Now,
                 fkInicial = null,
+                fkUser = userIdLoggedUsuario,
                 fkBaixa = null,
                 fkCartao = desp.idCartao,
                 fkEmpresa = (long) tEmp.i_unique,
@@ -67,9 +74,59 @@ namespace DevKit.Web.Controllers
                 nuMes = desp.mes,
                 nuParcela = 1,
                 nuTotParcelas = 1,
-                vrValor = vrFinal,
+                vrValor = vlrBaixa,
             });
-            
+
+            db.Insert(new LancamentosCCAudit
+            {
+                dtLog = DateTime.Now,
+                fkEmpresa = (int)tEmp.i_unique,
+                fkTipo = t_lanc_tipo.id,
+                nuAno = desp.ano,
+                nuMes = desp.mes,
+                vrValor = vlrBaixa,
+                fkUser = userIdLoggedUsuario,
+                nuOper = 4,
+                stCartao = t_cart.st_matricula + " - " + t_cart.stCodigoFOPA
+            });
+
+            var vrFinal = vlrLancsCartao - vlrBaixa;
+
+            if (vrFinal > 0)
+            {
+                var dtProx = new DateTime((int)desp.ano, (int)desp.mes, 1).AddMonths(1);
+
+                db.Insert(new LancamentosCC
+                {
+                    bRecorrente = false,
+                    dtLanc = System.DateTime.Now,
+                    fkInicial = null,
+                    fkBaixa = null,
+                    fkUser = userIdLoggedUsuario,
+                    fkCartao = desp.idCartao,
+                    fkEmpresa = (long)tEmp.i_unique,
+                    fkTipo = t_lanc_tipo.id,
+                    nuAno = dtProx.Year,
+                    nuMes = dtProx.Month,
+                    nuParcela = 1,
+                    nuTotParcelas = 1,
+                    vrValor = vrFinal,
+                });
+
+                db.Insert(new LancamentosCCAudit
+                {
+                    dtLog = DateTime.Now,
+                    fkEmpresa = (int)tEmp.i_unique,
+                    fkTipo = t_lanc_tipo.id,
+                    nuAno = dtProx.Year,
+                    nuMes = dtProx.Month,
+                    vrValor = vlrBaixa,
+                    fkUser = userIdLoggedUsuario,
+                    nuOper = 4,
+                    stCartao = t_cart.st_matricula + " - " + t_cart.stCodigoFOPA
+                });
+            }
+
             return Ok(desp);
         }
 
@@ -228,6 +285,7 @@ namespace DevKit.Web.Controllers
                     var tBaixa = db.LancamentosCCBaixa.FirstOrDefault(y => y.id == fkBaixa);
 
                     tBaixa.nuRecords = nuRecords;
+                    tBaixa.stReport = report;
 
                     db.Update(tBaixa);
                 }

@@ -28,11 +28,11 @@
                     </td>
                     <td width="20px"></td>
                     <td width="120px" align="right">
-                        <button class="btn btn-primary" style="width:110px" ng-click="search()" style="">Pesquisar</button>
+                        <button class="btn btn-primary" style="width:110px" ng-click="search()">Pesquisar</button>
                     </td>
                     <td width="20px"></td>
                     <td width="120px" align="right">
-                        
+                        <button class="btn btn-danger" style="width:110px" ng-click="audit()">Auditoria</button>
                     </td>
                     <td width="20px"></td>
                 </tr>                
@@ -66,6 +66,27 @@
                 <table>
                     <tr>
                         <td valign="top">
+                            <div ng-if="listAudit.length > 0">
+                                <h4>Lançamentos de auditoria</h4>
+                                <table class="table table-hover" style="width: 1100px" ng-if="listAudit.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th>Operador</th>
+                                            <th>Data</th>
+                                            <th>Operação</th>
+                                            <th>Cartão</th>
+                                            <th>Valor R$</th>
+                                        </tr>
+                                    </thead>
+                                    <tr data-ng-repeat="mdl in listAudit">
+                                        <td>{{ mdl.operador }}</td>
+                                        <td>{{ mdl.data }}</td>
+                                        <td>{{ mdl.oper }}</td>
+                                        <td>{{ mdl.cartao }}</td>
+                                        <td>{{ mdl.vlr}}</td>
+                                    </tr>
+                                </table>
+                            </div>
                             <div ng-show="list.length == 0">
                                 <br />
                                 <br />
@@ -74,7 +95,7 @@
                                 <br />
                             </div>
                             <div ng-show="list.length > 0">
-                                <table class="table table-hover">
+                                <table class="table table-hover" style="width:90%">
                                     <thead>
                                         <tr>
                                             <th>Ações</th>
@@ -87,12 +108,13 @@
                                             <th>Tipo</th>
                                             <th>Valor</th>
                                             <th>Parcela</th>
+                                            <th>Operador</th>
                                         </tr>
                                     </thead>
                                     <tr ng-click="show(mdl)" data-ng-repeat="mdl in list">
                                         <td>
                                             <div class="pull-right">
-                                                <i class="fa fa-edit" style="color:white" ng-click="editar(mdl)" title="Editar"></i>
+                                                <i ng-if="mdl.nuTipo != '10' && mdl.nuTipo != '11'" class="fa fa-edit" style="color:white" ng-click="editar(mdl)" title="Editar"></i>
                                                 <i class="fa fa-times" style="color:white" ng-click="remover(mdl)" title="Remover"></i>
                                             </div>
                                             <div class="modal-backdrop"
@@ -219,6 +241,7 @@
                                         <td style="min-width:120px;">{{ mdl.stTipo }}</td>
                                         <td style="min-width:80px;">{{ mdl.vrValor }}</td>
                                         <td style="min-width:80px;">{{ mdl.nuParcela }}</td>
+                                        <td style="min-width:80px;">{{ mdl.operador }}</td>
                                     </tr>
                                 </table>
                             </div>

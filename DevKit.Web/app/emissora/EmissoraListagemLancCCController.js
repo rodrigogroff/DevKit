@@ -43,9 +43,27 @@ angular.module('app.controllers').controller('EmissoraListagemLancCCController',
                 });                    
             });
 
+            $scope.audit = function () {
+
+                $scope.loading = true;
+                $scope.list = null;
+
+                var opcoes = {
+                    ano: $scope.campos.ano_inicial,
+                    mes: $scope.campos.mes_inicial,
+                };
+
+                Api.EmissoraBaixaCCAudit.listPage(opcoes, function (data) {
+                    $scope.listAudit = data.results;
+                    $scope.total = data.count;
+                    $scope.loading = false;
+                });
+            }
+
             $scope.load = function (skip, take) {
 
                 $scope.loading = true;
+                $scope.listAudit = null;
 
                 if ($scope.campos.mes_inicial !== undefined &&
                     $scope.campos.ano_inicial !== undefined) {

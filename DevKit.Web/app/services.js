@@ -45,6 +45,7 @@ angular.module('app.services', ['ngResource'])
         BaixaCC: $resource('api/baixacc', {}, opcoes),
         EmissoraBaixaCCHist: $resource('api/EmissoraBaixaCCHist/:id', {}, opcoes),
         EmissoraBaixaCCConf: $resource('api/EmissoraBaixaCCConf/:id', {}, opcoes),
+        EmissoraBaixaCCAudit: $resource('api/EmissoraBaixaCCAudit/:id', {}, opcoes),
         EmissoraBaixaCC: $resource('api/EmissoraBaixaCC/:id', {}, opcoes),
         Setup: $resource('api/setup/:id', {}, opcoes),
         Associado: $resource('api/associado/:id', {}, opcoes),

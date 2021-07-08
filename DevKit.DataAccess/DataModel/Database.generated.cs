@@ -42,6 +42,7 @@ namespace DataModel
         public ITable<EmpresaDespesa> EmpresaDespesa { get { return this.GetTable<EmpresaDespesa>(); } }
         public ITable<EmpresaDespesaRecorrente> EmpresaDespesaRecorrente { get { return this.GetTable<EmpresaDespesaRecorrente>(); } }
         public ITable<LancamentosCC> LancamentosCC { get { return this.GetTable<LancamentosCC>(); } }
+        public ITable<LancamentosCCAudit> LancamentosCCAudit { get { return this.GetTable<LancamentosCCAudit>(); } }
         public ITable<LancamentosCCBaixa> LancamentosCCBaixa { get { return this.GetTable<LancamentosCCBaixa>(); } }
         public ITable<LancamentosCCEmissao> LancamentosCCEmissao { get { return this.GetTable<LancamentosCCEmissao>(); } }
         public ITable<LOG_Chamado> LOG_Chamado { get { return this.GetTable<LOG_Chamado>(); } }
@@ -163,12 +164,28 @@ namespace DataModel
         [Column, Nullable] public bool? bAtivo { get; set; }
     }
 
+    [Table(Schema = "dbo", Name = "LancamentosCCAudit")]
+    public partial class LancamentosCCAudit
+    {
+        [PrimaryKey, Identity] public long id { get; set; }
+        [Column, Nullable] public long? fkUser { get; set; }
+        [Column, Nullable] public long? nuOper { get; set; }
+        [Column, Nullable] public long? nuMes { get; set; }
+        [Column, Nullable] public long? nuAno { get; set; }
+        [Column, Nullable] public long? fkTipo { get; set; }
+        [Column, Nullable] public long? fkEmpresa { get; set; }
+        [Column, Nullable] public long? vrValor { get; set; }        
+        [Column, Nullable] public DateTime? dtLog { get; set; }        
+        [Column, Nullable] public string stCartao { get; set; }
+    }
+
     [Table(Schema = "dbo", Name = "LancamentosCC")]
     public partial class LancamentosCC
     {
         [PrimaryKey, Identity] public long id { get; set; }
         [Column, Nullable] public long? fkEmpresa { get; set; }
         [Column, Nullable] public long? fkCartao { get; set; }
+        [Column, Nullable] public long? fkUser { get; set; }
         [Column, Nullable] public long? nuMes { get; set; }
         [Column, Nullable] public long? nuAno { get; set; }
         [Column, Nullable] public long? fkTipo { get; set; }

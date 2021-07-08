@@ -61,8 +61,7 @@ namespace DevKit.Web.Controllers
                                     Where(y => y.fkEmpresa == tEmp.i_unique).
                                     Where(y => y.nuAno == dtAtu.Year).
                                     Where(y => y.nuMes == dtAtu.Month).
-                                    Where (y=> lstTiposBaixa.Contains ( (int) y.fkTipo)).
-                                    Where(y=> y.fkBaixa > 0).
+                                    Where(y=> lstTiposBaixa.Contains ( (int) y.fkTipo)).                                    
                                     ToList();
 
             var lstCarts = new List<int>();
@@ -90,7 +89,7 @@ namespace DevKit.Web.Controllers
                 var vlrTotFech = queryFechs.Where(y => y.fk_cartao == item).Sum(y => (long)y.vr_valor);
 
                 var vlrTots = vlrTotLanc + vlrTotFech;
-                var vlrTotBaixa = queryBaixa.Where(y => y.fkCartao == item && y.fkBaixa > 0 && lstTiposBaixa.Contains( (int)y.fkTipo)).Sum(y => (long)y.vrValor);
+                var vlrTotBaixa = queryBaixa.Where(y => y.fkCartao == item).Sum(y => (long)y.vrValor);
 
                 nu_tot++;
 
@@ -98,11 +97,11 @@ namespace DevKit.Web.Controllers
                     nu_pend++;
                 else
                     if (vlrTotBaixa != vlrTots - vlrTotBaixa)
-                    nu_liq++;
-                else
                     nu_nliq++;
+                else
+                    nu_liq++;
 
-                lst.Add(new DtoBaixaConf
+                var baixaConf = new DtoBaixaConf
                 {
                     idCartao = Convert.ToInt64(t_card.i_unique),
                     mat = t_card.st_matricula +
@@ -111,9 +110,15 @@ namespace DevKit.Web.Controllers
                     vlrTotLanc = mon.setMoneyFormat(vlrTots),
                     vlrTotBaixa = mon.setMoneyFormat(vlrTotBaixa),
                     vlrSaldo = mon.setMoneyFormat(vlrTots - vlrTotBaixa),
-                    status = !queryBaixa.Any( y=> y.fkCartao == item) ? "Pendente" : vlrTotBaixa != vlrTots - vlrTotBaixa ? "Liquidado" : "Não Liquidado",
-                    nuStatus = !queryBaixa.Any(y => y.fkCartao == item) ? "1" : vlrTotBaixa != vlrTots - vlrTotBaixa ? "2" : "3",
-                });
+                    status = !queryBaixa.Any(y => y.fkCartao == item) ? "Não Processado" : vlrTotBaixa != vlrTots - vlrTotBaixa ? "Liquidado" : "Não Liquidado",
+                    nuStatus = !queryBaixa.Any(y => y.fkCartao == item) ? "1" : vlrTotBaixa != vlrTots - vlrTotBaixa ? "3" : "2",
+                };
+
+                if (baixaConf.vlrSaldo != "0,00")
+                    if (baixaConf.nuStatus == "3")
+                        baixaConf.status += " (Parcial)";
+
+                lst.Add(baixaConf);
             }
 
             lst = lst.OrderBy(y => y.nome).ToList();

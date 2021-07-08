@@ -25,6 +25,11 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
 
             $scope.tipoConf = 1;
 
+            $scope.baixaManualLista = function () {
+                $scope.campos.fkCartao = $scope.manualRecord.idCartao;
+                $scope.baixaManual();
+            }
+
             $scope.baixaManual = function () {
 
                 var mdl = {
@@ -37,6 +42,8 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
                 Api.EmissoraBaixaCC.add(mdl, function (data) {
                     toastr.success('Despesa salva!', 'Sucesso');
                     $scope.campos.valor = null;
+                    $scope.manualRecord = null;                    
+                    $scope.pesquisarConferenciaManual();
                 },
                     function (response) {
                         toastr.error(response.data.message, 'Erro');
@@ -66,6 +73,24 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
                     toastr.error('Informe um arquivo corretamente', 'Erro');
             };
 
+            $scope.pesquisarAuditoria = function () {
+
+                $scope.loading = true;
+                $scope.listConfManual = null;
+                $scope.manualRecord = null;
+
+                var opcoes = {
+                    ano: $scope.campos.ano_inicial,
+                    mes: $scope.campos.mes_inicial,
+                };
+
+                Api.EmissoraBaixaCCAudit.listPage(opcoes, function (data) {
+                    $scope.listAudit = data.results;
+                    $scope.total = data.count;
+                    $scope.loading = false;
+                });
+            }
+
             $scope.pesquisarHistorico = function () {
 
                 $scope.loading = true;
@@ -82,9 +107,35 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
                 });
             }
 
+            $scope.pesquisarConferenciaManual = function () {
+
+                $scope.loading = true;
+                $scope.manualRecord = null;
+                $scope.listAudit = null;
+
+                var opcoes = {
+                    ano: $scope.campos.ano_inicial,
+                    mes: $scope.campos.mes_inicial,
+                };
+
+                Api.EmissoraBaixaCCConf.listPage(opcoes, function (data) {
+
+                    $scope.listConfManual = [];
+
+                    for (var i = 0; i < data.results.length; i++) {
+                        var m = data.results[i];                        
+                        if (m.vlrSaldo !== "0,00")
+                            $scope.listConfManual.push(m);
+                    }
+                    
+                    $scope.loading = false;               
+                });
+            }
+
             $scope.pesquisarConferencia = function () {
 
                 $scope.loading = true;
+                $scope.manualRecord = null;
 
                 var opcoes = {
                     ano: $scope.campos.ano_inicial,
@@ -124,6 +175,10 @@ angular.module('app.controllers').controller('EmissoraBaixaCCController',
 
             $scope.cancelaModalDesfaz = function () {
                 $scope.modalDesfaz = false;
-            }            
+            }
+
+            $scope.editManual = function (mdl) {
+                $scope.manualRecord = mdl;
+            }
 
         }]);

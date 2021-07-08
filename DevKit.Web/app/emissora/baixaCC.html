@@ -44,7 +44,7 @@
                         <br />
                         <br />
                     </div>
-                </tab>
+                </tab>                
                 <tab heading="Baixa Manual">
                     <div style="margin-left:30px;margin-top:20px">
                         <table>
@@ -59,24 +59,98 @@
                                     <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.mes" ng-model="campos.mes_inicial" />
                                 </td>
                                 <td width="20px"></td>
-                            </tr>
-                            <tr height="43px">
-                                <td>Matricula</td>
-                                <td colspan="4">
-                                    <input type="hidden" style="width:100%" placeholder="(Selecione)" ui-select2="campos.selects.cartao" ng-model="campos.fkCartao" />
+                                <td width="120px">
+                                    <button class="btn btn-primary" ng-click="pesquisarConferenciaManual()">Pesquisar</button>
                                 </td>
-                            </tr>
-                            <tr height="43px">
-                                <td>R$ Devido</td>
-                                <td>
-                                    <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="6" ng-model="campos.valor">
+                                <td width="120px">
+                                    <button class="btn btn-danger" ng-click="pesquisarAuditoria()">Auditoria</button>
                                 </td>
-                                <td></td>
                             </tr>
                         </table>
                         <br />
-                        <button class="btn btn-primary" ng-click="baixaManual()">Confirmar</button>
-                        <br />
+                        <div ng-if="manualRecord == null">
+                            <div ng-if="listConfManual.length > 0">
+                                <h4>Lista de registros disponíveis para baixa manual</h4>
+                                <table class="table table-hover" style="width: 1100px">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Matricula</th>
+                                            <th>Remessa Mensal R$</th>
+                                            <th>Liquidado R$</th>
+                                            <th>Saldo R$</th>
+                                            <th>Situação</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-click="editManual(mdl)" data-ng-repeat="mdl in listConfManual">
+                                        <td>{{ mdl.nome }}</td>
+                                        <td>{{ mdl.mat }}</td>
+                                        <td>{{ mdl.vlrTotLanc }}</td>
+                                        <td>{{ mdl.vlrTotBaixa }}</td>
+                                        <td>{{ mdl.vlrSaldo}}</td>
+                                        <td>{{ mdl.status }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div ng-if="listAudit.length > 0">
+                                <h4>Lançamentos de auditoria</h4>
+                                <table class="table table-hover" style="width: 1100px" ng-if="listAudit.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th>Operador</th>
+                                            <th>Data</th>
+                                            <th>Operação</th>
+                                            <th>Cartão</th>
+                                            <th>Valor R$</th>
+                                        </tr>
+                                    </thead>
+                                    <tr data-ng-repeat="mdl in listAudit">
+                                        <td>{{ mdl.operador }}</td>
+                                        <td>{{ mdl.data }}</td>
+                                        <td>{{ mdl.oper }}</td>
+                                        <td>{{ mdl.cartao }}</td>
+                                        <td>{{ mdl.vlr}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div ng-if="manualRecord != null">
+                            <table class="table table-hover" style="width: 1100px">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Matricula</th>
+                                        <th>Remessa Mensal R$</th>
+                                        <th>Liquidado R$</th>
+                                        <th>Saldo R$</th>
+                                        <th>Situação</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>{{ manualRecord.nome }}</td>
+                                    <td>{{ manualRecord.mat }}</td>
+                                    <td>{{ manualRecord.vlrTotLanc }}</td>
+                                    <td>{{ manualRecord.vlrTotBaixa }}</td>
+                                    <td>{{ manualRecord.vlrSaldo}}</td>
+                                    <td>{{ manualRecord.status }}</td>
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    <td width="200px">
+                                        Valor da Baixa R$
+                                    </td>
+                                    <td width="20px"></td>
+                                    <td width="120px">
+                                        <input type="text" class="form-control input-transparent" onKeyUp="money(this,Valor);" maxlength="6" ng-model="campos.valor">
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                            <button class="btn btn-primary" ng-click="baixaManualLista()">Confirmar</button>
+                            <br />
+                            <br />
+                        </div>
                         <br />
                     </div>
                 </tab>
@@ -101,14 +175,14 @@
                         <button class="btn btn-primary" ng-click="pesquisarHistorico()">Buscar</button>
                         <br />
                         <br />
-                        <table class="table table-hover" style="width:500px" ng-if="listHist.length > 0">
+                        <table class="table table-hover" style="width:700px" ng-if="listHist.length > 0">
                             <thead>
                                 <tr>
                                     <th width="140px">Data</th>
                                     <th width="90px">Registros</th>
                                     <th width="120px">Saldo R$</th>
                                     <th width="120px">Liquidado R$</th>
-                                    <th width="120px">Pendente R$</th>
+                                    <th width="120px">Não Processado R$</th>
                                     <th width="120px">Ações</th>
                                 </tr>
                             </thead>
@@ -170,13 +244,13 @@
                                     <label style="display:block;"><input type="radio" name="status" id="rdConf" value="1" ng-model="tipoConf"> Todos {{vlr_tot}} </label>
                                     <label style="display:block;"><input type="radio" name="status" id="rdConf" value="2" ng-model="tipoConf"> Não Liquidados {{vlr_nliq}}</label>
                                     <label style="display:block;"><input type="radio" name="status" id="rdConf" value="4" ng-model="tipoConf"> Liquidados {{vlr_liq}}</label>
-                                    <label style="display:block;"><input type="radio" name="status" id="rdConf" value="3" ng-model="tipoConf"> Pendentes {{vlr_pend}}</label>
+                                    <label style="display:block;"><input type="radio" name="status" id="rdConf" value="3" ng-model="tipoConf"> Não Processados {{vlr_pend}}</label>
                                 </td>
                             </tr>
                         </table>
                         <br />
                         <div ng-if="tipoConf == 1">
-                            <table class="table table-hover" style="width:900px" ng-if="listConf.length > 0">
+                            <table class="table table-hover" style="width: 1100px" ng-if="listConf.length > 0">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
@@ -198,7 +272,7 @@
                             </table>
                         </div>
                         <div ng-if="tipoConf == 2">
-                            <table class="table table-hover" style="width:900px" ng-if="listConf.length > 0">
+                            <table class="table table-hover" style="width: 1100px" ng-if="listConf.length > 0">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
@@ -220,7 +294,7 @@
                             </table>
                         </div>
                         <div ng-if="tipoConf == 3">
-                            <table class="table table-hover" style="width:900px" ng-if="listConf.length > 0">
+                            <table class="table table-hover" style="width: 1100px" ng-if="listConf.length > 0">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
@@ -242,7 +316,7 @@
                             </table>
                         </div>
                         <div ng-if="tipoConf == 4">
-                            <table class="table table-hover" style="width:900px" ng-if="listConf.length > 0">
+                            <table class="table table-hover" style="width:1100px" ng-if="listConf.length > 0">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>

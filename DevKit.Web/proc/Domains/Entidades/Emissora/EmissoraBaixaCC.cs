@@ -60,57 +60,27 @@ namespace DevKit.Web.Controllers
 
             var t_cart = db.T_Cartao.FirstOrDefault(y => y.i_unique == desp.idCartao);
 
-            db.Insert(new LancamentosCC
+            var dtProx = new DateTime((int)desp.ano, (int)desp.mes, 1).AddMonths(1);
+
+            // registrar a baixa normalmente, sem nenhuma conta
+
+            if (vlrBaixa > 0)
             {
-                bRecorrente = false,
-                dtLanc = System.DateTime.Now,
-                fkInicial = null,
-                fkUser = userIdLoggedUsuario,
-                fkBaixa = null,
-                fkCartao = desp.idCartao,
-                fkEmpresa = (long) tEmp.i_unique,
-                fkTipo = t_lanc_tipo.id,
-                nuAno = desp.ano,
-                nuMes = desp.mes,
-                nuParcela = 1,
-                nuTotParcelas = 1,
-                vrValor = vlrBaixa,
-            });
-
-            db.Insert(new LancamentosCCAudit
-            {
-                dtLog = DateTime.Now,
-                fkEmpresa = (int)tEmp.i_unique,
-                fkTipo = t_lanc_tipo.id,
-                nuAno = desp.ano,
-                nuMes = desp.mes,
-                vrValor = vlrBaixa,
-                fkUser = userIdLoggedUsuario,
-                nuOper = 4,
-                stCartao = t_cart.st_matricula + " - " + t_cart.stCodigoFOPA
-            });
-
-            var vrFinal = vlrLancsCartao - vlrBaixa;
-
-            if (vrFinal > 0)
-            {
-                var dtProx = new DateTime((int)desp.ano, (int)desp.mes, 1).AddMonths(1);
-
                 db.Insert(new LancamentosCC
                 {
                     bRecorrente = false,
-                    dtLanc = System.DateTime.Now,
+                    dtLanc = DateTime.Now,
                     fkInicial = null,
-                    fkBaixa = null,
                     fkUser = userIdLoggedUsuario,
+                    fkBaixa = null,
                     fkCartao = desp.idCartao,
                     fkEmpresa = (long)tEmp.i_unique,
                     fkTipo = t_lanc_tipo.id,
-                    nuAno = dtProx.Year,
-                    nuMes = dtProx.Month,
+                    nuAno = desp.ano,
+                    nuMes = desp.mes,
                     nuParcela = 1,
                     nuTotParcelas = 1,
-                    vrValor = vrFinal,
+                    vrValor = vlrBaixa,
                 });
 
                 db.Insert(new LancamentosCCAudit
@@ -118,13 +88,24 @@ namespace DevKit.Web.Controllers
                     dtLog = DateTime.Now,
                     fkEmpresa = (int)tEmp.i_unique,
                     fkTipo = t_lanc_tipo.id,
-                    nuAno = dtProx.Year,
-                    nuMes = dtProx.Month,
+                    nuAno = desp.ano,
+                    nuMes = desp.mes,
                     vrValor = vlrBaixa,
                     fkUser = userIdLoggedUsuario,
                     nuOper = 4,
                     stCartao = t_cart.st_matricula + " - " + t_cart.stCodigoFOPA
                 });
+
+                // se tiver operação automática, descontar valor da baixa acima
+
+                var tblDebitoAuto = db.LancamentosCC.FirstOrDefault(y => y.fkCartao == desp.idCartao && y.nuAno == dtProx.Year && y.nuMes == dtProx.Month);
+
+                if (tblDebitoAuto != null)
+                {
+                    tblDebitoAuto.vrValor -= vlrBaixa;
+                                        
+                    db.Update(tblDebitoAuto);
+                }
             }
 
             return Ok(desp);
@@ -169,6 +150,19 @@ namespace DevKit.Web.Controllers
                     t_lanc_tipo = db.EmpresaDespesa.FirstOrDefault(y => y.fkEmpresa == t_emp.i_unique && y.stCodigo == "11");
                 }
 
+                var dtAnoMes = new DateTime(ano, mes, 1);
+                var dtAnoMesProx = new DateTime(ano, mes, 1).AddMonths(1);
+
+                //caso suba de novo, significa REPROCESSAMENTO
+
+                foreach (var item in db.LancamentosCC.Where(y => y.fkEmpresa == t_emp.i_unique && y.fkTipo == t_lanc_tipo.id && y.nuAno == dtAnoMes.Year && y.nuMes == dtAnoMes.Month).ToList())
+                    db.Delete(item);
+
+                foreach (var item in db.LancamentosCC.Where(y => y.fkEmpresa == t_emp.i_unique && y.fkTipo == t_lanc_tipo.id && y.nuAno == dtAnoMesProx.Year && y.nuMes == dtAnoMesProx.Month).ToList())
+                    db.Delete(item);
+
+                // busca todos os valores
+                
                 var lstFechamento = db.LOG_Fechamento.Where(y => y.fk_empresa == t_emp.i_unique && y.st_ano == ano.ToString() && y.st_mes == mes.ToString().PadLeft(2,'0')).ToList();
                 var lstDespesas = db.LancamentosCC.Where(y => y.nuAno == ano && y.nuMes == mes ).ToList();
                 var lstCartoes = db.T_Cartao.Where(y => y.st_empresa == t_emp.st_empresa).ToList();
@@ -189,9 +183,6 @@ namespace DevKit.Web.Controllers
                         nuMonth = mes,
                         nuYear = ano
                     }));
-
-                    var dtAnoMes = new DateTime(ano, mes, 1);
-                    var dtAnoMesProx = new DateTime(ano, mes, 1).AddMonths(1);
 
                     int nuRecords = 0;
 
@@ -240,7 +231,7 @@ namespace DevKit.Web.Controllers
 
                         report += "vlrBaixa: " + vlrBaixa + " lancs e fech: " + vlrLancsCartao + " Final: " + vrFinal + "\n";
 
-                        if (vrFinal >= 0)
+                        if (vlrBaixa >= 0)
                         {
                             report += "Registro baixado!\n";
 
@@ -260,26 +251,30 @@ namespace DevKit.Web.Controllers
                                 vrValor = vlrBaixa,
                             });
 
-                            db.Insert(new LancamentosCC
+                            // se vrFinal == 0, pagto completo (não inserir nada)
+                            // do contrário
+                            if (vrFinal > 0)
                             {
-                                bRecorrente = false,
-                                dtLanc = DateTime.Now,
-                                fkBaixa = fkBaixa,
-                                fkCartao = (long)t_cart.i_unique,
-                                fkEmpresa = (long)t_emp.i_unique,
-                                fkInicial = null,
-                                fkTipo = t_lanc_tipo.id,
-                                nuAno = dtAnoMesProx.Year,
-                                nuMes = dtAnoMesProx.Month,
-                                nuParcela = 1,
-                                nuTotParcelas = 1,
-                                vrValor = vrFinal,
-                            });
+                                // fica parcial e transporta pro próximo mês
+                                db.Insert(new LancamentosCC
+                                {
+                                    bRecorrente = false,
+                                    dtLanc = DateTime.Now,
+                                    fkBaixa = fkBaixa,
+                                    fkCartao = (long)t_cart.i_unique,
+                                    fkEmpresa = (long)t_emp.i_unique,
+                                    fkInicial = null,
+                                    fkTipo = t_lanc_tipo.id,
+                                    nuAno = dtAnoMesProx.Year,
+                                    nuMes = dtAnoMesProx.Month,
+                                    nuParcela = 1,
+                                    nuTotParcelas = 1,
+                                    vrValor = vrFinal,
+                                });
+                            }
                         }
                         else
-                        {
                             report += "Registro não baixado, por valor negativo ou zerado \n";
-                        }
                     }
 
                     var tBaixa = db.LancamentosCCBaixa.FirstOrDefault(y => y.id == fkBaixa);
@@ -288,6 +283,8 @@ namespace DevKit.Web.Controllers
                     tBaixa.stReport = report;
 
                     db.Update(tBaixa);
+
+                    break;
                 }
 
                 return Request.CreateResponse(HttpStatusCode.Created);

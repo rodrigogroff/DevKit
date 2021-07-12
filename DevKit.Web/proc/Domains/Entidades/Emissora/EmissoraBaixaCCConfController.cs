@@ -97,9 +97,9 @@ namespace DevKit.Web.Controllers
                     nu_pend++;
                 else
                     if (vlrTotBaixa != vlrTots - vlrTotBaixa)
-                    nu_nliq++;
+                    nu_liq++; 
                 else
-                    nu_liq++;
+                    nu_nliq++;
 
                 var baixaConf = new DtoBaixaConf
                 {

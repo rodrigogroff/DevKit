@@ -36,11 +36,14 @@ namespace DevKit.Web.Controllers
 
             foreach (var item in query.ToList())
             {
-                lst.Add(new DtoDespesa
+                if (item.stCodigo != "10" && item.stCodigo != "11")
                 {
-                    id = item.id,
-                    stName = item.stCodigo + " - " + item.stDescricao
-                });
+                    lst.Add(new DtoDespesa
+                    {
+                        id = item.id,
+                        stName = item.stCodigo + " - " + item.stDescricao
+                    });
+                }
             }
 
             var ret = new DespesaReport
